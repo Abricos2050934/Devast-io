@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "checked_at": "2026-11-02T01:40:46.344693+03:00",
+  "published_client_sha256": "963e42a1ad12cb676accf262d22bb49172c4b8c4e121e63d4c8c19f3da952fcf",
+  "canonical_client_sha256": "faa94869dd82e55091688c6702b40a16b38de55a80ab54cdd8a2a1db3947772c",
+  "automated_tests": {
+    "node": 65,
+    "python": 26,
+    "ilm_core": "identical AST after removal of dead decoder aliases",
+    "native_browser": "passed: shot/line alignment in four directions, clan colors/cache, loot cadence, identity and settings after three reloads"
+  },
+  "live_canonical": {
+    "result": "passed",
+    "observed_session_seconds": 60,
+    "same_page_reconnect": "passed",
+    "identity_kept_on_reconnect": true,
+    "reload_rejoin": "passed",
+    "cookie_kept_on_reload": true,
+    "errors": []
+  },
+  "live_full_identity_reloads": {
+    "confirmed": [
+      {
+        "attempt": 1,
+        "token": true,
+        "tokenId": true,
+        "userId": true,
+        "cookie": true
+      }
+    ],
+    "extended_result": "failed",
+    "failure": "page.waitForFunction: Timeout 45000ms exceeded.",
+    "websocket_503_hosts": [
+      "frankfurt1.devast.io",
+      "frankfurt4.devast.io",
+      "frankfurt5.devast.io"
+    ]
+  },
+  "live_published_build": {
+    "output_sha256": "963e42a1ad12cb676accf262d22bb49172c4b8c4e121e63d4c8c19f3da952fcf",
+    "menu_loaded": true,
+    "result": "failed",
+    "failure": "page.waitForFunction: Timeout 45000ms exceeded.",
+    "mod_errors": []
+  },
+  "network_probe": {
+    "devast_io_list_http": 503,
+    "github_api_http": 503
+  },
+  "limits": "A live rejoin preserving all three identity fields was observed. Further live attempts were blocked by network/server HTTP 503. No guarantee of uninterrupted access or immunity from kicks."
+}

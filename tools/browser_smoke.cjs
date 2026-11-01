@@ -79,6 +79,10 @@ async function main(){
       report.mode='saved HTML and native object fixtures; no live server test';return;
     }
     await join();await sample('joined');
+    const identityKeys=['token','tokenId','userId'];
+    const originalIdentity=await page.evaluate(keys=>keys.map(key=>localStorage.getItem(key)),identityKeys);
+    report.initial_identity_present=originalIdentity.every(value=>typeof value==='string'&&value.length>0);
+    if(!report.initial_identity_present)throw Error('Server did not save a complete identity');
     await page.evaluate(()=>{window.__savedTokenForTest=localStorage.getItem('token');});
     await page.keyboard.down('KeyW');await page.waitForTimeout(1000);await page.keyboard.up('KeyW');
     await page.evaluate(()=>{const m=window.__devastMod;m.setSetting('AimBotEnabled',true);m.setSetting('ShowPlayerHitbox',true);m.setSetting('XrayBuildings',true);m.setSetting('zoomFactor',0.8);});
@@ -91,10 +95,17 @@ async function main(){
     report.same_page_reconnect='passed';
     report.identity_kept_on_reconnect=await page.evaluate(()=>window.__savedTokenForTest===localStorage.getItem('token')&&document.cookie.includes('devast_rejoin_check=kept'));
     if(!report.identity_kept_on_reconnect)throw Error('Identity or cookie was lost during reconnect');
-    await page.reload({waitUntil:'domcontentloaded',timeout:45000});await join();await page.waitForTimeout(10000);const s=await sample('rejoined-after-reload');
-    if(s.state!==1||!s.player_id||s.mod_errors.length||errors.length)throw Error('Rejoin or browser errors');
-    report.cookie_kept_on_reload=await page.evaluate(()=>document.cookie.includes('devast_rejoin_check=kept'));
-    if(!report.cookie_kept_on_reload)throw Error('Cookie was lost during reload');
+    report.reloads=[];
+    const reloadCount=Math.max(1,Math.min(5,Number(process.env.DEVAST_RELOADS)||1));
+    for(let attempt=1;attempt<=reloadCount;attempt++){
+      await page.reload({waitUntil:'domcontentloaded',timeout:45000});await join();await page.waitForTimeout(10000);const s=await sample('rejoined-after-reload-'+attempt);
+      if(s.state!==1||!s.player_id||s.mod_errors.length||errors.length)throw Error('Rejoin or browser errors');
+      const currentIdentity=await page.evaluate(keys=>keys.map(key=>localStorage.getItem(key)),identityKeys);
+      const kept={attempt,token:currentIdentity[0]===originalIdentity[0],tokenId:currentIdentity[1]===originalIdentity[1],userId:currentIdentity[2]===originalIdentity[2],cookie:await page.evaluate(()=>document.cookie.includes('devast_rejoin_check=kept'))};
+      report.reloads.push(kept);
+      if(!kept.token||!kept.tokenId||!kept.userId||!kept.cookie)throw Error('Saved identity or cookie changed after reload');
+    }
+    report.cookie_kept_on_reload=report.reloads.every(r=>r.cookie);
     report.result='passed';report.observed_session_seconds=60;report.reload_rejoin='passed';
   }catch(e){report.result='failed';report.failure=String(e.message);await sample('failure').catch(()=>{});await page.screenshot({path:'build/browser-failure.png'}).catch(()=>{});process.exitCode=1;}
   finally{report.finished_at=new Date().toISOString();fs.writeFileSync(menuOnly?'build/browser-menu-report.json':'build/browser-report.json',JSON.stringify(report,null,2)+'\n');await browser.close();}
