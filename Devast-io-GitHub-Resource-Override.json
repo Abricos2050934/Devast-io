@@ -1,0 +1,19 @@
+{
+  "v": 1,
+  "data": [
+    {
+      "id": "d1",
+      "matchUrl": "https://devast.io/*",
+      "rules": [
+        {
+          "type": "fileOverride",
+          "match": "**://devast.io/js/*.js",
+          "file": "(function () {\r\n  var url = \"https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/game.modded.js\";\r\n  var previous = window.__devastRemoteLoader;\r\n  if (window.__devastClientLoaded || (previous && (previous.state === \"loading\" || previous.state === \"loaded\"))) return;\r\n  var state = window.__devastRemoteLoader = { state: \"loading\", url: url };\r\n  try {\r\n    var x = new XMLHttpRequest();\r\n    x.open(\"GET\", url + \"?t=\" + Date.now(), false);\r\n    x.send(null);\r\n    if (x.status < 200 || x.status >= 300 || !x.responseText) {\r\n      throw new Error(\"Не удалось загрузить клиент: HTTP \" + x.status);\r\n    }\r\n    var code = x.responseText;\r\n    if (code.indexOf(\"function __installDevastMod\") === -1 || code.indexOf(\"function __createIlmAim\") === -1) {\r\n      throw new Error(\"По ссылке получен неверный файл клиента\");\r\n    }\r\n    (0, eval)(code);\r\n    if (!window.__devastClientLoaded || !window.__devastMod) {\r\n      throw new Error(\"Клиент не завершил установку\");\r\n    }\r\n    state.state = \"loaded\";\r\n  } catch (e) {\r\n    state.state = \"failed\";\r\n    state.error = String(e && e.message || e);\r\n    console.error(\"[Devast auto-update]\", state.error, url);\r\n  }\r\n})();\r\n",
+          "fileId": "f1",
+          "on": true
+        }
+      ],
+      "on": true
+    }
+  ]
+}
