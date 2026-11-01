@@ -62,7 +62,7 @@ function __installDevastMod(B) {
   const MOD = new HackCon();
   Object.assign(MOD, {zoomFactor:1, showFunctionList:true});
   const defaults = JSON.parse(JSON.stringify(MOD));
-  const SAVE = 'BestModMenuConfig';
+  const SAVE = 'DevastILM:settings:v3', LEGACY_SAVE = 'BestModMenuConfig';
   const transient = new Set(['Token', 'token', 'tokenId', 'userId']);
   const keySettings = ['AimbotKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey'];
   const limits = {mouseFov:[1,20000],lockId:[-1,65535],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],bulletSpeedCoefficient:[1,15],zoomFactor:[.33,2],Xraytransparency:[.05,1]};
@@ -77,13 +77,13 @@ function __installDevastMod(B) {
     return value;
   }
   try {
-    const saved = JSON.parse(localStorage.getItem(SAVE) || '{}');
+    const saved = JSON.parse(localStorage.getItem(SAVE) || localStorage.getItem(LEGACY_SAVE) || '{}');
     for (const key of Object.keys(defaults)) {
       if (!transient.has(key) && Object.prototype.hasOwnProperty.call(saved,key)) {
         try { MOD[key] = validateSetting(key,saved[key]); } catch (_) {}
       }
     }
-    if (localStorage.getItem(SAVE + ':ilm2') !== '1') {
+    if (localStorage.getItem(SAVE + ':ilm2') !== '1' && localStorage.getItem(LEGACY_SAVE + ':ilm2') !== '1') {
       for (const key of ['AimBotEnabled', 'AimbotKey', 'autoFire', 'target', 'mouseFovEnable', 'mouseFov', 'lockId', 'distanceCoefficient', 'bulletSpeedCoefficient', 'resolverType', 'offsetCoefficient', 'visualizeResolving', 'visualizeResolvingColor', 'ShowRealAngles']) MOD[key] = defaults[key];
       const migrated = {};
       for (const key of Object.keys(defaults)) if (!transient.has(key)) migrated[key] = MOD[key];
@@ -752,7 +752,7 @@ function __installDevastMod(B) {
     id: item.id
   }]));
   try {
-    const saved = JSON.parse(localStorage.getItem(SAVE + ':loot') || '{}');
+    const saved = JSON.parse(localStorage.getItem(SAVE + ':loot') || localStorage.getItem(LEGACY_SAVE + ':loot') || '{}');
     for (const key of Object.keys(LootData)) if (typeof saved[key] === 'boolean') LootData[key].acquire = saved[key];
   } catch (_) {}
   const allowedLootIds = new Set();
@@ -815,7 +815,6 @@ function __installDevastMod(B) {
   let overlay, overlayHost, ctx, menu, functionList, zoomControl, nextFrame, stopped = false, waitingKey = null;
   let lastStep = -Infinity, lastLoot = -Infinity, lastBuild = -Infinity;
   let lastTake = -Infinity, lastKeepAlive = -Infinity, lastChat = -Infinity, nextChatAt = -Infinity;
-  let lastFastLootSend = -Infinity;
   const chatState = {
     status: 'Off',
     sent: 0
@@ -845,7 +844,7 @@ function __installDevastMod(B) {
     ['XrayBuildings', 'Xray'],
     ['AutoTakeEnabled', 'AutoTake']
   ];
-  const pendingLoot = new Map(), playerLabelCache = new WeakMap();
+  const playerLabelCache = new WeakMap();
   function listen(target, event, callback, options) {
     target.addEventListener(event, callback, options);
     removers.push(() => target.removeEventListener(event, callback, options));
@@ -877,6 +876,7 @@ function __installDevastMod(B) {
     for (const key of Object.keys(defaults)) if (!transient.has(key)) saved[key] = MOD[key];
     try {
       localStorage.setItem(SAVE, JSON.stringify(saved));
+      localStorage.setItem(SAVE + ':ilm2', '1');
       localStorage.setItem(SAVE + ':loot', JSON.stringify(Object.fromEntries(Object.entries(LootData).map(([k, v]) => [k, v.acquire]))));
     } catch (_) {}
   }
@@ -1020,7 +1020,7 @@ function __installDevastMod(B) {
   }
   function automate(now) {
     const me = B.world.ᅠᏧ‍;
-    if (MOD.FAutoLootEnabled) scanFastLoot(now); else pendingLoot.clear();
+    if (!B.synchronizedRender && MOD.FAutoLootEnabled) scanFastLoot();
     if (MOD.SAutoLootEnabled && !MOD.FAutoLootEnabled && now - lastLoot >= 200) {
       lastLoot = now;
       const loot = records.filter(r => r.type === B.categories.loot && (r.e.x - me.x) ** 2 + (r.e.y - me.y) ** 2 < 50000 && lootAllowed(r.e));
@@ -1087,40 +1087,16 @@ function __installDevastMod(B) {
       chatState.status = 'Send not confirmed';
     }
   }
-  function scanFastLoot(now) {
-    if (!playing() || !MOD.FAutoLootEnabled) {
-      pendingLoot.clear();
-      return;
-    }
-    if (now - lastFastLootSend < 125) return;
+  function scanFastLoot() {
+    if (!playing() || !MOD.FAutoLootEnabled) return;
+    // ILM visits every nearby drop on each frame, independently of the game's
+    // single cursor-selected interaction. fastDist in ILM is squared distance.
     const me = B.world.ᅠᏧ‍, type = B.categories.loot, border = B.entities.border[type], group = B.entities.ᴎ̂２[type];
-    const seen = new Set(), candidates = [];
     if (border && group) for (let i = 0; i < border.border; i++) {
       const e = group[border.ⲣᴑᴏ[i]];
       if (!e || e.е̝ހ !== 0 || !Number.isInteger(e.id) || !Number.isFinite(e.x) || !Number.isFinite(e.y)) continue;
       const distance = (e.x - me.x) ** 2 + (e.y - me.y) ** 2;
-      if (distance >= 50000 || !lootAllowed(e)) continue;
-      seen.add(e.id);
-      let state = pendingLoot.get(e.id);
-      if (state && (state.entity !== e || state.resource !== e.Іࡈ５)) {
-        pendingLoot.delete(e.id);
-        state = null;
-      }
-      if (!state || now - state.sentAt >= 250 || now < state.sentAt) candidates.push({
-        e,
-        state,
-        distance
-      });
-    }
-    for (const id of pendingLoot.keys()) if (!seen.has(id)) pendingLoot.delete(id);
-    candidates.sort((a, b) => Number(!!a.state) - Number(!!b.state) || (a.state?.sentAt || 0) - (b.state?.sentAt || 0) || a.distance - b.distance);
-    for (const {e} of candidates.slice(0, 1)) if (__send([12, e.id])) {
-      lastFastLootSend = now;
-      pendingLoot.set(e.id, {
-      entity: e,
-      resource: e.Іࡈ５,
-      sentAt: now
-      });
+      if (distance < 41000 && (!MOD.LootDataEnabled || allowedLootIds.has(e.Іࡈ５))) __send([12, e.id]);
     }
   }
   function building(r) {
@@ -1228,7 +1204,6 @@ function __installDevastMod(B) {
     }
     ctx.save();
     if (MOD.ShowPosition) text('[' + Math.floor(me.x / 100) + ':' + Math.floor(me.y / 100) + ']', 100, 32, '#fff', 18);
-    const angleBatches=new Map();
     for (const r of records) {
       if (r.type === B.categories.player) {
         const id = r.e.ᴘ४１, p = at(r.e), self = id === me.id, color = self && !validClan(id) ? '#00ffff' : clanColor(id);
@@ -1236,12 +1211,6 @@ function __installDevastMod(B) {
           text(playerLabel(playerMeta(id),id).trim(), p.x, p.y - 56 * v.scale, MOD.NicknameColor);
           const clan=validClan(id);
           if(clan && typeof clan.name==='string' && clan.name) text('['+clan.name+']',p.x,p.y-72*v.scale,clanColor(id));
-        }
-        if ((MOD.ShowRealAngles === 'always' || MOD.AimBotEnabled) && Number.isFinite(r.e.angle)) {
-          const end=at({x:r.e.x+80*Math.cos(r.e.angle),y:r.e.y+80*Math.sin(r.e.angle)});
-          let segments=angleBatches.get(color);
-          if(!segments) {segments=[];angleBatches.set(color,segments);}
-          segments.push(p.x,p.y,end.x,end.y);
         }
         if (MOD.ShowPlayerHitbox) {
           ctx.strokeStyle = color;
@@ -1264,16 +1233,12 @@ function __installDevastMod(B) {
         }
       }
     }
-    for(const [color,segments] of angleBatches) {
-      ctx.strokeStyle=color;ctx.lineWidth=1;ctx.beginPath();
-      for(let i=0;i<segments.length;i+=4) {ctx.moveTo(segments[i],segments[i+1]);ctx.lineTo(segments[i+2],segments[i+3]);}
-      ctx.stroke();
-    }
     const selfRecord = records.find(r => r.type === B.categories.player && r.e.ᴘ४１ === me.id);
     if (MOD.AimBotEnabled && selfRecord) {
       for (const [i, line] of GetAllTargets.lines.entries()) {
         if (i === 0 && !MOD.visualizeResolving) continue;
         if (![line.x1, line.y1, line.x2, line.y2].every(Number.isFinite) || line.x1 === -1 && line.y1 === -1 && line.x2 === -1 && line.y2 === -1) continue;
+        if (line.x1 === line.x2 && line.y1 === line.y2) continue;
         const start = at({x:line.x1, y:line.y1});
         const end = at({x:line.x2, y:line.y2});
         ctx.globalAlpha = line.alpha;
@@ -1498,7 +1463,6 @@ function __installDevastMod(B) {
     updateReconnect(now);
     if (!playing()) {
       lastSentAngle = null;
-      pendingLoot.clear();
       if (previousPlayer) {
         Aimbot.onDeath();
         previousPlayer = 0;
@@ -1517,9 +1481,11 @@ function __installDevastMod(B) {
       lastChat = nextChatAt = -Infinity;
       lastKeepAlive = now;
     }
-    records = collect();
-    updateTargets();
-    updateMouse();
+    if (!B.synchronizedRender) {
+      records = collect();
+      updateTargets();
+      updateMouse();
+    }
     if (!MOD.AimBotEnabled) lastSentAngle = null;
     automate(now);
     if (!B.synchronizedRender) draw();
@@ -1547,6 +1513,19 @@ function __installDevastMod(B) {
     B.network[key] = function (...args) {
       if (MOD.AimBotEnabled) return;
       return originals[key].apply(this, args);
+    };
+  }
+  if (B.fireKey && typeof B.network[B.fireKey] === 'function') {
+    const nativeFire = B.network[B.fireKey];
+    originals[B.fireKey] = nativeFire;
+    B.network[B.fireKey] = function (...args) {
+      // A click may arrive between ILM's 50 ms ticks. Resolve and send the same
+      // angle used by the prediction line immediately before the native shot.
+      if (!stopped && playing() && MOD.AimBotEnabled) {
+        updateMouse();
+        __send([6, Aimbot.resolve()], true);
+      }
+      return nativeFire.apply(this, args);
     };
   }
   function keyboard(e) {
@@ -1796,6 +1775,11 @@ function __installDevastMod(B) {
     render(now = performance.now()) {
       if (stopped) return;
       try {
+        if (B.synchronizedRender && playing()) {
+          records = collect();
+          updateTargets();
+          updateMouse();
+        }
         scanFastLoot(now);
         draw();
       } catch (e) {
@@ -1821,7 +1805,6 @@ function __installDevastMod(B) {
       MOD.ShowMines = false;
       stopped = true;
       window.clearInterval(aimTimer);
-      pendingLoot.clear();
       window.cancelAnimationFrame(nextFrame);
       removers.forEach(f => f());
       if (menu) menu.destroy();

@@ -47,7 +47,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   for(const n of a.nodes)if(n.type==='VariableDeclarator'&&n.id.name===entry.value.name&&n.start>=scope.start&&n.end<=scope.end&&n.init&&isFunction(n.init))defs.push(n.init);
   return defs.length===1?defs[0]:null;
  }
- for(const key of ['ᴎᚂρ','ѕ᠋༢','ρ٨٨','ᅠϲ᠍','е̅ܙ','εܖᴏ','ⲅ︊ᄃ']){
+ for(const key of ['ᴎᚂρ','ѕ᠋༢','ρ٨٨','ᴎ༩༣','ᅠϲ᠍','е̅ܙ','εܖᴏ','ⲅ︊ᄃ']){
   const name=bindings.symbols[key],left=entryDefinition(old,networkReturn,networkScope,name,bindings.symbols['о̃༩']),right=entryDefinition(cur,nextReturn,nextNetwork,provisional[name],provisional[bindings.symbols['о̃༩']]);
   if(!left||!right||oldCanon.get(left)?.hash!==curCanon.get(right)?.hash)throw Error('Native network contract changed or ambiguous: '+key);
   pairs.set(left,right);learn(oldCanon.get(left),curCanon.get(right));nativeContracts.push(key);
@@ -97,7 +97,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const aimTree=acorn.parse(aim,{ecmaVersion:'latest'}),helper=aimTree.body.find(n=>n.id?.name==='__ilmPatchPlayerMetadata');
  const adaptedAim=aim.slice(0,helper.start)+`function __ilmPatchPlayerMetadata(source){const before=${JSON.stringify(meta.before)};if(source.split(before).length!==2)throw Error('Unsupported native player metadata constructor');return source.replace(before,${JSON.stringify(meta.after)});}`+aim.slice(helper.end);
  const output=assemble(Buffer.from(cur.source),generated,outputBindings.symbols,payload,bootstrap,gui,adaptedAim);
- const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠'];
+ const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴎܕα','ᴎ༩༣','І̎ܘ','еϲᄄ','ᴎ︅ހ','ѕ٨ᚄ','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠'];
  const roles={};for(const key of requiredNative){const next=map[key];if(!next)throw Error('Missing browser validation binding '+key);roles[key]=next;}
  return {source:cur.source,output,profile:generated,bindings:outputBindings,aim:adaptedAim,roles,
   report:{raw_sha256:hash(candidate),reference_sha256:hash(reference),deobfuscated_sha256:hash(cur.source),output_sha256:hash(output),matched_functions:pairs.size,native_network_contracts:nativeContracts,required_bindings:canonicalRequired.size,patches:operations.map(x=>x.id),decoder_blocks:decodedNew.evidence,live_server:'not_tested'}};

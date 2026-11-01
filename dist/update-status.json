@@ -2,8 +2,8 @@
   "status": "static_checks_passed",
   "source_url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
   "baseline_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
-  "output_sha256": "c405d77bcce3424224406bf068d81b7bb3e086b9d8bac771890bfb0e7a51647a",
-  "output_bytes": 7041347,
+  "output_sha256": "faa94869dd82e55091688c6702b40a16b38de55a80ab54cdd8a2a1db3947772c",
+  "output_bytes": 7041029,
   "applied_patches": [
     "camera-world-view",
     "packet-position-history",
@@ -15,7 +15,10 @@
     "native-invalid-session-id-guard",
     "ilm-native-player-nickname-id",
     "ilm-native-self-server-angle",
-    "ilm-native-initial-nickname-id"
+    "ilm-native-initial-nickname-id",
+    "ilm-native-clan-colors",
+    "native-preserve-token-across-version-init",
+    "ilm-native-synchronized-render"
   ],
   "live_server_test": "see build/browser-report.json",
   "publication": "not_published"

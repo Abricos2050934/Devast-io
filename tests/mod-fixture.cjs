@@ -26,6 +26,7 @@ function fixture(options={}) {
   let clock=1000;
   const document=dom?.document||{readyState:'loading',getElementById:()=>null};
   const B={world,network,entities,categories:{player:1,loot:2},items:[],karma:[],graphics:{options:{}},view:()=>({x:0,y:0,scale:1,ctx:dom?.canvas.getContext('2d')}),chatActive:()=>false};
+  if(options.fireKey){B.fireKey=options.fireKey;network[options.fireKey]=()=>packets.push([4]);}
   const clipboard=[];
   const navigator={clipboard:{writeText:async text=>{clipboard.push(text);}}};
   const candidate=process.env.DEVAST_TEST_CANDIDATE?require('../tools/updater/candidate-fixture.cjs').candidateFixture(B,process.env.DEVAST_TEST_CANDIDATE):null;
