@@ -20,6 +20,9 @@ class PublicationTests(unittest.TestCase):
   with zipfile.ZipFile(io.BytesIO(files['Devast-io-client.zip'])) as z:
    self.assertEqual(z.read('game.modded.js'),self.body)
    self.assertEqual(json.loads(z.read('Devast-io-GitHub-Resource-Override.json'))['v'],1)
+  with zipfile.ZipFile(io.BytesIO(files['Devast-io-Resource-Override.zip'])) as z:
+   self.assertEqual(z.namelist(),['Devast-io-GitHub-Resource-Override.json'])
+   self.assertEqual(z.read(z.namelist()[0]),files[z.namelist()[0]])
  def test_changed_mod_after_validation_cannot_publish(self):
   (self.root/'mod/test.js').write_text('another mod')
   with self.assertRaisesRegex(ValueError,'another mod'):p.artifacts(self.root,self.out)

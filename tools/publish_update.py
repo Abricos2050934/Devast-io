@@ -57,6 +57,11 @@ verification.json содержит проверенную ревизию мод�
             info=zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0)); info.compress_type=zipfile.ZIP_DEFLATED; info.external_attr=0o100644 << 16
             archive.writestr(info, entries[name])
     entries['Devast-io-client.zip'] = buffer.getvalue()
+    json_buffer=io.BytesIO()
+    with zipfile.ZipFile(json_buffer, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+        info=zipfile.ZipInfo(override_name, (1980, 1, 1, 0, 0, 0)); info.compress_type=zipfile.ZIP_DEFLATED; info.external_attr=0o100644 << 16
+        archive.writestr(info, override_bytes)
+    entries['Devast-io-Resource-Override.zip']=json_buffer.getvalue()
     return entries
 
 def publish(root, entries, branch='updates', remote='origin'):
