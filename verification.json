@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "8715a3a804b39471f5dc4b4e307a75605c0f99e56e33929d6a0adb29eae88085",
+  "output_sha256": "963e42a1ad12cb676accf262d22bb49172c4b8c4e121e63d4c8c19f3da952fcf",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -43,14 +43,40 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "487e83768268a77393b0971d5283a262b65589e14550caa87dc56b539dd72615",
-    "mod/bootstrap.js": "361466a2b61329b2b7b1bb1e48acc55b685b64493318fab3f7507857492e559c",
+    "mod/responsive.js": "c7192ea0db794ef4d7979cb06b73103a57b1f7cb24b702ef9a26248917fb4226",
+    "mod/bootstrap.js": "3ca2770f7e33352cc113cb58616237aa4db6ddb0595d2fe0cd7766b14a629e63",
     "mod/ilm-aim.js": "502a4285e26c66ea59046ebf5c54083d3d0d5d9422a7908ef8aeb6a8a8eaa632",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "db06419789b93aee9f2e172068d5d9bee6cbdf5c3a2cb71dc804e4ac68cf10f7",
+  "mod_bundle_sha256": "6459c4ea89d401d7872db430930e2e6d4a6aeba578a1824d84fd4114941d2f35",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
+  "reload_identity": [
+    {
+      "token": true,
+      "tokenId": true,
+      "userId": true,
+      "cookie": true,
+      "settings": true,
+      "loot": true
+    },
+    {
+      "token": true,
+      "tokenId": true,
+      "userId": true,
+      "cookie": true,
+      "settings": true,
+      "loot": true
+    },
+    {
+      "token": true,
+      "tokenId": true,
+      "userId": true,
+      "cookie": true,
+      "settings": true,
+      "loot": true
+    }
+  ],
   "resource_override_loader": "passed",
   "native": {
     "menu": true,
@@ -59,9 +85,13 @@
     "packet_history": true,
     "packet_removal": true,
     "self_angle_modes": true,
+    "native_clan_colors_and_cache": true,
+    "native_shot_matches_ilm_line": true,
+    "native_fast_loot_cadence": true,
+    "native_rejoin_identity": true,
     "mod_errors": []
   },
-  "finished_at": "2026-11-01T19:56:52.406Z",
+  "finished_at": "2026-11-01T22:36:04.916Z",
   "candidate_function_tests": {
     "status": "passed",
     "files": [
@@ -73,7 +103,7 @@
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 62,
+    "node_tests": 65,
     "python_tests": 26
   }
 }
