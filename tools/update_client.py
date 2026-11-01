@@ -150,7 +150,7 @@ def locked(state):
 
 def fingerprint(root):
     files = [p for p in (root / 'package-lock.json', root / 'package.json') if p.exists()]
-    for directory in ('mod', 'patches', 'vendor', 'tools', 'tests', 'recovery', 'baselines'):
+    for directory in ('mod', 'patches', 'vendor', 'tools', 'tests', 'recovery', 'baselines', 'resource-override'):
         files.extend(p for p in (root / directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix in ('.js', '.cjs', '.py', '.json', '.gz'))
     sha = hashlib.sha256()
     for file in sorted(set(files)):

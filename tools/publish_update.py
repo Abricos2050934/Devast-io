@@ -28,7 +28,10 @@ def artifacts(root, output):
         raise ValueError('Full current-mod checks have not passed')
     modules = {file: digest((root / file).read_bytes()) for file in validation['mod_contract']['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
-    public = dict(meta, publication='github', mod_bundle_sha256=validation['mod_bundle_sha256'])
+    override_name='Devast-io-GitHub-Resource-Override.json'
+    override_bytes=(root/'resource-override'/override_name).read_bytes()
+    if validation.get('resource_override_sha256') != digest(override_bytes): raise ValueError('Resource Override was not verified')
+    public = dict(meta, publication='github', mod_bundle_sha256=validation['mod_bundle_sha256'], resource_override_sha256=digest(override_bytes))
     encode = lambda value: (json.dumps(value, ensure_ascii=False, indent=2) + '\n').encode()
     text = '''# Devast-io: автоматически обновляемый клиент
 
@@ -47,9 +50,10 @@ verification.json содержит проверенную ревизию мод�
 '''.encode()
     entries = {'game.modded.js': body, 'current.json': encode(public), 'verification.json': encode(validation),
         'README.md': text, 'versions/' + release + '/game.modded.js': body}
+    entries[override_name]=override_bytes
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
-        for name in ['game.modded.js', 'current.json', 'verification.json', 'README.md']:
+        for name in ['game.modded.js', 'current.json', 'verification.json', 'README.md', override_name]:
             info=zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0)); info.compress_type=zipfile.ZIP_DEFLATED; info.external_attr=0o100644 << 16
             archive.writestr(info, entries[name])
     entries['Devast-io-client.zip'] = buffer.getvalue()

@@ -4,6 +4,9 @@ const acorn=require('./parser.cjs'),{hash}=require('./build_client.cjs'),{transl
 const {chromium}=require('playwright-core');
 const root=path.resolve(__dirname,'..'),dir=path.resolve(process.argv[2]||'');
 const read=f=>fs.readFileSync(path.join(dir,f),'utf8'),json=f=>JSON.parse(read(f));
+const overrideBytes=fs.readFileSync(path.join(root,'resource-override/Devast-io-GitHub-Resource-Override.json'));
+const override=JSON.parse(overrideBytes);
+assert.equal(override.v,1);assert.equal(override.data[0].rules[0].type,'fileOverride');
 const output=read('game.modded.js'),profile=json('profile.json'),symbols=json('bindings.json').symbols,roles=json('roles.json'),source=json('source.json');
 const contract=JSON.parse(fs.readFileSync(path.join(root,'mod/contract.json')));
 const moduleHashes=Object.fromEntries(contract.modules.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]));
@@ -34,15 +37,18 @@ const end=tree.body[0].expression.callee.body.end-1;
 edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']}};`});
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
 (async()=>{
- const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',ilm_core:'identical',mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
+ const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',ilm_core:'identical',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
  let browser;
  try{
   const executablePath=process.env.CHROMIUM_PATH||(fs.existsSync('/usr/bin/chromium')?'/usr/bin/chromium':chromium.executablePath());
   browser=await chromium.launch({executablePath,headless:true,env:{...process.env,HOME:process.env.DEVAST_BROWSER_HOME||'/tmp/devast-browser-home'},proxy:process.env.HTTPS_PROXY?{server:process.env.HTTPS_PROXY}:undefined,args:['--no-sandbox','--disable-dev-shm-usage']});
   const page=await browser.newPage({viewport:{width:1280,height:800}});page.on('pageerror',e=>report.page_errors.push(e.message.slice(0,250)));
   await page.route(source.page_url,r=>r.fulfill({status:200,contentType:'text/html',body:read('index.html')}));
-  await page.route(source.script_url,r=>r.fulfill({status:200,contentType:'text/javascript',body:code}));
+  await page.route(source.script_url,r=>r.fulfill({status:200,contentType:'text/javascript',body:override.data[0].rules[0].file}));
+  await page.route(url=>url.hostname==='raw.githubusercontent.com'&&url.pathname==='/Abricos2050934/Devast-io/updates/game.modded.js',r=>r.fulfill({status:200,contentType:'text/plain',headers:{'access-control-allow-origin':'*'},body:code}));
   await page.goto(source.page_url,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForFunction(()=>!!window.__updateProbe&&!!window.__devastMod?.menu,{timeout:25000});
+  assert.equal(await page.evaluate(()=>window.__devastRemoteLoader?.state),'loaded','Resource Override loader failed');
+  report.resource_override_loader='passed';
   report.native=await page.evaluate(({s,r})=>{
    const n=window.__updateProbe,m=window.__devastMod,w=n.world,players=w[s['ᴎ︃ᄉ']],self=w[s['ᅠᏧ‍']];
    const check=(v,message)=>{if(!v)throw Error(message);};

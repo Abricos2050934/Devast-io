@@ -12,6 +12,11 @@
 - [Версия и SHA256](https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/current.json)
 - [Автоматические запуски](https://github.com/Abricos2050934/Devast-io/actions/workflows/auto-update.yml)
 
+Для Resource Override: [скачать импортируемый JSON](https://github.com/Abricos2050934/Devast-io/raw/refs/heads/updates/Devast-io-GitHub-Resource-Override.json).
+[Установка](resource-override/README.md): импортировать, отключить прежнюю подмену,
+перезагрузить страницу. JSON загружает последний опубликованный JS по постоянной
+ссылке; заново импортировать его после обновлений не нужно.
+
 Полный файл заменяет основной игровой JS **до запуска игры**. Не выполняйте второй
 клиент поверх уже загруженного оригинала. Публичная ссылка остаётся постоянной;
 обновления попадают в неё только после проверок. Если изменился неизвестный контракт
