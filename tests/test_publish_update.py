@@ -26,3 +26,16 @@ class PublicationTests(unittest.TestCase):
  def test_corrupted_client_cannot_publish(self):
   (self.d/'game.modded.js').write_bytes(b'broken')
   with self.assertRaisesRegex(ValueError,'checksum'):p.artifacts(self.root,self.out)
+
+ def test_publication_keeps_immutable_versions_and_does_not_rewrite_unchanged_tree(self):
+  import subprocess
+  remote=self.root/'remote.git'
+  subprocess.run(['git','init','--quiet','--bare',str(remote)],check=True)
+  subprocess.run(['git','init','--quiet',str(self.root)],check=True)
+  subprocess.run(['git','remote','add','origin',str(remote)],cwd=self.root,check=True)
+  first=p.publish(self.root,{'game.modded.js':b'first','versions/first/game.modded.js':b'first'})
+  second=p.publish(self.root,{'game.modded.js':b'second','versions/second/game.modded.js':b'second'})
+  self.assertNotEqual(first,second)
+  old=subprocess.check_output(['git','show',second+':versions/first/game.modded.js'],cwd=self.root)
+  self.assertEqual(old,b'first')
+  self.assertEqual(p.publish(self.root,{'game.modded.js':b'second','versions/second/game.modded.js':b'second'}),second)

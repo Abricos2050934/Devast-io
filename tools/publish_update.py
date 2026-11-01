@@ -68,7 +68,7 @@ def publish(root, entries, branch='updates', remote='origin'):
     fd, index = tempfile.mkstemp(prefix='devast-publish-'); os.close(fd); os.unlink(index)
     env = dict(os.environ, GIT_INDEX_FILE=index)
     try:
-        git('read-tree', '--empty', env=env)
+        git('read-tree', parent, env=env) if parent else git('read-tree', '--empty', env=env)
         for name, data in sorted(entries.items()):
             blob = git('hash-object', '-w', '--stdin', data=data)
             git('update-index', '--add', '--cacheinfo', '100644', blob, name, env=env)
