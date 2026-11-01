@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "output_sha256": "8715a3a804b39471f5dc4b4e307a75605c0f99e56e33929d6a0adb29eae88085",
+  "static_ast": "passed",
+  "ilm_core": "identical",
+  "mod_contract": {
+    "schema": 1,
+    "name": "Devast-io ILM mod",
+    "modules": [
+      "mod/responsive.js",
+      "mod/bootstrap.js",
+      "mod/ilm-aim.js",
+      "vendor/dat.gui.recovered.js"
+    ],
+    "features": [
+      "ilm-aim",
+      "prediction-and-auto-fire",
+      "player-ghoul-history",
+      "native-nickname-id",
+      "native-self-angle",
+      "zoom",
+      "loot-and-filter",
+      "auto-build",
+      "container-take",
+      "cursor-interaction",
+      "chat",
+      "nickname-copy",
+      "rejoin-without-cookie-reset",
+      "hotkeys-and-settings",
+      "mines-and-building-opacity",
+      "function-indicators"
+    ],
+    "removed_overlays": [
+      "bottom-gauge-text",
+      "aim-bot-head-label"
+    ],
+    "candidate_tests": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs"
+    ]
+  },
+  "module_sha256": {
+    "mod/responsive.js": "487e83768268a77393b0971d5283a262b65589e14550caa87dc56b539dd72615",
+    "mod/bootstrap.js": "361466a2b61329b2b7b1bb1e48acc55b685b64493318fab3f7507857492e559c",
+    "mod/ilm-aim.js": "502a4285e26c66ea59046ebf5c54083d3d0d5d9422a7908ef8aeb6a8a8eaa632",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "mod_bundle_sha256": "db06419789b93aee9f2e172068d5d9bee6cbdf5c3a2cb71dc804e4ac68cf10f7",
+  "mode": "native browser fixtures; no live game session",
+  "page_errors": [],
+  "native": {
+    "menu": true,
+    "initial_metadata": true,
+    "head_and_leaderboard_labels": true,
+    "packet_history": true,
+    "packet_removal": true,
+    "self_angle_modes": true,
+    "mod_errors": []
+  },
+  "finished_at": "2026-11-01T19:05:14.974Z",
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs"
+    ]
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 57,
+    "python_tests": 24
+  }
+}
