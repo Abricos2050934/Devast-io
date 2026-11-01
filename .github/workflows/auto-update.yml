@@ -1,0 +1,59 @@
+name: Check game JS and build update
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '*/15 * * * *'
+
+# Publish only the fully verified current mod to the updates branch.
+permissions:
+  contents: write
+
+concurrency:
+  group: devast-auto-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts
+      - run: npx playwright-core install --with-deps chromium
+      - run: npm run build
+      - name: Restore local updater history
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .updater/http-cache
+            dist/auto-update
+          key: devast-updater-${{ github.run_id }}
+          restore-keys: devast-updater-
+      - run: npm run update:once
+      - name: Publish the verified client
+        run: python3 tools/publish_update.py
+      - name: Save verified versions for the next check
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            .updater/http-cache
+            dist/auto-update
+          key: devast-updater-${{ github.run_id }}
+      - name: Upload the local result for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: devast-auto-update
+          path: dist/auto-update/
+          if-no-files-found: ignore
+          retention-days: 14

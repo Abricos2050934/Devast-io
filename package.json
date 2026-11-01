@@ -1,0 +1,20 @@
+{
+  "name": "devast-io-recovery",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Recovery of the user-supplied historical modified client",
+  "scripts": {
+    "build": "node tools/build_client.cjs",
+    "check": "node tools/check_client.cjs",
+    "test": "python3 -m unittest discover -s tests -v && npm run check && node --test tests/*.test.cjs",
+    "update:once": "python3 tools/update_client.py once",
+    "update:watch": "python3 tools/update_client.py watch",
+    "update:status": "python3 tools/update_client.py status",
+    "update:serve": "python3 tools/update_client.py serve",
+    "update:rollback": "python3 tools/update_client.py rollback"
+  },
+  "devDependencies": {
+    "acorn": "8.15.0",
+    "playwright-core": "1.62.1"
+  }
+}

@@ -1,0 +1,110 @@
+// ILM 1.0 declarations from the supplied JSON; see recovery/ilm-aim-reference.json.gz.
+// Only dead decoder aliases were removed; native game adaptation lives outside the core.
+function __createIlmAim(settings, world, send) {
+const _0x2ea565=settings, _0x10898e=world, _0x4c996c=send;
+// BEGIN ORIGINAL ILM CORE
+class _0x3e2cd1{
+constructor(){
+this["players"]=Array["from"]({
+'length':0x79}
+,(_0x38ba4d,_0x36bec7)=>new _0x218077(_0x36bec7)),this["ghouls"]=Array['from']({
+'length':0x3e7}
+,(_0x58e32a,_0x3ea701)=>new _0x218077(_0x3ea701)),this['obstacles']=[],this["lines"]=[new _0x391c19(0.6,0x1,"#EEEEEE"),new _0x391c19(0.8,0x3,"#FF0000"),new _0x391c19(0.8,0x3,'#00FF00'),new _0x391c19(0.8,0x2,'#0000FF')],this['mousePosition']={
+'x':0x0,'y':0x0}
+,this['mouseMapCords']={
+'x':0x0,'y':0x0}
+,this["tappedForLast140mills"]=![],this["shifting"]=![],this['menuActive']=![],this["menuX"]=0x0,this["menuY"]=0x0,this["menuWidth"]=0x0,this['menuHeight']=0x0,this["lastId"]=0x0,this["myLastMoveDirection"]=0x0;
+}
+["getPlayerById"](_0x4a05d2){
+return this["players"][_0x4a05d2];
+}
+["getGhoulByUid"](_0x232cd5){
+return this["ghouls"][_0x232cd5];
+}
+["resetLines"](){
+this["lines"]["forEach"](_0x177dce=>_0x177dce["reset"]());
+}
+}
+
+class _0x218077{
+constructor(_0x3f7d89){
+this['id']=_0x3f7d89,this['x']=-0x1,this['y']=-0x1,this["prevX"]=Array(0x3)["fill"](-0x1),this["prevY"]=Array(0x3)["fill"](-0x1),this["active"]=![],this["weapon"]=-0x1,this['gear']=-0x1;
+}
+["update"](_0x16c549,_0x39f961){
+this["active"]=!![],this['prevX']=[this['x'],...this["prevX"]["slice"](0x0,0x2)],this["prevY"]=[this['y'],...this["prevY"]["slice"](0x0,0x2)],this['x']=_0x16c549,this['y']=_0x39f961;
+}
+["setInactive"](){
+this['x']=-0x1,this['y']=-0x1,this["prevX"]["fill"](-0x1),this["prevY"]["fill"](-0x1),this["active"]=![],_0x6cc5f2['resetLines']();
+}
+}
+
+class _0x4b5d6f{
+constructor(){
+this["lastAngle"]=0x0,this["targetPlayer"]=null;
+}
+["wannaFire"](_0x51d67e=this["targetPlayer"]){
+if(!_0x51d67e)return![];
+const [_0x4c3eaf,_0x4d399f,_0x54230e]=_0x51d67e['prevX'],[_0x440651,_0x3f96,_0x2d4ab1]=_0x51d67e["prevY"];
+return _0x51d67e['x']-_0x4c3eaf>0x0!==_0x4c3eaf-_0x4d399f>0x0||_0x51d67e['y']-_0x440651>0x0!==_0x440651-_0x3f96>0x0;
+}
+['resolve'](){
+const _0x302a15=_0x6cc5f2['getPlayerById'](_0x10898e['PLAYER']['id']);
+let _0x32f84a;
+_0x2ea565["lockId"]>-0x1?_0x32f84a=_0x6cc5f2["getPlayerById"](_0x2ea565["lockId"]):_0x32f84a=_0x2ea565["mouseFovEnable"]?this["findNearestPlayerTo"](_0x6cc5f2["mouseMapCords"],_0x2ea565["mouseFov"]):this['findNearestPlayerTo'](_0x302a15,0x9c4);
+this["targetPlayer"]=_0x32f84a;
+if(!_0x32f84a)return this["lastAngle"];
+const _0x294d42=Math["hypot"](_0x302a15['x']-_0x32f84a['x'],_0x302a15['y']-_0x32f84a['y']),_0x545191=_0x294d42/_0x2ea565["distanceCoefficient"]+_0x2ea565['offsetCoefficient'],_0x116788=_0x32f84a["prevX"][0x0]===-0x1?_0x32f84a['x']:_0x32f84a['x']+_0x545191*(_0x32f84a['x']-_0x32f84a["prevX"][0x0]),_0x5af3a6=_0x32f84a['prevY'][0x0]===-0x1?_0x32f84a['y']:_0x32f84a['y']+_0x545191*(_0x32f84a['y']-_0x32f84a['prevY'][0x0]),_0x3f6465=Math["atan2"](_0x5af3a6-_0x302a15['y'],_0x116788-_0x302a15['x'])*(0xb4/Math['PI']);
+return this['lastAngle']=_0x3f6465,_0x2ea565["visualizeResolving"]&&_0x6cc5f2['lines'][0x0]["reset"](_0x302a15['x'],_0x302a15['y'],_0x116788,_0x5af3a6),Math['round'](_0x3f6465);
+}
+["findNearestPlayerTo"](_0x1b0ea4,_0x27daba){
+let _0x54dddc=null,_0x3dfe2b=_0x27daba;
+const _0x44dc5a=_0x4d9bd2=>{
+for(let _0x53f889 of _0x4d9bd2){
+if(_0x53f889['active']&&_0x53f889['id']!==_0x10898e['PLAYER']['id']&&(_0x10898e["players"][_0x53f889['id']]["team"]!==_0x10898e["PLAYER"]["team"]||_0x10898e["PLAYER"]["team"]===-0x1)){
+const _0xed1853=Math['hypot'](_0x1b0ea4['x']-_0x53f889['x'],_0x1b0ea4['y']-_0x53f889['y']);
+_0xed1853<_0x3dfe2b&&(_0x54dddc=_0x53f889,_0x3dfe2b=_0xed1853);
+}
+}
+}
+;
+return(_0x2ea565["target"]==='players'||_0x2ea565["target"]==='all')&&_0x44dc5a(_0x6cc5f2["players"]),(_0x2ea565["target"]==="ghouls"||_0x2ea565["target"]==="all")&&_0x44dc5a(_0x6cc5f2["ghouls"]),_0x54dddc;
+}
+}
+
+class _0x391c19{
+constructor(_0x4c599e,_0x14ea80,_0x57b06a){
+this['x1']=-0xa,this['x2']=-0xa,this['y1']=-0xa,this['y2']=-0xa,this["alpha"]=_0x4c599e,this["width"]=_0x14ea80,this["color"]=_0x57b06a;
+}
+["reset"](_0x4a15e2,_0x2d9e21,_0x3151bb,_0x340401){
+this['x1']=_0x4a15e2,this['y1']=_0x2d9e21,this['x2']=_0x3151bb,this['y2']=_0x340401;
+}
+}
+
+function _0x4a7389(){
+if(_0x10898e["PLAYER"]['id']===0x0){
+if(_0x6cc5f2["lastId"]!==0x0){
+_0x6cc5f2["lastId"]=0x0;
+for(let _0x2b8de3 of _0x6cc5f2["players"])_0x2b8de3["setInactive"]();
+}
+return;
+}
+_0x6cc5f2["lastId"]=_0x10898e["PLAYER"]['id'],_0x2ea565["AimBotEnabled"]&&(_0x4c996c([0x6,_0x41e779["resolve"]()]),_0x2ea565["autoFire"]&&_0x41e779["wannaFire"]()&&(_0x4c996c([0x4]),_0x4c996c([0x5])));
+}
+
+// END ORIGINAL ILM CORE
+const _0x6cc5f2=new _0x3e2cd1(), _0x41e779=new _0x4b5d6f();
+return {targets:_0x6cc5f2,aim:_0x41e779,tick:_0x4a7389,Target:_0x218077};
+}
+
+// Keep the native zero sentinel for unused player slots. Decorate raw server names only.
+function __ilmPlayerNickname(value,id) {
+  return typeof value==='string' ? value+'#'+id : value;
+}
+
+// The current game's metadata constructor is in a native decoded block.
+// Match one reviewed assignment; preserve the native numeric empty-slot sentinel.
+function __ilmPatchPlayerMetadata(source) {
+  const before='this.ο३︀ = ο३︀';
+  if(source.split(before).length!==2) throw new Error('Unsupported native player metadata constructor');
+  return source.replace(before,'this.ο३︀ = __ilmPlayerNickname(ο३︀,ᴘ५٢)');
+}

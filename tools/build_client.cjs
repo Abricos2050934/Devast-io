@@ -1,0 +1,43 @@
+// Applies reviewed, uniquely matched patches to an immutable current-game baseline.
+const fs = require('node:fs'), path = require('node:path'), zlib = require('node:zlib');
+const crypto = require('node:crypto'), acorn = require('./parser.cjs');
+const {translate} = require('./translate_payload.cjs');
+const root = path.resolve(__dirname, '..');
+const hash = b => crypto.createHash('sha256').update(b).digest('hex');
+function once(source, before, after, id) {
+  if (!before || source.split(before).length !== 2) throw Error('Expected exactly one anchor: '+id);
+  return source.replace(before, () => after);
+}
+function assemble(baseline, profile, symbols, payload, bootstrap, gui, aim = '') {
+  if (hash(baseline) !== profile.baseline_sha256) throw Error('Unsupported baseline; remapping required');
+  let source = baseline.toString('utf8');
+  for (const op of profile.operations) {
+    if (op.expected !== 1) throw Error('Invalid patch match count');
+    source = once(source, op.before, op.after, op.id);
+  }
+  const additions = gui+'\n'+aim+'\n'+translate(payload,symbols)+'\n'+translate(bootstrap,symbols)+'\n';
+  source = once(source,profile.bootstrap_anchor,additions+profile.bootstrap_anchor,'bootstrap');
+  source = once(source,profile.guard_anchor,profile.guard_anchor+
+    'if(window.__devastClientLoaded)return;window.__devastClientLoaded=true;', 'double-load guard');
+  acorn.parse(source,{ecmaVersion:'latest',sourceType:'script'});
+  return source;
+}
+function build() {
+  const baseline = zlib.gunzipSync(fs.readFileSync(path.join(root,'baselines/current.js.gz')));
+  const profile = JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json')));
+  const bindings = JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-bindings.json')));
+  const read = file => fs.readFileSync(path.join(root,file),'utf8');
+  const source = assemble(baseline,profile,bindings.symbols,read('mod/responsive.js'),read('mod/bootstrap.js'),read('vendor/dat.gui.recovered.js'),read('mod/ilm-aim.js'));
+  const status = {status:'static_checks_passed',source_url:profile.source_url,
+    baseline_sha256:profile.baseline_sha256,output_sha256:hash(source),output_bytes:Buffer.byteLength(source),
+    applied_patches:profile.operations.map(p=>p.id),live_server_test:'see build/browser-report.json',publication:'not_published'};
+  const dist = path.join(root,'dist');fs.mkdirSync(dist,{recursive:true});
+  // All transformations and parsing finish before either existing artifact is replaced.
+  fs.writeFileSync(path.join(dist,'game.modded.js.tmp'),source);
+  fs.writeFileSync(path.join(dist,'update-status.json.tmp'),JSON.stringify(status,null,2)+'\n');
+  fs.renameSync(path.join(dist,'game.modded.js.tmp'),path.join(dist,'game.modded.js'));
+  fs.renameSync(path.join(dist,'update-status.json.tmp'),path.join(dist,'update-status.json'));
+  console.log(JSON.stringify(status,null,2));
+}
+if(require.main===module) build();
+module.exports={assemble,once,hash};

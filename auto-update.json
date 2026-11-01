@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "page_url": "https://devast.io/",
+  "allowed_hosts": ["devast.io", "www.devast.io"],
+  "poll_seconds": 300,
+  "timeout_seconds": 30,
+  "retries": 2,
+  "max_html_bytes": 2097152,
+  "max_script_bytes": 16777216,
+  "max_candidates": 6,
+  "output_dir": "dist/auto-update",
+  "state_dir": ".updater"
+}
