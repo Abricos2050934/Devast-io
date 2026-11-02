@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "963e42a1ad12cb676accf262d22bb49172c4b8c4e121e63d4c8c19f3da952fcf",
+  "output_sha256": "59f19e7ca6b1776c31f720860c763edcf3ff1783acf4252bc0fa2b8ba1a22311",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -39,16 +39,17 @@
     "candidate_tests": [
       "tests/mod.test.cjs",
       "tests/aim-settings.test.cjs",
-      "tests/mod-performance.test.cjs"
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs"
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "c7192ea0db794ef4d7979cb06b73103a57b1f7cb24b702ef9a26248917fb4226",
-    "mod/bootstrap.js": "3ca2770f7e33352cc113cb58616237aa4db6ddb0595d2fe0cd7766b14a629e63",
-    "mod/ilm-aim.js": "502a4285e26c66ea59046ebf5c54083d3d0d5d9422a7908ef8aeb6a8a8eaa632",
+    "mod/responsive.js": "5042864b7069f349adc02ec8bb37832e53c5c4bef9e01656518e11494004f0d6",
+    "mod/bootstrap.js": "0fa5ec6348474e483378c05f64c3a860631f43f5f70e5b475d97d7a9ca6a196f",
+    "mod/ilm-aim.js": "fd823041ace4981a96af3feb2f55c63836573d33b11821ab6610eaf857baa3da",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "6459c4ea89d401d7872db430930e2e6d4a6aeba578a1824d84fd4114941d2f35",
+  "mod_bundle_sha256": "e1a4823a26b8d896a59447f6e89f659449b6c9337b04da603c7a7534f409170e",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "reload_identity": [
@@ -87,23 +88,26 @@
     "self_angle_modes": true,
     "native_clan_colors_and_cache": true,
     "native_shot_matches_ilm_line": true,
+    "ilm_manual_fire_cadence": true,
+    "disconnect_preserves_aim_history": true,
     "native_fast_loot_cadence": true,
     "native_rejoin_identity": true,
     "mod_errors": []
   },
-  "finished_at": "2026-11-01T22:36:04.916Z",
+  "finished_at": "2026-11-02T07:32:07.832Z",
   "candidate_function_tests": {
     "status": "passed",
     "files": [
       "tests/mod.test.cjs",
       "tests/aim-settings.test.cjs",
-      "tests/mod-performance.test.cjs"
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 65,
+    "node_tests": 69,
     "python_tests": 26
   }
 }
