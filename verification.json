@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "bab6756659e97f3d7ef7051a2cb5dd916d25f87cb6944020472afcdb157a15d4",
+  "output_sha256": "9add8a360db8eae7eb347734d087d03430d8cc1637c91c4a447f7b2969019231",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -30,7 +30,8 @@
       "rejoin-without-cookie-reset",
       "hotkeys-and-settings",
       "mines-and-building-opacity",
-      "function-indicators"
+      "function-indicators",
+      "jitter-with-shot-priority"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -43,16 +44,17 @@
       "tests/ilm-parity.test.cjs",
       "tests/rejoin-recovery.test.cjs",
       "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
       "tests/player-labels.test.cjs"
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "b1abbe3c3e2b3019f245d35e3d28f2ad6484bd8687625a92c5e105f741b9995a",
+    "mod/responsive.js": "d3ce16b644110f01c74b4ca3e59415e1ba92895a4d3457e3a0ab887f57ca6944",
     "mod/bootstrap.js": "1631e444b28954e506f3f9d1a87f7630140ca460e3c8371c34d3e30754ad7255",
-    "mod/ilm-aim.js": "fd823041ace4981a96af3feb2f55c63836573d33b11821ab6610eaf857baa3da",
+    "mod/ilm-aim.js": "f85c9ffda1daf32bf3a6c755c285a4e6661de513727686fa57f094bd0a5b7863",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "8f5d7882fb326eceb1375941703470ccbebab3e7cde6d61fa89b8e1ce1bbda64",
+  "mod_bundle_sha256": "68539e80782bd90a3d232f9956739386e93b1c42329576fdfb44a1fe6ccf8b88",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "external_dependencies": {
@@ -97,6 +99,7 @@
     "native_nickname_color_and_cache": true,
     "full_player_list_and_native_lifecycle": true,
     "native_shot_matches_ilm_line": true,
+    "jitter_rotation_and_shot_priority": true,
     "ilm_manual_fire_cadence": true,
     "disconnect_preserves_aim_history": true,
     "native_fast_loot_cadence": true,
@@ -106,7 +109,7 @@
     "native_death_observation": true,
     "mod_errors": []
   },
-  "finished_at": "2026-11-02T12:43:55.582Z",
+  "finished_at": "2026-11-02T14:47:26.706Z",
   "candidate_function_tests": {
     "status": "passed",
     "files": [
@@ -116,13 +119,14 @@
       "tests/ilm-parity.test.cjs",
       "tests/rejoin-recovery.test.cjs",
       "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
       "tests/player-labels.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 100,
+    "node_tests": 106,
     "python_tests": 26
   }
 }
