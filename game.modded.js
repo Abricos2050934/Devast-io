@@ -986,7 +986,7 @@ function __installDevastMod(B) {
   Aimbot.refresh = () => {
     if (stopped) return;
     aimSnapshot(()=>ilm.tick());
-    updateJitter(performance.now());
+    updateJitter(performance.now(),true);
   };
   const _players_list = [];
   const removers = [];
@@ -996,8 +996,16 @@ function __installDevastMod(B) {
     frames: 0,
     errors: [],
     commands: 0,
-    deduplicatedAngles: 0
+    deduplicatedAngles: 0,
+    commandsByOpcode:Object.create(null)
   };
+  const frameGaps=new Array(120);
+  let frameGapIndex=0,frameGapCount=0,previousAnimationFrame=null;
+  function animationTiming() {
+    const gaps=frameGaps.slice(0,frameGapCount).sort((a,b)=>a-b);
+    const mean=gaps.length?gaps.reduce((sum,gap)=>sum+gap,0)/gaps.length:0;
+    return {samples:gaps.length,meanGapMs:Math.round(mean*100)/100,p95GapMs:gaps.length?Math.round(gaps[Math.floor((gaps.length-1)*.95)]*100)/100:null,fpsEstimate:mean>0?Math.round(1000/mean):null,hidden:!!document.hidden};
+  }
   const recentCombatCommands = [], connectionEvents = [];
   function combatCommands(now = performance.now()) {
     while (recentCombatCommands.length && now - recentCombatCommands[0].at > 2000) recentCombatCommands.shift();
@@ -1060,6 +1068,7 @@ function __installDevastMod(B) {
     return copyText(name);
   }
   let previousPlayer = 0, records = [], mouse = null;
+  const collectedRecords=records, entityRecords=new WeakMap();
   const functionRows = new Map();
   // Column order matches the compact status list in the supplied screenshot.
   const functionLabels = [
@@ -1100,21 +1109,20 @@ function __installDevastMod(B) {
     }
     if (packet[0] === 6) lastSentAngle = packet[1];
     diagnostics.commands++;
+    diagnostics.commandsByOpcode[packet[0]]=(diagnostics.commandsByOpcode[packet[0]]||0)+1;
     return true;
   }
-  const jitter = {angle:0,updatedAt:null,lastSentAt:-Infinity,fireUntil:-Infinity,spinning:false,savedInput:null};
+  const jitter = {angle:0,updatedAt:null,lastSentAt:-Infinity,fireUntil:-Infinity,spinning:false,deferredDirections:0};
   function jitterAiming() {
     return MOD.AimBotEnabled && (Aimbot.mouseDown || performance.now() < jitter.fireUntil ||
       (MOD.autoFire && Aimbot.targetPlayer?.active && Aimbot.wannaFire()));
   }
   function stopJitter() {
-    if (jitter.spinning && B.input && jitter.savedInput !== null) B.input.angle = jitter.savedInput;
     jitter.spinning = false;
     jitter.updatedAt = null;
-    jitter.savedInput = null;
     jitter.lastSentAt = -Infinity;
   }
-  function updateJitter(now) {
+  function updateJitter(now, sendDirection=false) {
     if (!MOD.JitterEnabled || !playing() || Aimbot.mouseDown || now < jitter.fireUntil || jitterAiming() || B.chatActive?.()) {
       stopJitter();
       return;
@@ -1122,14 +1130,18 @@ function __installDevastMod(B) {
     if (jitter.updatedAt === null) {
       jitter.angle = ((B.input?.angle || 0) * 180 / Math.PI % 360 + 360) % 360;
       jitter.updatedAt = now;
-      jitter.savedInput = B.input?.angle ?? null;
     }
-    jitter.angle = (jitter.angle + Math.max(0,now - jitter.updatedAt) * MOD.JitterSpeed / 1000) % 360;
-    jitter.updatedAt = now;
+    const visualNow=Math.max(now,jitter.updatedAt);
+    jitter.angle = (jitter.angle + (visualNow - jitter.updatedAt) * MOD.JitterSpeed / 1000) % 360;
+    jitter.updatedAt = visualNow;
     jitter.spinning = true;
-    if (B.input) B.input.angle = jitter.angle * Math.PI / 180;
-    // Rendering is smooth; send at most one direction per ILM tick period.
-    if (now - jitter.lastSentAt >= 50) {
+    // Private visual angle never changes the native mouse/movement input.
+    // Only the 50 ms timer sends idle rotation; RAF cannot enqueue directions.
+    if (sendDirection && now - jitter.lastSentAt >= 50) {
+      if (connectionSocket && (connectionSocket.readyState!==1 || connectionSocket.bufferedAmount>0)) {
+        jitter.deferredDirections++;
+        return;
+      }
       __send([6,jitter.angle]);
       jitter.lastSentAt = now;
     }
@@ -1278,19 +1290,22 @@ function __installDevastMod(B) {
     }
   }
   function collect() {
-    const result = [];
+    let count=0;
     for (let type = 0; type < B.entities.border.length; type++) {
       const border = B.entities.border[type], group = B.entities.ܐރ٠[type];
       if (!border || !group) continue;
       for (let i = 0; i < border.border; i++) {
         const e = group[border.ᴎсࡄ[i]];
-        if (e && e.ѕа๓ === 0 && Number.isFinite(e.x) && Number.isFinite(e.y)) result.push({
-          type,
-          e
-        });
+        if (e && e.ѕа๓ === 0 && Number.isFinite(e.x) && Number.isFinite(e.y)) {
+          let record=entityRecords.get(e);
+          if (!record) {record={type,e};entityRecords.set(e,record);}
+          else record.type=type;
+          collectedRecords[count++]=record;
+        }
       }
     }
-    return result;
+    collectedRecords.length=count;
+    return collectedRecords;
   }
   function updateTargets() {
     for (const {type, e} of records) if (type === B.categories.player && playerMeta(e.ρ͏१) && typeof playerMeta(e.ρ͏१).ο३︀ === 'string') _players_list[e.ρ͏१] = playerMeta(e.ρ͏१).ο३︀;
@@ -1657,6 +1672,10 @@ function __installDevastMod(B) {
       adWaiting:!!B.adWaiting?.(),socketState:connectionSocket?.readyState ?? null,
       socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
       combatNow:combatCommands(),
+      animationTiming:animationTiming(),
+      modCommandsByOpcode:{...diagnostics.commandsByOpcode},
+      automationSettings:{autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled},
+      jitterTransport:{deferredDirections:jitter.deferredDirections,rateLimitHz:20},
       aimSettings:{enabled:MOD.AimBotEnabled,autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,commandsInLast2s:{...event.commandsInLast2s}}))};
@@ -1997,7 +2016,7 @@ function __installDevastMod(B) {
       Aimbot.mouseDown = false;
       if (previousPlayer) {
         previousPlayer = 0;
-        records = [];
+        records.length = 0;
         _players_list.length = 0;
       }
       chatState.status = MOD.SpamChatEnabled ? 'Waiting for game' : 'Off';
@@ -2024,6 +2043,15 @@ function __installDevastMod(B) {
   }
   function tick(now) {
     if (stopped) return;
+    if (document.hidden) previousAnimationFrame=null;
+    else if (Number.isFinite(now)) {
+      if (previousAnimationFrame!==null && now>previousAnimationFrame) {
+        frameGaps[frameGapIndex]=now-previousAnimationFrame;
+        frameGapIndex=(frameGapIndex+1)%frameGaps.length;
+        frameGapCount=Math.min(frameGapCount+1,frameGaps.length);
+      }
+      previousAnimationFrame=now;
+    }
     if (now - lastStep >= 16) {
       lastStep = now;
       try {
