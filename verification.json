@@ -101,7 +101,7 @@
     "native_death_observation": true,
     "mod_errors": []
   },
-  "finished_at": "2026-11-02T10:08:59.098Z",
+  "finished_at": "2026-11-02T10:05:26.563Z",
   "candidate_function_tests": {
     "status": "passed",
     "files": [
