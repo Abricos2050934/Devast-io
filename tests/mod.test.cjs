@@ -151,11 +151,11 @@ test('ILM auto fire repeats on each 50 ms tick while direction-change history re
  assert.equal(f.packets.filter(p=>p[0]===4).length,2);assert.equal(f.packets.filter(p=>p[0]===5).length,2);f.mod.dispose();
 });
 
-test('build and container take send only when enabled, with native permission flags and nonempty slots',()=>{
- const f=fixture();Object.assign(f.world['ᅠᏧ‍'],{'ε︁ᚂ':1,'օⲥᚁ':1,'α०ᚂ':3,'ρⲅ️':4,'ᴎ︆ࡉ':5,'ᴉᄁ͏':1,'ᴘϲ๓':[[0],[6,1],[7,2]],'ᅠܓ̃':3});
- f.mod.setSetting('AutoBuiledEnabled',true);f.mod.setSetting('AutoTakeEnabled',true);f.mod.aim.mouseDown=true;f.mod.step(0);f.mod.step(200);
- assert.ok(f.packets.some(p=>JSON.stringify(p)==='[14,3,4,5]'));assert.deepEqual(f.packets.filter(p=>p[0]===27),[[27,1]]);
- f.mod.setSetting('AutoBuiledEnabled',false);f.mod.setSetting('AutoTakeEnabled',false);const count=f.packets.length;f.mod.step(500);assert.equal(f.packets.length,count);f.mod.dispose();
+test('container take sends only when enabled, with native permission flags and nonempty slots',()=>{
+ const f=fixture();Object.assign(f.world['ᅠᏧ‍'],{'ᴉᄁ͏':1,'ᴘϲ๓':[[0],[6,1],[7,2]],'ᅠܓ̃':3});
+ f.mod.setSetting('AutoTakeEnabled',true);f.mod.aim.mouseDown=true;f.mod.step(0);f.mod.step(200);
+ assert.deepEqual(f.packets.filter(p=>p[0]===27),[[27,1]]);
+ f.mod.setSetting('AutoTakeEnabled',false);const count=f.packets.length;f.mod.step(500);assert.equal(f.packets.length,count);f.mod.dispose();
 });
 
 test('cursor interaction uses camera coordinates and requires the native eligible target; never fakes a door state',()=>{

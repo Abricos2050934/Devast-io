@@ -956,7 +956,7 @@ function __installDevastMod(B) {
     connectionEvent('server-death',details);
   }
   let overlay, overlayHost, ctx, menu, functionList, zoomControl, nextFrame, stopped = false, waitingKey = null;
-  let lastStep = -Infinity, lastLoot = -Infinity, lastBuild = -Infinity;
+  let lastStep = -Infinity, lastLoot = -Infinity;
   let lastTake = -Infinity, lastKeepAlive = -Infinity, lastChat = -Infinity, nextChatAt = -Infinity;
   const chatState = {
     status: 'Off',
@@ -1171,13 +1171,6 @@ function __installDevastMod(B) {
       loot.sort((a, b) => (a.e.x - me.x) ** 2 + (a.e.y - me.y) ** 2 - ((b.e.x - me.x) ** 2 + (b.e.y - me.y) ** 2));
       for (const {e} of loot.slice(0, 1)) __send([12, e.id]);
     }
-    if (MOD.AutoBuiledEnabled && me.ρ̠︉ === 1 && me.ࡀࡁܝ === 1 && now - lastBuild >= 120) {
-      const packet = [14, me.οކᚁ, me.ㅤ̢︋, me.ᴎ๖օ];
-      if (packet.every(Number.isFinite)) {
-        __send(packet);
-        lastBuild = now;
-      }
-    }
     if (MOD.AutoTakeEnabled && Aimbot.mouseDown && me.ㅤރ̴ === 1 && now - lastTake >= 200) {
       const slots = me.Ꮷ๗ᄆ, count = me.а︃̘;
       if (Array.isArray(slots) && Number.isInteger(count)) {
@@ -1191,6 +1184,13 @@ function __installDevastMod(B) {
       lastKeepAlive = now;
     }
     updateChat(now);
+  }
+  // ILM's native render hook builds with rotation zero at the player's position.
+  // Keep its y/x order and fractional tile coordinates; the native codec owns encoding.
+  function autoBuildFrame() {
+    if (B.network.state === 1) {
+      MOD.AutoBuiledEnabled && __send([14,0,B.world.і३α.y/100,B.world.і३α.x/100]);
+    }
   }
   function updateChat(now) {
     if (!MOD.SpamChatEnabled) {
@@ -1749,11 +1749,12 @@ function __installDevastMod(B) {
     if (previousPlayer !== B.world.і३α.id) {
       lastSentAngle = null;
       previousPlayer = B.world.і३α.id;
-      lastLoot = lastBuild = lastTake = now;
+      lastLoot = lastTake = now;
       lastChat = nextChatAt = -Infinity;
       lastKeepAlive = now;
     }
     if (!B.synchronizedRender) {
+      autoBuildFrame();
       records = collect();
       updateTargets();
       updateMouse();
@@ -1895,7 +1896,8 @@ function __installDevastMod(B) {
       Reset: () => setSetting('zoomFactor', 1)
     }, 'Reset');
     const automation = menu.addFolder('Automation');
-    for (const key of ['SAutoLootEnabled', 'FAutoLootEnabled', 'LootDataEnabled', 'AutoBuiledEnabled', 'AutoTakeEnabled', 'AntiKickEnabled', 'OpenEverythingByClick']) add(automation, key);
+    for (const key of ['SAutoLootEnabled', 'FAutoLootEnabled', 'LootDataEnabled', 'AutoTakeEnabled', 'AntiKickEnabled', 'OpenEverythingByClick']) add(automation, key);
+    add(automation,'AutoBuiledEnabled','AutoBuild').domElement.title = 'Как в ILM: выбранная постройка под персонажем, поворот 0.';
     const filter = automation.addFolder('Loot filter');
     for (const [name, item] of Object.entries(LootData)) filter.add(item, 'acquire').name(name).onChange(persist);
     const keys = menu.addFolder('Keyboard');
@@ -2034,6 +2036,7 @@ function __installDevastMod(B) {
       if (stopped) return;
       try {
         if (B.synchronizedRender && playing()) {
+          autoBuildFrame();
           records = collect();
           updateTargets();
           updateMouse();

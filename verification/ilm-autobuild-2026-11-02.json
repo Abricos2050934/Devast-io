@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "checked_at": "2026-11-02T10:28:27.299402+00:00",
+  "status": "passed",
+  "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+  "official_js_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+  "release": "bd415c94452638c5331ee43f2dc891e543a9ae46ac0d34660fa5dd36c2aa266b",
+  "client_sha256": "6b3239731abf7ab4950a26b2965550e5772a8e1bb74318075794f0253ac2caec",
+  "canonical_sha256": "462017eab5a2f5afff1e2c7f02deb3f674fc15044f88944fbcea9d98017b46dc",
+  "autobuild": {
+    "original_owner": "_0xeb562b",
+    "original_statement": "_0x2ea565[\"AutoBuiledEnabled\"]&&_0x2e4a2b[\"SendWsMessage\"]([0xe,0x0,_0x10898e['PLAYER']['y']/0x64,_0x10898e[\"PLAYER\"]['x']/0x64]);",
+    "original_render_function_sha256": "555ab24338b43102c7a5bd9552b7a52eeb32b63306bfa320e7fccf2f496fc0d3",
+    "packet": [
+      14,
+      0,
+      "PLAYER.y / 100",
+      "PLAYER.x / 100"
+    ],
+    "second_field": "building rotation, fixed to zero by original ILM; not an inventory slot",
+    "building_selection": "Native game selection is retained, as in ILM.",
+    "cadence": "Every active native world render frame; no 120 ms throttle; no extra RAF sender",
+    "preview_permission_requirement": false,
+    "cursor_preview_coordinates_used": false,
+    "fractional_coordinates_preserved_before_native_encoding": true,
+    "gui": "Automation -> AutoBuild",
+    "default_key": "KeyB",
+    "tests": {
+      "file": "tests/ilm-autobuild.test.cjs",
+      "cases": 6,
+      "deterministic_trace_frames": 240,
+      "cadence_frames_compared": 121,
+      "native_browser_codec_entry_packets": "passed"
+    }
+  },
+  "aim": {
+    "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+    "core_sha256": "fd823041ace4981a96af3feb2f55c63836573d33b11821ab6610eaf857baa3da",
+    "declarations": [
+      "_0x3e2cd1",
+      "_0x218077",
+      "_0x4b5d6f",
+      "_0x391c19",
+      "_0x4a7389"
+    ],
+    "classes": 4,
+    "methods_including_constructors": 13,
+    "tick_functions": 1,
+    "removed_unused_decoder_aliases": 14,
+    "ast_parity": "exact_after_dead_decoder_alias_removal",
+    "behavioral_tests": {
+      "original_core_scenes": 180,
+      "ticks_per_core_scene": 6,
+      "installed_mod_traces": 36,
+      "events_per_trace": 60,
+      "settings_and_native_angle_tests": "passed"
+    },
+    "native_shot_matches_ilm_line": true,
+    "manual_fire_cadence": true
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 93,
+    "python_tests": 26
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs"
+    ]
+  },
+  "limitations": [
+    "Autobuild was verified against the isolated original ILM statement and current native browser objects/codec entry; live placement with materials was not independently tested.",
+    "Native codec and symbols are adapted to the current game; invalid or disconnected sessions do not send gameplay commands.",
+    "No claim of resolving the previously reported server death is made by this change."
+  ]
+}

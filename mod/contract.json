@@ -34,6 +34,7 @@
     "tests/aim-settings.test.cjs",
     "tests/mod-performance.test.cjs",
     "tests/ilm-parity.test.cjs",
-    "tests/rejoin-recovery.test.cjs"
+    "tests/rejoin-recovery.test.cjs",
+    "tests/ilm-autobuild.test.cjs"
   ]
 }
