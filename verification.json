@@ -96,7 +96,7 @@
     "native_ad_failure_recovery": true,
     "mod_errors": []
   },
-  "finished_at": "2026-11-02T09:14:04.663Z",
+  "finished_at": "2026-11-02T09:26:42.605Z",
   "candidate_function_tests": {
     "status": "passed",
     "files": [
