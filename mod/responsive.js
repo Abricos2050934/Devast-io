@@ -19,6 +19,7 @@ function __installDevastMod(B) {
       this.AimBotEnabled = false;
       this.JitterEnabled = false;
       this.JitterSpeed = 360;
+      this.JitterKey = "KeyJ";
       this.mouseFovEnable = true;
       this.distanceCoefficient = 300;
       this.bulletSpeedCoefficient = 4;
@@ -66,7 +67,7 @@ function __installDevastMod(B) {
   const defaults = JSON.parse(JSON.stringify(MOD));
   const SAVE = 'DevastILM:settings:v3', LEGACY_SAVE = 'BestModMenuConfig';
   const transient = new Set(['Token', 'token', 'tokenId', 'userId']);
-  const keySettings = ['AimbotKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey'];
+  const keySettings = ['AimbotKey','JitterKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey'];
   const limits = {JitterSpeed:[1,3600],mouseFov:[1,20000],lockId:[-1,65535],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],bulletSpeedCoefficient:[1,15],zoomFactor:[.33,2],Xraytransparency:[.05,1]};
   const choices = {target:['players','ghouls','all'],ShowRealAngles:['always','withAim']};
   function validateSetting(key,value) {
@@ -1788,6 +1789,7 @@ function __installDevastMod(B) {
     if (e.repeat || t && (t.isContentEditable || (/^(INPUT|TEXTAREA|SELECT)$/).test(t.tagName)) || B.chatActive && B.chatActive()) return;
     const bindings = {
       AimbotKey: 'AimBotEnabled',
+      JitterKey: 'JitterEnabled',
       AutoBuiledKey: 'AutoBuiledEnabled',
       SAutoLootKey: 'SAutoLootEnabled',
       FAutoLootKey: 'FAutoLootEnabled',
@@ -1898,7 +1900,7 @@ function __installDevastMod(B) {
     const filter = automation.addFolder('Loot filter');
     for (const [name, item] of Object.entries(LootData)) filter.add(item, 'acquire').name(name).onChange(persist);
     const keys = menu.addFolder('Keyboard');
-    for (const key of ['AimbotKey', 'AutoBuiledKey', 'SAutoLootKey', 'FAutoLootKey', 'AutoTakeKey', 'XrayKey', 'PlayersListKey', 'ModMenuKey']) {
+    for (const key of ['AimbotKey', 'JitterKey', 'AutoBuiledKey', 'SAutoLootKey', 'FAutoLootKey', 'AutoTakeKey', 'XrayKey', 'PlayersListKey', 'ModMenuKey']) {
       const c = keys.add(MOD, key), input = c.domElement.querySelector('input');
       input.readOnly = true;
       listen(input, "click", () => {

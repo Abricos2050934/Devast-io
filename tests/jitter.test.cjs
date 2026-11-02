@@ -64,3 +64,23 @@ test('Jitter autoFire gives a turning target the ILM angle, and a missing target
   f.mod.aim.mouseDown=true;f.packets.length=0;f.mod.aim.refresh();assert.equal(f.packets.length,0);
  }finally{f.mod.dispose();}
 });
+test('J toggles Jitter, ignores typing/repeats, and its Keyboard binding can be reassigned and saved',()=>{
+ const f=setup();try{
+  assert.equal(f.mod.settings.JitterKey,'KeyJ');
+  const press=[...f.listeners.get('keydown')][0];
+  press({code:'KeyJ',target:{tagName:'INPUT'}});press({code:'KeyJ',target:{tagName:'CANVAS'},repeat:true});
+  f.B.chatActive=()=>true;press({code:'KeyJ',target:{tagName:'CANVAS'}});f.B.chatActive=()=>false;
+  assert.equal(f.mod.settings.JitterEnabled,false);
+  press({code:'KeyJ',target:{tagName:'CANVAS'}});assert.equal(f.mod.settings.JitterEnabled,true);
+  f.mod.step(0);f.mod.step(250);assert.notEqual(f.mod.jitterAngle,null);
+  press({code:'KeyJ',target:{tagName:'CANVAS'}});assert.equal(f.mod.settings.JitterEnabled,false);assert.equal(f.mod.jitterAngle,null);
+  const input=control(menu(f).__folders.Keyboard,'JitterKey').domElement.querySelector('input');
+  for(const fn of input.listeners.get('click'))fn();
+  press({code:'KeyZ',target:{tagName:'CANVAS'},preventDefault(){},stopImmediatePropagation(){}});
+  assert.equal(f.mod.settings.JitterKey,'KeyZ');assert.equal(f.mod.settings.JitterEnabled,false);
+  press({code:'KeyJ',target:{tagName:'CANVAS'}});assert.equal(f.mod.settings.JitterEnabled,false);
+  press({code:'KeyZ',target:{tagName:'CANVAS'}});assert.equal(f.mod.settings.JitterEnabled,true);
+  const restored=fixture({saved:Object.fromEntries(f.storage)});try{assert.equal(restored.mod.settings.JitterKey,'KeyZ');}finally{restored.mod.dispose();}
+  f.mod.setSetting('JitterKey','Space');assert.equal(f.mod.settings.AimbotKey,'KeyZ');
+ }finally{f.mod.dispose();}
+});
