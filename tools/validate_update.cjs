@@ -28,7 +28,8 @@ assert.deepEqual(normalize(body.find(n=>n.id?.name==='__createIlmAim')),normaliz
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
 assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id),'Every reviewed native patch is required');
 const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave'};
-const edits=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;
+const edits=[],placements=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;
+ if(n.type==='ArrayExpression'&&n.elements[0]?.value===14&&n.elements.length===4&&n.elements[1]?.object?.type==='MemberExpression')placements.push(n);
  if(n.type==='FunctionDeclaration')for(const [old,name]of Object.entries(functions))if(n.id.name===roles[old]){
   let text=`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.${name}=${n.id.name};`;
   if(name==='fire')text+=`window.__updateFunctions.capturePackets=()=>{const codec=${roles['еϲᄄ']},key=${JSON.stringify(roles['ᴎ︅ހ'])},encode=codec[key],socket=${roles['І̎ܘ']},packets=[];codec[key]=p=>{packets.push(p.slice());return '';};${roles['І̎ܘ']}={send(){}};return {packets,restore(){codec[key]=encode;${roles['І̎ܘ']}=socket;}};};`;
@@ -37,8 +38,9 @@ const edits=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n
  for(const v of Object.values(n)){if(Array.isArray(v))todo.push(...v);else if(v&&typeof v==='object')todo.push(v);}
 }
 assert.equal(edits.length,Object.keys(functions).length,'Unique browser fixture functions required');
+assert.equal(placements.length,1,'One native cursor placement expression required');
 const end=tree.body[0].expression.callee.body.end-1;
-edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
+edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},types:${symbols['εᚇ๓']},nativePlacement:()=>${output.slice(placements[0].start,placements[0].end)},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
 (async()=>{
  const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',ilm_core:'identical',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
@@ -187,12 +189,26 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
      m.setSetting('LootDataEnabled',false);m.setSetting('FAutoLootEnabled',true);m.render(0);m.render(16);
      check(JSON.stringify(transport.packets)===JSON.stringify([[12,10],[12,11],[12,10],[12,11]]),'Native fast loot cadence/bindings differ from ILM');
     }finally{m.setSetting('FAutoLootEnabled',false);for(const id of [10,11])n.entities.remove(0,id,1,1,0);}
-    transport.packets.length=0;self.x=1234.5;self.y=5678.25;m.setSetting('AutoBuiledEnabled',true);
+    transport.packets.length=0;self.x=1234.5;self.y=5678.25;Object.assign(self,{[s['ε︁ᚂ']]:1,[s['օⲥᚁ']]:1,[s['α०ᚂ']]:3,[s['ρⲅ️']]:40,[s['ᴎ︆ࡉ']]:27});m.setSetting('AutoBuiledEnabled',true);
     try{
      m.step(0);m.step(8);check(transport.packets.length===0,'RAF duplicated native AutoBuild');
      m.render(0);m.render(8);
-     check(JSON.stringify(transport.packets)===JSON.stringify([[14,0,56.7825,12.345],[14,0,56.7825,12.345]]),'Native AutoBuild coordinates or frame cadence differ from ILM');
+     check(JSON.stringify(transport.packets)===JSON.stringify([n.nativePlacement(),n.nativePlacement()]),'AutoBuild differs from the native cursor placement cell or rotation');
+     self[s['օⲥᚁ']]=0;m.render(16);check(transport.packets.length===2,'AutoBuild sent an invalid native preview');
     }finally{m.setSetting('AutoBuiledEnabled',false);}
+    const weapons=n.types[0]?.[s.ilmWeaponTable];
+    check(Array.isArray(weapons),'Native weapon table binding failed');
+    const weaponIndex=weapons.findIndex(item=>item?.[s.ilmBulletSpeed]===1.4);
+    check(weaponIndex>=0,'Native AK-speed metadata binding failed: '+JSON.stringify(Object.entries(n.types).slice(0,5).map(([id,t])=>({id,count:t?.[s.ilmWeaponTable]?.length,speeds:t?.[s.ilmWeaponTable]?.slice(0,25).map(w=>w?.[s.ilmBulletSpeed])}))));
+    e[s['Іࡈ５']]=weaponIndex;e[s['е̝ހ']]=0;e.x=1000;e.y=1000;m.setSetting('AimBotEnabled',true);transport.packets.length=0;
+    const savedNow=performance.now.bind(performance);let testTime=0;performance.now=()=>testTime;
+    try{
+     m.trackPacket(0,2,1,0,0,false);m.trackPacket(0,1,1,1000,1000,true);
+     for(let i=0;i<3;i++){testTime=i*100;m.trackPacket(0,1,1,1000,1000,true);m.trackPacket(0,2,1,1500,1000+i*40,true);}
+     m.render();m.setSetting('ImprovedAimEnabled',false);m.aim.refresh();const legacy=transport.packets.at(-1)[1];m.setSetting('ImprovedAimEnabled',true);m.aim.refresh();
+     check(transport.packets.at(-1)[1]>legacy,'Timestamped prediction did not use native weapon speed');
+     check(transport.packets.length===2&&transport.packets.every(p=>p[0]===6),'Improved prediction changed direction cadence');
+    }finally{performance.now=savedNow;}
     const identity=[localStorage.getItem('token'),localStorage.getItem('tokenId'),Number(localStorage.getItem('userId'))];
     n.network.state=64;const restore=n.joinPayload(35);n.network.state=0;const normal=n.joinPayload(35);
     check(restore[4]===1&&normal[4]===0&&JSON.stringify(restore.slice(1,4))===JSON.stringify(identity)&&JSON.stringify(normal.slice(1,4))===JSON.stringify(identity),'Native rejoin payload changes identity');
@@ -220,7 +236,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Death recovery changed stored identity');
    }finally{n.network[deathKey]=nativeDeath;}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

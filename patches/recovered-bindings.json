@@ -348,7 +348,9 @@
     "ϲ१༧": "ϲ१༧",
     "ϲІ̗": "ϲІ̗",
     "а༠٥": "ѕᄇ︊",
-    "ᴘ๒︅": "ᴘ๒︅"
+    "ᴘ๒︅": "ᴘ๒︅",
+    "ilmWeaponTable": "і६३",
+    "ilmBulletSpeed": "ᴇࡃ̠"
   },
   "evidence": {
     "options": "export:ᴘᚉ٦",
@@ -685,6 +687,8 @@
     "εᚇ๓": "type descriptor table, player category index 0",
     "ιᄅᴄ": "item descriptors including native interaction opcode",
     "а०̅": "native canvas context getContext(2d), renderer usage",
-    "ᴉ२ߋ": "sprite table literal img/karma4.png"
+    "ᴉ२ߋ": "sprite table literal img/karma4.png",
+    "ilmWeaponTable": "Reviewed ranged-weapon metadata array containing AK47 and laser submachine sound anchors",
+    "ilmBulletSpeed": "Unique scalar pair AK47=1.4 and laser submachine=1.45 in reviewed weapon metadata"
   }
 }

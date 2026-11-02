@@ -17,6 +17,7 @@ function __installDevastMod(B) {
       this.ShowRealAngles = "withAim";
       this.target = "players";
       this.AimBotEnabled = false;
+      this.ImprovedAimEnabled = true;
       this.JitterEnabled = false;
       this.JitterSpeed = 360;
       this.JitterKey = "KeyJ";
@@ -798,10 +799,19 @@ function __installDevastMod(B) {
     return __send(packet,true);
   });
   const GetAllTargets = ilm.targets, Aimbot = ilm.aim;
+  const aimPrediction=__createAdaptiveAim(()=>performance.now());
+  function nativeWeaponSpeed() {
+    const self=playerRecords.find(record=>record.e.ᴘ४１===aimSelf.id),weapon=self?.e.Іࡈ５;
+    if (!Number.isInteger(weapon)) return NaN;
+    return B.types?.[B.categories.player]?.ilmWeaponTable?.[weapon&255]?.ilmBulletSpeed;
+  }
   // Delegate to the unchanged ILM methods; cache only the native metadata adapter.
   for(const key of ['resolve','findNearestPlayerTo']) {
     const method=Aimbot[key];
-    Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>method.apply(this,args),key==='findNearestPlayerTo'||MOD.lockId<0);}});
+    Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>{
+      const result=method.apply(this,args);
+      return key==='resolve'&&MOD.ImprovedAimEnabled?aimPrediction.resolve(this,GetAllTargets,aimSelf.id,MOD,nativeWeaponSpeed(),result):result;
+    },key==='findNearestPlayerTo'||MOD.lockId<0);}});
   }
   Aimbot.mouseDown = false;
   // ILM owns lastId and its death reset on the 50 ms tick. A temporary socket
@@ -1046,8 +1056,11 @@ function __installDevastMod(B) {
     // Fill any extended slots: original ILM iterates densely over both arrays.
     while(group.length<=id) group.push(new ilm.Target(group.length));
     ensureAimTeams(id);
-    if(!active) { group[id].setInactive(); return; }
-    if(Number.isFinite(x)&&Number.isFinite(y)) group[id].update(x,y);
+    if(!active) {aimPrediction.forget(group[id]);group[id].setInactive();return;}
+    if(Number.isFinite(x)&&Number.isFinite(y)) {
+      if(!group[id].active)aimPrediction.forget(group[id]);
+      group[id].update(x,y);aimPrediction.observe(group[id]);
+    }
   }
   function playerMeta(id) {
     return B.world.ᴎ︃ᄉ[id];
@@ -1182,12 +1195,12 @@ function __installDevastMod(B) {
     }
     updateChat(now);
   }
-  // ILM's native render hook builds with rotation zero at the player's position.
-  // Keep its y/x order and fractional tile coordinates; the native codec owns encoding.
+  // Use the same selected building, rotation and cursor preview as native placement.
   function autoBuildFrame() {
-    if (B.network.state === 1) {
-      MOD.AutoBuiledEnabled && __send([14,0,B.world.ᅠᏧ‍.y/100,B.world.ᅠᏧ‍.x/100]);
-    }
+    if (!playing() || !MOD.AutoBuiledEnabled) return;
+    const me=B.world.ᅠᏧ‍;
+    if (me.ε︁ᚂ!==1 || me.օⲥᚁ!==1) return;
+    __send([14,me.α०ᚂ,me.ρⲅ️,me.ᴎ︆ࡉ]);
   }
   function updateChat(now) {
     if (!MOD.SpamChatEnabled) {
@@ -1996,6 +2009,7 @@ function __installDevastMod(B) {
     for (const [key,label] of [['TeamClanColor','Цвет своего клана'],['EnemyClanColor','Цвет чужого клана'],['NicknameColor','Цвет ника']]) visual.addColor(MOD, key).name(label).onChange(value=>setSetting(key,value));
     const aim = __installIlmAimMenu(menu,MOD);
     for (const control of aim.__controllers) control.onChange(value=>setSetting(control.property,value));
+    add(aim,'ImprovedAimEnabled','Improved prediction');
     const jitterMenu = menu.addFolder('Jitter');
     add(jitterMenu, 'JitterEnabled', 'Enabled');
     add(jitterMenu, 'JitterSpeed', 'Speed (degrees/sec)', 1, 3600, 1);
@@ -2006,7 +2020,7 @@ function __installDevastMod(B) {
     }, 'Reset');
     const automation = menu.addFolder('Automation');
     for (const key of ['SAutoLootEnabled', 'FAutoLootEnabled', 'LootDataEnabled', 'AutoTakeEnabled', 'AntiKickEnabled', 'OpenEverythingByClick']) add(automation, key);
-    add(automation,'AutoBuiledEnabled','AutoBuild').domElement.title = 'Как в ILM: выбранная постройка под персонажем, поворот 0.';
+    add(automation,'AutoBuiledEnabled','AutoBuild').domElement.title = 'Ставит выбранный блок в допустимую клетку предпросмотра под курсором.';
     const filter = automation.addFolder('Loot filter');
     for (const [name, item] of Object.entries(LootData)) filter.add(item, 'acquire').name(name).onChange(persist);
     const keys = menu.addFolder('Keyboard');

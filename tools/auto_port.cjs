@@ -21,6 +21,25 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   }return local;
  }
  for(const [key,list]of og){const next=ng.get(key);if(list.length===1&&next?.length===1){pairs.set(list[0],next[0]);learn(oldCanon.get(list[0]),curCanon.get(next[0]));}}
+ // These data-only fields live outside the small native functions matched above.
+ // Require both reviewed weapon anchors and speed values before exposing them.
+ function weaponFields(a){
+  const found=[];
+  for(const [sound,speed]of [['audio/ak47-shot.mp3',1.4],['audio/laser-submachine-shot.mp3',1.45]]){
+   const literals=a.nodes.filter(n=>n.type==='Literal'&&n.value===sound);if(literals.length!==1)throw Error('Ambiguous weapon sound anchor: '+sound);
+   let object=a.parent.get(literals[0]);while(object&&object.type!=='ObjectExpression')object=a.parent.get(object);
+   const fields=object?.properties.filter(p=>p.type==='Property'&&a.constant(p.value)===speed);
+   if(fields?.length!==1)throw Error('Weapon speed contract changed: '+sound);
+   const array=a.parent.get(object),table=a.parent.get(array);
+   if(array?.type!=='ArrayExpression'||table?.type!=='Property')throw Error('Weapon table shape changed');
+   found.push({speed:prop(a,fields[0]),table:prop(a,table)});
+  }
+  if(found[0].speed!==found[1].speed||found[0].table!==found[1].table)throw Error('Inconsistent weapon metadata bindings');
+  return found[0];
+ }
+ const oldWeapons=weaponFields(old),newWeapons=weaponFields(cur);
+ if(bindings.symbols.ilmWeaponTable!==oldWeapons.table||bindings.symbols.ilmBulletSpeed!==oldWeapons.speed)throw Error('Reference weapon metadata binding does not match reviewed weapon anchors');
+ propose(oldWeapons.speed,newWeapons.speed);propose(oldWeapons.table,newWeapons.table);
  const globalMap=()=>Object.fromEntries([...votes].filter(([,v])=>v.size===1).map(([k,v])=>[k,[...v][0]]));
  // Check native network entrypoints themselves, not just references to their names.
  const rootBody=old.tree.body[0]?.expression?.callee?.body?.body;

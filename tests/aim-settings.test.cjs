@@ -101,8 +101,8 @@ test('AimbotKey is reassigned through the keyboard menu and the new key toggles 
  keydown({code:'KeyZ',target:{tagName:'CANVAS'}});f.mod.aim.refresh();assert.equal(f.packets.at(-1)[0],6);f.mod.dispose();
 });
 
-test('bulletSpeedCoefficient and resolverType remain inert as in ILM; claiming that they change prediction would be false',()=>{
- const f=aimScene();f.set('lockId',2);
+test('legacy ILM mode leaves bulletSpeedCoefficient and resolverType inert',()=>{
+ const f=aimScene();f.set('lockId',2);f.set('ImprovedAimEnabled',false);
  const capture=()=>{f.mod.aim.resolve();return JSON.stringify({angle:f.mod.aim.lastAngle,lines:f.mod.targets.lines,target:f.mod.aim.targetPlayer.id});};
  const baseline=capture();
  for(const speed of [1,4,15]){f.setGui('bulletSpeedCoefficient',speed);assert.equal(capture(),baseline);}
@@ -116,9 +116,9 @@ test('installed Aim Bot folder matches the uploaded ILM control order, labels, c
  const f=aimScene();try{
   const root=new f.dom.GUI(),settings=JSON.parse(JSON.stringify(f.mod.settings));
   vm.runInNewContext('const _0x2a1bff=root,_0x2ea565=settings;'+source,{root,settings},{timeout:1000});
-  const describe=folder=>JSON.parse(JSON.stringify(folder.__controllers.map(c=>({property:c.property,label:c.label,range:c.range}))));
+  const describe=folder=>JSON.parse(JSON.stringify(folder.__controllers.filter(c=>c.property!=='ImprovedAimEnabled').map(c=>({property:c.property,label:c.label,range:c.range}))));
   assert.deepEqual(describe(f.gui.__folders['Aim Bot']),describe(root.__folders['Aim Bot']));
-  assert.equal(f.gui.__folders['Aim Bot'].__controllers.length,5);
+  assert.equal(f.gui.__folders['Aim Bot'].__controllers.length,6);assert.equal(control(f.gui.__folders['Aim Bot'],'ImprovedAimEnabled').object.ImprovedAimEnabled,true);
   assert.equal(f.gui.__folders['Aim bot'],undefined);
   control(f.gui.__folders['Aim Bot'],'ShowRealAngles').setValue('always');assert.equal(f.mod.settings.ShowRealAngles,'always');
   assert.equal(JSON.parse(f.storage.get('DevastILM:settings:v3')).ShowRealAngles,'always');

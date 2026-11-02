@@ -1,0 +1,678 @@
+{
+  "schema": 1,
+  "output_sha256": "d9a24d230e63156cb290acde454377191a883dc058161fa7685c45bfd69c4cc1",
+  "module_sha256": {
+    "mod/responsive.js": "3e7569db7b1ae9f39b5c3cfcaa779c5adeafa22824a9008e0c49b4b9e425d47b",
+    "mod/bootstrap.js": "1631e444b28954e506f3f9d1a87f7630140ca460e3c8371c34d3e30754ad7255",
+    "mod/ilm-aim.js": "f7d97d6bfbbba505656b24908f41a4e258aa9a0fa22904b22555503b535dfd47",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 140,
+    "python_tests": 26
+  },
+  "browsers": {
+    "chromium": {
+      "version": "154.0.8037.57",
+      "status": "passed",
+      "native": {
+        "menu": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": []
+    },
+    "firefox": {
+      "version": "153.0",
+      "status": "passed",
+      "native": {
+        "menu": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": []
+    }
+  },
+  "legacy_core": {
+    "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+    "core_sha256": "f7d97d6bfbbba505656b24908f41a4e258aa9a0fa22904b22555503b535dfd47",
+    "declarations": [
+      "_0x3e2cd1",
+      "_0x218077",
+      "_0x4b5d6f",
+      "_0x391c19",
+      "_0x4a7389"
+    ],
+    "classes": 4,
+    "methods_including_constructors": 13,
+    "tick_functions": 1,
+    "removed_unused_decoder_aliases": 0,
+    "preserved_unused_decoder_aliases": 14,
+    "ast_parity": "exact",
+    "source_parity": "verbatim_stored_decoded_declarations",
+    "menu_parity": "verbatim_original_5_controls",
+    "line_render_parity": "verbatim_original_block"
+  },
+  "accuracy": {
+    "scenes": 48,
+    "legacyRms": 60.001890415557675,
+    "enhancedRms": 12.266029603811287,
+    "legacyHits": 25,
+    "enhancedHits": 46,
+    "cases": [
+      {
+        "speed": 1.4,
+        "interval": 50,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 400,
+        "legacy": 83.0210479857693,
+        "enhanced": 0.9249043945883596
+      },
+      {
+        "speed": 1.4,
+        "interval": 50,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 700,
+        "legacy": 146.33380916031973,
+        "enhanced": 2.058143023649935
+      },
+      {
+        "speed": 1.4,
+        "interval": 50,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 400,
+        "legacy": 69.27474520156821,
+        "enhanced": 0.11513384678146192
+      },
+      {
+        "speed": 1.4,
+        "interval": 50,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 700,
+        "legacy": 123.92863303405896,
+        "enhanced": 7.981982908761904
+      },
+      {
+        "speed": 1.4,
+        "interval": 50,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 400,
+        "legacy": 18.957862148772158,
+        "enhanced": 2.8258366618085113
+      },
+      {
+        "speed": 1.4,
+        "interval": 50,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 700,
+        "legacy": 33.683246833067116,
+        "enhanced": 4.063485423921779
+      },
+      {
+        "speed": 1.4,
+        "interval": 100,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 400,
+        "legacy": 62.71537259110903,
+        "enhanced": 3.2619707815722228
+      },
+      {
+        "speed": 1.4,
+        "interval": 100,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 700,
+        "legacy": 98.46295372028908,
+        "enhanced": 0.749418678490911
+      },
+      {
+        "speed": 1.4,
+        "interval": 100,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 400,
+        "legacy": 50.98748040148337,
+        "enhanced": 4.847618999449038
+      },
+      {
+        "speed": 1.4,
+        "interval": 100,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 700,
+        "legacy": 92.08400228570677,
+        "enhanced": 1.3923218326652542
+      },
+      {
+        "speed": 1.4,
+        "interval": 100,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 400,
+        "legacy": 13.330746440515252,
+        "enhanced": 1.9588119995350688
+      },
+      {
+        "speed": 1.4,
+        "interval": 100,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 700,
+        "legacy": 23.913410366503605,
+        "enhanced": 4.668551511075083
+      },
+      {
+        "speed": 1.4,
+        "interval": 150,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 400,
+        "legacy": 38.62046653191449,
+        "enhanced": 0.028771341879610127
+      },
+      {
+        "speed": 1.4,
+        "interval": 150,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 700,
+        "legacy": 71.92375594329484,
+        "enhanced": 4.532505089891072
+      },
+      {
+        "speed": 1.4,
+        "interval": 150,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 400,
+        "legacy": 36.89096885450604,
+        "enhanced": 2.795191467793257
+      },
+      {
+        "speed": 1.4,
+        "interval": 150,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 700,
+        "legacy": 57.87268563798353,
+        "enhanced": 29.83430025827956
+      },
+      {
+        "speed": 1.4,
+        "interval": 150,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 400,
+        "legacy": 5.083470199791299,
+        "enhanced": 0.3286132120604997
+      },
+      {
+        "speed": 1.4,
+        "interval": 150,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 700,
+        "legacy": 6.3979543725172965,
+        "enhanced": 2.7848826942882203
+      },
+      {
+        "speed": 1.4,
+        "interval": 200,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 400,
+        "legacy": 17.539345497328593,
+        "enhanced": 1.2352741738093937
+      },
+      {
+        "speed": 1.4,
+        "interval": 200,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 700,
+        "legacy": 29.963463238155608,
+        "enhanced": 3.7118820763199256
+      },
+      {
+        "speed": 1.4,
+        "interval": 200,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 400,
+        "legacy": 18.193016085350674,
+        "enhanced": 2.932958175043127
+      },
+      {
+        "speed": 1.4,
+        "interval": 200,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 700,
+        "legacy": 57.36697954421026,
+        "enhanced": 54.13599966319315
+      },
+      {
+        "speed": 1.4,
+        "interval": 200,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 400,
+        "legacy": 0.4029532705670296,
+        "enhanced": 0.4029532705670296
+      },
+      {
+        "speed": 1.4,
+        "interval": 200,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 700,
+        "legacy": 0.18542029545993632,
+        "enhanced": 0.18542029545993632
+      },
+      {
+        "speed": 1.45,
+        "interval": 50,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 400,
+        "legacy": 79.60760559642554,
+        "enhanced": 4.588829122041783
+      },
+      {
+        "speed": 1.45,
+        "interval": 50,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 700,
+        "legacy": 140.49931941255392,
+        "enhanced": 4.272138521913975
+      },
+      {
+        "speed": 1.45,
+        "interval": 50,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 400,
+        "legacy": 66.0536452804225,
+        "enhanced": 3.063230031467623
+      },
+      {
+        "speed": 1.45,
+        "interval": 50,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 700,
+        "legacy": 118.35790271960884,
+        "enhanced": 1.8259531093815655
+      },
+      {
+        "speed": 1.45,
+        "interval": 50,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 400,
+        "legacy": 18.216897331315266,
+        "enhanced": 1.7994191356546139
+      },
+      {
+        "speed": 1.45,
+        "interval": 50,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 700,
+        "legacy": 32.39148582772322,
+        "enhanced": 2.6095698119863355
+      },
+      {
+        "speed": 1.45,
+        "interval": 100,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 400,
+        "legacy": 59.08712870147521,
+        "enhanced": 0.5000761757017896
+      },
+      {
+        "speed": 1.45,
+        "interval": 100,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 700,
+        "legacy": 92.28915392391116,
+        "enhanced": 7.16224117973121
+      },
+      {
+        "speed": 1.45,
+        "interval": 100,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 400,
+        "legacy": 47.76446002444795,
+        "enhanced": 1.5712720132833495
+      },
+      {
+        "speed": 1.45,
+        "interval": 100,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 700,
+        "legacy": 86.52782660250952,
+        "enhanced": 4.779428976279973
+      },
+      {
+        "speed": 1.45,
+        "interval": 100,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 400,
+        "legacy": 12.556312475940729,
+        "enhanced": 2.815695207426195
+      },
+      {
+        "speed": 1.45,
+        "interval": 100,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 700,
+        "legacy": 22.565636572469522,
+        "enhanced": 3.417905820902729
+      },
+      {
+        "speed": 1.45,
+        "interval": 150,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 400,
+        "legacy": 34.8205644409828,
+        "enhanced": 3.7865439462611525
+      },
+      {
+        "speed": 1.45,
+        "interval": 150,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 700,
+        "legacy": 65.5515058945409,
+        "enhanced": 1.9002225024450723
+      },
+      {
+        "speed": 1.45,
+        "interval": 150,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 400,
+        "legacy": 33.68771955808633,
+        "enhanced": 5.771369751309027
+      },
+      {
+        "speed": 1.45,
+        "interval": 150,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 700,
+        "legacy": 51.4940150677548,
+        "enhanced": 21.33677175745633
+      },
+      {
+        "speed": 1.45,
+        "interval": 150,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 400,
+        "legacy": 4.261440113406917,
+        "enhanced": 0.5187206287615966
+      },
+      {
+        "speed": 1.45,
+        "interval": 150,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 700,
+        "legacy": 4.952633146881152,
+        "enhanced": 4.279432535917078
+      },
+      {
+        "speed": 1.45,
+        "interval": 200,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 400,
+        "legacy": 13.636285435836694,
+        "enhanced": 2.6527409355866367
+      },
+      {
+        "speed": 1.45,
+        "interval": 200,
+        "velocity": {
+          "x": 0,
+          "y": 0.35
+        },
+        "distance": 700,
+        "legacy": 23.415217679812464,
+        "enhanced": 2.8537116745115516
+      },
+      {
+        "speed": 1.45,
+        "interval": 200,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 400,
+        "legacy": 15.064375809002582,
+        "enhanced": 5.925182490171836
+      },
+      {
+        "speed": 1.45,
+        "interval": 200,
+        "velocity": {
+          "x": 0.2,
+          "y": 0.25
+        },
+        "distance": 700,
+        "legacy": 50.489691859273364,
+        "enhanced": 49.46580933026767
+      },
+      {
+        "speed": 1.45,
+        "interval": 200,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 400,
+        "legacy": 1.257420281791213,
+        "enhanced": 1.257420281791213
+      },
+      {
+        "speed": 1.45,
+        "interval": 200,
+        "velocity": {
+          "x": -0.25,
+          "y": 0.1
+        },
+        "distance": 700,
+        "legacy": 1.6683584924451609,
+        "enhanced": 1.6683584924451609
+      }
+    ]
+  },
+  "performance": {
+    "browser": "153.0",
+    "scope": "Prepared Firefox aim tick CPU benchmark; no user-device FPS or live-server hit-rate measurement",
+    "samples": [
+      {
+        "improved": false,
+        "medianTickMs": 0.011,
+        "packets": 9000,
+        "angle": 34.99202019855866
+      },
+      {
+        "improved": true,
+        "medianTickMs": 0.012,
+        "packets": 9000,
+        "angle": 28.543290015797577
+      }
+    ]
+  },
+  "scope": {
+    "unchanged_existing_installer_functions": 64,
+    "preserved": [
+      "Original ILM core and explicit legacy toggle",
+      "Jitter functions",
+      "Native single-canvas rendering",
+      "50 ms aiming timer and packet cadence",
+      "Identity and cookies"
+    ],
+    "autobuild": "Native selected-building state, validity, rotation and cursor-preview coordinates; matched the actual native placement expression"
+  },
+  "limitations": [
+    "Independent constant-velocity point-projectile simulations; not measured live-server hit rate",
+    "Projectile spread, obstacles and unknown server-side delay are outside the simulation",
+    "Two simulation cases move beyond the 900-unit projectile path; neither algorithm reaches the target radius there",
+    "Actual user-device FPS and server latency remain unmeasured"
+  ]
+}

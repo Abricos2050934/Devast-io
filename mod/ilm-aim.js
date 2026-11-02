@@ -66,3 +66,58 @@ const _0x2ea565=settings,_0x6cc5f2=targets,_0x3bfd3a=ctx,_0x555618=view.scale,_0
 if(_0x2ea565["AimBotEnabled"]){let _0xb2b2ae=_0x3bfd3a["globalAlpha"],_0x2d0da4=_0x3bfd3a["lineWidth"];for(var _0x55bf6b=0x0;_0x55bf6b<_0x6cc5f2["lines"]["length"];_0x55bf6b++){let _0x47ac71=_0x6cc5f2["lines"][_0x55bf6b];var _0x4e7ab6={'x':_0x555618*(_0x47ac71['x1']+_0x4212a3),'y':_0x555618*(_0x47ac71['y1']+_0x260b24)},_0xfdef36={'x':_0x555618*(_0x47ac71['x2']+_0x4212a3),'y':_0x555618*(_0x47ac71['y2']+_0x260b24)};_0x3bfd3a["lineWidth"]=_0x47ac71["width"],_0x3bfd3a["globalAlpha"]=_0x47ac71['alpha'],_0x3bfd3a["strokeStyle"]=_0x47ac71['color'],_0x3bfd3a["beginPath"](),_0x3bfd3a["moveTo"](_0x4e7ab6['x'],_0x4e7ab6['y']),_0x3bfd3a["lineTo"](_0xfdef36['x'],_0xfdef36['y']),_0x3bfd3a['stroke']();}_0x3bfd3a["globalAlpha"]=_0xb2b2ae,_0x3bfd3a["lineWidth"]=_0x2d0da4;}
 // END ORIGINAL ILM AIM LINES
 }
+
+// Optional prediction extension. The original ILM declarations above stay intact.
+function __createAdaptiveAim(clock) {
+  const samples=new WeakMap();
+  function observe(target) {
+    const now=clock(),last=samples.get(target);
+    if (!last) {samples.set(target,{x:target.x,y:target.y,time:now,vx:0,vy:0,dt:0,ready:false,px:target.x,py:target.y,pt:now});return;}
+    const dt=now-last.time,dx=target.x-last.x,dy=target.y-last.y;
+    let vx=0,vy=0,ready=dt>=8&&dt<=500&&Math.hypot(dx,dy)<=Math.max(400,dt*2);
+    if (ready) {
+      vx=dx/dt;vy=dy/dt;
+      // Pool two consistent intervals to reduce packet-arrival jitter. A stop,
+      // reversal or sharp turn uses only the newest movement immediately.
+      const oldDt=last.time-last.pt,oldVx=oldDt>0?(last.x-last.px)/oldDt:0,oldVy=oldDt>0?(last.y-last.py)/oldDt:0;
+      const speed=Math.hypot(vx,vy),oldSpeed=Math.hypot(oldVx,oldVy);
+      if (last.ready&&oldDt>=8&&speed>0&&oldSpeed>0&&vx*oldVx+vy*oldVy>.98*speed*oldSpeed&&speed/oldSpeed>.8&&speed/oldSpeed<1.25) {
+        vx=(target.x-last.px)/(now-last.pt);vy=(target.y-last.py)/(now-last.pt);
+      }
+    }
+    last.px=last.x;last.py=last.y;last.pt=last.time;
+    last.x=target.x;last.y=target.y;last.time=now;last.vx=vx;last.vy=vy;last.dt=dt;last.ready=ready;
+  }
+  function velocity(sample,now) {
+    return sample?.ready&&now>=sample.time&&now-sample.time<=Math.min(250,Math.max(100,sample.dt*2));
+  }
+  function resolve(aim,targets,selfId,settings,nativeSpeed,legacy) {
+    if (!settings.ImprovedAimEnabled||!(nativeSpeed>0)||!Number.isFinite(nativeSpeed)) return legacy;
+    const target=aim.targetPlayer,self=targets.players[selfId];
+    if (!target?.active||!self?.active) return legacy;
+    const sample=samples.get(target);if(!sample)return legacy;
+    const now=clock(),moving=velocity(sample,now),vx=moving?sample.vx:0,vy=moving?sample.vy:0;
+    const own=samples.get(self),ownMoving=velocity(own,now);
+    const sx=self.x+(ownMoving?own.vx*(now-own.time):0),sy=self.y+(ownMoving?own.vy*(now-own.time):0);
+    const age=moving?now-sample.time:0,delay=settings.offsetCoefficient*50;
+    let x=target.x+vx*(age+delay),y=target.y+vy*(age+delay);
+    const speed=nativeSpeed*(settings.bulletSpeedCoefficient/4)*(settings.distanceCoefficient/300);
+    if (!(speed>0)||!Number.isFinite(speed))return legacy;
+    const rx=x-sx,ry=y-sy,a=vx*vx+vy*vy-speed*speed,b=2*(rx*vx+ry*vy),c=rx*rx+ry*ry;
+    let time=0;
+    if (Math.abs(a)<1e-10) {if(b<0)time=-c/b;}
+    else {
+      const discriminant=b*b-4*a*c;
+      if(discriminant>=0){
+        const q=-.5*(b+(b>=0?1:-1)*Math.sqrt(discriminant)),t1=q/a,t2=q!==0?c/q:-1;
+        time=t1>0&&t2>0?Math.min(t1,t2):Math.max(t1,t2,0);
+      }
+    }
+    if(Number.isFinite(time)&&time<=3000){x+=vx*time;y+=vy*time;}
+    const angle=Math.atan2(y-sy,x-sx)*180/Math.PI;if(!Number.isFinite(angle))return legacy;
+    aim.lastAngle=angle;
+    if(settings.visualizeResolving)targets.lines[0].reset(sx,sy,x,y);
+    return Math.round(angle);
+  }
+  return {observe,forget:target=>samples.delete(target),resolve};
+}

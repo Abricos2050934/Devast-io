@@ -62,7 +62,7 @@ test('movement report separates browser frame timing from automation traffic and
   const tick=f.frames.values().next().value;for(let i=0;i<=130;i++)tick(i*20);
   let report=f.mod.connectionInfo();assert.equal(report.animationTiming.samples,120);assert.equal(report.animationTiming.fpsEstimate,50);assert.equal(report.animationTiming.p95GapMs,20);
   f.document.hidden=true;tick(5000);f.document.hidden=false;tick(10000);tick(10020);assert.equal(f.mod.connectionInfo().animationTiming.fpsEstimate,50);
-  f.mod.setSetting('AutoBuiledEnabled',true);f.mod.step(10040);report=f.mod.connectionInfo();assert.equal(report.automationSettings.autoBuild,true);assert.ok(report.modCommandsByOpcode[14]>0);
+  Object.assign(f.world['ᅠᏧ‍'],{'ε︁ᚂ':1,'օⲥᚁ':1,'α०ᚂ':0,'ρⲅ️':2,'ᴎ︆ࡉ':3});f.mod.setSetting('AutoBuiledEnabled',true);f.mod.step(10040);report=f.mod.connectionInfo();assert.equal(report.automationSettings.autoBuild,true);assert.ok(report.modCommandsByOpcode[14]>0);
   report.modCommandsByOpcode[14]=99999;assert.notEqual(f.mod.connectionInfo().modCommandsByOpcode[14],99999);
  }finally{f.mod.dispose();}
 });

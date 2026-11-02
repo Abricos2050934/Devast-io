@@ -69,6 +69,61 @@ if(_0x2ea565["AimBotEnabled"]){let _0xb2b2ae=_0x3bfd3a["globalAlpha"],_0x2d0da4=
 // END ORIGINAL ILM AIM LINES
 }
 
+// Optional prediction extension. The original ILM declarations above stay intact.
+function __createAdaptiveAim(clock) {
+  const samples=new WeakMap();
+  function observe(target) {
+    const now=clock(),last=samples.get(target);
+    if (!last) {samples.set(target,{x:target.x,y:target.y,time:now,vx:0,vy:0,dt:0,ready:false,px:target.x,py:target.y,pt:now});return;}
+    const dt=now-last.time,dx=target.x-last.x,dy=target.y-last.y;
+    let vx=0,vy=0,ready=dt>=8&&dt<=500&&Math.hypot(dx,dy)<=Math.max(400,dt*2);
+    if (ready) {
+      vx=dx/dt;vy=dy/dt;
+      // Pool two consistent intervals to reduce packet-arrival jitter. A stop,
+      // reversal or sharp turn uses only the newest movement immediately.
+      const oldDt=last.time-last.pt,oldVx=oldDt>0?(last.x-last.px)/oldDt:0,oldVy=oldDt>0?(last.y-last.py)/oldDt:0;
+      const speed=Math.hypot(vx,vy),oldSpeed=Math.hypot(oldVx,oldVy);
+      if (last.ready&&oldDt>=8&&speed>0&&oldSpeed>0&&vx*oldVx+vy*oldVy>.98*speed*oldSpeed&&speed/oldSpeed>.8&&speed/oldSpeed<1.25) {
+        vx=(target.x-last.px)/(now-last.pt);vy=(target.y-last.py)/(now-last.pt);
+      }
+    }
+    last.px=last.x;last.py=last.y;last.pt=last.time;
+    last.x=target.x;last.y=target.y;last.time=now;last.vx=vx;last.vy=vy;last.dt=dt;last.ready=ready;
+  }
+  function velocity(sample,now) {
+    return sample?.ready&&now>=sample.time&&now-sample.time<=Math.min(250,Math.max(100,sample.dt*2));
+  }
+  function resolve(aim,targets,selfId,settings,nativeSpeed,legacy) {
+    if (!settings.ImprovedAimEnabled||!(nativeSpeed>0)||!Number.isFinite(nativeSpeed)) return legacy;
+    const target=aim.targetPlayer,self=targets.players[selfId];
+    if (!target?.active||!self?.active) return legacy;
+    const sample=samples.get(target);if(!sample)return legacy;
+    const now=clock(),moving=velocity(sample,now),vx=moving?sample.vx:0,vy=moving?sample.vy:0;
+    const own=samples.get(self),ownMoving=velocity(own,now);
+    const sx=self.x+(ownMoving?own.vx*(now-own.time):0),sy=self.y+(ownMoving?own.vy*(now-own.time):0);
+    const age=moving?now-sample.time:0,delay=settings.offsetCoefficient*50;
+    let x=target.x+vx*(age+delay),y=target.y+vy*(age+delay);
+    const speed=nativeSpeed*(settings.bulletSpeedCoefficient/4)*(settings.distanceCoefficient/300);
+    if (!(speed>0)||!Number.isFinite(speed))return legacy;
+    const rx=x-sx,ry=y-sy,a=vx*vx+vy*vy-speed*speed,b=2*(rx*vx+ry*vy),c=rx*rx+ry*ry;
+    let time=0;
+    if (Math.abs(a)<1e-10) {if(b<0)time=-c/b;}
+    else {
+      const discriminant=b*b-4*a*c;
+      if(discriminant>=0){
+        const q=-.5*(b+(b>=0?1:-1)*Math.sqrt(discriminant)),t1=q/a,t2=q!==0?c/q:-1;
+        time=t1>0&&t2>0?Math.min(t1,t2):Math.max(t1,t2,0);
+      }
+    }
+    if(Number.isFinite(time)&&time<=3000){x+=vx*time;y+=vy*time;}
+    const angle=Math.atan2(y-sy,x-sx)*180/Math.PI;if(!Number.isFinite(angle))return legacy;
+    aim.lastAngle=angle;
+    if(settings.visualizeResolving)targets.lines[0].reset(sx,sy,x,y);
+    return Math.round(angle);
+  }
+  return {observe,forget:target=>samples.delete(target),resolve};
+}
+
 function __installDevastMod(B) {
   for (const key of ["ɑ༣ᄆ","օ︃２","ᴄ९ܐ"]) if(typeof B.network?.[key] !== 'function') throw new Error('Missing native network handler: '+key);
   const ᅟࠅ８ = B.world;
@@ -88,6 +143,7 @@ function __installDevastMod(B) {
       this.ShowRealAngles = "withAim";
       this.target = "players";
       this.AimBotEnabled = false;
+      this.ImprovedAimEnabled = true;
       this.JitterEnabled = false;
       this.JitterSpeed = 360;
       this.JitterKey = "KeyJ";
@@ -869,10 +925,19 @@ function __installDevastMod(B) {
     return __send(packet,true);
   });
   const GetAllTargets = ilm.targets, Aimbot = ilm.aim;
+  const aimPrediction=__createAdaptiveAim(()=>performance.now());
+  function nativeWeaponSpeed() {
+    const self=playerRecords.find(record=>record.e.ρ͏१===aimSelf.id),weapon=self?.e.с४̉;
+    if (!Number.isInteger(weapon)) return NaN;
+    return B.types?.[B.categories.player]?.і६३?.[weapon&255]?.ᴇࡃ̠;
+  }
   // Delegate to the unchanged ILM methods; cache only the native metadata adapter.
   for(const key of ['resolve','findNearestPlayerTo']) {
     const method=Aimbot[key];
-    Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>method.apply(this,args),key==='findNearestPlayerTo'||MOD.lockId<0);}});
+    Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>{
+      const result=method.apply(this,args);
+      return key==='resolve'&&MOD.ImprovedAimEnabled?aimPrediction.resolve(this,GetAllTargets,aimSelf.id,MOD,nativeWeaponSpeed(),result):result;
+    },key==='findNearestPlayerTo'||MOD.lockId<0);}});
   }
   Aimbot.mouseDown = false;
   // ILM owns lastId and its death reset on the 50 ms tick. A temporary socket
@@ -1117,8 +1182,11 @@ function __installDevastMod(B) {
     // Fill any extended slots: original ILM iterates densely over both arrays.
     while(group.length<=id) group.push(new ilm.Target(group.length));
     ensureAimTeams(id);
-    if(!active) { group[id].setInactive(); return; }
-    if(Number.isFinite(x)&&Number.isFinite(y)) group[id].update(x,y);
+    if(!active) {aimPrediction.forget(group[id]);group[id].setInactive();return;}
+    if(Number.isFinite(x)&&Number.isFinite(y)) {
+      if(!group[id].active)aimPrediction.forget(group[id]);
+      group[id].update(x,y);aimPrediction.observe(group[id]);
+    }
   }
   function playerMeta(id) {
     return B.world.ﾠ᠌ܔ[id];
@@ -1253,12 +1321,12 @@ function __installDevastMod(B) {
     }
     updateChat(now);
   }
-  // ILM's native render hook builds with rotation zero at the player's position.
-  // Keep its y/x order and fractional tile coordinates; the native codec owns encoding.
+  // Use the same selected building, rotation and cursor preview as native placement.
   function autoBuildFrame() {
-    if (B.network.state === 1) {
-      MOD.AutoBuiledEnabled && __send([14,0,B.world.і३α.y/100,B.world.і३α.x/100]);
-    }
+    if (!playing() || !MOD.AutoBuiledEnabled) return;
+    const me=B.world.і३α;
+    if (me.ρ̠︉!==1 || me.ࡀࡁܝ!==1) return;
+    __send([14,me.οކᚁ,me.ㅤ̢︋,me.ᴎ๖օ]);
   }
   function updateChat(now) {
     if (!MOD.SpamChatEnabled) {
@@ -2067,6 +2135,7 @@ function __installDevastMod(B) {
     for (const [key,label] of [['TeamClanColor','Цвет своего клана'],['EnemyClanColor','Цвет чужого клана'],['NicknameColor','Цвет ника']]) visual.addColor(MOD, key).name(label).onChange(value=>setSetting(key,value));
     const aim = __installIlmAimMenu(menu,MOD);
     for (const control of aim.__controllers) control.onChange(value=>setSetting(control.property,value));
+    add(aim,'ImprovedAimEnabled','Improved prediction');
     const jitterMenu = menu.addFolder('Jitter');
     add(jitterMenu, 'JitterEnabled', 'Enabled');
     add(jitterMenu, 'JitterSpeed', 'Speed (degrees/sec)', 1, 3600, 1);
@@ -2077,7 +2146,7 @@ function __installDevastMod(B) {
     }, 'Reset');
     const automation = menu.addFolder('Automation');
     for (const key of ['SAutoLootEnabled', 'FAutoLootEnabled', 'LootDataEnabled', 'AutoTakeEnabled', 'AntiKickEnabled', 'OpenEverythingByClick']) add(automation, key);
-    add(automation,'AutoBuiledEnabled','AutoBuild').domElement.title = 'Как в ILM: выбранная постройка под персонажем, поворот 0.';
+    add(automation,'AutoBuiledEnabled','AutoBuild').domElement.title = 'Ставит выбранный блок в допустимую клетку предпросмотра под курсором.';
     const filter = automation.addFolder('Loot filter');
     for (const [name, item] of Object.entries(LootData)) filter.add(item, 'acquire').name(name).onChange(persist);
     const keys = menu.addFolder('Keyboard');
