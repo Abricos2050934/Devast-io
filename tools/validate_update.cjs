@@ -27,7 +27,7 @@ const canonical=acorn.parse(fs.readFileSync(path.join(root,'mod/ilm-aim.js'),'ut
 assert.deepEqual(normalize(body.find(n=>n.id?.name==='__createIlmAim')),normalize(canonical),'ILM algorithm changed');
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
 assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id),'Every reviewed native patch is required');
-const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload'};
+const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload','рܙ๕':'death'};
 const edits=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;
  if(n.type==='FunctionDeclaration')for(const [old,name]of Object.entries(functions))if(n.id.name===roles[old]){
   let text=`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.${name}=${n.id.name};`;
@@ -47,6 +47,12 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   const executablePath=process.env.CHROMIUM_PATH||(fs.existsSync('/usr/bin/chromium')?'/usr/bin/chromium':chromium.executablePath());
   browser=await chromium.launch({executablePath,headless:true,env:{...process.env,HOME:process.env.DEVAST_BROWSER_HOME||'/tmp/devast-browser-home'},proxy:process.env.HTTPS_PROXY?{server:process.env.HTTPS_PROXY}:undefined,args:['--no-sandbox','--disable-dev-shm-usage']});
   const page=await browser.newPage({viewport:{width:1280,height:800}});page.on('pageerror',e=>report.page_errors.push(e.message.slice(0,250)));
+  // These fixtures exercise native game logic, not third-party ads or audio.
+  // Supply valid local dependencies so an asset outage cannot mask game errors.
+  await page.route(url=>url.hostname==='webgames.io'&&url.pathname==='/js/widget.min.js',r=>r.fulfill({status:200,contentType:'text/javascript',body:'window.Widget={init(){},filter:value=>value,isBlocked:0,preroll(){},createAdPlayer(){}};'}));
+  const silence=Buffer.alloc(204);silence.write('RIFF');silence.writeUInt32LE(196,4);silence.write('WAVEfmt ',8);silence.writeUInt32LE(16,16);silence.writeUInt16LE(1,20);silence.writeUInt16LE(1,22);silence.writeUInt32LE(8000,24);silence.writeUInt32LE(16000,28);silence.writeUInt16LE(2,32);silence.writeUInt16LE(16,34);silence.write('data',36);silence.writeUInt32LE(160,40);
+  await page.route(url=>url.hostname==='devast.io'&&url.pathname.startsWith('/audio/')&&url.pathname.endsWith('.mp3'),r=>r.fulfill({status:200,contentType:'audio/wav',body:silence}));
+  report.external_dependencies={advertising:'fixture; failures exercised explicitly below',audio:'valid silent WAV fixture'};
   await page.context().addCookies([{name:'devast_fixture_cookie',value:'retained',domain:'devast.io',path:'/',secure:true}]);
   await page.addInitScript(()=>{
    if(!localStorage.getItem('fixture-seeded')){
@@ -128,8 +134,15 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     window.Widget.play();check(resumed===1,'Late SDK callback duplicated login');
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Gateway recovery changed identity');
    }finally{nativeMenu[s['ϲ१༧']]=waiting;window.Widget=widget;}
+   const deathKey=s['ι︃２'],nativeDeath=n.network[deathKey],health=w[s['ᴘρࡀ']][s['ᴇ༤ᚆ']].value;let deathCalls=0;
+   try{
+    n.network[deathKey]=code=>{check(code===128,'Native death error code changed');deathCalls++;};n.death(new Uint8Array([5,0,0]));
+    const event=m.connectionInfo().events.at(-1);
+    check(event.type==='server-death'&&event.health===health,'Native death lost its pre-handler health snapshot');
+    check(deathCalls===1,'Death observation changed native handling');
+   }finally{n.network[deathKey]=nativeDeath;}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_shot_matches_ilm_line:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_shot_matches_ilm_line:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "checked_at": "2026-11-02T09:51:10.767500+00:00",
+  "reported_problem": "Unexpected death after attacking another player with aim enabled",
+  "root_cause": "unconfirmed",
+  "fix_status": "diagnostic observation added; reported post-hit failure not reproduced",
+  "live_controls": {
+    "official_client": {
+      "result": "observed",
+      "client_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+      "last_sample": {
+        "label": "control-24s",
+        "state": 1,
+        "gauges": {
+          "р᠋ࠃ": 255,
+          "ᴑα３": 226.30128000000548,
+          "ﾠށ̂": 255,
+          "ᴏ͠ᚅ": 146.55570000000284,
+          "ᴑ̴٠": 255,
+          "ᴄ᠌ϲ": 0
+        },
+        "counts": {
+          "4": 1,
+          "5": 1,
+          "6": 1
+        },
+        "events": [],
+        "errors": null
+      },
+      "page_errors": []
+    },
+    "mod_without_aim": {
+      "result": "observed",
+      "client_sha256": "f3f8785ac1c805a65d8109f9ff1d4df4e95fd56857b9649f2f8304141fccefae",
+      "last_sample": {
+        "label": "control-24s",
+        "state": 1,
+        "gauges": {
+          "р᠋ࠃ": 255,
+          "ᴑα３": 226.04112000000504,
+          "ﾠށ̂": 255,
+          "ᴏ͠ᚅ": 255,
+          "ᴑ̴٠": 255,
+          "ᴄ᠌ϲ": 0
+        },
+        "counts": {
+          "4": 1,
+          "5": 1,
+          "6": 1
+        },
+        "events": [],
+        "errors": []
+      },
+      "page_errors": []
+    },
+    "aim_auto_fire_stress": {
+      "result": "observed",
+      "client_sha256": "f3f8785ac1c805a65d8109f9ff1d4df4e95fd56857b9649f2f8304141fccefae",
+      "last_sample": {
+        "label": "control-36s",
+        "state": 1,
+        "gauges": {
+          "р᠋ࠃ": 255,
+          "ᴑα３": 211.78188000000353,
+          "ﾠށ̂": 255,
+          "ᴏ͠ᚅ": 255,
+          "ᴑ̴٠": 81,
+          "ᴄ᠌ϲ": 0
+        },
+        "counts": {
+          "4": 679,
+          "5": 679,
+          "6": 680
+        },
+        "events": [],
+        "errors": []
+      },
+      "page_errors": []
+    }
+  },
+  "stress_scope": "Artificial target history; unarmed attack commands into empty space; no verified hits on another player.",
+  "first_probe": {
+    "server_death_before_aim_enabled": true,
+    "attack_commands_before_death": 0,
+    "proves_reported_cause": false
+  },
+  "longer_run": {
+    "status": "blocked",
+    "reason": "Frankfurt 2 was unavailable in the enabled server list; no longer combat coverage claimed"
+  },
+  "new_diagnostics": [
+    "Native server-death event before native state reset",
+    "Client-side health snapshot, aim and autoFire flags",
+    "Counts of mod angle/attack/release commands within the previous two seconds",
+    "WebSocket error and close events; numeric close code and clean flag"
+  ],
+  "privacy": "No token/cookie values, nicknames, hostnames, raw packets or close reason text included in the exported connection report.",
+  "limitations": [
+    "Server death is authoritative, but the client death packet does not identify anticheat as the cause.",
+    "Client health can lag authoritative server health.",
+    "New diagnostics are held only in page memory and are lost on reload.",
+    "Fresh source discovery returned HTTP 503; diagnostic build uses the previously reviewed official snapshot."
+  ],
+  "diagnostic_release": "7e80309d8ec5e0443280056289190923753a9260aa94127abadac7477c63c13e",
+  "diagnostic_client_sha256": "369a797339b9c442828ca83552cc8873e03d5fd25634b9829452b57e28f30674",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 85,
+    "python_tests": 26
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs"
+    ]
+  },
+  "native_death_observation": true,
+  "external_fixture_dependencies": {
+    "advertising": "fixture; failures exercised explicitly below",
+    "audio": "valid silent WAV fixture"
+  },
+  "source_provenance": {
+    "mode": "saved_official_snapshot",
+    "raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+    "live_discovery": "HTTP 503 on three attempts; homepage unavailable",
+    "note": "Diagnostic client uses the reviewed official snapshot used in the live game tests; latest website version could not be confirmed."
+  }
+}

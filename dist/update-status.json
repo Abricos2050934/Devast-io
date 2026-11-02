@@ -2,8 +2,8 @@
   "status": "static_checks_passed",
   "source_url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
   "baseline_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
-  "output_sha256": "f3f8785ac1c805a65d8109f9ff1d4df4e95fd56857b9649f2f8304141fccefae",
-  "output_bytes": 7048207,
+  "output_sha256": "3bd0ef786f1f5fd560f12002e076e824763def7a29d1675cd0bfa5c10c97d0a6",
+  "output_bytes": 7050264,
   "applied_patches": [
     "camera-world-view",
     "packet-position-history",
@@ -22,7 +22,8 @@
     "ilm-native-angle-bookkeeping-primary",
     "ilm-native-angle-bookkeeping-secondary",
     "native-observe-connection-socket",
-    "native-guard-stale-preflight-response"
+    "native-guard-stale-preflight-response",
+    "native-observe-server-death"
   ],
   "live_server_test": "see build/browser-report.json",
   "publication": "not_published"

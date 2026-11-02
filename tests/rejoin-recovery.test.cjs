@@ -113,3 +113,33 @@ test('the connection report contains presence flags, without exposing stored cre
  for(const value of Object.values(account))assert.ok(!text.includes(JSON.stringify(value)));
  f.mod.dispose();
 });
+test('server death captures combat and health before the native handler resets the player',()=>{
+ const f=fixture({saved:account});f.B.health=()=>255;
+ f.mod.trackPacket(1,1,1,1000,1000,true);f.mod.trackPacket(1,2,1,1200,1100,true);
+ f.mod.setSetting('AimBotEnabled',true);f.mod.setSetting('mouseFovEnable',false);f.mod.aim.refresh();
+ f.mod.observeDeath();f.world['ᅠᏧ‍'].id=0;f.network.state=0;
+ const event=f.mod.connectionInfo().events.at(-1);
+ assert.equal(event.type,'server-death');assert.equal(event.state,1);assert.equal(event.health,255);
+ assert.equal(event.aim,true);assert.equal(event.commandsInLast2s.angle,1);
+ for(const value of Object.values(account))assert.ok(!JSON.stringify(event).includes(JSON.stringify(value)));
+ assert.deepEqual(identity(f),account);f.mod.dispose();
+});
+test('socket observers preserve native callbacks and exclude close reasons and credentials',()=>{
+ const f=fixture({saved:account}),sockets=[];
+ function socket(){const handlers=new Map();const s={readyState:1,onclose(){},addEventListener(k,fn){handlers.set(k,fn);},removeEventListener(k,fn){if(handlers.get(k)===fn)handlers.delete(k);},emit(k,event={}){handlers.get(k)?.(event);},handlers};sockets.push(s);return s;}
+ const first=socket(),nativeClose=first.onclose;f.mod.observeSocket(first);first.emit('error');
+ assert.equal(first.onclose,nativeClose);
+ first.emit('close',{code:1006,wasClean:false,reason:account.token});
+ const report=f.mod.connectionInfo();assert.equal(report.events.at(-1).code,1006);
+ assert.ok(!JSON.stringify(report).includes(account.token));
+ const second=socket();f.mod.observeSocket(second);assert.equal(first.handlers.size,0);
+ first.emit('close',{code:1000});assert.equal(f.mod.connectionInfo().events.length,2);
+ for(let i=0;i<20;i++)second.emit('error');assert.equal(f.mod.connectionInfo().events.length,12);
+ f.mod.dispose();assert.equal(second.handlers.size,0);assert.deepEqual(identity(f),account);
+});
+test('combat snapshots expire idle commands and cannot be changed by the report consumer',()=>{
+ const f=fixture();f.mod.trackPacket(1,1,1,0,0,true);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();
+ f.mod.observeDeath();const report=f.mod.connectionInfo();report.events[0].commandsInLast2s.angle=999;
+ assert.equal(f.mod.connectionInfo().events[0].commandsInLast2s.angle,1);
+ f.setClock(4000);f.mod.observeDeath();assert.equal(f.mod.connectionInfo().events.at(-1).commandsInLast2s.angle,0);f.mod.dispose();
+});

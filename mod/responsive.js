@@ -808,6 +808,21 @@ function __installDevastMod(B) {
     commands: 0,
     deduplicatedAngles: 0
   };
+  const recentCombatCommands = [], connectionEvents = [];
+  function combatCommands(now = performance.now()) {
+    while (recentCombatCommands.length && now - recentCombatCommands[0].at > 2000) recentCombatCommands.shift();
+    const counts = {angle:0,attack:0,release:0};
+    for (const {op} of recentCombatCommands) counts[op === 6 ? 'angle' : op === 4 ? 'attack' : 'release']++;
+    return counts;
+  }
+  function connectionEvent(type, details = {}) {
+    const health = B.health?.();
+    connectionEvents.push({type,at:Math.round(performance.now()),state:B.network.state,
+      aim:MOD.AimBotEnabled,autoFire:MOD.autoFire,
+      health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details});
+    if (connectionEvents.length > 12) connectionEvents.shift();
+  }
+  function observeDeath() { if (!stopped) connectionEvent('server-death'); }
   let overlay, overlayHost, ctx, menu, functionList, zoomControl, nextFrame, stopped = false, waitingKey = null;
   let lastStep = -Infinity, lastLoot = -Infinity, lastBuild = -Infinity;
   let lastTake = -Infinity, lastKeepAlive = -Infinity, lastChat = -Infinity, nextChatAt = -Infinity;
@@ -862,6 +877,10 @@ function __installDevastMod(B) {
       }
     }
     originalSender(JSON.stringify(packet));
+    if ([4,5,6].includes(packet[0])) {
+      recentCombatCommands.push({at:performance.now(),op:packet[0]});
+      if (recentCombatCommands.length > 180) recentCombatCommands.shift();
+    }
     if (packet[0] === 6) lastSentAngle = packet[1];
     diagnostics.commands++;
     return true;
@@ -1281,20 +1300,33 @@ function __installDevastMod(B) {
     lastFailureCode: 0,
     gatewayRecoveries: 0
   };
-  let connectionSocket = null, adGate = null;
+  let connectionSocket = null, adGate = null, removeSocketObservers = () => {};
   const widgetWrappers = new Map();
-  function observeSocket(socket) { connectionSocket = socket; }
+  function observeSocket(socket) {
+    removeSocketObservers();
+    connectionSocket = socket;
+    if (typeof socket?.addEventListener !== 'function') return;
+    const handlers = {
+      close:event => { if (!stopped && socket === connectionSocket) connectionEvent('socket-close',
+        {code:Number.isInteger(event.code) ? event.code : null,clean:event.wasClean === true}); },
+      error:() => { if (!stopped && socket === connectionSocket) connectionEvent('socket-error'); }
+    };
+    for (const [name,handler] of Object.entries(handlers)) socket.addEventListener(name,handler);
+    removeSocketObservers = () => {
+      for (const [name,handler] of Object.entries(handlers)) socket.removeEventListener?.(name,handler);
+    };
+  }
   function connectionInfo() {
     const stored = {};
     for (const key of ['token','tokenId','userId','accountToken']) {
       try { stored[key] = !!localStorage.getItem(key); } catch (_) { stored[key] = null; }
     }
-    return {schema:1,recoveryVersion:1,state:B.network.state,phase:reconnect.phase,
+    return {schema:2,recoveryVersion:2,state:B.network.state,phase:reconnect.phase,
       nativeReady:typeof B.network[B.loginKey] === 'function',
       nativePending:B.pendingKey ? !!B.network[B.pendingKey] : false,
       adWaiting:!!B.adWaiting?.(),socketState:connectionSocket?.readyState ?? null,
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,
-      stored,modErrorCount:diagnostics.errors.length};
+      stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,commandsInLast2s:{...event.commandsInLast2s}}))};
   }
   function releaseNativePending() {
     if (B.pendingKey) B.network[B.pendingKey] = false;
@@ -1474,6 +1506,7 @@ function __installDevastMod(B) {
         reconnect.phase = 'idle';
         reconnect.generation++;
         releaseNativePending();
+        connectionEvent('connection-timeout');
         const socket = connectionSocket;
         connectionSocket = null;
         if (socket && typeof socket.close === 'function') socket.close();
@@ -1854,6 +1887,7 @@ function __installDevastMod(B) {
     copyNickname,
     reconnect,
     observeSocket,
+    observeDeath,
     guardHandshakeCallback,
     connectionInfo,
     step,
@@ -1896,6 +1930,7 @@ function __installDevastMod(B) {
       MOD.XrayBuildings = false;
       MOD.ShowMines = false;
       stopped = true;
+      removeSocketObservers();
       adGate = null;
       for (const [widget,entries] of widgetWrappers) for (const [method,entry] of Object.entries(entries)) if (widget[method] === entry.wrapped) widget[method] = entry.original;
       window.clearInterval(aimTimer);
