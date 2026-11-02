@@ -21,6 +21,16 @@ if(require.main===module){
  const blocks=names.map(name=>{const n=tree.body.find(n=>n.id?.name===name);if(!n)throw Error('Missing '+name);return {name,source:src.slice(n.start,n.end)};});
  const refs={upload_sha256:'65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315',blocks};
  fs.writeFileSync('recovery/ilm-aim-reference.json.gz',z.gzipSync(JSON.stringify(refs),{level:9}));
+ const nodes=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;nodes.push(n);for(const v of Object.values(n)){if(Array.isArray(v))todo.push(...v);else if(v&&typeof v==='object')todo.push(v);}}
+ const folders=nodes.filter(n=>n.type==='VariableDeclaration'&&n.declarations.some(d=>d.id.name==='_0xaa24fd'));
+ if(folders.length!==1)throw Error('Expected one ILM aim folder');
+ const folder=folders[0],controls=nodes.filter(n=>n.type==='ExpressionStatement'&&n.start>=folder.end).sort((a,b)=>a.start-b.start)[0];
+ if(!src.slice(controls.start,controls.end).startsWith('_0xaa24fd['))throw Error('Unexpected ILM aim controls');
+ const renders=nodes.filter(n=>n.type==='FunctionDeclaration'&&n.id?.name==='_0x341470');
+ if(renders.length!==1)throw Error('Expected one ILM aim renderer');
+ const lines=renders[0].body.body.find(n=>n.type==='IfStatement');
+ const menuRefs={upload_sha256:refs.upload_sha256,blocks:[{name:'menu',source:src.slice(folder.start,folder.end)+'\n'+src.slice(controls.start,controls.end)},{name:'lines',source:src.slice(lines.start,lines.end)}]};
+ fs.writeFileSync('recovery/ilm-aim-menu-reference.json.gz',z.gzipSync(JSON.stringify(menuRefs),{level:9}));
  // Check that decoder aliases are unused, but retain every declaration verbatim.
  const checked=blocks.map(b=>clean(b.source));const core=blocks.map(b=>b.source).join('\n\n');
  fs.writeFileSync('build/ilm-upload/core.js',core);

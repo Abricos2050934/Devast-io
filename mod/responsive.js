@@ -969,11 +969,9 @@ function __installDevastMod(B) {
       jitter.lastSentAt = now;
     }
   }
-  let firingUntil=-Infinity;
   function beforeFire() {
     if (!playing()) return;
     const now=performance.now();
-    firingUntil=now+150;
     if (!MOD.JitterEnabled) return;
     const continuingBurst=now<jitter.fireUntil && !jitter.spinning;
     jitter.fireUntil = now + 150;
@@ -1439,23 +1437,7 @@ function __installDevastMod(B) {
         }
       }
     }
-    const selfRecord = MOD.AimBotEnabled && playerRecords.find(r => r.e.ᴘ४１ === me.id);
-    if (MOD.AimBotEnabled && selfRecord) {
-      for (const [i, line] of GetAllTargets.lines.entries()) {
-        if (i === 0 && !MOD.visualizeResolving) continue;
-        if (![line.x1, line.y1, line.x2, line.y2].every(Number.isFinite) || line.x1 === -1 && line.y1 === -1 && line.x2 === -1 && line.y2 === -1) continue;
-        if (line.x1 === line.x2 && line.y1 === line.y2) continue;
-        const start = at({x:line.x1, y:line.y1});
-        const end = at({x:line.x2, y:line.y2});
-        ctx.globalAlpha = line.alpha;
-        ctx.strokeStyle = i === 0 ? MOD.visualizeResolvingColor : line.color;
-        ctx.lineWidth = line.width;
-        ctx.beginPath();
-        ctx.moveTo(start.x, start.y);
-        ctx.lineTo(end.x, end.y);
-        ctx.stroke();
-      }
-    }
+    __renderIlmAimLines(MOD,GetAllTargets,ctx,v);
     ctx.globalAlpha = 1;
     ctx.restore();
   }
@@ -2001,17 +1983,8 @@ function __installDevastMod(B) {
     for (const key of ['ShowPosition', 'ShowNamesOnMap', 'ShowMines', 'ShowPlayerHitbox', 'KarmaAboveHead', 'ShowBuildingOwner', 'XrayBuildings', 'PlayersListEnabled', 'showFunctionList']) add(visual, key);
     add(visual, 'Xraytransparency', 'Building opacity', .05, 1, .05);
     for (const [key,label] of [['TeamClanColor','Цвет своего клана'],['EnemyClanColor','Цвет чужого клана'],['NicknameColor','Цвет ника']]) visual.addColor(MOD, key).name(label).onChange(value=>setSetting(key,value));
-    const aim = menu.addFolder('Aim bot');
-    for (const key of ['AimBotEnabled', 'autoFire', 'visualizeResolving']) add(aim, key);
-    add(aim, 'bulletSpeedCoefficient', 'bulletSpeedCoefficient', 1, 15, .25);
-    add(aim, 'ShowRealAngles', 'Show real angles', ['always', 'withAim']);
-    add(aim, 'target', 'Target', ['players', 'ghouls', 'all']);
-    add(aim, 'mouseFovEnable', 'Target near cursor');
-    add(aim, 'mouseFov', 'Cursor range', 1, 20000, 1);
-    add(aim, 'lockId', 'Lock player ID', -1, 65535, 1);
-    add(aim, 'distanceCoefficient', 'Distance coefficient', 10, 1000, 10);
-    add(aim, 'offsetCoefficient', 'Prediction offset', 0, 3, .1);
-    aim.addColor(MOD, 'visualizeResolvingColor').onChange(persist);
+    const aim = __installIlmAimMenu(menu,MOD);
+    for (const control of aim.__controllers) control.onChange(value=>setSetting(control.property,value));
     const jitterMenu = menu.addFolder('Jitter');
     add(jitterMenu, 'JitterEnabled', 'Enabled');
     add(jitterMenu, 'JitterSpeed', 'Speed (degrees/sec)', 1, 3600, 1);
@@ -2138,11 +2111,6 @@ function __installDevastMod(B) {
     settings: MOD,
     beforeFire,
     get jitterAngle() { return jitter.spinning ? jitter.angle * Math.PI / 180 : null; },
-    get firingAngle() {
-      if (!playing() || !MOD.AimBotEnabled || !Aimbot.targetPlayer?.active || !Number.isFinite(lastSentAngle)) return null;
-      if (!(Aimbot.mouseDown || performance.now()<firingUntil || MOD.autoFire && Aimbot.wannaFire())) return null;
-      return lastSentAngle*Math.PI/180;
-    },
     targets: GetAllTargets,
     trackPacket,
     aim: Aimbot,

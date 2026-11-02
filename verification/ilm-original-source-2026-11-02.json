@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+  "fresh_extraction": "Full upload decoded without executing client startup; regenerated core reference remains identical to committed reference",
+  "core_reference_unchanged": true,
+  "scope": {
+    "unchanged_installer_functions": 64,
+    "unchanged_installer_statements": 70,
+    "changed_functions": [
+      "beforeFire",
+      "draw",
+      "createMenu"
+    ],
+    "removed_return_property": "firingAngle",
+    "other_native_patches": "unchanged",
+    "jitter_functions_and_state": "identical",
+    "beforeFire": "only custom firing-display timer assignment removed",
+    "defaults_and_settings_storage": "unchanged"
+  },
+  "original_script_sha256": "27a33f1ce1e83474fec17704454bf4eb5dc62fc8bf0b740fd1bd7c5daacc946b",
+  "decoded_script_sha256": "2c0087f65d907a82a109f529fb226539326e79503e531357b35077ae7c683693",
+  "core": {
+    "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+    "core_sha256": "d461201eba20131454b355647979dc738a47e4acf4b4d88fd74f658b22049ed2",
+    "declarations": [
+      "_0x3e2cd1",
+      "_0x218077",
+      "_0x4b5d6f",
+      "_0x391c19",
+      "_0x4a7389"
+    ],
+    "classes": 4,
+    "methods_including_constructors": 13,
+    "tick_functions": 1,
+    "removed_unused_decoder_aliases": 0,
+    "preserved_unused_decoder_aliases": 14,
+    "ast_parity": "exact",
+    "source_parity": "verbatim_stored_decoded_declarations",
+    "menu_parity": "verbatim_original_5_controls",
+    "line_render_parity": "verbatim_original_block"
+  },
+  "output_sha256": "31bef7c5b874c030d0b9b6f72651c4a554b804ffbf59a0efe8d4a0628fa8eabe",
+  "module_sha256": {
+    "mod/responsive.js": "93f6d4b981f357394e0ac99d9930174f72c8afb6ab482f56b9cf2c249fc37856",
+    "mod/bootstrap.js": "1631e444b28954e506f3f9d1a87f7630140ca460e3c8371c34d3e30754ad7255",
+    "mod/ilm-aim.js": "d461201eba20131454b355647979dc738a47e4acf4b4d88fd74f658b22049ed2",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 131,
+    "python_tests": 26
+  },
+  "native_browser": {
+    "menu": true,
+    "initial_metadata": true,
+    "head_and_leaderboard_labels": true,
+    "packet_history": true,
+    "packet_removal": true,
+    "self_angle_modes": true,
+    "native_clan_colors_and_cache": true,
+    "native_nickname_color_and_cache": true,
+    "full_player_list_and_native_lifecycle": true,
+    "native_shot_matches_ilm_line": true,
+    "jitter_rotation_and_shot_priority": true,
+    "jitter_preserves_native_input": true,
+    "jitter_socket_backpressure": true,
+    "stable_frame_entity_records": true,
+    "firing_display_original_ilm_interpolation": true,
+    "continuous_fire_ilm_cadence": true,
+    "ilm_manual_fire_cadence": true,
+    "disconnect_preserves_aim_history": true,
+    "native_fast_loot_cadence": true,
+    "native_autobuild_ilm_cadence": true,
+    "native_rejoin_identity": true,
+    "native_ad_failure_recovery": true,
+    "native_death_observation": true,
+    "death_stops_restore_retries": true,
+    "mod_errors": []
+  },
+  "page_errors": [],
+  "original_menu_controls": [
+    "ShowRealAngles",
+    "Target",
+    "DistanceCoefficient",
+    "BulletSpeedCoefficient",
+    "OffsetCoefficient"
+  ],
+  "removed_customizations": [
+    "Additional aim GUI controls",
+    "Custom line hiding and color override",
+    "Firing display override using the sent angle instead of original server-angle interpolation"
+  ],
+  "adaptation_scope": [
+    "Current native packet format and codec",
+    "Current canvas coordinates and team metadata",
+    "Existing explicitly requested Jitter interoperability"
+  ],
+  "live_game_session": "not_tested_this_change"
+}

@@ -61,7 +61,7 @@
       "id": "ilm-native-self-server-angle",
       "expected": 1,
       "before": "ᅟ̗༣[ⲥ̡༤] =ㅤ๘މ [ еϲ̇]",
-      "after": "(typeof __responsiveMod!==\"undefined\" && __responsiveMod && Number.isFinite(__responsiveMod.firingAngle)) ? (ᅟ̗༣[ⲥ̡༤]=__responsiveMod.firingAngle) : ((typeof __responsiveMod!==\"undefined\" && __responsiveMod && Number.isFinite(__responsiveMod.jitterAngle)) ? (ᅟ̗༣[ⲥ̡༤]=__responsiveMod.jitterAngle) : (ᅟ̗༣[ⲥ̡༤] = (typeof __responsiveMod!==\"undefined\" && __responsiveMod && (__responsiveMod.settings.ShowRealAngles===\"always\" || (__responsiveMod.settings.ShowRealAngles===\"withAim\" && __responsiveMod.settings.AimBotEnabled))) ? ᴌߊ༡.ᴎ٨ߍ(ᅟ̗༣[ⲥ̡༤],ᅟ̗༣.ᴑ٧ߓ,ᅟ̗༣.ᴎ٨ߍ*2) : ㅤ๘މ [ еϲ̇]))"
+      "after": "(typeof __responsiveMod!==\"undefined\" && __responsiveMod && Number.isFinite(__responsiveMod.jitterAngle)) ? (ᅟ̗༣[ⲥ̡༤]=__responsiveMod.jitterAngle) : (ᅟ̗༣[ⲥ̡༤] = (typeof __responsiveMod!==\"undefined\" && __responsiveMod && (__responsiveMod.settings.ShowRealAngles===\"always\" || (__responsiveMod.settings.ShowRealAngles===\"withAim\" && __responsiveMod.settings.AimBotEnabled))) ? ᴌߊ༡.ᴎ٨ߍ(ᅟ̗༣[ⲥ̡༤],ᅟ̗༣.ᴑ٧ߓ,ᅟ̗༣.ᴎ٨ߍ*2) : ㅤ๘މ [ еϲ̇])"
     },
     {
       "id": "ilm-native-initial-nickname-id",

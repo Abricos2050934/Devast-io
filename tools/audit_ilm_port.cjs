@@ -22,7 +22,15 @@ function audit(){
  }
  const payload=fs.readFileSync('mod/responsive.js','utf8');
  for(const forbidden of ['class GetAllTargetsCon','class AimbotCon','Aimbot.resolve =','Aimbot.wannaFire =','lastFireKey','target.revision'])assert.ok(!payload.includes(forbidden),'Old replacement remains: '+forbidden);
- const out={upload_sha256:ref.upload_sha256,core_sha256:crypto.createHash('sha256').update(src).digest('hex'),declarations,classes:4,methods_including_constructors:methods,tick_functions:1,removed_unused_decoder_aliases:0,preserved_unused_decoder_aliases:aliases,ast_parity:'exact',source_parity:'verbatim_stored_decoded_declarations'};
+ const menuRef=JSON.parse(z.gunzipSync(fs.readFileSync('recovery/ilm-aim-menu-reference.json.gz')));
+ assert.equal(menuRef.upload_sha256,ref.upload_sha256,'Aim references must come from the same upload');
+ for(const [name,marker]of [['menu','MENU'],['lines','LINES']]){
+  const begin='// BEGIN ORIGINAL ILM AIM '+marker+'\n',end='\n// END ORIGINAL ILM AIM '+marker;
+  assert.equal(src.split(begin).length,2,'One ILM '+name+' block required');assert.equal(src.split(end).length,2,'One ILM '+name+' block end required');
+  assert.equal(src.split(begin)[1].split(end)[0],menuRef.blocks.find(b=>b.name===name).source,'Changed original ILM '+name);
+ }
+ assert.ok(!payload.includes('firingAngle'),'Custom firing display override remains');
+ const out={upload_sha256:ref.upload_sha256,core_sha256:crypto.createHash('sha256').update(src).digest('hex'),declarations,classes:4,methods_including_constructors:methods,tick_functions:1,removed_unused_decoder_aliases:0,preserved_unused_decoder_aliases:aliases,ast_parity:'exact',source_parity:'verbatim_stored_decoded_declarations',menu_parity:'verbatim_original_5_controls',line_render_parity:'verbatim_original_block'};
  return out;
 }
 if(require.main===module){const report=audit();fs.writeFileSync('build/ilm-upload/port-audit.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));}

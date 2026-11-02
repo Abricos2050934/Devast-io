@@ -87,7 +87,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    check(m.targets.players[2].prevX[0]===1100&&m.targets.players[2].x===1120&&m.targets.ghouls[17].x===1200,'Current packet bindings failed');
    packet(13,0,17,0,0,false);packet(0,2,1,0,0,false);check(!m.targets.players[2].active&&!m.targets.ghouls[17].active,'Removal binding failed');
    self.id=1;const e=n.entities.get(1,0,1,0);e[s['ᴘ४１']]=1;e.id=0;e[r['ᴎ٨ߍ']]=.25;e[r['ᴑ٧ߓ']]=1;n.input.angle=2;
-   for(const [mode,on]of [['withAim',false],['withAim',true],['always',false]]){m.setSetting('ShowRealAngles',mode);m.setSetting('AimBotEnabled',on);e.angle=0;n.update(e);check(Math.abs(e.angle-((mode==='always'||on)?0.5:2))<1e-8,'Self angle binding failed');}
+   for(const [mode,on]of [['withAim',false],['withAim',true],['always',false]]){m.menu.__folders['Aim Bot'].__controllers.find(c=>c.property==='ShowRealAngles').setValue(mode);m.setSetting('AimBotEnabled',on);e.angle=0;n.update(e);check(Math.abs(e.angle-((mode==='always'||on)?0.5:2))<1e-8,'Self angle binding failed');}
    n.spawn([0,1,123,'Self',0,0]);
    const clans=w[s['ﾠࡅ‍']];clans[0]={name:'ALLY',[s['ոᚄރ']]:7,[s['ᴌ५ᚂ']]:null};clans[1]={name:'ENEMY',[s['ոᚄރ']]:8,[s['ᴌ५ᚂ']]:null};
    Object.assign(players[1],{[s['а༤̘']]:0,[s['ᴌ̗ⲟ']]:7});Object.assign(players[2],{[s['а༤̘']]:1,[s['ᴌ̗ⲟ']]:8});Object.assign(players[120],{[s['а༤̘']]:0,[s['ᴌ̗ⲟ']]:7});
@@ -134,8 +134,8 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
      n.network[s['ѕ᠋༢']]();n.network[s['ρ٨٨']]();n.network[r['ᴎ༩༣']]();
      const line=m.targets.lines[0],angle=(Math.round(Math.atan2(line.y2-line.y1,line.x2-line.x1)*180/Math.PI)+360)%360;
      check(JSON.stringify(transport.packets)===JSON.stringify([[6,angle],[4]]),'Native shot does not follow the current ILM line: '+JSON.stringify({packets:transport.packets,angle,line}));
-     e.angle=-2;e[r['ᴑ٧ߓ']]=-2;n.update(e);
-     check(Math.abs(e.angle-angle*Math.PI/180)<1e-6,'Firing display waited for a stale server angle');
+     e.angle=-2;e[r['ᴑ٧ߓ']]=-1;n.update(e);
+     check(Math.abs(e.angle-(-2+e[r['ᴎ٨ߍ']]*2))<1e-6,'Firing display differs from original ILM server-angle interpolation');
      const before=JSON.stringify(line);transport.packets.length=0;m.trackPacket(0,2,1,x+5,y+5,true);n.network[r['ᴎ༩༣']]();
      check(JSON.stringify(transport.packets)==='[[4]]'&&JSON.stringify(m.targets.lines[0])===before,'Manual fire inserted a calculation outside the ILM timer');
     }
@@ -207,7 +207,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Death recovery changed stored identity');
    }finally{n.network[deathKey]=nativeDeath;}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_without_server_echo:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

@@ -48,3 +48,21 @@ function __jitterPatchNativeFire(source) {
   if(source.split(before).length!==2) throw new Error('Unsupported native fire handler');
   return source.replace(before,before+'if(typeof __responsiveMod!=="undefined"&&__responsiveMod)__responsiveMod.beforeFire();');
 }
+
+// Original aim GUI only; the surrounding mod keeps its own folders and persistence.
+function __installIlmAimMenu(root,settings) {
+const _0x2a1bff=root,_0x2ea565=settings;
+// BEGIN ORIGINAL ILM AIM MENU
+const _0xaa24fd=_0x2a1bff["addFolder"]("Aim Bot");
+_0xaa24fd["add"](_0x2ea565,"ShowRealAngles",["always","withAim"])["name"]("ShowRealAngles"),_0xaa24fd['add'](_0x2ea565,"target",["players",'ghouls',"all"])['name']("Target"),_0xaa24fd["add"](_0x2ea565,'distanceCoefficient',0xa,0x3e8,0xa)["name"]("DistanceCoefficient"),_0xaa24fd['add'](_0x2ea565,"bulletSpeedCoefficient",0x1,0xf,0.25)["name"]("BulletSpeedCoefficient"),_0xaa24fd['add'](_0x2ea565,'offsetCoefficient',0x0,0x3,0.1)["name"]("OffsetCoefficient");
+// END ORIGINAL ILM AIM MENU
+return _0xaa24fd;
+}
+
+// Original prediction lines; the caller supplies the current native view/canvas.
+function __renderIlmAimLines(settings,targets,ctx,view) {
+const _0x2ea565=settings,_0x6cc5f2=targets,_0x3bfd3a=ctx,_0x555618=view.scale,_0x4212a3=view.x,_0x260b24=view.y;
+// BEGIN ORIGINAL ILM AIM LINES
+if(_0x2ea565["AimBotEnabled"]){let _0xb2b2ae=_0x3bfd3a["globalAlpha"],_0x2d0da4=_0x3bfd3a["lineWidth"];for(var _0x55bf6b=0x0;_0x55bf6b<_0x6cc5f2["lines"]["length"];_0x55bf6b++){let _0x47ac71=_0x6cc5f2["lines"][_0x55bf6b];var _0x4e7ab6={'x':_0x555618*(_0x47ac71['x1']+_0x4212a3),'y':_0x555618*(_0x47ac71['y1']+_0x260b24)},_0xfdef36={'x':_0x555618*(_0x47ac71['x2']+_0x4212a3),'y':_0x555618*(_0x47ac71['y2']+_0x260b24)};_0x3bfd3a["lineWidth"]=_0x47ac71["width"],_0x3bfd3a["globalAlpha"]=_0x47ac71['alpha'],_0x3bfd3a["strokeStyle"]=_0x47ac71['color'],_0x3bfd3a["beginPath"](),_0x3bfd3a["moveTo"](_0x4e7ab6['x'],_0x4e7ab6['y']),_0x3bfd3a["lineTo"](_0xfdef36['x'],_0xfdef36['y']),_0x3bfd3a['stroke']();}_0x3bfd3a["globalAlpha"]=_0xb2b2ae,_0x3bfd3a["lineWidth"]=_0x2d0da4;}
+// END ORIGINAL ILM AIM LINES
+}

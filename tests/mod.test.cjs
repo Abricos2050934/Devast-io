@@ -138,10 +138,10 @@ test('map names, ID 120, clan/name colors, gauges, hitboxes and real-angle displ
  assert.ok(!f.dom.calls.some(c=>c.name==='arc'||c.name==='lineTo'));f.mod.dispose();
 });
 
-test('line color reaches the canvas; removal resets ILM lines and aim owns native input while enabled',()=>{
+test('original ILM line color reaches the canvas; removal resets lines and aim owns native input while enabled',()=>{
  const f=fixture({dom:true});scene(f,1,[player(1),player(2,100,0)]);
  f.mod.trackPacket(1,1,0,0,0,true);f.mod.trackPacket(1,2,0,100,0,true);f.mod.setSetting('visualizeResolvingColor','#abcdef');f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();f.mod.step(0);
- assert.ok(f.dom.calls.some(c=>c.name==='stroke'&&c.stroke==='#abcdef'));f.network['ѕ᠋༢']();assert.equal(f.nativeCalls,1);
+ assert.ok(f.dom.calls.some(c=>c.name==='stroke'&&c.stroke==='#EEEEEE'));f.network['ѕ᠋༢']();assert.equal(f.nativeCalls,1);
  f.mod.trackPacket(1,2,0,0,0,false);f.mod.aim.refresh();assert.equal(f.mod.targets.lines[0].x1,undefined);f.network['ѕ᠋༢']();assert.equal(f.nativeCalls,2);f.mod.dispose();
 });
 

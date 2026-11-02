@@ -95,12 +95,13 @@ test('continuous native fire aligns Jitter once and then uses only the original 
   f.mod.aim.mouseDown=false;f.setClock(500);f.mod.step(500);f.mod.step(750);assert.notEqual(f.mod.jitterAngle,null);
  }finally{f.mod.dispose();}
 });
-test('firing display uses the angle already sent by ILM, without waiting for a server echo or changing prediction',()=>{
+test('non-Jitter firing leaves ILM prediction and direction cadence unchanged',()=>{
  const f=setup();try{
-  f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();assert.equal(f.mod.firingAngle,null);
-  const count=f.packets.length;f.mod.aim.mouseDown=true;assert.equal(f.mod.firingAngle,Math.PI/4);assert.equal(f.packets.length,count);
-  f.mod.aim.mouseDown=false;f.mod.beforeFire();assert.equal(f.packets.length,count,'Non-Jitter fire added a packet');assert.equal(f.mod.firingAngle,Math.PI/4);
-  f.mod.setSetting('AimBotEnabled',false);assert.equal(f.mod.firingAngle,null);
+  f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();
+  const count=f.packets.length,line=JSON.stringify(f.mod.targets.lines[0]);f.mod.aim.mouseDown=true;
+  f.mod.trackPacket(1,2,1,120,150,true);f.mod.beforeFire();
+  assert.equal(f.packets.length,count,'Non-Jitter fire added a packet');assert.equal(JSON.stringify(f.mod.targets.lines[0]),line,'Fire calculated a new prediction between ILM ticks');
+  assert.equal(Object.hasOwn(f.mod,'firingAngle'),false);
  }finally{f.mod.dispose();}
 });
 test('Jitter leaves native pointer and movement state untouched, including when toggled off',()=>{
