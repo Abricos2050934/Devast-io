@@ -94,7 +94,7 @@
     "native_rejoin_identity": true,
     "mod_errors": []
   },
-  "finished_at": "2026-11-02T07:32:07.832Z",
+  "finished_at": "2026-11-02T07:43:40.638Z",
   "candidate_function_tests": {
     "status": "passed",
     "files": [
