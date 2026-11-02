@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "output_sha256": "f1df140c5b8cba275473e146b92afd74abad9a37d2a28b1347808af37735923b",
+  "reference_scope": "Stored decoded core and selected integration declarations from 25INVITES-ILM1.0.json. The complete upload and GUI creation code are absent.",
+  "core": {
+    "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+    "core_sha256": "7b2647bc40a4e6b7a373b7e4276655f8699b7125a8189e668713801674c655a5",
+    "declarations": [
+      "_0x3e2cd1",
+      "_0x218077",
+      "_0x4b5d6f",
+      "_0x391c19",
+      "_0x4a7389"
+    ],
+    "classes": 4,
+    "methods_including_constructors": 13,
+    "tick_functions": 1,
+    "removed_unused_decoder_aliases": 0,
+    "preserved_unused_decoder_aliases": 14,
+    "ast_parity": "exact",
+    "source_parity": "verbatim_stored_decoded_declarations"
+  },
+  "validation": "passed",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 129,
+    "python_tests": 26
+  },
+  "core_behavior": "Original and transplanted blocks agree across 180 scenes and six ticks per scene; installed integration parity and GUI behavior tests passed.",
+  "menu_parity": "not_verified_original_GUI_source_required",
+  "original_inert_settings": [
+    "resolverType",
+    "bulletSpeedCoefficient"
+  ],
+  "preserved": [
+    "Jitter",
+    "50 ms scheduling",
+    "optimized native metadata adapter",
+    "current protocol adaptation",
+    "saved settings and login identity"
+  ],
+  "remaining_work": "Obtain the complete original ILM JSON or JavaScript, then transplant and verify its GUI creation block, order, labels, ranges and callbacks."
+}

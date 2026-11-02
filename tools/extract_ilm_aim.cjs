@@ -21,8 +21,9 @@ if(require.main===module){
  const blocks=names.map(name=>{const n=tree.body.find(n=>n.id?.name===name);if(!n)throw Error('Missing '+name);return {name,source:src.slice(n.start,n.end)};});
  const refs={upload_sha256:'65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315',blocks};
  fs.writeFileSync('recovery/ilm-aim-reference.json.gz',z.gzipSync(JSON.stringify(refs),{level:9}));
- const cleaned=blocks.map(b=>clean(b.source));const core=cleaned.map(b=>format(b.source)).join('\n');
+ // Check that decoder aliases are unused, but retain every declaration verbatim.
+ const checked=blocks.map(b=>clean(b.source));const core=blocks.map(b=>b.source).join('\n\n');
  fs.writeFileSync('build/ilm-upload/core.js',core);
- console.log(JSON.stringify({declarations:names,removed_unused_decoder_aliases:cleaned.reduce((s,x)=>s+x.removed,0),sha256:crypto.createHash('sha256').update(core).digest('hex')}));
+ console.log(JSON.stringify({declarations:names,removed_unused_decoder_aliases:0,preserved_unused_decoder_aliases:checked.reduce((s,x)=>s+x.removed,0),sha256:crypto.createHash('sha256').update(core).digest('hex')}));
 }
 module.exports={names,clean};

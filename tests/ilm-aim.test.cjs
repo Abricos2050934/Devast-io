@@ -8,7 +8,7 @@ function instance(original){
  vm.runInContext(setup+code,ctx,{timeout:1000});return ctx;
 }
 const snap=`JSON.stringify({packets,settings,target:engine.aim.targetPlayer?.id,lastAngle:engine.aim.lastAngle,lines:engine.targets.lines,players:engine.targets.players.filter(t=>t.active),ghouls:engine.targets.ghouls.filter(t=>t.active),lastId:engine.targets.lastId,keys:Object.keys(engine.targets)})`;
-test('every original ILM declaration and local variable survives AST comparison',()=>{const r=audit();assert.equal(r.classes,4);assert.equal(r.removed_unused_decoder_aliases,14);});
+test('every original ILM declaration and local variable survives verbatim and AST comparison',()=>{const r=audit();assert.equal(r.classes,4);assert.equal(r.removed_unused_decoder_aliases,0);assert.equal(r.preserved_unused_decoder_aliases,14);assert.equal(r.ast_parity,'exact');assert.equal(r.source_parity,'verbatim_stored_decoded_declarations');});
 test('original upload and transplanted aim agree over 180 deterministic scenes and six ticks per scene',()=>{
  const original=instance(true),ported=instance(false);
  for(let i=0;i<180;i++){
