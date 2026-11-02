@@ -141,7 +141,9 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     }
     // Jitter owns the idle angle, but a real native shot must encode aim first.
     n.input.angle=0;m.setSetting('JitterEnabled',true);m.setSetting('JitterSpeed',360);
-    const jitterNow=performance.now();m.step(jitterNow);m.step(jitterNow+250);
+    const nativeInput={angle:n.input.angle,x:n.input.x,y:n.input.y,state:n.input.state};
+    const jitterNow=performance.now();m.step(jitterNow);m.step(jitterNow+250);m.aim.refresh();
+    check(Object.keys(nativeInput).every(k=>n.input[k]===nativeInput[k]),'Jitter overwrote native pointer or movement state');
     check(Math.abs(m.jitterAngle-Math.PI/2)<1e-6,'Jitter rotation speed is disconnected');
     e.angle=0;n.update(e);check(Math.abs(e.angle-m.jitterAngle)<1e-6,'Native player sprite does not rotate with Jitter');
     transport.packets.length=0;n.input.angle=-2;n.network[s['ѕ᠋༢']]();n.network[s['ρ٨٨']]();
@@ -155,8 +157,18 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(transport.packets.length===20&&transport.packets.every(p=>p.length===1&&p[0]===4),'Repeated native attacks flooded extra aim packets');
     check(JSON.stringify(m.targets.lines[0])===heldLine,'Repeated native attacks recalculated prediction between ILM ticks');
     transport.packets.length=0;m.aim.refresh();check(transport.packets.length===1&&transport.packets[0][0]===6,'Continuous fire lost its ILM aim tick');
-    m.setSetting('JitterEnabled',false);
+    m.setSetting('AimBotEnabled',false);
+    const blockedSocket={readyState:1,bufferedAmount:4096};m.observeSocket(blockedSocket);
+    await new Promise(resolve=>setTimeout(resolve,160));transport.packets.length=0;
+    m.step(performance.now());m.aim.refresh();
+    check(transport.packets.length===0,'Jitter added cosmetic directions to a backed-up socket');
+    check(m.jitterAngle!==null,'Socket backlog stopped local Jitter rendering');
+    blockedSocket.bufferedAmount=0;m.aim.refresh();
+    check(transport.packets.length===1&&transport.packets[0][0]===6,'Jitter replayed a queue of stale angles');
+    m.observeSocket(null);m.setSetting('JitterEnabled',false);
     m.setSetting('AimBotEnabled',false);transport.packets.length=0;
+    m.render(performance.now());const stableRecords=m.records,stableEntries=m.records.slice();m.render(performance.now());
+    check(stableEntries.length>0&&m.records===stableRecords&&stableEntries.every((r,i)=>m.records[i]===r),'Frame collection rebuilt stable native entity records');
     const loot=[];for(const id of [10,11]){const drop=n.entities.get(0,id,1,1);Object.assign(drop,{id,x:self.x+10,y:self.y,[s['е̝ހ']]:0,[s['Іࡈ５']]:6});loot.push(drop);}
     try{
      m.setSetting('LootDataEnabled',false);m.setSetting('FAutoLootEnabled',true);m.render(0);m.render(16);
@@ -195,7 +207,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Death recovery changed stored identity');
    }finally{n.network[deathKey]=nativeDeath;}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,firing_display_without_server_echo:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_without_server_echo:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

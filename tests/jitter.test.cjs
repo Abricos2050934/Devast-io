@@ -10,9 +10,9 @@ test('Jitter GUI rotates standing and moving players at the chosen speed without
  const f=setup();try{
   const gui=menu(f).__folders.Jitter;
   control(gui,'JitterEnabled').setValue(true);control(gui,'JitterSpeed').setValue(180);
-  f.mod.step(0);f.mod.step(250);assert.equal(f.packets.at(-1)[1],45);
-  f.world['ᅠᏧ‍'].x=40;f.mod.step(500);assert.equal(f.packets.at(-1)[1],90);
-  f.mod.setSetting('JitterSpeed',360);f.mod.step(750);assert.equal(f.packets.at(-1)[1],180);
+  f.mod.step(0);f.mod.step(250);f.setClock(250);f.mod.aim.refresh();assert.equal(f.packets.at(-1)[1],45);
+  f.world['ᅠᏧ‍'].x=40;f.mod.step(500);f.setClock(500);f.mod.aim.refresh();assert.equal(f.packets.at(-1)[1],90);
+  f.mod.setSetting('JitterSpeed',360);f.mod.step(750);f.setClock(750);f.mod.aim.refresh();assert.equal(f.packets.at(-1)[1],180);
   assert.ok(f.packets.every(p=>p[0]===6));assert.equal(f.mod.jitterAngle,Math.PI);
   f.mod.setSetting('JitterEnabled',false);assert.equal(f.mod.jitterAngle,null);assert.equal(f.B.input.angle,0);
  }finally{f.mod.dispose();}
@@ -20,16 +20,16 @@ test('Jitter GUI rotates standing and moving players at the chosen speed without
 test('Jitter preserves ILM core but aims immediately before fire and throughout held fire, then resumes',()=>{
  const f=setup();try{
   f.mod.setSetting('AimBotEnabled',true);f.mod.setSetting('JitterEnabled',true);
-  f.mod.step(0);f.mod.step(200);assert.equal(f.packets.at(-1)[1],72);
+  f.mod.step(0);f.mod.step(200);f.setClock(200);f.mod.aim.refresh();assert.equal(f.packets.at(-1)[1],72);
   f.setClock(200);f.mod.beforeFire();assert.equal(f.packets.at(-1)[1],45);assert.equal(f.mod.jitterAngle,null);
   f.mod.aim.mouseDown=true;f.mod.step(400);f.mod.aim.refresh();assert.equal(f.packets.at(-1)[1],45);assert.equal(f.mod.jitterAngle,null);
-  f.mod.aim.mouseDown=false;f.setClock(500);f.mod.step(500);f.mod.step(750);assert.equal(f.packets.at(-1)[1],90);
+  f.mod.aim.mouseDown=false;f.setClock(500);f.mod.step(500);f.mod.step(750);f.setClock(750);f.mod.aim.refresh();assert.equal(f.packets.at(-1)[1],90);
  }finally{f.mod.dispose();}
 });
 test('Jitter pauses during manual fire without aim, death, disconnect and disposal; rate is bounded',()=>{
  const f=setup();try{
-  f.mod.setSetting('JitterEnabled',true);f.mod.step(0);f.packets.length=0;
-  for(let t=1;t<=100;t++)f.mod.step(t);assert.equal(f.packets.length,2);
+  f.mod.setSetting('JitterEnabled',true);f.mod.step(0);f.mod.aim.refresh();f.packets.length=0;
+  for(let t=1;t<=100;t++){f.mod.step(t);f.setClock(t);f.mod.aim.refresh();}assert.equal(f.packets.length,2);
   f.mod.aim.mouseDown=true;f.mod.step(200);assert.equal(f.mod.jitterAngle,null);
   f.mod.aim.mouseDown=false;f.mod.step(250);f.network.state=64;f.mod.step(300);assert.equal(f.mod.jitterAngle,null);
   const count=f.packets.length;f.mod.aim.refresh();assert.equal(f.packets.length,count);
@@ -101,5 +101,35 @@ test('firing display uses the angle already sent by ILM, without waiting for a s
   const count=f.packets.length;f.mod.aim.mouseDown=true;assert.equal(f.mod.firingAngle,Math.PI/4);assert.equal(f.packets.length,count);
   f.mod.aim.mouseDown=false;f.mod.beforeFire();assert.equal(f.packets.length,count,'Non-Jitter fire added a packet');assert.equal(f.mod.firingAngle,Math.PI/4);
   f.mod.setSetting('AimBotEnabled',false);assert.equal(f.mod.firingAngle,null);
+ }finally{f.mod.dispose();}
+});
+test('Jitter leaves native pointer and movement state untouched, including when toggled off',()=>{
+ const f=setup();try{
+  let angle=.7,writes=0;f.B.input={x:25,y:70,state:3,movement:5,get angle(){return angle;},set angle(v){writes++;angle=v;}};
+  f.mod.setSetting('JitterEnabled',true);
+  for(let t=0;t<=1000;t+=10){f.setClock(t);f.mod.step(t);if(t%50===0)f.mod.aim.refresh();}
+  assert.equal(writes,0);assert.equal(angle,.7);assert.equal(f.B.input.movement,5);assert.equal(f.B.input.state,3);assert.equal(f.B.input.x,25);assert.equal(f.B.input.y,70);
+  f.B.input.angle=1.3;f.mod.setSetting('JitterEnabled',false);assert.equal(angle,1.3);assert.equal(writes,1,'Stopping Jitter overwrote fresh native input');
+ }finally{f.mod.dispose();}
+});
+test('RAF only draws Jitter; one timer sends directions at no more than 20 Hz',()=>{
+ const f=setup();try{
+  f.mod.setSetting('JitterEnabled',true);f.mod.setSetting('JitterSpeed',180);
+  for(let t=0;t<=1000;t+=10){
+   f.setClock(t);const count=f.packets.length;f.mod.step(t);assert.equal(f.packets.length,count,'RAF sent an idle rotation packet');
+   if(t%50===0)f.mod.aim.refresh();
+  }
+  assert.equal(f.packets.length,21);assert.ok(f.packets.every(p=>p[0]===6));assert.equal(f.packets.at(-1)[1],180);
+ }finally{f.mod.dispose();}
+});
+test('Jitter defers cosmetic directions on socket backlog and sends only the latest one when drained',()=>{
+ const f=setup();try{
+  const socket={readyState:1,bufferedAmount:4096};f.mod.observeSocket(socket);f.mod.setSetting('JitterEnabled',true);f.mod.setSetting('JitterSpeed',180);
+  for(let t=0;t<=1000;t+=50){f.setClock(t);f.mod.step(t);f.mod.aim.refresh();}
+  assert.equal(f.packets.length,0);assert.equal(f.mod.jitterAngle,Math.PI);assert.ok(f.mod.connectionInfo().jitterTransport.deferredDirections>=20);
+  // Native movement remains an immediate native send, independent of idle spin.
+  f.network['ᴎᚂρ'](JSON.stringify([3,1]));assert.deepEqual(f.packets,[[3,1]]);f.packets.length=0;
+  socket.bufferedAmount=0;f.setClock(1050);f.mod.aim.refresh();assert.deepEqual(f.packets,[[6,189]]);
+  socket.bufferedAmount=4096;f.mod.setSetting('AimBotEnabled',true);f.mod.beforeFire();assert.equal(f.packets.at(-1)[1],45,'First shot alignment was deferred with cosmetic spin');
  }finally{f.mod.dispose();}
 });

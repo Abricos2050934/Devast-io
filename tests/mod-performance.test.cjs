@@ -47,3 +47,22 @@ test('building owner labels read cursor layout once per frame even with hundreds
   f.mod.step(20);assert.ok(reads<=3);assert.ok(!f.dom.calls.some(c=>c.name==='fillText'&&c.args[0]==='Owner #2'));
  }finally{f.mod.dispose();}
 });
+test('frame entity collection reuses records while preserving removal, replacement and pooled type changes',()=>{
+ const f=fixture();try{
+  const first={x:10,y:20,'е̝ހ':0},second={x:30,y:40,'е̝ހ':0};scene(f,3,[first,second]);f.mod.step(0);
+  const records=f.mod.records,a=records[0],b=records[1];f.mod.step(20);assert.equal(f.mod.records,records);assert.equal(records[0],a);assert.equal(records[1],b);
+  second['е̝ހ']=1;f.mod.step(40);assert.equal(records.length,1);assert.equal(records[0],a);
+  scene(f,3,[]);scene(f,4,[first]);f.mod.step(60);assert.equal(records[0],a);assert.equal(records[0].type,4);
+  const replacement={x:50,y:60,'е̝ހ':0};scene(f,4,[replacement]);f.mod.step(80);assert.notEqual(records[0],a);assert.equal(records[0].e.x,replacement.x);assert.equal(records[0].e.y,replacement.y);
+  f.network.state=0;f.mod.step(100);assert.equal(records.length,0);
+ }finally{f.mod.dispose();}
+});
+test('movement report separates browser frame timing from automation traffic and ignores hidden-tab gaps',()=>{
+ const f=fixture();try{
+  const tick=f.frames.values().next().value;for(let i=0;i<=130;i++)tick(i*20);
+  let report=f.mod.connectionInfo();assert.equal(report.animationTiming.samples,120);assert.equal(report.animationTiming.fpsEstimate,50);assert.equal(report.animationTiming.p95GapMs,20);
+  f.document.hidden=true;tick(5000);f.document.hidden=false;tick(10000);tick(10020);assert.equal(f.mod.connectionInfo().animationTiming.fpsEstimate,50);
+  f.mod.setSetting('AutoBuiledEnabled',true);f.mod.step(10040);report=f.mod.connectionInfo();assert.equal(report.automationSettings.autoBuild,true);assert.ok(report.modCommandsByOpcode[14]>0);
+  report.modCommandsByOpcode[14]=99999;assert.notEqual(f.mod.connectionInfo().modCommandsByOpcode[14],99999);
+ }finally{f.mod.dispose();}
+});

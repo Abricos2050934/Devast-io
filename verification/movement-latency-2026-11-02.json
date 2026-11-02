@@ -1,0 +1,60 @@
+{
+  "output_sha256": "4a2ab4f0dee50df8a872d72221d6dcf5c43fc438569f0d416b0cafb95658d9b9",
+  "browser": "passed",
+  "ilm_core": "identical",
+  "checks": {
+    "jitter_preserves_native_input": true,
+    "jitter_socket_backpressure": true,
+    "stable_frame_entity_records": true,
+    "jitter_rotation_and_shot_priority": true,
+    "continuous_fire_ilm_cadence": true
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 123,
+    "python_tests": 26
+  },
+  "jitter_simulation": {
+    "before": [
+      {
+        "backlogBytes": 0,
+        "inputWrites": 122,
+        "rafDirectionPackets": 21,
+        "totalDirectionPackets": 21
+      },
+      {
+        "backlogBytes": 4096,
+        "inputWrites": 122,
+        "rafDirectionPackets": 21,
+        "totalDirectionPackets": 21
+      }
+    ],
+    "after": [
+      {
+        "backlogBytes": 0,
+        "inputWrites": 0,
+        "rafDirectionPackets": 0,
+        "totalDirectionPackets": 21
+      },
+      {
+        "backlogBytes": 4096,
+        "inputWrites": 0,
+        "rafDirectionPackets": 0,
+        "totalDirectionPackets": 0
+      }
+    ],
+    "scope": "Deterministic native-input and packet-queue simulation over 1 second; not a live server RTT measurement"
+  },
+  "entity_record_allocation": {
+    "entities": 10000,
+    "frames": 120,
+    "before": 1200000,
+    "after": 10000
+  },
+  "limitations": [
+    "Client input and socket-pressure behavior verified with deterministic fixtures and native Chromium",
+    "Actual device movement latency and server RTT are not verified",
+    "Lag reported with Jitter and aim disabled means the full cause is not established"
+  ]
+}
