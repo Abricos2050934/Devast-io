@@ -45,3 +45,9 @@ npm run update:once
 
 Подробности: [AUTO-UPDATE.md](AUTO-UPDATE.md), [ILM-PORT.md](ILM-PORT.md),
 [AIM-SETTINGS.md](AIM-SETTINGS.md), [REJOIN-FIX.md](REJOIN-FIX.md).
+
+## Перенос проекта в новый чат
+
+Полная инструкция: [CONTINUE-IN-NEW-CHAT.md](CONTINUE-IN-NEW-CHAT.md).
+Текст для вставки: [handoff/NEW-CHAT-PROMPT.txt](handoff/NEW-CHAT-PROMPT.txt).
+Полный архив проекта: [Devast-io-Handoff.zip](https://github.com/Abricos2050934/Devast-io/raw/refs/heads/updates/Devast-io-Handoff.zip?download=1).
