@@ -1,0 +1,70 @@
+{
+  "output_sha256": "296c8c4c6252ca88853ee0beb52943ceda520a8aa284ee13a6d3a5c756cd1631",
+  "validation": "passed",
+  "ilm_core": "identical",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 129,
+    "python_tests": 26
+  },
+  "comparison": {
+    "scope": "Synthetic Chromium aim tick benchmark; not user-device FPS or server RTT",
+    "results": [
+      {
+        "label": "before",
+        "cases": [
+          {
+            "name": "off",
+            "medianTickMs": 0.00039999999105930326,
+            "packets": 0,
+            "snapshotSha256": "013dbe77dbc2b3ae8caf91785a8d5afe6221dc692f21d8e8abdad730561bc234"
+          },
+          {
+            "name": "players",
+            "medianTickMs": 0.010799999997019768,
+            "packets": 4500,
+            "snapshotSha256": "b366e2417aa19b086c1c4b2cf170ad05de470743e5e9a0613d79c988521b098e"
+          },
+          {
+            "name": "all",
+            "medianTickMs": 0.07679999999701977,
+            "packets": 4500,
+            "snapshotSha256": "b366e2417aa19b086c1c4b2cf170ad05de470743e5e9a0613d79c988521b098e"
+          }
+        ]
+      },
+      {
+        "label": "after",
+        "cases": [
+          {
+            "name": "off",
+            "medianTickMs": 0.00039999999105930326,
+            "packets": 0,
+            "snapshotSha256": "013dbe77dbc2b3ae8caf91785a8d5afe6221dc692f21d8e8abdad730561bc234"
+          },
+          {
+            "name": "players",
+            "medianTickMs": 0.004599999994039535,
+            "packets": 4500,
+            "snapshotSha256": "b366e2417aa19b086c1c4b2cf170ad05de470743e5e9a0613d79c988521b098e"
+          },
+          {
+            "name": "all",
+            "medianTickMs": 0.023800000011920928,
+            "packets": 4500,
+            "snapshotSha256": "b366e2417aa19b086c1c4b2cf170ad05de470743e5e9a0613d79c988521b098e"
+          }
+        ]
+      }
+    ],
+    "behavior": "identical"
+  },
+  "source_sha256": "8df3df4d0ce38add8eec91968436bfc8583a830cf85df26f68ef399cb1de05dd",
+  "baseline_source_sha256": "e531a120cdb342b6441d0aaed68ba755092ceb3697432c8a96f82fa75df423d5",
+  "limitations": [
+    "Synthetic CPU measurement of full aim.refresh only; not total game FPS or server RTT on the user device",
+    "No changes to ILM calculation, 50 ms scheduling, aim packet cadence, Jitter, or login recovery",
+    "Measured CPU reduction does not establish that the reported user-device lag is resolved"
+  ]
+}

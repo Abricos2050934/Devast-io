@@ -892,37 +892,35 @@ function __installDevastMod(B) {
     for (const item of Object.values(LootData)) if(item.acquire) allowedLootIds.add(item.id);
   }
   refreshLootFilter();
-  // One consistent native view per aim operation; reuse metadata objects between ticks.
-  const aimSelf={id:0,team:-1}, aimTeams=[];
-  let aimDepth=0, aimEpoch=0;
-  function aimSnapshot(callback) {
-    if(aimDepth===0) {
+  // Materialize teams only for active candidates. ILM then reads plain data,
+  // without per-candidate property getters or a sweep of unused metadata slots.
+  const aimSelf={id:0,team:-1}, aimTeams=[],teamEpochs=[];
+  let aimDepth=0,aimEpoch=0;
+  function ensureAimTeams(id) {
+    while (aimTeams.length<=id) {aimTeams.push({team:-1});teamEpochs.push(0);}
+  }
+  ensureAimTeams(998);
+  function prepareAimTeam(id) {
+    if (teamEpochs[id]===aimEpoch) return;
+    teamEpochs[id]=aimEpoch;
+    aimTeams[id].team=teamId(id);
+  }
+  function aimSnapshot(callback,withTeams=true) {
+    if (aimDepth===0) {
       aimSelf.id=B.world.і३α?.id || 0;
-      aimSelf.team=teamId(aimSelf.id);
+      ensureAimTeams(aimSelf.id);
       aimEpoch++;
+      if (withTeams) {
+        prepareAimTeam(aimSelf.id);
+        aimSelf.team=aimTeams[aimSelf.id].team;
+        if (MOD.target==='players'||MOD.target==='all') for (const target of GetAllTargets.players) if (target.active) prepareAimTeam(target.id);
+        if (MOD.target==='ghouls'||MOD.target==='all') for (const target of GetAllTargets.ghouls) if (target.active) prepareAimTeam(target.id);
+      }
     }
     aimDepth++;
     try { return callback(); } finally { aimDepth--; }
   }
-  // Dense native metadata slots match ILM's indexed access. Cache team values
-  // per resolve without a Proxy trap, string conversion or Map lookup per target.
-  function ensureAimTeams(id) {
-    for (let next=aimTeams.length;next<=id;next++) {
-      let epoch=-1, team=-1;
-      aimTeams.push({get team() {
-        if (!aimDepth || epoch!==aimEpoch) {team=teamId(next);epoch=aimEpoch;}
-        return team;
-      }});
-    }
-  }
-  ensureAimTeams(998);
-  const ilmWorld = {
-    get PLAYER() {
-      if(!aimDepth) {aimSelf.id=B.world.і३α?.id || 0;aimSelf.team=teamId(aimSelf.id);}
-      return aimSelf;
-    },
-    players:aimTeams
-  };
+  const ilmWorld={PLAYER:aimSelf,players:aimTeams};
   const ilm = __createIlmAim(MOD, ilmWorld, packet=>{
     if (MOD.JitterEnabled && packet[0] === 6 && (!jitterAiming() || !Aimbot.targetPlayer?.active)) return false;
     return __send(packet,true);
@@ -931,14 +929,14 @@ function __installDevastMod(B) {
   // Delegate to the unchanged ILM methods; cache only the native metadata adapter.
   for(const key of ['resolve','findNearestPlayerTo']) {
     const method=Aimbot[key];
-    Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>method.apply(this,args));}});
+    Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>method.apply(this,args),key==='findNearestPlayerTo'||MOD.lockId<0);}});
   }
   Aimbot.mouseDown = false;
   // ILM owns lastId and its death reset on the 50 ms tick. A temporary socket
   // failure or a newly received player ID must not erase packet history.
   Aimbot.refresh = () => {
     if (stopped) return;
-    aimSnapshot(()=>ilm.tick());
+    aimSnapshot(()=>ilm.tick(),MOD.AimBotEnabled&&MOD.lockId<0);
     updateJitter(performance.now(),true);
   };
   const _players_list = [];

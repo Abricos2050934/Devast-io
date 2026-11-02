@@ -87,3 +87,29 @@ test('loot without building tile coordinates does not add owner-overlay layout r
   const rect=f.dom.canvas.getBoundingClientRect;f.dom.canvas.getBoundingClientRect=()=>{reads++;return rect();};f.mod.step(0);assert.equal(reads,1);
  }finally{f.mod.dispose();}
 });
+test('aim snapshot reads each active metadata ID once and never sweeps inactive roster slots',()=>{
+ const f=fixture();try{
+  const self=f.world['ᴎ︃ᄉ'][1],enemy=f.world['ᴎ︃ᄉ'][2];let selfReads=0,enemyReads=0,inactiveReads=0;
+  Object.defineProperty(f.world['ᴎ︃ᄉ'],1,{get(){selfReads++;return self;}});Object.defineProperty(f.world['ᴎ︃ᄉ'],2,{get(){enemyReads++;return enemy;}});
+  for(let i=3;i<=120;i++)Object.defineProperty(f.world['ᴎ︃ᄉ'],i,{get(){inactiveReads++;return 0;},configurable:true});
+  f.mod.trackPacket(1,1,1,0,0,true);f.mod.trackPacket(1,2,1,100,100,true);f.mod.trackPacket(13,0,2,200,200,true);
+  f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('target','all');f.mod.aim.resolve();
+  assert.equal(selfReads,1);assert.equal(enemyReads,1);assert.equal(inactiveReads,0);assert.equal(f.mod.aim.targetPlayer,f.mod.targets.players[2]);
+ }finally{f.mod.dispose();}
+});
+test('aim snapshot refreshes vanished metadata and reused clan membership on every resolve',()=>{
+ const f=fixture();try{
+  f.world['ﾠࡅ‍'][0]={'ոᚄރ':7};for(const id of [1,2])f.world['ᴎ︃ᄉ'][id]={'а༤̘':0,'ᴌ̗ⲟ':7};
+  f.mod.trackPacket(1,1,1,0,0,true);f.mod.trackPacket(1,2,1,100,100,true);f.mod.trackPacket(1,3,1,200,200,true);f.mod.setSetting('mouseFovEnable',false);
+  f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,3);
+  f.world['ᴎ︃ᄉ'].length=2;f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,2);
+  f.world['ᴎ︃ᄉ'][2]={'а༤̘':0,'ᴌ̗ⲟ':7};f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,3);
+ }finally{f.mod.dispose();}
+});
+test('disabled aim and a locked target avoid preparing a full candidate scan',()=>{
+ const f=fixture();try{
+  f.mod.trackPacket(1,1,1,0,0,true);f.mod.trackPacket(1,2,1,100,100,true);
+  Object.defineProperty(f.mod.targets.players,Symbol.iterator,{value(){throw Error('Unexpected full scan');},configurable:true});
+  f.mod.aim.refresh();f.mod.setSetting('lockId',2);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();assert.equal(f.packets.at(-1)[1],45);
+ }finally{f.mod.dispose();}
+});
