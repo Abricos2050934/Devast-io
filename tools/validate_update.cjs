@@ -38,7 +38,7 @@ const edits=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n
 }
 assert.equal(edits.length,Object.keys(functions).length,'Unique browser fixture functions required');
 const end=tree.body[0].expression.callee.body.end-1;
-edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']}};`});
+edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
 (async()=>{
  const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',ilm_core:'identical',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
@@ -68,7 +68,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   }
   assert.equal(await page.evaluate(()=>window.__devastRemoteLoader?.state),'loaded','Resource Override loader failed');
   report.resource_override_loader='passed';
-  report.native=await page.evaluate(({s,r})=>{
+  report.native=await page.evaluate(async ({s,r})=>{
    const n=window.__updateProbe,m=window.__devastMod,w=n.world,players=w[s['ᴎ︃ᄉ']],self=w[s['ᅠᏧ‍']];
    const check=(v,message)=>{if(!v)throw Error(message);};
    w[r['ࡀ︌٨']]=121;const names=Array(121).fill(0);names[2]='Update#fixture';w[r['І︈༧']](names);
@@ -118,8 +118,18 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     n.network.state=64;const restore=n.joinPayload(35);n.network.state=0;const normal=n.joinPayload(35);
     check(restore[4]===1&&normal[4]===0&&JSON.stringify(restore.slice(1,4))===JSON.stringify(identity)&&JSON.stringify(normal.slice(1,4))===JSON.stringify(identity),'Native rejoin payload changes identity');
    }finally{transport.restore();n.network.state=0;}
-   m.setSetting('AimBotEnabled',false);self.id=0;check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_shot_matches_ilm_line:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_rejoin_identity:true,mod_errors:[...m.diagnostics.errors]};
+   m.setSetting('AimBotEnabled',false);self.id=0;
+   const nativeMenu=n.nativeMenu(),widget=window.Widget,waiting=nativeMenu[s['ϲ१༧']],identityBefore=['token','tokenId','userId','accountToken'].map(k=>localStorage.getItem(k));let resumed=0;
+   try{
+    window.Widget={preroll:()=>Promise.reject(false)};m.step(performance.now());
+    nativeMenu[s['ϲ१༧']]=1;window.Widget.preroll();window.Widget.play=()=>{nativeMenu[s['ϲ१༧']]=0;resumed++;};
+    for(let i=0;i<6;i++)await Promise.resolve();
+    check(resumed===1&&!nativeMenu[s['ϲ१༧']],'Native ad gateway stayed blocked');
+    window.Widget.play();check(resumed===1,'Late SDK callback duplicated login');
+    check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Gateway recovery changed identity');
+   }finally{nativeMenu[s['ϲ१༧']]=waiting;window.Widget=widget;}
+   check(!m.diagnostics.errors.length,'Mod reported errors');
+   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_shot_matches_ilm_line:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

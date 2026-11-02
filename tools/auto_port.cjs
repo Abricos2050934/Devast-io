@@ -14,7 +14,9 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  function prop(a,n){if(n.type==='MemberExpression')return n.computed?a.constant(n.property):n.property.name;if(n.type==='Property')return n.computed?a.constant(n.key):n.key.name??n.key.value;}
  function learn(oc,nc){const local=new Map();function add(a,b){if(a===undefined||b===undefined)return;if(local.has(a)&&local.get(a)!==b)throw Error('Inconsistent structural binding '+a);local.set(a,b);propose(a,b);}
   for(const [p,n]of oc.entries){const m=nc.entries.get(p);if(!m)continue;
-   if(n.type==='Identifier'&&m.type==='Identifier'&&old.constant(n)===undefined&&cur.constant(m)===undefined)add(n.name,m.name);
+   if(n.type==='Identifier'&&m.type==='Identifier'&&
+      (old.constant(n)===undefined||old.binding(n)?.node===n)&&
+      (cur.constant(m)===undefined||cur.binding(m)?.node===m))add(n.name,m.name);
    if(n.type===m.type&&['MemberExpression','Property'].includes(n.type)){const a=prop(old,n),b=prop(cur,m);if(typeof a==='string'&&typeof b==='string')add(a,b);}
   }return local;
  }

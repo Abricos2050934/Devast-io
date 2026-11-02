@@ -7,6 +7,9 @@ var __responsiveMod = __installDevastMod({
   loginKey:'ᅠϲ᠍',
   restoreFailureKey:'е̅ܙ',
   preflightKey:'εܖᴏ',
+  errorKey:'ι︃２',
+  pendingKey:'ϲІ̗',
+  adWaiting:()=>typeof ɑᚆᴏ !== 'undefined' && !!(ɑᚆᴏ && ɑᚆᴏ.ϲ१༧ === 1),
   reconnect:()=>{
     if(typeof о̃༩.ᅠϲ᠍ !== 'function') throw new Error('Game login is not ready');
     о̃༩.ᅠϲ᠍();

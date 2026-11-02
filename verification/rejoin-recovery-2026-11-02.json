@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "checked_at": "2026-11-02T09:25:14.374021+00:00",
+  "status": "passed",
+  "baseline_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+  "release": "799d5876424d34b0ef2e02696dffa1c5f4b466821590e00efe755b16302edca3",
+  "client_sha256": "8a2f617930a5410fc3d400b5a9b2021450fbb30fc0d80ad1559a5808a3e2ab5a",
+  "canonical_sha256": "f3f8785ac1c805a65d8109f9ff1d4df4e95fd56857b9649f2f8304141fccefae",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 82,
+    "python_tests": 26
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs"
+    ]
+  },
+  "native_browser_checks": {
+    "menu": true,
+    "initial_metadata": true,
+    "head_and_leaderboard_labels": true,
+    "packet_history": true,
+    "packet_removal": true,
+    "self_angle_modes": true,
+    "native_clan_colors_and_cache": true,
+    "native_shot_matches_ilm_line": true,
+    "ilm_manual_fire_cadence": true,
+    "disconnect_preserves_aim_history": true,
+    "native_fast_loot_cadence": true,
+    "native_rejoin_identity": true,
+    "native_ad_failure_recovery": true,
+    "mod_errors": []
+  },
+  "live_server": {
+    "mode": "same persistent browser context; controlled SDK failure; real game server",
+    "requests": [
+      {
+        "mode": "old",
+        "host": "token.devast.io",
+        "status": 200
+      },
+      {
+        "mode": "old",
+        "host": "token.devast.io",
+        "status": 200
+      },
+      {
+        "mode": "fixed",
+        "host": "token.devast.io",
+        "status": 200
+      },
+      {
+        "mode": "fixed",
+        "host": "token.devast.io",
+        "status": 200
+      }
+    ],
+    "errors": [
+      {
+        "mode": "old",
+        "error": "false"
+      }
+    ],
+    "initial_join": true,
+    "old_gateway": {
+      "waiting": true,
+      "state": 0
+    },
+    "fixed_gateway": {
+      "waiting": false,
+      "state": 1,
+      "recoveries": 1,
+      "cookie": true,
+      "errors": []
+    },
+    "identity": {
+      "token": true,
+      "tokenId": true,
+      "userId": true,
+      "accountToken": true
+    },
+    "result": "passed",
+    "client_sha256": "8a2f617930a5410fc3d400b5a9b2021450fbb30fc0d80ad1559a5808a3e2ab5a",
+    "server": "Frankfurt 2",
+    "sdk_failure": "Injected createAdPlayer rejected Promise; actual native Play entry point"
+  },
+  "rejoin_regression_cases": 13,
+  "diagnostic_report_contains_credential_values": false,
+  "limitations": [
+    "Controlled SDK failure in one persistent guest browser context, not access to the user browser profile.",
+    "accountToken equality was checked with a guest null value in the live run; populated account data preservation was checked in fixtures.",
+    "Server availability and every possible login failure are not guaranteed."
+  ]
+}

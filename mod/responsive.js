@@ -1277,10 +1277,90 @@ function __installDevastMod(B) {
     phase: 'idle',
     freshRequired: false,
     freshUsed: false,
-    autoBlocked: false
+    autoBlocked: false,
+    lastFailureCode: 0,
+    gatewayRecoveries: 0
   };
+  let connectionSocket = null, adGate = null;
+  const widgetWrappers = new Map();
+  function observeSocket(socket) { connectionSocket = socket; }
+  function connectionInfo() {
+    const stored = {};
+    for (const key of ['token','tokenId','userId','accountToken']) {
+      try { stored[key] = !!localStorage.getItem(key); } catch (_) { stored[key] = null; }
+    }
+    return {schema:1,recoveryVersion:1,state:B.network.state,phase:reconnect.phase,
+      nativeReady:typeof B.network[B.loginKey] === 'function',
+      nativePending:B.pendingKey ? !!B.network[B.pendingKey] : false,
+      adWaiting:!!B.adWaiting?.(),socketState:connectionSocket?.readyState ?? null,
+      lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,
+      stored,modErrorCount:diagnostics.errors.length};
+  }
+  function releaseNativePending() {
+    if (B.pendingKey) B.network[B.pendingKey] = false;
+  }
+  function continueAdGate(gate) {
+    if (stopped || gate !== adGate || gate.done || !gate.callback || !B.adWaiting?.()) return;
+    reconnect.gatewayRecoveries++;
+    reconnect.status = 'Рекламный модуль не ответил; продолжаем вход';
+    gate.wrapped.call(gate.widget);
+  }
+  function watchLoginGateway(now) {
+    const widget = window.Widget;
+    if (typeof B.adWaiting === 'function' && widget) for (const method of ['preroll','createAdPlayer']) {
+      const entries = widgetWrappers.get(widget) || {};
+      if (typeof widget[method] !== 'function' || widget[method] === entries[method]?.wrapped) continue;
+      const original = widget[method];
+      const wrapped = function (...args) {
+        const gate = adGate = {widget, done:false, failed:false, deadline:performance.now()+60000};
+        // Native code installs Widget.play immediately after preroll returns.
+        Promise.resolve().then(() => {
+          if (stopped || gate !== adGate || !B.adWaiting() || typeof widget.play !== 'function') return;
+          gate.callback = widget.play;
+          gate.wrapped = function (...result) {
+            if (stopped || gate !== adGate || gate.done) return;
+            gate.done = true;
+            adGate = null;
+            return gate.callback.apply(this, result);
+          };
+          widget.play = gate.wrapped;
+          if (gate.failed) continueAdGate(gate);
+        });
+        let result;
+        try { result = original.apply(this,args); }
+        catch (_) { gate.failed = true; return; }
+        if (result && typeof result.then === 'function') Promise.resolve(result).catch(() => {
+          gate.failed = true;
+          continueAdGate(gate);
+        });
+        return result;
+      };
+      entries[method] = {original,wrapped};
+      widgetWrappers.set(widget,entries);
+      widget[method] = wrapped;
+    }
+    if (adGate && !adGate.done) {
+      if (!B.adWaiting?.()) adGate = null;
+      else if (document.hidden) adGate.deadline = now + 60000;
+      else if (now >= adGate.deadline) continueAdGate(adGate);
+      else reconnect.status = 'Ожидание завершения рекламного модуля';
+    }
+  }
   let automaticJoin = false;
   let nativeLoginDepth = 0;
+  function guardHandshakeCallback(url, callback) {
+    if (!nativeLoginDepth || typeof callback !== 'function') return callback;
+    const generation = reconnect.generation;
+    // Gate the native HTTP response before it can overwrite the current
+    // connection's cryptographic state, not only its final start callback.
+    return function (...args) {
+      if (stopped || generation !== reconnect.generation) return;
+      // Native preflight can issue its next HTTP round from this callback.
+      // Carry ownership into that round before the original stack returns.
+      nativeLoginDepth++;
+      try { return callback.apply(this,args); } finally { nativeLoginDepth--; }
+    };
+  }
   const connectionWrappers = new Map();
   function markRestoreFailure() {
     reconnect.generation++;
@@ -1306,7 +1386,7 @@ function __installDevastMod(B) {
   }
   function watchConnectionHandlers() {
     const n = B.network;
-    for (const [key,kind] of [[B.loginKey,'login'],[B.restoreFailureKey,'restoreFailure'],[B.preflightKey,'preflight']]) {
+    for (const [key,kind] of [[B.loginKey,'login'],[B.restoreFailureKey,'restoreFailure'],[B.preflightKey,'preflight'],[B.errorKey,'error']]) {
       if (!key || typeof n[key] !== 'function' || n[key] === connectionWrappers.get(key)) continue;
       const original = n[key];
       originals[key] = original;
@@ -1317,6 +1397,16 @@ function __installDevastMod(B) {
           if (!stopped && generation !== reconnect.generation) return;
           return callback.apply(this,result);
         };
+        return original.apply(this,args);
+      } : kind === 'error' ? function (...args) {
+        if (!stopped) {
+          reconnect.lastFailureCode = Number.isInteger(args[0]) ? args[0] : 0;
+          reconnect.pending = false;
+          reconnect.phase = 'idle';
+          reconnect.generation++;
+          releaseNativePending();
+          reconnect.status = 'Игра не завершила вход; можно повторить без сброса cookies';
+        }
         return original.apply(this,args);
       } : kind === 'restoreFailure' ? function (...args) {
         const result = original.apply(this,args);
@@ -1343,7 +1433,14 @@ function __installDevastMod(B) {
         reconnect.status = 'Connecting; saved login kept';
         nativeLoginDepth++;
         try { return original.apply(this,args); }
-        catch (error) { reconnect.pending = false; reconnect.phase = 'idle'; throw error; }
+        catch (error) {
+          reconnect.pending = false;
+          reconnect.phase = 'idle';
+          reconnect.generation++;
+          releaseNativePending();
+          reconnect.status = 'Не удалось начать вход; повторите Play без сброса cookies';
+          throw error;
+        }
         finally { nativeLoginDepth--; }
       };
       connectionWrappers.set(key,wrapper);
@@ -1353,6 +1450,7 @@ function __installDevastMod(B) {
   function updateReconnect(now) {
     const n = B.network;
     watchConnectionHandlers();
+    watchLoginGateway(now);
     if (n.state === 1) {
       reconnect.status = 'Connected';
       reconnect.attempts = 0;
@@ -1368,15 +1466,30 @@ function __installDevastMod(B) {
     }
     if ((n.state & 2) !== 0) {
       reconnect.armed = true;
-      reconnect.pending = false;
+      if (reconnect.phase !== 'connecting' && !reconnect.pending) reconnect.deadline = now + 12000;
+      reconnect.pending = true;
       reconnect.phase = 'connecting';
+      if (now >= reconnect.deadline) {
+        reconnect.pending = false;
+        reconnect.phase = 'idle';
+        reconnect.generation++;
+        releaseNativePending();
+        const socket = connectionSocket;
+        connectionSocket = null;
+        if (socket && typeof socket.close === 'function') socket.close();
+        // Retain the native restore bit and let the existing bounded retry path
+        // obtain a fresh connection. No persistent identity is changed.
+        n.state = 64;
+        reconnect.status = 'Соединение не завершилось; повторяем с прежним токеном';
+      }
       return;
     }
     if (reconnect.pending && reconnect.phase === 'joining' && now >= reconnect.deadline && n.state === 0) {
       reconnect.pending = false;
       reconnect.phase = 'idle';
       reconnect.generation++;
-      reconnect.status = 'Login timed out; retry manually';
+      releaseNativePending();
+      reconnect.status = 'Вход не завершился; повторите Play без сброса cookies';
     }
     if (n.state === 256 && !reconnect.freshRequired && !reconnect.autoBlocked) markRestoreFailure();
     if ((n.state & (8|16|512|1024)) !== 0) {
@@ -1707,6 +1820,7 @@ function __installDevastMod(B) {
     const connection = menu.addFolder('Connection');
     const connectionStatus = connection.add(reconnect, 'status').name('Status').listen();
     connectionStatus.domElement.querySelector('input').readOnly = true;
+    connection.add({CopyReport:()=>copyText(JSON.stringify(connectionInfo(),null,2))},'CopyReport').name('Копировать отчёт входа');
     const config = menu.addFolder('Config');
     config.add({
       Save: persist
@@ -1739,6 +1853,9 @@ function __installDevastMod(B) {
     clipboard: clipboardState,
     copyNickname,
     reconnect,
+    observeSocket,
+    guardHandshakeCallback,
+    connectionInfo,
     step,
     setSetting,
     openUnderMouse,
@@ -1779,6 +1896,8 @@ function __installDevastMod(B) {
       MOD.XrayBuildings = false;
       MOD.ShowMines = false;
       stopped = true;
+      adGate = null;
+      for (const [widget,entries] of widgetWrappers) for (const [method,entry] of Object.entries(entries)) if (widget[method] === entry.wrapped) widget[method] = entry.original;
       window.clearInterval(aimTimer);
       window.cancelAnimationFrame(nextFrame);
       removers.forEach(f => f());
