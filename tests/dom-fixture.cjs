@@ -7,7 +7,8 @@ function domFixture() {
     ctx.restore=function(){Object.assign(this,states.pop()||{});};ctx.measureText=s=>({width:String(s).length*7});return ctx;
   }
   function element(tag){const e={tagName:tag.toUpperCase(),style:{},dataset:{},children:[],listeners:new Map(),width:800,height:600,
-    appendChild(child){this.children.push(child);child.parent=this;return child;},remove(){if(this.parent)this.parent.children=this.parent.children.filter(x=>x!==this);},
+    appendChild(child){if(child.parent)child.parent.children=child.parent.children.filter(x=>x!==child);this.children.push(child);child.parent=this;return child;},remove(){if(this.parent)this.parent.children=this.parent.children.filter(x=>x!==this);},
+    replaceChildren(...children){for(const child of this.children)child.parent=null;this.children=[];for(const child of children)this.appendChild(child);},
     addEventListener(type,fn){if(!this.listeners.has(type))this.listeners.set(type,new Set());this.listeners.get(type).add(fn);},removeEventListener(type,fn){this.listeners.get(type)?.delete(fn);},
     attachShadow(){return this.shadowRoot=element('shadow');},getBoundingClientRect(){return {left:10,top:20,width:400,height:300};},
     querySelector(){return this.input??=element('input');},blur(){},closest(){return null;}};

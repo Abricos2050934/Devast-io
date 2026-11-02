@@ -2,8 +2,8 @@
   "status": "static_checks_passed",
   "source_url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
   "baseline_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
-  "output_sha256": "53105f98465dba7c64d4ee8549d509434f16f793cebed3b6c40d7a980992bde7",
-  "output_bytes": 7054456,
+  "output_sha256": "1ab096aca8fd61028904e5b5bd201014e7ebee053544fa14d174099678742864",
+  "output_bytes": 7059780,
   "applied_patches": [
     "camera-world-view",
     "packet-position-history",
@@ -24,7 +24,10 @@
     "native-observe-connection-socket",
     "native-guard-stale-preflight-response",
     "native-observe-server-death",
-    "jitter-native-fire-priority"
+    "jitter-native-fire-priority",
+    "native-nickname-head-color",
+    "native-nickname-leader-color",
+    "native-player-list-leave"
   ],
   "live_server_test": "see build/browser-report.json",
   "publication": "not_published"

@@ -27,7 +27,7 @@ const canonical=acorn.parse(fs.readFileSync(path.join(root,'mod/ilm-aim.js'),'ut
 assert.deepEqual(normalize(body.find(n=>n.id?.name==='__createIlmAim')),normalize(canonical),'ILM algorithm changed');
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
 assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id),'Every reviewed native patch is required');
-const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload','рܙ๕':'death'};
+const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave'};
 const edits=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;
  if(n.type==='FunctionDeclaration')for(const [old,name]of Object.entries(functions))if(n.id.name===roles[old]){
   let text=`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.${name}=${n.id.name};`;
@@ -100,6 +100,29 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     m.setSetting('EnemyClanColor','#3456ab');tag(2);check(labels.at(-1).text==='[ENEMY]'&&labels.at(-1).color==='#3456ab','Clan color cache did not update');
     Object.assign(players[1],{[s['а༤̘']]:1,[s['ᴌ̗ⲟ']]:8});tag(2);check(labels.at(-1).color==='#12ab34','Clan membership cache did not update');
    }finally{n.labelFactory[r['ᴉ̷Ꮷ']]=text;}
+   Object.assign(players[1],{[s['а༤̘']]:0,[s['ᴌ̗ⲟ']]:7});
+   const nickColors=[],nickControl=m.menu.__folders.Visuals.__controllers.find(c=>c.property==='NicknameColor');
+   n.labelFactory[r['ᴉ̷Ꮷ']]=function(...args){nickColors.push({text:args[0],color:args[2]});return text.apply(this,args);};
+   try{
+    const meta=players[2],headKey=s['а༠٥'],leaderKey=s['ᴘ๒︅'];
+    n.nameTag({[s['ᴘ४１']]:2,[s['Іࡈ５']]:0,x:1000,y:1000});meta[leaderKey]=n.leaderLabel(meta,'#fff');
+    nickControl.setValue('#654321');
+    check(meta[headKey]===null&&meta[leaderKey]===null&&w[s['ᴑܓօ']]===1,'Nickname GUI did not invalidate native name caches');
+    nickColors.length=0;n.nameTag({[s['ᴘ४１']]:2,[s['Іࡈ５']]:0,x:1000,y:1000});n.leaderLabel(meta,'#fff');
+    check(nickColors.filter(x=>x.text===meta[s['ο̏︇']]&&x.color==='#654321').length===2,'Native head/leader nickname colors did not change');
+    const cached=meta[headKey];n.nameTag({[s['ᴘ४１']]:2,[s['Іࡈ５']]:0,x:1000,y:1000});check(meta[headKey]===cached,'Unchanged nickname canvas was rebuilt');
+   }finally{n.labelFactory[r['ᴉ̷Ꮷ']]=text;}
+   const listState=n.network.state;n.network.state=1;m.setSetting('PlayersListEnabled',true);
+   try{
+    m.render(0);const panel=m.playerList,find=id=>panel.querySelector('[data-player-id="'+id+'"]');
+    check(find(120)&&find(2),'Player list omitted players outside visible entities');
+    check(find(120).children[0].textContent==='#120'&&find(120).children[2].textContent==='[ALLY]','Player list lost ID or clan');
+    check(find(2).children[1].style.color==='rgb(101, 67, 33)'&&find(2).children[2].style.color==='rgb(52, 86, 171)','Player list mixed nickname and clan colors');
+    n.leave(2);m.render(1);check(!find(2),'Native leave did not remove player from list');
+    n.spawn([0,2,123,'Roster#tag',0,0]);m.render(2);
+    check(find(2).children[1].textContent==='Roster#tag'&&find(2).children[0].textContent==='#2','Native respawn did not restore nickname and ID');
+    Object.assign(players[2],{[s['а༤̘']]:1,[s['ᴌ̗ⲟ']]:8});
+   }finally{m.setSetting('PlayersListEnabled',false);n.network.state=listState;}
    n.network.state=1;m.setSetting('AimBotEnabled',true);m.setSetting('autoFire',false);m.setSetting('lockId',2);m.setSetting('visualizeResolving',true);
    const transport=n.capturePackets();
    try{
@@ -161,7 +184,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(deathCalls===1,'Death observation changed native handling');
    }finally{n.network[deathKey]=nativeDeath;}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

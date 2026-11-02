@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "checked_at": "2026-11-02T15:39:36.157715+03:00",
+  "status": "passed",
+  "release": "c6e5f26aba0b7bab8d200987136b3420c08fcb11bfc6c0e63efb8598bfdcf879",
+  "client_sha256": "bab6756659e97f3d7ef7051a2cb5dd916d25f87cb6944020472afcdb157a15d4",
+  "fixes": [
+    "NicknameColor is applied by native head and leaderboard name generators",
+    "Actual native name canvas caches are invalidated on color changes and leaderboard redraw is requested",
+    "Player list uses known server metadata, including players outside visible entities",
+    "Native leave/spawn hooks handle departures and ID reuse",
+    "Scrollable responsive list with separate ID, nickname and clan columns",
+    "Nickname and ID use NicknameColor; valid clans use independent team/enemy colors",
+    "User-provided names are rendered as text; nickname copy removes only the added native ID suffix"
+  ],
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 100,
+    "python_tests": 26
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/player-labels.test.cjs"
+    ]
+  },
+  "native_browser": {
+    "nickname_color_and_cache": true,
+    "player_list_and_lifecycle": true,
+    "ilm_aim_preserved": "identical"
+  },
+  "layout": {
+    "mode": "Actual player list DOM produced by native client fixtures; static layout preview, not a live server session",
+    "rows": 120,
+    "layouts": [
+      {
+        "name": "desktop",
+        "right": 568,
+        "bottom": 792,
+        "viewportWidth": 1280,
+        "viewportHeight": 800,
+        "scrollHeight": 5455,
+        "clientHeight": 728,
+        "horizontalOverflow": false
+      },
+      {
+        "name": "mobile",
+        "right": 352,
+        "bottom": 632,
+        "viewportWidth": 360,
+        "viewportHeight": 640,
+        "scrollHeight": 6841,
+        "clientHeight": 568,
+        "horizontalOverflow": false
+      }
+    ],
+    "result": "passed"
+  },
+  "limitations": [
+    "Uses names and clans provided by the server; missing metadata is not fabricated.",
+    "Browser checks use native client fixtures; no live server roster/session was used for this UI verification.",
+    "The earlier unresolved server-death issue is not claimed fixed by this change."
+  ]
+}
