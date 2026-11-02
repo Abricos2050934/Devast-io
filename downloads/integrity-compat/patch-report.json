@@ -1,0 +1,56 @@
+{
+  "audit_build": "integrity-compat-v2",
+  "source_release": "79e590dc32262ca11ada8e018233b0d43c8c310c34fef150e5c3803f55ddbaae",
+  "source_sha256": "79513e5db98f2eb64e7ce1bfeb1c00e00f57b3309a96049806b2c6d08e62e1ae",
+  "output_sha256": "faca5600667a8c3bad53f974e9f5b2f2254249aa0bc58d6b91f3b0794e435c54",
+  "edits": [
+    {
+      "start": 1263565,
+      "end": 1263574,
+      "before": "ѕ०̊===0X1",
+      "after": "false"
+    },
+    {
+      "start": 1478226,
+      "end": 1478234,
+      "before": "ѕ०̊===01",
+      "after": "false"
+    },
+    {
+      "start": 1532646,
+      "end": 1532655,
+      "before": "ѕ०̊===ܐ４ⲅ",
+      "after": "false"
+    }
+  ],
+  "scope_verified": true,
+  "changed_functions": [
+    {
+      "name": "а１๐",
+      "owner": "а１๐"
+    },
+    {
+      "name": "ⲅࡃ०",
+      "owner": "ⲅࡃ०"
+    },
+    {
+      "name": "ܐ̄︁",
+      "owner": "ܐ̄︁"
+    },
+    {
+      "name": "__installDevastMod",
+      "owner": "__installDevastMod"
+    },
+    {
+      "name": "connectionEvent",
+      "owner": "__installDevastMod"
+    },
+    {
+      "name": "connectionInfo",
+      "owner": "__installDevastMod"
+    }
+  ],
+  "ilm_core_unchanged": true,
+  "parse_verified": true,
+  "live_server_tested": false
+}

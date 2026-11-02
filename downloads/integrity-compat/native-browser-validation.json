@@ -1,0 +1,201 @@
+{
+  "mode": "offline Chromium, synthetic input, native signing functions; not a live game test",
+  "rows": [
+    {
+      "version": "published-game",
+      "signer": 0,
+      "flag": 0,
+      "startupFlag": 0,
+      "flagAfter": 0,
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ᴑ︈օ": "i_540040752",
+        "Ꮷ︄ߏ": 540040752,
+        "ѕމ༥": 48
+      },
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "version": "published-game",
+      "signer": 0,
+      "flag": 1,
+      "startupFlag": 0,
+      "flagAfter": 1,
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ᴑ︈օ": "i_540040753",
+        "Ꮷ︄ߏ": 540040753,
+        "ѕމ༥": 49
+      },
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "version": "published-game",
+      "signer": 1,
+      "flag": 0,
+      "startupFlag": 0,
+      "flagAfter": 0,
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ρ०ᄇ": "n_702734209",
+        "ᴄᄁࠅ": 702734209,
+        "ѕމ༥": 129
+      },
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "version": "published-game",
+      "signer": 1,
+      "flag": 1,
+      "startupFlag": 0,
+      "flagAfter": 1,
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ρ०ᄇ": "n_702734210",
+        "ᴄᄁࠅ": 702734210,
+        "ѕމ༥": 130
+      },
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "version": "published-game",
+      "signer": 2,
+      "flag": 0,
+      "startupFlag": 0,
+      "flagAfter": 0,
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ⲅ٢ᴑ": "t_702734209",
+        "сࡈ５": 702734209
+      },
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "version": "published-game",
+      "signer": 2,
+      "flag": 1,
+      "startupFlag": 0,
+      "flagAfter": 1,
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ⲅ٢ᴑ": "t_702734210",
+        "сࡈ５": 702734210
+      },
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "version": "game.integrity-compat",
+      "signer": 0,
+      "flag": 0,
+      "startupFlag": 0,
+      "flagAfter": 0,
+      "auditBuild": "integrity-compat-v2",
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ᴑ︈օ": "i_540040752",
+        "Ꮷ︄ߏ": 540040752,
+        "ѕމ༥": 48
+      },
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "version": "game.integrity-compat",
+      "signer": 0,
+      "flag": 1,
+      "startupFlag": 0,
+      "flagAfter": 1,
+      "auditBuild": "integrity-compat-v2",
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ᴑ︈օ": "i_540040752",
+        "Ꮷ︄ߏ": 540040752,
+        "ѕމ༥": 48
+      },
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "version": "game.integrity-compat",
+      "signer": 1,
+      "flag": 0,
+      "startupFlag": 0,
+      "flagAfter": 0,
+      "auditBuild": "integrity-compat-v2",
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ρ०ᄇ": "n_702734209",
+        "ᴄᄁࠅ": 702734209,
+        "ѕމ༥": 129
+      },
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "version": "game.integrity-compat",
+      "signer": 1,
+      "flag": 1,
+      "startupFlag": 0,
+      "flagAfter": 1,
+      "auditBuild": "integrity-compat-v2",
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ρ०ᄇ": "n_702734209",
+        "ᴄᄁࠅ": 702734209,
+        "ѕމ༥": 129
+      },
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "version": "game.integrity-compat",
+      "signer": 2,
+      "flag": 0,
+      "startupFlag": 0,
+      "flagAfter": 0,
+      "auditBuild": "integrity-compat-v2",
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ⲅ٢ᴑ": "t_702734209",
+        "сࡈ５": 702734209
+      },
+      "errors": [],
+      "pageErrors": []
+    },
+    {
+      "version": "game.integrity-compat",
+      "signer": 2,
+      "flag": 1,
+      "startupFlag": 0,
+      "flagAfter": 1,
+      "auditBuild": "integrity-compat-v2",
+      "recoveryVersion": 4,
+      "output": null,
+      "changed": {
+        "ⲅ٢ᴑ": "t_702734209",
+        "сࡈ５": 702734209
+      },
+      "errors": [],
+      "pageErrors": []
+    }
+  ],
+  "failures": [],
+  "passed": true
+}
