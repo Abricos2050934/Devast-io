@@ -17,6 +17,8 @@ function __installDevastMod(B) {
       this.ShowRealAngles = "withAim";
       this.target = "players";
       this.AimBotEnabled = false;
+      this.JitterEnabled = false;
+      this.JitterSpeed = 360;
       this.mouseFovEnable = true;
       this.distanceCoefficient = 300;
       this.bulletSpeedCoefficient = 4;
@@ -65,7 +67,7 @@ function __installDevastMod(B) {
   const SAVE = 'DevastILM:settings:v3', LEGACY_SAVE = 'BestModMenuConfig';
   const transient = new Set(['Token', 'token', 'tokenId', 'userId']);
   const keySettings = ['AimbotKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey'];
-  const limits = {mouseFov:[1,20000],lockId:[-1,65535],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],bulletSpeedCoefficient:[1,15],zoomFactor:[.33,2],Xraytransparency:[.05,1]};
+  const limits = {JitterSpeed:[1,3600],mouseFov:[1,20000],lockId:[-1,65535],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],bulletSpeedCoefficient:[1,15],zoomFactor:[.33,2],Xraytransparency:[.05,1]};
   const choices = {target:['players','ghouls','all'],ShowRealAngles:['always','withAim']};
   function validateSetting(key,value) {
     if (!Object.prototype.hasOwnProperty.call(defaults,key) || typeof value !== typeof defaults[key]) throw new Error('Invalid setting: '+key);
@@ -787,7 +789,10 @@ function __installDevastMod(B) {
       return entry;
     }})
   };
-  const ilm = __createIlmAim(MOD, ilmWorld, packet=>__send(packet,true));
+  const ilm = __createIlmAim(MOD, ilmWorld, packet=>{
+    if (MOD.JitterEnabled && packet[0] === 6 && (!jitterAiming() || !Aimbot.targetPlayer?.active)) return false;
+    return __send(packet,true);
+  });
   const GetAllTargets = ilm.targets, Aimbot = ilm.aim;
   // Delegate to the unchanged ILM methods; cache only the native metadata adapter.
   for(const key of ['resolve','findNearestPlayerTo']) {
@@ -797,7 +802,11 @@ function __installDevastMod(B) {
   Aimbot.mouseDown = false;
   // ILM owns lastId and its death reset on the 50 ms tick. A temporary socket
   // failure or a newly received player ID must not erase packet history.
-  Aimbot.refresh = () => { if (!stopped) aimSnapshot(()=>ilm.tick()); };
+  Aimbot.refresh = () => {
+    if (stopped) return;
+    aimSnapshot(()=>ilm.tick());
+    updateJitter(performance.now());
+  };
   const _players_list = [];
   const removers = [];
   const originalSender = B.network.ᴎᚂρ.bind(B.network);
@@ -860,6 +869,7 @@ function __installDevastMod(B) {
   const functionLabels = [
     ['SAutoLootEnabled', 'SAutoLoot'],
     ['AimBotEnabled', 'AimBot'],
+    ['JitterEnabled', 'Jitter'],
     ['AutoBuiledEnabled', 'AutoBuild'],
     ['AntiKickEnabled', 'AntiKick'],
     ['FAutoLootEnabled', 'FAutoLoot'],
@@ -896,6 +906,54 @@ function __installDevastMod(B) {
     diagnostics.commands++;
     return true;
   }
+  const jitter = {angle:0,updatedAt:null,lastSentAt:-Infinity,fireUntil:-Infinity,spinning:false,savedInput:null};
+  function jitterAiming() {
+    return MOD.AimBotEnabled && (Aimbot.mouseDown || performance.now() < jitter.fireUntil ||
+      (MOD.autoFire && Aimbot.targetPlayer?.active && Aimbot.wannaFire()));
+  }
+  function stopJitter() {
+    if (jitter.spinning && B.input && jitter.savedInput !== null) B.input.angle = jitter.savedInput;
+    jitter.spinning = false;
+    jitter.updatedAt = null;
+    jitter.savedInput = null;
+    jitter.lastSentAt = -Infinity;
+  }
+  function updateJitter(now) {
+    if (!MOD.JitterEnabled || !playing() || Aimbot.mouseDown || now < jitter.fireUntil || jitterAiming() || B.chatActive?.()) {
+      stopJitter();
+      return;
+    }
+    if (jitter.updatedAt === null) {
+      jitter.angle = ((B.input?.angle || 0) * 180 / Math.PI % 360 + 360) % 360;
+      jitter.updatedAt = now;
+      jitter.savedInput = B.input?.angle ?? null;
+    }
+    jitter.angle = (jitter.angle + Math.max(0,now - jitter.updatedAt) * MOD.JitterSpeed / 1000) % 360;
+    jitter.updatedAt = now;
+    jitter.spinning = true;
+    if (B.input) B.input.angle = jitter.angle * Math.PI / 180;
+    // Rendering is smooth; send at most one direction per ILM tick period.
+    if (now - jitter.lastSentAt >= 50) {
+      __send([6,jitter.angle]);
+      jitter.lastSentAt = now;
+    }
+  }
+  function beforeFire() {
+    if (!MOD.JitterEnabled || !playing()) return;
+    jitter.fireUntil = performance.now() + 150;
+    stopJitter();
+    if (MOD.AimBotEnabled) {
+      const angle = Aimbot.resolve();
+      if (Aimbot.targetPlayer?.active) {
+        __send([6,angle],true);
+        return;
+      }
+    }
+    const point = cursorWorld();
+    const me = B.world.ᅠᏧ‍;
+    if (point) __send([6,Math.atan2(point.y-me.y,point.x-me.x)*180/Math.PI],true);
+    else if (B.input && Number.isFinite(B.input.angle)) __send([6,B.input.angle*180/Math.PI],true);
+  }
   function persist() {
     refreshLootFilter();
     const saved = {};
@@ -914,6 +972,7 @@ function __installDevastMod(B) {
       if (conflict) MOD[conflict] = MOD[key];
     }
     MOD[key] = value;
+    if (key === 'JitterEnabled' && !value) stopJitter();
     if (key === 'SpamChatEnabled') {
       chatState.status = value ? 'Waiting for game' : 'Off';
       if (value) {
@@ -1616,6 +1675,8 @@ function __installDevastMod(B) {
     updateReconnect(now);
     if (!playing()) {
       lastSentAngle = null;
+      stopJitter();
+      Aimbot.mouseDown = false;
       if (previousPlayer) {
         previousPlayer = 0;
         records = [];
@@ -1639,6 +1700,7 @@ function __installDevastMod(B) {
       updateMouse();
     }
     if (!MOD.AimBotEnabled) lastSentAngle = null;
+    updateJitter(now);
     automate(now);
     if (!B.synchronizedRender) draw();
   }
@@ -1704,6 +1766,7 @@ function __installDevastMod(B) {
     };
     if (e.button === 0) {
       Aimbot.mouseDown = true;
+      if (MOD.JitterEnabled) stopJitter();
 
     }
     if (e.button === 2 && openUnderMouse()) {
@@ -1769,6 +1832,9 @@ function __installDevastMod(B) {
     add(aim, 'distanceCoefficient', 'Distance coefficient', 10, 1000, 10);
     add(aim, 'offsetCoefficient', 'Prediction offset', 0, 3, .1);
     aim.addColor(MOD, 'visualizeResolvingColor').onChange(persist);
+    const jitterMenu = menu.addFolder('Jitter');
+    add(jitterMenu, 'JitterEnabled', 'Enabled');
+    add(jitterMenu, 'JitterSpeed', 'Speed (degrees/sec)', 1, 3600, 1);
     const zoom = menu.addFolder('Zoom');
     zoomControl = add(zoom, 'zoomFactor', 'View scale', .33, 2, .01);
     zoom.add({
@@ -1890,6 +1956,8 @@ function __installDevastMod(B) {
   nextFrame = window.requestAnimationFrame(tick);
   return {
     settings: MOD,
+    beforeFire,
+    get jitterAngle() { return jitter.spinning ? jitter.angle * Math.PI / 180 : null; },
     targets: GetAllTargets,
     trackPacket,
     aim: Aimbot,
@@ -1939,6 +2007,8 @@ function __installDevastMod(B) {
       return functionList;
     },
     dispose() {
+      stopJitter();
+      MOD.JitterEnabled = false;
       MOD.zoomFactor = 1;
       MOD.AimBotEnabled = false;
       MOD.XrayBuildings = false;

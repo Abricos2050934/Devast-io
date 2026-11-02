@@ -23,7 +23,8 @@
     "rejoin-without-cookie-reset",
     "hotkeys-and-settings",
     "mines-and-building-opacity",
-    "function-indicators"
+    "function-indicators",
+    "jitter-with-shot-priority"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -35,6 +36,7 @@
     "tests/mod-performance.test.cjs",
     "tests/ilm-parity.test.cjs",
     "tests/rejoin-recovery.test.cjs",
-    "tests/ilm-autobuild.test.cjs"
+    "tests/ilm-autobuild.test.cjs",
+    "tests/jitter.test.cjs"
   ]
 }

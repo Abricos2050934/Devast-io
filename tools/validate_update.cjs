@@ -114,6 +114,18 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
      const before=JSON.stringify(line);transport.packets.length=0;m.trackPacket(0,2,1,x+5,y+5,true);n.network[r['ᴎ༩༣']]();
      check(JSON.stringify(transport.packets)==='[[4]]'&&JSON.stringify(m.targets.lines[0])===before,'Manual fire inserted a calculation outside the ILM timer');
     }
+    // Jitter owns the idle angle, but a real native shot must encode aim first.
+    n.input.angle=0;m.setSetting('JitterEnabled',true);m.setSetting('JitterSpeed',360);
+    const jitterNow=performance.now();m.step(jitterNow);m.step(jitterNow+250);
+    check(Math.abs(m.jitterAngle-Math.PI/2)<1e-6,'Jitter rotation speed is disconnected');
+    e.angle=0;n.update(e);check(Math.abs(e.angle-m.jitterAngle)<1e-6,'Native player sprite does not rotate with Jitter');
+    transport.packets.length=0;n.input.angle=-2;n.network[s['ѕ᠋༢']]();n.network[s['ρ٨٨']]();
+    check(transport.packets.length===0,'Native mouse direction overwrote Jitter');
+    n.network[r['ᴎ༩༣']]();
+    const jitterLine=m.targets.lines[0],jitterShot=(Math.round(Math.atan2(jitterLine.y2-jitterLine.y1,jitterLine.x2-jitterLine.x1)*180/Math.PI)+360)%360;
+    check(JSON.stringify(transport.packets)===JSON.stringify([[6,jitterShot],[4]]),'Jitter shot encoded attack before corrected aim');
+    check(m.jitterAngle===null,'Jitter continued spinning during a shot');
+    m.setSetting('JitterEnabled',false);
     m.setSetting('AimBotEnabled',false);transport.packets.length=0;
     const loot=[];for(const id of [10,11]){const drop=n.entities.get(0,id,1,1);Object.assign(drop,{id,x:self.x+10,y:self.y,[s['е̝ހ']]:0,[s['Іࡈ５']]:6});loot.push(drop);}
     try{
@@ -149,7 +161,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(deathCalls===1,'Death observation changed native handling');
    }finally{n.network[deathKey]=nativeDeath;}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_shot_matches_ilm_line:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

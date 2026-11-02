@@ -102,6 +102,9 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const directionRules=operations.filter(x=>x.id.startsWith('ilm-native-angle-bookkeeping-')).map(x=>[x.before,x.after]);
  if(!directionHelper||directionRules.length!==2)throw Error('Both native ILM direction contracts are required');
  adaptedAim=adaptedAim.slice(0,directionHelper.start)+`function __ilmPatchNativeDirection(source,index){const rules=${JSON.stringify(directionRules)},rule=rules[index];if(!rule||source.split(rule[0]).length!==2)throw Error('Unsupported native direction handler');return source.replace(rule[0],rule[1]);}`+adaptedAim.slice(directionHelper.end);
+ const fireHelper=acorn.parse(adaptedAim,{ecmaVersion:'latest'}).body.find(n=>n.id?.name==='__jitterPatchNativeFire');
+ const fireRule=operations.find(x=>x.id==='jitter-native-fire-priority');
+ if(fireHelper&&fireRule) adaptedAim=adaptedAim.slice(0,fireHelper.start)+`function __jitterPatchNativeFire(source){const before=${JSON.stringify(fireRule.before)};if(source.split(before).length!==2)throw Error('Unsupported native fire handler');return source.replace(before,${JSON.stringify(fireRule.after)});}`+adaptedAim.slice(fireHelper.end);
  const output=assemble(Buffer.from(cur.source),generated,outputBindings.symbols,payload,bootstrap,gui,adaptedAim);
  const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴎܕα','ᴎ༩༣','І̎ܘ','еϲᄄ','ᴎ︅ހ','ѕ٨ᚄ','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠','рܙ๕'];
  const roles={};for(const key of requiredNative){const next=map[key];if(!next)throw Error('Missing browser validation binding '+key);roles[key]=next;}
