@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "checked_at": "2026-11-02T10:41:49.118385+03:00",
+  "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+  "published_client_sha256": "59f19e7ca6b1776c31f720860c763edcf3ff1783acf4252bc0fa2b8ba1a22311",
+  "canonical_client_sha256": "23cbfb56ecf450f72b532cba42d4f4d9b55ef2e0d504925bab73158d6a7f0690",
+  "module_sha256": {
+    "mod/responsive.js": "5042864b7069f349adc02ec8bb37832e53c5c4bef9e01656518e11494004f0d6",
+    "mod/bootstrap.js": "0fa5ec6348474e483378c05f64c3a860631f43f5f70e5b475d97d7a9ca6a196f",
+    "mod/ilm-aim.js": "fd823041ace4981a96af3feb2f55c63836573d33b11821ab6610eaf857baa3da",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 69,
+    "python_tests": 26
+  },
+  "core_ast": "exact after removal of 14 unused decoder aliases",
+  "core_comparison": {
+    "scenes": 180,
+    "ticks_per_scene": 6,
+    "result": "passed"
+  },
+  "installed_mod_comparison": {
+    "event_traces": 36,
+    "checkpoints_per_trace": 60,
+    "checkpoints": 2160,
+    "result": "passed",
+    "compared": [
+      "target selection",
+      "active player and ghoul history",
+      "lastAngle",
+      "lastId",
+      "prediction lines",
+      "mouse FOV coordinates",
+      "normalized wire commands"
+    ],
+    "focused_cases": [
+      "manual fire between ticks",
+      "aim off/on",
+      "temporary disconnect",
+      "new self ID after packet receipt",
+      "death and respawn",
+      "zero-slot removal"
+    ]
+  },
+  "native_direction_comparison": {
+    "raw_and_decoded": "passed",
+    "codec_not_called_for_suppressed_direction": true,
+    "original_ILM_bookkeeping": "passed",
+    "raw_browser": [
+      {
+        "enabled_updates_time": true,
+        "enabled_updates_angle": true,
+        "enabled_sends": 0,
+        "disabled_stationary_sends": 0,
+        "disabled_moved_sends": 1
+      },
+      {
+        "enabled_updates_time": true,
+        "enabled_updates_angle": true,
+        "enabled_sends": 0,
+        "disabled_stationary_sends": 0,
+        "disabled_moved_sends": 1
+      }
+    ]
+  },
+  "candidate_browser": {
+    "menu": true,
+    "initial_metadata": true,
+    "head_and_leaderboard_labels": true,
+    "packet_history": true,
+    "packet_removal": true,
+    "self_angle_modes": true,
+    "native_clan_colors_and_cache": true,
+    "native_shot_matches_ilm_line": true,
+    "ilm_manual_fire_cadence": true,
+    "disconnect_preserves_aim_history": true,
+    "native_fast_loot_cadence": true,
+    "native_rejoin_identity": true,
+    "mod_errors": []
+  },
+  "live": {
+    "canonical_build": {
+      "result": "passed",
+      "output_sha256": "23cbfb56ecf450f72b532cba42d4f4d9b55ef2e0d504925bab73158d6a7f0690",
+      "observed_session_seconds": 60,
+      "same_page_reconnect": "passed",
+      "reload_rejoin": "passed",
+      "reloads": [
+        {
+          "attempt": 1,
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true
+        }
+      ],
+      "errors": []
+    },
+    "auto_update_build": {
+      "result": "passed",
+      "output_sha256": "59f19e7ca6b1776c31f720860c763edcf3ff1783acf4252bc0fa2b8ba1a22311",
+      "observed_session_seconds": 10,
+      "same_page_reconnect": "passed",
+      "reload_rejoin": "passed",
+      "reloads": [
+        {
+          "attempt": 1,
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true
+        }
+      ],
+      "errors": []
+    }
+  },
+  "adaptations": [
+    "current 20-byte entity protocol and native binary codec",
+    "current canvas/camera transform",
+    "no wire sends outside an active session",
+    "existing line color/visibility controls and removed AIM BOT label"
+  ],
+  "inert_original_parameters": [
+    "bulletSpeedCoefficient",
+    "resolverType"
+  ]
+}

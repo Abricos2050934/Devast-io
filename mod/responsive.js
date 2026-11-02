@@ -795,13 +795,9 @@ function __installDevastMod(B) {
     Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>method.apply(this,args));}});
   }
   Aimbot.mouseDown = false;
-  Aimbot.isDead = () => !B.world.ᅠᏧ‍?.id;
-  Aimbot.refresh = () => { if (!stopped && (playing() || Aimbot.isDead())) aimSnapshot(()=>ilm.tick()); };
-  Aimbot.onDeath = () => {
-    Aimbot.targetPlayer=null; Aimbot.mouseDown=false; GetAllTargets.lastId=0;
-    for(const target of [...GetAllTargets.players,...GetAllTargets.ghouls]) if(target.active) target.setInactive();
-    GetAllTargets.resetLines();
-  };
+  // ILM owns lastId and its death reset on the 50 ms tick. A temporary socket
+  // failure or a newly received player ID must not erase packet history.
+  Aimbot.refresh = () => { if (!stopped) aimSnapshot(()=>ilm.tick()); };
   const _players_list = [];
   const removers = [];
   const originalSender = B.network.ᴎᚂρ.bind(B.network);
@@ -897,10 +893,6 @@ function __installDevastMod(B) {
     }
     if (key === 'SAutoLootEnabled' && value) MOD.FAutoLootEnabled = false;
     if (key === 'FAutoLootEnabled' && value) MOD.SAutoLootEnabled = false;
-    if (key === 'AimBotEnabled' && !value) {
-      Aimbot.targetPlayer = null;
-      GetAllTargets.lines.forEach(l => l.reset(-1, -1, -1, -1));
-    }
     persist();
     if (menu) menu.updateDisplay();
   }
@@ -916,7 +908,7 @@ function __installDevastMod(B) {
   function trackPacket(type, playerId, uid, x, y, active) {
     const group=type===B.categories.player?GetAllTargets.players:type===13?GetAllTargets.ghouls:null;
     const id=type===B.categories.player?playerId:uid;
-    if(!group || !Number.isInteger(id) || id<1 || id>65535) return;
+    if(!group || !Number.isInteger(id) || id<(active?1:0) || id>65535) return;
     // Fill any extended slots: original ILM iterates densely over both arrays.
     while(group.length<=id) group.push(new ilm.Target(group.length));
     if(!active) { group[id].setInactive(); return; }
@@ -1004,19 +996,20 @@ function __installDevastMod(B) {
       scale: v.scale * (Number.isFinite(ratio) && ratio > 0 ? ratio : 1)
     };
   }
-  function updateMouse() {
+  function cursorWorld(cursor = mouse || GetAllTargets.mousePosition) {
     const v = view(), can = v.ctx?.canvas || document.getElementById('can');
-    if (!can || !(v.scale > 0)) return;
+    if (!can || !(v.scale > 0)) return null;
     const r = can.getBoundingClientRect();
-    if (!r.width || !r.height) return;
-    const cursor = mouse || ({
-      x: r.left + r.width / 2,
-      y: r.top + r.height / 2
-    });
-    GetAllTargets.mouseMapCords = {
+    if (!r.width || !r.height) return null;
+    return {
       x: (cursor.x - r.left) * can.width / r.width / v.scale - v.x,
       y: (cursor.y - r.top) * can.height / r.height / v.scale - v.y
     };
+  }
+  function updateMouse() {
+    if (!MOD.mouseFovEnable) return;
+    const point = cursorWorld(GetAllTargets.mousePosition);
+    if (point) GetAllTargets.mouseMapCords = point;
   }
   function automate(now) {
     const me = B.world.ᅠᏧ‍;
@@ -1110,8 +1103,9 @@ function __installDevastMod(B) {
   }
   function openUnderMouse() {
     if (!playing() || !MOD.OpenEverythingByClick) return false;
-    updateMouse();
-    const x = Math.floor(GetAllTargets.mouseMapCords.x / 100), y = Math.floor(GetAllTargets.mouseMapCords.y / 100);
+    const point = cursorWorld();
+    if (!point) return false;
+    const x = Math.floor(point.x / 100), y = Math.floor(point.y / 100);
     for (const r of records) {
       const d = building(r);
       const me = B.world.ᅠᏧ‍;
@@ -1226,7 +1220,9 @@ function __installDevastMod(B) {
           if (sprite && B.graphics.ᴑ̸ᴘ) B.graphics.ᴑ̸ᴘ(sprite, v.x + r.e.x, v.y + r.e.y - 85, 0, 0, 0, 0.6);
         }
       } else if (MOD.ShowBuildingOwner && building(r)) {
-        const x = Math.floor(GetAllTargets.mouseMapCords.x / 100), y = Math.floor(GetAllTargets.mouseMapCords.y / 100);
+        const point = cursorWorld();
+        if (!point) continue;
+        const x = Math.floor(point.x / 100), y = Math.floor(point.y / 100);
         if (r.e.αބ̞ === x && r.e.ᴀܛ٤ === y) {
           const p = at(r.e), id = r.e.ᴘ४１;
           text(Number.isInteger(id) && id > 0 ? (nickname(id) ? nickname(id)+' ' : '')+'#'+id : 'Owner unknown', p.x, p.y - 35, clanColor(id), 16);
@@ -1464,7 +1460,6 @@ function __installDevastMod(B) {
     if (!playing()) {
       lastSentAngle = null;
       if (previousPlayer) {
-        Aimbot.onDeath();
         previousPlayer = 0;
         records = [];
         _players_list.length = 0;
@@ -1475,7 +1470,6 @@ function __installDevastMod(B) {
     }
     if (previousPlayer !== B.world.ᅠᏧ‍.id) {
       lastSentAngle = null;
-      if (previousPlayer) Aimbot.onDeath();
       previousPlayer = B.world.ᅠᏧ‍.id;
       lastLoot = lastBuild = lastTake = now;
       lastChat = nextChatAt = -Infinity;
@@ -1507,27 +1501,8 @@ function __installDevastMod(B) {
     if (stopped) return;
     try { Aimbot.refresh(); } catch (error) { report(error); }
   }, 50);
-  for (const key of ["ѕ᠋༢", "ρ٨٨"]) {
-    if (typeof B.network[key] !== 'function') throw new Error('Missing native angle handler');
-    originals[key] = B.network[key];
-    B.network[key] = function (...args) {
-      if (MOD.AimBotEnabled) return;
-      return originals[key].apply(this, args);
-    };
-  }
-  if (B.fireKey && typeof B.network[B.fireKey] === 'function') {
-    const nativeFire = B.network[B.fireKey];
-    originals[B.fireKey] = nativeFire;
-    B.network[B.fireKey] = function (...args) {
-      // A click may arrive between ILM's 50 ms ticks. Resolve and send the same
-      // angle used by the prediction line immediately before the native shot.
-      if (!stopped && playing() && MOD.AimBotEnabled) {
-        updateMouse();
-        __send([6, Aimbot.resolve()], true);
-      }
-      return nativeFire.apply(this, args);
-    };
-  }
+  // Native direction functions keep updating their timing/angle bookkeeping;
+  // reviewed native patches suppress only their send, exactly as ILM does.
   function keyboard(e) {
     if (waitingKey) {
       e.preventDefault();

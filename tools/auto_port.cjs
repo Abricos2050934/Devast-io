@@ -54,7 +54,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  }
  const canonicalRequired=new Set();for(const source of [payload,bootstrap])for(const tok of acorn.tokenizer(source,{ecmaVersion:'latest'}))if(Object.hasOwn(bindings.symbols,tok.value))canonicalRequired.add(tok.value);
  // Existing protected metadata is decoded to a normal constructor assignment.
- const ops=profile.operations.map(op=>op.id==='ilm-native-initial-nickname-id'?{...op,before:'this.ο३︀ = ο३︀',after:'this.ο३︀ = __ilmPlayerNickname(ο३︀,ᴘ५٢)'}:op);
+ const ops=profile.operations.map(op=>op.decoded_before?{...op,before:op.decoded_before,after:op.decoded_after}:op.id==='ilm-native-initial-nickname-id'?{...op,before:'this.ο३︀ = ο३︀',after:'this.ο३︀ = __ilmPlayerNickname(ο३︀,ᴘ५٢)'}:op);
  function anchor(text,id){
   const at=old.source.indexOf(text);if(at<0||old.source.indexOf(text,at+1)>=0)throw Error('Reference anchor is not unique: '+id);
   const n=old.nodes.find(n=>n.start===at&&n.end===at+text.length);if(!n)throw Error('Reference anchor is not an AST node: '+id);
@@ -95,7 +95,11 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  // This helper is unused after direct constructor patching; retain a correct recipe.
  const meta=operations.find(x=>x.id==='ilm-native-initial-nickname-id');
  const aimTree=acorn.parse(aim,{ecmaVersion:'latest'}),helper=aimTree.body.find(n=>n.id?.name==='__ilmPatchPlayerMetadata');
- const adaptedAim=aim.slice(0,helper.start)+`function __ilmPatchPlayerMetadata(source){const before=${JSON.stringify(meta.before)};if(source.split(before).length!==2)throw Error('Unsupported native player metadata constructor');return source.replace(before,${JSON.stringify(meta.after)});}`+aim.slice(helper.end);
+ let adaptedAim=aim.slice(0,helper.start)+`function __ilmPatchPlayerMetadata(source){const before=${JSON.stringify(meta.before)};if(source.split(before).length!==2)throw Error('Unsupported native player metadata constructor');return source.replace(before,${JSON.stringify(meta.after)});}`+aim.slice(helper.end);
+ const directionHelper=acorn.parse(adaptedAim,{ecmaVersion:'latest'}).body.find(n=>n.id?.name==='__ilmPatchNativeDirection');
+ const directionRules=operations.filter(x=>x.id.startsWith('ilm-native-angle-bookkeeping-')).map(x=>[x.before,x.after]);
+ if(!directionHelper||directionRules.length!==2)throw Error('Both native ILM direction contracts are required');
+ adaptedAim=adaptedAim.slice(0,directionHelper.start)+`function __ilmPatchNativeDirection(source,index){const rules=${JSON.stringify(directionRules)},rule=rules[index];if(!rule||source.split(rule[0]).length!==2)throw Error('Unsupported native direction handler');return source.replace(rule[0],rule[1]);}`+adaptedAim.slice(directionHelper.end);
  const output=assemble(Buffer.from(cur.source),generated,outputBindings.symbols,payload,bootstrap,gui,adaptedAim);
  const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴎܕα','ᴎ༩༣','І̎ܘ','еϲᄄ','ᴎ︅ހ','ѕ٨ᚄ','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠'];
  const roles={};for(const key of requiredNative){const next=map[key];if(!next)throw Error('Missing browser validation binding '+key);roles[key]=next;}

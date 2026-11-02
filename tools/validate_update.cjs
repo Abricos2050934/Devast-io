@@ -98,11 +98,15 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    const transport=n.capturePackets();
    try{
     m.trackPacket(0,1,1,1000,1000,true);m.trackPacket(0,2,1,1100,1050,true);m.aim.refresh();transport.packets.length=0;
+    m.step(0);const history=JSON.stringify(m.targets.players[2]);n.network.state=64;m.step(16);m.aim.refresh();n.network.state=1;m.step(32);
+    check(JSON.stringify(m.targets.players[2])===history,'Temporary disconnection erased native packet history');
     for(const [x,y]of [[1080,1100],[900,900],[1100,900],[950,1150]]){
-     transport.packets.length=0;m.trackPacket(0,2,1,x,y,true);n.input.angle=-2;
-     n.network[s['ѕ᠋༢']]();n.network[s['ρ٨٨']]();n.network[s['ᴎ༩༣']]();
+     transport.packets.length=0;m.trackPacket(0,2,1,x,y,true);m.aim.refresh();n.input.angle=-2;
+     n.network[s['ѕ᠋༢']]();n.network[s['ρ٨٨']]();n.network[r['ᴎ༩༣']]();
      const line=m.targets.lines[0],angle=(Math.round(Math.atan2(line.y2-line.y1,line.x2-line.x1)*180/Math.PI)+360)%360;
      check(JSON.stringify(transport.packets)===JSON.stringify([[6,angle],[4]]),'Native shot does not follow the current ILM line: '+JSON.stringify({packets:transport.packets,angle,line}));
+     const before=JSON.stringify(line);transport.packets.length=0;m.trackPacket(0,2,1,x+5,y+5,true);n.network[r['ᴎ༩༣']]();
+     check(JSON.stringify(transport.packets)==='[[4]]'&&JSON.stringify(m.targets.lines[0])===before,'Manual fire inserted a calculation outside the ILM timer');
     }
     m.setSetting('AimBotEnabled',false);transport.packets.length=0;
     const loot=[];for(const id of [10,11]){const drop=n.entities.get(0,id,1,1);Object.assign(drop,{id,x:self.x+10,y:self.y,[s['е̝ހ']]:0,[s['Іࡈ５']]:6});loot.push(drop);}
@@ -115,7 +119,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(restore[4]===1&&normal[4]===0&&JSON.stringify(restore.slice(1,4))===JSON.stringify(identity)&&JSON.stringify(normal.slice(1,4))===JSON.stringify(identity),'Native rejoin payload changes identity');
    }finally{transport.restore();n.network.state=0;}
    m.setSetting('AimBotEnabled',false);self.id=0;check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_shot_matches_ilm_line:true,native_fast_loot_cadence:true,native_rejoin_identity:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_shot_matches_ilm_line:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_rejoin_identity:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

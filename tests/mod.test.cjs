@@ -74,10 +74,10 @@ test('ILM retains last angle without a target; native input resumes after disabl
   const g=fixture();const wrapper=g.network['ѕ᠋༢'];
   g.mod.trackPacket(1,1,0,10,20,true);g.mod.setSetting('AimBotEnabled',true);g.mod.aim.refresh();
   assert.deepEqual(g.packets,[[6,0]]);
-  g.network['ѕ᠋༢']();assert.equal(g.nativeCalls,0);
-  g.mod.setSetting('AimBotEnabled',false);g.network['ѕ᠋༢']();assert.equal(g.nativeCalls,1);
-  g.mod.dispose();assert.notEqual(g.network['ѕ᠋༢'],wrapper);
-  g.network['ѕ᠋༢']();assert.equal(g.nativeCalls,2);
+  g.network['ѕ᠋༢']();assert.equal(g.nativeCalls,1);
+  g.mod.setSetting('AimBotEnabled',false);g.network['ѕ᠋༢']();assert.equal(g.nativeCalls,2);
+  g.mod.dispose();assert.equal(g.network['ѕ᠋༢'],wrapper);
+  g.network['ѕ᠋༢']();assert.equal(g.nativeCalls,3);
 });
 
 test('ILM fast loot sends all in-range drops each frame without the native selected-item restriction',()=>{
@@ -141,8 +141,8 @@ test('map names, ID 120, clan/name colors, gauges, hitboxes and real-angle displ
 test('line color reaches the canvas; removal resets ILM lines and aim owns native input while enabled',()=>{
  const f=fixture({dom:true});scene(f,1,[player(1),player(2,100,0)]);
  f.mod.trackPacket(1,1,0,0,0,true);f.mod.trackPacket(1,2,0,100,0,true);f.mod.setSetting('visualizeResolvingColor','#abcdef');f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();f.mod.step(0);
- assert.ok(f.dom.calls.some(c=>c.name==='stroke'&&c.stroke==='#abcdef'));f.network['ѕ᠋༢']();assert.equal(f.nativeCalls,0);
- f.mod.trackPacket(1,2,0,0,0,false);f.mod.aim.refresh();assert.equal(f.mod.targets.lines[0].x1,undefined);f.network['ѕ᠋༢']();assert.equal(f.nativeCalls,0);f.mod.dispose();
+ assert.ok(f.dom.calls.some(c=>c.name==='stroke'&&c.stroke==='#abcdef'));f.network['ѕ᠋༢']();assert.equal(f.nativeCalls,1);
+ f.mod.trackPacket(1,2,0,0,0,false);f.mod.aim.refresh();assert.equal(f.mod.targets.lines[0].x1,undefined);f.network['ѕ᠋༢']();assert.equal(f.nativeCalls,2);f.mod.dispose();
 });
 
 test('ILM auto fire repeats on each 50 ms tick while direction-change history remains true',()=>{
@@ -272,12 +272,12 @@ test('legacy settings migrate separately from account storage and preserve custo
  assert.equal(g.storage.get('token'),'original');assert.equal(g.storage.get('tokenId'),'17');assert.equal(g.storage.get('userId'),'2');f.mod.dispose();g.mod.dispose();
 });
 
-test('native manual fire resolves the latest ILM angle immediately before the shot and restores on dispose',()=>{
+test('manual fire retains the angle and line from the last ILM tick without an extra resolve',()=>{
  const f=fixture({fireKey:'nativeFire'});f.mod.trackPacket(1,1,0,0,0,true);f.mod.trackPacket(1,2,0,100,0,true);
  f.mod.setSetting('lockId',2);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();f.packets.length=0;
- f.mod.trackPacket(1,2,0,100,100,true);f.network.nativeFire();
- const line=f.mod.targets.lines[0],angle=(Math.round(Math.atan2(line.y2-line.y1,line.x2-line.x1)*180/Math.PI)+360)%360;
- assert.deepEqual(f.packets,[[6,angle],[4]]);
+ const before=JSON.stringify(f.mod.targets.lines);f.mod.trackPacket(1,2,0,100,100,true);f.network.nativeFire();
+ assert.deepEqual(f.packets,[[4]]);assert.equal(JSON.stringify(f.mod.targets.lines),before);
+ f.mod.aim.refresh();assert.equal(f.packets.at(-1)[0],6);assert.notEqual(JSON.stringify(f.mod.targets.lines),before);
  f.mod.setSetting('AimBotEnabled',false);f.packets.length=0;f.network.nativeFire();assert.deepEqual(f.packets,[[4]]);
  f.mod.dispose();f.packets.length=0;f.network.nativeFire();assert.deepEqual(f.packets,[[4]]);
 });

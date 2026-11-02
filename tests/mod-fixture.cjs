@@ -1,7 +1,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 
 function fixture(options={}) {
-  const listeners = new Map(), timers = new Map(), frames = new Map(), storage = new Map(), packets = [];
+  const listeners = new Map(), timers = new Map(), timerPeriods = new Map(), frames = new Map(), storage = new Map(), packets = [];
   let next = 0;
   const window = {
     addEventListener(type, fn) {
@@ -9,7 +9,7 @@ function fixture(options={}) {
       listeners.get(type).add(fn);
     },
     removeEventListener(type, fn) { listeners.get(type)?.delete(fn); },
-    setInterval(fn) { const id = ++next; timers.set(id, fn); return id; },
+    setInterval(fn,delay) { const id = ++next; timers.set(id, fn); timerPeriods.set(id,delay); return id; },
     clearInterval(id) { timers.delete(id); },
     requestAnimationFrame(fn) { const id = ++next; frames.set(id, fn); return id; },
     cancelAnimationFrame(id) { frames.delete(id); },
@@ -36,7 +36,7 @@ function fixture(options={}) {
     console, performance: {now: () => clock},navigator,alert(){},B:candidate?.B||B,
   });
   vm.runInContext((candidate?.source||(fs.readFileSync('mod/ilm-aim.js','utf8') + '\n' + fs.readFileSync('mod/responsive.js', 'utf8'))) + '\nglobalThis.mod = __installDevastMod(B);', context, {timeout: 1000});
-  return {mod: candidate?candidate.adaptMod(context.mod):context.mod, B,window,document,dom,navigator,clipboard,setClock:value=>{clock=value;},network, world, entities, storage, packets, listeners, timers, frames, get nativeCalls(){return nativeCalls;}};
+  return {mod: candidate?candidate.adaptMod(context.mod):context.mod, B,window,document,dom,navigator,clipboard,setClock:value=>{clock=value;},network, world, entities, storage, packets, listeners, timers, timerPeriods, frames, get nativeCalls(){return nativeCalls;}};
 }
 
 function scene(f,type,items){f.entities.border[type]={border:items.length,'ⲣᴑᴏ':items.map((_,i)=>i)};f.entities['ᴎ̂２'][type]=items;}

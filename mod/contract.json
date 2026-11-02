@@ -1,8 +1,38 @@
 {
   "schema": 1,
   "name": "Devast-io ILM mod",
-  "modules": ["mod/responsive.js", "mod/bootstrap.js", "mod/ilm-aim.js", "vendor/dat.gui.recovered.js"],
-  "features": ["ilm-aim", "prediction-and-auto-fire", "player-ghoul-history", "native-nickname-id", "native-self-angle", "zoom", "loot-and-filter", "auto-build", "container-take", "cursor-interaction", "chat", "nickname-copy", "rejoin-without-cookie-reset", "hotkeys-and-settings", "mines-and-building-opacity", "function-indicators"],
-  "removed_overlays": ["bottom-gauge-text", "aim-bot-head-label"],
-  "candidate_tests": ["tests/mod.test.cjs", "tests/aim-settings.test.cjs", "tests/mod-performance.test.cjs"]
+  "modules": [
+    "mod/responsive.js",
+    "mod/bootstrap.js",
+    "mod/ilm-aim.js",
+    "vendor/dat.gui.recovered.js"
+  ],
+  "features": [
+    "ilm-aim",
+    "prediction-and-auto-fire",
+    "player-ghoul-history",
+    "native-nickname-id",
+    "native-self-angle",
+    "zoom",
+    "loot-and-filter",
+    "auto-build",
+    "container-take",
+    "cursor-interaction",
+    "chat",
+    "nickname-copy",
+    "rejoin-without-cookie-reset",
+    "hotkeys-and-settings",
+    "mines-and-building-opacity",
+    "function-indicators"
+  ],
+  "removed_overlays": [
+    "bottom-gauge-text",
+    "aim-bot-head-label"
+  ],
+  "candidate_tests": [
+    "tests/mod.test.cjs",
+    "tests/aim-settings.test.cjs",
+    "tests/mod-performance.test.cjs",
+    "tests/ilm-parity.test.cjs"
+  ]
 }

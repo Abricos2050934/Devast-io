@@ -8,6 +8,9 @@ const edits=[],todo=[t];while(todo.length){const n=todo.pop();if(!n||typeof n!==
  for(const v of Object.values(n)){if(Array.isArray(v))todo.push(...v);else if(v&&typeof v==='object')todo.push(v);}
 }
 if(edits.filter(e=>e.text.includes('__ilmFunctions')).length!==5)throw Error('Expected five native functions');
+const network=t.body[0].expression.callee.body.body.flatMap(n=>n.declarations||[]).find(n=>n.id.name===s['о̃༩']).init.callee;
+const networkReturn=network.body.body.find(n=>n.type==='ReturnStatement');
+edits.push({at:networkReturn.start,text:`window.__ilmDirectionProbe=name=>{const saved=[ᴉ̡̂,ѕܓ́,ⲅᚂߌ,ﾠࠂ̶,ιܕ︅,ㅤ๘މ.angle,__responsiveMod.settings.AimBotEnabled],sent=[];try{ιܕ︅=p=>sent.push(1);__responsiveMod.settings.AimBotEnabled=true;ᴉ̡̂=1e9;ѕܓ́=0;ⲅᚂߌ=0;ﾠࠂ̶=0;ㅤ๘މ.angle=1.3;оᴌ︈[name]();const first={time:ѕܓ́,angle:ⲅᚂߌ,sends:sent.length};__responsiveMod.settings.AimBotEnabled=false;ᴉ̡̂+=1e6;оᴌ︈[name]();const stationary=sent.length;ㅤ๘މ.angle=-1.7;ᴉ̡̂+=1e6;оᴌ︈[name]();return {enabled_updates_time:first.time===1e9,enabled_updates_angle:first.angle===1.3,enabled_sends:first.sends,disabled_stationary_sends:stationary,disabled_moved_sends:sent.length};}finally{[ᴉ̡̂,ѕܓ́,ⲅᚂߌ,ﾠࠂ̶,ιܕ︅,ㅤ๘މ.angle,__responsiveMod.settings.AimBotEnabled]=saved;}};`});
 const probe=`window.__ilmProbe={...window.__ilmFunctions,world:ᴘ̏٤,network:оᴌ︈,entities:ᴘոᚄ,input:ㅤ๘މ,labelFactory:а̵̠,lerp:ᴌߊ༡.ᴎ٨ߍ,layout:{x:ρ̴ކ,y:7},};`;
 edits.push({at:end,text:probe});let code=src;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
 (async()=>{
@@ -17,7 +20,7 @@ edits.push({at:end,text:probe});let code=src;for(const e of edits.sort((a,b)=>b.
   const page=await browser.newPage({viewport:{width:1280,height:800}});page.on('pageerror',e=>report.page_errors.push(e.message.slice(0,250)));
   await page.route('https://devast.io/',r=>r.fulfill({status:200,contentType:'text/html',body:fs.readFileSync('build/download/index.html','utf8')}));
   await page.route(p.source_url,r=>r.fulfill({status:200,contentType:'text/javascript',body:code}));
-  await page.goto('https://devast.io/',{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>!!window.__ilmProbe&&!!window.__devastMod?.menu);
+  await page.goto('https://devast.io/',{waitUntil:'domcontentloaded'});await page.waitForFunction(key=>!!window.__ilmProbe&&!!window.__devastMod?.menu&&typeof window.__ilmProbe.network[key]==='function',s['ᅠϲ᠍']);
   report.checks=await page.evaluate(s=>{
    const n=window.__ilmProbe,m=window.__devastMod,w=n.world,players=w[s['ᴎ︃ᄉ']],self=w[s['ᅠᏧ‍']],out={};
    const assert=(value,message)=>{if(!value)throw Error(message);};
@@ -60,7 +63,13 @@ edits.push({at:end,text:probe});let code=src;for(const e of edits.sort((a,b)=>b.
     const expected=mode==='always'||enabled?n.lerp(0,1,.5):2;
     assert(Math.abs(e.angle-expected)<1e-8,'Native self angle mode failed: '+mode+'/'+enabled);angles.push({mode,enabled,angle:e.angle});
    }
-   out.native_self_angles=angles;out.mod_errors=[...m.diagnostics.errors];assert(!out.mod_errors.length,'Mod integration errors');
+   out.native_self_angles=angles;
+   out.native_direction_parity=[];
+   for(const key of ['ѕ᠋༢','ρ٨٨']){
+    const result=window.__ilmDirectionProbe(s[key]);out.native_direction_parity.push(result);
+    assert(result.enabled_updates_time&&result.enabled_updates_angle&&result.enabled_sends===0&&result.disabled_stationary_sends===0&&result.disabled_moved_sends===1,'Raw native direction handler differs from ILM');
+   }
+   out.mod_errors=[...m.diagnostics.errors];assert(!out.mod_errors.length,'Mod integration errors');
    m.setSetting('AimBotEnabled',false);self.id=0;return out;
   },s);
   report.result='passed';await page.screenshot({path:'build/ilm-upload/native-browser.png'});
