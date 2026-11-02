@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "archive": "Devast-io-Handoff.zip",
+  "archive_sha256": "9dd2b2e1888c9b29ccb719587ee8dc22ea0708187c54d1a468fb531362b429d3",
+  "archive_bytes": 17337678,
+  "snapshot_commit": "e2d6f54aa8fe6af80131e344e8717f6b4fd57665",
+  "functional_source_commit": "d64f758af2d15eef4cde91eae687aa2bf214fa02",
+  "client_sha256": "bab6756659e97f3d7ef7051a2cb5dd916d25f87cb6944020472afcdb157a15d4",
+  "files": 112,
+  "created_at": "2026-11-02T15:40:21.591148+03:00",
+  "restored_snapshot_checks": {
+    "status": "passed",
+    "checksums_before_and_after_build": "passed",
+    "npm_run_build": "passed",
+    "npm_test": {
+      "node_tests": 100,
+      "python_tests": 26
+    },
+    "test_context": "Fresh extraction without .git, .npmrc or project node_modules; uses available Node runtime dependencies."
+  }
+}
