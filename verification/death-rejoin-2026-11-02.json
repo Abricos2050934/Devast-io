@@ -1,0 +1,23 @@
+{
+  "output_sha256": "9e0236b273227b209a76a770e4f02902f7b0faeaa8b5cfba43b8537a3d453fa2",
+  "recoveryVersion": 4,
+  "fixture_packet": "05 00 02",
+  "browser": "passed",
+  "death_stops_restore_retries": true,
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 118,
+    "python_tests": 26
+  },
+  "checks": [
+    "death cancels stale handshakes and automatic restore",
+    "Play after death uses normal join mode with unchanged account data",
+    "failed normal joins remain normal and retries are bounded",
+    "live connection recovery without a death event retains existing restore behavior"
+  ],
+  "limitations": [
+    "Reason for server-side death is not established",
+    "New successful live post-death login is not claimed; verification used native browser fixtures and regression tests"
+  ]
+}

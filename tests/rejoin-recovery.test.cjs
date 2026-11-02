@@ -195,3 +195,36 @@ test('disposing recovery leaves native Play usable while canceling old preparati
  const f=fixture({saved:account});f.network.state=0;let calls=0;f.mod.beginPlay();const old=f.mod.guardPlayCallback(()=>calls++);
  f.mod.dispose();old();assert.equal(calls,0);assert.equal(f.mod.beginPlay(),true);f.mod.guardPlayCallback(()=>calls++)();assert.equal(calls,1);assert.deepEqual(identity(f),account);
 });
+test('reported 05 00 02 death stops restoration retries and Play keeps identity while starting a normal join',()=>{
+ const f=fixture({saved:account});let refreshes=0;const joins=[];
+ f.B.loginKey='login';f.B.errorKey='error';f.B.pendingKey='busy';f.network.login=function(){joins.push(this.state);};f.network.error=()=>{f.network.state=0;};
+ const row=['lobby',0,0,0,'region',0,'mode'];f.network['ԁᴄࡃ']=row;f.network['ոߒ४']=[row];f.network['ⲅ︊ᄃ']=(_,cb)=>{refreshes++;cb();};f.B.reconnect=()=>f.network.login();
+ let cookieWrites=0;Object.defineProperty(f.document,'cookie',{get:()=> 'kept=1',set:()=>cookieWrites++});
+ f.mod.step(0);f.mod.observeDeath(new Uint8Array([5,0,2]));f.world['ᅠᏧ‍'].id=0;f.network.state=128;f.network.error();
+ assert.equal(f.mod.connectionInfo().lastFailureCode,128);
+ for(const now of [1,1000,9000,24000]){f.network.state=64;f.mod.step(now);assert.equal(f.network.state,0);}
+ assert.equal(refreshes,0);assert.equal(joins.length,0);assert.equal(f.mod.connectionInfo().awaitingPlay,true);
+ f.setClock(25000);assert.equal(f.mod.beginPlay(),true);f.network.login();assert.deepEqual(joins,[0]);
+ assert.equal(f.mod.connectionInfo().sessionEnded,true);assert.deepEqual(identity(f),account);assert.equal(cookieWrites,0);
+ f.network.state=1;f.world['ᅠᏧ‍'].id=3;f.mod.step(25001);assert.equal(f.mod.connectionInfo().sessionEnded,false);assert.equal(f.mod.connectionInfo().awaitingPlay,false);
+ f.mod.dispose();
+});
+test('death invalidates a pending handshake callback without deleting stored login',()=>{
+ const f=fixture({saved:account});f.network.state=0;f.B.loginKey='login';let reply,starts=0;
+ f.network.login=()=>{reply=f.mod.guardHandshakeCallback('/native-preflight',()=>starts++);};f.mod.step(0);f.network.login();
+ f.mod.observeDeath(new Uint8Array([5,0,2]));reply();assert.equal(starts,0);assert.deepEqual(identity(f),account);f.mod.dispose();
+});
+test('failed normal joins after death stay normal, are bounded and keep the same account',()=>{
+ const f=fixture({saved:account});const joins=[];const row=['lobby',0,0,0,'region',0,'mode'];
+ f.B.loginKey='login';f.network.login=function(){joins.push(this.state);};f.B.reconnect=()=>f.network.login();
+ f.network['ԁᴄࡃ']=row;f.network['ոߒ४']=[row];f.network['ⲅ︊ᄃ']=(_,cb)=>cb();
+ const step=now=>{f.setClock(now);f.mod.step(now);};step(0);f.mod.observeDeath(new Uint8Array([5,0,2]));f.network.state=0;
+ assert.equal(f.mod.beginPlay(),true);f.network.login();assert.deepEqual(joins,[0]);
+ let now=0;
+ for(let retry=0;retry<3;retry++){
+  f.network.state=64;step(now+12001);step(now+12002);step(now+13002);now+=13002;
+ }
+ assert.equal(joins.length,4);assert.ok(joins.every(state=>state===0));
+ for(const time of [now+12001,now+12002,now+50000,now+100000]){f.network.state=64;step(time);}
+ assert.equal(joins.length,4);assert.deepEqual(identity(f),account);f.mod.dispose();
+});
