@@ -134,6 +134,8 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
      n.network[s['ѕ᠋༢']]();n.network[s['ρ٨٨']]();n.network[r['ᴎ༩༣']]();
      const line=m.targets.lines[0],angle=(Math.round(Math.atan2(line.y2-line.y1,line.x2-line.x1)*180/Math.PI)+360)%360;
      check(JSON.stringify(transport.packets)===JSON.stringify([[6,angle],[4]]),'Native shot does not follow the current ILM line: '+JSON.stringify({packets:transport.packets,angle,line}));
+     e.angle=-2;e[r['ᴑ٧ߓ']]=-2;n.update(e);
+     check(Math.abs(e.angle-angle*Math.PI/180)<1e-6,'Firing display waited for a stale server angle');
      const before=JSON.stringify(line);transport.packets.length=0;m.trackPacket(0,2,1,x+5,y+5,true);n.network[r['ᴎ༩༣']]();
      check(JSON.stringify(transport.packets)==='[[4]]'&&JSON.stringify(m.targets.lines[0])===before,'Manual fire inserted a calculation outside the ILM timer');
     }
@@ -148,6 +150,11 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     const jitterLine=m.targets.lines[0],jitterShot=(Math.round(Math.atan2(jitterLine.y2-jitterLine.y1,jitterLine.x2-jitterLine.x1)*180/Math.PI)+360)%360;
     check(JSON.stringify(transport.packets)===JSON.stringify([[6,jitterShot],[4]]),'Jitter shot encoded attack before corrected aim');
     check(m.jitterAngle===null,'Jitter continued spinning during a shot');
+    transport.packets.length=0;const heldLine=JSON.stringify(m.targets.lines[0]);
+    for(let i=0;i<20;i++)n.network[r['ᴎ༩༣']]();
+    check(transport.packets.length===20&&transport.packets.every(p=>p.length===1&&p[0]===4),'Repeated native attacks flooded extra aim packets');
+    check(JSON.stringify(m.targets.lines[0])===heldLine,'Repeated native attacks recalculated prediction between ILM ticks');
+    transport.packets.length=0;m.aim.refresh();check(transport.packets.length===1&&transport.packets[0][0]===6,'Continuous fire lost its ILM aim tick');
     m.setSetting('JitterEnabled',false);
     m.setSetting('AimBotEnabled',false);transport.packets.length=0;
     const loot=[];for(const id of [10,11]){const drop=n.entities.get(0,id,1,1);Object.assign(drop,{id,x:self.x+10,y:self.y,[s['е̝ހ']]:0,[s['Іࡈ５']]:6});loot.push(drop);}
@@ -184,7 +191,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(deathCalls===1,'Death observation changed native handling');
    }finally{n.network[deathKey]=nativeDeath;}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,firing_display_without_server_echo:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

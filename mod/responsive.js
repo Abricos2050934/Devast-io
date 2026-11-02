@@ -946,11 +946,19 @@ function __installDevastMod(B) {
       jitter.lastSentAt = now;
     }
   }
+  let firingUntil=-Infinity;
   function beforeFire() {
-    if (!MOD.JitterEnabled || !playing()) return;
-    jitter.fireUntil = performance.now() + 150;
+    if (!playing()) return;
+    const now=performance.now();
+    firingUntil=now+150;
+    if (!MOD.JitterEnabled) return;
+    const continuingBurst=now<jitter.fireUntil && !jitter.spinning;
+    jitter.fireUntil = now + 150;
     stopJitter();
     if (MOD.AimBotEnabled) {
+      // Align once when leaving rotation. During held fire, the unchanged ILM
+      // timer owns prediction and direction packets; native attack repeats do not.
+      if (continuingBurst && Aimbot.targetPlayer?.active && Number.isFinite(lastSentAngle)) return;
       const angle = Aimbot.resolve();
       if (Aimbot.targetPlayer?.active) {
         __send([6,angle],true);
@@ -1456,6 +1464,9 @@ function __installDevastMod(B) {
       nativeReady:typeof B.network[B.loginKey] === 'function',
       nativePending:B.pendingKey ? !!B.network[B.pendingKey] : false,
       adWaiting:!!B.adWaiting?.(),socketState:connectionSocket?.readyState ?? null,
+      socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
+      combatNow:combatCommands(),
+      aimSettings:{enabled:MOD.AimBotEnabled,autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,commandsInLast2s:{...event.commandsInLast2s}}))};
   }
@@ -2061,6 +2072,11 @@ function __installDevastMod(B) {
     settings: MOD,
     beforeFire,
     get jitterAngle() { return jitter.spinning ? jitter.angle * Math.PI / 180 : null; },
+    get firingAngle() {
+      if (!playing() || !MOD.AimBotEnabled || !Aimbot.targetPlayer?.active || !Number.isFinite(lastSentAngle)) return null;
+      if (!(Aimbot.mouseDown || performance.now()<firingUntil || MOD.autoFire && Aimbot.wannaFire())) return null;
+      return lastSentAngle*Math.PI/180;
+    },
     targets: GetAllTargets,
     trackPacket,
     aim: Aimbot,

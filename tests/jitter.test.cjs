@@ -84,3 +84,22 @@ test('J toggles Jitter, ignores typing/repeats, and its Keyboard binding can be 
   f.mod.setSetting('JitterKey','Space');assert.equal(f.mod.settings.AimbotKey,'KeyZ');
  }finally{f.mod.dispose();}
 });
+test('continuous native fire aligns Jitter once and then uses only the original 50 ms ILM aim packets',()=>{
+ const f=setup();try{
+  f.mod.setSetting('AimBotEnabled',true);f.mod.setSetting('JitterEnabled',true);f.mod.step(0);f.mod.step(200);f.packets.length=0;
+  f.mod.aim.mouseDown=true;f.setClock(200);f.mod.beforeFire();assert.equal(f.packets.length,1);assert.equal(f.packets[0][0],6);
+  f.mod.trackPacket(1,2,1,120,150,true);const line=JSON.stringify(f.mod.targets.lines[0]);
+  for(let i=1;i<=20;i++){f.setClock(200+i*5);f.mod.beforeFire();}
+  assert.equal(f.packets.length,1,'Repeated native attacks added aim packets');assert.equal(JSON.stringify(f.mod.targets.lines[0]),line,'Repeated native attacks recalculated ILM');
+  f.mod.aim.refresh();assert.equal(f.packets.length,2);assert.equal(f.packets.at(-1)[0],6);assert.notEqual(JSON.stringify(f.mod.targets.lines[0]),line);
+  f.mod.aim.mouseDown=false;f.setClock(500);f.mod.step(500);f.mod.step(750);assert.notEqual(f.mod.jitterAngle,null);
+ }finally{f.mod.dispose();}
+});
+test('firing display uses the angle already sent by ILM, without waiting for a server echo or changing prediction',()=>{
+ const f=setup();try{
+  f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();assert.equal(f.mod.firingAngle,null);
+  const count=f.packets.length;f.mod.aim.mouseDown=true;assert.equal(f.mod.firingAngle,Math.PI/4);assert.equal(f.packets.length,count);
+  f.mod.aim.mouseDown=false;f.mod.beforeFire();assert.equal(f.packets.length,count,'Non-Jitter fire added a packet');assert.equal(f.mod.firingAngle,Math.PI/4);
+  f.mod.setSetting('AimBotEnabled',false);assert.equal(f.mod.firingAngle,null);
+ }finally{f.mod.dispose();}
+});
