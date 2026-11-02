@@ -58,7 +58,7 @@
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "154.0.8037.57",
+  "browser_version": "156.0.8078.0",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -118,7 +118,7 @@
     "death_stops_restore_retries": true,
     "mod_errors": []
   },
-  "finished_at": "2026-11-02T21:28:33.473Z",
+  "finished_at": "2026-11-02T21:32:04.611Z",
   "candidate_function_tests": {
     "status": "passed",
     "files": [

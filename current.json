@@ -6,7 +6,7 @@
   "output_sha256": "79513e5db98f2eb64e7ce1bfeb1c00e00f57b3309a96049806b2c6d08e62e1ae",
   "script": "versions/79e590dc32262ca11ada8e018233b0d43c8c310c34fef150e5c3803f55ddbaae/game.modded.js",
   "source_url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
-  "activated_at": "2026-11-02T21:28:47.567386+00:00",
+  "activated_at": "2026-11-02T21:32:14.902185+00:00",
   "previous_release": "c708145ff31cd0d76d18fac5475dee0b3b2338ea1ac2d63e36b17534440f7592",
   "validation": "passed",
   "live_server": "not_tested",
