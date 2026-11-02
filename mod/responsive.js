@@ -765,7 +765,7 @@ function __installDevastMod(B) {
   }
   refreshLootFilter();
   // One consistent native view per aim operation; reuse metadata objects between ticks.
-  const aimSelf={id:0,team:-1}, aimTeams=new Map();
+  const aimSelf={id:0,team:-1}, aimTeams=[];
   let aimDepth=0, aimEpoch=0;
   function aimSnapshot(callback) {
     if(aimDepth===0) {
@@ -776,19 +776,24 @@ function __installDevastMod(B) {
     aimDepth++;
     try { return callback(); } finally { aimDepth--; }
   }
+  // Dense native metadata slots match ILM's indexed access. Cache team values
+  // per resolve without a Proxy trap, string conversion or Map lookup per target.
+  function ensureAimTeams(id) {
+    for (let next=aimTeams.length;next<=id;next++) {
+      let epoch=-1, team=-1;
+      aimTeams.push({get team() {
+        if (!aimDepth || epoch!==aimEpoch) {team=teamId(next);epoch=aimEpoch;}
+        return team;
+      }});
+    }
+  }
+  ensureAimTeams(998);
   const ilmWorld = {
     get PLAYER() {
       if(!aimDepth) {aimSelf.id=B.world.ᅠᏧ‍?.id || 0;aimSelf.team=teamId(aimSelf.id);}
       return aimSelf;
     },
-    players:new Proxy({}, {get:(_, key)=>{
-      if(typeof key==='symbol')return undefined;
-      const id=Number(key);
-      let entry=aimTeams.get(id);
-      if(!entry) {entry={team:-1,epoch:-1};aimTeams.set(id,entry);}
-      if(!aimDepth||entry.epoch!==aimEpoch) {entry.team=teamId(id);entry.epoch=aimEpoch;}
-      return entry;
-    }})
+    players:aimTeams
   };
   const ilm = __createIlmAim(MOD, ilmWorld, packet=>{
     if (MOD.JitterEnabled && packet[0] === 6 && (!jitterAiming() || !Aimbot.targetPlayer?.active)) return false;
@@ -1010,6 +1015,7 @@ function __installDevastMod(B) {
     if(!group || !Number.isInteger(id) || id<(active?1:0) || id>65535) return;
     // Fill any extended slots: original ILM iterates densely over both arrays.
     while(group.length<=id) group.push(new ilm.Target(group.length));
+    ensureAimTeams(id);
     if(!active) { group[id].setInactive(); return; }
     if(Number.isFinite(x)&&Number.isFinite(y)) group[id].update(x,y);
   }
@@ -1030,14 +1036,15 @@ function __installDevastMod(B) {
     return Number.isInteger(id) && id > 0 ? name+'#'+id : name;
   }
   function preparePlayerLabel(meta, id) {
-    const signature = JSON.stringify([id,meta.ο̏︇,MOD.NicknameColor]);
-    if (playerLabelCache.get(meta)?.signature !== signature) {
+    const cached = playerLabelCache.get(meta);
+    if (!cached || cached.id !== id || cached.nickname !== meta.ο̏︇ || cached.color !== MOD.NicknameColor) {
       meta.а༠٥ = null;
       meta.ᴘ๒︅ = null;
       B.world.ᴑܓօ = 1;
       playerLabelCache.set(meta, {
         id,
-        signature
+        nickname:meta.ο̏︇,
+        color:MOD.NicknameColor
       });
     }
   }
@@ -1357,6 +1364,7 @@ function __installDevastMod(B) {
     }
     ctx.save();
     if (MOD.ShowPosition) text('[' + Math.floor(me.x / 100) + ':' + Math.floor(me.y / 100) + ']', 100, 32, '#fff', 18);
+    let ownerCursor, ownerCursorRead=false;
     for (const r of records) {
       if (r.type === B.categories.player) {
         const id = r.e.ᴘ४１, p = at(r.e), self = id === me.id, color = self && !validClan(id) ? '#00ffff' : clanColor(id);
@@ -1379,7 +1387,8 @@ function __installDevastMod(B) {
           if (sprite && B.graphics.ᴑ̸ᴘ) B.graphics.ᴑ̸ᴘ(sprite, v.x + r.e.x, v.y + r.e.y - 85, 0, 0, 0, 0.6);
         }
       } else if (MOD.ShowBuildingOwner && building(r)) {
-        const point = cursorWorld();
+        if (!ownerCursorRead) {ownerCursor=cursorWorld();ownerCursorRead=true;}
+        const point = ownerCursor;
         if (!point) continue;
         const x = Math.floor(point.x / 100), y = Math.floor(point.y / 100);
         if (r.e.αބ̞ === x && r.e.ᴀܛ٤ === y) {
