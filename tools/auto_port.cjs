@@ -103,7 +103,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  if(!directionHelper||directionRules.length!==2)throw Error('Both native ILM direction contracts are required');
  adaptedAim=adaptedAim.slice(0,directionHelper.start)+`function __ilmPatchNativeDirection(source,index){const rules=${JSON.stringify(directionRules)},rule=rules[index];if(!rule||source.split(rule[0]).length!==2)throw Error('Unsupported native direction handler');return source.replace(rule[0],rule[1]);}`+adaptedAim.slice(directionHelper.end);
  const output=assemble(Buffer.from(cur.source),generated,outputBindings.symbols,payload,bootstrap,gui,adaptedAim);
- const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴎܕα','ᴎ༩༣','І̎ܘ','еϲᄄ','ᴎ︅ހ','ѕ٨ᚄ','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠','рܙ๕'];
+ const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴎܕα','ᴎ༩༣','І̎ܘ','еϲᄄ','ᴎ︅ހ','ѕ٨ᚄ','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠','рܙ๕','ᅟ᠌５'];
  const roles={};for(const key of requiredNative){const next=map[key];if(!next)throw Error('Missing browser validation binding '+key);roles[key]=next;}
  return {source:cur.source,output,profile:generated,bindings:outputBindings,aim:adaptedAim,roles,
   report:{raw_sha256:hash(candidate),reference_sha256:hash(reference),deobfuscated_sha256:hash(cur.source),output_sha256:hash(output),matched_functions:pairs.size,native_network_contracts:nativeContracts,required_bindings:canonicalRequired.size,patches:operations.map(x=>x.id),decoder_blocks:decodedNew.evidence,live_server:'not_tested'}};

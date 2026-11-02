@@ -132,7 +132,7 @@ test('map names, ID 120, clan/name colors, gauges, hitboxes and real-angle displ
  assert.ok(!f.dom.calls.some(c=>c.name==='fillText'&&/HP:|Food:|Water:|Warmth:|Stamina:/.test(String(c.args[0]))));
  assert.ok(f.dom.calls.some(c=>c.name==='arc'&&c.args[2]===38));
  assert.ok(!f.dom.calls.some(c=>c.name==='lineTo'),'ILM real angles change the native sprite, without extra rays');
- assert.ok(f.dom.calls.some(c=>c.name==='fillRect'&&c.args[0]>0&&c.alpha===1&&c.fill==='rgba(0,0,0,.55)'));
+ assert.equal(f.mod.playerList.style.display,'flex');
  f.dom.calls.length=0;f.mod.setSetting('ShowNamesOnMap',false);f.mod.setSetting('PlayersListEnabled',false);f.mod.setSetting('ShowRealAngles','withAim');f.mod.setSetting('ShowPlayerHitbox',false);f.mod.render(100);
  assert.ok(!f.dom.calls.some(c=>c.name==='fillText'&&(String(c.args[0]).includes('#120')||String(c.args[0]).includes('HP:'))));
  assert.ok(!f.dom.calls.some(c=>c.name==='arc'||c.name==='lineTo'));f.mod.dispose();

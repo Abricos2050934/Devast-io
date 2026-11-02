@@ -835,6 +835,8 @@ function __installDevastMod(B) {
     connectionEvent('server-death',details);
   }
   let overlay, overlayHost, ctx, menu, functionList, zoomControl, nextFrame, stopped = false, waitingKey = null;
+  let playerListPanel, playerListBody, playerListCount, playerListOrder = '';
+  const playerListRows = new Map(), departedPlayers = new Map();
   let lastStep = -Infinity, lastLoot = -Infinity;
   let lastTake = -Infinity, lastKeepAlive = -Infinity, lastChat = -Infinity, nextChatAt = -Infinity;
   const chatState = {
@@ -914,6 +916,13 @@ function __installDevastMod(B) {
       if (conflict) MOD[conflict] = MOD[key];
     }
     MOD[key] = value;
+    if (key === 'NicknameColor') {
+      for (let id=1;id<B.world.ᴎ︃ᄉ.length;id++) {
+        const meta=playerMeta(id);
+        if (meta && typeof meta === 'object') preparePlayerLabel(meta,id);
+      }
+    }
+    if (key === 'PlayersListEnabled' && !value && playerListPanel) playerListPanel.style.display = 'none';
     if (key === 'SpamChatEnabled') {
       chatState.status = value ? 'Waiting for game' : 'Off';
       if (value) {
@@ -961,15 +970,19 @@ function __installDevastMod(B) {
     return Number.isInteger(id) && id > 0 ? name+'#'+id : name;
   }
   function preparePlayerLabel(meta, id) {
-    const signature = String(MOD.ShowNamesOnMap) + '|' + id + '|' + String(meta.ο̏︇ || '');
+    const signature = JSON.stringify([id,meta.ο̏︇,MOD.NicknameColor]);
     if (playerLabelCache.get(meta)?.signature !== signature) {
       meta.а༠٥ = null;
+      meta.ᴘ๒︅ = null;
+      B.world.ᴑܓօ = 1;
       playerLabelCache.set(meta, {
         id,
         signature
       });
     }
   }
+  function observePlayerSpawn(id) { departedPlayers.delete(id); }
+  function observePlayerLeave(id) { departedPlayers.set(id,playerMeta(id)); }
   function zoomOffset(nativeOffset) {
     const base = Number.isFinite(nativeOffset) ? nativeOffset : 0;
     return Math.max(-.95, Math.min(3, (1 + base) * MOD.zoomFactor - 1));
@@ -1201,14 +1214,70 @@ function __installDevastMod(B) {
       row.style.textShadow = on ? '0 0 7px rgba(255,255,0,.9)' : 'none';
     }
   }
+  function syncPlayerList() {
+    if (!playing() || !MOD.PlayersListEnabled) {
+      if (playerListPanel) playerListPanel.style.display = 'none';
+      return;
+    }
+    if (!playerListPanel) {
+      const style=document.createElement('style');
+      style.textContent='.player-list{position:absolute;left:8px;top:8px;width:min(560px,calc(100% - 16px));max-height:calc(100% - 16px);box-sizing:border-box;pointer-events:auto;background:rgba(8,16,25,.96);border:1px solid #607086;border-radius:8px;flex-direction:column;overflow:hidden;color:#fff;font:14px/1.5 system-ui,sans-serif}.player-list-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;gap:12px}.player-list button{font:inherit;cursor:pointer;border:0;background:transparent;color:inherit}.player-list-close{font-size:24px!important;line-height:1}.player-list-scroll{overflow:auto;min-height:0;overscroll-behavior:contain}.player-list-row{display:grid;grid-template-columns:58px minmax(0,1fr) minmax(85px,1fr);gap:8px;padding:6px 12px;align-items:center;border-top:1px solid #293646}.player-list-columns{position:sticky;top:0;background:#182434;color:#b6c4d4;font-size:12px}.player-list-name{text-align:left;overflow-wrap:anywhere;padding:0}.player-list-clan{overflow-wrap:anywhere}.player-list-empty{padding:12px;color:#b6c4d4}';
+      overlayHost.shadowRoot.appendChild(style);
+      playerListPanel=document.createElement('section');playerListPanel.className='player-list';playerListPanel.id='devast-player-list';
+      const header=document.createElement('div');header.className='player-list-header';
+      playerListCount=document.createElement('strong');header.appendChild(playerListCount);
+      const close=document.createElement('button');close.className='player-list-close';close.textContent='×';close.title='Закрыть список игроков';
+      listen(close,'click',()=>setSetting('PlayersListEnabled',false));header.appendChild(close);playerListPanel.appendChild(header);
+      const scroll=document.createElement('div');scroll.className='player-list-scroll';
+      const columns=document.createElement('div');columns.className='player-list-row player-list-columns';
+      for (const label of ['#ID','Ник','Клан']) {const cell=document.createElement('span');cell.textContent=label;columns.appendChild(cell);}
+      scroll.appendChild(columns);playerListBody=document.createElement('div');scroll.appendChild(playerListBody);playerListPanel.appendChild(scroll);
+      for (const name of ['mousedown','click','dblclick','contextmenu','wheel','touchstart']) listen(playerListPanel,name,event=>event.stopPropagation());
+      overlayHost.shadowRoot.appendChild(playerListPanel);
+    }
+    playerListPanel.style.display='flex';
+    const ids=[];
+    for (let id=1;id<B.world.ᴎ︃ᄉ.length;id++) {
+      const meta=playerMeta(id);
+      if (!meta || typeof meta.ο̏︇ !== 'string' || departedPlayers.get(id) === meta) continue;
+      departedPlayers.delete(id);ids.push(id);
+      const name=nickname(id),clan=validClan(id),tag=clan?.name ? '['+clan.name+']' : '—';
+      const color=clan ? clanColor(id) : '#9aabbc';
+      let entry=playerListRows.get(id);
+      if (!entry) {
+        const row=document.createElement('div');row.className='player-list-row';row.dataset.playerId=String(id);
+        const number=document.createElement('span'),nick=document.createElement('button'),clanLabel=document.createElement('span');
+        number.textContent='#'+id;nick.className='player-list-name';nick.title='Копировать ник';clanLabel.className='player-list-clan';
+        row.appendChild(number);row.appendChild(nick);row.appendChild(clanLabel);nick.onclick=()=>copyNickname(id);
+        entry={row,number,nick,clan:clanLabel};playerListRows.set(id,entry);
+      }
+      const signature=JSON.stringify([name,tag,MOD.NicknameColor,color]);
+      if (entry.signature !== signature) {
+        entry.nick.textContent=name || 'Без ника';entry.nick.style.color=MOD.NicknameColor;entry.number.style.color=MOD.NicknameColor;
+        entry.clan.textContent=tag;entry.clan.style.color=color;entry.signature=signature;
+      }
+    }
+    const order=ids.join(',');
+    if (order !== playerListOrder || !playerListBody.children.length) {
+      const present=new Set(ids);
+      for (const id of playerListRows.keys()) if (!present.has(id)) playerListRows.delete(id);
+      const rows=ids.map(id=>playerListRows.get(id).row);
+      if (!rows.length) {const empty=document.createElement('div');empty.className='player-list-empty';empty.textContent='Нет данных об игроках';rows.push(empty);}
+      playerListBody.replaceChildren(...rows);playerListOrder=order;
+    }
+    const title='Игроки: '+ids.length;
+    if (playerListCount.textContent !== title) playerListCount.textContent=title;
+  }
   function draw() {
     if (!playing()) {
       if (ctx && overlay) ctx.clearRect(0, 0, overlay.width, overlay.height);
       if (functionList) functionList.style.display = 'none';
+      if (playerListPanel) playerListPanel.style.display = 'none';
       return;
     }
     if (!ensureOverlay()) return;
     syncFunctionList();
+    syncPlayerList();
     ctx.clearRect(0, 0, overlay.width, overlay.height);
     const v = view(), me = B.world.ᅠᏧ‍;
     function at(e) {
@@ -1277,24 +1346,6 @@ function __installDevastMod(B) {
       }
     }
     ctx.globalAlpha = 1;
-    if (MOD.PlayersListEnabled) {
-      ctx.fillStyle = 'rgba(0,0,0,.55)';
-      const left = Math.min(180,overlay.width/3), width = overlay.width-left-12;
-      ctx.fillRect(left, 16, width, overlay.height-50);
-      let i = 0;
-      const ids = new Set(records.filter(r=>r.type === B.categories.player).map(r=>r.e.ᴘ४１));
-      for (const id of ids) {
-        if (!Number.isInteger(id) || id < 1) continue;
-        const clan = validClan(id), col = Math.floor(i / 30), row = i % 30;
-        const x=left+width/8+col*width/4,y=35+row*((overlay.height-70)/30);
-        ctx.save();ctx.beginPath();ctx.rect(left+col*width/4,16,width/4,overlay.height-50);ctx.clip();
-        text(playerLabel(playerMeta(id),id).trim(),x,y,MOD.NicknameColor,13);
-        if(clan && clan.name) text('['+clan.name+']',x,y+11,clanColor(id),10);
-        ctx.restore();
-        i++;
-      }
-      text('Players: ' + i, overlay.width - 100, overlay.height - 22);
-    }
     ctx.restore();
   }
   const reconnect = {
@@ -1698,6 +1749,7 @@ function __installDevastMod(B) {
   }, true);
   listen(window, 'mousedown', e => {
     if (e.target.closest && e.target.closest('.dg')) return;
+    if (playerListPanel && e.composedPath?.().includes(playerListPanel)) return;
     mouse = {
       x: e.clientX,
       y: e.clientY
@@ -1757,7 +1809,7 @@ function __installDevastMod(B) {
     const visual = menu.addFolder('Visuals');
     for (const key of ['ShowPosition', 'ShowNamesOnMap', 'ShowMines', 'ShowPlayerHitbox', 'KarmaAboveHead', 'ShowBuildingOwner', 'XrayBuildings', 'PlayersListEnabled', 'showFunctionList']) add(visual, key);
     add(visual, 'Xraytransparency', 'Building opacity', .05, 1, .05);
-    for (const key of ['TeamClanColor', 'EnemyClanColor','NicknameColor']) visual.addColor(MOD, key).onChange(persist);
+    for (const [key,label] of [['TeamClanColor','Цвет своего клана'],['EnemyClanColor','Цвет чужого клана'],['NicknameColor','Цвет ника']]) visual.addColor(MOD, key).name(label).onChange(value=>setSetting(key,value));
     const aim = menu.addFolder('Aim bot');
     for (const key of ['AimBotEnabled', 'autoFire', 'visualizeResolving']) add(aim, key);
     add(aim, 'bulletSpeedCoefficient', 'bulletSpeedCoefficient', 1, 15, .25);
@@ -1910,6 +1962,8 @@ function __installDevastMod(B) {
     prepareClanTag,
     playerLabel,
     preparePlayerLabel,
+    observePlayerSpawn,
+    observePlayerLeave,
     zoomOffset,
     render(now = performance.now()) {
       if (stopped) return;
@@ -1932,6 +1986,7 @@ function __installDevastMod(B) {
     get menu() {
       return menu;
     },
+    get playerList() { return playerListPanel; },
     get overlay() {
       return overlay;
     },
