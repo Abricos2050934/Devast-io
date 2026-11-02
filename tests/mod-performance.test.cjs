@@ -113,3 +113,21 @@ test('disabled aim and a locked target avoid preparing a full candidate scan',()
   f.mod.aim.refresh();f.mod.setSetting('lockId',2);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();assert.equal(f.packets.at(-1)[1],45);
  }finally{f.mod.dispose();}
 });
+test('native frame drawing uses the game canvas without a second full-screen canvas or clearing the game',()=>{
+ const f=fixture({dom:true});try{
+  f.B.synchronizedRender=true;f.document.body.appendChild(f.dom.canvas);const ctx=f.dom.canvas.getContext('2d');ctx.setTransform(2,0,0,2,17,23);ctx.globalAlpha=.61;ctx.globalCompositeOperation='multiply';ctx.lineWidth=8;ctx.setLineDash([2,3]);
+  const state=()=>JSON.stringify({matrix:ctx.getTransform(),alpha:ctx.globalAlpha,composite:ctx.globalCompositeOperation,width:ctx.lineWidth,dash:ctx.getLineDash()}),before=state();
+  f.mod.setSetting('AimBotEnabled',true);f.mod.trackPacket(1,1,1,100,100,true);f.mod.trackPacket(1,2,1,200,200,true);f.mod.aim.refresh();f.mod.render(0);
+  assert.equal(state(),before);assert.equal(f.mod.overlay,undefined);assert.ok(f.dom.calls.some(c=>c.name==='lineTo'));assert.ok(!f.dom.calls.some(c=>c.name==='clearRect'));
+  assert.equal(f.mod.functionList.style.display,'grid');f.network.state=0;f.mod.step(16);assert.ok(!f.dom.calls.some(c=>c.name==='clearRect'));
+  f.mod.dispose();assert.equal(f.dom.canvas.parent,f.document.body);
+ }finally{f.mod.dispose();}
+});
+test('a failed native drawing call restores the host canvas state and standalone mode retains its separate surface',()=>{
+ const f=fixture({dom:true});try{
+  f.B.synchronizedRender=true;const ctx=f.dom.canvas.getContext('2d');ctx.setTransform(2,0,0,2,7,9);ctx.globalAlpha=.4;ctx.lineWidth=11;const strokeText=ctx.strokeText;
+  ctx.strokeText=()=>{throw Error('Native drawing fixture failure');};f.mod.render(0);
+  assert.deepEqual(ctx.getTransform(),[2,0,0,2,7,9]);assert.equal(ctx.globalAlpha,.4);assert.equal(ctx.lineWidth,11);assert.ok(f.mod.diagnostics.errors.includes('Native drawing fixture failure'));
+  ctx.strokeText=strokeText;f.B.synchronizedRender=false;f.mod.render(16);assert.ok(f.mod.overlay);assert.notEqual(f.mod.overlay,f.dom.canvas);assert.ok(f.dom.calls.some(c=>c.name==='clearRect'));
+ }finally{f.mod.dispose();}
+});

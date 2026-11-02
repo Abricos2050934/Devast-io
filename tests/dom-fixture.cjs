@@ -1,10 +1,10 @@
 // Minimal DOM/canvas with recorded drawing operations for behavioral assertions.
 function domFixture() {
   const calls=[];
-  function context(canvas){const ctx={canvas,globalAlpha:1,fillStyle:'#000',strokeStyle:'#000'};const states=[];
+  function context(canvas){const ctx={canvas,globalAlpha:1,fillStyle:'#000',strokeStyle:'#000'};let transform=[1,0,0,1,0,0],dash=[];const states=[];ctx.setTransform=(...value)=>{transform=value;};ctx.getTransform=()=>transform.slice();ctx.setLineDash=value=>{dash=value.slice();};ctx.getLineDash=()=>dash.slice();
     for(const name of ['clearRect','fillRect','strokeRect','beginPath','moveTo','lineTo','stroke','arc','rect','clip','fillText','strokeText'])ctx[name]=function(...args){calls.push({name,args,fill:this.fillStyle,stroke:this.strokeStyle,alpha:this.globalAlpha});};
-    ctx.save=function(){states.push({globalAlpha:this.globalAlpha,fillStyle:this.fillStyle,strokeStyle:this.strokeStyle});};
-    ctx.restore=function(){Object.assign(this,states.pop()||{});};ctx.measureText=s=>({width:String(s).length*7});return ctx;
+    ctx.save=function(){states.push({globalAlpha:this.globalAlpha,fillStyle:this.fillStyle,strokeStyle:this.strokeStyle,lineWidth:this.lineWidth,globalCompositeOperation:this.globalCompositeOperation,transform:transform.slice(),dash:dash.slice()});};
+    ctx.restore=function(){const state=states.pop();if(state){transform=state.transform;dash=state.dash;delete state.transform;delete state.dash;Object.assign(this,state);}};ctx.measureText=s=>({width:String(s).length*7});return ctx;
   }
   function element(tag){const e={tagName:tag.toUpperCase(),style:{},dataset:{},children:[],listeners:new Map(),width:800,height:600,
     appendChild(child){if(child.parent)child.parent.children=child.parent.children.filter(x=>x!==child);this.children.push(child);child.parent=this;return child;},remove(){if(this.parent)this.parent.children=this.parent.children.filter(x=>x!==this);},

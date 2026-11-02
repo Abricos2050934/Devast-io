@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "output_sha256": "79513e5db98f2eb64e7ce1bfeb1c00e00f57b3309a96049806b2c6d08e62e1ae",
+  "module_sha256": {
+    "mod/responsive.js": "1d3af774037dd19792789e9c4b8cccb07f5f9e107bb122ab73ad789153aa0690",
+    "mod/bootstrap.js": "1631e444b28954e506f3f9d1a87f7630140ca460e3c8371c34d3e30754ad7255",
+    "mod/ilm-aim.js": "d461201eba20131454b355647979dc738a47e4acf4b4d88fd74f658b22049ed2",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 133,
+    "python_tests": 26
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "154.0.8037.57",
+      "native_shared_canvas": true,
+      "page_errors": []
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "native": {
+        "menu": true,
+        "native_shared_canvas": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_ilm_cadence": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "page_errors": []
+    }
+  },
+  "frame_replay": {
+    "scope": "Synthetic Firefox frame replay including canvas drawing and presentation; not the user device or the live game server",
+    "samples": [
+      {
+        "label": "current",
+        "aim": true,
+        "renderMedianMs": 3,
+        "renderP95Ms": 5,
+        "frameGapMedianMs": 16.579999999999927,
+        "frameGapP95Ms": 17.240000000000236,
+        "meanFps": 59.98840224223317,
+        "packets": 70,
+        "canvasPixels": 8294400,
+        "errors": []
+      },
+      {
+        "label": "inline",
+        "aim": true,
+        "renderMedianMs": 1,
+        "renderP95Ms": 2,
+        "frameGapMedianMs": 16.539999999999964,
+        "frameGapP95Ms": 17.200000000000045,
+        "meanFps": 60.01440345682963,
+        "packets": 70,
+        "canvasPixels": 8294400,
+        "errors": []
+      },
+      {
+        "label": "inline",
+        "aim": false,
+        "renderMedianMs": 1,
+        "renderP95Ms": 2,
+        "frameGapMedianMs": 17.039999999999964,
+        "frameGapP95Ms": 17.16000000000031,
+        "meanFps": 60.00120002400048,
+        "packets": 0,
+        "canvasPixels": 8294400,
+        "errors": []
+      },
+      {
+        "label": "current",
+        "aim": false,
+        "renderMedianMs": 3,
+        "renderP95Ms": 4,
+        "frameGapMedianMs": 17.059999999999945,
+        "frameGapP95Ms": 17.16000000000031,
+        "meanFps": 59.98680290336125,
+        "packets": 0,
+        "canvasPixels": 8294400,
+        "errors": []
+      }
+    ]
+  },
+  "pixel_comparison": {
+    "browser": "firefox",
+    "samples": [
+      {
+        "label": "current",
+        "stateMatches": true,
+        "extraCanvas": true,
+        "errors": [],
+        "pixelSha256": "d742021cb8aca7c0df26f356ca3133b6a60e006af00e6998cfc92b2103c746a9"
+      },
+      {
+        "label": "inline",
+        "stateMatches": true,
+        "extraCanvas": false,
+        "errors": [],
+        "pixelSha256": "4add86eeb6a5579a9dcbe3249d26bc4caa4c34125275c678504bc32c4e3ef41b"
+      }
+    ],
+    "comparison": {
+      "maxDifference": 1,
+      "differentChannels": 837,
+      "behavior": "identical"
+    }
+  },
+  "scope": {
+    "changed_installer_functions": [
+      "ensureOverlay",
+      "draw"
+    ],
+    "unchanged_installer_functions": 65,
+    "ilm_core_menu_and_line_module": "unchanged",
+    "jitter_and_native_network_patch": "unchanged",
+    "standalone_canvas_fallback": "retained"
+  },
+  "method": {
+    "browser": "Playwright Firefox 153.0 headless",
+    "canvas": "3840x2160 backing pixels; 1280x720 CSS pixels",
+    "entities": "120 players, 10000 buildings",
+    "frames_per_sample": 210,
+    "warmup_frames": 30,
+    "fps_result": "Both Firefox variants remained near the 60 Hz cap; the measured improvement is draw CPU time, not demonstrated FPS increase",
+    "native_context_checks": [
+      "No extra native full-screen canvas",
+      "No clearing of game-owned pixels",
+      "State restoration including transform, alpha, composite, dash, filter and shadow",
+      "Context restored when drawing throws"
+    ]
+  },
+  "limitations": [
+    "Prepared browser scenes and native game fixtures, not a live game session or the user PC",
+    "Visible pixel differences are at most 1/255 per color channel from compositing rounding",
+    "Actual user-device FPS and network RTT remain unmeasured"
+  ]
+}

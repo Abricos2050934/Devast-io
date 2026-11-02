@@ -868,6 +868,7 @@ function __installDevastMod(B) {
     reconnect.freshUsed=false;
     releaseNativePending();
   }
+  let nativeDraw=false;
   let overlay, overlayHost, ctx, menu, functionList, zoomControl, nextFrame, stopped = false, waitingKey = null;
   let playerListPanel, playerListBody, playerListCount, playerListOrder = '';
   const playerListRows = new Map(), departedPlayers = new Map();
@@ -1261,30 +1262,31 @@ function __installDevastMod(B) {
     return false;
   }
   function ensureOverlay() {
-    const can = view().ctx?.canvas || document.getElementById('can');
+    const v=view(),can=v.ctx?.canvas || document.getElementById('can');
     if (!can) return false;
-    if (!overlay) {
-      overlay = document.createElement('canvas');
-      overlay.id = 'devast-mod-overlay';
-      overlayHost = document.createElement('div');
-      overlayHost.id = 'devast-mod-layer';
-      overlayHost.style.cssText = 'position:fixed;pointer-events:none;z-index:100000;background:transparent;';
-      overlay.style.cssText = 'display:block;width:100%;height:100%;background:transparent;';
-      overlayHost.attachShadow({
-        mode: 'open'
-      }).appendChild(overlay);
-      document.body.appendChild(overlayHost);
-      ctx = overlay.getContext('2d');
+    if (!overlayHost) {
+      overlayHost=document.createElement('div');overlayHost.id='devast-mod-layer';
+      overlayHost.style.cssText='position:fixed;pointer-events:none;z-index:100000;background:transparent;';
+      overlayHost.attachShadow({mode:'open'});document.body.appendChild(overlayHost);
     }
-    const r = can.getBoundingClientRect();
-    if (overlay.width !== can.width) overlay.width = can.width;
-    if (overlay.height !== can.height) overlay.height = can.height;
-    for (const [key, value] of Object.entries({
-      left: r.left + 'px',
-      top: r.top + 'px',
-      width: r.width + 'px',
-      height: r.height + 'px'
-    })) if (overlayHost.style[key] !== value) overlayHost.style[key] = value;
+    // The native hook runs after the world is drawn. Reuse that frame instead
+    // of clearing and compositing another full-size pixel surface every frame.
+    nativeDraw=!!(B.synchronizedRender && v.ctx?.canvas===document.getElementById('can'));
+    if (nativeDraw) {
+      ctx=v.ctx;
+      if (overlay) overlay.style.display='none';
+    } else {
+      if (!overlay) {
+        overlay=document.createElement('canvas');overlay.id='devast-mod-overlay';
+        overlay.style.cssText='display:block;width:100%;height:100%;background:transparent;';
+        overlayHost.shadowRoot.appendChild(overlay);
+      }
+      overlay.style.display='block';ctx=overlay.getContext('2d');
+      if(overlay.width!==can.width)overlay.width=can.width;
+      if(overlay.height!==can.height)overlay.height=can.height;
+    }
+    const r=can.getBoundingClientRect();
+    for (const [key,value]of Object.entries({left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'}))if(overlayHost.style[key]!==value)overlayHost.style[key]=value;
     return !!ctx;
   }
   function syncFunctionList() {
@@ -1376,7 +1378,7 @@ function __installDevastMod(B) {
   }
   function draw() {
     if (!playing()) {
-      if (ctx && overlay) ctx.clearRect(0, 0, overlay.width, overlay.height);
+      if (!nativeDraw && ctx && overlay) ctx.clearRect(0, 0, overlay.width, overlay.height);
       if (functionList) functionList.style.display = 'none';
       if (playerListPanel) playerListPanel.style.display = 'none';
       return;
@@ -1384,7 +1386,7 @@ function __installDevastMod(B) {
     if (!ensureOverlay()) return;
     syncFunctionList();
     syncPlayerList();
-    ctx.clearRect(0, 0, overlay.width, overlay.height);
+    if (!nativeDraw) ctx.clearRect(0, 0, overlay.width, overlay.height);
     const v = view(), me = B.world.ᅠᏧ‍;
     function at(e) {
       return {
@@ -1402,44 +1404,53 @@ function __installDevastMod(B) {
       ctx.fillText(String(value), x, y);
     }
     ctx.save();
-    if (MOD.ShowPosition) text('[' + Math.floor(me.x / 100) + ':' + Math.floor(me.y / 100) + ']', 100, 32, '#fff', 18);
-    let ownerCursor, ownerCursorRead=false;
-    const drawRecords=MOD.ShowBuildingOwner?records:playerRecords;
-    for (const r of drawRecords) {
-      if (r.type === B.categories.player) {
-        const id = r.e.ᴘ४１, p = at(r.e), self = id === me.id, color = self && !validClan(id) ? '#00ffff' : clanColor(id);
-        if (MOD.ShowNamesOnMap && !B.nativePlayerLabels && Number.isInteger(id) && id > 0) {
-          text(playerLabel(playerMeta(id),id).trim(), p.x, p.y - 56 * v.scale, MOD.NicknameColor);
-          const clan=validClan(id);
-          if(clan && typeof clan.name==='string' && clan.name) text('['+clan.name+']',p.x,p.y-72*v.scale,clanColor(id));
-        }
-        if (MOD.ShowPlayerHitbox) {
-          ctx.strokeStyle = color;
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 38 * v.scale, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.strokeRect(p.x - 30 * v.scale, p.y - 30 * v.scale, 60 * v.scale, 60 * v.scale);
+    try {
+      if (nativeDraw) {
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.globalAlpha=1;
+        ctx.globalCompositeOperation='source-over';
+        ctx.shadowColor='rgba(0,0,0,0)';ctx.shadowBlur=0;ctx.shadowOffsetX=0;ctx.shadowOffsetY=0;
+        ctx.filter='none';ctx.lineCap='butt';ctx.lineJoin='miter';ctx.miterLimit=10;
+        ctx.setLineDash([]);ctx.lineDashOffset=0;ctx.textBaseline='alphabetic';
+      }
+      if (MOD.ShowPosition) text('[' + Math.floor(me.x / 100) + ':' + Math.floor(me.y / 100) + ']', 100, 32, '#fff', 18);
+      let ownerCursor, ownerCursorRead=false;
+      const drawRecords=MOD.ShowBuildingOwner?records:playerRecords;
+      for (const r of drawRecords) {
+        if (r.type === B.categories.player) {
+          const id = r.e.ᴘ४１, p = at(r.e), self = id === me.id, color = self && !validClan(id) ? '#00ffff' : clanColor(id);
+          if (MOD.ShowNamesOnMap && !B.nativePlayerLabels && Number.isInteger(id) && id > 0) {
+            text(playerLabel(playerMeta(id),id).trim(), p.x, p.y - 56 * v.scale, MOD.NicknameColor);
+            const clan=validClan(id);
+            if(clan && typeof clan.name==='string' && clan.name) text('['+clan.name+']',p.x,p.y-72*v.scale,clanColor(id));
+          }
+          if (MOD.ShowPlayerHitbox) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 38 * v.scale, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.strokeRect(p.x - 30 * v.scale, p.y - 30 * v.scale, 60 * v.scale, 60 * v.scale);
 
-        }
-        if (MOD.KarmaAboveHead) {
-          const meta = playerMeta(id), sprite = meta && B.karma[meta.ᴑᴄ̉];
-          if (sprite && B.graphics.ᴑ̸ᴘ) B.graphics.ᴑ̸ᴘ(sprite, v.x + r.e.x, v.y + r.e.y - 85, 0, 0, 0, 0.6);
-        }
-      } else if (MOD.ShowBuildingOwner && typeof r.e.αބ̞==='number') {
-        if (!ownerCursorRead) {ownerCursor=cursorWorld();ownerCursorRead=true;}
-        const point = ownerCursor;
-        if (!point) continue;
-        const x = Math.floor(point.x / 100), y = Math.floor(point.y / 100);
-        if (r.e.αބ̞ === x && r.e.ᴀܛ٤ === y && building(r)) {
-          const p = at(r.e), id = r.e.ᴘ४１;
-          text(Number.isInteger(id) && id > 0 ? (nickname(id) ? nickname(id)+' ' : '')+'#'+id : 'Owner unknown', p.x, p.y - 35, clanColor(id), 16);
+          }
+          if (MOD.KarmaAboveHead) {
+            const meta = playerMeta(id), sprite = meta && B.karma[meta.ᴑᴄ̉];
+            if (sprite && B.graphics.ᴑ̸ᴘ) B.graphics.ᴑ̸ᴘ(sprite, v.x + r.e.x, v.y + r.e.y - 85, 0, 0, 0, 0.6);
+          }
+        } else if (MOD.ShowBuildingOwner && typeof r.e.αބ̞==='number') {
+          if (!ownerCursorRead) {ownerCursor=cursorWorld();ownerCursorRead=true;}
+          const point = ownerCursor;
+          if (!point) continue;
+          const x = Math.floor(point.x / 100), y = Math.floor(point.y / 100);
+          if (r.e.αބ̞ === x && r.e.ᴀܛ٤ === y && building(r)) {
+            const p = at(r.e), id = r.e.ᴘ४１;
+            text(Number.isInteger(id) && id > 0 ? (nickname(id) ? nickname(id)+' ' : '')+'#'+id : 'Owner unknown', p.x, p.y - 35, clanColor(id), 16);
+          }
         }
       }
-    }
-    __renderIlmAimLines(MOD,GetAllTargets,ctx,v);
-    ctx.globalAlpha = 1;
-    ctx.restore();
+      __renderIlmAimLines(MOD,GetAllTargets,ctx,v);
+      ctx.globalAlpha = 1;
+    } finally {ctx.restore();}
   }
   const reconnect = {
     status: 'Ready',

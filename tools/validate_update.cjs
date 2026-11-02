@@ -1,7 +1,7 @@
 // Gate an immutable candidate with static checks and real native browser fixtures.
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const acorn=require('./parser.cjs'),{hash}=require('./build_client.cjs'),{translate}=require('./translate_payload.cjs');
-const {chromium}=require('playwright-core');
+const {chromium,firefox}=require('playwright-core');
 const root=path.resolve(__dirname,'..'),dir=path.resolve(process.argv[2]||'');
 const read=f=>fs.readFileSync(path.join(dir,f),'utf8'),json=f=>JSON.parse(read(f));
 const overrideBytes=fs.readFileSync(path.join(root,'resource-override/Devast-io-GitHub-Resource-Override.json'));
@@ -44,8 +44,11 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
  const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',ilm_core:'identical',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
  let browser;
  try{
+  const engine=process.env.DEVAST_BROWSER||'chromium';assert.ok(['chromium','firefox'].includes(engine),'Unsupported browser');report.browser=engine;
   const executablePath=process.env.CHROMIUM_PATH||(fs.existsSync('/usr/bin/chromium')?'/usr/bin/chromium':chromium.executablePath());
-  browser=await chromium.launch({executablePath,headless:true,env:{...process.env,HOME:process.env.DEVAST_BROWSER_HOME||'/tmp/devast-browser-home'},proxy:process.env.HTTPS_PROXY?{server:process.env.HTTPS_PROXY}:undefined,args:['--no-sandbox','--disable-dev-shm-usage']});
+  const proxy=process.env.HTTPS_PROXY?{server:process.env.HTTPS_PROXY}:undefined;
+  browser=engine==='firefox'?await firefox.launch({headless:true,proxy,firefoxUserPrefs:{'security.enterprise_roots.enabled':true}}):await chromium.launch({executablePath,headless:true,env:{...process.env,HOME:process.env.DEVAST_BROWSER_HOME||'/tmp/devast-browser-home'},proxy,args:['--no-sandbox','--disable-dev-shm-usage']});
+  report.browser_version=browser.version();
   const page=await browser.newPage({viewport:{width:1280,height:800}});page.on('pageerror',e=>report.page_errors.push(e.message.slice(0,250)));
   // These fixtures exercise native game logic, not third-party ads or audio.
   // Supply valid local dependencies so an asset outage cannot mask game errors.
@@ -124,6 +127,16 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     Object.assign(players[2],{[s['а༤̘']]:1,[s['ᴌ̗ⲟ']]:8});
    }finally{m.setSetting('PlayersListEnabled',false);n.network.state=listState;}
    n.network.state=1;m.setSetting('AimBotEnabled',true);m.setSetting('autoFire',false);m.setSetting('lockId',2);m.setSetting('visualizeResolving',true);
+   const surface=document.getElementById('can'),surfaceContext=surface.getContext('2d');surfaceContext.save();
+   try{
+    surfaceContext.setTransform(1,0,0,1,0,0);surfaceContext.globalAlpha=1;surfaceContext.globalCompositeOperation='source-over';surfaceContext.fillStyle='#456789';surfaceContext.fillRect(0,surface.height-4,4,4);
+    const corner=Array.from(surfaceContext.getImageData(0,surface.height-4,4,4).data);
+    surfaceContext.setTransform(2,0,0,2,17,23);surfaceContext.globalAlpha=.61;surfaceContext.globalCompositeOperation='multiply';surfaceContext.lineWidth=8;
+    const state=()=>JSON.stringify([surfaceContext.getTransform().toString(),surfaceContext.globalAlpha,surfaceContext.globalCompositeOperation,surfaceContext.lineWidth]),before=state();m.render();
+    check(!m.overlay,'Native render allocated a second full-screen canvas');check(state()===before,'Native drawing changed the game canvas state');
+    check(JSON.stringify(Array.from(surfaceContext.getImageData(0,surface.height-4,4,4).data))===JSON.stringify(corner),'Mod cleared the native game canvas');
+   }finally{surfaceContext.restore();}
+
    const transport=n.capturePackets();
    try{
     m.trackPacket(0,1,1,1000,1000,true);m.trackPacket(0,2,1,1100,1050,true);m.aim.refresh();transport.packets.length=0;
@@ -207,7 +220,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Death recovery changed stored identity');
    }finally{n.network[deathKey]=nativeDeath;}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_ilm_cadence:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}
