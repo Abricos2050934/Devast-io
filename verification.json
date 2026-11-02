@@ -115,7 +115,7 @@
     "death_stops_restore_retries": true,
     "mod_errors": []
   },
-  "finished_at": "2026-11-02T20:47:26.227Z",
+  "finished_at": "2026-11-02T20:52:22.359Z",
   "candidate_function_tests": {
     "status": "passed",
     "files": [
