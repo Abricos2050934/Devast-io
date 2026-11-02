@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "296c8c4c6252ca88853ee0beb52943ceda520a8aa284ee13a6d3a5c756cd1631",
+  "output_sha256": "f1df140c5b8cba275473e146b92afd74abad9a37d2a28b1347808af37735923b",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -51,10 +51,10 @@
   "module_sha256": {
     "mod/responsive.js": "8df3df4d0ce38add8eec91968436bfc8583a830cf85df26f68ef399cb1de05dd",
     "mod/bootstrap.js": "1631e444b28954e506f3f9d1a87f7630140ca460e3c8371c34d3e30754ad7255",
-    "mod/ilm-aim.js": "f85c9ffda1daf32bf3a6c755c285a4e6661de513727686fa57f094bd0a5b7863",
+    "mod/ilm-aim.js": "7b2647bc40a4e6b7a373b7e4276655f8699b7125a8189e668713801674c655a5",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "fd318dd274b0442bae1b48865011168e49258476b2028b9d538d89ab6f73abd5",
+  "mod_bundle_sha256": "df4b7d009990b4875973f3a8b31890790725fdc4ab2cfe04f1032d7c2d661dc6",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "external_dependencies": {
@@ -115,7 +115,7 @@
     "death_stops_restore_retries": true,
     "mod_errors": []
   },
-  "finished_at": "2026-11-02T20:52:22.359Z",
+  "finished_at": "2026-11-02T20:56:07.562Z",
   "candidate_function_tests": {
     "status": "passed",
     "files": [
