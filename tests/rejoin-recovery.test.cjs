@@ -151,3 +151,47 @@ test('the native death prefix is captured without logging arbitrary packet bodie
  f.mod.observeDeath({length:1000000,0:5,1:1,2:2});assert.equal(f.mod.connectionInfo().events.at(-1).deathPrefixHex,undefined);
  assert.deepEqual(identity(f),account);f.mod.dispose();
 });
+test('Play preparation timeout releases the pre-login busy flag and ignores stale resource callbacks',()=>{
+ const f=fixture({saved:account});f.network.state=0;f.B.pendingKey='busy';f.network.busy=true;f.setClock(0);
+ assert.equal(f.mod.beginPlay(),true);assert.equal(f.network.busy,false);
+ f.network.busy=true;let starts=0;const stale=f.mod.guardPlayCallback(()=>starts++);
+ assert.equal(f.mod.beginPlay(),false);f.mod.step(12001);assert.equal(f.network.busy,false);
+ f.setClock(12001);assert.equal(f.mod.beginPlay(),true);
+ const current=f.mod.guardPlayCallback(()=>starts++);stale();assert.equal(starts,0);current();current();assert.equal(starts,1);
+ assert.deepEqual(identity(f),account);f.mod.dispose();
+});
+test('native Play works without Widget and can retry a stalled resource load with the same saved identity',()=>{
+ const fs=require('node:fs'),z=require('node:zlib'),vm=require('node:vm');
+ const ref=JSON.parse(z.gunzipSync(fs.readFileSync('recovery/rejoin-gateway-reference.json.gz'))),profile=JSON.parse(fs.readFileSync('patches/recovered-current.json'));
+ const patch=profile.operations.find(o=>o.id==='native-play-preparation-recovery');assert.equal(patch.before,ref.source);
+ for(const fixed of [false,true]){
+  const f=fixture({saved:account});f.network.state=0;f.B.pendingKey='ϲІ̗';f.setClock(0);const resources=[];let logins=0;
+  const menu={'ϲ१༧':0,'а５ߋ':1,'а͠٣':5};f.B.adWaiting=()=>menu['ϲ१༧']===1;
+  f.document.getElementById=id=>id==='servers'?{value:'saved-lobby'}:{id};
+  Object.assign(f.context,ref.literals,{__responsiveMod:f.mod,'ɑᚆᴏ':menu,'ᴄࡇ९':f.window,'ѕ︁︁':{'оᄃމ'(){}},'і︅２':{'ᴀߊᄆ':()=>true},'ᴑ٢༩':{'ε᠌️':cb=>resources.push(cb)},'ᴘ̏٤':{'ϲ︂ᄇ':5},'оᴌ︈':Object.assign(f.network,{'ᅟވ̝':{'ᴄ̈ᚈ':2},'Ꮷіܖ':()=>logins++})});
+  if(!fixed){assert.throws(()=>vm.runInContext(patch.before+';ܐࡅ̙();',f.context));assert.equal(resources.length,0);}
+  else{
+   vm.runInContext(patch.after+';ܐࡅ̙();',f.context);assert.equal(resources.length,1);
+   assert.equal(f.network['ϲІ̗'],true);f.mod.step(12001);assert.equal(f.network['ϲІ̗'],false);
+   f.setClock(12001);vm.runInContext('ܐࡅ̙();',f.context);assert.equal(resources.length,2);
+   resources[0]();assert.equal(logins,0);resources[1]();assert.equal(logins,1);resources[1]();assert.equal(logins,1);
+  }
+  assert.deepEqual(identity(f),account);f.mod.dispose();
+ }
+});
+test('partially loaded Widget cannot set an advertising wait with no usable completion method',()=>{
+ const fs=require('node:fs'),z=require('node:zlib'),vm=require('node:vm');
+ const ref=JSON.parse(z.gunzipSync(fs.readFileSync('recovery/rejoin-gateway-reference.json.gz')));
+ const patch=JSON.parse(fs.readFileSync('patches/recovered-current.json')).operations.find(o=>o.id==='native-play-preparation-recovery');
+ for(const widget of [{},{isBlocked:0},{isBlocked:1}]){
+  const f=fixture({saved:account});f.setClock(0);f.network.state=0;f.B.pendingKey='ϲІ̗';const menu={'ϲ१༧':0,'а５ߋ':1,'а͠٣':5};let prepares=0;
+  f.window.Widget=widget;f.B.adWaiting=()=>menu['ϲ१༧']===1;f.document.getElementById=id=>id==='servers'?{value:'saved-lobby'}:{id};
+  Object.assign(f.context,ref.literals,{__responsiveMod:f.mod,'ɑᚆᴏ':menu,'ᴄࡇ९':f.window,'ѕ︁︁':{'оᄃމ'(){}},'і︅２':{'ᴀߊᄆ':()=>true},'ᴑ٢༩':{'ε᠌️':()=>prepares++},'ᴘ̏٤':{'ϲ︂ᄇ':5},'оᴌ︈':Object.assign(f.network,{'ᅟވ̝':{'ᴄ̈ᚈ':2}})});
+  vm.runInContext(patch.after+';ܐࡅ̙();',f.context);assert.equal(prepares,1);assert.equal(menu['ϲ१༧'],0);assert.deepEqual(identity(f),account);f.mod.dispose();
+ }
+});
+
+test('disposing recovery leaves native Play usable while canceling old preparation callbacks',()=>{
+ const f=fixture({saved:account});f.network.state=0;let calls=0;f.mod.beginPlay();const old=f.mod.guardPlayCallback(()=>calls++);
+ f.mod.dispose();old();assert.equal(calls,0);assert.equal(f.mod.beginPlay(),true);f.mod.guardPlayCallback(()=>calls++)();assert.equal(calls,1);assert.deepEqual(identity(f),account);
+});

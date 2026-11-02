@@ -1452,7 +1452,7 @@ function __installDevastMod(B) {
     for (const key of ['token','tokenId','userId','accountToken']) {
       try { stored[key] = !!localStorage.getItem(key); } catch (_) { stored[key] = null; }
     }
-    return {schema:2,recoveryVersion:2,state:B.network.state,phase:reconnect.phase,
+    return {schema:2,recoveryVersion:3,state:B.network.state,phase:reconnect.phase,
       nativeReady:typeof B.network[B.loginKey] === 'function',
       nativePending:B.pendingKey ? !!B.network[B.pendingKey] : false,
       adWaiting:!!B.adWaiting?.(),socketState:connectionSocket?.readyState ?? null,
@@ -1461,6 +1461,34 @@ function __installDevastMod(B) {
   }
   function releaseNativePending() {
     if (B.pendingKey) B.network[B.pendingKey] = false;
+  }
+  function beginPlay() {
+    if (stopped) return true;
+    if (B.network.state === 1 || (B.network.state & 2) !== 0) return false;
+    const now=performance.now();
+    if (B.adWaiting?.()) return false;
+    if (reconnect.pending && ['preparing','joining','refreshing'].includes(reconnect.phase) && now < reconnect.deadline) return false;
+    // Play can lock its native busy flag before the network login is called.
+    // Recover this earlier stage too; persistent account data is never touched.
+    reconnect.generation++;
+    releaseNativePending();
+    reconnect.pending=true;
+    reconnect.phase='preparing';
+    reconnect.deadline=now+12000;
+    reconnect.armed=true;
+    reconnect.autoBlocked=false;
+    reconnect.status='Preparing game; saved login kept';
+    return true;
+  }
+  function guardPlayCallback(callback) {
+    if (stopped) return callback;
+    const generation=reconnect.generation;
+    let completed=false;
+    return function (...args) {
+      if (stopped || completed || generation!==reconnect.generation) return;
+      completed=true;
+      return callback.apply(this,args);
+    };
   }
   function continueAdGate(gate) {
     if (stopped || gate !== adGate || gate.done || !gate.callback || !B.adWaiting?.()) return;
@@ -1475,6 +1503,7 @@ function __installDevastMod(B) {
       if (typeof widget[method] !== 'function' || widget[method] === entries[method]?.wrapped) continue;
       const original = widget[method];
       const wrapped = function (...args) {
+        reconnect.phase='advertising';
         const gate = adGate = {widget, done:false, failed:false, deadline:performance.now()+60000};
         // Native code installs Widget.play immediately after preroll returns.
         Promise.resolve().then(() => {
@@ -1647,6 +1676,17 @@ function __installDevastMod(B) {
         reconnect.status = 'Соединение не завершилось; повторяем с прежним токеном';
       }
       return;
+    }
+    if (reconnect.pending && reconnect.phase === 'preparing' && n.state === 0) {
+      if (document.hidden) reconnect.deadline=now+12000;
+      else if (now>=reconnect.deadline) {
+        reconnect.pending=false;
+        reconnect.phase='idle';
+        reconnect.generation++;
+        releaseNativePending();
+        connectionEvent('play-preparation-timeout');
+        reconnect.status='Подготовка игры зависла; нажмите Play ещё раз без очистки cookies';
+      }
     }
     if (reconnect.pending && reconnect.phase === 'joining' && now >= reconnect.deadline && n.state === 0) {
       reconnect.pending = false;
@@ -2032,6 +2072,8 @@ function __installDevastMod(B) {
     reconnect,
     observeSocket,
     observeDeath,
+    beginPlay,
+    guardPlayCallback,
     guardHandshakeCallback,
     connectionInfo,
     step,

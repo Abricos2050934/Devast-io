@@ -1,0 +1,29 @@
+{
+  "sha256": "55806eee6b962eaa3cdd64cf964bb5e3f731edbbb7c831cb4eeab07ac59d5336",
+  "checks": [
+    {
+      "attempt": 1,
+      "state": 1,
+      "cookie_kept": true,
+      "identity_kept": true,
+      "recoveryVersion": 3
+    },
+    {
+      "attempt": 2,
+      "state": 1,
+      "cookie_kept": true,
+      "identity_kept": true,
+      "recoveryVersion": 3
+    }
+  ],
+  "mode": "own guest browser profile, two joins without clearing cookies or localStorage",
+  "errors": [],
+  "result": "passed",
+  "regression": {
+    "python_tests": 26,
+    "node_tests": 113,
+    "status": "passed"
+  },
+  "recovery_scenarios": 21,
+  "live_scope": "Own guest profile on Frankfurt 1; saved cookie and guest identity survive page reload with absent Widget at Play; user account was not tested."
+}
