@@ -1,16 +1,16 @@
 {
   "schema": 1,
-  "release": "51eba15f1f7ba2b8fe970b98cbcde5f1497835d2d7a38293b05b6c3ecdf106f4",
+  "release": "fab297386337fa399c88008ad83699836ab33097af302ec660da85710116a228",
   "raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
-  "inputs_sha256": "fbfb8b5687ba91b13804f654e5a02640084dd8e4c3b6272449e2f6f67f91375f",
-  "output_sha256": "55806eee6b962eaa3cdd64cf964bb5e3f731edbbb7c831cb4eeab07ac59d5336",
-  "script": "versions/51eba15f1f7ba2b8fe970b98cbcde5f1497835d2d7a38293b05b6c3ecdf106f4/game.modded.js",
+  "inputs_sha256": "65dad5ec7886c768b628c751be27b4f14a9db9b8bc711ddd8e10ae846236bd01",
+  "output_sha256": "3b84be0393d4429cd843326e5cc26f2b699c73d811de7109385c8e21adcc6fbf",
+  "script": "versions/fab297386337fa399c88008ad83699836ab33097af302ec660da85710116a228/game.modded.js",
   "source_url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
-  "activated_at": "2026-11-02T17:30:41.213045+00:00",
-  "previous_release": "116fcdb1dace1c3441bafa33070ce87acce36dabba64c0b29db32cbb66928e97",
+  "activated_at": "2026-11-02T17:42:37.476461+00:00",
+  "previous_release": "51eba15f1f7ba2b8fe970b98cbcde5f1497835d2d7a38293b05b6c3ecdf106f4",
   "validation": "passed",
   "live_server": "not_tested",
   "publication": "github",
-  "mod_bundle_sha256": "fae5e6bbc532edd4f7fa2cc64daa8d2bd1b744e0d147971a5151d6969dbdcce1",
+  "mod_bundle_sha256": "603cd173f223c8e3ac2769f51ab7a880b69ca681a1801d625f3a9e00184c9c4f",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6"
 }
