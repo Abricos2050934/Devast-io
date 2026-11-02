@@ -2,8 +2,8 @@
   "status": "static_checks_passed",
   "source_url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
   "baseline_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
-  "output_sha256": "3bd0ef786f1f5fd560f12002e076e824763def7a29d1675cd0bfa5c10c97d0a6",
-  "output_bytes": 7050264,
+  "output_sha256": "956a98312faf7091b7f23716ed492c844d360719d89d8805cc571d1daa3e9695",
+  "output_bytes": 7050805,
   "applied_patches": [
     "camera-world-view",
     "packet-position-history",

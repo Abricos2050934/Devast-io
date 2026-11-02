@@ -822,7 +822,18 @@ function __installDevastMod(B) {
       health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details});
     if (connectionEvents.length > 12) connectionEvents.shift();
   }
-  function observeDeath() { if (!stopped) connectionEvent('server-death'); }
+  function observeDeath(packet) {
+    if (stopped) return;
+    const details = {};
+    // Only the reviewed three-byte death prefix is safe to include. Never log
+    // arbitrary server packets, login payloads or an unbounded response body.
+    if (ArrayBuffer.isView(packet) && packet.BYTES_PER_ELEMENT === 1 && packet.length >= 3 && packet[0] === 5) {
+      details.deathOpcode = 5;
+      details.deathPacketLength = packet.byteLength;
+      details.deathPrefixHex = Array.from(packet.subarray(0,3),value=>value.toString(16).padStart(2,'0')).join(' ');
+    }
+    connectionEvent('server-death',details);
+  }
   let overlay, overlayHost, ctx, menu, functionList, zoomControl, nextFrame, stopped = false, waitingKey = null;
   let lastStep = -Infinity, lastLoot = -Infinity, lastBuild = -Infinity;
   let lastTake = -Infinity, lastKeepAlive = -Infinity, lastChat = -Infinity, nextChatAt = -Infinity;

@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "checked_at": "2026-11-02T10:07:15.730700+00:00",
+  "user_clarification": {
+    "autoFire": false
+  },
+  "official_js_download": {
+    "sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+    "url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
+    "http_status": 200
+  },
+  "aim_send_path": {
+    "module": "mod/ilm-aim.js",
+    "calls": [
+      [
+        6,
+        "resolve()"
+      ],
+      [
+        4
+      ],
+      [
+        5
+      ]
+    ],
+    "autoFire_false": "Only [6, angle] is emitted by the aim timer; manual attack remains native.",
+    "timer_ms": 50,
+    "angle_range": [
+      0,
+      359
+    ],
+    "explicit_aim_enabled_field_in_this_path": false,
+    "scope": "Reviewed aim core, mod sender and native encoding path; this does not establish how server-side detection works."
+  },
+  "server_death_path": {
+    "dispatcher": "Іᄀރ",
+    "opcode": 5,
+    "handler": "рܙ๕",
+    "effects": [
+      "Remove native self entity",
+      "Store the following two bytes as the native end-screen numeric value",
+      "Call native death transition with error flag 128"
+    ],
+    "reason_field_parsed_by_handler": false,
+    "client_observation": "First three bytes and total packet length are captured before native handling; native handling is preserved."
+  },
+  "live_received_packet": {
+    "hex": "05 00 00",
+    "length": 3,
+    "reconstruction": "Opcode 5, length 3 and the captured big-endian remaining uint16 equal to zero uniquely determine these three bytes.",
+    "context": "Controlled guest died before aim was enabled or combat began.",
+    "event": {
+      "type": "server-death",
+      "at": 94638,
+      "state": 1,
+      "aim": false,
+      "autoFire": false,
+      "health": 0.009999999999140918,
+      "commandsInLast2s": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      }
+    },
+    "health_history": [
+      {
+        "seconds": 55,
+        "health": 46.17449999999922
+      },
+      {
+        "seconds": 60,
+        "health": 19.758999999999148
+      }
+    ],
+    "reported_post_hit_case_reproduced": false
+  },
+  "live_aim_only_manual_test": {
+    "status": "blocked",
+    "reason": "Frankfurt 2 was unavailable in the enabled server list; no completed manual-hit test claimed."
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 87,
+    "python_tests": 26
+  },
+  "native_death_capture_fixture": "passed",
+  "diagnostic_release": "59d8e50b321b8583785a82a78506ba492d5d411a476bf1bae3045dd99ac21bf2",
+  "diagnostic_client_sha256": "cfecae72f500ea36c06f1e466ee367cc9b6416a56476ff62f3b02495b824940c",
+  "source_provenance": {
+    "mode": "downloaded_official_snapshot",
+    "raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+    "live_discovery": "Homepage and game JS downloaded successfully this turn; a later updater request returned HTTP 503",
+    "note": "Built from the successful official HTML and JS downloads recorded for this audit; the JS hash matches the reviewed baseline."
+  },
+  "root_cause": "unconfirmed",
+  "fix_status": "Death signal captured and autoFire-disabled output verified; the reported server-side punishment has not been demonstrated or fixed."
+}

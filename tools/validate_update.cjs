@@ -139,6 +139,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     n.network[deathKey]=code=>{check(code===128,'Native death error code changed');deathCalls++;};n.death(new Uint8Array([5,0,0]));
     const event=m.connectionInfo().events.at(-1);
     check(event.type==='server-death'&&event.health===health,'Native death lost its pre-handler health snapshot');
+    check(event.deathOpcode===5&&event.deathPacketLength===3&&event.deathPrefixHex==='05 00 00','Native death packet was not captured');
     check(deathCalls===1,'Death observation changed native handling');
    }finally{n.network[deathKey]=nativeDeath;}
    check(!m.diagnostics.errors.length,'Mod reported errors');

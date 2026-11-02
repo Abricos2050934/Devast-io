@@ -60,6 +60,17 @@ test('autoFire GUI control changes attack packets when the original direction-ch
  f.set('autoFire',false);const n=f.packets.length;f.mod.aim.refresh();assert.equal(f.packets.length,n+1);assert.equal(f.packets.at(-1)[0],6);f.mod.dispose();
 });
 
+test('aim with autoFire disabled sends only finite native direction packets over repeated moving-target ticks',()=>{
+ const f=aimScene();f.set('lockId',2);f.set('AimBotEnabled',true);f.set('autoFire',false);
+ const tick=[...f.timers.values()][0];
+ for(let i=0;i<100;i++){
+  f.setClock(i*50);f.mod.trackPacket(1,2,0,100+(i%2)*30,50+Math.floor(30*Math.sin(i)),true);tick();
+ }
+ assert.equal(f.packets.length,100);
+ for(const packet of f.packets){assert.equal(packet.length,2);assert.equal(packet[0],6);assert.ok(Number.isInteger(packet[1])&&packet[1]>=0&&packet[1]<360);}
+ f.set('AimBotEnabled',false);tick();assert.equal(f.packets.length,100);f.mod.dispose();
+});
+
 test('visualizeResolving GUI control changes the prediction drawing, while keeping the calculated angle',()=>{
  const f=aimScene();f.set('lockId',2);f.set('AimBotEnabled',true);f.set('visualizeResolvingColor','#abcdef');
  f.set('visualizeResolving',true);const before=f.mod.aim.resolve();f.mod.step(0);

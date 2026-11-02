@@ -143,3 +143,11 @@ test('combat snapshots expire idle commands and cannot be changed by the report 
  assert.equal(f.mod.connectionInfo().events[0].commandsInLast2s.angle,1);
  f.setClock(4000);f.mod.observeDeath();assert.equal(f.mod.connectionInfo().events.at(-1).commandsInLast2s.angle,0);f.mod.dispose();
 });
+test('the native death prefix is captured without logging arbitrary packet bodies',()=>{
+ const f=fixture({saved:account});const bytes=new Uint8Array([5,0x12,0x34,0x78,0x79]);
+ f.mod.observeDeath(bytes);bytes[1]=255;const event=f.mod.connectionInfo().events.at(-1);
+ assert.equal(event.deathOpcode,5);assert.equal(event.deathPacketLength,5);assert.equal(event.deathPrefixHex,'05 12 34');
+ f.mod.observeDeath(new Uint8Array([35,1,2,3]));assert.equal(f.mod.connectionInfo().events.at(-1).deathPrefixHex,undefined);
+ f.mod.observeDeath({length:1000000,0:5,1:1,2:2});assert.equal(f.mod.connectionInfo().events.at(-1).deathPrefixHex,undefined);
+ assert.deepEqual(identity(f),account);f.mod.dispose();
+});
