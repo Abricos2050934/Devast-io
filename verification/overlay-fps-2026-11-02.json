@@ -1,0 +1,64 @@
+{
+  "output_sha256": "d0920cdba99e76a3e47624f144d57d9a58e8e8f8b741a7c249724d2e191f9ab1",
+  "browser": "passed",
+  "ilm_core": "identical",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 126,
+    "python_tests": 26
+  },
+  "comparison": {
+    "scope": "Synthetic dense scene: CPU time of mod overlay in Chromium, not device FPS or server RTT",
+    "samples": [
+      {
+        "label": "before",
+        "playerList": false,
+        "medianMs": 1.2000000029802322,
+        "p95Ms": 1.7999999970197678,
+        "descriptorReads": 2000000,
+        "frames": 200,
+        "overlaySha256": "7c60fe78897706c87cbb25b01590426b005f82d9b299b714ede31dde30625e90",
+        "rosterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "after",
+        "playerList": false,
+        "medianMs": 0.29999999701976776,
+        "p95Ms": 0.4000000059604645,
+        "descriptorReads": 200,
+        "frames": 200,
+        "overlaySha256": "7c60fe78897706c87cbb25b01590426b005f82d9b299b714ede31dde30625e90",
+        "rosterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "after",
+        "playerList": true,
+        "medianMs": 0.30000000447034836,
+        "p95Ms": 0.6999999955296516,
+        "descriptorReads": 200,
+        "frames": 200,
+        "overlaySha256": "7c60fe78897706c87cbb25b01590426b005f82d9b299b714ede31dde30625e90",
+        "rosterSha256": "70e1293312e9e4548dda7f68930882c5b6bfe44362e42722a72d0eb7d457719b"
+      },
+      {
+        "label": "before",
+        "playerList": true,
+        "medianMs": 1.2999999970197678,
+        "p95Ms": 1.7999999970197678,
+        "descriptorReads": 2000000,
+        "frames": 200,
+        "overlaySha256": "7c60fe78897706c87cbb25b01590426b005f82d9b299b714ede31dde30625e90",
+        "rosterSha256": "70e1293312e9e4548dda7f68930882c5b6bfe44362e42722a72d0eb7d457719b"
+      }
+    ],
+    "visualEquivalence": "passed"
+  },
+  "source_sha256": "e531a120cdb342b6441d0aaed68ba755092ceb3697432c8a96f82fa75df423d5",
+  "baseline_source_sha256": "cf741d5e524b9e6121e0196de7e1078ca49cf28ccb60de0d8fdf86add8e6b96a",
+  "limitations": [
+    "Synthetic CPU benchmark for mod overlay only; not total game FPS on the user device",
+    "Pixel equality checks cover canvas overlay; roster equality checks cover text content",
+    "No changes to ILM, Jitter, login credentials or recovery behavior"
+  ]
+}

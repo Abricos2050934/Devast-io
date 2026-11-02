@@ -66,3 +66,24 @@ test('movement report separates browser frame timing from automation traffic and
   report.modCommandsByOpcode[14]=99999;assert.notEqual(f.mod.connectionInfo().modCommandsByOpcode[14],99999);
  }finally{f.mod.dispose();}
 });
+test('owner overlay resolves item metadata only for the hovered tile, while preserving the label',()=>{
+ const f=fixture({dom:true});try{
+  let reads=0;Object.defineProperty(f.B.items,0,{get(){reads++;return {'ࡀ︂̄':7};}});f.world['ᴎ︃ᄉ'][2]['ο̏︇']='Owner';
+  scene(f,3,Array.from({length:1000},(_,i)=>({id:i,x:100+i,y:100,'е̝ހ':0,'Іࡈ５':0,'αބ̞':i===0?-1:i,'ᴀܛ٤':-1,'ᴘ४１':2})));
+  f.mod.step(0);assert.equal(reads,1);assert.ok(f.dom.calls.some(c=>c.name==='fillText'&&c.args[0]==='Owner #2'));
+  reads=0;f.mod.setSetting('ShowBuildingOwner',false);f.mod.step(20);assert.equal(reads,0);
+ }finally{f.mod.dispose();}
+});
+test('status HUD avoids rewriting unchanged layout styles but responds to resizing',()=>{
+ const f=fixture({dom:true});try{
+  f.mod.step(0);const styles=f.mod.functionList.style;let writes=0;f.mod.functionList.style=new Proxy(styles,{set(target,key,value){writes++;target[key]=value;return true;}});
+  for(let t=20;t<=200;t+=20)f.mod.step(t);assert.equal(writes,0);
+  const rect=f.dom.canvas.getBoundingClientRect;f.dom.canvas.getBoundingClientRect=()=>({...rect(),height:80});f.mod.step(220);assert.ok(writes>0);assert.equal(f.mod.functionList.style.fontSize,'13px');
+ }finally{f.mod.dispose();}
+});
+test('loot without building tile coordinates does not add owner-overlay layout reads',()=>{
+ const f=fixture({dom:true});try{
+  f.mod.setSetting('mouseFovEnable',false);scene(f,2,[{id:1,x:10,y:20,'е̝ހ':0,'Іࡈ５':6}]);let reads=0;
+  const rect=f.dom.canvas.getBoundingClientRect;f.dom.canvas.getBoundingClientRect=()=>{reads++;return rect();};f.mod.step(0);assert.equal(reads,1);
+ }finally{f.mod.dispose();}
+});

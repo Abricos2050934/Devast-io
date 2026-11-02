@@ -1021,7 +1021,7 @@ function __installDevastMod(B) {
     return copyText(name);
   }
   let previousPlayer = 0, records = [], mouse = null;
-  const collectedRecords=records, entityRecords=new WeakMap();
+  const collectedRecords=records, playerRecords=[], entityRecords=new WeakMap();
   const functionRows = new Map();
   // Column order matches the compact status list in the supplied screenshot.
   const functionLabels = [
@@ -1243,7 +1243,7 @@ function __installDevastMod(B) {
     }
   }
   function collect() {
-    let count=0;
+    let count=0,playerCount=0;
     for (let type = 0; type < B.entities.border.length; type++) {
       const border = B.entities.border[type], group = B.entities.ܐރ٠[type];
       if (!border || !group) continue;
@@ -1254,14 +1254,19 @@ function __installDevastMod(B) {
           if (!record) {record={type,e};entityRecords.set(e,record);}
           else record.type=type;
           collectedRecords[count++]=record;
+          if (type===B.categories.player) playerRecords[playerCount++]=record;
         }
       }
     }
     collectedRecords.length=count;
+    playerRecords.length=playerCount;
     return collectedRecords;
   }
   function updateTargets() {
-    for (const {type, e} of records) if (type === B.categories.player && playerMeta(e.ρ͏१) && typeof playerMeta(e.ρ͏१).ο३︀ === 'string') _players_list[e.ρ͏१] = playerMeta(e.ρ͏१).ο३︀;
+    for (const {e} of playerRecords) {
+      const meta=playerMeta(e.ρ͏१);
+      if (meta && typeof meta.ο३︀==='string') _players_list[e.ρ͏१]=meta.ο३︀;
+    }
   }
   function view() {
     const v = B.view(), ratio = B.graphics.options && B.graphics.options.ісܒ;
@@ -1430,12 +1435,14 @@ function __installDevastMod(B) {
       }
       overlayHost.shadowRoot.appendChild(functionList);
     }
-    functionList.style.display = MOD.showFunctionList ? 'grid' : 'none';
+    const display=MOD.showFunctionList?'grid':'none';
+    if (functionList.style.display!==display) functionList.style.display=display;
     if (!MOD.showFunctionList) return;
     const height = parseFloat(overlayHost.style.height) || window.innerHeight, rows = Math.ceil(functionRows.size / 2), font = Math.max(8, Math.min(14, (height - 16) / rows - 3)), line = Math.ceil(font + 3);
-    functionList.style.fontSize = font + 'px';
-    functionList.style.lineHeight = line + 'px';
-    functionList.style.gridTemplateRows = 'repeat(' + rows + ', ' + line + 'px)';
+    const fontSize=font+'px',lineHeight=line+'px',gridRows='repeat('+rows+', '+line+'px)';
+    if (functionList.style.fontSize!==fontSize) functionList.style.fontSize=fontSize;
+    if (functionList.style.lineHeight!==lineHeight) functionList.style.lineHeight=lineHeight;
+    if (functionList.style.gridTemplateRows!==gridRows) functionList.style.gridTemplateRows=gridRows;
     for (const { key, row } of functionRows.values()) {
       const on = key !== null && MOD[key] === true;
       if (row.dataset.enabled === String(on)) continue;
@@ -1482,10 +1489,10 @@ function __installDevastMod(B) {
         row.appendChild(number);row.appendChild(nick);row.appendChild(clanLabel);nick.onclick=()=>copyNickname(id);
         entry={row,number,nick,clan:clanLabel};playerListRows.set(id,entry);
       }
-      const signature=JSON.stringify([name,tag,MOD.NicknameColor,color]);
-      if (entry.signature !== signature) {
+      if (entry.name!==name || entry.tag!==tag || entry.nickColor!==MOD.NicknameColor || entry.clanColor!==color) {
         entry.nick.textContent=name || 'Без ника';entry.nick.style.color=MOD.NicknameColor;entry.number.style.color=MOD.NicknameColor;
-        entry.clan.textContent=tag;entry.clan.style.color=color;entry.signature=signature;
+        entry.clan.textContent=tag;entry.clan.style.color=color;
+        entry.name=name;entry.tag=tag;entry.nickColor=MOD.NicknameColor;entry.clanColor=color;
       }
     }
     const order=ids.join(',');
@@ -1529,7 +1536,8 @@ function __installDevastMod(B) {
     ctx.save();
     if (MOD.ShowPosition) text('[' + Math.floor(me.x / 100) + ':' + Math.floor(me.y / 100) + ']', 100, 32, '#fff', 18);
     let ownerCursor, ownerCursorRead=false;
-    for (const r of records) {
+    const drawRecords=MOD.ShowBuildingOwner?records:playerRecords;
+    for (const r of drawRecords) {
       if (r.type === B.categories.player) {
         const id = r.e.ρ͏१, p = at(r.e), self = id === me.id, color = self && !validClan(id) ? '#00ffff' : clanColor(id);
         if (MOD.ShowNamesOnMap && !B.nativePlayerLabels && Number.isInteger(id) && id > 0) {
@@ -1550,18 +1558,18 @@ function __installDevastMod(B) {
           const meta = playerMeta(id), sprite = meta && B.karma[meta.ᴀ४ބ];
           if (sprite && B.graphics.Ꮷߎ̜) B.graphics.Ꮷߎ̜(sprite, v.x + r.e.x, v.y + r.e.y - 85, 0, 0, 0, 0.6);
         }
-      } else if (MOD.ShowBuildingOwner && building(r)) {
+      } else if (MOD.ShowBuildingOwner && typeof r.e.ᴉ९ܘ==='number') {
         if (!ownerCursorRead) {ownerCursor=cursorWorld();ownerCursorRead=true;}
         const point = ownerCursor;
         if (!point) continue;
         const x = Math.floor(point.x / 100), y = Math.floor(point.y / 100);
-        if (r.e.ᴉ९ܘ === x && r.e.ᅠᴀ︄ === y) {
+        if (r.e.ᴉ९ܘ === x && r.e.ᅠᴀ︄ === y && building(r)) {
           const p = at(r.e), id = r.e.ρ͏१;
           text(Number.isInteger(id) && id > 0 ? (nickname(id) ? nickname(id)+' ' : '')+'#'+id : 'Owner unknown', p.x, p.y - 35, clanColor(id), 16);
         }
       }
     }
-    const selfRecord = records.find(r => r.type === B.categories.player && r.e.ρ͏१ === me.id);
+    const selfRecord = MOD.AimBotEnabled && playerRecords.find(r => r.e.ρ͏१ === me.id);
     if (MOD.AimBotEnabled && selfRecord) {
       for (const [i, line] of GetAllTargets.lines.entries()) {
         if (i === 0 && !MOD.visualizeResolving) continue;
@@ -1970,6 +1978,7 @@ function __installDevastMod(B) {
       if (previousPlayer) {
         previousPlayer = 0;
         records.length = 0;
+        playerRecords.length = 0;
         _players_list.length = 0;
       }
       chatState.status = MOD.SpamChatEnabled ? 'Waiting for game' : 'Off';
