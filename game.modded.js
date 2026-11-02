@@ -1023,6 +1023,19 @@ function __installDevastMod(B) {
       details.deathPrefixHex = Array.from(packet.subarray(0,3),value=>value.toString(16).padStart(2,'0')).join(' ');
     }
     connectionEvent('server-death',details);
+    // A confirmed death terminates the playable session. Socket close flags
+    // must not turn it into a request to restore the dead character.
+    reconnect.sessionEnded=true;
+    reconnect.awaitingPlay=true;
+    reconnect.generation++;
+    reconnect.pending=false;
+    reconnect.phase='dead';
+    reconnect.next=0;
+    reconnect.armed=false;
+    reconnect.autoBlocked=true;
+    reconnect.freshRequired=true;
+    reconnect.freshUsed=false;
+    releaseNativePending();
   }
   let overlay, overlayHost, ctx, menu, functionList, zoomControl, nextFrame, stopped = false, waitingKey = null;
   let playerListPanel, playerListBody, playerListCount, playerListOrder = '';
@@ -1612,7 +1625,9 @@ function __installDevastMod(B) {
     freshUsed: false,
     autoBlocked: false,
     lastFailureCode: 0,
-    gatewayRecoveries: 0
+    gatewayRecoveries: 0,
+    sessionEnded:false,
+    awaitingPlay:false
   };
   let connectionSocket = null, adGate = null, removeSocketObservers = () => {};
   const widgetWrappers = new Map();
@@ -1635,7 +1650,8 @@ function __installDevastMod(B) {
     for (const key of ['token','tokenId','userId','accountToken']) {
       try { stored[key] = !!localStorage.getItem(key); } catch (_) { stored[key] = null; }
     }
-    return {schema:2,recoveryVersion:3,state:B.network.state,phase:reconnect.phase,
+    return {schema:2,recoveryVersion:4,state:B.network.state,phase:reconnect.phase,
+      sessionEnded:reconnect.sessionEnded,awaitingPlay:reconnect.awaitingPlay,normalJoinRequired:reconnect.freshRequired,
       nativeReady:typeof B.network[B.loginKey] === 'function',
       nativePending:B.pendingKey ? !!B.network[B.pendingKey] : false,
       adWaiting:!!B.adWaiting?.(),socketState:connectionSocket?.readyState ?? null,
@@ -1663,6 +1679,8 @@ function __installDevastMod(B) {
     reconnect.deadline=now+12000;
     reconnect.armed=true;
     reconnect.autoBlocked=false;
+    reconnect.awaitingPlay=false;
+    if (reconnect.sessionEnded) reconnect.freshRequired=true;
     reconnect.status='Preparing game; saved login kept';
     return true;
   }
@@ -1778,12 +1796,12 @@ function __installDevastMod(B) {
         return original.apply(this,args);
       } : kind === 'error' ? function (...args) {
         if (!stopped) {
-          reconnect.lastFailureCode = Number.isInteger(args[0]) ? args[0] : 0;
+          reconnect.lastFailureCode = Number.isInteger(args[0]) ? args[0] : (Number.isInteger(n.state)?n.state:0);
           reconnect.pending = false;
-          reconnect.phase = 'idle';
+          reconnect.phase = reconnect.awaitingPlay?'dead':'idle';
           reconnect.generation++;
           releaseNativePending();
-          reconnect.status = 'Игра не завершила вход; можно повторить без сброса cookies';
+          reconnect.status = reconnect.awaitingPlay?'Персонаж погиб; нажмите Play для нового входа с прежним токеном':'Игра не завершила вход; можно повторить без сброса cookies';
         }
         return original.apply(this,args);
       } : kind === 'restoreFailure' ? function (...args) {
@@ -1803,7 +1821,8 @@ function __installDevastMod(B) {
           reconnect.freshUsed = false;
           reconnect.armed = true;
         }
-        if (n.state === 256) reconnect.freshRequired = true;
+        reconnect.awaitingPlay=false;
+        if (n.state === 256 || reconnect.sessionEnded) reconnect.freshRequired = true;
         prepareNormalJoin();
         reconnect.pending = true;
         reconnect.phase = 'joining';
@@ -1829,7 +1848,18 @@ function __installDevastMod(B) {
     const n = B.network;
     watchConnectionHandlers();
     watchLoginGateway(now);
+    if (reconnect.awaitingPlay) {
+      reconnect.pending=false;
+      reconnect.phase='dead';
+      reconnect.next=0;
+      releaseNativePending();
+      if (n.state===64) n.state=0;
+      reconnect.status='Персонаж погиб; нажмите Play для нового входа с прежним токеном';
+      return;
+    }
     if (n.state === 1) {
+      reconnect.sessionEnded=false;
+      reconnect.awaitingPlay=false;
       reconnect.status = 'Connected';
       reconnect.attempts = 0;
       reconnect.armed = true;
@@ -1887,6 +1917,7 @@ function __installDevastMod(B) {
       reconnect.status = 'Login rejected; see the game message';
       return;
     }
+    if (reconnect.sessionEnded && (n.state & 64)!==0) reconnect.freshRequired=true;
     const retryable = (n.state & 64) !== 0 || reconnect.freshRequired && (n.state === 0 || n.state === 256);
     if (!retryable || !reconnect.armed || stopped || reconnect.autoBlocked) return;
     if (typeof n.ᴇ༧︈ !== 'function' || typeof B.reconnect !== 'function') return;
@@ -1898,7 +1929,7 @@ function __installDevastMod(B) {
       reconnect.status = 'Refresh timed out';
       return;
     }
-    if (reconnect.attempts >= 3 && !reconnect.freshRequired) {
+    if (reconnect.attempts >= 3 && (reconnect.sessionEnded || !reconnect.freshRequired)) {
       reconnect.status = 'Connection failed after ' + reconnect.attempts + ' retries';
       return;
     }
