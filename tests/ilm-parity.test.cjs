@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {fixture}=require('./mod-fixture.cjs'),{oracle}=require('./ilm-oracle.cjs');
 function pair(){
- const f=fixture({dom:true,fireKey:'nativeFire'});f.mod.setSetting('ImprovedAimEnabled',false);const old=oracle(f.mod.settings);
+ const f=fixture({dom:true,fireKey:'nativeFire'});f.mod.setSetting('ImprovedAimEnabled',false);f.mod.setSetting('resolverType','linear');const old=oracle(f.mod.settings);
  f.dom.canvas.getBoundingClientRect=()=>({left:0,top:0,width:800,height:600});
  let now=0,view={x:0,y:0,scale:1};
  f.B.view=()=>({...view,ctx:f.dom.canvas.getContext('2d')});

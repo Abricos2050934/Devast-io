@@ -13,7 +13,7 @@ function __installDevastMod(B) {
       this.AutoTakeEnabled = false;
       this.AutoBuiledEnabled = false;
       this.AntiKickEnabled = false;
-      this.resolverType = "linear";
+      this.resolverType = "smoothed";
       this.ShowRealAngles = "withAim";
       this.target = "players";
       this.AimBotEnabled = false;
@@ -96,6 +96,24 @@ function __installDevastMod(B) {
       for (const key of Object.keys(defaults)) if (!transient.has(key)) migrated[key] = MOD[key];
       localStorage.setItem(SAVE, JSON.stringify(migrated));
       localStorage.setItem(SAVE + ':ilm2', '1');
+    }
+  } catch (_) {}
+  // Repair only the exact shipped far profiles and the old untouched default.
+  // Keep a local backup and never overwrite custom prediction values on reload.
+  try {
+    if(localStorage.getItem(SAVE+':far-aim-v1')!=='1'){
+      const formerFar=MOD.ImprovedAimEnabled&&MOD.mouseFovEnable&&MOD.mouseFov===450&&MOD.target==='players'&&MOD.lockId===-1&&MOD.bulletSpeedCoefficient===4&&(
+        MOD.distanceCoefficient===300&&MOD.offsetCoefficient===.8&&MOD.resolverType==='linear'||
+        MOD.distanceCoefficient===330&&MOD.offsetCoefficient===1.6&&MOD.resolverType==='smoothed');
+      const formerDefault=MOD.ImprovedAimEnabled&&MOD.distanceCoefficient===300&&MOD.bulletSpeedCoefficient===4&&MOD.offsetCoefficient===.1&&MOD.resolverType==='linear';
+      if(formerFar||formerDefault){
+        const before=Object.fromEntries(['distanceCoefficient','bulletSpeedCoefficient','offsetCoefficient','resolverType'].map(key=>[key,MOD[key]]));
+        if(!localStorage.getItem(SAVE+':far-aim-before-v1'))localStorage.setItem(SAVE+':far-aim-before-v1',JSON.stringify(before));
+        Object.assign(MOD,{distanceCoefficient:300,bulletSpeedCoefficient:4,offsetCoefficient:.1,resolverType:'smoothed'});
+        const saved=Object.fromEntries(Object.keys(defaults).filter(key=>!transient.has(key)).map(key=>[key,MOD[key]]));
+        localStorage.setItem(SAVE,JSON.stringify(saved));
+      }
+      localStorage.setItem(SAVE+':far-aim-v1','1');
     }
   } catch (_) {}
   const usedKeys = new Set();
@@ -2142,7 +2160,7 @@ function __installDevastMod(B) {
     const aimHints={
       distanceCoefficient:'Масштаб скорости: 300 соответствует нативной скорости при BulletSpeedCoefficient = 4. Больше — меньше упреждение.',
       bulletSpeedCoefficient:'Множитель скорости пули. Значение 4 соответствует данным оружия; работает в обоих режимах.',
-      offsetCoefficient:'Дополнительная задержка: 50 мс на единицу в улучшенном режиме. Учитывает движение цели и стрелка.',
+      offsetCoefficient:'Дополнительное упреждение цели: 50 мс на единицу в улучшенном режиме. Положение стрелка оценивается на текущий момент.',
       resolverType:'linear: последний интервал движения; smoothed: два согласованных интервала. Разворот и остановка учитываются сразу.',
       autoFire:'Исходный автоогонь ILM: срабатывает при смене направления выбранной цели.',
       mouseFov:'Радиус вокруг курсора в единицах мира. Используется при Cursor FOV и Lock player ID = -1.',

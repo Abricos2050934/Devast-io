@@ -36,7 +36,8 @@
     "independent-door-control-and-server-state-feedback",
     "automation-socket-backpressure",
     "functional-aim-settings",
-    "ak47-laser-distance-presets"
+    "ak47-laser-distance-presets",
+    "restored-stable-far-prediction"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -55,7 +56,8 @@
     "tests/world-visuals.test.cjs",
     "tests/door-click.test.cjs",
     "tests/automation-transport.test.cjs",
-    "tests/aim-presets.test.cjs"
+    "tests/aim-presets.test.cjs",
+    "tests/far-aim-regression.test.cjs"
   ],
   "required_browsers": [
     "chromium",

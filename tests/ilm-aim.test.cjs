@@ -29,7 +29,7 @@ test('native labels append exactly one client suffix and keep unused zero sentin
  }
 });
 
-test('all fourteen ILM aim defaults and variables remain present with their original values',()=>{
+test('thirteen ILM aim defaults retain their original values and the resolver defaults to the restored pooled predictor',()=>{
  const a=require('../tools/parser.cjs');
  const ref=JSON.parse(z.gunzipSync(fs.readFileSync('recovery/ilm-integration-reference.json.gz'))).find(x=>x.name==='_0x3ff00c');
  const own=fs.readFileSync('mod/responsive.js','utf8');
@@ -42,7 +42,8 @@ test('all fourteen ILM aim defaults and variables remain present with their orig
   for(const v of Object.values(n))if(Array.isArray(v))v.forEach(x=>values(x,out));else if(v&&typeof v==='object')values(v,out);return out;
  }
  const expected=values(original),actual=values(current);
- for(const key of ['AimbotKey','ShowRealAngles','AimBotEnabled','target','mouseFovEnable','resolverType','distanceCoefficient','bulletSpeedCoefficient','offsetCoefficient','visualizeResolving','visualizeResolvingColor','autoFire','lockId','mouseFov'])assert.equal(actual[key],expected[key],key);
+ for(const key of ['AimbotKey','ShowRealAngles','AimBotEnabled','target','mouseFovEnable','distanceCoefficient','bulletSpeedCoefficient','offsetCoefficient','visualizeResolving','visualizeResolvingColor','autoFire','lockId','mouseFov'])assert.equal(actual[key],expected[key],key);
+ assert.equal(expected.resolverType,'linear');assert.equal(actual.resolverType,'smoothed');
 });
 
 test('native metadata constructor patch matches only its reviewed assignment and preserves all other native code',()=>{

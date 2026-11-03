@@ -106,7 +106,9 @@ function __createAdaptiveAim(clock) {
       return Math.round(angle);
     }
     const own=samples.get(self),ownMoving=velocity(own,now),delay=settings.offsetCoefficient*50;
-    const sx=self.x+(ownMoving?(smooth?own.vx:own.rawVx)*(now-own.time+delay):0),sy=self.y+(ownMoving?(smooth?own.vy:own.rawVy)*(now-own.time+delay):0);
+    // The origin is the shooter's current estimated position. Offset tunes
+    // target lead; shifting the origin by it changes the previous shot geometry.
+    const sx=self.x+(ownMoving?(smooth?own.vx:own.rawVx)*(now-own.time):0),sy=self.y+(ownMoving?(smooth?own.vy:own.rawVy)*(now-own.time):0);
     const age=moving?now-sample.time:0;
     let x=target.x+vx*(age+delay),y=target.y+vy*(age+delay);
     const speed=nativeSpeed*(settings.bulletSpeedCoefficient/4)*(settings.distanceCoefficient/300);
@@ -130,7 +132,8 @@ function __createAdaptiveAim(clock) {
   return {observe,forget:target=>samples.delete(target),resolve};
 }
 
-// Values are selected by tools/calibrate_aim.cjs using separate held-out scenes.
+// Close profiles retain the earlier offline tuning. Far profiles restore the
+// pre-tuning predictor's native speed and pooled velocity after live feedback.
 function __aimWeaponPresets() {
   return {
   "ak47_close": {
@@ -151,10 +154,10 @@ function __aimWeaponPresets() {
     "label": "AK-47: дальняя",
     "settings": {
       "ImprovedAimEnabled": true,
-      "resolverType": "linear",
+      "resolverType": "smoothed",
       "distanceCoefficient": 300,
       "bulletSpeedCoefficient": 4,
-      "offsetCoefficient": 0.8,
+      "offsetCoefficient": 0.1,
       "mouseFovEnable": true,
       "mouseFov": 450,
       "target": "players",
@@ -180,9 +183,9 @@ function __aimWeaponPresets() {
     "settings": {
       "ImprovedAimEnabled": true,
       "resolverType": "smoothed",
-      "distanceCoefficient": 330,
+      "distanceCoefficient": 300,
       "bulletSpeedCoefficient": 4,
-      "offsetCoefficient": 1.6,
+      "offsetCoefficient": 0.1,
       "mouseFovEnable": true,
       "mouseFov": 450,
       "target": "players",

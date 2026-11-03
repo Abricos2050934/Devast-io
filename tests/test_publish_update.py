@@ -118,3 +118,11 @@ class PublicationTests(unittest.TestCase):
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['aim_settings_and_presets']=False;self.save()
   with self.assertRaisesRegex(ValueError,'aim controls.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_stable_far_prediction_requires_both_native_browsers(self):
+  self.contract['features']=['restored-stable-far-prediction']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'stable_far_prediction':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['stable_far_prediction']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'Stable far.*firefox'):p.artifacts(self.root,self.out)

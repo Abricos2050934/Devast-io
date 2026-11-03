@@ -1,0 +1,222 @@
+{
+  "schema": 1,
+  "reason": "User reports worse long-range aim with both AK-47 and laser SMG after 6cbd09d",
+  "release": "a2828802b847de7e46fd4cb5da71fffbf299f6e5aee10bc20ab22119689fc286",
+  "output_sha256": "0383e14e311cbe3b6d546b46d9ccdc7d6a8712b62aa2315a98ff91e61eb12aed",
+  "module_sha256": {
+    "mod/responsive.js": "bcd2c7ac817de20c85939ae36ead5a54d69d03c8a707aef04ba516e9443214db",
+    "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
+    "mod/ilm-aim.js": "5fe24264cc3dd4e808e7fc934fa694a021b89b9d00374ae941a49ce79de04d7a",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 170,
+    "python_tests": 42
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/adaptive-aim.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/aim-presets.test.cjs",
+      "tests/far-aim-regression.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "output_sha256": "0383e14e311cbe3b6d546b46d9ccdc7d6a8712b62aa2315a98ff91e61eb12aed",
+      "browser_version": "154.0.8037.57",
+      "native": {
+        "menu": true,
+        "aim_settings_and_presets": true,
+        "stable_far_prediction": true,
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "output_sha256": "0383e14e311cbe3b6d546b46d9ccdc7d6a8712b62aa2315a98ff91e61eb12aed",
+      "browser_version": "153.0",
+      "native": {
+        "menu": true,
+        "aim_settings_and_presets": true,
+        "stable_far_prediction": true,
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    }
+  },
+  "restored_prediction": {
+    "reference_commit": "675ef29",
+    "reference_file": "recovery/aim-prediction-before-tuning.json",
+    "reference_sha256": "67c51296cc3bc332863aecb5d79c06ac93ca38ac69305783c36f965edcc765b7",
+    "far_scenes_with_exact_angle_and_line_parity": 512,
+    "settings": {
+      "ImprovedAimEnabled": true,
+      "distanceCoefficient": 300,
+      "bulletSpeedCoefficient": 4,
+      "offsetCoefficient": 0.1,
+      "resolverType": "smoothed"
+    },
+    "native_weapon_speeds": {
+      "ak47": 1.4,
+      "laser": 1.45
+    },
+    "independent_native_check": "800 world-unit range, uneven packet arrivals, both far buttons with equipped native weapon metadata"
+  },
+  "saved_settings_repair": {
+    "once": true,
+    "profiles": "Only the exact previous far presets and the former baseline linear predictor",
+    "backup_key": "DevastILM:settings:v3:far-aim-before-v1",
+    "custom_coefficients": "preserved"
+  },
+  "limits": [
+    "Restores the pre-tuning predictor; does not establish improved live-server accuracy.",
+    "The prior calibration model did not generalize to the user reported long-range play.",
+    "No live-server hit-rate measurement was performed."
+  ]
+}

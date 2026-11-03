@@ -10,7 +10,7 @@ function setup(){
  f.mod.targets.mouseMapCords={x:1500,y:1090};
  return {f,self};
 }
-test('all four preset buttons apply and persist the calibrated values without sending commands or changing other features',()=>{
+test('all four preset buttons persist their values, including restored stable far profiles, without sending commands or changing other features',()=>{
  const {f}=setup();try{
   f.mod.setSetting('zoomFactor',.8);f.mod.setSetting('RightClickDoors',true);f.mod.setSetting('autoFire',true);
   const folder=menu(f).__folders['Aim Bot'].__folders['Weapon presets'];
@@ -19,7 +19,8 @@ test('all four preset buttons apply and persist the calibrated values without se
   for(const key of Object.keys(report.groups)){
    const c=control(folder,key);c.object[key]();
    const saved=JSON.parse(f.storage.get('DevastILM:settings:v3'));
-   for(const name of ['distanceCoefficient','bulletSpeedCoefficient','offsetCoefficient','resolverType'])assert.equal(saved[name],report.groups[key].settings[name]);
+   const expected=key.endsWith('_far')?{distanceCoefficient:300,bulletSpeedCoefficient:4,offsetCoefficient:.1,resolverType:'smoothed'}:report.groups[key].settings;
+   for(const name of ['distanceCoefficient','bulletSpeedCoefficient','offsetCoefficient','resolverType'])assert.equal(saved[name],expected[name]);
    assert.equal(saved.ImprovedAimEnabled,true);assert.equal(saved.mouseFovEnable,true);assert.equal(saved.mouseFov,key.endsWith('close')?250:450);
    assert.equal(saved.zoomFactor,.8);assert.equal(saved.RightClickDoors,true);assert.equal(saved.autoFire,true);
   }
