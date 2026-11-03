@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "2d4e3433df6532205fb9d74b13d7879f4a4ac570953bcaa4ad757ba01f5c1db7",
+  "output_sha256": "8580069487bed0965bdbc18bcc03c0634ad97e2b8ffcf1d7904c2b76571a4bd9",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -40,7 +40,8 @@
       "received-mines-and-wires-visibility",
       "right-click-hovered-door",
       "right-click-door-independent-of-native-prompt",
-      "independent-door-control-and-server-state-feedback"
+      "independent-door-control-and-server-state-feedback",
+      "automation-socket-backpressure"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -57,7 +58,8 @@
       "tests/player-labels.test.cjs",
       "tests/adaptive-aim.test.cjs",
       "tests/world-visuals.test.cjs",
-      "tests/door-click.test.cjs"
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -65,16 +67,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "ff022ee406e6515cee5297232d170680559d1967f78c5d92d785ac0ffe85671d",
+    "mod/responsive.js": "228ec98d9cf0de2f1afc710f5b2c9beffd2bc25d70eff7ac00d749bb87f2670f",
     "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
     "mod/ilm-aim.js": "f7d97d6bfbbba505656b24908f41a4e258aa9a0fa22904b22555503b535dfd47",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "8a94dd227a8a3849b3b0c2a403e295e5aeeebefae1ff342cf17fb6c0aeddac0f",
+  "mod_bundle_sha256": "b1d758ce8b0d6eb9d8e7146a2654164cb1113a8239184404821bffa4f64ea3e8",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -108,6 +110,7 @@
   "resource_override_loader": "passed",
   "native": {
     "menu": true,
+    "automation_socket_backpressure": true,
     "right_click_hovered_door": true,
     "right_click_without_native_prompt": true,
     "right_click_real_mouse": true,
@@ -148,14 +151,15 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-03T14:06:28.943Z",
+  "finished_at": "2026-11-03T16:51:23.595Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "2d4e3433df6532205fb9d74b13d7879f4a4ac570953bcaa4ad757ba01f5c1db7",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "8580069487bed0965bdbc18bcc03c0634ad97e2b8ffcf1d7904c2b76571a4bd9",
+      "browser_version": "154.0.8037.57",
       "native": {
         "menu": true,
+        "automation_socket_backpressure": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
         "right_click_real_mouse": true,
@@ -226,10 +230,11 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "2d4e3433df6532205fb9d74b13d7879f4a4ac570953bcaa4ad757ba01f5c1db7",
+      "output_sha256": "8580069487bed0965bdbc18bcc03c0634ad97e2b8ffcf1d7904c2b76571a4bd9",
       "browser_version": "153.0",
       "native": {
         "menu": true,
+        "automation_socket_backpressure": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
         "right_click_real_mouse": true,
@@ -312,13 +317,14 @@
       "tests/player-labels.test.cjs",
       "tests/adaptive-aim.test.cjs",
       "tests/world-visuals.test.cjs",
-      "tests/door-click.test.cjs"
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 159,
-    "python_tests": 39
+    "node_tests": 162,
+    "python_tests": 40
   }
 }
