@@ -11,6 +11,8 @@ const output=read('game.modded.js'),profile=json('profile.json'),symbols=json('b
 const contract=JSON.parse(fs.readFileSync(path.join(root,'mod/contract.json')));
 const moduleHashes=Object.fromEntries(contract.modules.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]));
 const tree=acorn.parse(output,{ecmaVersion:'latest'}),body=tree.body[0]?.expression?.callee?.body?.body;
+assert.equal(profile.operations.filter(op=>op.id.startsWith('native-integrity-signature-')).length,3,'All three native signature compatibility operations are required');
+assert.equal(roles.nativeIntegritySigners?.length,3,'Three reviewed native signers required');
 assert.ok(body,'Full native client IIFE required');
 for(const name of ['__installDevastMod','__createIlmAim'])assert.equal(body.filter(n=>n.id?.name===name).length,1);
 const installer=body.find(n=>n.id?.name==='__installDevastMod');
@@ -26,7 +28,7 @@ function normalize(value){if(Array.isArray(value))return value.map(normalize);if
 const canonical=acorn.parse(fs.readFileSync(path.join(root,'mod/ilm-aim.js'),'utf8'),{ecmaVersion:'latest'}).body.find(n=>n.id?.name==='__createIlmAim');
 assert.deepEqual(normalize(body.find(n=>n.id?.name==='__createIlmAim')),normalize(canonical),'ILM algorithm changed');
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
-assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id),'Every reviewed native patch is required');
+assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2']),'Every reviewed native patch is required');
 const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave'};
 const edits=[],placements=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;
  if(n.type==='ArrayExpression'&&n.elements[0]?.value===14&&n.elements.length===4&&n.elements[1]?.object?.type==='MemberExpression')placements.push(n);
@@ -41,6 +43,7 @@ assert.equal(edits.length,Object.keys(functions).length,'Unique browser fixture 
 assert.equal(placements.length,1,'One native cursor placement expression required');
 const end=tree.body[0].expression.callee.body.end-1;
 edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},types:${symbols['εᚇ๓']},nativePlacement:()=>${output.slice(placements[0].start,placements[0].end)},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
+edits.push({at:tree.body[0].expression.callee.body.end-1,text:`window.__updateIntegrityProbe={read:()=>${roles.nativeIntegrityFlag},set:value=>${roles.nativeIntegrityFlag}=value,signers:[${roles.nativeIntegritySigners.join(',')}]};`});
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
 (async()=>{
  const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',ilm_core:'identical',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
@@ -223,6 +226,15 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     window.Widget.play();check(resumed===1,'Late SDK callback duplicated login');
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Gateway recovery changed identity');
    }finally{nativeMenu[s['ϲ१༧']]=waiting;window.Widget=widget;}
+   const uiKey=s.nativeHomeEnter,nativeUi=nativeMenu[uiKey];let uiReturns=0;
+   try{
+    check(typeof nativeUi==='function','Native home activation method is unavailable');
+    nativeMenu[uiKey]=()=>uiReturns++;
+    const now=performance.now();n.network.state=0;check(m.beginPlay(),'Play preparation could not start');
+    n.network[s['ϲІ̗']]=true;m.step(now+12001);
+    check(uiReturns===1&&n.network.state===0&&!n.network[s['ϲІ̗']],'Timed out preparation left the native loading screen active');
+    check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Returning from loading changed identity');
+   }finally{nativeMenu[uiKey]=nativeUi;}
    const deathKey=s['ι︃２'],nativeDeath=n.network[deathKey],health=w[s['ᴘρࡀ']][s['ᴇ༤ᚆ']].value;let deathCalls=0;
    try{
     n.network[deathKey]=code=>{check(code===128,'Native death error code changed');deathCalls++;};n.death(new Uint8Array([5,0,2]));
@@ -235,10 +247,23 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(n.network.state===0&&m.connectionInfo().phase==='dead','Closed socket revived restore mode after death');
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Death recovery changed stored identity');
    }finally{n.network[deathKey]=nativeDeath;}
+   const integrity=window.__updateIntegrityProbe,networkSnapshot={...n.network},savedIntegrity=integrity.read();
+   function restoreIntegrityNetwork(){for(const key of Object.keys(n.network))if(!Object.hasOwn(networkSnapshot,key))delete n.network[key];Object.assign(n.network,networkSnapshot);}
+   try{
+    for(const signer of integrity.signers){
+     const values=[];
+     for(const flag of [0,1]){
+      restoreIntegrityNetwork();integrity.set(flag);signer('integrity-fixture');
+      values.push(JSON.stringify(Object.fromEntries(Object.entries(n.network).filter(([,value])=>['number','boolean','string'].includes(typeof value)))));
+     }
+     check(values[0]===values[1],'Integrity flag still changes a native signature');
+    }
+   }finally{restoreIntegrityNetwork();integrity.set(savedIntegrity);}
+   check(m.connectionInfo().integrityCompatibility===true,'Automatic build omitted native signature compatibility');
    check(!m.diagnostics.errors.length,'Mod reported errors');
    return {menu:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
-  assert.equal(report.page_errors.length,0,'Browser page errors');report.status='passed';
+  assert.equal(report.page_errors.length,0,'Browser page errors');report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}
  finally{report.finished_at=new Date().toISOString();fs.writeFileSync(path.join(dir,'validation.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));if(browser)await browser.close();}
 })().catch(error=>{console.error(error.message);process.exitCode=1;});

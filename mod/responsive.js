@@ -849,6 +849,7 @@ function __installDevastMod(B) {
   function connectionEvent(type, details = {}) {
     const health = B.health?.();
     connectionEvents.push({type,at:Math.round(performance.now()),state:B.network.state,
+      integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,
       aim:MOD.AimBotEnabled,autoFire:MOD.autoFire,
       health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details});
     if (connectionEvents.length > 12) connectionEvents.shift();
@@ -1479,7 +1480,8 @@ function __installDevastMod(B) {
     lastFailureCode: 0,
     gatewayRecoveries: 0,
     sessionEnded:false,
-    awaitingPlay:false
+    awaitingPlay:false,
+    initialHomeRecoveries:0
   };
   let connectionSocket = null, adGate = null, removeSocketObservers = () => {};
   const widgetWrappers = new Map();
@@ -1502,7 +1504,8 @@ function __installDevastMod(B) {
     for (const key of ['token','tokenId','userId','accountToken']) {
       try { stored[key] = !!localStorage.getItem(key); } catch (_) { stored[key] = null; }
     }
-    return {schema:2,recoveryVersion:4,state:B.network.state,phase:reconnect.phase,
+    return {schema:2,recoveryVersion:5,auditBuild:'integrity-autoupdate-v1',integrityCompatibility:B.integrityPatched?.()===true,
+      integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,state:B.network.state,phase:reconnect.phase,
       sessionEnded:reconnect.sessionEnded,awaitingPlay:reconnect.awaitingPlay,normalJoinRequired:reconnect.freshRequired,
       nativeReady:typeof B.network[B.loginKey] === 'function',
       nativePending:B.pendingKey ? !!B.network[B.pendingKey] : false,
@@ -1514,11 +1517,38 @@ function __installDevastMod(B) {
       automationSettings:{autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled},
       jitterTransport:{deferredDirections:jitter.deferredDirections,rateLimitHz:20},
       aimSettings:{enabled:MOD.AimBotEnabled,autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
-      lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,
+      lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,commandsInLast2s:{...event.commandsInLast2s}}))};
   }
   function releaseNativePending() {
     if (B.pendingKey) B.network[B.pendingKey] = false;
+  }
+  function finishStalledEntry(stage) {
+    // Releasing the busy flag alone leaves the native connecting screen active.
+    // Invalidate outstanding callbacks before returning through the game's UI.
+    reconnect.generation++;
+    reconnect.pending=false;
+    reconnect.phase='idle';
+    reconnect.next=0;
+    reconnect.armed=false;
+    reconnect.autoBlocked=true;
+    releaseNativePending();
+    B.network.state=0;
+    connectionEvent('entry-timeout',{stage});
+    if (typeof B.returnToMenu === 'function') {
+      try { B.returnToMenu(); } catch (error) { report(error); }
+    }
+    reconnect.status='Сервис входа не ответил; выберите сервер и повторите Play';
+  }
+  let initialHomeWaitAt=null,initialHomeSeen=false;
+  function watchInitialHome(now) {
+    if (initialHomeSeen || typeof B.homeControlsVisible!=='function') return;
+    if (B.network.state===1 || B.homeControlsVisible()) {initialHomeSeen=true;return;}
+    if (initialHomeWaitAt===null || document.hidden) initialHomeWaitAt=now;
+    if (now-initialHomeWaitAt<20000 || document.hidden || reconnect.pending || B.adWaiting?.() || B.network.state!==0 || !B.canShowHome?.()) return;
+    initialHomeSeen=true;
+    reconnect.initialHomeRecoveries++;
+    finishStalledEntry('startup');
   }
   function beginPlay() {
     if (stopped) return true;
@@ -1704,6 +1734,7 @@ function __installDevastMod(B) {
     const n = B.network;
     watchConnectionHandlers();
     watchLoginGateway(now);
+    watchInitialHome(now);
     if (reconnect.awaitingPlay) {
       reconnect.pending=false;
       reconnect.phase='dead';
@@ -1752,20 +1783,12 @@ function __installDevastMod(B) {
     if (reconnect.pending && reconnect.phase === 'preparing' && n.state === 0) {
       if (document.hidden) reconnect.deadline=now+12000;
       else if (now>=reconnect.deadline) {
-        reconnect.pending=false;
-        reconnect.phase='idle';
-        reconnect.generation++;
-        releaseNativePending();
-        connectionEvent('play-preparation-timeout');
-        reconnect.status='Подготовка игры зависла; нажмите Play ещё раз без очистки cookies';
+        finishStalledEntry('preparing');
       }
     }
-    if (reconnect.pending && reconnect.phase === 'joining' && now >= reconnect.deadline && n.state === 0) {
-      reconnect.pending = false;
-      reconnect.phase = 'idle';
-      reconnect.generation++;
-      releaseNativePending();
-      reconnect.status = 'Вход не завершился; повторите Play без сброса cookies';
+    if (reconnect.pending && reconnect.phase === 'joining' && (n.state === 0 || n.state === 64 && !connectionSocket && !reconnect.sessionEnded)) {
+      if (document.hidden) reconnect.deadline=now+12000;
+      else if (now >= reconnect.deadline) finishStalledEntry('joining');
     }
     if (n.state === 256 && !reconnect.freshRequired && !reconnect.autoBlocked) markRestoreFailure();
     if ((n.state & (8|16|512|1024)) !== 0) {
@@ -1786,7 +1809,7 @@ function __installDevastMod(B) {
       return;
     }
     if (reconnect.attempts >= 3 && (reconnect.sessionEnded || !reconnect.freshRequired)) {
-      reconnect.status = 'Connection failed after ' + reconnect.attempts + ' retries';
+      finishStalledEntry('retries');
       return;
     }
     if (!reconnect.next) {

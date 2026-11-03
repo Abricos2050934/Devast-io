@@ -18,7 +18,8 @@ function assemble(baseline, profile, symbols, payload, bootstrap, gui, aim = '')
   const additions = gui+'\n'+aim+'\n'+translate(payload,symbols)+'\n'+translate(bootstrap,symbols)+'\n';
   source = once(source,profile.bootstrap_anchor,additions+profile.bootstrap_anchor,'bootstrap');
   source = once(source,profile.guard_anchor,profile.guard_anchor+
-    'if(window.__devastClientLoaded)return;window.__devastClientLoaded=true;', 'double-load guard');
+    'if(window.__devastClientLoaded)return;window.__devastClientLoaded=true;var __devastIntegrityCompatibility='+
+    (profile.operations.filter(op=>op.id.startsWith('native-integrity-signature-')).length===3)+';', 'double-load guard');
   acorn.parse(source,{ecmaVersion:'latest',sourceType:'script'});
   return source;
 }

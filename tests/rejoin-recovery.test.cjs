@@ -66,6 +66,48 @@ test('a stalled preflight releases the native busy flag and ignores its late res
  assert.equal(attempts,2);callbacks[0]();assert.equal(started,0);callbacks[1]();assert.equal(started,1);
  assert.deepEqual(identity(f),account);f.mod.dispose();
 });
+test('a timed out Webgames preflight returns to native Play once and keeps saved identity',()=>{
+ for(const state of [0,64]){
+  const f=fixture({saved:account});f.network.state=0;f.B.loginKey='login';f.B.pendingKey='busy';
+  let menus=0,starts=0;const callbacks=[];
+  f.B.returnToMenu=()=>menus++;
+  f.network.login=()=>{f.network.busy=true;callbacks.push(f.mod.guardHandshakeCallback('/native-token',()=>starts++));};
+  f.setClock(0);f.mod.step(0);f.network.login();f.network.state=state;
+  f.mod.step(11999);assert.equal(menus,0);
+  f.setClock(12001);f.mod.step(12001);
+  assert.equal(menus,1);assert.equal(f.network.state,0);assert.equal(f.network.busy,false);
+  assert.equal(f.mod.connectionInfo().events.at(-1).type,'entry-timeout');
+  callbacks[0]();assert.equal(starts,0);
+  f.mod.step(24000);assert.equal(menus,1);
+  f.setClock(24000);assert.equal(f.mod.beginPlay(),true);f.network.login();callbacks[1]();assert.equal(starts,1);
+  assert.deepEqual(identity(f),account);f.mod.dispose();
+ }
+});
+test('hidden tabs keep their pending preflight instead of returning to the menu',()=>{
+ const f=fixture({saved:account});f.network.state=0;f.B.loginKey='login';f.B.pendingKey='busy';
+ let menus=0;f.B.returnToMenu=()=>menus++;f.network.login=()=>{f.network.busy=true;};
+ f.setClock(0);f.mod.step(0);f.network.login();f.document.hidden=true;
+ f.mod.step(30000);assert.equal(menus,0);assert.equal(f.network.busy,true);
+ f.document.hidden=false;f.mod.step(30001);assert.equal(menus,0);
+ f.mod.step(42001);assert.equal(menus,1);assert.deepEqual(identity(f),account);f.mod.dispose();
+});
+test('a stalled initial service screen opens native Play once only after servers are available',()=>{
+ const f=fixture({saved:account});f.network.state=0;let menus=0,serversReady=false;
+ f.B.homeControlsVisible=()=>false;f.B.canShowHome=()=>serversReady;f.B.returnToMenu=()=>menus++;
+ f.mod.step(0);f.mod.step(25000);assert.equal(menus,0);
+ serversReady=true;f.mod.step(25001);assert.equal(menus,1);
+ assert.equal(f.mod.reconnect.initialHomeRecoveries,1);assert.equal(f.mod.connectionInfo().events.at(-1).stage,'startup');
+ f.mod.step(50000);assert.equal(menus,1);assert.deepEqual(identity(f),account);f.mod.dispose();
+});
+test('initial recovery leaves a visible menu and a hidden browser tab alone',()=>{
+ for(const visible of [false,true]){
+  const f=fixture({saved:account});f.network.state=0;let menus=0;
+  f.B.homeControlsVisible=()=>visible;f.B.canShowHome=()=>true;f.B.returnToMenu=()=>menus++;
+  f.document.hidden=true;f.mod.step(0);f.mod.step(30000);assert.equal(menus,0);
+  f.document.hidden=false;f.mod.step(30001);assert.equal(menus,0);
+  f.mod.step(50001);assert.equal(menus,visible?0:1);assert.deepEqual(identity(f),account);f.mod.dispose();
+ }
+});
 test('an immediate native login exception does not leave Play locked',()=>{
  const f=fixture({saved:account});f.network.state=0;f.B.loginKey='login';f.B.pendingKey='busy';let attempts=0;
  f.network.login=()=>{f.network.busy=true;attempts++;throw Error('Request could not start');};f.mod.step(0);

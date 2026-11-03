@@ -26,6 +26,8 @@ def artifacts(root, output):
         raise ValueError('Release checksum mismatch')
     if validation.get('status') != 'passed' or validation.get('regression', {}).get('status') != 'passed' or validation.get('candidate_function_tests', {}).get('status') != 'passed':
         raise ValueError('Full current-mod checks have not passed')
+    if validation.get('integrity_compatibility') != {'status': 'passed', 'predicates': 3}:
+        raise ValueError('Native integrity compatibility checks have not passed')
     contract = read_json(root / 'mod/contract.json')
     if validation.get('mod_contract') != contract:
         raise ValueError('Verified release belongs to another feature contract')
@@ -35,6 +37,8 @@ def artifacts(root, output):
         report = validation.get('browsers', {}).get(browser, {})
         if report.get('status') != 'passed' or report.get('output_sha256') != meta['output_sha256']:
             raise ValueError('Required browser validation missing or stale: ' + browser)
+        if report.get('integrity_compatibility') != {'status': 'passed', 'predicates': 3}:
+            raise ValueError('Native integrity compatibility was not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'

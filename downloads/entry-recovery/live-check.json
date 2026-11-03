@@ -1,0 +1,80 @@
+{
+  "mode": "saved real-site HTML; real widget, images, token service and game server; fresh guest context",
+  "liveJoin": false,
+  "rejoin": false,
+  "errors": [
+    "Widget is not defined",
+    "Unable to decode audio data",
+    "Unable to decode audio data",
+    "Unable to decode audio data",
+    "Unable to decode audio data",
+    "Unable to decode audio data",
+    "Unable to decode audio data",
+    "Unable to decode audio data"
+  ],
+  "samples": [],
+  "startedAt": "2026-11-03T07:03:49.685Z",
+  "result": "not_fully_verified",
+  "reason": "page.waitForFunction: Timeout 30000ms exceeded.",
+  "last": {
+    "auditBuild": "integrity-entry-v3",
+    "integrityFlag": 0,
+    "schema": 2,
+    "recoveryVersion": 5,
+    "state": 0,
+    "phase": "idle",
+    "sessionEnded": false,
+    "awaitingPlay": false,
+    "normalJoinRequired": false,
+    "nativeReady": true,
+    "nativePending": false,
+    "adWaiting": false,
+    "socketState": null,
+    "socketBufferedBytes": null,
+    "combatNow": {
+      "angle": 0,
+      "attack": 0,
+      "release": 0
+    },
+    "animationTiming": {
+      "samples": 120,
+      "meanGapMs": 16.67,
+      "p95GapMs": 16.7,
+      "fpsEstimate": 60,
+      "hidden": false
+    },
+    "modCommandsByOpcode": {},
+    "automationSettings": {
+      "autoBuild": false,
+      "fastLoot": false,
+      "slowLoot": false,
+      "autoTake": false,
+      "spamChat": false
+    },
+    "jitterTransport": {
+      "deferredDirections": 0,
+      "rateLimitHz": 20
+    },
+    "aimSettings": {
+      "enabled": false,
+      "autoFire": false,
+      "jitter": false,
+      "target": "players",
+      "lockId": -1,
+      "distanceCoefficient": 300,
+      "offsetCoefficient": 0.1
+    },
+    "lastFailureCode": 0,
+    "gatewayRecoveries": 0,
+    "initialHomeRecoveries": 0,
+    "stored": {
+      "token": true,
+      "tokenId": false,
+      "userId": false,
+      "accountToken": false
+    },
+    "modErrorCount": 0,
+    "events": []
+  },
+  "finishedAt": "2026-11-03T07:04:23.470Z"
+}

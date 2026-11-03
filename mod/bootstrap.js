@@ -9,8 +9,18 @@ var __responsiveMod = __installDevastMod({
   preflightKey:'εܖᴏ',
   errorKey:'ι︃２',
   pendingKey:'ϲІ̗',
+  integrity:()=>nativeIntegrityFlag,
+  integrityPatched:()=>__devastIntegrityCompatibility,
   health:()=>еܞ︌.ᴘρࡀ?.ᴇ༤ᚆ?.value,
   adWaiting:()=>typeof ɑᚆᴏ !== 'undefined' && !!(ɑᚆᴏ && ɑᚆᴏ.ϲ१༧ === 1),
+  returnToMenu:()=>{
+    if(typeof ɑᚆᴏ.nativeHomeEnter === 'function') ɑᚆᴏ.nativeHomeEnter();
+  },
+  homeControlsVisible:()=>{
+    const input=document.getElementById('nicknameInput');
+    return !!(input&&input.getClientRects().length);
+  },
+  canShowHome:()=>typeof ɑᚆᴏ.nativeHomeEnter === 'function'&&Array.isArray(о̃༩.ոߒ४)&&о̃༩.ոߒ४.length>0,
   reconnect:()=>{
     if(typeof о̃༩.ᅠϲ᠍ !== 'function') throw new Error('Game login is not ready');
     о̃༩.ᅠϲ᠍();

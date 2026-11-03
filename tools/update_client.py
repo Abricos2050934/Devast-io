@@ -185,10 +185,12 @@ def pipeline(root, work, url):
         if (report.get('status') != 'passed' or report.get('browser') != browser or
                 report.get('output_sha256') != digest((work / 'game.modded.js').read_bytes())):
             raise UpdateError('Browser validation does not match candidate: ' + browser)
+        if report.get('integrity_compatibility') != {'status': 'passed', 'predicates': 3}:
+            raise UpdateError('Three native signature checks are required in browser: ' + browser)
         atomic_json(work / ('validation-' + browser + '.json'), report)
         if validation is None:
             validation = dict(report)
-        browsers[browser] = {key: report.get(key) for key in ('status', 'output_sha256', 'browser_version', 'native', 'page_errors', 'reload_identity')}
+        browsers[browser] = {key: report.get(key) for key in ('status', 'output_sha256', 'browser_version', 'native', 'page_errors', 'reload_identity', 'integrity_compatibility')}
     validation['browsers'] = browsers
     candidate_env = dict(os.environ, DEVAST_TEST_CANDIDATE=str(work))
     run(['node', '--test', *contract['candidate_tests']], root, work / 'candidate-tests.log', env=candidate_env)

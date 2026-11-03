@@ -2,6 +2,7 @@
 const fs=require('node:fs'),path=require('node:path'),zlib=require('node:zlib'),acorn=require('./parser.cjs');
 const {analyze,canonical,isFunction,obfuscated,hash}=require('./updater/static.cjs');
 const {deobfuscate}=require('./updater/decoder.cjs');
+const {integrityOperations}=require('./updater/integrity.cjs');
 const {translate}=require('./translate_payload.cjs'),{assemble}=require('./build_client.cjs');
 const root=path.resolve(__dirname,'..');
 function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
@@ -93,8 +94,23 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const patchAnchors=ops.map(op=>({op,match:anchor(op.before,op.id)}));
  const boot=anchor(profile.bootstrap_anchor,'bootstrap');
  const map=globalMap();
+ const integrity=integrityOperations(old,cur,pairs);
  const outputBindings={schema:'automatic-port-v1',symbols:{},evidence:{}};
- for(const key of canonicalRequired){const previous=bindings.symbols[key],next=map[previous]??(!obfuscated(previous)?previous:undefined);
+ // The home activation method shares its obfuscated spelling with many local
+ // functions. Resolve the exported method in the home object namespace.
+ const homeName=bindings.symbols['ɑᚆᴏ'];
+ const homeScope=rootBody?.flatMap(n=>n.declarations||[]).find(d=>d.id.name===homeName)?.init?.callee;
+ const nextHomeScope=nextRoot?.flatMap(n=>n.declarations||[]).find(d=>d.id.name===map[homeName])?.init?.callee;
+ const homeReturn=homeScope?.body?.body.filter(n=>n.type==='ReturnStatement').at(-1)?.argument;
+ const nextHomeReturn=nextHomeScope?.body?.body.filter(n=>n.type==='ReturnStatement').at(-1)?.argument;
+ const homeProperties=new Map();
+ if(homeReturn?.type==='ObjectExpression'&&nextHomeReturn?.type==='ObjectExpression'&&canonical(old,homeReturn).hash===canonical(cur,nextHomeReturn).hash) {
+  for(let i=0;i<homeReturn.properties.length;i++) {
+   const left=homeReturn.properties[i],right=nextHomeReturn.properties[i];
+   homeProperties.set(prop(old,left),prop(cur,right));
+  }
+ }
+ for(const key of canonicalRequired){const previous=bindings.symbols[key],next=(key==='nativeIntegrityFlag'?integrity.flag:key==='nativeHomeEnter'?homeProperties.get(previous):map[previous])??(!obfuscated(previous)?previous:undefined);
   if(!next)throw Error('Missing or ambiguous required native binding: '+key+' ('+previous+')');outputBindings.symbols[key]=next;outputBindings.evidence[key]='unique normalized native function correspondence';
  }
  // Every fragment is a reviewed patch. Materialize only immutable literal aliases.
@@ -108,7 +124,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
    }else if(tok.type.label==='string'&&Object.hasOwn(map,tok.value))edits.push({start:tok.start,end:tok.end,text:JSON.stringify(map[tok.value])});
   }for(const e of edits.reverse())text=text.slice(0,e.start)+e.text+text.slice(e.end);return text;
  }
- const operations=patchAnchors.map(({op,match})=>({id:op.id,expected:1,before:cur.source.slice(match.current.start,match.current.end),after:nativeFragment(op.after,match.local)}));
+ const operations=patchAnchors.map(({op,match})=>({id:op.id,expected:1,before:cur.source.slice(match.current.start,match.current.end),after:nativeFragment(op.after,match.local)})).concat(integrity.operations);
  const fn=cur.tree.body[0]?.expression?.callee;
  if(!fn||fn.type!=='FunctionExpression'||cur.tree.body.length!==1||!fn.body.body.length)throw Error('Unsupported native bootstrap shape');
  const generated={schema:'automatic-port-v1',source_url:profile.source_url,baseline_sha256:hash(cur.source),operations,
@@ -126,9 +142,9 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  if(fireHelper&&fireRule) adaptedAim=adaptedAim.slice(0,fireHelper.start)+`function __jitterPatchNativeFire(source){const before=${JSON.stringify(fireRule.before)};if(source.split(before).length!==2)throw Error('Unsupported native fire handler');return source.replace(before,${JSON.stringify(fireRule.after)});}`+adaptedAim.slice(fireHelper.end);
  const output=assemble(Buffer.from(cur.source),generated,outputBindings.symbols,payload,bootstrap,gui,adaptedAim);
  const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴎܕα','ᴎ༩༣','І̎ܘ','еϲᄄ','ᴎ︅ހ','ѕ٨ᚄ','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠','рܙ๕','ᅟ᠌５'];
- const roles={};for(const key of requiredNative){const next=map[key];if(!next)throw Error('Missing browser validation binding '+key);roles[key]=next;}
+ const roles={nativeIntegrityFlag:integrity.flag,nativeIntegritySigners:integrity.signers};for(const key of requiredNative){const next=map[key];if(!next)throw Error('Missing browser validation binding '+key);roles[key]=next;}
  return {source:cur.source,output,profile:generated,bindings:outputBindings,aim:adaptedAim,roles,
-  report:{raw_sha256:hash(candidate),reference_sha256:hash(reference),deobfuscated_sha256:hash(cur.source),output_sha256:hash(output),matched_functions:pairs.size,native_network_contracts:nativeContracts,required_bindings:canonicalRequired.size,patches:operations.map(x=>x.id),decoder_blocks:decodedNew.evidence,live_server:'not_tested'}};
+  report:{raw_sha256:hash(candidate),reference_sha256:hash(reference),deobfuscated_sha256:hash(cur.source),output_sha256:hash(output),matched_functions:pairs.size,native_network_contracts:nativeContracts,required_bindings:canonicalRequired.size,patches:operations.map(x=>x.id),integrity_compatibility:{status:'applied',predicates:integrity.operations.length},decoder_blocks:decodedNew.evidence,live_server:'not_tested'}};
 }
 if(require.main===module){
  try{

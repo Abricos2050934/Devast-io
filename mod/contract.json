@@ -27,7 +27,8 @@
     "jitter-with-shot-priority",
     "timestamped-weapon-interception",
     "cursor-autobuild-native-preview",
-    "native-shared-canvas"
+    "native-shared-canvas",
+    "native-integrity-signature-compatibility"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
