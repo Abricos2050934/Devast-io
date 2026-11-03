@@ -159,6 +159,8 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
      check(JSON.stringify(transport.packets)==='[[4]]'&&JSON.stringify(m.targets.lines[0])===before,'Manual fire inserted a calculation outside the ILM timer');
     }
     // Jitter owns the idle angle, but a real native shot must encode aim first.
+    // The preceding non-Jitter shots now also start the 150 ms fire pause.
+    await new Promise(resolve=>setTimeout(resolve,160));
     n.input.angle=0;m.setSetting('JitterEnabled',true);m.setSetting('JitterSpeed',360);
     const nativeInput={angle:n.input.angle,x:n.input.x,y:n.input.y,state:n.input.state};
     const jitterNow=performance.now();m.step(jitterNow);m.step(jitterNow+250);m.aim.refresh();
@@ -247,6 +249,23 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
       const expected=Math.atan2(dy+vy*flight,800)*180/Math.PI,before=transport.packets.length;m.aim.refresh();
       check(transport.packets.length===before+1&&transport.packets.at(-1)[1]===Math.round(expected),'Far prediction differs from previous stable pooled intercept');
       check(Math.abs(m.targets.lines[0].y2-(1000+dy+vy*flight))<1e-7,'Far prediction line lost pooled velocity');
+     }
+     for(const speed of [1.4,1.45]){
+      e[s['Іࡈ５']]=weapons.findIndex(item=>item?.[s.ilmBulletSpeed]===speed);
+      m.setSetting('JitterEnabled',false);m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);
+      control('lockId').setValue(2);control('mouseFovEnable').setValue(false);m.trackPacket(0,2,1,0,0,false);
+      const start=testTime+1000;
+      for(let i=0;i<3;i++){testTime=start+i*100;m.trackPacket(0,1,1,1000,1000,true);m.trackPacket(0,2,1,1500,1000+i*40,true);}
+      testTime+=25;transport.packets.length=0;n.input.angle=-2;
+      n.network[s['ѕ᠋༢']]();n.network[s['ρ٨٨']]();n.network[r['ᴎ༩༣']]();
+      const p=m.targets.lines[0],angle=(Math.round(Math.atan2(p.y2-p.y1,p.x2-p.x1)*180/Math.PI)+360)%360;
+      check(JSON.stringify(transport.packets)===JSON.stringify([[6,angle],[4]]),'First non-Jitter shot used an angle from before the prediction line');
+      const before=JSON.stringify(p);transport.packets.length=0;
+      for(let i=0;i<20;i++){testTime+=5;n.network[r['ᴎ༩༣']]();}
+      check(transport.packets.length===20&&transport.packets.every(p=>p[0]===4)&&JSON.stringify(m.targets.lines[0])===before,'Held non-Jitter fire flooded extra directions');
+      testTime+=200;m.trackPacket(0,2,1,1450,1200,true);transport.packets.length=0;n.network[r['ᴎ༩༣']]();
+      const q=m.targets.lines[0],fresh=(Math.round(Math.atan2(q.y2-q.y1,q.x2-q.x1)*180/Math.PI)+360)%360;
+      check(JSON.stringify(transport.packets)===JSON.stringify([[6,fresh],[4]]),'A fresh burst did not update its direction before attack');
      }
      control('lockId').setValue(2);control('mouseFovEnable').setValue(false);control('AimBotEnabled').setValue(true);m.aim.resolve();
      const stroke=n.ctx.stroke,colors=[];n.ctx.stroke=function(...args){colors.push(this.strokeStyle);return stroke.apply(this,args);};
@@ -364,7 +383,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    }finally{restoreIntegrityNetwork();integrity.set(savedIntegrity);}
    check(m.connectionInfo().integrityCompatibility===true,'Automatic build omitted native signature compatibility');
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,aim_settings_and_presets:true,stable_far_prediction:true,automation_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,aim_settings_and_presets:true,stable_far_prediction:true,manual_shot_aim_line_alignment:true,automation_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

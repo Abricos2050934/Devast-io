@@ -126,3 +126,11 @@ class PublicationTests(unittest.TestCase):
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['stable_far_prediction']=False;self.save()
   with self.assertRaisesRegex(ValueError,'Stable far.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_manual_shot_alignment_requires_both_native_browsers(self):
+  self.contract['features']=['manual-shot-aim-line-alignment']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'manual_shot_aim_line_alignment':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['manual_shot_aim_line_alignment']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'Manual shot.*firefox'):p.artifacts(self.root,self.out)

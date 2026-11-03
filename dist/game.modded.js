@@ -1158,7 +1158,7 @@ function __installDevastMod(B) {
   function playing() {
     return !stopped && B.network.state === 1 && B.world.і३α && B.world.і३α.id > 0;
   }
-  let lastSentAngle = null;
+  let lastSentAngle = null,lastSentPlayer = 0;
   function __send(value, forceAngle = false) {
     if (!playing()) return false;
     const packet = typeof value === 'string' ? JSON.parse(value) : value;
@@ -1166,7 +1166,7 @@ function __installDevastMod(B) {
     if (packet[0] === 6) {
       if (packet.length !== 2) return false;
       packet[1] = (Math.round(packet[1]) % 360 + 360) % 360;
-      if (!forceAngle && packet[1] === lastSentAngle) {
+      if (!forceAngle && packet[1] === lastSentAngle && lastSentPlayer === B.world.і३α.id) {
         diagnostics.deduplicatedAngles++;
         return true;
       }
@@ -1176,7 +1176,7 @@ function __installDevastMod(B) {
       recentCombatCommands.push({at:performance.now(),op:packet[0]});
       if (recentCombatCommands.length > 180) recentCombatCommands.shift();
     }
-    if (packet[0] === 6) lastSentAngle = packet[1];
+    if (packet[0] === 6) {lastSentAngle = packet[1];lastSentPlayer = B.world.і३α.id;}
     diagnostics.commands++;
     diagnostics.commandsByOpcode[packet[0]]=(diagnostics.commandsByOpcode[packet[0]]||0)+1;
     return true;
@@ -1218,20 +1218,21 @@ function __installDevastMod(B) {
   function beforeFire() {
     if (!playing()) return;
     const now=performance.now();
-    if (!MOD.JitterEnabled) return;
+    if (!MOD.JitterEnabled && !MOD.AimBotEnabled) return;
     const continuingBurst=now<jitter.fireUntil && !jitter.spinning;
     jitter.fireUntil = now + 150;
     stopJitter();
     if (MOD.AimBotEnabled) {
-      // Align once when leaving rotation. During held fire, the unchanged ILM
-      // timer owns prediction and direction packets; native attack repeats do not.
-      if (continuingBurst && Aimbot.targetPlayer?.active && Number.isFinite(lastSentAngle)) return;
+      // Align the first native shot even without Jitter: it can occur before
+      // the next 50 ms tick. Held fire keeps using that timer without flooding.
+      if (continuingBurst && Aimbot.targetPlayer?.active && Number.isFinite(lastSentAngle) && lastSentPlayer === B.world.і३α.id) return;
       const angle = Aimbot.resolve();
       if (Aimbot.targetPlayer?.active) {
-        __send([6,angle],true);
+        __send([6,angle]);
         return;
       }
     }
+    if (!MOD.JitterEnabled) return;
     const point = cursorWorld();
     const me = B.world.і३α;
     if (point) __send([6,Math.atan2(point.y-me.y,point.x-me.x)*180/Math.PI],true);
@@ -1250,6 +1251,7 @@ function __installDevastMod(B) {
   function setSetting(key, value) {
     if (stopped) throw new Error('Mod has been disposed');
     validateSetting(key,value);
+    if(key==='AimBotEnabled'&&MOD[key]!==value){lastSentAngle=null;jitter.fireUntil=-Infinity;}
     if (keySettings.includes(key)) {
       const conflict = keySettings.find(other=>other!==key && MOD[other]===value);
       if (conflict) MOD[conflict] = MOD[key];

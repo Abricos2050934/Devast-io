@@ -37,7 +37,8 @@
     "automation-socket-backpressure",
     "functional-aim-settings",
     "ak47-laser-distance-presets",
-    "restored-stable-far-prediction"
+    "restored-stable-far-prediction",
+    "manual-shot-aim-line-alignment"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -57,7 +58,8 @@
     "tests/door-click.test.cjs",
     "tests/automation-transport.test.cjs",
     "tests/aim-presets.test.cjs",
-    "tests/far-aim-regression.test.cjs"
+    "tests/far-aim-regression.test.cjs",
+    "tests/shot-line.test.cjs"
   ],
   "required_browsers": [
     "chromium",

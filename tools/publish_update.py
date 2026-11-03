@@ -53,6 +53,8 @@ def artifacts(root, output):
             raise ValueError('Functional aim controls and weapon presets were not verified in browser: ' + browser)
         if 'restored-stable-far-prediction' in contract.get('features', []) and report.get('native', {}).get('stable_far_prediction') is not True:
             raise ValueError('Stable far prediction was not verified in browser: ' + browser)
+        if 'manual-shot-aim-line-alignment' in contract.get('features', []) and report.get('native', {}).get('manual_shot_aim_line_alignment') is not True:
+            raise ValueError('Manual shot aim-line alignment was not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'
