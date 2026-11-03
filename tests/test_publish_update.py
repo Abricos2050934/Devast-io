@@ -13,6 +13,7 @@ class PublicationTests(unittest.TestCase):
   (self.root/'resource-override').mkdir();(self.root/'resource-override/Devast-io-GitHub-Resource-Override.json').write_bytes((p.ROOT/'resource-override/Devast-io-GitHub-Resource-Override.json').read_bytes())
   self.meta={'release':self.release,'output_sha256':p.digest(self.body)};self.validation={'output_sha256':p.digest(self.body),'status':'passed','regression':{'status':'passed'},'candidate_function_tests':{'status':'passed'},'mod_contract':{'modules':['mod/test.js']},'module_sha256':{'mod/test.js':p.digest(b'current mod')},'mod_bundle_sha256':'bundle','resource_override_sha256':p.digest((self.root/'resource-override/Devast-io-GitHub-Resource-Override.json').read_bytes())};self.save()
  def save(self):
+  self.validation.setdefault('integrity_compatibility', {'status':'passed','predicates':3})
   (self.out/'current.json').write_text(json.dumps(self.meta));(self.d/'validation.json').write_text(json.dumps(self.validation))
  def test_builds_only_verified_current_mod_and_matching_zip(self):
   import io,zipfile
@@ -29,6 +30,9 @@ class PublicationTests(unittest.TestCase):
  def test_candidate_function_failures_cannot_publish(self):
   self.validation['candidate_function_tests']['status']='failed';self.save()
   with self.assertRaisesRegex(ValueError,'checks'):p.artifacts(self.root,self.out)
+ def test_unpatched_integrity_build_cannot_publish(self):
+  self.validation['integrity_compatibility']={'status':'failed','predicates':2};self.save()
+  with self.assertRaisesRegex(ValueError,'integrity compatibility'):p.artifacts(self.root,self.out)
  def test_corrupted_client_cannot_publish(self):
   (self.d/'game.modded.js').write_bytes(b'broken')
   with self.assertRaisesRegex(ValueError,'checksum'):p.artifacts(self.root,self.out)

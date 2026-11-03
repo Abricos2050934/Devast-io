@@ -849,6 +849,7 @@ function __installDevastMod(B) {
   function connectionEvent(type, details = {}) {
     const health = B.health?.();
     connectionEvents.push({type,at:Math.round(performance.now()),state:B.network.state,
+      integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,
       aim:MOD.AimBotEnabled,autoFire:MOD.autoFire,
       health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details});
     if (connectionEvents.length > 12) connectionEvents.shift();
@@ -1503,7 +1504,8 @@ function __installDevastMod(B) {
     for (const key of ['token','tokenId','userId','accountToken']) {
       try { stored[key] = !!localStorage.getItem(key); } catch (_) { stored[key] = null; }
     }
-    return {schema:2,recoveryVersion:5,state:B.network.state,phase:reconnect.phase,
+    return {schema:2,recoveryVersion:5,auditBuild:'integrity-autoupdate-v1',integrityCompatibility:B.integrityPatched?.()===true,
+      integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,state:B.network.state,phase:reconnect.phase,
       sessionEnded:reconnect.sessionEnded,awaitingPlay:reconnect.awaitingPlay,normalJoinRequired:reconnect.freshRequired,
       nativeReady:typeof B.network[B.loginKey] === 'function',
       nativePending:B.pendingKey ? !!B.network[B.pendingKey] : false,

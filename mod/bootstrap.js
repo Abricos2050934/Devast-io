@@ -9,6 +9,8 @@ var __responsiveMod = __installDevastMod({
   preflightKey:'εܖᴏ',
   errorKey:'ι︃２',
   pendingKey:'ϲІ̗',
+  integrity:()=>nativeIntegrityFlag,
+  integrityPatched:()=>__devastIntegrityCompatibility,
   health:()=>еܞ︌.ᴘρࡀ?.ᴇ༤ᚆ?.value,
   adWaiting:()=>typeof ɑᚆᴏ !== 'undefined' && !!(ɑᚆᴏ && ɑᚆᴏ.ϲ१༧ === 1),
   returnToMenu:()=>{

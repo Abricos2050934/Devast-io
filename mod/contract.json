@@ -25,7 +25,8 @@
     "mines-and-building-opacity",
     "function-indicators",
     "jitter-with-shot-priority",
-    "timestamped-weapon-interception"
+    "timestamped-weapon-interception",
+    "native-integrity-signature-compatibility"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
