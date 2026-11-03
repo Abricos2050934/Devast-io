@@ -29,7 +29,7 @@ const canonical=acorn.parse(fs.readFileSync(path.join(root,'mod/ilm-aim.js'),'ut
 assert.deepEqual(normalize(body.find(n=>n.id?.name==='__createIlmAim')),normalize(canonical),'ILM algorithm changed');
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
 assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2']),'Every reviewed native patch is required');
-const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave'};
+const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave','ᴀᄁ︃':'landmineRender','рոᴎ':'wireRender','ᅠ̘ܛ':'trapRender'};
 const edits=[],placements=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;
  if(n.type==='ArrayExpression'&&n.elements[0]?.value===14&&n.elements.length===4&&n.elements[1]?.object?.type==='MemberExpression')placements.push(n);
  if(n.type==='FunctionDeclaration')for(const [old,name]of Object.entries(functions))if(n.id.name===roles[old]){
@@ -42,7 +42,7 @@ const edits=[],placements=[],todo=[tree];while(todo.length){const n=todo.pop();i
 assert.equal(edits.length,Object.keys(functions).length,'Unique browser fixture functions required');
 assert.equal(placements.length,1,'One native cursor placement expression required');
 const end=tree.body[0].expression.callee.body.end-1;
-edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},types:${symbols['εᚇ๓']},nativePlacement:()=>${output.slice(placements[0].start,placements[0].end)},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
+edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},types:${symbols['εᚇ๓']},graphics:${symbols['ᴘᚉ٦']},get ctx(){return ${symbols['а०̅']}},nativePlacement:()=>${output.slice(placements[0].start,placements[0].end)},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
 edits.push({at:tree.body[0].expression.callee.body.end-1,text:`window.__updateIntegrityProbe={read:()=>${roles.nativeIntegrityFlag},set:value=>${roles.nativeIntegrityFlag}=value,signers:[${roles.nativeIntegritySigners.join(',')}]};`});
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
 (async()=>{
@@ -247,6 +247,19 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(n.network.state===0&&m.connectionInfo().phase==='dead','Closed socket revived restore mode after death');
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Death recovery changed stored identity');
    }finally{n.network[deathKey]=nativeDeath;}
+   const drawKey=s['ᴑ̸ᴘ'],originalDraw=n.graphics[drawKey],visualState={id:self.id,state:n.network.state,alpha:n.ctx.globalAlpha};
+   try{
+    self.id=1;n.network.state=1;m.setSetting('ShowMines',true);m.setSetting('ShowWires',true);
+    const sprites=[{testSprite:0},{testSprite:1},{testSprite:2}],descriptor=new Proxy({},{get:()=>sprites});
+    const mine={id:5,x:100000,y:120000,[s['ᴘ४１']]:999};
+    for(const render of [n.landmineRender,n.wireRender,n.trapRender]){
+     const draws=[];n.graphics[drawKey]=(...args)=>draws.push({args,alpha:n.ctx.globalAlpha});n.ctx.globalAlpha=.37;const previousAlpha=n.ctx.globalAlpha;
+     render(descriptor,mine,3,4,2,1);
+     check(draws.length===1&&draws[0].alpha===1,'Distant received mine/wire is still hidden');
+     check(Math.abs(draws[0].args[3]-Math.PI)<1e-9,'Revealed object rotation changed');
+     check(n.ctx.globalAlpha===previousAlpha,'Reveal leaked canvas alpha');
+    }
+   }finally{n.graphics[drawKey]=originalDraw;self.id=visualState.id;n.network.state=visualState.state;n.ctx.globalAlpha=visualState.alpha;}
    const integrity=window.__updateIntegrityProbe,networkSnapshot={...n.network},savedIntegrity=integrity.read();
    function restoreIntegrityNetwork(){for(const key of Object.keys(n.network))if(!Object.hasOwn(networkSnapshot,key))delete n.network[key];Object.assign(n.network,networkSnapshot);}
    try{
@@ -263,7 +276,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    check(!m.diagnostics.errors.length,'Mod reported errors');
    return {menu:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
-  assert.equal(report.page_errors.length,0,'Browser page errors');report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
+  assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}
  finally{report.finished_at=new Date().toISOString();fs.writeFileSync(path.join(dir,'validation.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));if(browser)await browser.close();}
 })().catch(error=>{console.error(error.message);process.exitCode=1;});

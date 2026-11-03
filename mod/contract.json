@@ -28,7 +28,9 @@
     "timestamped-weapon-interception",
     "cursor-autobuild-native-preview",
     "native-shared-canvas",
-    "native-integrity-signature-compatibility"
+    "native-integrity-signature-compatibility",
+    "hover-building-owners",
+    "received-mines-and-wires-visibility"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -43,7 +45,8 @@
     "tests/ilm-autobuild.test.cjs",
     "tests/jitter.test.cjs",
     "tests/player-labels.test.cjs",
-    "tests/adaptive-aim.test.cjs"
+    "tests/adaptive-aim.test.cjs",
+    "tests/world-visuals.test.cjs"
   ],
   "required_browsers": [
     "chromium",

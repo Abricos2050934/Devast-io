@@ -39,6 +39,8 @@ def artifacts(root, output):
             raise ValueError('Required browser validation missing or stale: ' + browser)
         if report.get('integrity_compatibility') != {'status': 'passed', 'predicates': 3}:
             raise ValueError('Native integrity compatibility was not verified in browser: ' + browser)
+        if 'received-mines-and-wires-visibility' in contract.get('features', []) and report.get('world_visibility') != {'status': 'passed', 'native_renderers': 3}:
+            raise ValueError('Native world visibility was not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'

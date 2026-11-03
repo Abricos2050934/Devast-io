@@ -68,3 +68,11 @@ class PublicationTests(unittest.TestCase):
  def test_missing_integrity_check_in_one_browser_cannot_publish(self):
   del self.validation['browsers']['firefox']['integrity_compatibility'];self.save()
   with self.assertRaisesRegex(ValueError,'integrity.*browser'):p.artifacts(self.root,self.out)
+
+ def test_world_visibility_requires_three_native_renderers_in_each_browser(self):
+  self.contract['features']=['received-mines-and-wires-visibility']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['world_visibility']={'status':'passed','native_renderers':3}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['world_visibility']['native_renderers']=2;self.save()
+  with self.assertRaisesRegex(ValueError,'world visibility.*firefox'):p.artifacts(self.root,self.out)

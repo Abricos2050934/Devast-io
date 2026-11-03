@@ -38,6 +38,7 @@ function __installDevastMod(B) {
       this.FAutoLootKey = "KeyQ";
       this.AutoTakeKey = "KeyT";
       this.ShowMines = true;
+      this.ShowWires = true;
       this.ShowPlayerHitbox = false;
       this.XrayBuildings = false;
       this.Xraytransparency = 0.4;
@@ -1259,6 +1260,28 @@ function __installDevastMod(B) {
     const descriptor = B.items[r.e.Іࡈ５ >> 7];
     return descriptor && Number.isInteger(descriptor.ࡀ︂̄) && descriptor.ࡀ︂̄ > 0 ? descriptor : null;
   }
+  function ownedBuilding(r) {
+    if ([B.categories.player,B.categories.loot,B.categories.projectile,13].includes(r.type)) return null;
+    const descriptor=B.items[r.e.Іࡈ５>>7];
+    if (!descriptor) return null;
+    // Interaction opcodes only identify doors/containers. Walls, floors and
+    // sleeping bags also have placeable dimensions and item details.
+    return descriptor.detail&&typeof descriptor.detail.name==='string'&&Array.isArray(descriptor.width)&&Array.isArray(descriptor.height)
+      || Number.isInteger(descriptor.ࡀ︂̄)&&descriptor.ࡀ︂̄>0 ? descriptor:null;
+  }
+  function highlightMine(entity) {
+    if (stopped||!MOD.ShowMines||!playing()) return;
+    const v=view(),canvas=v.ctx?.canvas;
+    if (!canvas||!Number.isFinite(entity.x)||!Number.isFinite(entity.y)) return;
+    const x=(v.x+entity.x)*v.scale,y=(v.y+entity.y)*v.scale;
+    const radius=Math.max(6,Math.min(22,25*v.scale));
+    if(x < -radius||y < -radius||x > canvas.width+radius||y > canvas.height+radius)return;
+    const c=v.ctx;c.save();
+    try{
+      c.setTransform(1,0,0,1,0,0);c.globalAlpha=1;c.strokeStyle='#ff453a';c.lineWidth=2;
+      c.beginPath();c.arc(x,y,radius,0,Math.PI*2);c.stroke();
+    }finally{c.restore();}
+  }
   function lootAllowed(e) {
     const me = B.world.ᅠᏧ‍;
     return me.І๔︊ === 0 && me.ιᄁ८ === e.id && (!MOD.LootDataEnabled || allowedLootIds.has(e.Іࡈ５));
@@ -1428,7 +1451,7 @@ function __installDevastMod(B) {
         ctx.setLineDash([]);ctx.lineDashOffset=0;ctx.textBaseline='alphabetic';
       }
       if (MOD.ShowPosition) text('[' + Math.floor(me.x / 100) + ':' + Math.floor(me.y / 100) + ']', 100, 32, '#fff', 18);
-      let ownerCursor, ownerCursorRead=false;
+      let ownerCursor, ownerCursorRead=false,ownerLabelCount=0;
       const drawRecords=MOD.ShowBuildingOwner?records:playerRecords;
       for (const r of drawRecords) {
         if (r.type === B.categories.player) {
@@ -1456,9 +1479,12 @@ function __installDevastMod(B) {
           const point = ownerCursor;
           if (!point) continue;
           const x = Math.floor(point.x / 100), y = Math.floor(point.y / 100);
-          if (r.e.αބ̞ === x && r.e.ᴀܛ٤ === y && building(r)) {
-            const p = at(r.e), id = r.e.ᴘ४１;
-            text(Number.isInteger(id) && id > 0 ? (nickname(id) ? nickname(id)+' ' : '')+'#'+id : 'Owner unknown', p.x, p.y - 35, clanColor(id), 16);
+          if (r.e.αބ̞ === x && r.e.ᴀܛ٤ === y) {
+            const descriptor=ownedBuilding(r);
+            if(!descriptor)continue;
+            const p=at(r.e),id=r.e.ᴘ४１,kind=descriptor.detail?.name;
+            const owner=Number.isInteger(id)&&id>0?(nickname(id)?nickname(id)+' ':'')+'#'+id:'Owner unknown';
+            text((kind?kind+': ':'')+owner,p.x,p.y-35-18*ownerLabelCount++,clanColor(id),16);
           }
         }
       }
@@ -2027,7 +2053,7 @@ function __installDevastMod(B) {
       return c;
     }
     const visual = menu.addFolder('Visuals');
-    for (const key of ['ShowPosition', 'ShowNamesOnMap', 'ShowMines', 'ShowPlayerHitbox', 'KarmaAboveHead', 'ShowBuildingOwner', 'XrayBuildings', 'PlayersListEnabled', 'showFunctionList']) add(visual, key);
+    for (const key of ['ShowPosition', 'ShowNamesOnMap', 'ShowMines', 'ShowWires', 'ShowPlayerHitbox', 'KarmaAboveHead', 'ShowBuildingOwner', 'XrayBuildings', 'PlayersListEnabled', 'showFunctionList']) add(visual, key);
     add(visual, 'Xraytransparency', 'Building opacity', .05, 1, .05);
     for (const [key,label] of [['TeamClanColor','Цвет своего клана'],['EnemyClanColor','Цвет чужого клана'],['NicknameColor','Цвет ника']]) visual.addColor(MOD, key).name(label).onChange(value=>setSetting(key,value));
     const aim = __installIlmAimMenu(menu,MOD);
@@ -2170,6 +2196,7 @@ function __installDevastMod(B) {
     reconnect,
     observeSocket,
     observeDeath,
+    highlightMine,
     beginPlay,
     guardPlayCallback,
     guardHandshakeCallback,
@@ -2219,6 +2246,7 @@ function __installDevastMod(B) {
       MOD.AimBotEnabled = false;
       MOD.XrayBuildings = false;
       MOD.ShowMines = false;
+      MOD.ShowWires = false;
       stopped = true;
       removeSocketObservers();
       adGate = null;
