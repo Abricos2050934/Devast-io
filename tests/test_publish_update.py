@@ -102,3 +102,11 @@ class PublicationTests(unittest.TestCase):
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['door_server_state_feedback']=False;self.save()
   with self.assertRaisesRegex(ValueError,'state feedback.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_automation_backpressure_requires_browser_verification(self):
+  self.contract['features']=['automation-socket-backpressure']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'automation_socket_backpressure':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['automation_socket_backpressure']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'backpressure.*firefox'):p.artifacts(self.root,self.out)

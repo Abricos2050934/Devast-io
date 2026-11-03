@@ -185,18 +185,27 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     blockedSocket.bufferedAmount=0;m.aim.refresh();
     check(transport.packets.length===1&&transport.packets[0][0]===6,'Jitter replayed a queue of stale angles');
     m.observeSocket(null);m.setSetting('JitterEnabled',false);
-    m.setSetting('AimBotEnabled',false);transport.packets.length=0;
+    m.setSetting('AimBotEnabled',true);transport.packets.length=0;blockedSocket.bufferedAmount=4096;m.observeSocket(blockedSocket);
+    const backpressureHistory=JSON.stringify(m.targets.players[2]);
+    for(let i=0;i<20;i++)m.aim.refresh();check(transport.packets.length===0,'Automatic aim grew the socket backlog');
+    check(JSON.stringify(m.targets.players[2])===backpressureHistory,'Pausing transport erased target history');
+    blockedSocket.readyState=3;blockedSocket.bufferedAmount=0;m.aim.refresh();check(transport.packets.length===0,'Automatic aim sent through a closed socket');
+    blockedSocket.readyState=1;m.aim.refresh();check(transport.packets.length===1&&transport.packets[0][0]===6,'Automatic aim replayed stale queued ticks');
+    m.observeSocket(null);m.setSetting('AimBotEnabled',false);transport.packets.length=0;
     m.render(performance.now());const stableRecords=m.records,stableEntries=m.records.slice();m.render(performance.now());
     check(stableEntries.length>0&&m.records===stableRecords&&stableEntries.every((r,i)=>m.records[i]===r),'Frame collection rebuilt stable native entity records');
     const loot=[];for(const id of [10,11]){const drop=n.entities.get(0,id,1,1);Object.assign(drop,{id,x:self.x+10,y:self.y,[s['е̝ހ']]:0,[s['Іࡈ５']]:6});loot.push(drop);}
     try{
-     m.setSetting('LootDataEnabled',false);m.setSetting('FAutoLootEnabled',true);m.render(0);m.render(16);
+     m.setSetting('LootDataEnabled',false);m.setSetting('FAutoLootEnabled',true);
+     blockedSocket.bufferedAmount=4096;m.observeSocket(blockedSocket);m.render(0);m.render(16);check(transport.packets.length===0,'Fast loot grew the socket backlog');
+     m.observeSocket(null);m.render(0);m.render(16);
      check(JSON.stringify(transport.packets)===JSON.stringify([[12,10],[12,11],[12,10],[12,11]]),'Native fast loot cadence/bindings differ from ILM');
     }finally{m.setSetting('FAutoLootEnabled',false);for(const id of [10,11])n.entities.remove(0,id,1,1,0);}
     transport.packets.length=0;self.x=1234.5;self.y=5678.25;Object.assign(self,{[s['ε︁ᚂ']]:1,[s['օⲥᚁ']]:1,[s['α०ᚂ']]:3,[s['ρⲅ️']]:40,[s['ᴎ︆ࡉ']]:27});m.setSetting('AutoBuiledEnabled',true);
     try{
      m.step(0);m.step(8);check(transport.packets.length===0,'RAF duplicated native AutoBuild');
-     m.render(0);m.render(8);
+     blockedSocket.bufferedAmount=4096;m.observeSocket(blockedSocket);m.render(0);m.render(8);check(transport.packets.length===0,'AutoBuild grew the socket backlog');
+     m.observeSocket(null);m.render(0);m.render(8);
      check(JSON.stringify(transport.packets)===JSON.stringify([n.nativePlacement(),n.nativePlacement()]),'AutoBuild differs from the native cursor placement cell or rotation');
      self[s['օⲥᚁ']]=0;m.render(16);check(transport.packets.length===2,'AutoBuild sent an invalid native preview');
     }finally{m.setSetting('AutoBuiledEnabled',false);}
@@ -321,7 +330,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    }finally{restoreIntegrityNetwork();integrity.set(savedIntegrity);}
    check(m.connectionInfo().integrityCompatibility===true,'Automatic build omitted native signature compatibility');
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,automation_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

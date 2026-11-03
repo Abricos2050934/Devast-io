@@ -47,6 +47,8 @@ def artifacts(root, output):
             raise ValueError('Door request without the E prompt and real mouse input were not verified in browser: ' + browser)
         if 'independent-door-control-and-server-state-feedback' in contract.get('features', []) and not all(report.get('native', {}).get(key) is True for key in ('independent_door_control', 'door_server_state_feedback')):
             raise ValueError('Independent door control and state feedback were not verified in browser: ' + browser)
+        if 'automation-socket-backpressure' in contract.get('features', []) and report.get('native', {}).get('automation_socket_backpressure') is not True:
+            raise ValueError('Automation socket backpressure was not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'

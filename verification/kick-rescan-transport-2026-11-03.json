@@ -1,0 +1,303 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "purpose": "Fresh comparison of both old uploads with the live native client and current mod; fix reproduced automated send accumulation",
+  "source_comparison": {
+    "schema": 1,
+    "inputs": {
+      "old_native": {
+        "input_sha256": "e090cec7542760cb9413e1807470f57b60bed1f43de57f6d4da8652f4c8f4853",
+        "input_bytes": 6443883,
+        "decoded_sha256": "21c1a440911da9186b3f5b1fef9488ad17fa65490951c9622fe39d13ebebec1a",
+        "parse": "passed",
+        "functions": 15168,
+        "remaining_eval_calls": 2,
+        "markers": {
+          "[native code]": 26,
+          "stack_capture_count": 2,
+          "stack_empty": 2,
+          "stack_depth": 2,
+          "stack_forbidden_keyword": 2,
+          "coercion_count": 2,
+          "lockdown_tooling": 9
+        },
+        "functions_matching_current_normalized_AST": 8908
+      },
+      "old_prp": {
+        "input_sha256": "8a93fecd24a64900a643bec42753fb3b989e8819b1e9c4847a1957bc196d72b9",
+        "input_bytes": 7449904,
+        "decoded_sha256": "36a3830937230b04cd0ac60d09c1c744e34b7f48a948967334a2d3c41b707b15",
+        "parse": "passed",
+        "functions": 15614,
+        "remaining_eval_calls": 2,
+        "markers": {
+          "[native code]": 26,
+          "stack_capture_count": 2,
+          "stack_empty": 2,
+          "stack_depth": 2,
+          "stack_forbidden_keyword": 2,
+          "coercion_count": 2,
+          "lockdown_tooling": 9
+        },
+        "functions_matching_current_normalized_AST": 8778
+      },
+      "current_native": {
+        "input_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+        "input_bytes": 6923876,
+        "decoded_sha256": "645fe8e99382cedd1b1849e86c51588cdc3e51c3802904412b27d06a8bf726e1",
+        "parse": "passed",
+        "functions": 16340,
+        "remaining_eval_calls": 2,
+        "markers": {
+          "[native code]": 26,
+          "stack_capture_count": 2,
+          "stack_empty": 2,
+          "stack_depth": 2,
+          "stack_forbidden_keyword": 2,
+          "coercion_count": 2,
+          "lockdown_tooling": 9
+        }
+      },
+      "current_public": {
+        "input_sha256": "2d4e3433df6532205fb9d74b13d7879f4a4ac570953bcaa4ad757ba01f5c1db7",
+        "input_bytes": 4283121,
+        "decoded_sha256": "2d4e3433df6532205fb9d74b13d7879f4a4ac570953bcaa4ad757ba01f5c1db7",
+        "parse": "passed",
+        "functions": 16834,
+        "remaining_eval_calls": 2,
+        "markers": {
+          "[native code]": 26,
+          "stack_capture_count": 2,
+          "stack_empty": 2,
+          "stack_depth": 2,
+          "stack_forbidden_keyword": 2,
+          "coercion_count": 2,
+          "lockdown_tooling": 9
+        }
+      }
+    },
+    "signers": [
+      {
+        "name": "а１๐",
+        "unflagged_native_AST": "identical"
+      },
+      {
+        "name": "ⲅࡃ०",
+        "unflagged_native_AST": "identical"
+      },
+      {
+        "name": "ܐ̄︁",
+        "unflagged_native_AST": "identical"
+      }
+    ],
+    "current_native_still_matches_reviewed_baseline": true,
+    "method": "Static table decoding and bounded decoding interpreter; uploaded bundles never executed in Node",
+    "finding": "Native signature compatibility retained; a separate reproducible automation send-queue defect is fixed and browser-gated",
+    "server_disconnect_cause": "unconfirmed"
+  },
+  "release": "08e85699fa6b6ed1784e438a74aeeec538b4951ef002294bb99bf6a244fbde0f",
+  "output_sha256": "8580069487bed0965bdbc18bcc03c0634ad97e2b8ffcf1d7904c2b76571a4bd9",
+  "reproduced_defect": {
+    "socket_buffered_bytes": 8192,
+    "automatic_aim_ticks": 100,
+    "commands_before_fix": 300,
+    "commands_after_fix": 0,
+    "resume_behavior": "one current tick; no replay",
+    "other_cases": [
+      "100 high-FPS loot/build frames: 300 queued commands before, zero after",
+      "Slow loot, take and keepalive background cycles: 81 commands before, zero after",
+      "Full candidate tests cover chat deferral and closed sockets"
+    ]
+  },
+  "changes": [
+    "Pause complete automatic aim/fire ticks while observed socket is non-open or has buffered bytes",
+    "Pause fast/slow loot, auto-build, container take, spam chat and keepalive in the same condition",
+    "Resume current state without storing or replaying skipped cycles",
+    "Capture active automation options and socket queue size at each disconnect event"
+  ],
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 162,
+    "python_tests": 40
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/adaptive-aim.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "output_sha256": "8580069487bed0965bdbc18bcc03c0634ad97e2b8ffcf1d7904c2b76571a4bd9",
+      "browser_version": "154.0.8037.57",
+      "native": {
+        "menu": true,
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "output_sha256": "8580069487bed0965bdbc18bcc03c0634ad97e2b8ffcf1d7904c2b76571a4bd9",
+      "browser_version": "153.0",
+      "native": {
+        "menu": true,
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    }
+  },
+  "integrity_compatibility": {
+    "status": "passed",
+    "predicates": 3
+  },
+  "limits": [
+    "No server-side cause of the supplied session termination has been established",
+    "Static decoding leaves two argument-dependent eval calls in each source; this is not a claim to recover original source names or all dynamic runtime behavior",
+    "Normal transport cadence and existing native/browser feature checks remain required",
+    "Live absence of kicks is not verified; old pinned installed clients must be replaced to receive this fix"
+  ]
+}

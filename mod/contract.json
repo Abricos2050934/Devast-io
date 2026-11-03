@@ -33,7 +33,8 @@
     "received-mines-and-wires-visibility",
     "right-click-hovered-door",
     "right-click-door-independent-of-native-prompt",
-    "independent-door-control-and-server-state-feedback"
+    "independent-door-control-and-server-state-feedback",
+    "automation-socket-backpressure"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -50,7 +51,8 @@
     "tests/player-labels.test.cjs",
     "tests/adaptive-aim.test.cjs",
     "tests/world-visuals.test.cjs",
-    "tests/door-click.test.cjs"
+    "tests/door-click.test.cjs",
+    "tests/automation-transport.test.cjs"
   ],
   "required_browsers": [
     "chromium",

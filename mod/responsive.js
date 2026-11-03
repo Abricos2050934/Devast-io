@@ -820,7 +820,7 @@ function __installDevastMod(B) {
   // failure or a newly received player ID must not erase packet history.
   Aimbot.refresh = () => {
     if (stopped) return;
-    aimSnapshot(()=>ilm.tick(),MOD.AimBotEnabled&&MOD.lockId<0);
+    if(!playing()||!MOD.AimBotEnabled||automationReady('aim'))aimSnapshot(()=>ilm.tick(),MOD.AimBotEnabled&&MOD.lockId<0);
     updateJitter(performance.now(),true);
   };
   const _players_list = [];
@@ -842,6 +842,12 @@ function __installDevastMod(B) {
     return {samples:gaps.length,meanGapMs:Math.round(mean*100)/100,p95GapMs:gaps.length?Math.round(gaps[Math.floor((gaps.length-1)*.95)]*100)/100:null,fpsEstimate:mean>0?Math.round(1000/mean):null,hidden:!!document.hidden};
   }
   const recentCombatCommands = [], connectionEvents = [];
+  const automationDeferrals={aim:0,loot:0,build:0,take:0,chat:0,keepAlive:0};
+  function automationReady(kind) {
+    if(!connectionSocket || connectionSocket.readyState===1&&!(connectionSocket.bufferedAmount>0))return true;
+    automationDeferrals[kind]++;
+    return false;
+  }
   function combatCommands(now = performance.now()) {
     while (recentCombatCommands.length && now - recentCombatCommands[0].at > 2000) recentCombatCommands.shift();
     const counts = {angle:0,attack:0,release:0};
@@ -852,7 +858,9 @@ function __installDevastMod(B) {
     const health = B.health?.();
     connectionEvents.push({type,at:Math.round(performance.now()),state:B.network.state,
       integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,
-      aim:MOD.AimBotEnabled,autoFire:MOD.autoFire,
+      aim:MOD.AimBotEnabled,autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,
+      autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled,
+      socketState:connectionSocket?.readyState??null,socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
       health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details});
     if (connectionEvents.length > 12) connectionEvents.shift();
   }
@@ -1178,13 +1186,13 @@ function __installDevastMod(B) {
   function automate(now) {
     const me = B.world.ᅠᏧ‍;
     if (!B.synchronizedRender && MOD.FAutoLootEnabled) scanFastLoot();
-    if (MOD.SAutoLootEnabled && !MOD.FAutoLootEnabled && now - lastLoot >= 200) {
+    if (MOD.SAutoLootEnabled && !MOD.FAutoLootEnabled && now - lastLoot >= 200 && automationReady('loot')) {
       lastLoot = now;
       const loot = records.filter(r => r.type === B.categories.loot && (r.e.x - me.x) ** 2 + (r.e.y - me.y) ** 2 < 50000 && lootAllowed(r.e));
       loot.sort((a, b) => (a.e.x - me.x) ** 2 + (a.e.y - me.y) ** 2 - ((b.e.x - me.x) ** 2 + (b.e.y - me.y) ** 2));
       for (const {e} of loot.slice(0, 1)) __send([12, e.id]);
     }
-    if (MOD.AutoTakeEnabled && Aimbot.mouseDown && me.ᴉᄁ͏ === 1 && now - lastTake >= 200) {
+    if (MOD.AutoTakeEnabled && Aimbot.mouseDown && me.ᴉᄁ͏ === 1 && now - lastTake >= 200 && automationReady('take')) {
       const slots = me.ᴘϲ๓, count = me.ᅠܓ̃;
       if (Array.isArray(slots) && Number.isInteger(count)) {
         const slot = slots.findIndex((item,index)=>index < count && Array.isArray(item) && Number.isFinite(item[0]) && item[0] > 0);
@@ -1192,7 +1200,7 @@ function __installDevastMod(B) {
       }
       lastTake = now;
     }
-    if (MOD.AntiKickEnabled && now - lastKeepAlive >= 7000) {
+    if (MOD.AntiKickEnabled && now - lastKeepAlive >= 7000 && automationReady('keepAlive')) {
       __send([0]);
       lastKeepAlive = now;
     }
@@ -1203,6 +1211,7 @@ function __installDevastMod(B) {
     if (!playing() || !MOD.AutoBuiledEnabled) return;
     const me=B.world.ᅠᏧ‍;
     if (me.ε︁ᚂ!==1 || me.օⲥᚁ!==1) return;
+    if(!automationReady('build'))return;
     __send([14,me.α०ᚂ,me.ρⲅ️,me.ᴎ︆ࡉ]);
   }
   function updateChat(now) {
@@ -1228,6 +1237,7 @@ function __installDevastMod(B) {
       chatState.status = 'Next message: ' + Math.ceil((5000 - now + lastChat) / 1000) + 's';
       return;
     }
+    if(!automationReady('chat')){chatState.status='Waiting for network';return;}
     const wait = B.network.іߐ̸(text);
     if (wait === 0) {
       lastChat = now;
@@ -1246,6 +1256,7 @@ function __installDevastMod(B) {
   }
   function scanFastLoot() {
     if (!playing() || !MOD.FAutoLootEnabled) return;
+    if(!automationReady('loot'))return;
     // ILM visits every nearby drop on each frame, independently of the game's
     // single cursor-selected interaction. fastDist in ILM is squared distance.
     const me = B.world.ᅠᏧ‍, type = B.categories.loot, border = B.entities.border[type], group = B.entities.ᴎ̂２[type];
@@ -1575,6 +1586,7 @@ function __installDevastMod(B) {
       modCommandsByOpcode:{...diagnostics.commandsByOpcode},
       automationSettings:{autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled},
       jitterTransport:{deferredDirections:jitter.deferredDirections,rateLimitHz:20},
+      automationTransport:{deferred:{...automationDeferrals}},
       aimSettings:{enabled:MOD.AimBotEnabled,autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,commandsInLast2s:{...event.commandsInLast2s}}))};
