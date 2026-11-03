@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "684f15814ed414efa5eb11a6920a3082d62da15b689e7998aef0d8b463322804",
+  "output_sha256": "0383e14e311cbe3b6d546b46d9ccdc7d6a8712b62aa2315a98ff91e61eb12aed",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -43,7 +43,8 @@
       "independent-door-control-and-server-state-feedback",
       "automation-socket-backpressure",
       "functional-aim-settings",
-      "ak47-laser-distance-presets"
+      "ak47-laser-distance-presets",
+      "restored-stable-far-prediction"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -62,7 +63,8 @@
       "tests/world-visuals.test.cjs",
       "tests/door-click.test.cjs",
       "tests/automation-transport.test.cjs",
-      "tests/aim-presets.test.cjs"
+      "tests/aim-presets.test.cjs",
+      "tests/far-aim-regression.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -70,16 +72,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "28bba13674b63d33c60fb7acec6b79c3c26d5fd4d38cb2eaa89e862f17e93227",
+    "mod/responsive.js": "bcd2c7ac817de20c85939ae36ead5a54d69d03c8a707aef04ba516e9443214db",
     "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
-    "mod/ilm-aim.js": "56b414a994e3e2b7dc9c5b69f64baa63228b1be01a2bb50a0d86448cb7a89aed",
+    "mod/ilm-aim.js": "5fe24264cc3dd4e808e7fc934fa694a021b89b9d00374ae941a49ce79de04d7a",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "789cac4037716507c315afc204b45c797995da756ba9dce0e8ef6fb057ab25fd",
+  "mod_bundle_sha256": "2767648665a8a28cd0d1f55b735f3c5c3e503a0641e7db74dd26c2f4b6f909ff",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -114,6 +116,7 @@
   "native": {
     "menu": true,
     "aim_settings_and_presets": true,
+    "stable_far_prediction": true,
     "automation_socket_backpressure": true,
     "right_click_hovered_door": true,
     "right_click_without_native_prompt": true,
@@ -155,15 +158,16 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-03T18:07:00.086Z",
+  "finished_at": "2026-11-03T19:06:29.570Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "684f15814ed414efa5eb11a6920a3082d62da15b689e7998aef0d8b463322804",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "0383e14e311cbe3b6d546b46d9ccdc7d6a8712b62aa2315a98ff91e61eb12aed",
+      "browser_version": "154.0.8037.57",
       "native": {
         "menu": true,
         "aim_settings_and_presets": true,
+        "stable_far_prediction": true,
         "automation_socket_backpressure": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
@@ -235,11 +239,12 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "684f15814ed414efa5eb11a6920a3082d62da15b689e7998aef0d8b463322804",
+      "output_sha256": "0383e14e311cbe3b6d546b46d9ccdc7d6a8712b62aa2315a98ff91e61eb12aed",
       "browser_version": "153.0",
       "native": {
         "menu": true,
         "aim_settings_and_presets": true,
+        "stable_far_prediction": true,
         "automation_socket_backpressure": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
@@ -325,13 +330,14 @@
       "tests/world-visuals.test.cjs",
       "tests/door-click.test.cjs",
       "tests/automation-transport.test.cjs",
-      "tests/aim-presets.test.cjs"
+      "tests/aim-presets.test.cjs",
+      "tests/far-aim-regression.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 166,
-    "python_tests": 41
+    "node_tests": 170,
+    "python_tests": 42
   }
 }
