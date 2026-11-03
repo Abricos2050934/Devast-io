@@ -76,10 +76,11 @@ for(let i=0;i<old.nodes.length;i++) {
 assert.ok(!changed.some(row=>row.name==='__createIlmAim'),'ILM core changed');
 fs.mkdirSync(output,{recursive:true});
 fs.writeFileSync(path.join(output,'game.entry-fixed.js'),result);
-const basename=new URL(manifest.source_url).pathname.split('/').pop();
-assert.match(basename,/^[A-Za-z0-9_-]+\.js$/);
+// Retain the pinned JS as history, but never ship it inside an import rule
+// again: the importer must follow the verified current update channel.
+const loader=fs.readFileSync(path.join(root,'resource-override/loader.js'),'utf8').replace(/\r?\n/g,'\r\n');
 const config={v:1,data:[{id:'integrity-entry-v3',matchUrl:'https://devast.io/*',rules:[{
-  type:'fileOverride',match:'**://devast.io/js/'+basename+'*',file:result,fileId:'integrity-compat-file',on:true
+  type:'fileOverride',match:'**://devast.io/js/*.js',file:loader,fileId:'integrity-compat-file',on:true
 }],on:true}]};
 fs.writeFileSync(path.join(output,'Devast-io-Entry-Recovery-Resource-Override.json'),JSON.stringify(config,null,2)+'\n');
 fs.writeFileSync(path.join(output,'source-current.json'),JSON.stringify(manifest,null,2)+'\n');

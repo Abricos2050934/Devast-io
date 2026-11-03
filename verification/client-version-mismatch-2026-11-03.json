@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "purpose": "Correct a stale pinned-client import route after the supplied runtime report identified the old build",
+  "supplied_report_sha256": "928b4c7439ecf475c3b68e1cf8ccd227be6319a04c636aebb9c3f5ff6d10650b",
+  "reported_audit_build": "integrity-entry-v3",
+  "reported_integrity_compatibility_field_present": false,
+  "current_release": "d45f6251791c21977e9a20603afcf86feebd9f9eb3e6f19a213bc61ab49f40a1",
+  "current_output_sha256": "2d4e3433df6532205fb9d74b13d7879f4a4ac570953bcaa4ad757ba01f5c1db7",
+  "current_audit_build": "integrity-autoupdate-v1",
+  "current_integrity_compatibility": {
+    "status": "passed",
+    "predicates": 3
+  },
+  "legacy_import_changed_to": "stable auto-update loader, retaining its old group identity",
+  "legacy_pinned_client_retained_for": "historical reference",
+  "limits": [
+    "Report does not establish the server-side reason for termination",
+    "An already imported extension rule must be replaced in the affected browser; repository changes do not rewrite extension storage"
+  ]
+}
