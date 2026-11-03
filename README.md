@@ -50,7 +50,7 @@ npm run update:once
 
 Полная инструкция: [CONTINUE-IN-NEW-CHAT.md](CONTINUE-IN-NEW-CHAT.md).
 Текст для вставки: [handoff/NEW-CHAT-PROMPT.txt](handoff/NEW-CHAT-PROMPT.txt).
-Полный архив проекта: [Devast-io-Handoff.zip](https://github.com/Abricos2050934/Devast-io/releases/download/handoff-2026-11-03/Devast-io-Handoff.zip).
+Полный архив проекта: [Devast-io-Handoff.zip](https://github.com/Abricos2050934/Devast-io/raw/refs/heads/updates/Devast-io-Handoff.zip?download=1).
 
 Для переезда без старого GitHub: [пошаговая инструкция](handoff/MIGRATE-TO-NEW-GITHUB.md).
 В полном архиве есть автономный клиент и помощник смены ссылок; историю Git можно сохранить отдельно.
