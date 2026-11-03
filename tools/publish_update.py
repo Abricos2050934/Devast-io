@@ -49,6 +49,8 @@ def artifacts(root, output):
             raise ValueError('Independent door control and state feedback were not verified in browser: ' + browser)
         if 'automation-socket-backpressure' in contract.get('features', []) and report.get('native', {}).get('automation_socket_backpressure') is not True:
             raise ValueError('Automation socket backpressure was not verified in browser: ' + browser)
+        if any(feature in contract.get('features', []) for feature in ('functional-aim-settings','ak47-laser-distance-presets')) and report.get('native', {}).get('aim_settings_and_presets') is not True:
+            raise ValueError('Functional aim controls and weapon presets were not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'

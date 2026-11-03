@@ -86,20 +86,28 @@ function __createAdaptiveAim(clock) {
       }
     }
     last.px=last.x;last.py=last.y;last.pt=last.time;
-    last.x=target.x;last.y=target.y;last.time=now;last.vx=vx;last.vy=vy;last.dt=dt;last.ready=ready;
+    last.x=target.x;last.y=target.y;last.time=now;last.vx=vx;last.vy=vy;last.rawVx=ready?dx/dt:0;last.rawVy=ready?dy/dt:0;last.dt=dt;last.ready=ready;
   }
   function velocity(sample,now) {
     return sample?.ready&&now>=sample.time&&now-sample.time<=Math.min(250,Math.max(100,sample.dt*2));
   }
   function resolve(aim,targets,selfId,settings,nativeSpeed,legacy) {
-    if (!settings.ImprovedAimEnabled||!(nativeSpeed>0)||!Number.isFinite(nativeSpeed)) return legacy;
     const target=aim.targetPlayer,self=targets.players[selfId];
     if (!target?.active||!self?.active) return legacy;
     const sample=samples.get(target);if(!sample)return legacy;
-    const now=clock(),moving=velocity(sample,now),vx=moving?sample.vx:0,vy=moving?sample.vy:0;
-    const own=samples.get(self),ownMoving=velocity(own,now);
-    const sx=self.x+(ownMoving?own.vx*(now-own.time):0),sy=self.y+(ownMoving?own.vy*(now-own.time):0);
-    const age=moving?now-sample.time:0,delay=settings.offsetCoefficient*50;
+    const now=clock(),moving=velocity(sample,now),smooth=settings.resolverType==='smoothed';
+    const vx=moving?(smooth?sample.vx:sample.rawVx):0,vy=moving?(smooth?sample.vy:sample.rawVy):0;
+    if(!settings.ImprovedAimEnabled||!(nativeSpeed>0)||!Number.isFinite(nativeSpeed)){
+      if(!smooth||!moving)return legacy;
+      const lead=(Math.hypot(target.x-self.x,target.y-self.y)/settings.distanceCoefficient+settings.offsetCoefficient)*4/settings.bulletSpeedCoefficient;
+      const x=target.x+vx*sample.dt*lead,y=target.y+vy*sample.dt*lead;
+      const angle=Math.atan2(y-self.y,x-self.x)*180/Math.PI;if(!Number.isFinite(angle))return legacy;
+      aim.lastAngle=angle;if(settings.visualizeResolving)targets.lines[0].reset(self.x,self.y,x,y);
+      return Math.round(angle);
+    }
+    const own=samples.get(self),ownMoving=velocity(own,now),delay=settings.offsetCoefficient*50;
+    const sx=self.x+(ownMoving?(smooth?own.vx:own.rawVx)*(now-own.time+delay):0),sy=self.y+(ownMoving?(smooth?own.vy:own.rawVy)*(now-own.time+delay):0);
+    const age=moving?now-sample.time:0;
     let x=target.x+vx*(age+delay),y=target.y+vy*(age+delay);
     const speed=nativeSpeed*(settings.bulletSpeedCoefficient/4)*(settings.distanceCoefficient/300);
     if (!(speed>0)||!Number.isFinite(speed))return legacy;
@@ -120,4 +128,66 @@ function __createAdaptiveAim(clock) {
     return Math.round(angle);
   }
   return {observe,forget:target=>samples.delete(target),resolve};
+}
+
+// Values are selected by tools/calibrate_aim.cjs using separate held-out scenes.
+function __aimWeaponPresets() {
+  return {
+  "ak47_close": {
+    "label": "AK-47: ближняя",
+    "settings": {
+      "ImprovedAimEnabled": true,
+      "resolverType": "linear",
+      "distanceCoefficient": 330,
+      "bulletSpeedCoefficient": 4,
+      "offsetCoefficient": 0.1,
+      "mouseFovEnable": true,
+      "mouseFov": 250,
+      "target": "players",
+      "lockId": -1
+    }
+  },
+  "ak47_far": {
+    "label": "AK-47: дальняя",
+    "settings": {
+      "ImprovedAimEnabled": true,
+      "resolverType": "linear",
+      "distanceCoefficient": 300,
+      "bulletSpeedCoefficient": 4,
+      "offsetCoefficient": 0.8,
+      "mouseFovEnable": true,
+      "mouseFov": 450,
+      "target": "players",
+      "lockId": -1
+    }
+  },
+  "laser_close": {
+    "label": "Лазерная SMG: ближняя",
+    "settings": {
+      "ImprovedAimEnabled": true,
+      "resolverType": "smoothed",
+      "distanceCoefficient": 330,
+      "bulletSpeedCoefficient": 4,
+      "offsetCoefficient": 0.1,
+      "mouseFovEnable": true,
+      "mouseFov": 250,
+      "target": "players",
+      "lockId": -1
+    }
+  },
+  "laser_far": {
+    "label": "Лазерная SMG: дальняя",
+    "settings": {
+      "ImprovedAimEnabled": true,
+      "resolverType": "smoothed",
+      "distanceCoefficient": 330,
+      "bulletSpeedCoefficient": 4,
+      "offsetCoefficient": 1.6,
+      "mouseFovEnable": true,
+      "mouseFov": 450,
+      "target": "players",
+      "lockId": -1
+    }
+  }
+};
 }

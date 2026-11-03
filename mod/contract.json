@@ -34,7 +34,9 @@
     "right-click-hovered-door",
     "right-click-door-independent-of-native-prompt",
     "independent-door-control-and-server-state-feedback",
-    "automation-socket-backpressure"
+    "automation-socket-backpressure",
+    "functional-aim-settings",
+    "ak47-laser-distance-presets"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -52,7 +54,8 @@
     "tests/adaptive-aim.test.cjs",
     "tests/world-visuals.test.cjs",
     "tests/door-click.test.cjs",
-    "tests/automation-transport.test.cjs"
+    "tests/automation-transport.test.cjs",
+    "tests/aim-presets.test.cjs"
   ],
   "required_browsers": [
     "chromium",

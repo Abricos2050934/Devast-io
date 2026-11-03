@@ -110,3 +110,11 @@ class PublicationTests(unittest.TestCase):
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['automation_socket_backpressure']=False;self.save()
   with self.assertRaisesRegex(ValueError,'backpressure.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_aim_controls_and_presets_require_native_browser_verification(self):
+  self.contract['features']=['functional-aim-settings','ak47-laser-distance-presets']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'aim_settings_and_presets':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['aim_settings_and_presets']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'aim controls.*firefox'):p.artifacts(self.root,self.out)

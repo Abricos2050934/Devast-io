@@ -221,6 +221,28 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
      m.render();m.setSetting('ImprovedAimEnabled',false);m.aim.refresh();const legacy=transport.packets.at(-1)[1];m.setSetting('ImprovedAimEnabled',true);m.aim.refresh();
      check(transport.packets.at(-1)[1]>legacy,'Timestamped prediction did not use native weapon speed');
      check(transport.packets.length===2&&transport.packets.every(p=>p[0]===6),'Improved prediction changed direction cadence');
+     const aimFolder=m.menu.__folders['Aim Bot'],control=key=>aimFolder.__controllers.find(c=>c.property===key);
+     for(const key of ['AimBotEnabled','autoFire','mouseFovEnable','mouseFov','lockId','resolverType','visualizeResolving','visualizeResolvingColor'])check(!!control(key),'Missing functional aim control: '+key);
+     for(const enhanced of [false,true]){
+      control('ImprovedAimEnabled').setValue(enhanced);control('lockId').setValue(2);control('mouseFovEnable').setValue(false);control('distanceCoefficient').setValue(100);
+      for(const [t,y]of [[0,1000],[100,1030],[225,1060],[330,1090]]){testTime=t;m.trackPacket(0,1,1,1000,1000,true);m.trackPacket(0,2,1,1500,y,true);}
+      control('resolverType').setValue('linear');const raw=m.aim.resolve();control('resolverType').setValue('smoothed');check(m.aim.resolve()!==raw,'Velocity model control is inert');
+      control('bulletSpeedCoefficient').setValue(4);const normal=m.aim.resolve();control('bulletSpeedCoefficient').setValue(8);check(m.aim.resolve()!==normal,'Bullet speed control is inert in a prediction mode');
+     }
+     const expectedPresets={ak47_close:[330,4,.1,'linear'],ak47_far:[300,4,.8,'linear'],laser_close:[330,4,.1,'smoothed'],laser_far:[330,4,1.6,'smoothed']};
+     const presets=aimFolder.__folders['Weapon presets'];check(presets.__controllers.length===4,'Four weapon/range presets required');
+     for(const [key,expected]of Object.entries(expectedPresets)){
+      const button=presets.__controllers.find(c=>c.property===key);check(!!button,'Missing preset button: '+key);button.object[key]();
+      check(JSON.stringify([m.settings.distanceCoefficient,m.settings.bulletSpeedCoefficient,m.settings.offsetCoefficient,m.settings.resolverType])===JSON.stringify(expected),'Preset values differ from calibrated profile');
+      check(m.settings.ImprovedAimEnabled&&m.settings.mouseFov=== (key.endsWith('close')?250:450),'Preset target selection settings not applied');
+     }
+     control('lockId').setValue(2);control('mouseFovEnable').setValue(false);control('AimBotEnabled').setValue(true);m.aim.resolve();
+     const stroke=n.ctx.stroke,colors=[];n.ctx.stroke=function(...args){colors.push(this.strokeStyle);return stroke.apply(this,args);};
+     try{
+      control('visualizeResolving').setValue(false);m.render();check(colors.length===0,'Prediction line visibility control did not hide the line');
+      control('visualizeResolvingColor').setValue('#abcdef');control('visualizeResolving').setValue(true);m.render();check(colors.includes('#abcdef'),'Prediction line color control is inert');
+     }finally{n.ctx.stroke=stroke;}
+     control('visualizeResolvingColor').setValue('#EEEEEE');control('distanceCoefficient').setValue(300);control('bulletSpeedCoefficient').setValue(4);control('offsetCoefficient').setValue(.1);control('resolverType').setValue('linear');
     }finally{performance.now=savedNow;}
     const identity=[localStorage.getItem('token'),localStorage.getItem('tokenId'),Number(localStorage.getItem('userId'))];
     n.network.state=64;const restore=n.joinPayload(35);n.network.state=0;const normal=n.joinPayload(35);
@@ -330,7 +352,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    }finally{restoreIntegrityNetwork();integrity.set(savedIntegrity);}
    check(m.connectionInfo().integrityCompatibility===true,'Automatic build omitted native signature compatibility');
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,automation_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,aim_settings_and_presets:true,automation_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

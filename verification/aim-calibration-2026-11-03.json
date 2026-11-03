@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "method": "Grid search across two development folds maximizes hits within radius 38, then minimizes RMS; final evaluation uses a third set of distances, intervals, latency and phases",
+  "candidatesPerGroup": 48,
+  "groups": {
+    "ak47_close": {
+      "speed": 1.4,
+      "path": 900,
+      "settings": {
+        "ImprovedAimEnabled": true,
+        "resolverType": "linear",
+        "distanceCoefficient": 330,
+        "bulletSpeedCoefficient": 4,
+        "offsetCoefficient": 0.1,
+        "visualizeResolving": false
+      },
+      "training": {
+        "scenes": 832,
+        "rms": 35.53440563432037,
+        "p95": 87.66513819381082,
+        "hits": 681,
+        "hitRadius": 38
+      },
+      "holdout": {
+        "scenes": 256,
+        "rms": 39.44105889413396,
+        "p95": 94.79722625210485,
+        "hits": 196,
+        "hitRadius": 38
+      },
+      "previous": {
+        "scenes": 256,
+        "rms": 39.92065922486495,
+        "p95": 99.5611120450661,
+        "hits": 202,
+        "hitRadius": 38
+      }
+    },
+    "ak47_far": {
+      "speed": 1.4,
+      "path": 900,
+      "settings": {
+        "ImprovedAimEnabled": true,
+        "resolverType": "linear",
+        "distanceCoefficient": 300,
+        "bulletSpeedCoefficient": 4,
+        "offsetCoefficient": 0.8,
+        "visualizeResolving": false
+      },
+      "training": {
+        "scenes": 832,
+        "rms": 128.54579270092614,
+        "p95": 313.34817258735825,
+        "hits": 494,
+        "hitRadius": 38
+      },
+      "holdout": {
+        "scenes": 256,
+        "rms": 126.53842340993741,
+        "p95": 311.6736719002131,
+        "hits": 147,
+        "hitRadius": 38
+      },
+      "previous": {
+        "scenes": 256,
+        "rms": 121.77431476689613,
+        "p95": 299.86592253006995,
+        "hits": 139,
+        "hitRadius": 38
+      }
+    },
+    "laser_close": {
+      "speed": 1.45,
+      "path": 900,
+      "settings": {
+        "ImprovedAimEnabled": true,
+        "resolverType": "smoothed",
+        "distanceCoefficient": 330,
+        "bulletSpeedCoefficient": 4,
+        "offsetCoefficient": 0.1,
+        "visualizeResolving": false
+      },
+      "training": {
+        "scenes": 832,
+        "rms": 34.25143268245802,
+        "p95": 84.40987001770371,
+        "hits": 691,
+        "hitRadius": 38
+      },
+      "holdout": {
+        "scenes": 256,
+        "rms": 37.87686154781325,
+        "p95": 87.93040597638645,
+        "hits": 198,
+        "hitRadius": 38
+      },
+      "previous": {
+        "scenes": 256,
+        "rms": 38.640203475486366,
+        "p95": 97.13006433419143,
+        "hits": 200,
+        "hitRadius": 38
+      }
+    },
+    "laser_far": {
+      "speed": 1.45,
+      "path": 900,
+      "settings": {
+        "ImprovedAimEnabled": true,
+        "resolverType": "smoothed",
+        "distanceCoefficient": 330,
+        "bulletSpeedCoefficient": 4,
+        "offsetCoefficient": 1.6,
+        "visualizeResolving": false
+      },
+      "training": {
+        "scenes": 832,
+        "rms": 122.83791849885345,
+        "p95": 297.17417578666294,
+        "hits": 496,
+        "hitRadius": 38
+      },
+      "holdout": {
+        "scenes": 256,
+        "rms": 120.80467699711097,
+        "p95": 294.57400552765887,
+        "hits": 145,
+        "hitRadius": 38
+      },
+      "previous": {
+        "scenes": 256,
+        "rms": 117.4300809501455,
+        "p95": 294.2819999545046,
+        "hits": 139,
+        "hitRadius": 38
+      }
+    }
+  },
+  "limits": [
+    "Offline model; live accuracy not measured",
+    "Assumed receive delays 25–95 ms and command delays 10–50 ms in the final holdout",
+    "No spread, obstacles, armor or unknown server behavior; target direction changes are not predictable"
+  ],
+  "nativePhysics": [
+    {
+      "sound": "audio/ak47-shot.mp3",
+      "index": 10,
+      "speed": 1.4,
+      "path": 900
+    },
+    {
+      "sound": "audio/laser-submachine-shot.mp3",
+      "index": 37,
+      "speed": 1.45,
+      "path": 900
+    }
+  ],
+  "nativeSourceSha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+  "profileControlsNotOptimized": [
+    "Cursor FOV suggested radii 250/450 are selection preferences; the projectile calibration uses a single selected target",
+    "BulletSpeedCoefficient 4 keeps native weapon speed; grid search varies distance scaling and delay"
+  ]
+}

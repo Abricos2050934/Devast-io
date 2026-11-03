@@ -20,8 +20,10 @@ test('a dense aim scan reads self once and uses no linear clan lookup, while met
 test('ILM angle mode renders only its four original lines in a dense scene',()=>{
  const f=fixture({dom:true});scene(f,1,Array.from({length:120},(_,i)=>player(i+1,i*20,i*30)));
  for(let i=1;i<=120;i++)f.world['ᴎ︃ᄉ'][i]={'а༤̘':-1};
- f.mod.setSetting('visualizeResolving',false);f.mod.setSetting('AimBotEnabled',true);f.mod.step(0);
- assert.equal(f.dom.calls.filter(c=>c.name==='lineTo').length,4);f.mod.dispose();
+ f.mod.setSetting('visualizeResolving',true);f.mod.setSetting('AimBotEnabled',true);f.mod.step(0);
+ assert.equal(f.dom.calls.filter(c=>c.name==='lineTo').length,4);
+ f.dom.calls.length=0;f.mod.setSetting('visualizeResolving',false);f.mod.step(20);
+ assert.equal(f.dom.calls.filter(c=>c.name==='lineTo').length,0);f.mod.dispose();
 });
 test('dense metadata slots preserve extended player IDs, ghoul UIDs and fresh clan membership',()=>{
  const f=fixture();try{

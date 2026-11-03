@@ -1,0 +1,202 @@
+{
+  "schema": 1,
+  "release": "3eabfe610dd666a5d39131bc1128ef9ffcee1f91c13853efc7bf34b64b90d191",
+  "output_sha256": "684f15814ed414efa5eb11a6920a3082d62da15b689e7998aef0d8b463322804",
+  "module_sha256": {
+    "mod/responsive.js": "28bba13674b63d33c60fb7acec6b79c3c26d5fd4d38cb2eaa89e862f17e93227",
+    "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
+    "mod/ilm-aim.js": "56b414a994e3e2b7dc9c5b69f64baa63228b1be01a2bb50a0d86448cb7a89aed",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 166,
+    "python_tests": 41
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/adaptive-aim.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/aim-presets.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "output_sha256": "684f15814ed414efa5eb11a6920a3082d62da15b689e7998aef0d8b463322804",
+      "browser_version": "154.0.8037.57",
+      "native": {
+        "menu": true,
+        "aim_settings_and_presets": true,
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "output_sha256": "684f15814ed414efa5eb11a6920a3082d62da15b689e7998aef0d8b463322804",
+      "browser_version": "153.0",
+      "native": {
+        "menu": true,
+        "aim_settings_and_presets": true,
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    }
+  },
+  "calibration": {
+    "report": "verification/aim-calibration-2026-11-03.json",
+    "sha256": "6e645c6e9f0819cb9b1d7763149c1400b5f725cf80caa11ac077d49de40c3ca7",
+    "candidates_per_group": 48,
+    "development_scenarios_per_group": 832,
+    "holdout_scenarios_per_group": 256,
+    "live_server": "not_tested"
+  },
+  "limits": [
+    "Presets optimize the stated offline motion model and are not universally best for every ping or target.",
+    "Held-out close-range results slightly regressed; far-range results improved. See calibration report.",
+    "Target selection FOV is a suggested preference, not optimized in the single-target projectile model."
+  ]
+}
