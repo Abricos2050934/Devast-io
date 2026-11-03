@@ -33,6 +33,8 @@
       "function-indicators",
       "jitter-with-shot-priority",
       "timestamped-weapon-interception",
+      "cursor-autobuild-native-preview",
+      "native-shared-canvas",
       "native-integrity-signature-compatibility"
     ],
     "removed_overlays": [
@@ -49,6 +51,10 @@
       "tests/jitter.test.cjs",
       "tests/player-labels.test.cjs",
       "tests/adaptive-aim.test.cjs"
+    ],
+    "required_browsers": [
+      "chromium",
+      "firefox"
     ]
   },
   "module_sha256": {
@@ -61,7 +67,7 @@
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -126,7 +132,139 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-03T08:37:16.262Z",
+  "finished_at": "2026-11-03T08:46:29.247Z",
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "output_sha256": "08b4a536cc05aff5f02bd765aaa084359eb0ef91bdf2e1db1435d0dfeda1bf02",
+      "browser_version": "154.0.8037.57",
+      "native": {
+        "menu": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "output_sha256": "08b4a536cc05aff5f02bd765aaa084359eb0ef91bdf2e1db1435d0dfeda1bf02",
+      "browser_version": "153.0",
+      "native": {
+        "menu": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      }
+    }
+  },
   "candidate_function_tests": {
     "status": "passed",
     "files": [
@@ -145,6 +283,6 @@
     "status": "passed",
     "command": "npm test",
     "node_tests": 147,
-    "python_tests": 27
+    "python_tests": 35
   }
 }
