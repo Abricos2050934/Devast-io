@@ -157,6 +157,7 @@ function __installDevastMod(B) {
       this.lockId = -1;
       this.mouseFov = 12345;
       this.OpenEverythingByClick = true;
+      this.RightClickDoors = true;
       this.ShowBuildingOwner = true;
       this.AimbotKey = "Space";
       this.AutoBuiledKey = "KeyB";
@@ -1412,8 +1413,22 @@ function __installDevastMod(B) {
     const me = B.world.і३α;
     return me.Іߒ̇ === 0 && me.ᴑܛ̉ === e.id && (!MOD.LootDataEnabled || allowedLootIds.has(e.с४̉));
   }
+  const doorInteraction={status:'idle',message:'',id:null,owner:null,expires:0};
+  let pendingDoor=null;
+  function updateDoorInteraction(now=performance.now()) {
+    if(!pendingDoor)return;
+    const current=records.find(r=>r.type===pendingDoor.type&&r.e.id===pendingDoor.id&&r.e.ρ͏१===pendingDoor.owner);
+    if(current&&!!(current.e.state&16)!==pendingDoor.wasOpen){
+      doorInteraction.status='confirmed';
+      doorInteraction.message=current.e.state&16?'Дверь открыта':'Дверь закрыта';
+      doorInteraction.expires=now+1500;pendingDoor=null;
+    }else if(now-pendingDoor.at>=1500){
+      doorInteraction.status='unconfirmed';doorInteraction.message='Нет подтверждения от двери';
+      doorInteraction.expires=now+2000;pendingDoor=null;
+    }
+  }
   function openUnderMouse() {
-    if (!playing() || !MOD.OpenEverythingByClick || B.chatActive?.()) return false;
+    if (!playing() || (!MOD.RightClickDoors&&!MOD.OpenEverythingByClick) || B.chatActive?.()) return false;
     const point = cursorWorld();
     if (!point) return false;
     const x = Math.floor(point.x / 100), y = Math.floor(point.y / 100);
@@ -1424,11 +1439,16 @@ function __installDevastMod(B) {
       const d = building(r);
       if(!d)continue;
       if(B.isManualDoor?.(d)){
+        if(!MOD.RightClickDoors)continue;
         // E describes the native nearest target. A right click addresses this
         // door directly; the server decides whether the action is permitted.
-        return __send([d.ᅠ̠︆,r.e.id,r.e.ρ͏१]);
+        if(!__send([d.ᅠ̠︆,r.e.id,r.e.ρ͏१]))return false;
+        const now=performance.now();
+        pendingDoor={type:r.type,id:r.e.id,owner:r.e.ρ͏१,wasOpen:!!(r.e.state&16),at:now};
+        Object.assign(doorInteraction,{status:'requested',message:'Запрос двери отправлен',id:r.e.id,owner:r.e.ρ͏१,expires:now+1500});
+        return true;
       }
-      if(me.Іߒ̇===2 && me.ㅤι７===r.e.id && me.ᅠ༤ࡀ===r.e.ρ͏१ && me.ᅠ̠︆===d.ᅠ̠︆)selected=[d.ᅠ̠︆,r.e.id,r.e.ρ͏१];
+      if(MOD.OpenEverythingByClick && me.Іߒ̇===2 && me.ㅤι７===r.e.id && me.ᅠ༤ࡀ===r.e.ρ͏१ && me.ᅠ̠︆===d.ᅠ̠︆)selected=[d.ᅠ̠︆,r.e.id,r.e.ρ͏१];
     }
     return selected ? __send(selected) : false;
   }
@@ -1548,6 +1568,7 @@ function __installDevastMod(B) {
     if (playerListCount.textContent !== title) playerListCount.textContent=title;
   }
   function draw() {
+    updateDoorInteraction();
     if (!playing()) {
       if (!nativeDraw && ctx && overlay) ctx.clearRect(0, 0, overlay.width, overlay.height);
       if (functionList) functionList.style.display = 'none';
@@ -1586,7 +1607,7 @@ function __installDevastMod(B) {
       }
       if (MOD.ShowPosition) text('[' + Math.floor(me.x / 100) + ':' + Math.floor(me.y / 100) + ']', 100, 32, '#fff', 18);
       let ownerCursor, ownerCursorRead=false,ownerLabelCount=0;
-      const drawRecords=MOD.ShowBuildingOwner?records:playerRecords;
+      const drawRecords=MOD.ShowBuildingOwner||MOD.RightClickDoors?records:playerRecords;
       for (const r of drawRecords) {
         if (r.type === B.categories.player) {
           const id = r.e.ρ͏१, p = at(r.e), self = id === me.id, color = self && !validClan(id) ? '#00ffff' : clanColor(id);
@@ -1608,7 +1629,7 @@ function __installDevastMod(B) {
             const meta = playerMeta(id), sprite = meta && B.karma[meta.ᴀ४ބ];
             if (sprite && B.graphics.Ꮷߎ̜) B.graphics.Ꮷߎ̜(sprite, v.x + r.e.x, v.y + r.e.y - 85, 0, 0, 0, 0.6);
           }
-        } else if (MOD.ShowBuildingOwner && typeof r.e.ᴉ९ܘ==='number') {
+        } else if ((MOD.ShowBuildingOwner||MOD.RightClickDoors) && typeof r.e.ᴉ९ܘ==='number') {
           if (!ownerCursorRead) {ownerCursor=cursorWorld();ownerCursorRead=true;}
           const point = ownerCursor;
           if (!point) continue;
@@ -1618,7 +1639,11 @@ function __installDevastMod(B) {
             if(!descriptor)continue;
             const p=at(r.e),id=r.e.ρ͏१,kind=descriptor.detail?.name;
             const owner=Number.isInteger(id)&&id>0?(nickname(id)?nickname(id)+' ':'')+'#'+id:'Owner unknown';
-            text((kind?kind+': ':'')+owner,p.x,p.y-35-18*ownerLabelCount++,clanColor(id),16);
+            if(MOD.ShowBuildingOwner)text((kind?kind+': ':'')+owner,p.x,p.y-35-18*ownerLabelCount++,clanColor(id),16);
+            if(MOD.RightClickDoors&&B.isManualDoor?.(descriptor)){
+              const feedback=doorInteraction.id===r.e.id&&doorInteraction.owner===id&&performance.now()<doorInteraction.expires;
+              text(feedback?doorInteraction.message:(r.e.state&16?'ПКМ — закрыть дверь':'ПКМ — открыть дверь'),p.x,p.y-75,feedback&&doorInteraction.status==='unconfirmed'?'#ffb14e':'#fff',14);
+            }
           }
         }
       }
@@ -2158,7 +2183,7 @@ function __installDevastMod(B) {
   const canvas = document.getElementById('can');
   if (canvas) {
     listen(canvas, 'contextmenu', e => {
-      if (MOD.OpenEverythingByClick && playing()) e.preventDefault();
+      if ((MOD.RightClickDoors||MOD.OpenEverythingByClick) && playing()) e.preventDefault();
     });
     listen(canvas, 'wheel', e => {
       if (!playing()) return;
@@ -2208,6 +2233,7 @@ function __installDevastMod(B) {
       Reset: () => setSetting('zoomFactor', 1)
     }, 'Reset');
     const automation = menu.addFolder('Automation');
+    add(automation,'RightClickDoors','ПКМ: двери');
     for (const key of ['SAutoLootEnabled', 'FAutoLootEnabled', 'LootDataEnabled', 'AutoTakeEnabled', 'AntiKickEnabled', 'OpenEverythingByClick']) add(automation, key);
     add(automation,'AutoBuiledEnabled','AutoBuild').domElement.title = 'Ставит выбранный блок в допустимую клетку предпросмотра под курсором.';
     const filter = automation.addFolder('Loot filter');
@@ -2344,6 +2370,7 @@ function __installDevastMod(B) {
     step,
     setSetting,
     openUnderMouse,
+    get doorInteraction(){updateDoorInteraction();return {...doorInteraction,pending:!!pendingDoor};},
     clanColor,
     prepareClanTag,
     playerLabel,

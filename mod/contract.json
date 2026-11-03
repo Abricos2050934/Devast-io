@@ -32,7 +32,8 @@
     "hover-building-owners",
     "received-mines-and-wires-visibility",
     "right-click-hovered-door",
-    "right-click-door-independent-of-native-prompt"
+    "right-click-door-independent-of-native-prompt",
+    "independent-door-control-and-server-state-feedback"
   ],
   "removed_overlays": [
     "bottom-gauge-text",

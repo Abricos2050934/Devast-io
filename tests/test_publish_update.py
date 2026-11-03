@@ -94,3 +94,11 @@ class PublicationTests(unittest.TestCase):
    self.validation['browsers']['firefox']['native'][key]=False;self.save()
    with self.assertRaisesRegex(ValueError,'E prompt.*firefox'):p.artifacts(self.root,self.out)
    self.validation['browsers']['firefox']['native'][key]=True
+
+ def test_independent_door_control_requires_state_feedback_verification(self):
+  self.contract['features']=['independent-door-control-and-server-state-feedback']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'independent_door_control':True,'door_server_state_feedback':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['door_server_state_feedback']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'state feedback.*firefox'):p.artifacts(self.root,self.out)

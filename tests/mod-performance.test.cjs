@@ -71,7 +71,7 @@ test('owner overlay resolves item metadata only for the hovered tile, while pres
   let reads=0;Object.defineProperty(f.B.items,0,{get(){reads++;return {'ࡀ︂̄':7};}});f.world['ᴎ︃ᄉ'][2]['ο̏︇']='Owner';
   scene(f,3,Array.from({length:1000},(_,i)=>({id:i,x:100+i,y:100,'е̝ހ':0,'Іࡈ５':0,'αބ̞':i===0?-1:i,'ᴀܛ٤':-1,'ᴘ४１':2})));
   f.mod.step(0);assert.equal(reads,1);assert.ok(f.dom.calls.some(c=>c.name==='fillText'&&c.args[0]==='Owner #2'));
-  reads=0;f.mod.setSetting('ShowBuildingOwner',false);f.mod.step(20);assert.equal(reads,0);
+  reads=0;f.mod.setSetting('ShowBuildingOwner',false);f.mod.setSetting('RightClickDoors',false);f.mod.step(20);assert.equal(reads,0);
  }finally{f.mod.dispose();}
 });
 test('status HUD avoids rewriting unchanged layout styles but responds to resizing',()=>{

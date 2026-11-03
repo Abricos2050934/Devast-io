@@ -64,7 +64,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   await page.context().addCookies([{name:'devast_fixture_cookie',value:'retained',domain:'devast.io',path:'/',secure:true}]);
   await page.addInitScript(()=>{
    if(!localStorage.getItem('fixture-seeded')){
-    for(const [k,v]of Object.entries({token:'fixture-original-token',tokenId:'123',userId:'2',serverVersion:'previous-version',BestModMenuConfig:JSON.stringify({mouseFov:777,zoomFactor:.8}),'BestModMenuConfig:ilm2':'1','BestModMenuConfig:loot':JSON.stringify({steel:false})}))localStorage.setItem(k,v);
+    for(const [k,v]of Object.entries({token:'fixture-original-token',tokenId:'123',userId:'2',serverVersion:'previous-version',BestModMenuConfig:JSON.stringify({mouseFov:777,zoomFactor:.8,OpenEverythingByClick:false}),'BestModMenuConfig:ilm2':'1','BestModMenuConfig:loot':JSON.stringify({steel:false})}))localStorage.setItem(k,v);
     localStorage.setItem('fixture-seeded','1');
    }
   });
@@ -268,7 +268,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    let hitLayer;
    try{
     n.network.state=1;self.id=1;self[s['І๔︊']]=2;self[s['ⲟܐ༠']]=77;self[s['с̣ߏ']]=1;self[s['ࡀ︂̄']]=15;
-    m.setSetting('OpenEverythingByClick',true);
+    m.setSetting('OpenEverythingByClick',false);check(m.settings.RightClickDoors===true,'New door control inherited the disabled generic interaction setting');
     for(const key of Object.keys(doorSettings))m.setSetting(key,false);
     // Keep this native-client fixture stable while a real browser mouse event
     // travels through DOM hit testing and the capture/bubble event path.
@@ -297,7 +297,10 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     doorTransport.packets.length=0;await window.__doorClickMouse(p);
     const requests=doorTransport.packets.filter(packet=>packet[0]===15);
     check(JSON.stringify(requests)==='[[15,78,1]]','A real mouse press through a game surface wrapper failed to request the hovered door');
-    check(door.state===0,'Real mouse request faked an open door without a server update');
+    check(door.state===0&&m.doorInteraction.status==='requested','Real mouse request faked an open door without a server update');
+    // Apply the authoritative entity-state fixture after the request.
+    door.state=16;check(m.doorInteraction.status==='confirmed'&&m.doorInteraction.message==='Дверь открыта','Confirmed door state did not reach the click feedback');
+    check(m.settings.OpenEverythingByClick===false,'Door action changed the generic interaction preference');
    }finally{
     hitLayer?.remove();for(const [el,display]of hidden)el.style.display=display;
     n.view=doorView;m.render=doorRender;for(const [key,value]of Object.entries(doorSettings))m.setSetting(key,value);
@@ -318,7 +321,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    }finally{restoreIntegrityNetwork();integrity.set(savedIntegrity);}
    check(m.connectionInfo().integrityCompatibility===true,'Automatic build omitted native signature compatibility');
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}
