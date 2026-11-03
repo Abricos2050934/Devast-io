@@ -158,7 +158,7 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-03T19:09:15.575Z",
+  "finished_at": "2026-11-03T20:33:59.947Z",
   "browsers": {
     "chromium": {
       "status": "passed",
@@ -337,7 +337,7 @@
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 170,
+    "node_tests": 178,
     "python_tests": 42
   }
 }
