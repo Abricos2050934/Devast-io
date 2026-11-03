@@ -17,7 +17,7 @@ function candidateFixture(B,dir){
   });cache.set(value,proxy);original.set(proxy,value);return proxy;
  }
  const nativeKeys=new Set(['world','network','entities','input','types','items','graphics','renderer','karma']);
- const nativeCallbacks=new Set(['isManualDoor','canUseDoor']);
+ const nativeCallbacks=new Set(['isManualDoor']);
  const bridge=new Proxy(B,{get:(target,key)=>nativeKeys.has(key)?wrap(target[key]):nativeCallbacks.has(key)&&typeof target[key]==='function'?(...args)=>target[key](...args.map(value=>original.get(value)||value)):target[key]});
  const nativeArguments=new Set(['playerLabel','preparePlayerLabel','prepareClanTag']);
  function adaptMod(mod){return new Proxy(mod,{get(target,key){const value=target[key];return nativeArguments.has(key)?(first,...args)=>value(wrap(first),...args):value;}});}

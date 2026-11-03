@@ -1,5 +1,4 @@
 const test=require('node:test'),assert=require('node:assert/strict');
-const fs=require('node:fs'),vm=require('node:vm'),{parse}=require('../tools/parser.cjs');
 const {fixture,scene}=require('./mod-fixture.cjs');
 
 function setup(){
@@ -10,7 +9,7 @@ function setup(){
  const descriptor=f.B.items[33]={'ࡀ︂̄':15};f.B.items[34]={'ࡀ︂̄':16};
  Object.assign(f.world['ᅠᏧ‍'],{x:150,y:350,'І๔︊':2,'ⲟܐ༠':8,'с̣ߏ':1,'ࡀ︂̄':16});
  f.B.isManualDoor=d=>d===descriptor;
- let eligible=true,calls=0;f.B.canUseDoor=(d,e)=>{assert.equal(d,descriptor);assert.equal(e,door);calls++;return eligible;};
+ f.B.canUseDoor=()=>{throw Error('Right click must not consult the native E selector');};
  scene(f,3,[container,door,{...door,id:21,'αބ̞':2,x:250}]);f.mod.step(0);
  function press(options={}){
   let prevented=false,stopped=false;
@@ -18,7 +17,7 @@ function setup(){
   for(const fn of f.listeners.get('mousedown'))fn(event);
   return {prevented,stopped};
  }
- return {f,door,press,get calls(){return calls;},set eligible(value){eligible=value;}};
+ return {f,door,press};
 }
 test('right click opens the hovered door over a selected container, once, using click coordinates and zoom',()=>{
  const {f,door,press}=setup();try{
@@ -37,33 +36,31 @@ test('right click ignores UI, typing, disabled controls and other tiles',()=>{
   for(const target of [{tagName:'INPUT',closest(){return null;}},{closest(){return {};}}]){
    assert.deepEqual(press({target}),{prevented:false,stopped:false});
   }
-  press({clientX:260});assert.equal(state.calls,0);
-  f.B.chatActive=()=>true;press();assert.equal(state.calls,0);f.B.chatActive=()=>false;
-  f.mod.setSetting('OpenEverythingByClick',false);press();assert.equal(state.calls,0);
-  f.mod.setSetting('OpenEverythingByClick',true);f.network.state=0;press();assert.equal(state.calls,0);
+  press({clientX:260});
+  f.B.chatActive=()=>true;press();f.B.chatActive=()=>false;
+  f.mod.setSetting('OpenEverythingByClick',false);press();
+  f.mod.setSetting('OpenEverythingByClick',true);f.network.state=0;press();
   assert.equal(f.packets.length,0);
  }finally{f.mod.dispose();}
 });
-test('ineligible hovered door cannot fall back to a stale selected door',()=>{
- const state=setup(),{f,press}=state;try{
-  state.eligible=false;Object.assign(f.world['ᅠᏧ‍'],{'ⲟܐ༠':20,'ࡀ︂̄':15});
-  assert.deepEqual(press(),{prevented:false,stopped:false});assert.equal(state.calls,1);assert.equal(f.packets.length,0);
+test('door request is independent of E, nearest selection, client range and owner filtering',()=>{
+ const {f,door,press}=setup();try{
+  for(const state of [-1,0,1,2]){
+   Object.assign(f.world['ᅠᏧ‍'],{'І๔︊':state,'ⲟܐ༠':99,'с̣ߏ':9,'ࡀ︂̄':16,x:10000,y:10000});
+   const before=JSON.stringify(f.world['ᅠᏧ‍']);
+   f.packets.length=0;assert.equal(press().prevented,true);assert.deepEqual(f.packets,[[15,20,1]]);
+   assert.equal(JSON.stringify(f.world['ᅠᏧ‍']),before);assert.equal(door.state,0);
+  }
+  door['ᴘ४１']=2;f.packets.length=0;press();assert.deepEqual(f.packets,[[15,20,2]]);assert.equal(door.state,0);
  }finally{f.mod.dispose();}
 });
-test('native eligibility adapter restores selection and nearest distance on success, refusal and error',()=>{
- const op=JSON.parse(fs.readFileSync('patches/recovered-current.json')).operations.find(o=>o.id==='native-hovered-door-eligibility');
- const symbols=JSON.parse(fs.readFileSync('patches/recovered-bindings.json')).symbols;
- const reverse=Object.fromEntries(Object.entries(symbols).map(([key,value])=>[value,key]));
- const source=require('../tools/translate_payload.cjs').translate(op.after,reverse),tree=parse(source,{ecmaVersion:'latest'});
- const node=tree.body.find(n=>n.type==='ExpressionStatement'&&n.expression.type==='AssignmentExpression'&&n.expression.left.name==='__responsiveDoorEligibility').expression.right;
- const me={'І๔︊':2,'ⲟܐ༠':8,'с̣ߏ':1,'ࡀ︂̄':16,'օ᠌օ':{hint:'original'}};
- const saved={...me},ctx=vm.createContext({еܞ︌:{'ᅠᏧ‍':me},nativeNearestInteraction:0,nativeInteractionRange:12000});
- ctx.nativeSelectInteraction=(d,e,ownOnly)=>{
-  assert.equal(ctx.nativeNearestInteraction,12000);assert.equal(ownOnly,e['ᴘ४１']===0?0:1);
-  Object.assign(me,{'ࡀ︂̄':15,'ⲟܐ༠':20,'с̣ߏ':2,'ӧᄀ':9,'οࡃ̝':1,'І๔︊':2,'օ᠌օ':{hint:'door'}});ctx.nativeNearestInteraction=99;
-  if(d.error)throw Error('selector failed');return d.allowed;
- };
- const eligible=vm.runInContext('('+source.slice(node.start,node.end)+')',ctx);
- for(const allowed of [0,1]){assert.equal(eligible({allowed},{'ᴘ४１':allowed}),allowed===1);assert.deepEqual(me,saved);assert.equal(ctx.nativeNearestInteraction,0);}
- assert.throws(()=>eligible({error:true},{'ᴘ४１':2}),/selector failed/);assert.deepEqual(me,saved);assert.equal(ctx.nativeNearestInteraction,0);
+test('cursor picks the second adjacent door rather than the door with the E prompt',()=>{
+ const {f,press}=setup();try{
+  Object.assign(f.world['ᅠᏧ‍'],{'І๔︊':2,'ⲟܐ༠':20,'с̣ߏ':1,'ࡀ︂̄':15});
+  assert.deepEqual(press({clientX:160}),{prevented:true,stopped:true});assert.deepEqual(f.packets,[[15,21,1]]);
+  f.packets.length=0;
+  assert.equal(press({target:f.dom.document.body}).prevented,true,'A game surface wrapper must not swallow the click');
+  assert.deepEqual(f.packets,[[15,20,1]]);
+  f.packets.length=0;press({clientX:9});assert.equal(f.packets.length,0,'Clicks outside the game surface are ignored');
+ }finally{f.mod.dispose();}
 });

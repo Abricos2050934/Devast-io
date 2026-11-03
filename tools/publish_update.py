@@ -43,6 +43,8 @@ def artifacts(root, output):
             raise ValueError('Native world visibility was not verified in browser: ' + browser)
         if 'right-click-hovered-door' in contract.get('features', []) and report.get('native', {}).get('right_click_hovered_door') is not True:
             raise ValueError('Native right-click door interaction was not verified in browser: ' + browser)
+        if 'right-click-door-independent-of-native-prompt' in contract.get('features', []) and not all(report.get('native', {}).get(key) is True for key in ('right_click_without_native_prompt', 'right_click_real_mouse')):
+            raise ValueError('Door request without the E prompt and real mouse input were not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'

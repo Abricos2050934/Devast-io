@@ -74,9 +74,6 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   if(!left||!right||oldCanon.get(left)?.hash!==curCanon.get(right)?.hash)throw Error('Native network contract changed or ambiguous: '+key);
   pairs.set(left,right);learn(oldCanon.get(left),curCanon.get(right));nativeContracts.push(key);
  }
- const selectors=old.functions.filter(n=>n.id?.name===bindings.symbols.nativeSelectInteraction);
- if(selectors.length!==1 || !pairs.has(selectors[0]))throw Error('Native door interaction contract changed or ambiguous');
- nativeContracts.push('nativeSelectInteraction');
  const canonicalRequired=new Set();for(const source of [payload,bootstrap])for(const tok of acorn.tokenizer(source,{ecmaVersion:'latest'}))if(Object.hasOwn(bindings.symbols,tok.value))canonicalRequired.add(tok.value);
  // Existing protected metadata is decoded to a normal constructor assignment.
  const ops=profile.operations.map(op=>op.decoded_before?{...op,before:op.decoded_before,after:op.decoded_after}:op.id==='ilm-native-initial-nickname-id'?{...op,before:'this.ο३︀ = ο३︀',after:'this.ο३︀ = __ilmPlayerNickname(ο३︀,ᴘ५٢)'}:op);
@@ -144,7 +141,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const fireRule=operations.find(x=>x.id==='jitter-native-fire-priority');
  if(fireHelper&&fireRule) adaptedAim=adaptedAim.slice(0,fireHelper.start)+`function __jitterPatchNativeFire(source){const before=${JSON.stringify(fireRule.before)};if(source.split(before).length!==2)throw Error('Unsupported native fire handler');return source.replace(before,${JSON.stringify(fireRule.after)});}`+adaptedAim.slice(fireHelper.end);
  const output=assemble(Buffer.from(cur.source),generated,outputBindings.symbols,payload,bootstrap,gui,adaptedAim);
- const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴎܕα','ᴎ༩༣','І̎ܘ','еϲᄄ','ᴎ︅ހ','ѕ٨ᚄ','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠','рܙ๕','ᅟ᠌５','ᴀᄁ︃','рոᴎ','ᅠ̘ܛ','с२̸','ܐ̙ᄅ','ⲣܗ̴','ⲥ０２','ρ๘̘','еⲅ༦','е̊ނ'];
+ const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴎܕα','ᴎ༩༣','І̎ܘ','еϲᄄ','ᴎ︅ހ','ѕ٨ᚄ','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠','рܙ๕','ᅟ᠌５','ᴀᄁ︃','рոᴎ','ᅠ̘ܛ'];
  const roles={nativeIntegrityFlag:integrity.flag,nativeIntegritySigners:integrity.signers};for(const key of requiredNative){const next=map[key];if(!next)throw Error('Missing browser validation binding '+key);roles[key]=next;}
  return {source:cur.source,output,profile:generated,bindings:outputBindings,aim:adaptedAim,roles,
   report:{raw_sha256:hash(candidate),reference_sha256:hash(reference),deobfuscated_sha256:hash(cur.source),output_sha256:hash(output),matched_functions:pairs.size,native_network_contracts:nativeContracts,required_bindings:canonicalRequired.size,patches:operations.map(x=>x.id),integrity_compatibility:{status:'applied',predicates:integrity.operations.length},decoder_blocks:decodedNew.evidence,live_server:'not_tested'}};

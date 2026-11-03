@@ -1298,8 +1298,9 @@ function __installDevastMod(B) {
       const d = building(r);
       if(!d)continue;
       if(B.isManualDoor?.(d)){
-        if(B.canUseDoor(d,r.e))return __send([d.ࡀ︂̄,r.e.id,r.e.ᴘ४１]);
-        continue;
+        // E describes the native nearest target. A right click addresses this
+        // door directly; the server decides whether the action is permitted.
+        return __send([d.ࡀ︂̄,r.e.id,r.e.ᴘ४１]);
       }
       if(me.І๔︊===2 && me.ⲟܐ༠===r.e.id && me.с̣ߏ===r.e.ᴘ४１ && me.ࡀ︂̄===d.ࡀ︂̄)selected=[d.ࡀ︂̄,r.e.id,r.e.ᴘ४１];
     }
@@ -2002,7 +2003,12 @@ function __installDevastMod(B) {
   listen(window, 'mousedown', e => {
     if (e.target?.closest?.('.dg')) return;
     if (playerListPanel && e.composedPath?.().includes(playerListPanel)) return;
-    if(e.button===2 && e.target!==document.getElementById('can'))return;
+    if(e.button===2){
+      const target=e.target;
+      if(target?.isContentEditable || /^(INPUT|TEXTAREA|SELECT|BUTTON|A)$/.test(target?.tagName) || target?.closest?.('input,textarea,select,button,a,[contenteditable]'))return;
+      const bounds=document.getElementById('can')?.getBoundingClientRect();
+      if(!bounds || e.clientX<bounds.left || e.clientY<bounds.top || e.clientX>=bounds.left+bounds.width || e.clientY>=bounds.top+bounds.height)return;
+    }
     mouse = {
       x: e.clientX,
       y: e.clientY

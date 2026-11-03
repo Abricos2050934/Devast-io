@@ -1,4 +1,3 @@
-var __responsiveDoorEligibility;
 var __responsiveView = {x:0,y:0,scale:1,ctx:а०̅};
 var __responsiveMod = __installDevastMod({
   synchronizedRender:true, nativePlayerLabels:true,
@@ -14,7 +13,6 @@ var __responsiveMod = __installDevastMod({
   integrityPatched:()=>__devastIntegrityCompatibility,
   health:()=>еܞ︌.ᴘρࡀ?.ᴇ༤ᚆ?.value,
   isManualDoor:descriptor=>descriptor.ᴎߌ๕===ᴇ️̅.օ̠̄,
-  canUseDoor:(descriptor,entity)=>__responsiveDoorEligibility(descriptor,entity),
   adWaiting:()=>typeof ɑᚆᴏ !== 'undefined' && !!(ɑᚆᴏ && ɑᚆᴏ.ϲ१༧ === 1),
   returnToMenu:()=>{
     if(typeof ɑᚆᴏ.nativeHomeEnter === 'function') ɑᚆᴏ.nativeHomeEnter();

@@ -84,3 +84,13 @@ class PublicationTests(unittest.TestCase):
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   del self.validation['browsers']['firefox']['native']['right_click_hovered_door'];self.save()
   with self.assertRaisesRegex(ValueError,'right-click door.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_door_without_prompt_requires_real_mouse_verification(self):
+  self.contract['features']=['right-click-door-independent-of-native-prompt']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'right_click_without_native_prompt':True,'right_click_real_mouse':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for key in ['right_click_without_native_prompt','right_click_real_mouse']:
+   self.validation['browsers']['firefox']['native'][key]=False;self.save()
+   with self.assertRaisesRegex(ValueError,'E prompt.*firefox'):p.artifacts(self.root,self.out)
+   self.validation['browsers']['firefox']['native'][key]=True

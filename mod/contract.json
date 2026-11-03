@@ -31,7 +31,8 @@
     "native-integrity-signature-compatibility",
     "hover-building-owners",
     "received-mines-and-wires-visibility",
-    "right-click-hovered-door"
+    "right-click-hovered-door",
+    "right-click-door-independent-of-native-prompt"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
