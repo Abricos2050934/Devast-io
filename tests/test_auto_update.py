@@ -174,4 +174,36 @@ class DownloadTests(unittest.TestCase):
         with self.assertRaises(u.UpdateError):
             redirects.redirect_request(urllib.request.Request('https://devast.io/'), None, 302, '', {}, 'https://evil.test/steal')
 
+class PipelineBrowserTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name); self.work = self.root / 'work'; self.work.mkdir()
+        (self.root / 'mod').mkdir()
+        (self.root / 'mod/contract.json').write_text(json.dumps({'required_browsers': ['chromium', 'firefox'], 'candidate_tests': ['tests/feature.test.cjs']}))
+        self.body = b'candidate'; self.calls = []; self.failed = None; self.stale = False
+        from unittest.mock import patch
+        self.patch = patch.object(u, 'run', self.run_command); self.patch.start(); self.addCleanup(self.patch.stop)
+    def run_command(self, command, root, log, timeout=600, env=None):
+        self.calls.append((command, (env or {}).get('DEVAST_BROWSER')))
+        if command[0] == 'node' and command[1] == 'tools/auto_port.cjs':
+            (self.work / 'profile.json').write_text('{}'); (self.work / 'game.modded.js').write_bytes(self.body)
+        elif command[0] == 'node' and command[1] == 'tools/validate_update.cjs':
+            browser = env['DEVAST_BROWSER']
+            if browser == self.failed: raise u.UpdateError('Browser failed: ' + browser)
+            (self.work / 'validation.json').write_text(json.dumps({'status': 'passed', 'browser': browser, 'output_sha256': '0'*64 if self.stale and browser == 'firefox' else u.digest(self.body)}))
+        log.write_text('Ran 1 tests\n# tests 2\n')
+    def test_both_browsers_are_required_for_the_same_candidate(self):
+        report = u.pipeline(self.root, self.work, 'https://devast.io/js/new.js')
+        self.assertEqual(set(report['browsers']), {'chromium', 'firefox'})
+        self.assertTrue(all(r['status'] == 'passed' for r in report['browsers'].values()))
+        self.assertEqual(report['regression']['status'], 'passed')
+        self.assertTrue((self.work / 'validation-firefox.json').exists())
+    def test_firefox_failure_stops_the_pipeline(self):
+        self.failed = 'firefox'
+        with self.assertRaisesRegex(u.UpdateError, 'firefox'): u.pipeline(self.root, self.work, 'https://devast.io/js/new.js')
+        self.assertFalse(any(command[0] == 'npm' for command, _ in self.calls))
+    def test_stale_firefox_report_is_rejected(self):
+        self.stale = True
+        with self.assertRaisesRegex(u.UpdateError, 'does not match'): u.pipeline(self.root, self.work, 'https://devast.io/js/new.js')
+
 if __name__ == '__main__': unittest.main()

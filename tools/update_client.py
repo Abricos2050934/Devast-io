@@ -172,12 +172,27 @@ def pipeline(root, work, url):
     profile = read_json(work / 'profile.json')
     profile['source_url'] = url
     atomic_json(work / 'profile.json', profile)
-    run(['node', 'tools/validate_update.cjs', str(work)], root, work / 'validation.log')
     contract = read_json(root / 'mod/contract.json')
+    required_browsers = contract['required_browsers']
+    if not required_browsers or len(set(required_browsers)) != len(required_browsers):
+        raise UpdateError('A nonempty list of distinct browser checks is required')
+    browsers = {}
+    validation = None
+    for browser in required_browsers:
+        browser_env = dict(os.environ, DEVAST_BROWSER=browser)
+        run(['node', 'tools/validate_update.cjs', str(work)], root, work / ('validation-' + browser + '.log'), env=browser_env)
+        report = read_json(work / 'validation.json')
+        if (report.get('status') != 'passed' or report.get('browser') != browser or
+                report.get('output_sha256') != digest((work / 'game.modded.js').read_bytes())):
+            raise UpdateError('Browser validation does not match candidate: ' + browser)
+        atomic_json(work / ('validation-' + browser + '.json'), report)
+        if validation is None:
+            validation = dict(report)
+        browsers[browser] = {key: report.get(key) for key in ('status', 'output_sha256', 'browser_version', 'native', 'page_errors', 'reload_identity')}
+    validation['browsers'] = browsers
     candidate_env = dict(os.environ, DEVAST_TEST_CANDIDATE=str(work))
     run(['node', '--test', *contract['candidate_tests']], root, work / 'candidate-tests.log', env=candidate_env)
     run(['npm', 'test'], root, work / 'regression.log')
-    validation = read_json(work / 'validation.json')
     regression = (work / 'regression.log').read_text(errors='replace')
     node = re.search(r'(?m)^.*?tests (\d+)\s*$', regression)
     python = re.search(r'Ran (\d+) tests', regression)

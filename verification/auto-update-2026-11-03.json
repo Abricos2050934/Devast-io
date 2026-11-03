@@ -1,0 +1,415 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "production": {
+    "source_url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
+    "raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+    "output_sha256": "d9a24d230e63156cb290acde454377191a883dc058161fa7685c45bfd69c4cc1",
+    "validation": "passed",
+    "browsers": {
+      "chromium": {
+        "status": "passed",
+        "output_sha256": "d9a24d230e63156cb290acde454377191a883dc058161fa7685c45bfd69c4cc1",
+        "browser_version": "154.0.8037.57",
+        "native": {
+          "menu": true,
+          "native_shared_canvas": true,
+          "adaptive_weapon_prediction": true,
+          "initial_metadata": true,
+          "head_and_leaderboard_labels": true,
+          "packet_history": true,
+          "packet_removal": true,
+          "self_angle_modes": true,
+          "native_clan_colors_and_cache": true,
+          "native_nickname_color_and_cache": true,
+          "full_player_list_and_native_lifecycle": true,
+          "native_shot_matches_ilm_line": true,
+          "jitter_rotation_and_shot_priority": true,
+          "jitter_preserves_native_input": true,
+          "jitter_socket_backpressure": true,
+          "stable_frame_entity_records": true,
+          "firing_display_original_ilm_interpolation": true,
+          "continuous_fire_ilm_cadence": true,
+          "ilm_manual_fire_cadence": true,
+          "disconnect_preserves_aim_history": true,
+          "native_fast_loot_cadence": true,
+          "native_autobuild_cursor_preview": true,
+          "native_rejoin_identity": true,
+          "native_ad_failure_recovery": true,
+          "native_death_observation": true,
+          "death_stops_restore_retries": true,
+          "mod_errors": []
+        },
+        "page_errors": [],
+        "reload_identity": [
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          },
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          },
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          }
+        ]
+      },
+      "firefox": {
+        "status": "passed",
+        "output_sha256": "d9a24d230e63156cb290acde454377191a883dc058161fa7685c45bfd69c4cc1",
+        "browser_version": "153.0",
+        "native": {
+          "menu": true,
+          "native_shared_canvas": true,
+          "adaptive_weapon_prediction": true,
+          "initial_metadata": true,
+          "head_and_leaderboard_labels": true,
+          "packet_history": true,
+          "packet_removal": true,
+          "self_angle_modes": true,
+          "native_clan_colors_and_cache": true,
+          "native_nickname_color_and_cache": true,
+          "full_player_list_and_native_lifecycle": true,
+          "native_shot_matches_ilm_line": true,
+          "jitter_rotation_and_shot_priority": true,
+          "jitter_preserves_native_input": true,
+          "jitter_socket_backpressure": true,
+          "stable_frame_entity_records": true,
+          "firing_display_original_ilm_interpolation": true,
+          "continuous_fire_ilm_cadence": true,
+          "ilm_manual_fire_cadence": true,
+          "disconnect_preserves_aim_history": true,
+          "native_fast_loot_cadence": true,
+          "native_autobuild_cursor_preview": true,
+          "native_rejoin_identity": true,
+          "native_ad_failure_recovery": true,
+          "native_death_observation": true,
+          "death_stops_restore_retries": true,
+          "mod_errors": []
+        },
+        "page_errors": [],
+        "reload_identity": [
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          },
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          },
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          }
+        ]
+      }
+    },
+    "regression": {
+      "status": "passed",
+      "command": "npm test",
+      "node_tests": 140,
+      "python_tests": 32
+    },
+    "contract": {
+      "schema": 1,
+      "name": "Devast-io ILM mod",
+      "modules": [
+        "mod/responsive.js",
+        "mod/bootstrap.js",
+        "mod/ilm-aim.js",
+        "vendor/dat.gui.recovered.js"
+      ],
+      "features": [
+        "ilm-aim",
+        "prediction-and-auto-fire",
+        "player-ghoul-history",
+        "native-nickname-id",
+        "native-self-angle",
+        "zoom",
+        "loot-and-filter",
+        "auto-build",
+        "container-take",
+        "cursor-interaction",
+        "chat",
+        "nickname-copy",
+        "rejoin-without-cookie-reset",
+        "hotkeys-and-settings",
+        "mines-and-building-opacity",
+        "function-indicators",
+        "jitter-with-shot-priority",
+        "timestamped-weapon-interception",
+        "cursor-autobuild-native-preview",
+        "native-shared-canvas"
+      ],
+      "removed_overlays": [
+        "bottom-gauge-text",
+        "aim-bot-head-label"
+      ],
+      "candidate_tests": [
+        "tests/mod.test.cjs",
+        "tests/aim-settings.test.cjs",
+        "tests/mod-performance.test.cjs",
+        "tests/ilm-parity.test.cjs",
+        "tests/rejoin-recovery.test.cjs",
+        "tests/ilm-autobuild.test.cjs",
+        "tests/jitter.test.cjs",
+        "tests/player-labels.test.cjs",
+        "tests/adaptive-aim.test.cjs"
+      ],
+      "required_browsers": [
+        "chromium",
+        "firefox"
+      ]
+    }
+  },
+  "compatible_upgrade_test": {
+    "scope": "Controlled compatible upstream simulation only; never published",
+    "identifier_rotations": {
+      "ᴎ༩༣": "ϗUpdatedNativeFire",
+      "ᴇࡃ̠": "ϗUpdatedBulletSpeed",
+      "і६३": "ϗUpdatedWeapons",
+      "ㅤ̢︋": "ϗUpdatedPreviewY",
+      "οކᚁ": "ϗUpdatedBuildRotation"
+    },
+    "initial_state": "unchanged",
+    "future_state": "updated",
+    "repeat_state": "unchanged",
+    "original_raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+    "future_raw_sha256": "ba1b7ac7a8a0bd893e4f39957c56626319a5b10a5c78841f73a50d9158ec60ff",
+    "future_output_sha256": "d3b11a15ea76344d597a97acd643c56d929e6d20e658566201165ebe4fd41bc6",
+    "future_source_url": "https://devast.io/js/compatible-next-ba1b7ac7a8a0.js",
+    "browsers": {
+      "chromium": {
+        "status": "passed",
+        "output_sha256": "d3b11a15ea76344d597a97acd643c56d929e6d20e658566201165ebe4fd41bc6",
+        "browser_version": "154.0.8037.57",
+        "native": {
+          "menu": true,
+          "native_shared_canvas": true,
+          "adaptive_weapon_prediction": true,
+          "initial_metadata": true,
+          "head_and_leaderboard_labels": true,
+          "packet_history": true,
+          "packet_removal": true,
+          "self_angle_modes": true,
+          "native_clan_colors_and_cache": true,
+          "native_nickname_color_and_cache": true,
+          "full_player_list_and_native_lifecycle": true,
+          "native_shot_matches_ilm_line": true,
+          "jitter_rotation_and_shot_priority": true,
+          "jitter_preserves_native_input": true,
+          "jitter_socket_backpressure": true,
+          "stable_frame_entity_records": true,
+          "firing_display_original_ilm_interpolation": true,
+          "continuous_fire_ilm_cadence": true,
+          "ilm_manual_fire_cadence": true,
+          "disconnect_preserves_aim_history": true,
+          "native_fast_loot_cadence": true,
+          "native_autobuild_cursor_preview": true,
+          "native_rejoin_identity": true,
+          "native_ad_failure_recovery": true,
+          "native_death_observation": true,
+          "death_stops_restore_retries": true,
+          "mod_errors": []
+        },
+        "page_errors": [],
+        "reload_identity": [
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          },
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          },
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          }
+        ]
+      },
+      "firefox": {
+        "status": "passed",
+        "output_sha256": "d3b11a15ea76344d597a97acd643c56d929e6d20e658566201165ebe4fd41bc6",
+        "browser_version": "153.0",
+        "native": {
+          "menu": true,
+          "native_shared_canvas": true,
+          "adaptive_weapon_prediction": true,
+          "initial_metadata": true,
+          "head_and_leaderboard_labels": true,
+          "packet_history": true,
+          "packet_removal": true,
+          "self_angle_modes": true,
+          "native_clan_colors_and_cache": true,
+          "native_nickname_color_and_cache": true,
+          "full_player_list_and_native_lifecycle": true,
+          "native_shot_matches_ilm_line": true,
+          "jitter_rotation_and_shot_priority": true,
+          "jitter_preserves_native_input": true,
+          "jitter_socket_backpressure": true,
+          "stable_frame_entity_records": true,
+          "firing_display_original_ilm_interpolation": true,
+          "continuous_fire_ilm_cadence": true,
+          "ilm_manual_fire_cadence": true,
+          "disconnect_preserves_aim_history": true,
+          "native_fast_loot_cadence": true,
+          "native_autobuild_cursor_preview": true,
+          "native_rejoin_identity": true,
+          "native_ad_failure_recovery": true,
+          "native_death_observation": true,
+          "death_stops_restore_retries": true,
+          "mod_errors": []
+        },
+        "page_errors": [],
+        "reload_identity": [
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          },
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          },
+          {
+            "token": true,
+            "tokenId": true,
+            "userId": true,
+            "cookie": true,
+            "settings": true,
+            "loot": true
+          }
+        ]
+      }
+    },
+    "regression": {
+      "status": "passed",
+      "command": "npm test",
+      "node_tests": 140,
+      "python_tests": 32
+    },
+    "contract": {
+      "schema": 1,
+      "name": "Devast-io ILM mod",
+      "modules": [
+        "mod/responsive.js",
+        "mod/bootstrap.js",
+        "mod/ilm-aim.js",
+        "vendor/dat.gui.recovered.js"
+      ],
+      "features": [
+        "ilm-aim",
+        "prediction-and-auto-fire",
+        "player-ghoul-history",
+        "native-nickname-id",
+        "native-self-angle",
+        "zoom",
+        "loot-and-filter",
+        "auto-build",
+        "container-take",
+        "cursor-interaction",
+        "chat",
+        "nickname-copy",
+        "rejoin-without-cookie-reset",
+        "hotkeys-and-settings",
+        "mines-and-building-opacity",
+        "function-indicators",
+        "jitter-with-shot-priority",
+        "timestamped-weapon-interception",
+        "cursor-autobuild-native-preview",
+        "native-shared-canvas"
+      ],
+      "removed_overlays": [
+        "bottom-gauge-text",
+        "aim-bot-head-label"
+      ],
+      "candidate_tests": [
+        "tests/mod.test.cjs",
+        "tests/aim-settings.test.cjs",
+        "tests/mod-performance.test.cjs",
+        "tests/ilm-parity.test.cjs",
+        "tests/rejoin-recovery.test.cjs",
+        "tests/ilm-autobuild.test.cjs",
+        "tests/jitter.test.cjs",
+        "tests/player-labels.test.cjs",
+        "tests/adaptive-aim.test.cjs"
+      ],
+      "required_browsers": [
+        "chromium",
+        "firefox"
+      ]
+    },
+    "publication_preparation": "passed locally; simulated native JS not published"
+  },
+  "github_observations": {
+    "workflow_state": "active",
+    "scheduled_run": {
+      "id": 41563540153,
+      "head_sha": "e231eee3d397e65d571d37215b1bedb5877c18b3",
+      "conclusion": "success",
+      "url": "https://github.com/Abricos2050934/Devast-io/actions/runs/41563540153"
+    },
+    "manual_run": {
+      "id": 41603662454,
+      "conclusion": "success",
+      "url": "https://github.com/Abricos2050934/Devast-io/actions/runs/41603662454"
+    }
+  },
+  "added_checks": [
+    "Chromium and Firefox required automatically on every newly built version",
+    "Each browser report must match the candidate output SHA256",
+    "Publisher requires the current complete feature contract and candidate test list",
+    "Publisher rejects missing, failed or stale browser reports"
+  ],
+  "limitations": [
+    "The official upstream JS bytes were unchanged during this audit; the renamed future version was a controlled compatible simulation",
+    "Arbitrary protocol/protection changes may require new porting rules; failed candidates do not replace the published client",
+    "GitHub schedule is configured for every 15 minutes, but platform scheduling can be delayed"
+  ]
+}

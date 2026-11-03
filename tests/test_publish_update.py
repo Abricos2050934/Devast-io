@@ -11,7 +11,7 @@ class PublicationTests(unittest.TestCase):
   self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.out=self.root/'output';self.release='a'*64
   (self.root/'mod').mkdir();(self.root/'mod/test.js').write_text('current mod');self.d=self.out/'versions'/self.release;self.d.mkdir(parents=True);self.body=b'current bundled client';(self.d/'game.modded.js').write_bytes(self.body)
   (self.root/'resource-override').mkdir();(self.root/'resource-override/Devast-io-GitHub-Resource-Override.json').write_bytes((p.ROOT/'resource-override/Devast-io-GitHub-Resource-Override.json').read_bytes())
-  self.meta={'release':self.release,'output_sha256':p.digest(self.body)};self.validation={'output_sha256':p.digest(self.body),'status':'passed','regression':{'status':'passed'},'candidate_function_tests':{'status':'passed'},'mod_contract':{'modules':['mod/test.js']},'module_sha256':{'mod/test.js':p.digest(b'current mod')},'mod_bundle_sha256':'bundle','resource_override_sha256':p.digest((self.root/'resource-override/Devast-io-GitHub-Resource-Override.json').read_bytes())};self.save()
+  self.meta={'release':self.release,'output_sha256':p.digest(self.body)};self.validation={'output_sha256':p.digest(self.body),'status':'passed','regression':{'status':'passed'},'candidate_function_tests':{'status':'passed'},'mod_contract':{'modules':['mod/test.js']},'module_sha256':{'mod/test.js':p.digest(b'current mod')},'mod_bundle_sha256':'bundle','resource_override_sha256':p.digest((self.root/'resource-override/Devast-io-GitHub-Resource-Override.json').read_bytes())};self.contract={'modules':['mod/test.js'],'required_browsers':['chromium','firefox']};self.validation['mod_contract']=self.contract;self.validation['browsers']={name:{'status':'passed','output_sha256':self.meta['output_sha256']} for name in self.contract['required_browsers']};(self.root/'mod/contract.json').write_text(json.dumps(self.contract));self.save()
  def save(self):
   (self.out/'current.json').write_text(json.dumps(self.meta));(self.d/'validation.json').write_text(json.dumps(self.validation))
  def test_builds_only_verified_current_mod_and_matching_zip(self):
@@ -49,3 +49,14 @@ class PublicationTests(unittest.TestCase):
  def test_changed_override_after_validation_cannot_publish(self):
   (self.root/'resource-override/Devast-io-GitHub-Resource-Override.json').write_text('{}')
   with self.assertRaisesRegex(ValueError,'Resource Override'):p.artifacts(self.root,self.out)
+
+ def test_feature_contract_changes_cannot_publish_an_old_release(self):
+  contract=dict(self.contract,features=['cursor-autobuild-native-preview'])
+  (self.root/'mod/contract.json').write_text(json.dumps(contract))
+  with self.assertRaisesRegex(ValueError,'feature contract'):p.artifacts(self.root,self.out)
+ def test_required_firefox_failure_cannot_publish(self):
+  self.validation['browsers']['firefox']['status']='failed';self.save()
+  with self.assertRaisesRegex(ValueError,'firefox'):p.artifacts(self.root,self.out)
+ def test_browser_report_from_another_build_cannot_publish(self):
+  self.validation['browsers']['firefox']['output_sha256']='0'*64;self.save()
+  with self.assertRaisesRegex(ValueError,'stale'):p.artifacts(self.root,self.out)

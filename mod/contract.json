@@ -25,7 +25,9 @@
     "mines-and-building-opacity",
     "function-indicators",
     "jitter-with-shot-priority",
-    "timestamped-weapon-interception"
+    "timestamped-weapon-interception",
+    "cursor-autobuild-native-preview",
+    "native-shared-canvas"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -41,5 +43,9 @@
     "tests/jitter.test.cjs",
     "tests/player-labels.test.cjs",
     "tests/adaptive-aim.test.cjs"
+  ],
+  "required_browsers": [
+    "chromium",
+    "firefox"
   ]
 }
