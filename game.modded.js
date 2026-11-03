@@ -135,20 +135,28 @@ function __createAdaptiveAim(clock) {
       }
     }
     last.px=last.x;last.py=last.y;last.pt=last.time;
-    last.x=target.x;last.y=target.y;last.time=now;last.vx=vx;last.vy=vy;last.dt=dt;last.ready=ready;
+    last.x=target.x;last.y=target.y;last.time=now;last.vx=vx;last.vy=vy;last.rawVx=ready?dx/dt:0;last.rawVy=ready?dy/dt:0;last.dt=dt;last.ready=ready;
   }
   function velocity(sample,now) {
     return sample?.ready&&now>=sample.time&&now-sample.time<=Math.min(250,Math.max(100,sample.dt*2));
   }
   function resolve(aim,targets,selfId,settings,nativeSpeed,legacy) {
-    if (!settings.ImprovedAimEnabled||!(nativeSpeed>0)||!Number.isFinite(nativeSpeed)) return legacy;
     const target=aim.targetPlayer,self=targets.players[selfId];
     if (!target?.active||!self?.active) return legacy;
     const sample=samples.get(target);if(!sample)return legacy;
-    const now=clock(),moving=velocity(sample,now),vx=moving?sample.vx:0,vy=moving?sample.vy:0;
-    const own=samples.get(self),ownMoving=velocity(own,now);
-    const sx=self.x+(ownMoving?own.vx*(now-own.time):0),sy=self.y+(ownMoving?own.vy*(now-own.time):0);
-    const age=moving?now-sample.time:0,delay=settings.offsetCoefficient*50;
+    const now=clock(),moving=velocity(sample,now),smooth=settings.resolverType==='smoothed';
+    const vx=moving?(smooth?sample.vx:sample.rawVx):0,vy=moving?(smooth?sample.vy:sample.rawVy):0;
+    if(!settings.ImprovedAimEnabled||!(nativeSpeed>0)||!Number.isFinite(nativeSpeed)){
+      if(!smooth||!moving)return legacy;
+      const lead=(Math.hypot(target.x-self.x,target.y-self.y)/settings.distanceCoefficient+settings.offsetCoefficient)*4/settings.bulletSpeedCoefficient;
+      const x=target.x+vx*sample.dt*lead,y=target.y+vy*sample.dt*lead;
+      const angle=Math.atan2(y-self.y,x-self.x)*180/Math.PI;if(!Number.isFinite(angle))return legacy;
+      aim.lastAngle=angle;if(settings.visualizeResolving)targets.lines[0].reset(self.x,self.y,x,y);
+      return Math.round(angle);
+    }
+    const own=samples.get(self),ownMoving=velocity(own,now),delay=settings.offsetCoefficient*50;
+    const sx=self.x+(ownMoving?(smooth?own.vx:own.rawVx)*(now-own.time+delay):0),sy=self.y+(ownMoving?(smooth?own.vy:own.rawVy)*(now-own.time+delay):0);
+    const age=moving?now-sample.time:0;
     let x=target.x+vx*(age+delay),y=target.y+vy*(age+delay);
     const speed=nativeSpeed*(settings.bulletSpeedCoefficient/4)*(settings.distanceCoefficient/300);
     if (!(speed>0)||!Number.isFinite(speed))return legacy;
@@ -169,6 +177,68 @@ function __createAdaptiveAim(clock) {
     return Math.round(angle);
   }
   return {observe,forget:target=>samples.delete(target),resolve};
+}
+
+// Values are selected by tools/calibrate_aim.cjs using separate held-out scenes.
+function __aimWeaponPresets() {
+  return {
+  "ak47_close": {
+    "label": "AK-47: ближняя",
+    "settings": {
+      "ImprovedAimEnabled": true,
+      "resolverType": "linear",
+      "distanceCoefficient": 330,
+      "bulletSpeedCoefficient": 4,
+      "offsetCoefficient": 0.1,
+      "mouseFovEnable": true,
+      "mouseFov": 250,
+      "target": "players",
+      "lockId": -1
+    }
+  },
+  "ak47_far": {
+    "label": "AK-47: дальняя",
+    "settings": {
+      "ImprovedAimEnabled": true,
+      "resolverType": "linear",
+      "distanceCoefficient": 300,
+      "bulletSpeedCoefficient": 4,
+      "offsetCoefficient": 0.8,
+      "mouseFovEnable": true,
+      "mouseFov": 450,
+      "target": "players",
+      "lockId": -1
+    }
+  },
+  "laser_close": {
+    "label": "Лазерная SMG: ближняя",
+    "settings": {
+      "ImprovedAimEnabled": true,
+      "resolverType": "smoothed",
+      "distanceCoefficient": 330,
+      "bulletSpeedCoefficient": 4,
+      "offsetCoefficient": 0.1,
+      "mouseFovEnable": true,
+      "mouseFov": 250,
+      "target": "players",
+      "lockId": -1
+    }
+  },
+  "laser_far": {
+    "label": "Лазерная SMG: дальняя",
+    "settings": {
+      "ImprovedAimEnabled": true,
+      "resolverType": "smoothed",
+      "distanceCoefficient": 330,
+      "bulletSpeedCoefficient": 4,
+      "offsetCoefficient": 1.6,
+      "mouseFovEnable": true,
+      "mouseFov": 450,
+      "target": "players",
+      "lockId": -1
+    }
+  }
+};
 }
 
 function __installDevastMod(B) {
@@ -245,13 +315,14 @@ function __installDevastMod(B) {
   const transient = new Set(['Token', 'token', 'tokenId', 'userId']);
   const keySettings = ['AimbotKey','JitterKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey'];
   const limits = {JitterSpeed:[1,3600],mouseFov:[1,20000],lockId:[-1,65535],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],bulletSpeedCoefficient:[1,15],zoomFactor:[.33,2],Xraytransparency:[.05,1]};
-  const choices = {target:['players','ghouls','all'],ShowRealAngles:['always','withAim']};
+  const choices = {target:['players','ghouls','all'],ShowRealAngles:['always','withAim'],resolverType:['linear','smoothed']};
   function validateSetting(key,value) {
     if (!Object.prototype.hasOwnProperty.call(defaults,key) || typeof value !== typeof defaults[key]) throw new Error('Invalid setting: '+key);
     if (typeof value === 'number' && !Number.isFinite(value)) throw new Error('Invalid numeric setting');
     if (limits[key] && (value < limits[key][0] || value > limits[key][1])) throw new Error('Setting out of range: '+key);
     if (key === 'lockId' && !Number.isInteger(value)) throw new Error('Player ID must be an integer');
     if (choices[key] && !choices[key].includes(value)) throw new Error('Invalid choice: '+key);
+    if(key==='visualizeResolvingColor'&&!/^#(?:[\da-f]{3}|[\da-f]{6})$/i.test(value))throw new Error('Invalid line color');
     if (keySettings.includes(key) && !/^(Key[A-Z]|Digit[0-9]|F(?:[1-9]|1[0-2])|Space|Escape|Tab|Backquote|Minus|Equal|BracketLeft|BracketRight|Backslash|Semicolon|Quote|Comma|Period|Slash|Arrow(?:Up|Down|Left|Right)|(?:Shift|Control|Alt|Meta)(?:Left|Right)|Enter|Backspace|Delete|Insert|Home|End|PageUp|PageDown|Numpad\w+)$/.test(value)) throw new Error('Invalid key code');
     return value;
   }
@@ -969,7 +1040,13 @@ function __installDevastMod(B) {
     try { return callback(); } finally { aimDepth--; }
   }
   const ilmWorld={PLAYER:aimSelf,players:aimTeams};
-  const ilm = __createIlmAim(MOD, ilmWorld, packet=>{
+  // The classic ILM formula omits bullet speed. Adapt its two coefficients
+  // without mutating saved settings or the reviewed original classes.
+  const ilmSettings=Object.create(MOD,{
+    distanceCoefficient:{get:()=>MOD.distanceCoefficient*MOD.bulletSpeedCoefficient/4},
+    offsetCoefficient:{get:()=>MOD.offsetCoefficient*4/MOD.bulletSpeedCoefficient}
+  });
+  const ilm = __createIlmAim(ilmSettings, ilmWorld, packet=>{
     if (MOD.JitterEnabled && packet[0] === 6 && (!jitterAiming() || !Aimbot.targetPlayer?.active)) return false;
     return __send(packet,true);
   });
@@ -985,7 +1062,7 @@ function __installDevastMod(B) {
     const method=Aimbot[key];
     Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>{
       const result=method.apply(this,args);
-      return key==='resolve'&&MOD.ImprovedAimEnabled?aimPrediction.resolve(this,GetAllTargets,aimSelf.id,MOD,nativeWeaponSpeed(),result):result;
+      return key==='resolve'?aimPrediction.resolve(this,GetAllTargets,aimSelf.id,MOD,nativeWeaponSpeed(),result):result;
     },key==='findNearestPlayerTo'||MOD.lockId<0);}});
   }
   Aimbot.mouseDown = false;
@@ -1223,6 +1300,13 @@ function __installDevastMod(B) {
     if (key === 'FAutoLootEnabled' && value) MOD.SAutoLootEnabled = false;
     persist();
     if (menu) menu.updateDisplay();
+  }
+  function applyAimPreset(key) {
+    const presets=__aimWeaponPresets();
+    if(!Object.hasOwn(presets,key))throw new Error('Unknown aim preset');
+    const preset=presets[key];
+    for(const [name,value]of Object.entries(preset.settings))setSetting(name,value);
+    return {...preset.settings};
   }
   function report(error) {
     const message = String(error && error.message || error);
@@ -1705,7 +1789,11 @@ function __installDevastMod(B) {
           }
         }
       }
-      __renderIlmAimLines(MOD,GetAllTargets,ctx,v);
+      if(MOD.visualizeResolving){
+        const primary=GetAllTargets.lines[0],color=primary.color;
+        try{primary.color=MOD.visualizeResolvingColor;__renderIlmAimLines(MOD,GetAllTargets,ctx,v);}
+        finally{primary.color=color;}
+      }
       ctx.globalAlpha = 1;
     } finally {ctx.restore();}
   }
@@ -2283,6 +2371,28 @@ function __installDevastMod(B) {
     const aim = __installIlmAimMenu(menu,MOD);
     for (const control of aim.__controllers) control.onChange(value=>setSetting(control.property,value));
     add(aim,'ImprovedAimEnabled','Improved prediction');
+    add(aim,'AimBotEnabled','Enabled');
+    add(aim,'autoFire','Auto fire');
+    add(aim,'mouseFovEnable','Cursor FOV');
+    add(aim,'mouseFov','FOV radius',1,20000,10);
+    add(aim,'lockId','Lock player ID (-1 = auto)',-1,65535,1);
+    add(aim,'resolverType','Velocity model',choices.resolverType);
+    add(aim,'visualizeResolving','Prediction line');
+    aim.addColor(MOD,'visualizeResolvingColor').name('Line color').onChange(value=>setSetting('visualizeResolvingColor',value));
+    const weaponPresets=aim.addFolder('Weapon presets');
+    const presetActions=Object.fromEntries(Object.entries(__aimWeaponPresets()).map(([key,preset])=>[key,()=>applyAimPreset(key)]));
+    for(const [key,preset]of Object.entries(__aimWeaponPresets()))weaponPresets.add(presetActions,key).name(preset.label);
+    const aimHints={
+      distanceCoefficient:'Масштаб скорости: 300 соответствует нативной скорости при BulletSpeedCoefficient = 4. Больше — меньше упреждение.',
+      bulletSpeedCoefficient:'Множитель скорости пули. Значение 4 соответствует данным оружия; работает в обоих режимах.',
+      offsetCoefficient:'Дополнительная задержка: 50 мс на единицу в улучшенном режиме. Учитывает движение цели и стрелка.',
+      resolverType:'linear: последний интервал движения; smoothed: два согласованных интервала. Разворот и остановка учитываются сразу.',
+      autoFire:'Исходный автоогонь ILM: срабатывает при смене направления выбранной цели.',
+      mouseFov:'Радиус вокруг курсора в единицах мира. Используется при Cursor FOV и Lock player ID = -1.',
+      lockId:'-1: выбор по Target/FOV. Число: конкретный игрок, независимо от Target/FOV.',
+      ShowRealAngles:'Отображение поворота персонажа: всегда или только при включённом аимботе.'
+    };
+    for(const control of aim.__controllers)if(aimHints[control.property])control.domElement.title=aimHints[control.property];
     const jitterMenu = menu.addFolder('Jitter');
     add(jitterMenu, 'JitterEnabled', 'Enabled');
     add(jitterMenu, 'JitterSpeed', 'Speed (degrees/sec)', 1, 3600, 1);
@@ -2428,6 +2538,7 @@ function __installDevastMod(B) {
     connectionInfo,
     step,
     setSetting,
+    applyAimPreset,
     openUnderMouse,
     get doorInteraction(){updateDoorInteraction();return {...doorInteraction,pending:!!pendingDoor};},
     clanColor,
