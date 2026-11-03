@@ -76,7 +76,7 @@
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "154.0.8037.57",
+  "browser_version": "156.0.8078.0",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -151,12 +151,12 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-03T16:51:23.595Z",
+  "finished_at": "2026-11-03T16:56:54.419Z",
   "browsers": {
     "chromium": {
       "status": "passed",
       "output_sha256": "8580069487bed0965bdbc18bcc03c0634ad97e2b8ffcf1d7904c2b76571a4bd9",
-      "browser_version": "154.0.8037.57",
+      "browser_version": "156.0.8078.0",
       "native": {
         "menu": true,
         "automation_socket_backpressure": true,
