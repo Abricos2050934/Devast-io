@@ -4,12 +4,16 @@
   "production": {
     "source_url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
     "raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
-    "output_sha256": "d9a24d230e63156cb290acde454377191a883dc058161fa7685c45bfd69c4cc1",
+    "output_sha256": "08b4a536cc05aff5f02bd765aaa084359eb0ef91bdf2e1db1435d0dfeda1bf02",
     "validation": "passed",
+    "integrity_compatibility": {
+      "status": "passed",
+      "predicates": 3
+    },
     "browsers": {
       "chromium": {
         "status": "passed",
-        "output_sha256": "d9a24d230e63156cb290acde454377191a883dc058161fa7685c45bfd69c4cc1",
+        "output_sha256": "08b4a536cc05aff5f02bd765aaa084359eb0ef91bdf2e1db1435d0dfeda1bf02",
         "browser_version": "154.0.8037.57",
         "native": {
           "menu": true,
@@ -66,11 +70,15 @@
             "settings": true,
             "loot": true
           }
-        ]
+        ],
+        "integrity_compatibility": {
+          "status": "passed",
+          "predicates": 3
+        }
       },
       "firefox": {
         "status": "passed",
-        "output_sha256": "d9a24d230e63156cb290acde454377191a883dc058161fa7685c45bfd69c4cc1",
+        "output_sha256": "08b4a536cc05aff5f02bd765aaa084359eb0ef91bdf2e1db1435d0dfeda1bf02",
         "browser_version": "153.0",
         "native": {
           "menu": true,
@@ -127,14 +135,18 @@
             "settings": true,
             "loot": true
           }
-        ]
+        ],
+        "integrity_compatibility": {
+          "status": "passed",
+          "predicates": 3
+        }
       }
     },
     "regression": {
       "status": "passed",
       "command": "npm test",
-      "node_tests": 140,
-      "python_tests": 32
+      "node_tests": 147,
+      "python_tests": 35
     },
     "contract": {
       "schema": 1,
@@ -165,7 +177,8 @@
         "jitter-with-shot-priority",
         "timestamped-weapon-interception",
         "cursor-autobuild-native-preview",
-        "native-shared-canvas"
+        "native-shared-canvas",
+        "native-integrity-signature-compatibility"
       ],
       "removed_overlays": [
         "bottom-gauge-text",
@@ -195,19 +208,23 @@
       "ᴇࡃ̠": "ϗUpdatedBulletSpeed",
       "і६३": "ϗUpdatedWeapons",
       "ㅤ̢︋": "ϗUpdatedPreviewY",
-      "οކᚁ": "ϗUpdatedBuildRotation"
+      "οކᚁ": "ϗUpdatedBuildRotation",
+      "ѕ०̊": "ϗUpdatedIntegrityFlag",
+      "а１๐": "ϗUpdatedSigner0",
+      "ⲅࡃ०": "ϗUpdatedSigner1",
+      "ܐ̄︁": "ϗUpdatedSigner2"
     },
     "initial_state": "unchanged",
     "future_state": "updated",
     "repeat_state": "unchanged",
     "original_raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
-    "future_raw_sha256": "ba1b7ac7a8a0bd893e4f39957c56626319a5b10a5c78841f73a50d9158ec60ff",
-    "future_output_sha256": "d3b11a15ea76344d597a97acd643c56d929e6d20e658566201165ebe4fd41bc6",
-    "future_source_url": "https://devast.io/js/compatible-next-ba1b7ac7a8a0.js",
+    "future_raw_sha256": "f1ad7364ccd5d0d85b8d7ef996731e60eccf6163062ca5e82c5df272ba2f0bc4",
+    "future_output_sha256": "74d6c36e25512d50eff6ed91ae3d1afb9816a06a6fb885926fcdd5fe82763b4d",
+    "future_source_url": "https://devast.io/js/compatible-next-f1ad7364ccd5.js",
     "browsers": {
       "chromium": {
         "status": "passed",
-        "output_sha256": "d3b11a15ea76344d597a97acd643c56d929e6d20e658566201165ebe4fd41bc6",
+        "output_sha256": "74d6c36e25512d50eff6ed91ae3d1afb9816a06a6fb885926fcdd5fe82763b4d",
         "browser_version": "154.0.8037.57",
         "native": {
           "menu": true,
@@ -264,11 +281,15 @@
             "settings": true,
             "loot": true
           }
-        ]
+        ],
+        "integrity_compatibility": {
+          "status": "passed",
+          "predicates": 3
+        }
       },
       "firefox": {
         "status": "passed",
-        "output_sha256": "d3b11a15ea76344d597a97acd643c56d929e6d20e658566201165ebe4fd41bc6",
+        "output_sha256": "74d6c36e25512d50eff6ed91ae3d1afb9816a06a6fb885926fcdd5fe82763b4d",
         "browser_version": "153.0",
         "native": {
           "menu": true,
@@ -325,14 +346,18 @@
             "settings": true,
             "loot": true
           }
-        ]
+        ],
+        "integrity_compatibility": {
+          "status": "passed",
+          "predicates": 3
+        }
       }
     },
     "regression": {
       "status": "passed",
       "command": "npm test",
-      "node_tests": 140,
-      "python_tests": 32
+      "node_tests": 147,
+      "python_tests": 35
     },
     "contract": {
       "schema": 1,
@@ -363,7 +388,8 @@
         "jitter-with-shot-priority",
         "timestamped-weapon-interception",
         "cursor-autobuild-native-preview",
-        "native-shared-canvas"
+        "native-shared-canvas",
+        "native-integrity-signature-compatibility"
       ],
       "removed_overlays": [
         "bottom-gauge-text",
@@ -387,11 +413,21 @@
     },
     "publication_preparation": "passed locally; simulated native JS not published"
   },
+  "incompatible_signature_test": {
+    "candidate": "Additional unreviewed read of the renamed integrity flag",
+    "result": "rejected",
+    "reason": "Unreviewed native integrity flag read",
+    "previous_version_preserved": true,
+    "production_output_sha256": "08b4a536cc05aff5f02bd765aaa084359eb0ef91bdf2e1db1435d0dfeda1bf02"
+  },
+  "integrated_remote_commits": [
+    "02dcde0cb0ed85dc740b3302c37a7be7caad51df",
+    "30928fd2f2730a051533636fa55d0bef9fdf5349"
+  ],
   "github_observations": {
     "workflow_state": "active",
     "scheduled_run": {
       "id": 41563540153,
-      "head_sha": "e231eee3d397e65d571d37215b1bedb5877c18b3",
       "conclusion": "success",
       "url": "https://github.com/Abricos2050934/Devast-io/actions/runs/41563540153"
     },
@@ -401,15 +437,15 @@
       "url": "https://github.com/Abricos2050934/Devast-io/actions/runs/41603662454"
     }
   },
-  "added_checks": [
-    "Chromium and Firefox required automatically on every newly built version",
-    "Each browser report must match the candidate output SHA256",
+  "required_checks": [
+    "Chromium and Firefox independently validate the same candidate SHA256",
+    "Three native signature compatibility checks must pass in both browsers before activation and publication",
     "Publisher requires the current complete feature contract and candidate test list",
-    "Publisher rejects missing, failed or stale browser reports"
+    "Unknown signature algorithms, flag bindings and additional readers block the update without replacing the previous version"
   ],
   "limitations": [
-    "The official upstream JS bytes were unchanged during this audit; the renamed future version was a controlled compatible simulation",
-    "Arbitrary protocol/protection changes may require new porting rules; failed candidates do not replace the published client",
-    "GitHub schedule is configured for every 15 minutes, but platform scheduling can be delayed"
+    "Official upstream JS bytes were unchanged during this audit; the renamed future version was a controlled compatible simulation",
+    "Live-server anti-cheat acceptance and absence of kicks were not verified",
+    "GitHub scheduling can be delayed despite the configured 15-minute cron"
   ]
 }
