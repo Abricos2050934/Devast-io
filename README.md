@@ -27,17 +27,17 @@
 npm ci --ignore-scripts
 npm run build
 npm test
-npx playwright-core install --with-deps chromium
+npx playwright-core install --with-deps chromium firefox
 npm run update:once
 ```
 
-Нужны Python 3.12+, Node.js 24 и Chromium. `npm run update:watch` запускает локальную
+Нужны Python 3.12+, Node.js 24, Chromium и Firefox. `npm run update:watch` запускает локальную
 проверку раз в 5 минут; `npm run update:serve` выдаёт проверенный файл локально.
 Публикация вручную: `python3 tools/publish_update.py` после успешного update:once.
 
 Обновляется именно текущий мод из mod/contract.json: сверяются хеши всех четырёх
 модулей, целиком включённый установщик, bootstrap, GUI и ядро ILM. Проверяются
-нативные обработчики в Chromium и функции уже переведённой сборки; затем весь
+нативные обработчики в Chromium/Firefox и функции уже переведённой сборки; затем весь
 пакет регрессионных тестов. Данные аккаунта для обновлятора не нужны.
 
 Браузерные проверки используют подготовленные данные. Они не подтверждают вход
@@ -50,4 +50,7 @@ npm run update:once
 
 Полная инструкция: [CONTINUE-IN-NEW-CHAT.md](CONTINUE-IN-NEW-CHAT.md).
 Текст для вставки: [handoff/NEW-CHAT-PROMPT.txt](handoff/NEW-CHAT-PROMPT.txt).
-Полный архив проекта: [Devast-io-Handoff.zip](https://github.com/Abricos2050934/Devast-io/raw/refs/heads/updates/Devast-io-Handoff.zip?download=1).
+Полный архив проекта: [Devast-io-Handoff.zip](https://github.com/Abricos2050934/Devast-io/releases/download/handoff-2026-11-03/Devast-io-Handoff.zip).
+
+Для переезда без старого GitHub: [пошаговая инструкция](handoff/MIGRATE-TO-NEW-GITHUB.md).
+В полном архиве есть автономный клиент и помощник смены ссылок; историю Git можно сохранить отдельно.

@@ -4,3 +4,8 @@ __pycache__/
 
 .updater/
 dist/auto-update/
+
+# Generated contents of a restored handoff snapshot
+/MANIFEST.json
+/SHA256SUMS.txt
+/client/
