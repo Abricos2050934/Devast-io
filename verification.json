@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "b118ae0e3b53598abb997c45510a00049ff5c8c16e0fd8490ee95620c74780a6",
+  "output_sha256": "2d4e3433df6532205fb9d74b13d7879f4a4ac570953bcaa4ad757ba01f5c1db7",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -39,7 +39,8 @@
       "hover-building-owners",
       "received-mines-and-wires-visibility",
       "right-click-hovered-door",
-      "right-click-door-independent-of-native-prompt"
+      "right-click-door-independent-of-native-prompt",
+      "independent-door-control-and-server-state-feedback"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -64,16 +65,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "c2066d885090a7f06183bed56a22fd3e2c485caa7446141943753c1e6f6744a4",
+    "mod/responsive.js": "ff022ee406e6515cee5297232d170680559d1967f78c5d92d785ac0ffe85671d",
     "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
     "mod/ilm-aim.js": "f7d97d6bfbbba505656b24908f41a4e258aa9a0fa22904b22555503b535dfd47",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "d1758bb7d4b5253f85b1e6833e27cf5e54a3f2533026b5efafa9ab5896073eb0",
+  "mod_bundle_sha256": "8a94dd227a8a3849b3b0c2a403e295e5aeeebefae1ff342cf17fb6c0aeddac0f",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -110,6 +111,8 @@
     "right_click_hovered_door": true,
     "right_click_without_native_prompt": true,
     "right_click_real_mouse": true,
+    "independent_door_control": true,
+    "door_server_state_feedback": true,
     "native_shared_canvas": true,
     "adaptive_weapon_prediction": true,
     "initial_metadata": true,
@@ -145,17 +148,19 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-03T10:40:40.578Z",
+  "finished_at": "2026-11-03T14:00:30.464Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "b118ae0e3b53598abb997c45510a00049ff5c8c16e0fd8490ee95620c74780a6",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "2d4e3433df6532205fb9d74b13d7879f4a4ac570953bcaa4ad757ba01f5c1db7",
+      "browser_version": "154.0.8037.57",
       "native": {
         "menu": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
         "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
         "native_shared_canvas": true,
         "adaptive_weapon_prediction": true,
         "initial_metadata": true,
@@ -221,13 +226,15 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "b118ae0e3b53598abb997c45510a00049ff5c8c16e0fd8490ee95620c74780a6",
+      "output_sha256": "2d4e3433df6532205fb9d74b13d7879f4a4ac570953bcaa4ad757ba01f5c1db7",
       "browser_version": "153.0",
       "native": {
         "menu": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
         "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
         "native_shared_canvas": true,
         "adaptive_weapon_prediction": true,
         "initial_metadata": true,
@@ -311,7 +318,7 @@
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 156,
-    "python_tests": 38
+    "node_tests": 159,
+    "python_tests": 39
   }
 }
