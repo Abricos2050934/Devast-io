@@ -94,7 +94,21 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const boot=anchor(profile.bootstrap_anchor,'bootstrap');
  const map=globalMap();
  const outputBindings={schema:'automatic-port-v1',symbols:{},evidence:{}};
- for(const key of canonicalRequired){const previous=bindings.symbols[key],next=map[previous]??(!obfuscated(previous)?previous:undefined);
+ // The home activation method shares its obfuscated spelling with many local
+ // functions. Resolve the exported method in the home object namespace.
+ const homeName=bindings.symbols['ɑᚆᴏ'];
+ const homeScope=rootBody?.flatMap(n=>n.declarations||[]).find(d=>d.id.name===homeName)?.init?.callee;
+ const nextHomeScope=nextRoot?.flatMap(n=>n.declarations||[]).find(d=>d.id.name===map[homeName])?.init?.callee;
+ const homeReturn=homeScope?.body?.body.filter(n=>n.type==='ReturnStatement').at(-1)?.argument;
+ const nextHomeReturn=nextHomeScope?.body?.body.filter(n=>n.type==='ReturnStatement').at(-1)?.argument;
+ const homeProperties=new Map();
+ if(homeReturn?.type==='ObjectExpression'&&nextHomeReturn?.type==='ObjectExpression'&&canonical(old,homeReturn).hash===canonical(cur,nextHomeReturn).hash) {
+  for(let i=0;i<homeReturn.properties.length;i++) {
+   const left=homeReturn.properties[i],right=nextHomeReturn.properties[i];
+   homeProperties.set(prop(old,left),prop(cur,right));
+  }
+ }
+ for(const key of canonicalRequired){const previous=bindings.symbols[key],next=(key==='nativeHomeEnter'?homeProperties.get(previous):map[previous])??(!obfuscated(previous)?previous:undefined);
   if(!next)throw Error('Missing or ambiguous required native binding: '+key+' ('+previous+')');outputBindings.symbols[key]=next;outputBindings.evidence[key]='unique normalized native function correspondence';
  }
  // Every fragment is a reviewed patch. Materialize only immutable literal aliases.

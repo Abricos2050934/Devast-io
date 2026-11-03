@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "release": "entry-recovery-5",
+  "upstream_release": "c4cfb1266624bf2ccdb1d7dcc4af18909e9761e2bafe9f01895c3016fa97bf18",
+  "source_url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
+  "raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+  "output_sha256": "4e8795688a8bebb32f41f5d152272688123874ee35ab8db5f319053993386dc0",
+  "live_server": "not_yet_verified"
+}

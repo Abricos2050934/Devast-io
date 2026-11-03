@@ -223,6 +223,15 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     window.Widget.play();check(resumed===1,'Late SDK callback duplicated login');
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Gateway recovery changed identity');
    }finally{nativeMenu[s['ϲ१༧']]=waiting;window.Widget=widget;}
+   const uiKey=s.nativeHomeEnter,nativeUi=nativeMenu[uiKey];let uiReturns=0;
+   try{
+    check(typeof nativeUi==='function','Native home activation method is unavailable');
+    nativeMenu[uiKey]=()=>uiReturns++;
+    const now=performance.now();n.network.state=0;check(m.beginPlay(),'Play preparation could not start');
+    n.network[s['ϲІ̗']]=true;m.step(now+12001);
+    check(uiReturns===1&&n.network.state===0&&!n.network[s['ϲІ̗']],'Timed out preparation left the native loading screen active');
+    check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Returning from loading changed identity');
+   }finally{nativeMenu[uiKey]=nativeUi;}
    const deathKey=s['ι︃２'],nativeDeath=n.network[deathKey],health=w[s['ᴘρࡀ']][s['ᴇ༤ᚆ']].value;let deathCalls=0;
    try{
     n.network[deathKey]=code=>{check(code===128,'Native death error code changed');deathCalls++;};n.death(new Uint8Array([5,0,2]));
