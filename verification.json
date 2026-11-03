@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "08b4a536cc05aff5f02bd765aaa084359eb0ef91bdf2e1db1435d0dfeda1bf02",
+  "output_sha256": "dd1eca42aba308bb2c952878547f5e019442084a898f9847109117fef5229ba4",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -35,7 +35,9 @@
       "timestamped-weapon-interception",
       "cursor-autobuild-native-preview",
       "native-shared-canvas",
-      "native-integrity-signature-compatibility"
+      "native-integrity-signature-compatibility",
+      "hover-building-owners",
+      "received-mines-and-wires-visibility"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -50,7 +52,8 @@
       "tests/ilm-autobuild.test.cjs",
       "tests/jitter.test.cjs",
       "tests/player-labels.test.cjs",
-      "tests/adaptive-aim.test.cjs"
+      "tests/adaptive-aim.test.cjs",
+      "tests/world-visuals.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -58,16 +61,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "732ba8b30da5fb2341b2496edb22f1d24970790b3576fe290d270e26993d55c9",
+    "mod/responsive.js": "6a8ede10ee40adb14a07df6900880ab0628a6890deac8a0f929e31bcaefc7d68",
     "mod/bootstrap.js": "fae8b7fc0c0035d5fc2f718782f676d810031ff82dbbf4c85527453007bf4717",
     "mod/ilm-aim.js": "f7d97d6bfbbba505656b24908f41a4e258aa9a0fa22904b22555503b535dfd47",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "637753037921c906cccc15dd3db1b30289396203b47328edea4e032e506f0440",
+  "mod_bundle_sha256": "5feea804f22bbee5010b069c1da967b8fa4f72bd789129dab234f75efbdc0af9",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -128,16 +131,20 @@
     "death_stops_restore_retries": true,
     "mod_errors": []
   },
+  "world_visibility": {
+    "status": "passed",
+    "native_renderers": 3
+  },
   "integrity_compatibility": {
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-03T08:51:52.690Z",
+  "finished_at": "2026-11-03T10:07:27.878Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "08b4a536cc05aff5f02bd765aaa084359eb0ef91bdf2e1db1435d0dfeda1bf02",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "dd1eca42aba308bb2c952878547f5e019442084a898f9847109117fef5229ba4",
+      "browser_version": "154.0.8037.57",
       "native": {
         "menu": true,
         "native_shared_canvas": true,
@@ -197,11 +204,15 @@
       "integrity_compatibility": {
         "status": "passed",
         "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
       }
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "08b4a536cc05aff5f02bd765aaa084359eb0ef91bdf2e1db1435d0dfeda1bf02",
+      "output_sha256": "dd1eca42aba308bb2c952878547f5e019442084a898f9847109117fef5229ba4",
       "browser_version": "153.0",
       "native": {
         "menu": true,
@@ -262,6 +273,10 @@
       "integrity_compatibility": {
         "status": "passed",
         "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
       }
     }
   },
@@ -276,13 +291,14 @@
       "tests/ilm-autobuild.test.cjs",
       "tests/jitter.test.cjs",
       "tests/player-labels.test.cjs",
-      "tests/adaptive-aim.test.cjs"
+      "tests/adaptive-aim.test.cjs",
+      "tests/world-visuals.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 147,
-    "python_tests": 35
+    "node_tests": 152,
+    "python_tests": 36
   }
 }
