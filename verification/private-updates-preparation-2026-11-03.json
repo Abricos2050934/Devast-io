@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "status": "prepared_not_deployed",
+  "repository": "Abricos2050934/Devast-io",
+  "repository_visibility": "public",
+  "public_auto_update": "unchanged",
+  "service": "Cloudflare Workers",
+  "controls": [
+    "Per-recipient 256-bit bearer keys; only hashes in server configuration",
+    "Reject absent, expired and revoked keys before fetching GitHub",
+    "GitHub token is server-side and repository-scoped read-only",
+    "One pinned GitHub commit per response; verified manifest and SHA256 of client",
+    "No public fallback or public response caching",
+    "Issued files and local credentials excluded from Git"
+  ],
+  "validation": {
+    "python_tests": 42,
+    "node_tests": 178,
+    "private_update_tests": 8,
+    "chromium": {
+      "mode": "Real Chromium synchronous cross-origin XHR with Authorization; service and private GitHub responses are fixtures",
+      "checks": [
+        {
+          "enabled": true,
+          "state": "loaded",
+          "loaded": true,
+          "request_methods": [
+            "GET"
+          ]
+        },
+        {
+          "enabled": false,
+          "state": "failed",
+          "loaded": false,
+          "request_methods": [
+            "GET"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    "wrangler": "4.157.0 deploy --dry-run passed"
+  },
+  "pending": [
+    "Create/deploy Worker in the owner Cloudflare account",
+    "Configure GitHub read-only token and license hashes as Worker secrets",
+    "Issue owner JSON for the real Worker address and verify end-to-end",
+    "Switch repository visibility to private and verify authorized and anonymous access"
+  ],
+  "limits": [
+    "Authorized recipients can save the JS or forward their JSON/key",
+    "Revocation blocks future downloads but cannot recall saved copies",
+    "Previously public copies cannot be withdrawn"
+  ]
+}

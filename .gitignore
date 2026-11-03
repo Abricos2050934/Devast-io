@@ -9,3 +9,8 @@ dist/auto-update/
 /MANIFEST.json
 /SHA256SUMS.txt
 /client/
+
+# Private update credentials and individually issued import files
+/.private-updates/
+.dev.vars*
+.wrangler/

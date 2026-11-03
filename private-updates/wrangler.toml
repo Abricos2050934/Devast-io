@@ -1,0 +1,9 @@
+name = "devast-private-updates"
+main = "worker.mjs"
+compatibility_date = "2026-11-01"
+
+[vars]
+GITHUB_REPOSITORY = "Abricos2050934/Devast-io"
+
+# Set GITHUB_TOKEN and ACCESS_KEYS_JSON with `wrangler secret put`.
+# Never put credentials or issued JSON files in this configuration.
