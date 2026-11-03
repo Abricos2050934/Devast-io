@@ -30,7 +30,8 @@
     "native-shared-canvas",
     "native-integrity-signature-compatibility",
     "hover-building-owners",
-    "received-mines-and-wires-visibility"
+    "received-mines-and-wires-visibility",
+    "right-click-hovered-door"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -46,7 +47,8 @@
     "tests/jitter.test.cjs",
     "tests/player-labels.test.cjs",
     "tests/adaptive-aim.test.cjs",
-    "tests/world-visuals.test.cjs"
+    "tests/world-visuals.test.cjs",
+    "tests/door-click.test.cjs"
   ],
   "required_browsers": [
     "chromium",

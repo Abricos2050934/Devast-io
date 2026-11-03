@@ -29,12 +29,13 @@ const canonical=acorn.parse(fs.readFileSync(path.join(root,'mod/ilm-aim.js'),'ut
 assert.deepEqual(normalize(body.find(n=>n.id?.name==='__createIlmAim')),normalize(canonical),'ILM algorithm changed');
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
 assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2']),'Every reviewed native patch is required');
-const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave','ᴀᄁ︃':'landmineRender','рոᴎ':'wireRender','ᅠ̘ܛ':'trapRender'};
+const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave','ᴀᄁ︃':'landmineRender','рոᴎ':'wireRender','ᅠ̘ܛ':'trapRender','ρ๘̘':'doorSelector'};
 const edits=[],placements=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;
  if(n.type==='ArrayExpression'&&n.elements[0]?.value===14&&n.elements.length===4&&n.elements[1]?.object?.type==='MemberExpression')placements.push(n);
  if(n.type==='FunctionDeclaration')for(const [old,name]of Object.entries(functions))if(n.id.name===roles[old]){
   let text=`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.${name}=${n.id.name};`;
   if(name==='fire')text+=`window.__updateFunctions.capturePackets=()=>{const codec=${roles['еϲᄄ']},key=${JSON.stringify(roles['ᴎ︅ހ'])},encode=codec[key],socket=${roles['І̎ܘ']},packets=[];codec[key]=p=>{packets.push(p.slice());return '';};${roles['І̎ܘ']}={send(){}};return {packets,restore(){codec[key]=encode;${roles['І̎ܘ']}=socket;}};};`;
+  if(name==='doorSelector')text+=`window.__updateDoorProbe={get position(){return {x:${roles['с२̸']},y:${roles['ܐ̙ᄅ']}}},get range(){return ${roles['е̊ނ']}},get nearest(){return ${roles['еⲅ༦']}}};`;
   edits.push({at:n.start,text});
  }
  for(const v of Object.values(n)){if(Array.isArray(v))todo.push(...v);else if(v&&typeof v==='object')todo.push(v);}
@@ -42,7 +43,7 @@ const edits=[],placements=[],todo=[tree];while(todo.length){const n=todo.pop();i
 assert.equal(edits.length,Object.keys(functions).length,'Unique browser fixture functions required');
 assert.equal(placements.length,1,'One native cursor placement expression required');
 const end=tree.body[0].expression.callee.body.end-1;
-edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},types:${symbols['εᚇ๓']},graphics:${symbols['ᴘᚉ٦']},get ctx(){return ${symbols['а०̅']}},nativePlacement:()=>${output.slice(placements[0].start,placements[0].end)},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
+edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},types:${symbols['εᚇ๓']},graphics:${symbols['ᴘᚉ٦']},items:${symbols['ιᄅᴄ']},get interactionPosition(){return window.__updateDoorProbe.position},get interactionRange(){return window.__updateDoorProbe.range},get nearestInteraction(){return window.__updateDoorProbe.nearest},get view(){return __responsiveView},get ctx(){return ${symbols['а०̅']}},nativePlacement:()=>${output.slice(placements[0].start,placements[0].end)},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
 edits.push({at:tree.body[0].expression.callee.body.end-1,text:`window.__updateIntegrityProbe={read:()=>${roles.nativeIntegrityFlag},set:value=>${roles.nativeIntegrityFlag}=value,signers:[${roles.nativeIntegritySigners.join(',')}]};`});
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
 (async()=>{
@@ -260,6 +261,35 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
      check(n.ctx.globalAlpha===previousAlpha,'Reveal leaked canvas alpha');
     }
    }finally{n.graphics[drawKey]=originalDraw;self.id=visualState.id;n.network.state=visualState.state;n.ctx.globalAlpha=visualState.alpha;}
+   const doorTransport=n.capturePackets(),doorState=n.network.state,doorRecords=m.records.slice();
+   const doorKeys=['id',s['І๔︊'],s['ⲟܐ༠'],s['с̣ߏ'],s['ࡀ︂̄'],s['ӧᄀ'],s['οࡃ̝'],s['օ᠌օ'],r['ⲣܗ̴'],r['ⲥ０２'],s['а༤̘']];
+   const doorSaved=doorKeys.map(key=>[key,Object.hasOwn(self,key),self[key]]);
+   try{
+    n.network.state=1;self.id=1;self[s['І๔︊']]=2;self[s['ⲟܐ༠']]=99;self[s['с̣ߏ']]=1;self[s['ࡀ︂̄']]=16;self[r['ⲣܗ̴']]=0;self[r['ⲥ０２']]=0;self[s['а༤̘']]=-1;
+    m.setSetting('OpenEverythingByClick',true);
+    const item=n.items.findIndex(d=>d?.detail?.name==='Wooden Door');check(item>=0,'Native manual door descriptor missing');
+    const origin=n.interactionPosition,door={id:77,x:origin.x,y:origin.y,state:0,[s['е̝ހ']]:0,[s['Іࡈ５']]:item<<7,[s['ᴘ४１']]:1,[s['αބ̞']]:Math.floor(origin.x/100),[s['ᴀܛ٤']]:Math.floor(origin.y/100)};
+    m.records.length=0;m.records.push({type:3,e:door});
+    const canvas=n.ctx.canvas,rect=canvas.getBoundingClientRect();
+    function pressDoor(){
+     const v=n.view,ratio=n.graphics.options[s['еߎ༢']]||1,scale=v.scale*ratio;
+     const px=((door[s['αބ̞']]+.5)*100+v.x)*scale,py=((door[s['ᴀܛ٤']]+.5)*100+v.y)*scale;
+     return canvas.dispatchEvent(new MouseEvent('mousedown',{button:2,bubbles:true,cancelable:true,clientX:rect.left+px*rect.width/canvas.width,clientY:rect.top+py*rect.height/canvas.height}));
+    }
+    const before=JSON.stringify(doorKeys.map(k=>self[k])),nearest=n.nearestInteraction;
+    doorTransport.packets.length=0;check(pressDoor()===false,'Right click did not consume the handled door press');
+    check(JSON.stringify(doorTransport.packets)==='[[15,77,1]]','Right click did not send exactly one native door action');
+    canvas.dispatchEvent(new MouseEvent('contextmenu',{button:2,bubbles:true,cancelable:true}));check(doorTransport.packets.length===1,'Contextmenu duplicated the door action');
+    check(door.state===0&&JSON.stringify(doorKeys.map(k=>self[k]))===before&&n.nearestInteraction===nearest,'Door click changed native selection or faked the door state');
+    door[s['ᴘ४１']]=2;doorTransport.packets.length=0;pressDoor();check(!doorTransport.packets.some(p=>p[0]===15),'Foreign locked door bypassed native access checks');
+    door[s['ᴘ४１']]=0;doorTransport.packets.length=0;pressDoor();check(JSON.stringify(doorTransport.packets)==='[[15,77,0]]','Unowned door lost native access');
+    door[s['ᴘ४１']]=1;
+    for(const key of [s['І๔︊'],r['ⲣܗ̴'],r['ⲥ０２']]){const saved=self[key];self[key]=1;doorTransport.packets.length=0;pressDoor();check(!doorTransport.packets.some(p=>p[0]===15),'Blocked native interaction state allowed a door action');self[key]=saved;}
+    door.x=origin.x+Math.sqrt(n.interactionRange)+1;door[s['αބ̞']]=Math.floor(door.x/100);doorTransport.packets.length=0;pressDoor();check(!doorTransport.packets.some(p=>p[0]===15),'Distant door bypassed native interaction range');
+   }finally{
+    doorTransport.restore();n.network.state=doorState;m.records.length=0;m.records.push(...doorRecords);
+    for(const [key,present,value]of doorSaved){if(present)self[key]=value;else delete self[key];}
+   }
    const integrity=window.__updateIntegrityProbe,networkSnapshot={...n.network},savedIntegrity=integrity.read();
    function restoreIntegrityNetwork(){for(const key of Object.keys(n.network))if(!Object.hasOwn(networkSnapshot,key))delete n.network[key];Object.assign(n.network,networkSnapshot);}
    try{
@@ -274,7 +304,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    }finally{restoreIntegrityNetwork();integrity.set(savedIntegrity);}
    check(m.connectionInfo().integrityCompatibility===true,'Automatic build omitted native signature compatibility');
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,right_click_hovered_door:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

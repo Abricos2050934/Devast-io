@@ -17,7 +17,8 @@ function candidateFixture(B,dir){
   });cache.set(value,proxy);original.set(proxy,value);return proxy;
  }
  const nativeKeys=new Set(['world','network','entities','input','types','items','graphics','renderer','karma']);
- const bridge=new Proxy(B,{get:(target,key)=>nativeKeys.has(key)?wrap(target[key]):target[key]});
+ const nativeCallbacks=new Set(['isManualDoor','canUseDoor']);
+ const bridge=new Proxy(B,{get:(target,key)=>nativeKeys.has(key)?wrap(target[key]):nativeCallbacks.has(key)&&typeof target[key]==='function'?(...args)=>target[key](...args.map(value=>original.get(value)||value)):target[key]});
  const nativeArguments=new Set(['playerLabel','preparePlayerLabel','prepareClanTag']);
  function adaptMod(mod){return new Proxy(mod,{get(target,key){const value=target[key];return nativeArguments.has(key)?(first,...args)=>value(wrap(first),...args):value;}});}
  return {B:bridge,adaptMod,source:fs.readFileSync(path.join(dir,'ilm-aim.js'),'utf8')+'\n'+fs.readFileSync(path.join(dir,'installer.fixture.js'),'utf8')};

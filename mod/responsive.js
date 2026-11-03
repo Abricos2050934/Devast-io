@@ -1287,16 +1287,23 @@ function __installDevastMod(B) {
     return me.І๔︊ === 0 && me.ιᄁ८ === e.id && (!MOD.LootDataEnabled || allowedLootIds.has(e.Іࡈ５));
   }
   function openUnderMouse() {
-    if (!playing() || !MOD.OpenEverythingByClick) return false;
+    if (!playing() || !MOD.OpenEverythingByClick || B.chatActive?.()) return false;
     const point = cursorWorld();
     if (!point) return false;
     const x = Math.floor(point.x / 100), y = Math.floor(point.y / 100);
+    const me = B.world.ᅠᏧ‍;
+    let selected;
     for (const r of records) {
+      if(r.e.αބ̞!==x || r.e.ᴀܛ٤!==y)continue;
       const d = building(r);
-      const me = B.world.ᅠᏧ‍;
-      if (d && r.e.αބ̞ === x && r.e.ᴀܛ٤ === y && me.І๔︊ === 2 && me.ⲟܐ༠ === r.e.id && me.с̣ߏ === r.e.ᴘ४１ && me.ࡀ︂̄ === d.ࡀ︂̄) return __send([d.ࡀ︂̄, r.e.id, r.e.ᴘ४１]);
+      if(!d)continue;
+      if(B.isManualDoor?.(d)){
+        if(B.canUseDoor(d,r.e))return __send([d.ࡀ︂̄,r.e.id,r.e.ᴘ४１]);
+        continue;
+      }
+      if(me.І๔︊===2 && me.ⲟܐ༠===r.e.id && me.с̣ߏ===r.e.ᴘ४１ && me.ࡀ︂̄===d.ࡀ︂̄)selected=[d.ࡀ︂̄,r.e.id,r.e.ᴘ४１];
     }
-    return false;
+    return selected ? __send(selected) : false;
   }
   function ensureOverlay() {
     const v=view(),can=v.ctx?.canvas || document.getElementById('can');
@@ -1993,8 +2000,9 @@ function __installDevastMod(B) {
     GetAllTargets.mousePosition.x=e.clientX;GetAllTargets.mousePosition.y=e.clientY;
   }, true);
   listen(window, 'mousedown', e => {
-    if (e.target.closest && e.target.closest('.dg')) return;
+    if (e.target?.closest?.('.dg')) return;
     if (playerListPanel && e.composedPath?.().includes(playerListPanel)) return;
+    if(e.button===2 && e.target!==document.getElementById('can'))return;
     mouse = {
       x: e.clientX,
       y: e.clientY

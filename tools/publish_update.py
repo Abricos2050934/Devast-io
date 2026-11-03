@@ -41,6 +41,8 @@ def artifacts(root, output):
             raise ValueError('Native integrity compatibility was not verified in browser: ' + browser)
         if 'received-mines-and-wires-visibility' in contract.get('features', []) and report.get('world_visibility') != {'status': 'passed', 'native_renderers': 3}:
             raise ValueError('Native world visibility was not verified in browser: ' + browser)
+        if 'right-click-hovered-door' in contract.get('features', []) and report.get('native', {}).get('right_click_hovered_door') is not True:
+            raise ValueError('Native right-click door interaction was not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'

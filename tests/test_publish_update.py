@@ -76,3 +76,11 @@ class PublicationTests(unittest.TestCase):
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['world_visibility']['native_renderers']=2;self.save()
   with self.assertRaisesRegex(ValueError,'world visibility.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_right_click_door_requires_native_verification_in_each_browser(self):
+  self.contract['features']=['right-click-hovered-door']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'right_click_hovered_door':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  del self.validation['browsers']['firefox']['native']['right_click_hovered_door'];self.save()
+  with self.assertRaisesRegex(ValueError,'right-click door.*firefox'):p.artifacts(self.root,self.out)

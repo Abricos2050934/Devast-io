@@ -1,0 +1,188 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "purpose": "Right click opens the hovered nearby door independently of native nearest target",
+  "release": "b0b87d912921049597dcdef80c11c3ef329516531b272af845fdfa2f63e3e20c",
+  "output_sha256": "91c766be81f83fa5d7eb73d674fc1ae946d38f71e987dfb77b13d5a2ca34a150",
+  "mode": "native browser fixtures; no live game session",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 156,
+    "python_tests": 37
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/adaptive-aim.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "output_sha256": "91c766be81f83fa5d7eb73d674fc1ae946d38f71e987dfb77b13d5a2ca34a150",
+      "browser_version": "154.0.8037.57",
+      "native": {
+        "menu": true,
+        "right_click_hovered_door": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "output_sha256": "91c766be81f83fa5d7eb73d674fc1ae946d38f71e987dfb77b13d5a2ca34a150",
+      "browser_version": "153.0",
+      "native": {
+        "menu": true,
+        "right_click_hovered_door": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    }
+  },
+  "native_coverage": [
+    "Actual Wooden Door descriptor and native selector",
+    "Single mouse press produces one native action; contextmenu does not duplicate it",
+    "Own and unowned doors; deny foreign locked doors",
+    "Deny doors outside native range and blocked native interaction states",
+    "Native selection and nearest distance restored; no fake entity state"
+  ],
+  "world_visibility": {
+    "status": "passed",
+    "native_renderers": 3
+  },
+  "integrity_compatibility": {
+    "status": "passed",
+    "predicates": 3
+  },
+  "live_multiplayer_session": "not tested"
+}

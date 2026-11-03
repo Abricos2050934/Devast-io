@@ -352,7 +352,10 @@
     "ilmWeaponTable": "і६३",
     "ilmBulletSpeed": "ᴇࡃ̠",
     "nativeHomeEnter": "ϲ‍７",
-    "nativeIntegrityFlag": "ѕ०̊"
+    "nativeIntegrityFlag": "ѕ०̊",
+    "nativeSelectInteraction": "ρ๘̘",
+    "nativeNearestInteraction": "еⲅ༦",
+    "nativeInteractionRange": "е̊ނ"
   },
   "evidence": {
     "options": "export:ᴘᚉ٦",
