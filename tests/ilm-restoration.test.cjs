@@ -24,6 +24,7 @@ test('old predictor settings reset to original ILM once, preserving other featur
 });
 test('weapon data and elapsed time cannot alter original ILM prediction',()=>{
  const f=fixture();try{
+  f.mod.setSetting('CurvedAimEnabled',false);
   f.mod.trackPacket(1,1,1,1000,1000,true);
   for(const y of [1000,1040,1080])f.mod.trackPacket(1,2,1,1500,y,true);
   f.mod.setSetting('lockId',2);const expected=f.mod.aim.resolve(),line=JSON.stringify(f.mod.targets.lines);

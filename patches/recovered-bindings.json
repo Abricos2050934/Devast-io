@@ -350,7 +350,9 @@
     "а༠٥": "ѕᄇ︊",
     "ᴘ๒︅": "ᴘ๒︅",
     "nativeHomeEnter": "ϲ‍７",
-    "nativeIntegrityFlag": "ѕ०̊"
+    "nativeIntegrityFlag": "ѕ०̊",
+    "curveWeapons": "і६३",
+    "curveBulletSpeed": "ᴇࡃ̠"
   },
   "evidence": {
     "options": "export:ᴘᚉ٦",
@@ -689,6 +691,8 @@
     "а०̅": "native canvas context getContext(2d), renderer usage",
     "ᴉ२ߋ": "sprite table literal img/karma4.png",
     "nativeHomeEnter": "Exported activation method on native home object ɑᚆᴏ; installs the home renderer and restores the Play controls",
-    "nativeIntegrityFlag": "Shared native integrity flag used by the three reviewed signature functions"
+    "nativeIntegrityFlag": "Shared native integrity flag used by the three reviewed signature functions",
+    "curveWeapons": "Shared native weapon table verified by AK47 and laser submachine sound anchors",
+    "curveBulletSpeed": "Native projectile speeds AK47=1.4 and laser submachine=1.45; path=900"
   }
 }

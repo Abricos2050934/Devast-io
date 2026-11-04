@@ -5,6 +5,7 @@
     "mod/responsive.js",
     "mod/bootstrap.js",
     "mod/ilm-aim.js",
+    "mod/curved-aim.js",
     "vendor/dat.gui.recovered.js"
   ],
   "features": [
@@ -37,7 +38,8 @@
     "verbatim-original-ilm-aim",
     "coalesced-aim-directions",
     "native-shot-direction-and-render-sync",
-    "connection-close-origin-diagnostics"
+    "connection-close-origin-diagnostics",
+    "curved-target-and-chaser-interception"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -57,7 +59,8 @@
     "tests/automation-transport.test.cjs",
     "tests/shot-line.test.cjs",
     "tests/ilm-restoration.test.cjs",
-    "tests/angle-transport.test.cjs"
+    "tests/angle-transport.test.cjs",
+    "tests/curved-aim.test.cjs"
   ],
   "required_browsers": [
     "chromium",

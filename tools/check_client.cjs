@@ -34,7 +34,7 @@ assert.equal(bindings[0].init.callee.name, '__installDevastMod');
 console.log('AST OK: full client, one installer, one bootstrap; extracted payload matches');
 
 require('./audit_ilm_port.cjs').audit();
-const aimSource=fs.readFileSync('mod/ilm-aim.js','utf8');
+const aimSource=fs.readFileSync('mod/ilm-aim.js','utf8')+'\n'+fs.readFileSync('mod/curved-aim.js','utf8');
 for(const declaration of parse(aimSource,options).body) {
   const installed=body.filter(n=>n.type==='FunctionDeclaration'&&n.id.name===declaration.id.name);
   assert.equal(installed.length,1);

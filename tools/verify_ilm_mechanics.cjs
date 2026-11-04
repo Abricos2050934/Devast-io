@@ -11,7 +11,7 @@ function verifyOriginalIlm(m,n,s,reference) {
   'const _0x2ea565=settings,_0x10898e=world,_0x4c996c=send;'+reference.blocks.map(b=>b.source).join('\n')+
   'const _0x6cc5f2=new _0x3e2cd1(),_0x41e779=new _0x4b5d6f();return {targets:_0x6cc5f2,aim:_0x41e779,tick:_0x4a7389};');
  const self=n.world[s['ᅠᏧ‍']],metadata=n.world[s['ᴎ︃ᄉ']],clans=n.world[s['ﾠࡅ‍']];
- const keys=['AimBotEnabled','autoFire','target','lockId','mouseFovEnable','mouseFov','distanceCoefficient','bulletSpeedCoefficient','offsetCoefficient','resolverType','visualizeResolving','visualizeResolvingColor','JitterEnabled'];
+ const keys=['CurvedAimEnabled','AimBotEnabled','autoFire','target','lockId','mouseFovEnable','mouseFov','distanceCoefficient','bulletSpeedCoefficient','offsetCoefficient','resolverType','visualizeResolving','visualizeResolvingColor','JitterEnabled'];
  const saved=Object.fromEntries(keys.map(k=>[k,m.settings[k]])),savedId=self.id,savedState=n.network.state,savedClan=clans[0];
  const savedMetadata=[1,2,3,17].map(id=>[id,metadata[id]]);
  const oldSettings={...m.settings},oldWorld={PLAYER:{id:1,team:-1},players:Array.from({length:1000},()=>({team:-1}))};
@@ -32,7 +32,7 @@ function verifyOriginalIlm(m,n,s,reference) {
   transport.packets.length=expected.length=0;checks++;
  }
  try{
-  m.setSetting('JitterEnabled',false);m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);n.network.state=1;self.id=1;clans[0]={[s['ոᚄރ']]:7};
+  m.setSetting('CurvedAimEnabled',false);m.setSetting('JitterEnabled',false);m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);n.network.state=1;self.id=1;clans[0]={[s['ոᚄރ']]:7};
   for(const id of [1,2,3,17])metadata[id]={[s['а༤̘']]:-1,[s['ᴌ̗ⲟ']]:7};
   m.observeSocket(socket);
   for(let scene=0;scene<36;scene++){

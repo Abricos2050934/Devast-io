@@ -143,3 +143,11 @@ class PublicationTests(unittest.TestCase):
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['native_shot_direction_and_render_sync']=False;self.save()
   with self.assertRaisesRegex(ValueError,'shot direction.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_curved_chasing_requires_native_verification_in_both_browsers(self):
+  self.contract['features']=['curved-target-and-chaser-interception']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'curved_target_and_chaser_interception':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['curved_target_and_chaser_interception']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'Curved chasing.*firefox'):p.artifacts(self.root,self.out)

@@ -17,6 +17,7 @@ function __installDevastMod(B) {
       this.ShowRealAngles = "withAim";
       this.target = "players";
       this.AimBotEnabled = false;
+      this.CurvedAimEnabled = true;
       this.JitterEnabled = false;
       this.JitterSpeed = 360;
       this.JitterKey = "KeyJ";
@@ -811,10 +812,25 @@ function __installDevastMod(B) {
     return __send(packet);
   });
   const GetAllTargets = ilm.targets, Aimbot = ilm.aim;
+  const curvedAim=__createCurvedAim(()=>performance.now());
+  let curveSelfEntity=null;
+  function curveWeaponInfo() {
+    const weapons=B.types?.[B.categories.player]?.curveWeapons;
+    if(!Array.isArray(weapons))return null;
+    if(!curveSelfEntity || curveSelfEntity.ᴘ४１!==aimSelf.id || curveSelfEntity.е̝ހ!==0)
+      curveSelfEntity=playerRecords.find(record=>record.e.ᴘ४１===aimSelf.id)?.e;
+    const weapon=curveSelfEntity?.Іࡈ５;
+    if(!Number.isInteger(weapon))return null;
+    const descriptor=weapons[weapon&255];
+    return descriptor ? {speed:descriptor.curveBulletSpeed,range:descriptor.path} : null;
+  }
   // Delegate to the unchanged ILM methods; cache only the native metadata adapter.
   for(const key of ['resolve','findNearestPlayerTo']) {
     const method=Aimbot[key];
-    Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>method.apply(this,args),key==='findNearestPlayerTo'||MOD.lockId<0);}});
+    Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>{
+      const original=method.apply(this,args);
+      return key==='resolve'&&MOD.CurvedAimEnabled ? curvedAim.resolve(this,GetAllTargets,aimSelf.id,MOD,curveWeaponInfo(),original) : original;
+    },key==='findNearestPlayerTo'||MOD.lockId<0);}});
   }
   Aimbot.mouseDown = false;
   // ILM owns lastId and its death reset on the 50 ms tick. A temporary socket
@@ -1080,8 +1096,11 @@ function __installDevastMod(B) {
     // Fill any extended slots: original ILM iterates densely over both arrays.
     while(group.length<=id) group.push(new ilm.Target(group.length));
     ensureAimTeams(id);
-    if(!active) {group[id].setInactive();return;}
-    if(Number.isFinite(x)&&Number.isFinite(y)) group[id].update(x,y);
+    if(!active) {curvedAim.forget(group[id]);group[id].setInactive();return;}
+    if(Number.isFinite(x)&&Number.isFinite(y)) {
+      if(!group[id].active)curvedAim.forget(group[id]);
+      group[id].update(x,y);curvedAim.observe(group[id]);
+    }
   }
   function playerMeta(id) {
     return B.world.ᴎ︃ᄉ[id];
@@ -1577,6 +1596,7 @@ function __installDevastMod(B) {
   const widgetWrappers = new Map();
   function observeSocket(socket) {
     removeSocketObservers();
+    curveSelfEntity=null;
     connectionSocket = socket;
     socketTrace=socket?{id:++socketSerial,openedAt:socket.readyState===1?performance.now():null,lastReceiveAt:null,receivedMessages:0,localCloseSource:null}:null;
     if (typeof socket?.addEventListener !== 'function') return;
@@ -1612,7 +1632,7 @@ function __installDevastMod(B) {
       automationSettings:{autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled},
       jitterTransport:{deferredDirections:jitter.deferredDirections,rateLimitHz:20},
       automationTransport:{deferred:{...automationDeferrals}},
-      aimSettings:{enabled:MOD.AimBotEnabled,autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
+      aimSettings:{enabled:MOD.AimBotEnabled,curved:MOD.CurvedAimEnabled,curvedMode:MOD.CurvedAimEnabled?curvedAim.mode:'ilm',autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}}))};
   }
@@ -2134,6 +2154,8 @@ function __installDevastMod(B) {
     for (const [key,label] of [['TeamClanColor','Цвет своего клана'],['EnemyClanColor','Цвет чужого клана'],['NicknameColor','Цвет ника']]) visual.addColor(MOD, key).name(label).onChange(value=>setSetting(key,value));
     const aim = __installIlmAimMenu(menu,MOD);
     for (const control of aim.__controllers) control.onChange(value=>setSetting(control.property,value));
+    const predictionMenu=menu.addFolder('Prediction');
+    add(predictionMenu,'CurvedAimEnabled','Учитывать повороты цели').domElement.title='Упреждение при движении по дуге. Выключение возвращает обычный ILM.';
     const jitterMenu = menu.addFolder('Jitter');
     add(jitterMenu, 'JitterEnabled', 'Enabled');
     add(jitterMenu, 'JitterSpeed', 'Speed (degrees/sec)', 1, 3600, 1);
@@ -2261,6 +2283,7 @@ function __installDevastMod(B) {
     settings: MOD,
     beforeFire,
     get jitterAngle() { return jitter.spinning ? jitter.angle * Math.PI / 180 : null; },
+    get curvedAimMode(){return MOD.CurvedAimEnabled?curvedAim.mode:'ilm';},
     get aimRenderAngle() {
       return playing() && MOD.AimBotEnabled && Aimbot.targetPlayer?.active &&
         lastSentPlayer===B.world.ᅠᏧ‍.id && Number.isFinite(lastSentAngle) ? lastSentAngle*Math.PI/180 : null;

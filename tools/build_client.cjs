@@ -31,7 +31,7 @@ function build() {
   const profile = JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json')));
   const bindings = JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-bindings.json')));
   const read = file => fs.readFileSync(path.join(root,file),'utf8');
-  const source = assemble(baseline,profile,bindings.symbols,read('mod/responsive.js'),read('mod/bootstrap.js'),read('vendor/dat.gui.recovered.js'),read('mod/ilm-aim.js'));
+  const source = assemble(baseline,profile,bindings.symbols,read('mod/responsive.js'),read('mod/bootstrap.js'),read('vendor/dat.gui.recovered.js'),read('mod/ilm-aim.js')+'\n'+read('mod/curved-aim.js'));
   const status = {status:'static_checks_passed',source_url:profile.source_url,
     baseline_sha256:profile.baseline_sha256,output_sha256:hash(source),output_bytes:Buffer.byteLength(source),
     applied_patches:profile.operations.map(p=>p.id),live_server_test:'see build/browser-report.json',publication:'not_published'};

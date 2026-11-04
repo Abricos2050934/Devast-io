@@ -22,6 +22,24 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   }return local;
  }
  for(const [key,list]of og){const next=ng.get(key);if(list.length===1&&next?.length===1){pairs.set(list[0],next[0]);learn(oldCanon.get(list[0]),curCanon.get(next[0]));}}
+ // Projectile metadata is a required contract for circular interception.
+ function curveWeaponFields(a){
+  const found=[];
+  for(const [sound,speed]of [['audio/ak47-shot.mp3',1.4],['audio/laser-submachine-shot.mp3',1.45]]){
+   const hits=a.nodes.filter(n=>n.type==='Literal'&&n.value===sound);if(hits.length!==1)throw Error('Ambiguous curve weapon anchor');
+   let object=a.parent.get(hits[0]);while(object&&object.type!=='ObjectExpression')object=a.parent.get(object);
+   const fields=object?.properties.filter(p=>p.type==='Property'&&a.constant(p.value)===speed);
+   const path=object?.properties.find(p=>p.type==='Property'&&prop(a,p)==='path');
+   const array=a.parent.get(object),table=a.parent.get(array);
+   if(fields?.length!==1||a.constant(path?.value)!==900||array?.type!=='ArrayExpression'||table?.type!=='Property')throw Error('Native curve weapon speed/range contract changed');
+   found.push({speed:prop(a,fields[0]),table:prop(a,table)});
+  }
+  if(found[0].speed!==found[1].speed||found[0].table!==found[1].table)throw Error('Inconsistent curve weapon metadata');
+  return found[0];
+ }
+ const curveOld=curveWeaponFields(old),curveNew=curveWeaponFields(cur);
+ if(bindings.symbols.curveWeapons!==curveOld.table||bindings.symbols.curveBulletSpeed!==curveOld.speed)throw Error('Reviewed curve weapon bindings changed');
+ propose(curveOld.table,curveNew.table);propose(curveOld.speed,curveNew.speed);
  const globalMap=()=>Object.fromEntries([...votes].filter(([,v])=>v.size===1).map(([k,v])=>[k,[...v][0]]));
  // Check native network entrypoints themselves, not just references to their names.
  const rootBody=old.tree.body[0]?.expression?.callee?.body?.body;
@@ -131,7 +149,7 @@ if(require.main===module){
  try{
   const [, ,input,out]=process.argv;if(!input||!out)throw Error('Usage: node tools/auto_port.cjs RAW_JS OUTPUT_DIR');
   const read=f=>fs.readFileSync(path.join(root,f),'utf8');
-  const result=port(require('node:zlib').gunzipSync(fs.readFileSync(path.join(root,'baselines/current.js.gz'))).toString(),fs.readFileSync(input,'utf8'),JSON.parse(read('patches/recovered-current.json')),JSON.parse(read('patches/recovered-bindings.json')),read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/ilm-aim.js'),read('vendor/dat.gui.recovered.js'));
+  const result=port(require('node:zlib').gunzipSync(fs.readFileSync(path.join(root,'baselines/current.js.gz'))).toString(),fs.readFileSync(input,'utf8'),JSON.parse(read('patches/recovered-current.json')),JSON.parse(read('patches/recovered-bindings.json')),read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/ilm-aim.js')+'\n'+read('mod/curved-aim.js'),read('vendor/dat.gui.recovered.js'));
   fs.mkdirSync(out,{recursive:true});for(const [name,data]of Object.entries({'native.js':result.source,'game.modded.js':result.output,'profile.json':JSON.stringify(result.profile,null,2),'bindings.json':JSON.stringify(result.bindings,null,2),'ilm-aim.js':result.aim,'roles.json':JSON.stringify(result.roles,null,2),'port-report.json':JSON.stringify(result.report,null,2)}))fs.writeFileSync(path.join(out,name),data);
   console.log(JSON.stringify({status:'ported',...result.report,decoder_blocks:result.report.decoder_blocks.length}));
  }catch(error){console.error(error.message);process.exitCode=1;}

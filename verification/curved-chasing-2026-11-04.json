@@ -1,0 +1,2157 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "base_commit": "9c87ebbd0c65cec88411b8b112b8c590cd4d024a",
+  "user_scenario": "The shooter chases a target while both run around the same rock, block or tree",
+  "release": "42662f5d9664c7c2961fc224d8a2d2b87428eb628115b0ff98fd5fd9bb451708",
+  "output_sha256": "0857653faad1bac8475a2aa48c827f954cd6ada04f3cc73704386b4e1f2885ef",
+  "scope": {
+    "original_ilm": "byte_identical",
+    "original_ilm_sha256": "950b2dc1af051ce99e4168aa866d117f87f654a40a2f5cbb269b3de859ad0560",
+    "changed_functions": [
+      "trackPacket",
+      "observeSocket",
+      "connectionInfo",
+      "createMenu"
+    ],
+    "added_functions": [
+      "curveWeaponInfo"
+    ],
+    "native_patch_profile": "unchanged",
+    "first_shot_and_jitter": "unchanged",
+    "new_timers": 0
+  },
+  "simulation": {
+    "scenes": 144,
+    "used": 132,
+    "legacyHits": 91,
+    "enhancedHits": 136,
+    "legacyRms": 44.35205373343827,
+    "enhancedRms": 18.540433034505217,
+    "cases": [
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 5.664349862322051,
+        "enhanced": 0.2365046454707256
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 10.956771467121596,
+        "enhanced": 7.738630523090031
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 11.51608682830513,
+        "enhanced": 0.9756391929905351
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 3.503792274253702,
+        "enhanced": 6.131485786570569
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 18.437993742999275,
+        "enhanced": 0.21813240980187573
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 19.13050135556191,
+        "enhanced": 2.944690562484425
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 35.09942669840698,
+        "enhanced": 0.7494855386003061
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 29.783656128648268,
+        "enhanced": 5.420831960887686
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 34.41009591639808,
+        "enhanced": 0.37124466489215174
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 32.67078620733436,
+        "enhanced": 0.2763505446954005
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 56.16880747393101,
+        "enhanced": 1.132795919558037
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 48.808691465597214,
+        "enhanced": 4.306257841885765
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 3.059813783479948,
+        "enhanced": 0.46903402610702744
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 8.727735046443666,
+        "enhanced": 0.2996503340542968
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 12.869620985996033,
+        "enhanced": 0.7100184169482759
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 12.436448147952689,
+        "enhanced": 3.4709336129533948
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 12.67239193153205,
+        "enhanced": 1.2904143494271916
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 17.719984995237525,
+        "enhanced": 0.4199972315462073
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 35.59772206090218,
+        "enhanced": 0.18939387623869197
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 29.792315729902317,
+        "enhanced": 1.0596424849501356
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 25.984567290606662,
+        "enhanced": 1.5532603957071172
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 27.082580727623565,
+        "enhanced": 2.930415170902597
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 51.49868096448988,
+        "enhanced": 0.39205248383591823
+      },
+      {
+        "projectile": 1.4,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 41.47988968468325,
+        "enhanced": 6.294025408392496
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 5.129138531874202,
+        "enhanced": 0.21318912042068852
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 3.013005954313251,
+        "enhanced": 16.69019876049528
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 14.546674649197254,
+        "enhanced": 0.3790042488993973
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 16.687690788453015,
+        "enhanced": 7.630175882020901
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 21.86319888174471,
+        "enhanced": 0.23396702860716265
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 19.36147249954194,
+        "enhanced": 9.80510967881305
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 51.10608220387333,
+        "enhanced": 1.2845696549972407
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 48.31815889991904,
+        "enhanced": 6.4801482748139865
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 45.214175168169355,
+        "enhanced": 0.44527297286775214
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 47.06505591152889,
+        "enhanced": 2.9311010460597946
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 80.76265994188915,
+        "enhanced": 2.0184624859590823
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 78.2716626745917,
+        "enhanced": 2.485169389583714
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 4.062758957453642,
+        "enhanced": 0.3720015291448883
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 9.054024158858121,
+        "enhanced": 2.033100545732782
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 14.815782912125849,
+        "enhanced": 0.6520427684994087
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 11.274419767670679,
+        "enhanced": 1.5140134475714409
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 16.743870793372196,
+        "enhanced": 0.21552652992719176
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 19.41255195671989,
+        "enhanced": 0.727388709203826
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 47.78915733143931,
+        "enhanced": 0.7331918541450793
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 36.27179906462168,
+        "enhanced": 5.150386177995989
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 33.65760184641079,
+        "enhanced": 0.9779607017478511
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 38.84126730471743,
+        "enhanced": 6.9779518186939065
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 71.61888681598978,
+        "enhanced": 1.2916430335189661
+      },
+      {
+        "projectile": 1.4,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 56.51156801022536,
+        "enhanced": 4.967516235563394
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 3.6112245161270717,
+        "enhanced": 1.3081124891358464
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 14.187646778621719,
+        "enhanced": 14.187646778621719
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 13.681650441721105,
+        "enhanced": 1.6282305274954072
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 8.877167289849783,
+        "enhanced": 8.877167289849783
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 32.74723406637342,
+        "enhanced": 1.7219125721004782
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 40.97866853626514,
+        "enhanced": 40.97866853626514
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 76.95871012270455,
+        "enhanced": 7.165186339991831
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 63.64203437574598,
+        "enhanced": 63.64203437574598
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 72.68027117764154,
+        "enhanced": 3.767151242910968
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 70.01946599546191,
+        "enhanced": 70.01946599546191
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 127.43214426222731,
+        "enhanced": 0.3048756849038806
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 115.32554167964034,
+        "enhanced": 115.32554167964034
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 3.315491188305787,
+        "enhanced": 1.0153509203265267
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 7.460345764352854,
+        "enhanced": 6.028189153730483
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 16.99273160641165,
+        "enhanced": 1.738277447878082
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 13.38019586869589,
+        "enhanced": 6.152279417579641
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 21.768437311909157,
+        "enhanced": 1.0564866081205817
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 22.803312396449517,
+        "enhanced": 7.5863859095288095
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 68.64018167285441,
+        "enhanced": 0.32969699380162215
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 53.56775004100529,
+        "enhanced": 8.380244818408544
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 48.896988488893626,
+        "enhanced": 4.978594297134345
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 58.32955779033621,
+        "enhanced": 6.275787184462295
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 107.40695828164569,
+        "enhanced": 1.053038364926253
+      },
+      {
+        "projectile": 1.4,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 91.91533892943232,
+        "enhanced": 5.550765651888662
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 5.735495652533348,
+        "enhanced": 0.2268003507847132
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 11.112849648462435,
+        "enhanced": 7.8779270431751955
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 11.299887171847775,
+        "enhanced": 1.0445004314241282
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 3.1833183684096724,
+        "enhanced": 6.386633114520723
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 18.357180253494032,
+        "enhanced": 0.3605922372860909
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 19.182339123834637,
+        "enhanced": 2.8757816120605626
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 34.12402649600914,
+        "enhanced": 1.6597297174575878
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 28.85496294812342,
+        "enhanced": 6.316847946505506
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 34.01837912492029,
+        "enhanced": 0.4278271884047423
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 32.418953211280666,
+        "enhanced": 0.3782372971694846
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 54.83519435680476,
+        "enhanced": 2.658385818756319
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 47.606724864208324,
+        "enhanced": 5.677025750027547
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 3.1191026776252384,
+        "enhanced": 0.4046736949080291
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 8.784361885488103,
+        "enhanced": 0.5181396847935918
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 12.642059696761626,
+        "enhanced": 0.37874205848311315
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 12.406131099109503,
+        "enhanced": 3.544635359555751
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 12.550965741675913,
+        "enhanced": 0.16740590616200637
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 17.46715803292302,
+        "enhanced": 0.40281788940269553
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 34.62383134463457,
+        "enhanced": 1.0885763939033835
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 28.757006309009835,
+        "enhanced": 0.3464838121112774
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 25.53522181961435,
+        "enhanced": 0.16790948971811334
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 26.968474287951715,
+        "enhanced": 0.9672759322267933
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 50.1375120973646,
+        "enhanced": 1.9386286766217635
+      },
+      {
+        "projectile": 1.45,
+        "radius": 90,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 40.22940079269083,
+        "enhanced": 7.743255087603713
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 5.235769403525944,
+        "enhanced": 0.28659811330253515
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 2.878005936159962,
+        "enhanced": 16.649359105739325
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 14.211447690357263,
+        "enhanced": 0.21552514716759796
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 16.407402218775005,
+        "enhanced": 7.443101555178712
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 21.633783730045963,
+        "enhanced": 0.593320431925801
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 19.068549863983968,
+        "enhanced": 10.297343755570816
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 49.356681366954035,
+        "enhanced": 1.2467398562114602
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 46.93249827766174,
+        "enhanced": 5.3004532989166675
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 44.40784093323549,
+        "enhanced": 0.7374792049794044
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 46.06573519874096,
+        "enhanced": 4.268202006912468
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 78.28500142980592,
+        "enhanced": 0.7293934048374757
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 75.99842485303664,
+        "enhanced": 5.511232168110147
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 4.1628600059145615,
+        "enhanced": 0.44867379645263716
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 9.168929172261118,
+        "enhanced": 2.0591750841296523
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 14.477812254919026,
+        "enhanced": 0.4597488346594872
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 11.263248799081152,
+        "enhanced": 1.59935417863166
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 16.4806242640068,
+        "enhanced": 0.2764330604055748
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 18.960817799709766,
+        "enhanced": 0.26732551377823266
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 46.03626176233412,
+        "enhanced": 2.3964435251564717
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 35.13169483164646,
+        "enhanced": 6.316329969524053
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 32.772795474765005,
+        "enhanced": 0.20988481808583725
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 37.52929719810651,
+        "enhanced": 5.4616079478782025
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 69.09694281263413,
+        "enhanced": 4.018914796099456
+      },
+      {
+        "projectile": 1.45,
+        "radius": 160,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 54.172894842271134,
+        "enhanced": 7.566192168761123
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 3.7594279875622645,
+        "enhanced": 1.4326025220248908
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 14.051661519360385,
+        "enhanced": 14.051661519360385
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 13.180933017825314,
+        "enhanced": 1.9787009561123203
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 8.336514098952822,
+        "enhanced": 8.336514098952822
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 32.26568238770637,
+        "enhanced": 1.0232035943529043
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 41.16482205592173,
+        "enhanced": 41.16482205592173
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 73.67102227150187,
+        "enhanced": 2.4075007425812323
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 60.32544775696418,
+        "enhanced": 60.32544775696418
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 71.08845526054654,
+        "enhanced": 1.7145713340130948
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 69.1533720685038,
+        "enhanced": 69.1533720685038
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 122.67098884509957,
+        "enhanced": 4.854915674482167
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 50,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "ilm",
+        "legacy": 111.05987513945612,
+        "enhanced": 111.05987513945612
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 3.4611686810420776,
+        "enhanced": 1.1346154157506956
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 7.649490798969608,
+        "enhanced": 5.935267101962459
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 16.45955998235412,
+        "enhanced": 1.3588609898362074
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 0.5,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 13.359371506972368,
+        "enhanced": 6.212843785178402
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 21.20896381564292,
+        "enhanced": 0.35557992628995805
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 21.945547261423105,
+        "enhanced": 3.5347359375109133
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 65.35544732945753,
+        "enhanced": 3.4178199764747736
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.2,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 51.438347890242525,
+        "enhanced": 2.218206153976108
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 47.14699257534373,
+        "enhanced": 0.7418098633012457
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": -1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 55.87314037423263,
+        "enhanced": 11.035135251445974
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": false,
+        "mode": "curve",
+        "legacy": 102.56100701551145,
+        "enhanced": 6.156278726401815
+      },
+      {
+        "projectile": 1.45,
+        "radius": 300,
+        "dt": 100,
+        "phase": 1.9,
+        "direction": 1,
+        "polygon": true,
+        "mode": "curve",
+        "legacy": 87.43564819733028,
+        "enhanced": 10.448041115829916
+      }
+    ]
+  },
+  "frame_performance": {
+    "frames": 600,
+    "actors": 100,
+    "ilm_mode": {
+      "total_ms": 166.886893,
+      "packets": 600,
+      "mode": "ilm",
+      "timer_ms": 50
+    },
+    "curved": {
+      "total_ms": 181.877539,
+      "packets": 600,
+      "mode": "curve",
+      "timer_ms": 50
+    },
+    "jitter_combination": {
+      "mode": "curve",
+      "shot": [
+        [
+          6,
+          263
+        ],
+        [
+          4
+        ]
+      ],
+      "spin_stopped": true
+    }
+  },
+  "cached_sample_performance": {
+    "iterations": 20000,
+    "original": {
+      "milliseconds": 41.196493,
+      "packets": 1,
+      "timer_ms": 50,
+      "mode": "ilm"
+    },
+    "curved": {
+      "milliseconds": 327.265801,
+      "packets": 1,
+      "timer_ms": 50,
+      "mode": "curve"
+    }
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 190,
+    "python_tests": 45
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "output_sha256": "0857653faad1bac8475a2aa48c827f954cd6ada04f3cc73704386b4e1f2885ef",
+      "browser_version": "154.0.8037.57",
+      "native": {
+        "curved_target_and_chaser_interception": true,
+        "curve_comparison": {
+          "status": "passed",
+          "guns": [
+            {
+              "speed": 1.4,
+              "legacy_miss": 51.10608220387333,
+              "curved_miss": 1.2845696549971775,
+              "mode": "curve"
+            },
+            {
+              "speed": 1.45,
+              "legacy_miss": 49.356681366954035,
+              "curved_miss": 1.2467398562114962,
+              "mode": "curve"
+            }
+          ],
+          "shooter_and_target": "both_moving_around_same_obstacle",
+          "obstacle_collision": "not_simulated"
+        },
+        "menu": true,
+        "connection_close_origin_diagnostics": true,
+        "native_shot_direction_and_render_sync": true,
+        "coalesced_aim_directions_and_native_idle": true,
+        "original_ilm_mechanics": true,
+        "original_ilm_comparison": {
+          "scenes": 36,
+          "ticks": 432,
+          "exact_core_state": true,
+          "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
+          "original_menu_controls": 5,
+          "native_shot_sync": "verified_separately_without_changing_core_formula",
+          "line_visibility_and_color": "original_ILM"
+        },
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "output_sha256": "0857653faad1bac8475a2aa48c827f954cd6ada04f3cc73704386b4e1f2885ef",
+      "browser_version": "153.0",
+      "native": {
+        "curved_target_and_chaser_interception": true,
+        "curve_comparison": {
+          "status": "passed",
+          "guns": [
+            {
+              "speed": 1.4,
+              "legacy_miss": 51.10608220387333,
+              "curved_miss": 1.2845696549971644,
+              "mode": "curve"
+            },
+            {
+              "speed": 1.45,
+              "legacy_miss": 49.356681366954035,
+              "curved_miss": 1.2467398562114962,
+              "mode": "curve"
+            }
+          ],
+          "shooter_and_target": "both_moving_around_same_obstacle",
+          "obstacle_collision": "not_simulated"
+        },
+        "menu": true,
+        "connection_close_origin_diagnostics": true,
+        "native_shot_direction_and_render_sync": true,
+        "coalesced_aim_directions_and_native_idle": true,
+        "original_ilm_mechanics": true,
+        "original_ilm_comparison": {
+          "scenes": 36,
+          "ticks": 432,
+          "exact_core_state": true,
+          "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
+          "original_menu_controls": 5,
+          "native_shot_sync": "verified_separately_without_changing_core_formula",
+          "line_visibility_and_color": "original_ILM"
+        },
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    }
+  },
+  "candidate_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/shot-line.test.cjs",
+      "tests/ilm-restoration.test.cjs",
+      "tests/angle-transport.test.cjs",
+      "tests/curved-aim.test.cjs"
+    ]
+  },
+  "module_sha256": {
+    "mod/responsive.js": "86e43e11f5a114e7f0b3b6fd4311e651772ddecd259f70fe183e506451d8cadc",
+    "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
+    "mod/ilm-aim.js": "950b2dc1af051ce99e4168aa866d117f87f654a40a2f5cbb269b3de859ad0560",
+    "mod/curved-aim.js": "7d01c15a8a0e8eb2ac604aef7155e8bd1ab7586c25de729cfa2701d288970dd2",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "native_port": {
+    "raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+    "reference_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+    "deobfuscated_sha256": "645fe8e99382cedd1b1849e86c51588cdc3e51c3802904412b27d06a8bf726e1",
+    "output_sha256": "0857653faad1bac8475a2aa48c827f954cd6ada04f3cc73704386b4e1f2885ef",
+    "matched_functions": 7088,
+    "native_network_contracts": [
+      "ᴎᚂρ",
+      "ѕ᠋༢",
+      "ρ٨٨",
+      "ᴎ༩༣",
+      "ᅠϲ᠍",
+      "е̅ܙ",
+      "εܖᴏ",
+      "ⲅ︊ᄃ"
+    ],
+    "required_bindings": 81,
+    "patches": [
+      "camera-world-view",
+      "packet-position-history",
+      "packet-removal-history",
+      "native-view-scale",
+      "mine-visibility",
+      "building-opacity",
+      "native-disconnect-without-socket",
+      "native-invalid-session-id-guard",
+      "ilm-native-player-nickname-id",
+      "ilm-native-self-server-angle",
+      "ilm-native-initial-nickname-id",
+      "ilm-native-clan-colors",
+      "native-preserve-token-across-version-init",
+      "ilm-native-synchronized-render",
+      "ilm-native-angle-bookkeeping-primary",
+      "ilm-native-angle-bookkeeping-secondary",
+      "native-observe-connection-socket",
+      "native-guard-stale-preflight-response",
+      "native-observe-server-death",
+      "jitter-native-fire-priority",
+      "native-nickname-head-color",
+      "native-nickname-leader-color",
+      "native-player-list-leave",
+      "native-play-preparation-recovery",
+      "landmine-visibility",
+      "wire-visibility",
+      "native-receive-timeout-diagnostics",
+      "native-entry-timeout-diagnostics",
+      "native-integrity-signature-0",
+      "native-integrity-signature-1",
+      "native-integrity-signature-2"
+    ],
+    "integrity_compatibility": {
+      "status": "applied",
+      "predicates": 3
+    },
+    "decoder_blocks": [
+      {
+        "input_start": 108342,
+        "input_end": 762453,
+        "decoded_sha256": "23e34031789a901019d59125140041f8bcc6de19430b28cb26a15168c83e241e",
+        "steps": 25650679
+      },
+      {
+        "input_start": 827639,
+        "input_end": 929589,
+        "decoded_sha256": "b773061d4667d952bd12f791cada5a14a4b1ca1719b8033000c3a4f1a79f7a60",
+        "steps": 4894124
+      },
+      {
+        "input_start": 938378,
+        "input_end": 1067309,
+        "decoded_sha256": "3a49e97c3450af5aea94975b974200cc96fa39a6f8098bf8b18bdde283a6c676",
+        "steps": 5836406
+      },
+      {
+        "input_start": 1100758,
+        "input_end": 1195081,
+        "decoded_sha256": "edf5ca92ec2ad74c6f0310643ac4e7ac4ebd25ce65f984981a88c9d81261d5d9",
+        "steps": 4670970
+      },
+      {
+        "input_start": 1266220,
+        "input_end": 1271067,
+        "decoded_sha256": "3ef7ae0c462a4237e2444e733f801edb16cca5705e7621283ce2de12760e8449",
+        "steps": 33986
+      },
+      {
+        "input_start": 1271067,
+        "input_end": 1276510,
+        "decoded_sha256": "cce33b8f2aebe829faa4f3c1284eca54c6edae8e22b0ff3132037ef9fee2a621",
+        "steps": 170147
+      },
+      {
+        "input_start": 1276851,
+        "input_end": 1281843,
+        "decoded_sha256": "da05ce26078e0d7f23226a323de423bdb4308072dd98064b69e749e5990f1d1b",
+        "steps": 40325
+      },
+      {
+        "input_start": 1764008,
+        "input_end": 1772811,
+        "decoded_sha256": "473cc0789ded19ed1ddc2900e411316fc2006787b1cf71c1b1228e8dd3243f05",
+        "steps": 257365
+      },
+      {
+        "input_start": 1958324,
+        "input_end": 2369865,
+        "decoded_sha256": "cb3c16b717ace7c56a5c777c9a541d5256712440ed687423ae08624239dd98ab",
+        "steps": 19938757
+      },
+      {
+        "input_start": 2392579,
+        "input_end": 2565369,
+        "decoded_sha256": "6deaa180c2d5015079ca04e9932312883ea1bcf2564cfd35c987ff09e8b922a0",
+        "steps": 10489266
+      },
+      {
+        "input_start": 2569680,
+        "input_end": 2762095,
+        "decoded_sha256": "53b4179c9413a30f2817bf895d137a061466d6fa3305d7e28b46ec3a4db9d6a2",
+        "steps": 11772651
+      },
+      {
+        "input_start": 2773707,
+        "input_end": 2795431,
+        "decoded_sha256": "61102850b91437ed8f49d6593ea761ddc329195064cb4925d2f325c68a21df98",
+        "steps": 771481
+      },
+      {
+        "input_start": 2807398,
+        "input_end": 2812518,
+        "decoded_sha256": "6805315c50fd927d59f1fe33b34d553264019b7fa258e9c3e87ee397a78af2a4",
+        "steps": 46257
+      },
+      {
+        "input_start": 2813206,
+        "input_end": 2940370,
+        "decoded_sha256": "b3875b675ebb73e2d26f27bb6138978e754b550ad3fa10f157eaca6b6a3a6b0b",
+        "steps": 4435148
+      },
+      {
+        "input_start": 2941563,
+        "input_end": 3393708,
+        "decoded_sha256": "4f6241b2293448c5e0316b5bba453cca2fe69538cc0ac4a6a7e580622aa2708e",
+        "steps": 18581058
+      },
+      {
+        "input_start": 3415558,
+        "input_end": 3597350,
+        "decoded_sha256": "0c234697bc30d2df3fffc08e13e3a3a0f111f2b2738278caf7392d330ee36525",
+        "steps": 10036426
+      },
+      {
+        "input_start": 3633332,
+        "input_end": 3739602,
+        "decoded_sha256": "d7abe58b44a8926da738715f2f7c81ba45cf000c72e4bcc414bcce96a8998f18",
+        "steps": 3841799
+      },
+      {
+        "input_start": 3832451,
+        "input_end": 3862115,
+        "decoded_sha256": "df5944ebb227c3a1f21684d7f393c14bd435cfd92a2ce27b7f210055784cb546",
+        "steps": 1352251
+      },
+      {
+        "input_start": 3921390,
+        "input_end": 3926958,
+        "decoded_sha256": "881922f93bc02ee92ab6e85f4106e2006fa51c185b90ca16e6bfaebdaace324b",
+        "steps": 132876
+      },
+      {
+        "input_start": 3981345,
+        "input_end": 4305887,
+        "decoded_sha256": "d1a473338c8b31f4a35fe8cf5f6aeef8a5e9f6426b0845d6c03b9955da02bda5",
+        "steps": 17032065
+      },
+      {
+        "input_start": 4373347,
+        "input_end": 4454237,
+        "decoded_sha256": "226d392f9b28a35d4081397d4e0c663853eda648f7e3761ef61813232bda8f16",
+        "steps": 2797264
+      },
+      {
+        "input_start": 4495181,
+        "input_end": 4510167,
+        "decoded_sha256": "7f2ae06428472113230331b410012b58c9564dcfbbd0ba1adb84326bfe44b39b",
+        "steps": 675364
+      },
+      {
+        "input_start": 4558501,
+        "input_end": 4583583,
+        "decoded_sha256": "14388f80033bfe2ef90f0bb2493c69d7295a3c856a38f02792b99e25c49dd37c",
+        "steps": 1272188
+      },
+      {
+        "input_start": 4665387,
+        "input_end": 4831264,
+        "decoded_sha256": "4b11dc91cbf2097b931629a50b824fe20492921b8173da37afe380a0c16f048c",
+        "steps": 9173984
+      },
+      {
+        "input_start": 4860840,
+        "input_end": 4868444,
+        "decoded_sha256": "f7e6a6e1754d3c0d5a5073894839d589353ccc6702ac9967744999c37e929f40",
+        "steps": 75104
+      },
+      {
+        "input_start": 5407097,
+        "input_end": 5440985,
+        "decoded_sha256": "058203f649f088e36e1622ae27b04a78a8518ec6b18b58f69cb35446fbb8045b",
+        "steps": 1189628
+      },
+      {
+        "input_start": 5441804,
+        "input_end": 5444658,
+        "decoded_sha256": "75cdd9a4908d2cc09ba2d14d431375428dbf256311fbcd9d283ed3b38a59014a",
+        "steps": 9479
+      },
+      {
+        "input_start": 5449833,
+        "input_end": 5613779,
+        "decoded_sha256": "dc3b787d47f8ab7acb4a3ddf314b150ff2601ee38c5ddb24895ccd2c5594f770",
+        "steps": 8362134
+      },
+      {
+        "input_start": 5613808,
+        "input_end": 5636643,
+        "decoded_sha256": "4743025faaebabe1bdd8f893ca0660f21c025c0400c469f75caf83bb815ba41b",
+        "steps": 1121246
+      },
+      {
+        "input_start": 5765979,
+        "input_end": 5874858,
+        "decoded_sha256": "d5e6ee123ce76e1f18272a8dc8c8893edf1af884a09f0df08f3e00f8a6fdde0e",
+        "steps": 5638022
+      }
+    ],
+    "live_server": "not_tested"
+  },
+  "default": "CurvedAimEnabled=true; Prediction toggle returns to original ILM when disabled",
+  "safety_of_prediction": "Only a stable fitted orbit with current samples and known native projectile speed/range overrides ILM. Stops, reversals, teleports, reused IDs and stale data fall back. Same-ID reconnect invalidates the shooter-entity metadata cache.",
+  "limits": [
+    "Prepared trajectories and radius-38 intersections, not a measured live-server hit rate",
+    "No obstacle collision or projectile spread simulation",
+    "No measured server latency; sample arrival age is included",
+    "Browser/device FPS of the user was not measured"
+  ]
+}
