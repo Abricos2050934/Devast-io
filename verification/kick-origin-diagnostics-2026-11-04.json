@@ -368,5 +368,42 @@
       }
     ]
   },
-  "publication": "Prepared and fully verified; see updates/current.json and updates/verification.json for public receipt"
+  "publication": "Published and public stable and pinned artifact hashes verified",
+  "publication_check": {
+    "status": "passed",
+    "checked_at": "2026-11-04T12:03:51.095650+00:00",
+    "updates_commit": "7948468e3ddcf4c592548f05b273fc69125210a1",
+    "artifacts": [
+      {
+        "path": "updates/current.json",
+        "sha256": "31eb58c33aa840018e37509c5267984809886142b73b9858152d457d57f5c410",
+        "bytes": 937,
+        "output_sha256": "8970f0976120ae6f9d238630404f1d8d68e95f7bb7774ca8b62a4cbcc2ba2b5d"
+      },
+      {
+        "path": "updates/game.modded.js",
+        "sha256": "8970f0976120ae6f9d238630404f1d8d68e95f7bb7774ca8b62a4cbcc2ba2b5d",
+        "bytes": 4285074
+      },
+      {
+        "path": "7948468e3ddcf4c592548f05b273fc69125210a1/game.modded.js",
+        "sha256": "8970f0976120ae6f9d238630404f1d8d68e95f7bb7774ca8b62a4cbcc2ba2b5d",
+        "bytes": 4285074
+      },
+      {
+        "path": "7948468e3ddcf4c592548f05b273fc69125210a1/verification.json",
+        "sha256": "e514d31401f3db98d77711b1863cfabc2c384f19be56947c2f79edacc489dfd5",
+        "bytes": 12378,
+        "output_sha256": "8970f0976120ae6f9d238630404f1d8d68e95f7bb7774ca8b62a4cbcc2ba2b5d",
+        "client_build": {
+          "fingerprint": "4d961939b719995eb9a796c9340cb59158d4ffca99efeae1af4a05e596761290",
+          "nativeSha256": "645fe8e99382cedd1b1849e86c51588cdc3e51c3802904412b27d06a8bf726e1"
+        },
+        "native_by_browser": {
+          "chromium": true,
+          "firefox": true
+        }
+      }
+    ]
+  }
 }
