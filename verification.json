@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "8970f0976120ae6f9d238630404f1d8d68e95f7bb7774ca8b62a4cbcc2ba2b5d",
+  "output_sha256": "0857653faad1bac8475a2aa48c827f954cd6ada04f3cc73704386b4e1f2885ef",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -12,6 +12,7 @@
       "mod/responsive.js",
       "mod/bootstrap.js",
       "mod/ilm-aim.js",
+      "mod/curved-aim.js",
       "vendor/dat.gui.recovered.js"
     ],
     "features": [
@@ -44,7 +45,8 @@
       "verbatim-original-ilm-aim",
       "coalesced-aim-directions",
       "native-shot-direction-and-render-sync",
-      "connection-close-origin-diagnostics"
+      "connection-close-origin-diagnostics",
+      "curved-target-and-chaser-interception"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -64,7 +66,8 @@
       "tests/automation-transport.test.cjs",
       "tests/shot-line.test.cjs",
       "tests/ilm-restoration.test.cjs",
-      "tests/angle-transport.test.cjs"
+      "tests/angle-transport.test.cjs",
+      "tests/curved-aim.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -72,16 +75,17 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "764aef94aafe569b181acf8159585cd600026fb5e4340c28fff38f3d9dc4f0c7",
+    "mod/responsive.js": "86e43e11f5a114e7f0b3b6fd4311e651772ddecd259f70fe183e506451d8cadc",
     "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
     "mod/ilm-aim.js": "950b2dc1af051ce99e4168aa866d117f87f654a40a2f5cbb269b3de859ad0560",
+    "mod/curved-aim.js": "7d01c15a8a0e8eb2ac604aef7155e8bd1ab7586c25de729cfa2701d288970dd2",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "87b0be11de6f5a0ce02b445096e9e0421e3f56a12d41d3246e9b35e9f35f51cc",
+  "mod_bundle_sha256": "8ee73d3941bedbc76a4b30f903da999d4f7245b41d4f43cadb2d7924669d32bb",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -114,10 +118,30 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "4d961939b719995eb9a796c9340cb59158d4ffca99efeae1af4a05e596761290",
+    "fingerprint": "c5a41b2c8cdbaa16ba10020831ca2b157bae13256314039bad214dc0dbe8d0f2",
     "nativeSha256": "645fe8e99382cedd1b1849e86c51588cdc3e51c3802904412b27d06a8bf726e1"
   },
   "native": {
+    "curved_target_and_chaser_interception": true,
+    "curve_comparison": {
+      "status": "passed",
+      "guns": [
+        {
+          "speed": 1.4,
+          "legacy_miss": 51.10608220387333,
+          "curved_miss": 1.2845696549971775,
+          "mode": "curve"
+        },
+        {
+          "speed": 1.45,
+          "legacy_miss": 49.356681366954035,
+          "curved_miss": 1.2467398562114962,
+          "mode": "curve"
+        }
+      ],
+      "shooter_and_target": "both_moving_around_same_obstacle",
+      "obstacle_collision": "not_simulated"
+    },
     "menu": true,
     "connection_close_origin_diagnostics": true,
     "native_shot_direction_and_render_sync": true,
@@ -172,13 +196,33 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-04T12:04:52.122Z",
+  "finished_at": "2026-11-04T21:54:12.404Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "8970f0976120ae6f9d238630404f1d8d68e95f7bb7774ca8b62a4cbcc2ba2b5d",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "0857653faad1bac8475a2aa48c827f954cd6ada04f3cc73704386b4e1f2885ef",
+      "browser_version": "154.0.8037.57",
       "native": {
+        "curved_target_and_chaser_interception": true,
+        "curve_comparison": {
+          "status": "passed",
+          "guns": [
+            {
+              "speed": 1.4,
+              "legacy_miss": 51.10608220387333,
+              "curved_miss": 1.2845696549971775,
+              "mode": "curve"
+            },
+            {
+              "speed": 1.45,
+              "legacy_miss": 49.356681366954035,
+              "curved_miss": 1.2467398562114962,
+              "mode": "curve"
+            }
+          ],
+          "shooter_and_target": "both_moving_around_same_obstacle",
+          "obstacle_collision": "not_simulated"
+        },
         "menu": true,
         "connection_close_origin_diagnostics": true,
         "native_shot_direction_and_render_sync": true,
@@ -263,9 +307,29 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "8970f0976120ae6f9d238630404f1d8d68e95f7bb7774ca8b62a4cbcc2ba2b5d",
+      "output_sha256": "0857653faad1bac8475a2aa48c827f954cd6ada04f3cc73704386b4e1f2885ef",
       "browser_version": "153.0",
       "native": {
+        "curved_target_and_chaser_interception": true,
+        "curve_comparison": {
+          "status": "passed",
+          "guns": [
+            {
+              "speed": 1.4,
+              "legacy_miss": 51.10608220387333,
+              "curved_miss": 1.2845696549971644,
+              "mode": "curve"
+            },
+            {
+              "speed": 1.45,
+              "legacy_miss": 49.356681366954035,
+              "curved_miss": 1.2467398562114962,
+              "mode": "curve"
+            }
+          ],
+          "shooter_and_target": "both_moving_around_same_obstacle",
+          "obstacle_collision": "not_simulated"
+        },
         "menu": true,
         "connection_close_origin_diagnostics": true,
         "native_shot_direction_and_render_sync": true,
@@ -365,13 +429,14 @@
       "tests/automation-transport.test.cjs",
       "tests/shot-line.test.cjs",
       "tests/ilm-restoration.test.cjs",
-      "tests/angle-transport.test.cjs"
+      "tests/angle-transport.test.cjs",
+      "tests/curved-aim.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 183,
-    "python_tests": 44
+    "node_tests": 190,
+    "python_tests": 45
   }
 }
