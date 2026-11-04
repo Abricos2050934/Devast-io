@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "b16a630a59f5dadd86fed06a6b50fa0b19a1f45c87b56075bce27484acba10ed",
+  "output_sha256": "acff4272817d094f9efc6f61fcfc9d3f5aaeaf842bfad5a1e51d5721ef11dddd",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -42,7 +42,8 @@
       "independent-door-control-and-server-state-feedback",
       "automation-socket-backpressure",
       "verbatim-original-ilm-aim",
-      "coalesced-aim-directions"
+      "coalesced-aim-directions",
+      "native-shot-direction-and-render-sync"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -70,12 +71,12 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "818d480772a2312ac1d4d08c9ee74023305f77190b112e9081f61570bd39b953",
+    "mod/responsive.js": "47bcb6e2efee26e1995078995e3e648c0baab9780c55862c0dab80c4545b7406",
     "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
     "mod/ilm-aim.js": "950b2dc1af051ce99e4168aa866d117f87f654a40a2f5cbb269b3de859ad0560",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "fce98b925e0451772273cc499d6f5effe924eecad4ba2aefe2cd828fa5fa7995",
+  "mod_bundle_sha256": "9bd970c3f5e0d8a3cddfa3bf258959fc10c786568261ab53a1e3d081f9b2d28c",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
@@ -113,6 +114,7 @@
   "resource_override_loader": "passed",
   "native": {
     "menu": true,
+    "native_shot_direction_and_render_sync": true,
     "coalesced_aim_directions_and_native_idle": true,
     "original_ilm_mechanics": true,
     "original_ilm_comparison": {
@@ -121,7 +123,7 @@
       "exact_core_state": true,
       "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
       "original_menu_controls": 5,
-      "normal_fire_between_ticks": "unchanged",
+      "native_shot_sync": "verified_separately_without_changing_core_formula",
       "line_visibility_and_color": "original_ILM"
     },
     "automation_socket_backpressure": true,
@@ -164,14 +166,15 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-04T08:45:49.328Z",
+  "finished_at": "2026-11-04T10:31:50.569Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "b16a630a59f5dadd86fed06a6b50fa0b19a1f45c87b56075bce27484acba10ed",
+      "output_sha256": "acff4272817d094f9efc6f61fcfc9d3f5aaeaf842bfad5a1e51d5721ef11dddd",
       "browser_version": "156.0.8078.0",
       "native": {
         "menu": true,
+        "native_shot_direction_and_render_sync": true,
         "coalesced_aim_directions_and_native_idle": true,
         "original_ilm_mechanics": true,
         "original_ilm_comparison": {
@@ -180,7 +183,7 @@
           "exact_core_state": true,
           "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
           "original_menu_controls": 5,
-          "normal_fire_between_ticks": "unchanged",
+          "native_shot_sync": "verified_separately_without_changing_core_formula",
           "line_visibility_and_color": "original_ILM"
         },
         "automation_socket_backpressure": true,
@@ -253,10 +256,11 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "b16a630a59f5dadd86fed06a6b50fa0b19a1f45c87b56075bce27484acba10ed",
+      "output_sha256": "acff4272817d094f9efc6f61fcfc9d3f5aaeaf842bfad5a1e51d5721ef11dddd",
       "browser_version": "153.0",
       "native": {
         "menu": true,
+        "native_shot_direction_and_render_sync": true,
         "coalesced_aim_directions_and_native_idle": true,
         "original_ilm_mechanics": true,
         "original_ilm_comparison": {
@@ -265,7 +269,7 @@
           "exact_core_state": true,
           "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
           "original_menu_controls": 5,
-          "normal_fire_between_ticks": "unchanged",
+          "native_shot_sync": "verified_separately_without_changing_core_formula",
           "line_visibility_and_color": "original_ILM"
         },
         "automation_socket_backpressure": true,
@@ -359,7 +363,7 @@
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 175,
-    "python_tests": 42
+    "node_tests": 179,
+    "python_tests": 43
   }
 }
