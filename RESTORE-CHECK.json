@@ -1,38 +1,44 @@
 {
-  "status": "passed",
-  "tested_at": "2026-11-03T09:24:56.020370+00:00",
-  "offline_archive_files_verified": 140,
-  "tracked_sources_equal_history_bundle": 117,
-  "history_bundle_cloned_offline": true,
-  "fresh_dependency_install": "passed",
-  "repository_retarget_test": "BackupOwner/Devast-restored (local test only; no repository created)",
-  "regression": {
-    "status": "passed",
-    "command": "npm test",
-    "node_tests": 147,
-    "python_tests": 35
-  },
+  "status": "verified",
+  "checked_files": 168,
+  "source_commit": "5722816553a772abfef99c09591461d531f5db21",
+  "client_sha256": "b16a630a59f5dadd86fed06a6b50fa0b19a1f45c87b56075bce27484acba10ed",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "integrity_compatibility": {
-        "status": "passed",
-        "predicates": 3
-      }
+      "original_ilm_comparison": {
+        "scenes": 36,
+        "ticks": 432,
+        "exact_core_state": true,
+        "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
+        "original_menu_controls": 5,
+        "normal_fire_between_ticks": "unchanged",
+        "line_visibility_and_color": "original_ILM"
+      },
+      "native_idle_ping": true
     },
     "firefox": {
       "status": "passed",
-      "integrity_compatibility": {
-        "status": "passed",
-        "predicates": 3
-      }
+      "original_ilm_comparison": {
+        "scenes": 36,
+        "ticks": 432,
+        "exact_core_state": true,
+        "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
+        "original_menu_controls": 5,
+        "normal_fire_between_ticks": "unchanged",
+        "line_visibility_and_color": "original_ILM"
+      },
+      "native_idle_ping": true
     }
   },
-  "current_client_sha256": "08b4a536cc05aff5f02bd765aaa084359eb0ef91bdf2e1db1435d0dfeda1bf02",
-  "publisher_validation_for_new_loader": "passed",
-  "network_publication_to_test_repository": false,
-  "literal_chat_history_restored": false,
-  "functional_source_commit": "629470e686a94bacf5c36f4e048511f015ca4694",
-  "source_commit": "47483f4e41915b470261706090fba0b7e2ef8de3",
-  "snapshot_note": "After migration checks, only the README download link changed from unavailable Releases to updates branch."
+  "signatures_per_browser": 3,
+  "history_checked": true,
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 175,
+    "python_tests": 42
+  },
+  "migration_helper_tests": "3 passed; retarget dry run passed",
+  "scope": "Offline archive and source bundle verified; matching current source passed full updater pipeline and both browsers. No new repository created."
 }
