@@ -38,7 +38,8 @@
     "functional-aim-settings",
     "ak47-laser-distance-presets",
     "restored-stable-far-prediction",
-    "manual-shot-aim-line-alignment"
+    "manual-shot-aim-line-alignment",
+    "coalesced-aim-directions"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -59,7 +60,8 @@
     "tests/automation-transport.test.cjs",
     "tests/aim-presets.test.cjs",
     "tests/far-aim-regression.test.cjs",
-    "tests/shot-line.test.cjs"
+    "tests/shot-line.test.cjs",
+    "tests/angle-transport.test.cjs"
   ],
   "required_browsers": [
     "chromium",

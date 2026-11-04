@@ -33,7 +33,8 @@ test('both equipped guns use the stable far buttons and match the previous predi
     Object.assign(a,{x:sx,y:1000});Object.assign(b,{x:1800,y});expected.observe(a);expected.observe(b);
     if(t<198)continue;
     now=t+31;f.setClock(now);const wanted=expected.resolve({targetPlayer:b,lastAngle:0},{players:[null,a],lines:[{reset(){}}]},1,stable,speed,0);
-    const before=f.packets.length;f.mod.aim.refresh();assert.equal(f.packets.length,before+1);assert.equal(f.packets.at(-1)[1],(wanted+360)%360);
+    const before=f.packets.length,normalized=(wanted+360)%360,unchanged=f.packets.at(-1)?.[1]===normalized;
+    f.mod.aim.refresh();assert.equal(f.packets.length,before+(unchanged?0:1));assert.equal(f.packets.at(-1)[1],normalized);
    }
   }
  }finally{f.mod.dispose();}

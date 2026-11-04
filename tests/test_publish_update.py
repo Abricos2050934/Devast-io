@@ -134,3 +134,11 @@ class PublicationTests(unittest.TestCase):
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['manual_shot_aim_line_alignment']=False;self.save()
   with self.assertRaisesRegex(ValueError,'Manual shot.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_coalesced_directions_require_native_idle_ping_verification(self):
+  self.contract['features']=['coalesced-aim-directions']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'coalesced_aim_directions_and_native_idle':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['coalesced_aim_directions_and_native_idle']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'Coalesced.*firefox'):p.artifacts(self.root,self.out)

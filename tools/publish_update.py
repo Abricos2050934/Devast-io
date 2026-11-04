@@ -55,6 +55,8 @@ def artifacts(root, output):
             raise ValueError('Stable far prediction was not verified in browser: ' + browser)
         if 'manual-shot-aim-line-alignment' in contract.get('features', []) and report.get('native', {}).get('manual_shot_aim_line_alignment') is not True:
             raise ValueError('Manual shot aim-line alignment was not verified in browser: ' + browser)
+        if 'coalesced-aim-directions' in contract.get('features', []) and report.get('native', {}).get('coalesced_aim_directions_and_native_idle') is not True:
+            raise ValueError('Coalesced directions and native idle ping were not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'

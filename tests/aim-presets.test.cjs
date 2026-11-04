@@ -41,11 +41,12 @@ test('both velocity models change the selected moving-target prediction in class
 test('each preset uses the equipped gun speed immediately and retains the 50 ms transport cadence',()=>{
  const {f,self}=setup();try{
   f.mod.setSetting('AimBotEnabled',true);
+  const expected=[];const capture=()=>{const angle=(Math.round(f.mod.aim.lastAngle)%360+360)%360;if(expected.at(-1)?.[1]!==angle)expected.push([6,angle]);};
   for(const key of ['ak47_close','ak47_far','laser_close','laser_far']){
-   f.mod.applyAimPreset(key);self['Іࡈ５']=1;f.mod.aim.refresh();const ak=f.mod.aim.lastAngle;
-   self['Іࡈ５']=2;f.mod.aim.refresh();const laser=f.mod.aim.lastAngle;assert.ok(laser<ak,'Faster native projectile must require less unrounded lead');
+   f.mod.applyAimPreset(key);self['Іࡈ５']=1;f.mod.aim.refresh();const ak=f.mod.aim.lastAngle;capture();
+   self['Іࡈ５']=2;f.mod.aim.refresh();const laser=f.mod.aim.lastAngle;capture();assert.ok(laser<ak,'Faster native projectile must require less unrounded lead');
   }
-  assert.equal(f.packets.length,8);assert.ok(f.packets.every(p=>p[0]===6&&Number.isInteger(p[1])&&p[1]>=0&&p[1]<360));
+  assert.deepEqual(f.packets,expected);assert.ok(f.packets.every(p=>p[0]===6&&Number.isInteger(p[1])&&p[1]>=0&&p[1]<360));
   assert.equal(f.timerPeriods.values().next().value,50);
  }finally{f.mod.dispose();}
 });

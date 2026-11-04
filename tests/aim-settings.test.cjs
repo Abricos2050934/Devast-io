@@ -56,19 +56,21 @@ for(const [key,a,b] of [['distanceCoefficient',100,1000],['offsetCoefficient',0,
 test('autoFire setting changes attack packets when the original direction-change condition is met',()=>{
  const f=aimScene();for(const x of [80,90,80])f.mod.trackPacket(1,2,0,x,0,true);
  f.set('lockId',2);f.set('AimBotEnabled',true);f.mod.aim.refresh();assert.deepEqual(f.packets.map(p=>p[0]),[6]);
- f.set('autoFire',true);f.mod.aim.refresh();assert.deepEqual(f.packets.slice(-3).map(p=>p[0]),[6,4,5]);
- f.set('autoFire',false);const n=f.packets.length;f.mod.aim.refresh();assert.equal(f.packets.length,n+1);assert.equal(f.packets.at(-1)[0],6);f.mod.dispose();
+ const first=f.packets.length;f.set('autoFire',true);f.mod.aim.refresh();assert.deepEqual(f.packets.slice(first).map(p=>p[0]),[4,5]);
+ f.set('autoFire',false);const n=f.packets.length;f.mod.aim.refresh();assert.equal(f.packets.length,n);
+ f.mod.trackPacket(1,2,0,140,100,true);f.mod.aim.refresh();assert.equal(f.packets.length,n+1);assert.equal(f.packets.at(-1)[0],6);f.mod.dispose();
 });
 
 test('aim with autoFire disabled sends only finite native direction packets over repeated moving-target ticks',()=>{
  const f=aimScene();f.set('lockId',2);f.set('AimBotEnabled',true);f.set('autoFire',false);
- const tick=[...f.timers.values()][0];
+ const tick=[...f.timers.values()][0],expected=[];
  for(let i=0;i<100;i++){
   f.setClock(i*50);f.mod.trackPacket(1,2,0,100+(i%2)*30,50+Math.floor(30*Math.sin(i)),true);tick();
+  const angle=(Math.round(f.mod.aim.lastAngle)%360+360)%360;if(expected.at(-1)?.[1]!==angle)expected.push([6,angle]);
  }
- assert.equal(f.packets.length,100);
+ assert.deepEqual(f.packets,expected);
  for(const packet of f.packets){assert.equal(packet.length,2);assert.equal(packet[0],6);assert.ok(Number.isInteger(packet[1])&&packet[1]>=0&&packet[1]<360);}
- f.set('AimBotEnabled',false);tick();assert.equal(f.packets.length,100);f.mod.dispose();
+ f.set('AimBotEnabled',false);tick();assert.equal(f.packets.length,expected.length);f.mod.dispose();
 });
 
 test('visualizeResolving hides the old prediction line while retaining its last coordinates',()=>{

@@ -40,6 +40,23 @@ const edits=[],placements=[],todo=[tree];while(todo.length){const n=todo.pop();i
  for(const v of Object.values(n)){if(Array.isArray(v))todo.push(...v);else if(v&&typeof v==='object')todo.push(v);}
 }
 assert.equal(edits.length,Object.keys(functions).length,'Unique browser fixture functions required');
+// Derive the idle-ping clock from the native JSON sender, without hard-coding
+// obfuscated variable names. The probe exists only in this browser fixture.
+const networkDefinition=body.flatMap(n=>n.type==='VariableDeclaration'?n.declarations:[]).find(n=>n.id.name===symbols['о̃༩']);
+const networkBody=networkDefinition.init.callee.body.body,networkReturn=networkBody.find(n=>n.type==='ReturnStatement');
+const senderEntry=networkReturn.argument.properties.find(p=>(p.key.name??p.key.value)===symbols['ᴎᚂρ']);
+const senderDefinition=networkBody.find(n=>n.type==='FunctionDeclaration'&&n.id.name===senderEntry.value.name);
+const assignment=senderDefinition.body.body[0].expression;
+assert.ok(assignment?.type==='AssignmentExpression'&&assignment.left.type==='Identifier'&&assignment.right.type==='Identifier','Native send clock changed');
+const lastActivity=assignment.left.name,nativeNow=assignment.right.name,idleMatches=[];
+for(const fn of networkBody.filter(n=>n.type==='FunctionDeclaration')){
+ const pending=[fn.body];while(pending.length){const n=pending.pop();if(!n||typeof n!=='object')continue;
+  if(n.type==='BinaryExpression'&&n.operator==='>'&&n.left.type==='BinaryExpression'&&n.left.operator==='-'&&n.left.left.name===nativeNow&&n.left.right.name===lastActivity&&n.right.type==='Identifier')idleMatches.push({fn,limit:n.right.name});
+  for(const v of Object.values(n)){if(Array.isArray(v))pending.push(...v);else if(v&&typeof v==='object')pending.push(v);}
+ }
+}
+assert.equal(idleMatches.length,1,'Unique native idle ping required');const idle=idleMatches[0];
+edits.push({at:idle.fn.start,text:`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.idleProbe={read:()=>({now:${nativeNow},activity:${lastActivity},limit:${idle.limit}}),setNow:value=>{${nativeNow}=value},restore:value=>{${nativeNow}=value.now;${lastActivity}=value.activity},ping:()=>${idle.fn.id.name}()};`});
 assert.equal(placements.length,1,'One native cursor placement expression required');
 const end=tree.body[0].expression.callee.body.end-1;
 edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},types:${symbols['εᚇ๓']},graphics:${symbols['ᴘᚉ٦']},items:${symbols['ιᄅᴄ']},get view(){return __responsiveView},set view(value){__responsiveView=value},get ctx(){return ${symbols['а०̅']}},nativePlacement:()=>${output.slice(placements[0].start,placements[0].end)},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
@@ -145,6 +162,17 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
 
    const transport=n.capturePackets();
    try{
+    const savedClock=n.idleProbe.read();
+    try{
+     check(savedClock.limit>0&&savedClock.limit<=60000,'Unexpected native idle ping interval');
+     m.setSetting('JitterEnabled',false);m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);
+     for(let i=0;i<2;i++){m.trackPacket(0,1,1,1000,1000,true);m.trackPacket(0,2,1,1500,1000,true);}
+     transport.packets.length=0;const base=savedClock.now+1000;n.idleProbe.setNow(base);m.aim.refresh();
+     for(let elapsed=50;elapsed<=savedClock.limit*2+100;elapsed+=50){n.idleProbe.setNow(base+elapsed);m.aim.refresh();n.idleProbe.ping();}
+     check(transport.packets.filter(p=>p[0]===6).length===1,'Stationary aim still sends duplicate directions');
+     check(transport.packets.filter(p=>p[0]===0).length>=1,'Aim prevents the native idle ping');
+     check(transport.packets.every(p=>p[0]===0||p[0]===6),'Idle transport changed unrelated commands');
+    }finally{n.idleProbe.restore(savedClock);transport.packets.length=0;}
     m.trackPacket(0,1,1,1000,1000,true);m.trackPacket(0,2,1,1100,1050,true);m.aim.refresh();transport.packets.length=0;
     m.step(0);const history=JSON.stringify(m.targets.players[2]);n.network.state=64;m.step(16);m.aim.refresh();n.network.state=1;m.step(32);
     check(JSON.stringify(m.targets.players[2])===history,'Temporary disconnection erased native packet history');
@@ -177,7 +205,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     for(let i=0;i<20;i++)n.network[r['ᴎ༩༣']]();
     check(transport.packets.length===20&&transport.packets.every(p=>p.length===1&&p[0]===4),'Repeated native attacks flooded extra aim packets');
     check(JSON.stringify(m.targets.lines[0])===heldLine,'Repeated native attacks recalculated prediction between ILM ticks');
-    transport.packets.length=0;m.aim.refresh();check(transport.packets.length===1&&transport.packets[0][0]===6,'Continuous fire lost its ILM aim tick');
+    transport.packets.length=0;m.trackPacket(0,2,1,1300,1600,true);m.aim.refresh();check(transport.packets.length===1&&transport.packets[0][0]===6,'Continuous fire lost its updated aim direction');
     m.setSetting('AimBotEnabled',false);
     const blockedSocket={readyState:1,bufferedAmount:4096};m.observeSocket(blockedSocket);
     await new Promise(resolve=>setTimeout(resolve,160));transport.packets.length=0;
@@ -383,7 +411,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    }finally{restoreIntegrityNetwork();integrity.set(savedIntegrity);}
    check(m.connectionInfo().integrityCompatibility===true,'Automatic build omitted native signature compatibility');
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,aim_settings_and_presets:true,stable_far_prediction:true,manual_shot_aim_line_alignment:true,automation_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,aim_settings_and_presets:true,stable_far_prediction:true,manual_shot_aim_line_alignment:true,coalesced_aim_directions_and_native_idle:true,automation_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,adaptive_weapon_prediction:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

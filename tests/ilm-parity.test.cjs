@@ -3,22 +3,29 @@ const {fixture}=require('./mod-fixture.cjs'),{oracle}=require('./ilm-oracle.cjs'
 function pair(){
  const f=fixture({dom:true,fireKey:'nativeFire'});f.mod.setSetting('ImprovedAimEnabled',false);f.mod.setSetting('resolverType','linear');const old=oracle(f.mod.settings);
  f.dom.canvas.getBoundingClientRect=()=>({left:0,top:0,width:800,height:600});
- let now=0,view={x:0,y:0,scale:1};
+ let now=0,view={x:0,y:0,scale:1},wireAngle=null,wireFramePlayer=0;
  f.B.view=()=>({...view,ctx:f.dom.canvas.getContext('2d')});
  const snapshot=()=>JSON.parse(JSON.stringify({lastId:f.mod.targets.lastId,lastAngle:f.mod.aim.lastAngle,target:f.mod.aim.targetPlayer?.id,mouse:f.mod.targets.mouseMapCords,lines:f.mod.targets.lines,players:f.mod.targets.players.filter(p=>p.active),ghouls:f.mod.targets.ghouls.filter(p=>p.active)}));
  function equal(label){
   assert.deepEqual(snapshot(),old.snapshot(),label+' state');
-  assert.deepEqual(JSON.parse(JSON.stringify(f.packets)),old.drain(),label+' wire packets');f.packets.length=0;
+  // Keep exact core-state parity. The transport intentionally omits only
+  // redundant angle messages; attack/release and changed directions survive.
+  const expected=old.drain().filter(packet=>{if(packet[0]!==6)return true;if(packet[1]===wireAngle)return false;wireAngle=packet[1];return true;});
+  assert.deepEqual(JSON.parse(JSON.stringify(f.packets)),expected,label+' coalesced wire packets');f.packets.length=0;
  }
  return {
   f,old,equal,
-  set(k,v){f.mod.setSetting(k,v);old.set(k,v);},
+  set(k,v){if(k==='AimBotEnabled'&&f.mod.settings[k]!==v)wireAngle=null;f.mod.setSetting(k,v);old.set(k,v);},
   team(id,team){f.world['ᴎ︃ᄉ'][id]??={'ο̏︇':'Player '+id};Object.assign(f.world['ᴎ︃ᄉ'][id],{'а༤̘':team,'ᴌ̗ⲟ':7});if(team>=0)f.world['ﾠࡅ‍'][team]={'ոᚄރ':7};old.team(id,team);},
-  self(id){f.world['ᅠᏧ‍'].id=id;old.self(id);},
-  state(state){f.network.state=state;old.connected(state===1);},
+  self(id){if(f.world['ᅠᏧ‍'].id!==id)wireAngle=null;f.world['ᅠᏧ‍'].id=id;old.self(id);},
+  state(state){if(state!==1)wireAngle=null;f.network.state=state;old.connected(state===1);},
   packet(data){f.mod.trackPacket(data.type===13?13:1,data.id??2,data.uid??1,data.x??0,data.y??0,data.active??true);old.packet(data);},
   move(x,y){for(const fn of f.listeners.get('mousemove'))fn({clientX:x,clientY:y});old.move(x,y);},
-  frame(next=view){view=next;f.setClock(now+=16);f.mod.step(now);old.frame(view);},
+  frame(next=view){
+   const active=f.network.state===1?f.world['ᅠᏧ‍'].id:0;
+   if(!active||active!==wireFramePlayer)wireAngle=null;wireFramePlayer=active;
+   view=next;f.setClock(now+=16);f.mod.step(now);old.frame(view);
+  },
   tick(){assert.equal(f.timerPeriods.values().next().value,50);for(const tick of f.timers.values())tick();old.tick();},
   fire(){f.network.nativeFire();old.fire();},
   dispose(){f.mod.dispose();}

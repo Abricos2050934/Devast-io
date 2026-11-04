@@ -823,7 +823,9 @@ function __installDevastMod(B) {
   });
   const ilm = __createIlmAim(ilmSettings, ilmWorld, packet=>{
     if (MOD.JitterEnabled && packet[0] === 6 && (!jitterAiming() || !Aimbot.targetPlayer?.active)) return false;
-    return __send(packet,true);
+    // The server retains the last direction. Recalculating ILM at 20 Hz must
+    // not resend an unchanged angle or keep suppressing the native idle ping.
+    return __send(packet);
   });
   const GetAllTargets = ilm.targets, Aimbot = ilm.aim;
   const aimPrediction=__createAdaptiveAim(()=>performance.now());
@@ -1052,7 +1054,8 @@ function __installDevastMod(B) {
   function setSetting(key, value) {
     if (stopped) throw new Error('Mod has been disposed');
     validateSetting(key,value);
-    if(key==='AimBotEnabled'&&MOD[key]!==value){lastSentAngle=null;jitter.fireUntil=-Infinity;}
+    if((key==='AimBotEnabled'||key==='JitterEnabled')&&MOD[key]!==value)lastSentAngle=null;
+    if(key==='AimBotEnabled'&&MOD[key]!==value)jitter.fireUntil=-Infinity;
     if (keySettings.includes(key)) {
       const conflict = keySettings.find(other=>other!==key && MOD[other]===value);
       if (conflict) MOD[conflict] = MOD[key];
@@ -2006,7 +2009,6 @@ function __installDevastMod(B) {
       updateTargets();
       updateMouse();
     }
-    if (!MOD.AimBotEnabled) lastSentAngle = null;
     updateJitter(now);
     automate(now);
     if (!B.synchronizedRender) draw();
