@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "fd48a48ab46d49fa4e65f1982c1997fc5d2ec6657efc401b7e310d330eb27266",
+  "output_sha256": "dc44155714be235be9df840ded3aa85e92e171a424bf67834c93d85971d32753",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -45,7 +45,8 @@
       "functional-aim-settings",
       "ak47-laser-distance-presets",
       "restored-stable-far-prediction",
-      "manual-shot-aim-line-alignment"
+      "manual-shot-aim-line-alignment",
+      "coalesced-aim-directions"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -66,7 +67,8 @@
       "tests/automation-transport.test.cjs",
       "tests/aim-presets.test.cjs",
       "tests/far-aim-regression.test.cjs",
-      "tests/shot-line.test.cjs"
+      "tests/shot-line.test.cjs",
+      "tests/angle-transport.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -74,16 +76,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "f73aaeeb5f05c49bc233b743d9aeb6199ab081ce715f5f38ad7329de71d5249c",
+    "mod/responsive.js": "410ee0ba929e6e6c4eba70af2a61285aca2d41bf2e57b12e1b1dc54d0acdcc73",
     "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
     "mod/ilm-aim.js": "5fe24264cc3dd4e808e7fc934fa694a021b89b9d00374ae941a49ce79de04d7a",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "b7e1727d58d5d4f5c678c9bec388a97bb00773f7f8ed8691ff10a5fae39d4c48",
+  "mod_bundle_sha256": "fc7f5560cfff99d5fc2041bdd94dad1e9562093ec15f6bdf6cd242e21934718c",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -120,6 +122,7 @@
     "aim_settings_and_presets": true,
     "stable_far_prediction": true,
     "manual_shot_aim_line_alignment": true,
+    "coalesced_aim_directions_and_native_idle": true,
     "automation_socket_backpressure": true,
     "right_click_hovered_door": true,
     "right_click_without_native_prompt": true,
@@ -161,17 +164,18 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-03T20:55:58.240Z",
+  "finished_at": "2026-11-04T07:37:17.638Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "fd48a48ab46d49fa4e65f1982c1997fc5d2ec6657efc401b7e310d330eb27266",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "dc44155714be235be9df840ded3aa85e92e171a424bf67834c93d85971d32753",
+      "browser_version": "154.0.8037.57",
       "native": {
         "menu": true,
         "aim_settings_and_presets": true,
         "stable_far_prediction": true,
         "manual_shot_aim_line_alignment": true,
+        "coalesced_aim_directions_and_native_idle": true,
         "automation_socket_backpressure": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
@@ -243,13 +247,14 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "fd48a48ab46d49fa4e65f1982c1997fc5d2ec6657efc401b7e310d330eb27266",
+      "output_sha256": "dc44155714be235be9df840ded3aa85e92e171a424bf67834c93d85971d32753",
       "browser_version": "153.0",
       "native": {
         "menu": true,
         "aim_settings_and_presets": true,
         "stable_far_prediction": true,
         "manual_shot_aim_line_alignment": true,
+        "coalesced_aim_directions_and_native_idle": true,
         "automation_socket_backpressure": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
@@ -337,13 +342,14 @@
       "tests/automation-transport.test.cjs",
       "tests/aim-presets.test.cjs",
       "tests/far-aim-regression.test.cjs",
-      "tests/shot-line.test.cjs"
+      "tests/shot-line.test.cjs",
+      "tests/angle-transport.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 183,
-    "python_tests": 43
+    "node_tests": 189,
+    "python_tests": 44
   }
 }
