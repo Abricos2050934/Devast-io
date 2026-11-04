@@ -7,10 +7,10 @@ test('ILM still computes every tick; only a non-open socket suppresses its sends
   f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('AimBotEnabled',true);
   const socket={readyState:1,bufferedAmount:8192};f.mod.observeSocket(socket);
   for(let t=0;t<500;t+=50){f.setClock(t);f.mod.aim.refresh();}
-  assert.equal(f.packets.length,10,'ILM does not pause its 50 ms loop for buffered bytes');
+  assert.equal(f.packets.length,1);assert.equal(f.mod.diagnostics.deduplicatedAngles,9);
   socket.readyState=3;f.mod.trackPacket(1,2,0,100,200,true);f.mod.aim.refresh();
-  assert.equal(f.packets.length,10);assert.notEqual(f.mod.aim.lastAngle,45,'Closed transport changed ILM computation');
-  socket.readyState=1;f.mod.aim.refresh();assert.equal(f.packets.length,11);
+  assert.equal(f.packets.length,1);assert.notEqual(f.mod.aim.lastAngle,45,'Closed transport changed ILM computation');
+  socket.readyState=1;f.mod.aim.refresh();assert.equal(f.packets.length,2);
  }finally{f.mod.dispose();}
 });
 test('fast loot and native auto-build pause together and resume one current frame',()=>{

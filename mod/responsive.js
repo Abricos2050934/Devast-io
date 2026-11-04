@@ -807,7 +807,8 @@ function __installDevastMod(B) {
     if (MOD.JitterEnabled && packet[0] === 6 && (!jitterAiming() || !Aimbot.targetPlayer?.active)) return false;
     // Like ILM's ws sender, a non-open socket suppresses transmission only.
     if (connectionSocket && connectionSocket.readyState!==1) return false;
-    return __send(packet,true);
+    // Native transport coalesces equal directions so the game can send its idle ping.
+    return __send(packet);
   });
   const GetAllTargets = ilm.targets, Aimbot = ilm.aim;
   // Delegate to the unchanged ILM methods; cache only the native metadata adapter.
@@ -1026,7 +1027,8 @@ function __installDevastMod(B) {
   function setSetting(key, value) {
     if (stopped) throw new Error('Mod has been disposed');
     validateSetting(key,value);
-    if(key==='AimBotEnabled'&&MOD[key]!==value){lastSentAngle=null;jitter.fireUntil=-Infinity;}
+    if((key==='AimBotEnabled'||key==='JitterEnabled')&&MOD[key]!==value)lastSentAngle=null;
+    if(key==='AimBotEnabled'&&MOD[key]!==value)jitter.fireUntil=-Infinity;
     if (keySettings.includes(key)) {
       const conflict = keySettings.find(other=>other!==key && MOD[other]===value);
       if (conflict) MOD[conflict] = MOD[key];
@@ -1963,7 +1965,6 @@ function __installDevastMod(B) {
       updateTargets();
       updateMouse();
     }
-    if (!MOD.AimBotEnabled) lastSentAngle = null;
     updateJitter(now);
     automate(now);
     if (!B.synchronizedRender) draw();

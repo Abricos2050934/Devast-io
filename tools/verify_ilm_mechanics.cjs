@@ -15,11 +15,11 @@ function verifyOriginalIlm(m,n,s,reference) {
  const saved=Object.fromEntries(keys.map(k=>[k,m.settings[k]])),savedId=self.id,savedState=n.network.state,savedClan=clans[0];
  const savedMetadata=[1,2,3,17].map(id=>[id,metadata[id]]);
  const oldSettings={...m.settings},oldWorld={PLAYER:{id:1,team:-1},players:Array.from({length:1000},()=>({team:-1}))};
- let expected=[],connected=true,checks=0;const old=create(oldSettings,oldWorld,p=>{if(connected)expected.push(p);});
+ let expected=[],connected=true,checks=0,wireAngle=null,wirePlayer=0;const old=create(oldSettings,oldWorld,p=>{if(connected){if(p[0]===6){const angle=(Math.round(p[1])%360+360)%360;if(angle===wireAngle&&self.id===wirePlayer)return;wireAngle=angle;wirePlayer=self.id;}expected.push(p);}});
  const transport=n.capturePackets(),socket={readyState:1,bufferedAmount:0};
  const normalize=p=>p[0]===6?[6,(Math.round(p[1])%360+360)%360]:p;
  function snapshot(engine){return JSON.stringify({lastId:engine.targets.lastId,lastAngle:engine.aim.lastAngle,target:engine.aim.targetPlayer?.id,mouse:engine.targets.mouseMapCords,lines:engine.targets.lines,players:engine.targets.players.filter(p=>p.active),ghouls:engine.targets.ghouls.filter(p=>p.active)});}
- function set(key,value){m.settings[key]=oldSettings[key]=value;}
+ function set(key,value){if(key==='AimBotEnabled'){if(m.settings[key]!==value)wireAngle=null;m.setSetting(key,value);}else m.settings[key]=value;oldSettings[key]=value;}
  function track(type,id,uid,x,y,active=true){
   m.trackPacket(type===13?13:0,id,uid,x,y,active);
   const target=type===13?old.targets.ghouls[uid]:old.targets.players[id];
@@ -32,7 +32,7 @@ function verifyOriginalIlm(m,n,s,reference) {
   transport.packets.length=expected.length=0;checks++;
  }
  try{
-  m.settings.JitterEnabled=false;n.network.state=1;self.id=1;clans[0]={[s['ոᚄރ']]:7};
+  m.setSetting('JitterEnabled',false);m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);n.network.state=1;self.id=1;clans[0]={[s['ոᚄރ']]:7};
   for(const id of [1,2,3,17])metadata[id]={[s['а༤̘']]:-1,[s['ᴌ̗ⲟ']]:7};
   m.observeSocket(socket);
   for(let scene=0;scene<36;scene++){
@@ -66,7 +66,7 @@ function verifyOriginalIlm(m,n,s,reference) {
   m.settings.visualizeResolvingColor='#abcdef';const stroke=n.ctx.stroke,colors=[];
   n.ctx.stroke=function(...args){colors.push(this.strokeStyle);return stroke.apply(this,args);};
   try{m.render();check(colors.some(c=>c.toLowerCase()==='#eeeeee')&&!colors.includes('#abcdef'),'Original ILM line rendering changed');}finally{n.ctx.stroke=stroke;}
-  return {scenes:36,ticks:checks,exact_core_state:true,exact_native_commands:true,original_menu_controls:5,normal_fire_between_ticks:'unchanged',line_visibility_and_color:'original_ILM'};
+  return {scenes:36,ticks:checks,exact_core_state:true,native_commands:'original_angles_and_attacks_with_existing_direction_coalescing',original_menu_controls:5,normal_fire_between_ticks:'unchanged',line_visibility_and_color:'original_ILM'};
  }finally{
   transport.restore();m.observeSocket(null);self.id=savedId;n.network.state=savedState;clans[0]=savedClan;
   for(const [id,value]of savedMetadata)metadata[id]=value;

@@ -1,0 +1,310 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "release": "b2be9aef47bd4ba81fb5a71831a2ee06e60209eb184c38bbc4628c2d82f581c2",
+  "output_sha256": "dc44155714be235be9df840ded3aa85e92e171a424bf67834c93d85971d32753",
+  "native_raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+  "module_sha256": {
+    "mod/responsive.js": "410ee0ba929e6e6c4eba70af2a61285aca2d41bf2e57b12e1b1dc54d0acdcc73",
+    "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
+    "mod/ilm-aim.js": "5fe24264cc3dd4e808e7fc934fa694a021b89b9d00374ae941a49ce79de04d7a",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "confirmed_defect": {
+    "description": "Forced identical angle sends reset native activity time on every 50 ms tick and postpone the native idle ping",
+    "stationary_comparison": {
+      "before": {
+        "simulated_seconds": 300,
+        "ticks": 6000,
+        "angle_packets": 6000,
+        "unique_angles": 1,
+        "final_angle": 0
+      },
+      "after": {
+        "simulated_seconds": 300,
+        "ticks": 6000,
+        "angle_packets": 1,
+        "unique_angles": 1,
+        "final_angle": 0
+      }
+    },
+    "changes": [
+      "Coalesce identical integer angles before the native sender and codec",
+      "Keep ILM prediction and 50 ms timer unchanged",
+      "Retain native idle ping and attack/release commands",
+      "Invalidate direction cache on player ID, aim toggle and Jitter toggle"
+    ]
+  },
+  "additional_native_audit": {
+    "direct_closes": [
+      "connection establishment timeout",
+      "native no-receive watchdog",
+      "socket error/close handlers"
+    ],
+    "additional_close_calls": {
+      "count": 7,
+      "owners": [
+        "ᴎܖ５",
+        "ԁ٥̣"
+      ],
+      "status": "Native parsing/entry-related branches examined; not identified as the cause of the reported incident and not removed"
+    },
+    "remaining_eval_calls": 2,
+    "unchanged_native_source": true,
+    "user_incident_cause": "not established"
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 189,
+    "python_tests": 44
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/adaptive-aim.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/aim-presets.test.cjs",
+      "tests/far-aim-regression.test.cjs",
+      "tests/shot-line.test.cjs",
+      "tests/angle-transport.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "output_sha256": "dc44155714be235be9df840ded3aa85e92e171a424bf67834c93d85971d32753",
+      "browser_version": "154.0.8037.57",
+      "native": {
+        "menu": true,
+        "aim_settings_and_presets": true,
+        "stable_far_prediction": true,
+        "manual_shot_aim_line_alignment": true,
+        "coalesced_aim_directions_and_native_idle": true,
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "output_sha256": "dc44155714be235be9df840ded3aa85e92e171a424bf67834c93d85971d32753",
+      "browser_version": "153.0",
+      "native": {
+        "menu": true,
+        "aim_settings_and_presets": true,
+        "stable_far_prediction": true,
+        "manual_shot_aim_line_alignment": true,
+        "coalesced_aim_directions_and_native_idle": true,
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "adaptive_weapon_prediction": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    }
+  },
+  "live_observation": {
+    "candidate_output_sha256": "fb023e3e33c7a530f262e8f55e6c590ac4a8e8e46c548404bcc273436c577b1a",
+    "scope": "Main direction-coalescing change before the final Jitter-toggle cache invalidation adjustment; Jitter disabled throughout",
+    "last_connected_sample": "connected-230s",
+    "terminal_sample": "connected-240s",
+    "planned_seconds": 360,
+    "mod_commands": 1,
+    "session_events": [
+      {
+        "type": "server-death",
+        "at": 247384,
+        "state": 1,
+        "integrityFlag": 0,
+        "aim": true,
+        "autoFire": false,
+        "jitter": false,
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false,
+        "socketState": 1,
+        "socketBufferedBytes": 0,
+        "health": 0,
+        "commandsInLast2s": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        },
+        "deathOpcode": 5,
+        "deathPacketLength": 3,
+        "deathPrefixHex": "05 00 00"
+      },
+      {
+        "type": "socket-close",
+        "at": 248569,
+        "state": 0,
+        "integrityFlag": 0,
+        "aim": true,
+        "autoFire": false,
+        "jitter": false,
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false,
+        "socketState": 3,
+        "socketBufferedBytes": 0,
+        "health": 0,
+        "commandsInLast2s": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        },
+        "code": 1005,
+        "clean": true
+      }
+    ],
+    "mod_errors": [],
+    "browser_errors": [],
+    "result": "Six-minute observation not completed: server game-over packet with health 0 at the terminal sample; this does not prove an anti-cheat kick"
+  },
+  "limits": [
+    "No claim that the reported user disconnect has been reproduced or fixed conclusively",
+    "No guarantee of kick-free live-server operation",
+    "The live trace belongs to the stated intermediate candidate; the final build passed all unit and native browser gates"
+  ]
+}
