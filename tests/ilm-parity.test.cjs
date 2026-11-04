@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {fixture}=require('./mod-fixture.cjs'),{oracle}=require('./ilm-oracle.cjs');
 function pair(){
- const f=fixture({dom:true,fireKey:'nativeFire'});f.mod.setSetting('ImprovedAimEnabled',false);f.mod.setSetting('resolverType','linear');const old=oracle(f.mod.settings);
+ const f=fixture({dom:true,fireKey:'nativeFire'});const old=oracle(f.mod.settings);
  f.dom.canvas.getBoundingClientRect=()=>({left:0,top:0,width:800,height:600});
  let now=0,view={x:0,y:0,scale:1};
  f.B.view=()=>({...view,ctx:f.dom.canvas.getContext('2d')});
@@ -66,7 +66,7 @@ test('complete installed mod agrees with original ILM receiver and timer over 36
     p.packet({id:3,x:1300+Math.floor(120*Math.sin(n*.5)),y:1250+n});
     p.packet({type:13,id:0,uid:17,x:1120+n*3,y:1080+n*2});
     if(n%5===0)p.set('lockId',n%10===0?2:-1);
-    if(n%7===0){p.set('distanceCoefficient',100+(scene*7+n)%900);p.set('offsetCoefficient',(n%4)/2);}
+    if(n%7===0){p.set('distanceCoefficient',100+(scene*7+n)%900);p.set('offsetCoefficient',(n%4)/2);p.set('bulletSpeedCoefficient',1+(scene+n)%15);p.set('resolverType',n%14===0?'linear':'smoothed');}
     if(n%9===0){p.set('mouseFovEnable',n%18===0);p.set('mouseFov',300+(scene+n)*5);}
     if(n%11===0)p.team(2,n%22===0?0:-1);
     p.team(1,scene%4===0?0:-1);

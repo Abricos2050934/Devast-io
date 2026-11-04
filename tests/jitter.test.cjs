@@ -95,15 +95,13 @@ test('continuous native fire aligns Jitter once and then uses only the original 
   f.mod.aim.mouseDown=false;f.setClock(500);f.mod.step(500);f.mod.step(750);assert.notEqual(f.mod.jitterAngle,null);
  }finally{f.mod.dispose();}
 });
-test('non-Jitter first fire aligns an updated prediction before the shot, then keeps the ILM cadence',()=>{
+test('non-Jitter fire preserves ILM prediction and adds no directions between ticks',()=>{
  const f=setup();try{
   f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();
   const count=f.packets.length,line=JSON.stringify(f.mod.targets.lines[0]);f.mod.aim.mouseDown=true;
-  f.mod.trackPacket(1,2,1,120,150,true);f.mod.beforeFire();
-  assert.equal(f.packets.length,count+1);assert.equal(f.packets.at(-1)[0],6);assert.notEqual(JSON.stringify(f.mod.targets.lines[0]),line);
-  const corrected=JSON.stringify(f.mod.targets.lines[0]);
-  for(let i=1;i<=20;i++){f.setClock(i*5);f.mod.beforeFire();}
-  assert.equal(f.packets.length,count+1,'Held fire added extra angle packets');assert.equal(JSON.stringify(f.mod.targets.lines[0]),corrected);
+  f.mod.trackPacket(1,2,1,120,150,true);
+  for(let i=0;i<20;i++){f.setClock(i*5);f.mod.beforeFire();}
+  assert.equal(f.packets.length,count);assert.equal(JSON.stringify(f.mod.targets.lines[0]),line);
   assert.equal(Object.hasOwn(f.mod,'firingAngle'),false);
  }finally{f.mod.dispose();}
 });

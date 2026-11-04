@@ -23,7 +23,7 @@ test('ILM angle mode renders only its four original lines in a dense scene',()=>
  f.mod.setSetting('visualizeResolving',true);f.mod.setSetting('AimBotEnabled',true);f.mod.step(0);
  assert.equal(f.dom.calls.filter(c=>c.name==='lineTo').length,4);
  f.dom.calls.length=0;f.mod.setSetting('visualizeResolving',false);f.mod.step(20);
- assert.equal(f.dom.calls.filter(c=>c.name==='lineTo').length,0);f.mod.dispose();
+ assert.equal(f.dom.calls.filter(c=>c.name==='lineTo').length,4);f.mod.dispose();
 });
 test('dense metadata slots preserve extended player IDs, ghoul UIDs and fresh clan membership',()=>{
  const f=fixture();try{

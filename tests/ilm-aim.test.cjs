@@ -42,8 +42,7 @@ test('thirteen ILM aim defaults retain their original values and the resolver de
   for(const v of Object.values(n))if(Array.isArray(v))v.forEach(x=>values(x,out));else if(v&&typeof v==='object')values(v,out);return out;
  }
  const expected=values(original),actual=values(current);
- for(const key of ['AimbotKey','ShowRealAngles','AimBotEnabled','target','mouseFovEnable','distanceCoefficient','bulletSpeedCoefficient','offsetCoefficient','visualizeResolving','visualizeResolvingColor','autoFire','lockId','mouseFov'])assert.equal(actual[key],expected[key],key);
- assert.equal(expected.resolverType,'linear');assert.equal(actual.resolverType,'smoothed');
+ for(const key of ['AimbotKey','ShowRealAngles','AimBotEnabled','target','mouseFovEnable','resolverType','distanceCoefficient','bulletSpeedCoefficient','offsetCoefficient','visualizeResolving','visualizeResolvingColor','autoFire','lockId','mouseFov'])assert.equal(actual[key],expected[key],key);
 });
 
 test('native metadata constructor patch matches only its reviewed assignment and preserves all other native code',()=>{

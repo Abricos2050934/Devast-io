@@ -13,11 +13,10 @@ function __installDevastMod(B) {
       this.AutoTakeEnabled = false;
       this.AutoBuiledEnabled = false;
       this.AntiKickEnabled = false;
-      this.resolverType = "smoothed";
+      this.resolverType = "linear";
       this.ShowRealAngles = "withAim";
       this.target = "players";
       this.AimBotEnabled = false;
-      this.ImprovedAimEnabled = true;
       this.JitterEnabled = false;
       this.JitterSpeed = 360;
       this.JitterKey = "KeyJ";
@@ -72,14 +71,13 @@ function __installDevastMod(B) {
   const transient = new Set(['Token', 'token', 'tokenId', 'userId']);
   const keySettings = ['AimbotKey','JitterKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey'];
   const limits = {JitterSpeed:[1,3600],mouseFov:[1,20000],lockId:[-1,65535],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],bulletSpeedCoefficient:[1,15],zoomFactor:[.33,2],Xraytransparency:[.05,1]};
-  const choices = {target:['players','ghouls','all'],ShowRealAngles:['always','withAim'],resolverType:['linear','smoothed']};
+  const choices = {target:['players','ghouls','all'],ShowRealAngles:['always','withAim']};
   function validateSetting(key,value) {
     if (!Object.prototype.hasOwnProperty.call(defaults,key) || typeof value !== typeof defaults[key]) throw new Error('Invalid setting: '+key);
     if (typeof value === 'number' && !Number.isFinite(value)) throw new Error('Invalid numeric setting');
     if (limits[key] && (value < limits[key][0] || value > limits[key][1])) throw new Error('Setting out of range: '+key);
     if (key === 'lockId' && !Number.isInteger(value)) throw new Error('Player ID must be an integer');
     if (choices[key] && !choices[key].includes(value)) throw new Error('Invalid choice: '+key);
-    if(key==='visualizeResolvingColor'&&!/^#(?:[\da-f]{3}|[\da-f]{6})$/i.test(value))throw new Error('Invalid line color');
     if (keySettings.includes(key) && !/^(Key[A-Z]|Digit[0-9]|F(?:[1-9]|1[0-2])|Space|Escape|Tab|Backquote|Minus|Equal|BracketLeft|BracketRight|Backslash|Semicolon|Quote|Comma|Period|Slash|Arrow(?:Up|Down|Left|Right)|(?:Shift|Control|Alt|Meta)(?:Left|Right)|Enter|Backspace|Delete|Insert|Home|End|PageUp|PageDown|Numpad\w+)$/.test(value)) throw new Error('Invalid key code');
     return value;
   }
@@ -90,31 +88,21 @@ function __installDevastMod(B) {
         try { MOD[key] = validateSetting(key,saved[key]); } catch (_) {}
       }
     }
-    if (localStorage.getItem(SAVE + ':ilm2') !== '1' && localStorage.getItem(LEGACY_SAVE + ':ilm2') !== '1') {
+    // Retire our predictor/presets once. Only aim settings are reset to ILM;
+    // game identity, other mod settings and loot remain in their own storage.
+    const replacedAim=Object.prototype.hasOwnProperty.call(saved,'ImprovedAimEnabled') && localStorage.getItem(SAVE+':ilm-original-v1')!=='1';
+    if(replacedAim) {
+      const before=Object.fromEntries(['AimBotEnabled','AimbotKey','autoFire','target','mouseFovEnable','mouseFov','lockId','distanceCoefficient','bulletSpeedCoefficient','resolverType','offsetCoefficient','visualizeResolving','visualizeResolvingColor','ShowRealAngles'].filter(key=>Object.prototype.hasOwnProperty.call(saved,key)).map(key=>[key,saved[key]]));
+      localStorage.setItem(SAVE+':aim-before-original-v1',JSON.stringify(before));
+    }
+    if (replacedAim || (localStorage.getItem(SAVE + ':ilm2') !== '1' && localStorage.getItem(LEGACY_SAVE + ':ilm2') !== '1')) {
       for (const key of ['AimBotEnabled', 'AimbotKey', 'autoFire', 'target', 'mouseFovEnable', 'mouseFov', 'lockId', 'distanceCoefficient', 'bulletSpeedCoefficient', 'resolverType', 'offsetCoefficient', 'visualizeResolving', 'visualizeResolvingColor', 'ShowRealAngles']) MOD[key] = defaults[key];
       const migrated = {};
       for (const key of Object.keys(defaults)) if (!transient.has(key)) migrated[key] = MOD[key];
       localStorage.setItem(SAVE, JSON.stringify(migrated));
       localStorage.setItem(SAVE + ':ilm2', '1');
     }
-  } catch (_) {}
-  // Repair only the exact shipped far profiles and the old untouched default.
-  // Keep a local backup and never overwrite custom prediction values on reload.
-  try {
-    if(localStorage.getItem(SAVE+':far-aim-v1')!=='1'){
-      const formerFar=MOD.ImprovedAimEnabled&&MOD.mouseFovEnable&&MOD.mouseFov===450&&MOD.target==='players'&&MOD.lockId===-1&&MOD.bulletSpeedCoefficient===4&&(
-        MOD.distanceCoefficient===300&&MOD.offsetCoefficient===.8&&MOD.resolverType==='linear'||
-        MOD.distanceCoefficient===330&&MOD.offsetCoefficient===1.6&&MOD.resolverType==='smoothed');
-      const formerDefault=MOD.ImprovedAimEnabled&&MOD.distanceCoefficient===300&&MOD.bulletSpeedCoefficient===4&&MOD.offsetCoefficient===.1&&MOD.resolverType==='linear';
-      if(formerFar||formerDefault){
-        const before=Object.fromEntries(['distanceCoefficient','bulletSpeedCoefficient','offsetCoefficient','resolverType'].map(key=>[key,MOD[key]]));
-        if(!localStorage.getItem(SAVE+':far-aim-before-v1'))localStorage.setItem(SAVE+':far-aim-before-v1',JSON.stringify(before));
-        Object.assign(MOD,{distanceCoefficient:300,bulletSpeedCoefficient:4,offsetCoefficient:.1,resolverType:'smoothed'});
-        const saved=Object.fromEntries(Object.keys(defaults).filter(key=>!transient.has(key)).map(key=>[key,MOD[key]]));
-        localStorage.setItem(SAVE,JSON.stringify(saved));
-      }
-      localStorage.setItem(SAVE+':far-aim-v1','1');
-    }
+    localStorage.setItem(SAVE+':ilm-original-v1','1');
   } catch (_) {}
   const usedKeys = new Set();
   for (const key of keySettings) {
@@ -815,37 +803,24 @@ function __installDevastMod(B) {
     try { return callback(); } finally { aimDepth--; }
   }
   const ilmWorld={PLAYER:aimSelf,players:aimTeams};
-  // The classic ILM formula omits bullet speed. Adapt its two coefficients
-  // without mutating saved settings or the reviewed original classes.
-  const ilmSettings=Object.create(MOD,{
-    distanceCoefficient:{get:()=>MOD.distanceCoefficient*MOD.bulletSpeedCoefficient/4},
-    offsetCoefficient:{get:()=>MOD.offsetCoefficient*4/MOD.bulletSpeedCoefficient}
-  });
-  const ilm = __createIlmAim(ilmSettings, ilmWorld, packet=>{
+  const ilm = __createIlmAim(MOD, ilmWorld, packet=>{
     if (MOD.JitterEnabled && packet[0] === 6 && (!jitterAiming() || !Aimbot.targetPlayer?.active)) return false;
+    // Like ILM's ws sender, a non-open socket suppresses transmission only.
+    if (connectionSocket && connectionSocket.readyState!==1) return false;
     return __send(packet,true);
   });
   const GetAllTargets = ilm.targets, Aimbot = ilm.aim;
-  const aimPrediction=__createAdaptiveAim(()=>performance.now());
-  function nativeWeaponSpeed() {
-    const self=playerRecords.find(record=>record.e.ᴘ४１===aimSelf.id),weapon=self?.e.Іࡈ５;
-    if (!Number.isInteger(weapon)) return NaN;
-    return B.types?.[B.categories.player]?.ilmWeaponTable?.[weapon&255]?.ilmBulletSpeed;
-  }
   // Delegate to the unchanged ILM methods; cache only the native metadata adapter.
   for(const key of ['resolve','findNearestPlayerTo']) {
     const method=Aimbot[key];
-    Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>{
-      const result=method.apply(this,args);
-      return key==='resolve'?aimPrediction.resolve(this,GetAllTargets,aimSelf.id,MOD,nativeWeaponSpeed(),result):result;
-    },key==='findNearestPlayerTo'||MOD.lockId<0);}});
+    Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>method.apply(this,args),key==='findNearestPlayerTo'||MOD.lockId<0);}});
   }
   Aimbot.mouseDown = false;
   // ILM owns lastId and its death reset on the 50 ms tick. A temporary socket
   // failure or a newly received player ID must not erase packet history.
   Aimbot.refresh = () => {
     if (stopped) return;
-    if(!playing()||!MOD.AimBotEnabled||automationReady('aim'))aimSnapshot(()=>ilm.tick(),MOD.AimBotEnabled&&MOD.lockId<0);
+    aimSnapshot(()=>ilm.tick(),MOD.AimBotEnabled&&MOD.lockId<0);
     updateJitter(performance.now(),true);
   };
   const _players_list = [];
@@ -867,7 +842,7 @@ function __installDevastMod(B) {
     return {samples:gaps.length,meanGapMs:Math.round(mean*100)/100,p95GapMs:gaps.length?Math.round(gaps[Math.floor((gaps.length-1)*.95)]*100)/100:null,fpsEstimate:mean>0?Math.round(1000/mean):null,hidden:!!document.hidden};
   }
   const recentCombatCommands = [], connectionEvents = [];
-  const automationDeferrals={aim:0,loot:0,build:0,take:0,chat:0,keepAlive:0};
+  const automationDeferrals={loot:0,build:0,take:0,chat:0,keepAlive:0};
   function automationReady(kind) {
     if(!connectionSocket || connectionSocket.readyState===1&&!(connectionSocket.bufferedAmount>0))return true;
     automationDeferrals[kind]++;
@@ -1019,13 +994,13 @@ function __installDevastMod(B) {
   function beforeFire() {
     if (!playing()) return;
     const now=performance.now();
-    if (!MOD.JitterEnabled && !MOD.AimBotEnabled) return;
+    if (!MOD.JitterEnabled) return;
     const continuingBurst=now<jitter.fireUntil && !jitter.spinning;
     jitter.fireUntil = now + 150;
     stopJitter();
     if (MOD.AimBotEnabled) {
-      // Align the first native shot even without Jitter: it can occur before
-      // the next 50 ms tick. Held fire keeps using that timer without flooding.
+      // Only Jitter needs alignment when leaving idle rotation. Normal aim
+      // and manual fire retain ILM's original 50 ms calculation cadence.
       if (continuingBurst && Aimbot.targetPlayer?.active && Number.isFinite(lastSentAngle) && lastSentPlayer === B.world.ᅠᏧ‍.id) return;
       const angle = Aimbot.resolve();
       if (Aimbot.targetPlayer?.active) {
@@ -1033,7 +1008,6 @@ function __installDevastMod(B) {
         return;
       }
     }
-    if (!MOD.JitterEnabled) return;
     const point = cursorWorld();
     const me = B.world.ᅠᏧ‍;
     if (point) __send([6,Math.atan2(point.y-me.y,point.x-me.x)*180/Math.PI],true);
@@ -1078,13 +1052,6 @@ function __installDevastMod(B) {
     persist();
     if (menu) menu.updateDisplay();
   }
-  function applyAimPreset(key) {
-    const presets=__aimWeaponPresets();
-    if(!Object.hasOwn(presets,key))throw new Error('Unknown aim preset');
-    const preset=presets[key];
-    for(const [name,value]of Object.entries(preset.settings))setSetting(name,value);
-    return {...preset.settings};
-  }
   function report(error) {
     const message = String(error && error.message || error);
     if (!diagnostics.errors.includes(message)) {
@@ -1101,11 +1068,8 @@ function __installDevastMod(B) {
     // Fill any extended slots: original ILM iterates densely over both arrays.
     while(group.length<=id) group.push(new ilm.Target(group.length));
     ensureAimTeams(id);
-    if(!active) {aimPrediction.forget(group[id]);group[id].setInactive();return;}
-    if(Number.isFinite(x)&&Number.isFinite(y)) {
-      if(!group[id].active)aimPrediction.forget(group[id]);
-      group[id].update(x,y);aimPrediction.observe(group[id]);
-    }
+    if(!active) {group[id].setInactive();return;}
+    if(Number.isFinite(x)&&Number.isFinite(y)) group[id].update(x,y);
   }
   function playerMeta(id) {
     return B.world.ᴎ︃ᄉ[id];
@@ -1207,10 +1171,7 @@ function __installDevastMod(B) {
     if (!can || !(v.scale > 0)) return null;
     const r = can.getBoundingClientRect();
     if (!r.width || !r.height) return null;
-    return {
-      x: (cursor.x - r.left) * can.width / r.width / v.scale - v.x,
-      y: (cursor.y - r.top) * can.height / r.height / v.scale - v.y
-    };
+    return __ilmMouseToWorld({x:(cursor.x-r.left)*can.width/r.width,y:(cursor.y-r.top)*can.height/r.height},v);
   }
   function updateMouse() {
     if (!MOD.mouseFovEnable) return;
@@ -1566,11 +1527,7 @@ function __installDevastMod(B) {
           }
         }
       }
-      if(MOD.visualizeResolving){
-        const primary=GetAllTargets.lines[0],color=primary.color;
-        try{primary.color=MOD.visualizeResolvingColor;__renderIlmAimLines(MOD,GetAllTargets,ctx,v);}
-        finally{primary.color=color;}
-      }
+      __renderIlmAimLines(MOD,GetAllTargets,ctx,v);
       ctx.globalAlpha = 1;
     } finally {ctx.restore();}
   }
@@ -2147,29 +2104,6 @@ function __installDevastMod(B) {
     for (const [key,label] of [['TeamClanColor','Цвет своего клана'],['EnemyClanColor','Цвет чужого клана'],['NicknameColor','Цвет ника']]) visual.addColor(MOD, key).name(label).onChange(value=>setSetting(key,value));
     const aim = __installIlmAimMenu(menu,MOD);
     for (const control of aim.__controllers) control.onChange(value=>setSetting(control.property,value));
-    add(aim,'ImprovedAimEnabled','Improved prediction');
-    add(aim,'AimBotEnabled','Enabled');
-    add(aim,'autoFire','Auto fire');
-    add(aim,'mouseFovEnable','Cursor FOV');
-    add(aim,'mouseFov','FOV radius',1,20000,10);
-    add(aim,'lockId','Lock player ID (-1 = auto)',-1,65535,1);
-    add(aim,'resolverType','Velocity model',choices.resolverType);
-    add(aim,'visualizeResolving','Prediction line');
-    aim.addColor(MOD,'visualizeResolvingColor').name('Line color').onChange(value=>setSetting('visualizeResolvingColor',value));
-    const weaponPresets=aim.addFolder('Weapon presets');
-    const presetActions=Object.fromEntries(Object.entries(__aimWeaponPresets()).map(([key,preset])=>[key,()=>applyAimPreset(key)]));
-    for(const [key,preset]of Object.entries(__aimWeaponPresets()))weaponPresets.add(presetActions,key).name(preset.label);
-    const aimHints={
-      distanceCoefficient:'Масштаб скорости: 300 соответствует нативной скорости при BulletSpeedCoefficient = 4. Больше — меньше упреждение.',
-      bulletSpeedCoefficient:'Множитель скорости пули. Значение 4 соответствует данным оружия; работает в обоих режимах.',
-      offsetCoefficient:'Дополнительное упреждение цели: 50 мс на единицу в улучшенном режиме. Положение стрелка оценивается на текущий момент.',
-      resolverType:'linear: последний интервал движения; smoothed: два согласованных интервала. Разворот и остановка учитываются сразу.',
-      autoFire:'Исходный автоогонь ILM: срабатывает при смене направления выбранной цели.',
-      mouseFov:'Радиус вокруг курсора в единицах мира. Используется при Cursor FOV и Lock player ID = -1.',
-      lockId:'-1: выбор по Target/FOV. Число: конкретный игрок, независимо от Target/FOV.',
-      ShowRealAngles:'Отображение поворота персонажа: всегда или только при включённом аимботе.'
-    };
-    for(const control of aim.__controllers)if(aimHints[control.property])control.domElement.title=aimHints[control.property];
     const jitterMenu = menu.addFolder('Jitter');
     add(jitterMenu, 'JitterEnabled', 'Enabled');
     add(jitterMenu, 'JitterSpeed', 'Speed (degrees/sec)', 1, 3600, 1);
@@ -2315,7 +2249,6 @@ function __installDevastMod(B) {
     connectionInfo,
     step,
     setSetting,
-    applyAimPreset,
     openUnderMouse,
     get doorInteraction(){updateDoorInteraction();return {...doorInteraction,pending:!!pendingDoor};},
     clanColor,

@@ -111,26 +111,11 @@ class PublicationTests(unittest.TestCase):
   self.validation['browsers']['firefox']['native']['automation_socket_backpressure']=False;self.save()
   with self.assertRaisesRegex(ValueError,'backpressure.*firefox'):p.artifacts(self.root,self.out)
 
- def test_aim_controls_and_presets_require_native_browser_verification(self):
-  self.contract['features']=['functional-aim-settings','ak47-laser-distance-presets']
+ def test_original_ilm_mechanics_require_both_native_browsers(self):
+  self.contract['features']=['verbatim-original-ilm-aim']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
-  for report in self.validation['browsers'].values():report['native']={'aim_settings_and_presets':True}
+  for report in self.validation['browsers'].values():report['native']={'original_ilm_mechanics':True}
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
-  self.validation['browsers']['firefox']['native']['aim_settings_and_presets']=False;self.save()
-  with self.assertRaisesRegex(ValueError,'aim controls.*firefox'):p.artifacts(self.root,self.out)
-
- def test_stable_far_prediction_requires_both_native_browsers(self):
-  self.contract['features']=['restored-stable-far-prediction']
-  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
-  for report in self.validation['browsers'].values():report['native']={'stable_far_prediction':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
-  self.validation['browsers']['firefox']['native']['stable_far_prediction']=False;self.save()
-  with self.assertRaisesRegex(ValueError,'Stable far.*firefox'):p.artifacts(self.root,self.out)
-
- def test_manual_shot_alignment_requires_both_native_browsers(self):
-  self.contract['features']=['manual-shot-aim-line-alignment']
-  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
-  for report in self.validation['browsers'].values():report['native']={'manual_shot_aim_line_alignment':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
-  self.validation['browsers']['firefox']['native']['manual_shot_aim_line_alignment']=False;self.save()
-  with self.assertRaisesRegex(ValueError,'Manual shot.*firefox'):p.artifacts(self.root,self.out)
+  for state in [False,None]:
+   self.validation['browsers']['firefox']['native']['original_ilm_mechanics']=state;self.save()
+   with self.assertRaisesRegex(ValueError,'Original ILM.*firefox'):p.artifacts(self.root,self.out)

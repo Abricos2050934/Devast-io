@@ -25,7 +25,6 @@
     "mines-and-building-opacity",
     "function-indicators",
     "jitter-with-shot-priority",
-    "timestamped-weapon-interception",
     "cursor-autobuild-native-preview",
     "native-shared-canvas",
     "native-integrity-signature-compatibility",
@@ -35,10 +34,7 @@
     "right-click-door-independent-of-native-prompt",
     "independent-door-control-and-server-state-feedback",
     "automation-socket-backpressure",
-    "functional-aim-settings",
-    "ak47-laser-distance-presets",
-    "restored-stable-far-prediction",
-    "manual-shot-aim-line-alignment"
+    "verbatim-original-ilm-aim"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -53,13 +49,11 @@
     "tests/ilm-autobuild.test.cjs",
     "tests/jitter.test.cjs",
     "tests/player-labels.test.cjs",
-    "tests/adaptive-aim.test.cjs",
     "tests/world-visuals.test.cjs",
     "tests/door-click.test.cjs",
     "tests/automation-transport.test.cjs",
-    "tests/aim-presets.test.cjs",
-    "tests/far-aim-regression.test.cjs",
-    "tests/shot-line.test.cjs"
+    "tests/shot-line.test.cjs",
+    "tests/ilm-restoration.test.cjs"
   ],
   "required_browsers": [
     "chromium",

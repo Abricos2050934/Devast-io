@@ -1,19 +1,16 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {fixture,scene}=require('./mod-fixture.cjs');
 
-test('congested and non-open sockets pause the complete automatic aim tick and resume without replay',()=>{
+test('ILM still computes every tick; only a non-open socket suppresses its sends',()=>{
  const f=fixture();try{
   f.mod.trackPacket(1,1,0,0,0,true);f.mod.trackPacket(1,2,0,100,100,true);
-  f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('AimBotEnabled',true);f.mod.setSetting('autoFire',true);
-  f.mod.aim.wannaFire=()=>true;
+  f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('AimBotEnabled',true);
   const socket={readyState:1,bufferedAmount:8192};f.mod.observeSocket(socket);
-  const history=JSON.stringify(f.mod.targets.players[2]);
-  for(let t=0;t<5000;t+=50){f.setClock(t);f.mod.aim.refresh();}
-  assert.equal(f.packets.length,0,'Background aim/fire must not add packets to an already blocked socket');
-  assert.equal(JSON.stringify(f.mod.targets.players[2]),history);
-  socket.bufferedAmount=0;socket.readyState=3;f.mod.aim.refresh();assert.equal(f.packets.length,0);
-  socket.readyState=1;f.mod.aim.refresh();assert.deepEqual(f.packets.map(p=>p[0]),[6,4,5]);
-  assert.ok(f.mod.connectionInfo().automationTransport.deferred.aim>=100);
+  for(let t=0;t<500;t+=50){f.setClock(t);f.mod.aim.refresh();}
+  assert.equal(f.packets.length,10,'ILM does not pause its 50 ms loop for buffered bytes');
+  socket.readyState=3;f.mod.trackPacket(1,2,0,100,200,true);f.mod.aim.refresh();
+  assert.equal(f.packets.length,10);assert.notEqual(f.mod.aim.lastAngle,45,'Closed transport changed ILM computation');
+  socket.readyState=1;f.mod.aim.refresh();assert.equal(f.packets.length,11);
  }finally{f.mod.dispose();}
 });
 test('fast loot and native auto-build pause together and resume one current frame',()=>{

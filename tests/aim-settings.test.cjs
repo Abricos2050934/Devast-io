@@ -71,21 +71,22 @@ test('aim with autoFire disabled sends only finite native direction packets over
  f.set('AimBotEnabled',false);tick();assert.equal(f.packets.length,100);f.mod.dispose();
 });
 
-test('visualizeResolving hides the old prediction line while retaining its last coordinates',()=>{
+test('visualizeResolving stops updating the line but does not hide the previous line, as in original ILM',()=>{
  const f=aimScene();try{
   f.set('lockId',2);f.set('AimBotEnabled',true);f.mod.aim.resolve();const previous=JSON.stringify(f.mod.targets.lines[0]);
   f.set('visualizeResolving',false);f.mod.trackPacket(1,2,0,130,170,true);f.mod.aim.resolve();f.mod.step(0);
   assert.equal(JSON.stringify(f.mod.targets.lines[0]),previous);
-  assert.ok(!f.dom.calls.some(c=>c.name==='stroke'&&c.stroke==='#EEEEEE'));
+  assert.ok(f.dom.calls.some(c=>c.name==='stroke'&&c.stroke==='#EEEEEE'));
  }finally{f.mod.dispose();}
 });
 
-test('visualizeResolvingColor changes drawing without changing the aim angle',()=>{
+test('visualizeResolvingColor stays inert while the original line color remains authoritative',()=>{
  const f=aimScene();try{
   f.set('lockId',2);f.set('AimBotEnabled',true);const angle=f.mod.aim.resolve();
   for(const color of ['#abcdef','#123456']){
    f.dom.calls.length=0;f.set('visualizeResolvingColor',color);f.mod.render(20);
-   assert.ok(f.dom.calls.some(c=>c.name==='stroke'&&c.stroke===color));assert.equal(f.mod.aim.resolve(),angle);
+   assert.ok(f.dom.calls.some(c=>c.name==='stroke'&&c.stroke==='#EEEEEE'));
+   assert.ok(!f.dom.calls.some(c=>c.name==='stroke'&&c.stroke===color));assert.equal(f.mod.aim.resolve(),angle);
   }
  }finally{f.mod.dispose();}
 });
@@ -100,37 +101,38 @@ test('AimbotKey is reassigned through the keyboard menu and the new key toggles 
  keydown({code:'KeyZ',target:{tagName:'CANVAS'}});f.mod.aim.refresh();assert.equal(f.packets.at(-1)[0],6);f.mod.dispose();
 });
 
-test('classic prediction uses bullet speed coefficient and validates the velocity model',()=>{
- const f=aimScene();try{
-  f.set('lockId',2);f.set('ImprovedAimEnabled',false);
-  const capture=()=>f.mod.aim.resolve();f.setGui('bulletSpeedCoefficient',4);const normal=capture();
-  f.setGui('bulletSpeedCoefficient',1);assert.notEqual(capture(),normal);
-  f.setGui('bulletSpeedCoefficient',15);assert.notEqual(capture(),normal);
-  assert.throws(()=>f.set('resolverType','other-test-value'),/Invalid choice/);
- }finally{f.mod.dispose();}
+test('original ILM leaves bulletSpeedCoefficient and resolverType inert',()=>{
+ const f=aimScene();f.set('lockId',2);
+ const capture=()=>{f.mod.aim.resolve();return JSON.stringify({angle:f.mod.aim.lastAngle,lines:f.mod.targets.lines,target:f.mod.aim.targetPlayer.id});};
+ const baseline=capture();
+ for(const speed of [1,4,15]){f.setGui('bulletSpeedCoefficient',speed);assert.equal(capture(),baseline);}
+ f.mod.setSetting('resolverType','other-test-value');assert.equal(capture(),baseline);f.mod.dispose();
 });
 
-test('Aim Bot preserves the original numeric controls and exposes every active tuning control',()=>{
+
+test('installed Aim Bot folder matches the uploaded ILM control order, labels, choices and numeric steps exactly',()=>{
  const fs=require('node:fs'),z=require('node:zlib'),vm=require('node:vm');
  const source=JSON.parse(z.gunzipSync(fs.readFileSync('recovery/ilm-aim-menu-reference.json.gz'))).blocks.find(b=>b.name==='menu').source;
  const f=aimScene();try{
   const root=new f.dom.GUI(),settings=JSON.parse(JSON.stringify(f.mod.settings));
   vm.runInNewContext('const _0x2a1bff=root,_0x2ea565=settings;'+source,{root,settings},{timeout:1000});
-  const describe=folder=>JSON.parse(JSON.stringify(folder.__controllers.filter(c=>['ShowRealAngles','target','distanceCoefficient','bulletSpeedCoefficient','offsetCoefficient'].includes(c.property)).map(c=>({property:c.property,label:c.label,range:c.range}))));
+  const describe=folder=>JSON.parse(JSON.stringify(folder.__controllers.map(c=>({property:c.property,label:c.label,range:c.range}))));
   assert.deepEqual(describe(f.gui.__folders['Aim Bot']),describe(root.__folders['Aim Bot']));
-  assert.equal(f.gui.__folders['Aim Bot'].__controllers.length,14);assert.equal(control(f.gui.__folders['Aim Bot'],'ImprovedAimEnabled').object.ImprovedAimEnabled,true);
+  assert.equal(f.gui.__folders['Aim Bot'].__controllers.length,5);assert.deepEqual(Object.keys(f.gui.__folders['Aim Bot'].__folders),[]);
   assert.equal(f.gui.__folders['Aim bot'],undefined);
   control(f.gui.__folders['Aim Bot'],'ShowRealAngles').setValue('always');assert.equal(f.mod.settings.ShowRealAngles,'always');
   assert.equal(JSON.parse(f.storage.get('DevastILM:settings:v3')).ShowRealAngles,'always');
  }finally{f.mod.dispose();}
 });
 
-test('line visibility and color controls affect the installed renderer without changing prediction',()=>{
+test('installed prediction drawing matches the uploaded ILM renderer even when former custom color and hide settings are set',()=>{
+ const fs=require('node:fs'),z=require('node:zlib'),vm=require('node:vm'),{domFixture}=require('./dom-fixture.cjs');
+ const source=JSON.parse(z.gunzipSync(fs.readFileSync('recovery/ilm-aim-menu-reference.json.gz'))).blocks.find(b=>b.name==='lines').source;
  const f=aimScene();try{
-  f.set('AimBotEnabled',true);f.set('lockId',2);const angle=f.mod.aim.resolve();
-  f.set('visualizeResolving',false);f.mod.render(0);assert.ok(!f.dom.calls.some(c=>c.name==='stroke'));
-  f.dom.calls.length=0;f.set('visualizeResolving',true);f.set('visualizeResolvingColor','#abcdef');f.mod.render(20);
-  assert.ok(f.dom.calls.some(c=>c.name==='stroke'&&c.stroke==='#abcdef'));assert.equal(f.mod.aim.resolve(),angle);
-  assert.equal(f.mod.targets.lines[0].color,'#EEEEEE','Rendering must not rewrite the core line object');
+  f.set('AimBotEnabled',true);f.set('lockId',2);f.mod.aim.resolve();f.set('visualizeResolving',false);f.set('visualizeResolvingColor','#abcdef');
+  const view={x:-30,y:40,scale:1.5};f.B.view=()=>({...view,ctx:f.dom.canvas.getContext('2d')});
+  const expected=domFixture();vm.runInNewContext(source,{_0x2ea565:f.mod.settings,_0x6cc5f2:f.mod.targets,_0x3bfd3a:expected.canvas.getContext('2d'),_0x555618:view.scale,_0x4212a3:view.x,_0x260b24:view.y},{timeout:1000});
+  f.mod.step(0);const lineCalls=calls=>calls.filter(c=>['beginPath','moveTo','lineTo','stroke'].includes(c.name)).map(c=>({name:c.name,args:c.args,...(c.name==='stroke'?{stroke:c.stroke,alpha:c.alpha}:{})}));
+  assert.deepEqual(lineCalls(f.dom.calls),lineCalls(expected.calls));
  }finally{f.mod.dispose();}
 });
