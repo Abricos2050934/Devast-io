@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "dc44155714be235be9df840ded3aa85e92e171a424bf67834c93d85971d32753",
+  "output_sha256": "b16a630a59f5dadd86fed06a6b50fa0b19a1f45c87b56075bce27484acba10ed",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -32,7 +32,6 @@
       "mines-and-building-opacity",
       "function-indicators",
       "jitter-with-shot-priority",
-      "timestamped-weapon-interception",
       "cursor-autobuild-native-preview",
       "native-shared-canvas",
       "native-integrity-signature-compatibility",
@@ -42,10 +41,7 @@
       "right-click-door-independent-of-native-prompt",
       "independent-door-control-and-server-state-feedback",
       "automation-socket-backpressure",
-      "functional-aim-settings",
-      "ak47-laser-distance-presets",
-      "restored-stable-far-prediction",
-      "manual-shot-aim-line-alignment",
+      "verbatim-original-ilm-aim",
       "coalesced-aim-directions"
     ],
     "removed_overlays": [
@@ -61,13 +57,11 @@
       "tests/ilm-autobuild.test.cjs",
       "tests/jitter.test.cjs",
       "tests/player-labels.test.cjs",
-      "tests/adaptive-aim.test.cjs",
       "tests/world-visuals.test.cjs",
       "tests/door-click.test.cjs",
       "tests/automation-transport.test.cjs",
-      "tests/aim-presets.test.cjs",
-      "tests/far-aim-regression.test.cjs",
       "tests/shot-line.test.cjs",
+      "tests/ilm-restoration.test.cjs",
       "tests/angle-transport.test.cjs"
     ],
     "required_browsers": [
@@ -76,16 +70,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "410ee0ba929e6e6c4eba70af2a61285aca2d41bf2e57b12e1b1dc54d0acdcc73",
+    "mod/responsive.js": "818d480772a2312ac1d4d08c9ee74023305f77190b112e9081f61570bd39b953",
     "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
-    "mod/ilm-aim.js": "5fe24264cc3dd4e808e7fc934fa694a021b89b9d00374ae941a49ce79de04d7a",
+    "mod/ilm-aim.js": "950b2dc1af051ce99e4168aa866d117f87f654a40a2f5cbb269b3de859ad0560",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "fc7f5560cfff99d5fc2041bdd94dad1e9562093ec15f6bdf6cd242e21934718c",
+  "mod_bundle_sha256": "fce98b925e0451772273cc499d6f5effe924eecad4ba2aefe2cd828fa5fa7995",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -119,10 +113,17 @@
   "resource_override_loader": "passed",
   "native": {
     "menu": true,
-    "aim_settings_and_presets": true,
-    "stable_far_prediction": true,
-    "manual_shot_aim_line_alignment": true,
     "coalesced_aim_directions_and_native_idle": true,
+    "original_ilm_mechanics": true,
+    "original_ilm_comparison": {
+      "scenes": 36,
+      "ticks": 432,
+      "exact_core_state": true,
+      "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
+      "original_menu_controls": 5,
+      "normal_fire_between_ticks": "unchanged",
+      "line_visibility_and_color": "original_ILM"
+    },
     "automation_socket_backpressure": true,
     "right_click_hovered_door": true,
     "right_click_without_native_prompt": true,
@@ -130,7 +131,6 @@
     "independent_door_control": true,
     "door_server_state_feedback": true,
     "native_shared_canvas": true,
-    "adaptive_weapon_prediction": true,
     "initial_metadata": true,
     "head_and_leaderboard_labels": true,
     "packet_history": true,
@@ -164,18 +164,25 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-04T08:23:16.203Z",
+  "finished_at": "2026-11-04T08:42:47.659Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "dc44155714be235be9df840ded3aa85e92e171a424bf67834c93d85971d32753",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "b16a630a59f5dadd86fed06a6b50fa0b19a1f45c87b56075bce27484acba10ed",
+      "browser_version": "154.0.8037.57",
       "native": {
         "menu": true,
-        "aim_settings_and_presets": true,
-        "stable_far_prediction": true,
-        "manual_shot_aim_line_alignment": true,
         "coalesced_aim_directions_and_native_idle": true,
+        "original_ilm_mechanics": true,
+        "original_ilm_comparison": {
+          "scenes": 36,
+          "ticks": 432,
+          "exact_core_state": true,
+          "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
+          "original_menu_controls": 5,
+          "normal_fire_between_ticks": "unchanged",
+          "line_visibility_and_color": "original_ILM"
+        },
         "automation_socket_backpressure": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
@@ -183,7 +190,6 @@
         "independent_door_control": true,
         "door_server_state_feedback": true,
         "native_shared_canvas": true,
-        "adaptive_weapon_prediction": true,
         "initial_metadata": true,
         "head_and_leaderboard_labels": true,
         "packet_history": true,
@@ -247,14 +253,21 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "dc44155714be235be9df840ded3aa85e92e171a424bf67834c93d85971d32753",
+      "output_sha256": "b16a630a59f5dadd86fed06a6b50fa0b19a1f45c87b56075bce27484acba10ed",
       "browser_version": "153.0",
       "native": {
         "menu": true,
-        "aim_settings_and_presets": true,
-        "stable_far_prediction": true,
-        "manual_shot_aim_line_alignment": true,
         "coalesced_aim_directions_and_native_idle": true,
+        "original_ilm_mechanics": true,
+        "original_ilm_comparison": {
+          "scenes": 36,
+          "ticks": 432,
+          "exact_core_state": true,
+          "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
+          "original_menu_controls": 5,
+          "normal_fire_between_ticks": "unchanged",
+          "line_visibility_and_color": "original_ILM"
+        },
         "automation_socket_backpressure": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
@@ -262,7 +275,6 @@
         "independent_door_control": true,
         "door_server_state_feedback": true,
         "native_shared_canvas": true,
-        "adaptive_weapon_prediction": true,
         "initial_metadata": true,
         "head_and_leaderboard_labels": true,
         "packet_history": true,
@@ -336,20 +348,18 @@
       "tests/ilm-autobuild.test.cjs",
       "tests/jitter.test.cjs",
       "tests/player-labels.test.cjs",
-      "tests/adaptive-aim.test.cjs",
       "tests/world-visuals.test.cjs",
       "tests/door-click.test.cjs",
       "tests/automation-transport.test.cjs",
-      "tests/aim-presets.test.cjs",
-      "tests/far-aim-regression.test.cjs",
       "tests/shot-line.test.cjs",
+      "tests/ilm-restoration.test.cjs",
       "tests/angle-transport.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 189,
-    "python_tests": 44
+    "node_tests": 175,
+    "python_tests": 42
   }
 }
