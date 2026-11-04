@@ -36,7 +36,8 @@
     "automation-socket-backpressure",
     "verbatim-original-ilm-aim",
     "coalesced-aim-directions",
-    "native-shot-direction-and-render-sync"
+    "native-shot-direction-and-render-sync",
+    "connection-close-origin-diagnostics"
   ],
   "removed_overlays": [
     "bottom-gauge-text",

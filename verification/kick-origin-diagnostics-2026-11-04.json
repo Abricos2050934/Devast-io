@@ -1,0 +1,372 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "base_commit": "72745c5",
+  "release": "177b26369115dd937fe66d614686c4e7579ebfdf851ba8edfac1ad06e58d2020",
+  "output_sha256": "8970f0976120ae6f9d238630404f1d8d68e95f7bb7774ca8b62a4cbcc2ba2b5d",
+  "raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+  "client_build": {
+    "fingerprint": "4d961939b719995eb9a796c9340cb59158d4ffca99efeae1af4a05e596761290",
+    "nativeSha256": "645fe8e99382cedd1b1849e86c51588cdc3e51c3802904412b27d06a8bf726e1"
+  },
+  "purpose": "Identify the actual close path and the exact client build after another reported disconnect; no claim of a reproduced or fixed user kick",
+  "report_schema": 3,
+  "observed_close_paths": [
+    "native-network-close when the socket is connecting or open",
+    "native receive watchdog timeout before its close call",
+    "native entry timeout before its first socket close",
+    "mod entry timeout before closing the pending socket"
+  ],
+  "traffic_metadata": [
+    "socket sequence ID",
+    "time since socket open",
+    "time since last incoming message",
+    "number of incoming messages",
+    "first observed local close source",
+    "page visibility and time since last animation frame"
+  ],
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 183,
+    "python_tests": 44
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/shot-line.test.cjs",
+      "tests/ilm-restoration.test.cjs",
+      "tests/angle-transport.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "output_sha256": "8970f0976120ae6f9d238630404f1d8d68e95f7bb7774ca8b62a4cbcc2ba2b5d",
+      "browser_version": "154.0.8037.57",
+      "native": {
+        "menu": true,
+        "connection_close_origin_diagnostics": true,
+        "native_shot_direction_and_render_sync": true,
+        "coalesced_aim_directions_and_native_idle": true,
+        "original_ilm_mechanics": true,
+        "original_ilm_comparison": {
+          "scenes": 36,
+          "ticks": 432,
+          "exact_core_state": true,
+          "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
+          "original_menu_controls": 5,
+          "native_shot_sync": "verified_separately_without_changing_core_formula",
+          "line_visibility_and_color": "original_ILM"
+        },
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "output_sha256": "8970f0976120ae6f9d238630404f1d8d68e95f7bb7774ca8b62a4cbcc2ba2b5d",
+      "browser_version": "153.0",
+      "native": {
+        "menu": true,
+        "connection_close_origin_diagnostics": true,
+        "native_shot_direction_and_render_sync": true,
+        "coalesced_aim_directions_and_native_idle": true,
+        "original_ilm_mechanics": true,
+        "original_ilm_comparison": {
+          "scenes": 36,
+          "ticks": 432,
+          "exact_core_state": true,
+          "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
+          "original_menu_controls": 5,
+          "native_shot_sync": "verified_separately_without_changing_core_formula",
+          "line_visibility_and_color": "original_ILM"
+        },
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    }
+  },
+  "module_sha256": {
+    "mod/responsive.js": "764aef94aafe569b181acf8159585cd600026fb5e4340c28fff38f3d9dc4f0c7",
+    "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
+    "mod/ilm-aim.js": "950b2dc1af051ce99e4168aa866d117f87f654a40a2f5cbb269b3de859ad0560",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "limits": [
+    "No packet bodies, credentials, socket URLs or close-reason strings retained",
+    "No change to native timeout thresholds or closing behavior",
+    "No changes to original ILM prediction, shot synchronization, doors or world visibility",
+    "No observed local request does not establish a server anti-cheat kick",
+    "The user-reported disconnect is not attributed without its current-build report"
+  ],
+  "live_observation": {
+    "started_at": "2026-11-04T12:01:26.396Z",
+    "finished_at": "2026-11-04T12:02:48.865Z",
+    "result": "passed",
+    "output_sha256": "8970f0976120ae6f9d238630404f1d8d68e95f7bb7774ca8b62a4cbcc2ba2b5d",
+    "mode": "Fresh live connection with aim enabled and ordinary walking; one deliberately requested native close to validate origin logging and same-identity recovery; this is not a reproduced user kick",
+    "identity_preserved": true,
+    "scenario_observation_seconds": 60,
+    "errors": [],
+    "scope": "60 seconds of gameplay with aim enabled and periodic walking, followed by one deliberate native close and same-identity recovery; no attacks or loot/build automation",
+    "samples": [
+      {
+        "label": "joined",
+        "state": 1,
+        "transport": {
+          "id": 1,
+          "openForMs": 347,
+          "receiveGapMs": 2,
+          "receivedMessages": 8,
+          "localCloseSource": null
+        },
+        "mod_errors": []
+      },
+      {
+        "label": "connected-60s",
+        "state": 1,
+        "transport": {
+          "id": 1,
+          "openForMs": 62157,
+          "receiveGapMs": 116,
+          "receivedMessages": 192,
+          "localCloseSource": null
+        },
+        "mod_errors": []
+      },
+      {
+        "label": "controlled-native-close",
+        "state": 64,
+        "transport": {
+          "id": 1,
+          "openForMs": 62192,
+          "receiveGapMs": 152,
+          "receivedMessages": 192,
+          "localCloseSource": "native-network-close"
+        },
+        "mod_errors": []
+      },
+      {
+        "label": "restored-after-controlled-close",
+        "state": 1,
+        "transport": {
+          "id": 2,
+          "openForMs": 247,
+          "receiveGapMs": 2,
+          "receivedMessages": 11,
+          "localCloseSource": null
+        },
+        "mod_errors": []
+      }
+    ],
+    "events": [
+      {
+        "type": "client-close-request",
+        "at": 77870,
+        "state": 1,
+        "integrityFlag": 0,
+        "aim": true,
+        "autoFire": false,
+        "jitter": false,
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false,
+        "socketState": 1,
+        "socketBufferedBytes": 0,
+        "transport": {
+          "id": 1,
+          "openForMs": 62190,
+          "receiveGapMs": 149,
+          "receivedMessages": 192,
+          "localCloseSource": "native-network-close"
+        },
+        "pageHidden": false,
+        "frameGapMs": 15,
+        "health": 255,
+        "commandsInLast2s": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        },
+        "source": "native-network-close"
+      },
+      {
+        "type": "socket-close",
+        "at": 79077,
+        "state": 64,
+        "integrityFlag": 0,
+        "aim": true,
+        "autoFire": false,
+        "jitter": false,
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false,
+        "socketState": 3,
+        "socketBufferedBytes": 0,
+        "transport": {
+          "id": 1,
+          "openForMs": 63397,
+          "receiveGapMs": 1356,
+          "receivedMessages": 192,
+          "localCloseSource": "native-network-close"
+        },
+        "pageHidden": false,
+        "frameGapMs": 22,
+        "health": 255,
+        "commandsInLast2s": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        },
+        "code": 1005,
+        "clean": true,
+        "localCloseObserved": true
+      }
+    ]
+  },
+  "publication": "Prepared and fully verified; see updates/current.json and updates/verification.json for public receipt"
+}

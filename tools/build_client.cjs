@@ -17,9 +17,12 @@ function assemble(baseline, profile, symbols, payload, bootstrap, gui, aim = '')
   }
   const additions = gui+'\n'+aim+'\n'+translate(payload,symbols)+'\n'+translate(bootstrap,symbols)+'\n';
   source = once(source,profile.bootstrap_anchor,additions+profile.bootstrap_anchor,'bootstrap');
+  // Hash the complete assembled input before inserting the stamp itself.
+  const buildStamp={fingerprint:hash(source),nativeSha256:profile.baseline_sha256};
   source = once(source,profile.guard_anchor,profile.guard_anchor+
     'if(window.__devastClientLoaded)return;window.__devastClientLoaded=true;var __devastIntegrityCompatibility='+
-    (profile.operations.filter(op=>op.id.startsWith('native-integrity-signature-')).length===3)+';', 'double-load guard');
+    (profile.operations.filter(op=>op.id.startsWith('native-integrity-signature-')).length===3)+
+    ';var __devastClientBuild=Object.freeze('+JSON.stringify(buildStamp)+');', 'double-load guard');
   acorn.parse(source,{ecmaVersion:'latest',sourceType:'script'});
   return source;
 }

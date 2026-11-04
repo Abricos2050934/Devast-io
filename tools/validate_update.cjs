@@ -30,11 +30,15 @@ assert.deepEqual(normalize(body.find(n=>n.id?.name==='__createIlmAim')),normaliz
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
 assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2']),'Every reviewed native patch is required');
 const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave','ᴀᄁ︃':'landmineRender','рոᴎ':'wireRender','ᅠ̘ܛ':'trapRender'};
+const closeOperation=profile.operations.find(p=>p.id==='native-disconnect-without-socket');
+const closeName=acorn.parse(closeOperation.after,{ecmaVersion:'latest'}).body[0].id.name;
+functions[closeName]='nativeClose';
 const edits=[],placements=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;
  if(n.type==='ArrayExpression'&&n.elements[0]?.value===14&&n.elements.length===4&&n.elements[1]?.object?.type==='MemberExpression')placements.push(n);
- if(n.type==='FunctionDeclaration')for(const [old,name]of Object.entries(functions))if(n.id.name===roles[old]){
+ if(n.type==='FunctionDeclaration')for(const [old,name]of Object.entries(functions))if(n.id.name===(name==='nativeClose'?closeName:roles[old])){
   let text=`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.${name}=${n.id.name};`;
   if(name==='fire')text+=`window.__updateFunctions.capturePackets=()=>{const codec=${roles['еϲᄄ']},key=${JSON.stringify(roles['ᴎ︅ހ'])},encode=codec[key],socket=${roles['І̎ܘ']},packets=[];codec[key]=p=>{packets.push(p.slice());return '';};${roles['І̎ܘ']}={send(){}};return {packets,restore(){codec[key]=encode;${roles['І̎ܘ']}=socket;}};};`;
+  if(name==='nativeClose')text+=`window.__updateFunctions.exerciseNativeClose=readyState=>{const previous=${roles['І̎ܘ']};let closes=0;const socket={readyState,close(){closes++;}};${roles['І̎ܘ']}=socket;__responsiveMod.observeSocket(socket);try{${n.id.name}();return closes;}finally{${roles['І̎ܘ']}=previous;__responsiveMod.observeSocket(previous);}};`;
   edits.push({at:n.start,text});
  }
  for(const v of Object.values(n)){if(Array.isArray(v))todo.push(...v);else if(v&&typeof v==='object')todo.push(v);}
@@ -100,6 +104,8 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   }
   assert.equal(await page.evaluate(()=>window.__devastRemoteLoader?.state),'loaded','Resource Override loader failed');
   report.resource_override_loader='passed';
+  report.client_build=await page.evaluate(()=>window.__devastMod.connectionInfo().build);
+  assert.match(report.client_build.fingerprint,/^[a-f0-9]{64}$/);assert.equal(report.client_build.nativeSha256,profile.baseline_sha256);
   await page.exposeFunction('__doorClickMouse',point=>page.mouse.click(point.x,point.y,{button:'right'}));
   report.native=await page.evaluate(async ({s,r,originalAim})=>{
    const n=window.__updateProbe,m=window.__devastMod,w=n.world,players=w[s['ᴎ︃ᄉ']],self=w[s['ᅠᏧ‍']];
@@ -366,8 +372,17 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     }
    }finally{restoreIntegrityNetwork();integrity.set(savedIntegrity);}
    check(m.connectionInfo().integrityCompatibility===true,'Automatic build omitted native signature compatibility');
+   const diagnosticNetwork={...n.network};
+   try{
+    check(n.exerciseNativeClose(1)===1,'Diagnostics suppressed a native close');
+    const observed=m.connectionInfo().events.at(-1);
+    check(observed.type==='client-close-request'&&observed.source==='native-network-close','Native close origin was not recorded');
+    const beforeClosedSocket=JSON.stringify(m.connectionInfo().events);
+    check(n.exerciseNativeClose(3)===1&&JSON.stringify(m.connectionInfo().events)===beforeClosedSocket,'Remote close was incorrectly recorded as a local request');
+    check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
+   }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {menu:true,native_shot_direction_and_render_sync:true,coalesced_aim_directions_and_native_idle:true,original_ilm_mechanics:true,original_ilm_comparison:m.originalIlmVerification,automation_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {menu:true,connection_close_origin_diagnostics:true,native_shot_direction_and_render_sync:true,coalesced_aim_directions_and_native_idle:true,original_ilm_mechanics:true,original_ilm_comparison:m.originalIlmVerification,automation_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:JSON.parse(z.gunzipSync(fs.readFileSync('recovery/ilm-aim-reference.json.gz')))});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

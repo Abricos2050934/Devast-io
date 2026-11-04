@@ -179,6 +179,27 @@ test('socket observers preserve native callbacks and exclude close reasons and c
  for(let i=0;i<20;i++)second.emit('error');assert.equal(f.mod.connectionInfo().events.length,12);
  f.mod.dispose();assert.equal(second.handlers.size,0);assert.deepEqual(identity(f),account);
 });
+test('receive timing distinguishes a quiet socket from a client close without retaining packet contents',()=>{
+ const f=fixture({saved:account}),handlers=new Map();
+ const socket={readyState:0,addEventListener:(k,fn)=>handlers.set(k,fn),removeEventListener:(k)=>handlers.delete(k)};
+ const close=socket.close=()=>{};f.mod.observeSocket(socket);
+ assert.equal(f.mod.connectionInfo().transport.openForMs,null);
+ f.setClock(2000);socket.readyState=1;handlers.get('open')();
+ f.setClock(2500);handlers.get('message')({data:account.token});
+ f.setClock(18000);f.document.hidden=true;
+ assert.equal(f.mod.observeCloseRequest('native-receive-timeout'),true);
+ f.mod.observeCloseRequest('native-network-close');
+ socket.readyState=3;handlers.get('close')({code:1005,wasClean:true,reason:account.token});
+ const report=f.mod.connectionInfo(),event=report.events.at(-1);
+ assert.equal(event.localCloseObserved,true);assert.equal(event.transport.localCloseSource,'native-receive-timeout');
+ assert.equal(event.transport.receiveGapMs,15500);assert.equal(event.transport.openForMs,16000);assert.equal(event.transport.receivedMessages,1);assert.equal(event.pageHidden,true);
+ assert.equal(socket.close,close);assert.equal(f.mod.observeCloseRequest(account.token),false);
+ report.events.at(-1).transport.receivedMessages=99;
+ assert.equal(f.mod.connectionInfo().events.at(-1).transport.receivedMessages,1);
+ const other={...socket,readyState:1};f.mod.observeSocket(other);handlers.get('close')({code:1006});
+ const next=f.mod.connectionInfo();assert.equal(next.events.at(-1).localCloseObserved,false);assert.equal(next.transport.id,2);assert.equal(next.transport.receiveGapMs,null);
+ assert.ok(!JSON.stringify(next).includes(account.token));f.mod.dispose();assert.equal(handlers.size,0);
+});
 test('combat snapshots expire idle commands and cannot be changed by the report consumer',()=>{
  const f=fixture();f.mod.trackPacket(1,1,1,0,0,true);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();
  f.mod.observeDeath();const report=f.mod.connectionInfo();report.events[0].commandsInLast2s.angle=999;

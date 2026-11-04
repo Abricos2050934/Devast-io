@@ -35,6 +35,40 @@ test('native disconnect before a WebSocket exists does not throw, and closes an 
  const ctx=vm.createContext({console:{log(){}},'ϲܛ̈':'log','оᴌ︈':{state:0},'ɑρ̈':'state','іܐᄆ':'state','ᅟވ̝':{'ᅠ͠ᄈ':256,'ﾠ५︅':64},'І̎ܘ':undefined,'ﾠ३ᴇ':'close'});
  vm.runInContext(patch.after+'\nⲣ๔І();',ctx,{timeout:1000});assert.equal(ctx['оᴌ︈'].state,64);
  let closed=0;ctx['І̎ܘ']={close(){closed++;}};vm.runInContext('ⲣ๔І();',ctx,{timeout:1000});assert.equal(closed,1);
+ const sources=[];ctx.__responsiveMod={observeCloseRequest:s=>sources.push(s)};
+ ctx['І̎ܘ'].readyState=1;vm.runInContext('ⲣ๔І();',ctx,{timeout:1000});assert.deepEqual(sources,['native-network-close']);
+ ctx['І̎ܘ'].readyState=3;vm.runInContext('ⲣ๔І();',ctx,{timeout:1000});assert.equal(sources.length,1);assert.equal(closed,3);
+});
+
+test('build fingerprints identify different assembled inputs reproducibly',()=>{
+ const {assemble,hash}=require('../tools/build_client.cjs'),acorn=require('../tools/parser.cjs');
+ const baseline="(function(){'use strict';window.boot=true;})();";
+ const profile={baseline_sha256:hash(baseline),operations:[],bootstrap_anchor:'window.boot=true;',guard_anchor:"(function(){'use strict';"};
+ const stamp=s=>acorn.parse(s,{ecmaVersion:'latest'}).body[0].expression.callee.body.body.flatMap(n=>n.declarations||[]).find(n=>n.id.name==='__devastClientBuild').init.arguments[0].properties.find(p=>p.key.name==='fingerprint'||p.key.value==='fingerprint').value.value;
+ const a=assemble(baseline,profile,{},'function install(){return 1;}','','');
+ assert.equal(a,assemble(baseline,profile,{},'function install(){return 1;}','',''));
+ assert.match(stamp(a),/^[a-f0-9]{64}$/);assert.notEqual(stamp(a),stamp(assemble(baseline,profile,{},'function install(){return 2;}','','')));
+});
+
+test('native receive watchdog observation retains its original close threshold and never suppresses a close',()=>{
+ const vm=require('node:vm'),profile=JSON.parse(fs.readFileSync('patches/recovered-current.json'));
+ const patch=profile.operations.find(p=>p.id==='native-receive-timeout-diagnostics');assert.ok(patch);
+ let closed=0;const sources=[];
+ const ctx=vm.createContext({'ⲣ༩༢':0,'օܔߒ':10000,'ε̄０':0,'ᴉ̡̂':15000,'іᴀ︎':15000,'ⲣ๔І':()=>closed++,__responsiveMod:{observeCloseRequest:s=>sources.push(s)}});
+ vm.runInContext(patch.after+';ܐܚᚊ();',ctx,{timeout:1000});assert.equal(closed,0);
+ ctx['ᴉ̡̂']=15001;vm.runInContext('ܐܚᚊ();',ctx,{timeout:1000});assert.equal(closed,1);assert.deepEqual(sources,['native-receive-timeout']);
+ vm.runInContext('ܐܚᚊ();',ctx,{timeout:1000});assert.equal(closed,1);
+});
+
+test('entry timeout is observed before its first native socket close, including the final attempt',()=>{
+ const vm=require('node:vm'),profile=JSON.parse(fs.readFileSync('patches/recovered-current.json'));
+ const patch=profile.operations.find(p=>p.id==='native-entry-timeout-diagnostics');assert.ok(patch);
+ for(const previousAttempts of [0,2]){
+  const events=[];const ctx=vm.createContext({'аⲣᚇ':previousAttempts,'І༩̂':3,'І̎ܘ':{close(){events.push('socket-close');}},'ѕ︂︀':'close','ⲣ๔І':()=>events.push('network-close'),'оᴌ︈':{state:0,flags:0},'іܐᄆ':'state','ᴇ᠍ߎ':'flags','ᅟވ̝':{'ᴄε̋':0,'ﾠ५︅':64},'а̡̡':0,'а༥ᄂ':()=>{},__responsiveMod:{observeCloseRequest:s=>events.push(s)}});
+  vm.runInContext(patch.after+';е５̗();',ctx,{timeout:1000});
+  assert.equal(events[0],'native-entry-timeout');assert.equal(events[1],'socket-close');assert.equal(ctx['аⲣᚇ'],previousAttempts+1);
+  assert.equal(events.includes('network-close'),previousAttempts===0);
+ }
 });
 
 test('native malformed saved session ID reaches its intended finite fallback without changing stored identity',()=>{

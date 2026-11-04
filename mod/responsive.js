@@ -856,12 +856,15 @@ function __installDevastMod(B) {
     return counts;
   }
   function connectionEvent(type, details = {}) {
+    const now=performance.now();
     const health = B.health?.();
-    connectionEvents.push({type,at:Math.round(performance.now()),state:B.network.state,
+    connectionEvents.push({type,at:Math.round(now),state:B.network.state,
       integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,
       aim:MOD.AimBotEnabled,autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,
       autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled,
       socketState:connectionSocket?.readyState??null,socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
+      transport:socketTraffic(now),pageHidden:!!document.hidden,
+      frameGapMs:previousAnimationFrame===null?null:Math.max(0,Math.round(now-previousAnimationFrame)),
       health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details});
     if (connectionEvents.length > 12) connectionEvents.shift();
   }
@@ -1558,14 +1561,30 @@ function __installDevastMod(B) {
     initialHomeRecoveries:0
   };
   let connectionSocket = null, adGate = null, removeSocketObservers = () => {};
+  let socketSerial=0,socketTrace=null;
+  function socketTraffic(now=performance.now()) {
+    if(!socketTrace)return null;
+    return {id:socketTrace.id,openForMs:socketTrace.openedAt===null?null:Math.max(0,Math.round(now-socketTrace.openedAt)),
+      receiveGapMs:socketTrace.lastReceiveAt===null?null:Math.max(0,Math.round(now-socketTrace.lastReceiveAt)),
+      receivedMessages:socketTrace.receivedMessages,localCloseSource:socketTrace.localCloseSource};
+  }
+  function observeCloseRequest(source) {
+    if(stopped||!socketTrace||!['native-network-close','native-receive-timeout','native-entry-timeout','mod-entry-timeout'].includes(source))return false;
+    if(socketTrace.localCloseSource===null)socketTrace.localCloseSource=source;
+    connectionEvent('client-close-request',{source});
+    return true;
+  }
   const widgetWrappers = new Map();
   function observeSocket(socket) {
     removeSocketObservers();
     connectionSocket = socket;
+    socketTrace=socket?{id:++socketSerial,openedAt:socket.readyState===1?performance.now():null,lastReceiveAt:null,receivedMessages:0,localCloseSource:null}:null;
     if (typeof socket?.addEventListener !== 'function') return;
     const handlers = {
+      open:() => {if(!stopped&&socket===connectionSocket)socketTrace.openedAt=performance.now();},
+      message:() => {if(!stopped&&socket===connectionSocket){socketTrace.lastReceiveAt=performance.now();socketTrace.receivedMessages++;}},
       close:event => { if (!stopped && socket === connectionSocket) connectionEvent('socket-close',
-        {code:Number.isInteger(event.code) ? event.code : null,clean:event.wasClean === true}); },
+        {code:Number.isInteger(event.code) ? event.code : null,clean:event.wasClean === true,localCloseObserved:socketTrace.localCloseSource!==null}); },
       error:() => { if (!stopped && socket === connectionSocket) connectionEvent('socket-error'); }
     };
     for (const [name,handler] of Object.entries(handlers)) socket.addEventListener(name,handler);
@@ -1578,13 +1597,15 @@ function __installDevastMod(B) {
     for (const key of ['token','tokenId','userId','accountToken']) {
       try { stored[key] = !!localStorage.getItem(key); } catch (_) { stored[key] = null; }
     }
-    return {schema:2,recoveryVersion:5,auditBuild:'integrity-autoupdate-v1',integrityCompatibility:B.integrityPatched?.()===true,
+    const build=typeof __devastClientBuild==='undefined'?null:{...__devastClientBuild};
+    return {schema:3,recoveryVersion:5,auditBuild:'integrity-autoupdate-v1',build,integrityCompatibility:B.integrityPatched?.()===true,
       integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,state:B.network.state,phase:reconnect.phase,
       sessionEnded:reconnect.sessionEnded,awaitingPlay:reconnect.awaitingPlay,normalJoinRequired:reconnect.freshRequired,
       nativeReady:typeof B.network[B.loginKey] === 'function',
       nativePending:B.pendingKey ? !!B.network[B.pendingKey] : false,
       adWaiting:!!B.adWaiting?.(),socketState:connectionSocket?.readyState ?? null,
       socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
+      transport:socketTraffic(),
       combatNow:combatCommands(),
       animationTiming:animationTiming(),
       modCommandsByOpcode:{...diagnostics.commandsByOpcode},
@@ -1593,7 +1614,7 @@ function __installDevastMod(B) {
       automationTransport:{deferred:{...automationDeferrals}},
       aimSettings:{enabled:MOD.AimBotEnabled,autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
-      stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,commandsInLast2s:{...event.commandsInLast2s}}))};
+      stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}}))};
   }
   function releaseNativePending() {
     if (B.pendingKey) B.network[B.pendingKey] = false;
@@ -1844,6 +1865,7 @@ function __installDevastMod(B) {
         reconnect.phase = 'idle';
         reconnect.generation++;
         releaseNativePending();
+        observeCloseRequest('mod-entry-timeout');
         connectionEvent('connection-timeout');
         const socket = connectionSocket;
         connectionSocket = null;
@@ -2253,6 +2275,7 @@ function __installDevastMod(B) {
     copyNickname,
     reconnect,
     observeSocket,
+    observeCloseRequest,
     observeDeath,
     highlightMine,
     beginPlay,
