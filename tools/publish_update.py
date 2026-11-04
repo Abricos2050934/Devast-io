@@ -51,6 +51,8 @@ def artifacts(root, output):
             raise ValueError('Automation socket backpressure was not verified in browser: ' + browser)
         if 'coalesced-aim-directions' in contract.get('features', []) and report.get('native', {}).get('coalesced_aim_directions_and_native_idle') is not True:
             raise ValueError('Coalesced aim directions and native idle ping were not verified in browser: ' + browser)
+        if 'native-shot-direction-and-render-sync' in contract.get('features', []) and report.get('native', {}).get('native_shot_direction_and_render_sync') is not True:
+            raise ValueError('Native shot direction and render sync were not verified in browser: ' + browser)
         if 'verbatim-original-ilm-aim' in contract.get('features', []) and report.get('native', {}).get('original_ilm_mechanics') is not True:
             raise ValueError('Original ILM aim mechanics were not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}

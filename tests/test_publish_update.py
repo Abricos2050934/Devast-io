@@ -127,3 +127,11 @@ class PublicationTests(unittest.TestCase):
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['coalesced_aim_directions_and_native_idle']=False;self.save()
   with self.assertRaisesRegex(ValueError,'Coalesced.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_native_shot_and_render_sync_require_both_browsers(self):
+  self.contract['features']=['native-shot-direction-and-render-sync']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'native_shot_direction_and_render_sync':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['native_shot_direction_and_render_sync']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'shot direction.*firefox'):p.artifacts(self.root,self.out)

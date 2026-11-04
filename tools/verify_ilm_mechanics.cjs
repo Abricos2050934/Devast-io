@@ -55,8 +55,6 @@ function verifyOriginalIlm(m,n,s,reference) {
     track(0,1,1,1000+step*2,1000+step);track(0,2,1,1100+(step%3===0?-30:step*12),1050+step*11);
     track(0,3,1,1400-step*3,1250+step);track(13,0,17,1150+step*4,1100-step*7);
     if(step===5)track(0,2,1,0,0,false);
-    const line=JSON.stringify(m.targets.lines),angle=m.aim.lastAngle,before=transport.packets.length;
-    m.beforeFire();check(transport.packets.length===before&&m.aim.lastAngle===angle&&JSON.stringify(m.targets.lines)===line,'Manual fire changed original ILM cadence');
     compare('scene '+scene+' step '+step);
    }
   }
@@ -66,7 +64,7 @@ function verifyOriginalIlm(m,n,s,reference) {
   m.settings.visualizeResolvingColor='#abcdef';const stroke=n.ctx.stroke,colors=[];
   n.ctx.stroke=function(...args){colors.push(this.strokeStyle);return stroke.apply(this,args);};
   try{m.render();check(colors.some(c=>c.toLowerCase()==='#eeeeee')&&!colors.includes('#abcdef'),'Original ILM line rendering changed');}finally{n.ctx.stroke=stroke;}
-  return {scenes:36,ticks:checks,exact_core_state:true,native_commands:'original_angles_and_attacks_with_existing_direction_coalescing',original_menu_controls:5,normal_fire_between_ticks:'unchanged',line_visibility_and_color:'original_ILM'};
+  return {scenes:36,ticks:checks,exact_core_state:true,native_commands:'original_angles_and_attacks_with_existing_direction_coalescing',original_menu_controls:5,native_shot_sync:'verified_separately_without_changing_core_formula',line_visibility_and_color:'original_ILM'};
  }finally{
   transport.restore();m.observeSocket(null);self.id=savedId;n.network.state=savedState;clans[0]=savedClan;
   for(const [id,value]of savedMetadata)metadata[id]=value;

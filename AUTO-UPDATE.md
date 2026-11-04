@@ -209,3 +209,10 @@ integrity_compatibility={status: passed, predicates: 3} для текущего 
 переключение аима и медленный Jitter. Публикация требует в обоих браузерах
 coalesced_aim_directions_and_native_idle=true: реальный нативный idle-ping
 должен продолжать работать при включённом неподвижном аиме.
+
+Связь нативного выстрела и поворота проверяется отдельно от исходного ядра ILM.
+Контракт native-shot-direction-and-render-sync требует native_shot_direction_and_render_sync=true
+в Chromium и Firefox. Проверяются выстрел до первого такта, запаздывающий серверный
+угол своего спрайта, направление до атаки, сохранение native input.angle, повторные
+атаки без потока лишних направлений и нативный idle-ping. Формула ILM и пять
+исходных контролов остаются дословными.

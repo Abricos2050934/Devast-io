@@ -1,0 +1,284 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "base_commit": "6736feb9de8f5473375237308e536bc4c635ee5b",
+  "release": "05d80a89696e014a338497bc9ca2eb751cd1cc8c49ea681b6b5176361254aa3d",
+  "output_sha256": "acff4272817d094f9efc6f61fcfc9d3f5aaeaf842bfad5a1e51d5721ef11dddd",
+  "reproduction_before": {
+    "first_shot_before_tick": [
+      [
+        4
+      ]
+    ],
+    "aim_direction_degrees": 22,
+    "line_angle_degrees": 21.80140948635181,
+    "rendered_self_angle_degrees": -22.91831180523293
+  },
+  "reproduction_after": {
+    "first_shot_before_tick": [
+      [
+        6,
+        22
+      ],
+      [
+        4
+      ]
+    ],
+    "aim_direction_degrees": 22,
+    "line_angle_degrees": 21.80140948635181,
+    "rendered_self_angle_degrees": 21.999999999999996
+  },
+  "scope": {
+    "changed_installer_functions": [
+      "beforeFire",
+      "setSetting"
+    ],
+    "original_ilm_module": "byte_identical",
+    "original_ilm_sha256": "950b2dc1af051ce99e4168aa866d117f87f654a40a2f5cbb269b3de859ad0560",
+    "jitter_rotation": "byte_identical",
+    "native_profile_change": "Only self-angle display expression gains the sent-direction fallback",
+    "gui_change": "No new controls; correctly invalidate toggles changed by dat.GUI"
+  },
+  "original_ilm_audit": {
+    "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+    "core_sha256": "950b2dc1af051ce99e4168aa866d117f87f654a40a2f5cbb269b3de859ad0560",
+    "declarations": [
+      "_0x3e2cd1",
+      "_0x218077",
+      "_0x4b5d6f",
+      "_0x391c19",
+      "_0x4a7389"
+    ],
+    "classes": 4,
+    "methods_including_constructors": 13,
+    "tick_functions": 1,
+    "removed_unused_decoder_aliases": 0,
+    "preserved_unused_decoder_aliases": 14,
+    "ast_parity": "exact",
+    "source_parity": "verbatim_stored_decoded_declarations",
+    "menu_parity": "verbatim_original_5_controls",
+    "line_render_parity": "verbatim_original_block",
+    "mouse_helper_parity": "verbatim_original_function",
+    "additional_predictors": 0,
+    "coefficient_proxies": 0,
+    "decoded_original_sha256": "2c0087f65d907a82a109f529fb226539326e79503e531357b35077ae7c683693",
+    "original_blocks_rechecked": 14
+  },
+  "fixes": [
+    "Align the first native manual attack with the current unmodified ILM resolve, including shots before the first 50 ms tick",
+    "Reassert a cached angle once at burst start; held fire retains the 50 ms timer without per-attack direction flooding",
+    "Render the active self sprite using the actually sent angle while preserving native pointer/movement and Jitter priority",
+    "Invalidate toggle cache after dat.GUI writes the object before onChange"
+  ],
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 179,
+    "python_tests": 43
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/shot-line.test.cjs",
+      "tests/ilm-restoration.test.cjs",
+      "tests/angle-transport.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "output_sha256": "acff4272817d094f9efc6f61fcfc9d3f5aaeaf842bfad5a1e51d5721ef11dddd",
+      "browser_version": "154.0.8037.57",
+      "native": {
+        "menu": true,
+        "native_shot_direction_and_render_sync": true,
+        "coalesced_aim_directions_and_native_idle": true,
+        "original_ilm_mechanics": true,
+        "original_ilm_comparison": {
+          "scenes": 36,
+          "ticks": 432,
+          "exact_core_state": true,
+          "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
+          "original_menu_controls": 5,
+          "native_shot_sync": "verified_separately_without_changing_core_formula",
+          "line_visibility_and_color": "original_ILM"
+        },
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "output_sha256": "acff4272817d094f9efc6f61fcfc9d3f5aaeaf842bfad5a1e51d5721ef11dddd",
+      "browser_version": "153.0",
+      "native": {
+        "menu": true,
+        "native_shot_direction_and_render_sync": true,
+        "coalesced_aim_directions_and_native_idle": true,
+        "original_ilm_mechanics": true,
+        "original_ilm_comparison": {
+          "scenes": 36,
+          "ticks": 432,
+          "exact_core_state": true,
+          "native_commands": "original_angles_and_attacks_with_existing_direction_coalescing",
+          "original_menu_controls": 5,
+          "native_shot_sync": "verified_separately_without_changing_core_formula",
+          "line_visibility_and_color": "original_ILM"
+        },
+        "automation_socket_backpressure": true,
+        "right_click_hovered_door": true,
+        "right_click_without_native_prompt": true,
+        "right_click_real_mouse": true,
+        "independent_door_control": true,
+        "door_server_state_feedback": true,
+        "native_shared_canvas": true,
+        "initial_metadata": true,
+        "head_and_leaderboard_labels": true,
+        "packet_history": true,
+        "packet_removal": true,
+        "self_angle_modes": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_shot_matches_ilm_line": true,
+        "jitter_rotation_and_shot_priority": true,
+        "jitter_preserves_native_input": true,
+        "jitter_socket_backpressure": true,
+        "stable_frame_entity_records": true,
+        "firing_display_original_ilm_interpolation": true,
+        "continuous_fire_ilm_cadence": true,
+        "ilm_manual_fire_cadence": true,
+        "disconnect_preserves_aim_history": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "native_ad_failure_recovery": true,
+        "native_death_observation": true,
+        "death_stops_restore_retries": true,
+        "mod_errors": []
+      },
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "world_visibility": {
+        "status": "passed",
+        "native_renderers": 3
+      }
+    }
+  },
+  "module_sha256": {
+    "mod/responsive.js": "47bcb6e2efee26e1995078995e3e648c0baab9780c55862c0dab80c4545b7406",
+    "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
+    "mod/ilm-aim.js": "950b2dc1af051ce99e4168aa866d117f87f654a40a2f5cbb269b3de859ad0560",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "fixture_stability": "The independent real-mouse door scene pins its synthetic player/state and clock while Playwright bridges input; delayed home callbacks from earlier login fixtures otherwise reset synthetic self.id to zero. Production door code unchanged; separate unit tests still exercise confirmation timeouts.",
+  "limits": [
+    "Native browser fixtures, not a measured live-server hit rate",
+    "Original ILM prediction and its original five controls retained",
+    "Native integer direction rounding retained"
+  ]
+}

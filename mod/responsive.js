@@ -936,6 +936,7 @@ function __installDevastMod(B) {
     return !stopped && B.network.state === 1 && B.world.ᅠᏧ‍ && B.world.ᅠᏧ‍.id > 0;
   }
   let lastSentAngle = null,lastSentPlayer = 0;
+  const appliedToggles={AimBotEnabled:MOD.AimBotEnabled,JitterEnabled:MOD.JitterEnabled};
   function __send(value, forceAngle = false) {
     if (!playing()) return false;
     const packet = typeof value === 'string' ? JSON.parse(value) : value;
@@ -995,20 +996,23 @@ function __installDevastMod(B) {
   function beforeFire() {
     if (!playing()) return;
     const now=performance.now();
-    if (!MOD.JitterEnabled) return;
+    if (!MOD.JitterEnabled && !MOD.AimBotEnabled) return;
     const continuingBurst=now<jitter.fireUntil && !jitter.spinning;
     jitter.fireUntil = now + 150;
     stopJitter();
     if (MOD.AimBotEnabled) {
-      // Only Jitter needs alignment when leaving idle rotation. Normal aim
-      // and manual fire retain ILM's original 50 ms calculation cadence.
+      // A native burst may start before the next 50 ms tick. Use ILM itself
+      // once before its first attack; held fire stays on the existing timer.
       if (continuingBurst && Aimbot.targetPlayer?.active && Number.isFinite(lastSentAngle) && lastSentPlayer === B.world.ᅠᏧ‍.id) return;
       const angle = Aimbot.resolve();
       if (Aimbot.targetPlayer?.active) {
-        __send([6,angle]);
+        // The native mouse may have changed the server direction since our
+        // cached send. Reassert it once per burst, including an equal angle.
+        __send([6,angle],true);
         return;
       }
     }
+    if (!MOD.JitterEnabled) return;
     const point = cursorWorld();
     const me = B.world.ᅠᏧ‍;
     if (point) __send([6,Math.atan2(point.y-me.y,point.x-me.x)*180/Math.PI],true);
@@ -1027,8 +1031,11 @@ function __installDevastMod(B) {
   function setSetting(key, value) {
     if (stopped) throw new Error('Mod has been disposed');
     validateSetting(key,value);
-    if((key==='AimBotEnabled'||key==='JitterEnabled')&&MOD[key]!==value)lastSentAngle=null;
-    if(key==='AimBotEnabled'&&MOD[key]!==value)jitter.fireUntil=-Infinity;
+    // dat.GUI writes MOD before onChange, so compare the last applied value.
+    if(Object.prototype.hasOwnProperty.call(appliedToggles,key)){
+      if(appliedToggles[key]!==value){lastSentAngle=null;if(key==='AimBotEnabled')jitter.fireUntil=-Infinity;}
+      appliedToggles[key]=value;
+    }
     if (keySettings.includes(key)) {
       const conflict = keySettings.find(other=>other!==key && MOD[other]===value);
       if (conflict) MOD[conflict] = MOD[key];
@@ -2232,6 +2239,10 @@ function __installDevastMod(B) {
     settings: MOD,
     beforeFire,
     get jitterAngle() { return jitter.spinning ? jitter.angle * Math.PI / 180 : null; },
+    get aimRenderAngle() {
+      return playing() && MOD.AimBotEnabled && Aimbot.targetPlayer?.active &&
+        lastSentPlayer===B.world.ᅠᏧ‍.id && Number.isFinite(lastSentAngle) ? lastSentAngle*Math.PI/180 : null;
+    },
     targets: GetAllTargets,
     trackPacket,
     aim: Aimbot,

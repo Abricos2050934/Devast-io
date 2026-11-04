@@ -27,6 +27,8 @@ function pair(){
    view=next;f.setClock(now+=16);f.mod.step(now);old.frame(view);
   },
   tick(){assert.equal(f.timerPeriods.values().next().value,50);for(const tick of f.timers.values())tick();old.tick();},
+  // Isolate original timer mechanics here; tests/shot-line exercises the real
+  // native beforeFire adapter and its additional first-shot synchronization.
   fire(){f.network.nativeFire();old.fire();},
   dispose(){f.mod.dispose();}
  };

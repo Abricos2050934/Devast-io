@@ -35,7 +35,8 @@
     "independent-door-control-and-server-state-feedback",
     "automation-socket-backpressure",
     "verbatim-original-ilm-aim",
-    "coalesced-aim-directions"
+    "coalesced-aim-directions",
+    "native-shot-direction-and-render-sync"
   ],
   "removed_overlays": [
     "bottom-gauge-text",

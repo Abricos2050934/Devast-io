@@ -95,13 +95,15 @@ test('continuous native fire aligns Jitter once and then uses only the original 
   f.mod.aim.mouseDown=false;f.setClock(500);f.mod.step(500);f.mod.step(750);assert.notEqual(f.mod.jitterAngle,null);
  }finally{f.mod.dispose();}
 });
-test('non-Jitter fire preserves ILM prediction and adds no directions between ticks',()=>{
+test('non-Jitter fire synchronizes once with ILM, then holds the original timer cadence',()=>{
  const f=setup();try{
   f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();
   const count=f.packets.length,line=JSON.stringify(f.mod.targets.lines[0]);f.mod.aim.mouseDown=true;
-  f.mod.trackPacket(1,2,1,120,150,true);
-  for(let i=0;i<20;i++){f.setClock(i*5);f.mod.beforeFire();}
-  assert.equal(f.packets.length,count);assert.equal(JSON.stringify(f.mod.targets.lines[0]),line);
+  f.mod.trackPacket(1,2,1,120,150,true);f.setClock(0);f.mod.beforeFire();
+  assert.equal(f.packets.length,count+1);assert.notEqual(JSON.stringify(f.mod.targets.lines[0]),line);
+  const aligned=JSON.stringify(f.mod.targets.lines[0]);
+  for(let i=1;i<=20;i++){f.setClock(i*5);f.mod.beforeFire();}
+  assert.equal(f.packets.length,count+1);assert.equal(JSON.stringify(f.mod.targets.lines[0]),aligned);
   assert.equal(Object.hasOwn(f.mod,'firingAngle'),false);
  }finally{f.mod.dispose();}
 });
