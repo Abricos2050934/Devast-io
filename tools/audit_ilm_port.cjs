@@ -36,7 +36,7 @@ function audit(){
  for(const declaration of a.parse(src,options).body)assert.ok(allowed.has(declaration.id?.name),'Unexpected additional aim algorithm: '+declaration.id?.name);
  for(const forbidden of ['aimPrediction','nativeWeaponSpeed','ilmSettings','applyAimPreset','__createAdaptiveAim','__aimWeaponPresets'])assert.ok(!src.includes(forbidden)&&!payload.includes(forbidden),'Retired aim customization remains: '+forbidden);
  assert.ok(payload.includes('__createIlmAim(MOD, ilmWorld'),'Original ILM must receive the real settings without coefficient proxies');
- assert.ok(!payload.includes("automationReady('aim')"),'Original ILM tick must not be paused by a custom transport algorithm');
+ assert.ok(payload.includes('aimSnapshot(()=>ilm.tick()'),'Original ILM calculation must continue independently of socket backpressure');
  assert.ok(!payload.includes('firingAngle'),'Custom firing display override remains');
  const out={upload_sha256:ref.upload_sha256,core_sha256:crypto.createHash('sha256').update(src).digest('hex'),declarations,classes:4,methods_including_constructors:methods,tick_functions:1,removed_unused_decoder_aliases:0,preserved_unused_decoder_aliases:aliases,ast_parity:'exact',source_parity:'verbatim_stored_decoded_declarations',menu_parity:'verbatim_original_5_controls',line_render_parity:'verbatim_original_block',mouse_helper_parity:'verbatim_original_function',additional_predictors:1,extension_module:'mod/curved-aim.js',coefficient_proxies:0};
  return out;

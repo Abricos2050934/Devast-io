@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "source_base": "3dec637",
+  "release": "04fb97714a576f5c2388509d7da65721c2fbfc203a4f3ad64b6393b762f030ce",
+  "output_sha256": "74d3ef2b9ba390f9a3a67ed04960cad898918c4cf359ece2b6ba6d4f482112fc",
+  "raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+  "problem": "Aim sender and forced first-shot alignment kept adding commands to an already backed-up WebSocket. Equal-angle coalescing hid this regression in stationary-only tests.",
+  "reproduction": {
+    "socket_buffered_bytes": 8192,
+    "moving_target_ticks": 100,
+    "real_direction_change_history": true,
+    "packets_before": {
+      "aim_only": 100,
+      "autoFire": 300
+    },
+    "packets_after": {
+      "aim_only": 0,
+      "autoFire": 0
+    },
+    "on_resume": {
+      "aim_only": [
+        6
+      ],
+      "autoFire": [
+        6,
+        4,
+        5
+      ]
+    },
+    "no_replay": true,
+    "calculation_continues_when_blocked": true
+  },
+  "fix": [
+    "One queue-readiness decision per complete automatic direction/attack/release cycle",
+    "Continue original core calculations but discard blocked send cycles",
+    "Skip forced shot direction on a blocked socket; realign the next writable burst",
+    "Require new native queue checks in both browsers before publication"
+  ],
+  "comparison": {
+    "old_native_sha256": "e090cec7542760cb9413e1807470f57b60bed1f43de57f6d4da8652f4c8f4853",
+    "old_prp_sha256": "8a93fecd24a64900a643bec42753fb3b989e8819b1e9c4847a1957bc196d72b9",
+    "old_prp_aim": "Position-change-triggered direction 6 through its native sender; no automatic fire in its AimbotRefresh",
+    "current_aim": "50 ms ILM timer, equal-direction coalescing, optional curve prediction and first-shot alignment. The curve extension adds no packet-triggered sends.",
+    "original_ilm_core": "unchanged; exact AST and source audits pass",
+    "curve_module": "unchanged",
+    "native_current_vs_previous_reviewed_raw": "same SHA256"
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 195,
+    "python_tests": 46
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/shot-line.test.cjs",
+      "tests/ilm-restoration.test.cjs",
+      "tests/angle-transport.test.cjs",
+      "tests/curved-aim.test.cjs",
+      "tests/aim-backpressure.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "browser_version": "154.0.8037.57",
+      "aim_cycle_socket_backpressure": true,
+      "original_ilm_comparison_ticks": 432,
+      "curved_target_and_chaser_interception": true,
+      "page_errors": []
+    },
+    "firefox": {
+      "status": "passed",
+      "browser_version": "153.0",
+      "aim_cycle_socket_backpressure": true,
+      "original_ilm_comparison_ticks": 432,
+      "curved_target_and_chaser_interception": true,
+      "page_errors": []
+    }
+  },
+  "live": {
+    "result": "passed",
+    "output_sha256": "74d3ef2b9ba390f9a3a67ed04960cad898918c4cf359ece2b6ba6d4f482112fc",
+    "observed_session_seconds": 80,
+    "phases": [
+      {
+        "aim": false,
+        "seconds": 10
+      },
+      {
+        "aim": true,
+        "seconds": 60
+      },
+      {
+        "aim": false,
+        "seconds": 10
+      }
+    ],
+    "mod_errors": [],
+    "unexpected_session_ends": 0,
+    "attacks_performed": false
+  },
+  "limits": [
+    "The specific server-side cause of the user-reported disconnect is unconfirmed",
+    "The previous schema-2 user log contains terminal events both with and without aim; it cannot establish the cause in the current build",
+    "80 seconds of live observation, including 60 with aim, is not a long-session stability guarantee",
+    "Manual game commands and native close/death handling are preserved"
+  ]
+}

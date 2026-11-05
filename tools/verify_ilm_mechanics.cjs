@@ -44,7 +44,7 @@ function verifyOriginalIlm(m,n,s,reference) {
    set('AimBotEnabled',true);set('autoFire',scene%2===0);set('target',['players','ghouls','all'][scene%3]);
    set('mouseFovEnable',scene%2===0);set('mouseFov',scene%5===0?30:1800);set('lockId',scene%7===0?2:-1);
    for(let step=0;step<12;step++){
-    socket.bufferedAmount=step===8?8192:0;socket.readyState=step===9?3:1;connected=socket.readyState===1;
+    socket.bufferedAmount=step===8?8192:0;socket.readyState=step===9?3:1;connected=socket.readyState===1&&socket.bufferedAmount===0;
     set('distanceCoefficient',100+(scene*31+step*47)%900);set('offsetCoefficient',(step%4)/2);
     set('bulletSpeedCoefficient',1+(scene+step)%15);set('resolverType',step%2?'smoothed':'linear');
     set('visualizeResolving',step%3!==0);set('visualizeResolvingColor',step%2?'#abcdef':'#EEEEEE');
@@ -64,7 +64,7 @@ function verifyOriginalIlm(m,n,s,reference) {
   m.settings.visualizeResolvingColor='#abcdef';const stroke=n.ctx.stroke,colors=[];
   n.ctx.stroke=function(...args){colors.push(this.strokeStyle);return stroke.apply(this,args);};
   try{m.render();check(colors.some(c=>c.toLowerCase()==='#eeeeee')&&!colors.includes('#abcdef'),'Original ILM line rendering changed');}finally{n.ctx.stroke=stroke;}
-  return {scenes:36,ticks:checks,exact_core_state:true,native_commands:'original_angles_and_attacks_with_existing_direction_coalescing',original_menu_controls:5,native_shot_sync:'verified_separately_without_changing_core_formula',line_visibility_and_color:'original_ILM'};
+  return {scenes:36,ticks:checks,exact_core_state:true,native_commands:'original angles and attack/release cycles with direction coalescing; blocked cycles discarded',original_menu_controls:5,native_shot_sync:'verified_separately_without_changing_core_formula',line_visibility_and_color:'original_ILM'};
  }finally{
   transport.restore();m.observeSocket(null);self.id=savedId;n.network.state=savedState;clans[0]=savedClan;
   for(const [id,value]of savedMetadata)metadata[id]=value;

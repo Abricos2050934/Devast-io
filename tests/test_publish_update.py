@@ -151,3 +151,12 @@ class PublicationTests(unittest.TestCase):
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['curved_target_and_chaser_interception']=False;self.save()
   with self.assertRaisesRegex(ValueError,'Curved chasing.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_aim_backpressure_requires_native_verification_in_both_browsers(self):
+  self.contract['features']=['aim-cycle-socket-backpressure']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'aim_cycle_socket_backpressure':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for state in [False,None]:
+   self.validation['browsers']['firefox']['native']['aim_cycle_socket_backpressure']=state;self.save()
+   with self.assertRaisesRegex(ValueError,'Aim cycle.*firefox'):p.artifacts(self.root,self.out)

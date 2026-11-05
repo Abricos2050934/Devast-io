@@ -804,7 +804,11 @@ function __installDevastMod(B) {
     try { return callback(); } finally { aimDepth--; }
   }
   const ilmWorld={PLAYER:aimSelf,players:aimTeams};
+  let aimTickWritable=false;
   const ilm = __createIlmAim(MOD, ilmWorld, packet=>{
+    // Admit the whole automatic direction/attack/release cycle once. Checking
+    // bufferedAmount between its packets could discard release after attack.
+    if (!aimTickWritable) return false;
     if (MOD.JitterEnabled && packet[0] === 6 && (!jitterAiming() || !Aimbot.targetPlayer?.active)) return false;
     // Like ILM's ws sender, a non-open socket suppresses transmission only.
     if (connectionSocket && connectionSocket.readyState!==1) return false;
@@ -837,7 +841,12 @@ function __installDevastMod(B) {
   // failure or a newly received player ID must not erase packet history.
   Aimbot.refresh = () => {
     if (stopped) return;
-    aimSnapshot(()=>ilm.tick(),MOD.AimBotEnabled&&MOD.lockId<0);
+    aimTickWritable=MOD.AimBotEnabled && playing() && automationReady('aim');
+    try {
+      // Keep history, selection and the prediction line live while transport
+      // is blocked. A skipped cycle is discarded, never queued for replay.
+      aimSnapshot(()=>ilm.tick(),MOD.AimBotEnabled&&MOD.lockId<0);
+    } finally { aimTickWritable=false; }
     updateJitter(performance.now(),true);
   };
   const _players_list = [];
@@ -859,7 +868,7 @@ function __installDevastMod(B) {
     return {samples:gaps.length,meanGapMs:Math.round(mean*100)/100,p95GapMs:gaps.length?Math.round(gaps[Math.floor((gaps.length-1)*.95)]*100)/100:null,fpsEstimate:mean>0?Math.round(1000/mean):null,hidden:!!document.hidden};
   }
   const recentCombatCommands = [], connectionEvents = [];
-  const automationDeferrals={loot:0,build:0,take:0,chat:0,keepAlive:0};
+  const automationDeferrals={aim:0,loot:0,build:0,take:0,chat:0,keepAlive:0};
   function automationReady(kind) {
     if(!connectionSocket || connectionSocket.readyState===1&&!(connectionSocket.bufferedAmount>0))return true;
     automationDeferrals[kind]++;
@@ -1019,6 +1028,12 @@ function __installDevastMod(B) {
     const continuingBurst=now<jitter.fireUntil && !jitter.spinning;
     jitter.fireUntil = now + 150;
     stopJitter();
+    if (!automationReady('aim')) {
+      // The next writable native shot starts a fresh alignment, even when it
+      // follows this blocked attempt within the normal burst window.
+      jitter.fireUntil=-Infinity;
+      return;
+    }
     if (MOD.AimBotEnabled) {
       // A native burst may start before the next 50 ms tick. Use ILM itself
       // once before its first attack; held fire stays on the existing timer.

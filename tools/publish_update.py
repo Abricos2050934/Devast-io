@@ -49,6 +49,8 @@ def artifacts(root, output):
             raise ValueError('Independent door control and state feedback were not verified in browser: ' + browser)
         if 'automation-socket-backpressure' in contract.get('features', []) and report.get('native', {}).get('automation_socket_backpressure') is not True:
             raise ValueError('Automation socket backpressure was not verified in browser: ' + browser)
+        if 'aim-cycle-socket-backpressure' in contract.get('features', []) and report.get('native', {}).get('aim_cycle_socket_backpressure') is not True:
+            raise ValueError('Aim cycle socket backpressure was not verified in browser: ' + browser)
         if 'connection-close-origin-diagnostics' in contract.get('features', []) and report.get('native', {}).get('connection_close_origin_diagnostics') is not True:
             raise ValueError('Connection close origin diagnostics not verified in browser: ' + browser)
         if 'coalesced-aim-directions' in contract.get('features', []) and report.get('native', {}).get('coalesced_aim_directions_and_native_idle') is not True:

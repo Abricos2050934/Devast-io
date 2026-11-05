@@ -39,7 +39,8 @@
     "coalesced-aim-directions",
     "native-shot-direction-and-render-sync",
     "connection-close-origin-diagnostics",
-    "curved-target-and-chaser-interception"
+    "curved-target-and-chaser-interception",
+    "aim-cycle-socket-backpressure"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -60,7 +61,8 @@
     "tests/shot-line.test.cjs",
     "tests/ilm-restoration.test.cjs",
     "tests/angle-transport.test.cjs",
-    "tests/curved-aim.test.cjs"
+    "tests/curved-aim.test.cjs",
+    "tests/aim-backpressure.test.cjs"
   ],
   "required_browsers": [
     "chromium",

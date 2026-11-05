@@ -134,6 +134,7 @@ test('Jitter defers cosmetic directions on socket backlog and sends only the lat
   // Native movement remains an immediate native send, independent of idle spin.
   f.network['ᴎᚂρ'](JSON.stringify([3,1]));assert.deepEqual(f.packets,[[3,1]]);f.packets.length=0;
   socket.bufferedAmount=0;f.setClock(1050);f.mod.aim.refresh();assert.deepEqual(f.packets,[[6,189]]);
-  socket.bufferedAmount=4096;f.mod.setSetting('AimBotEnabled',true);f.mod.beforeFire();assert.equal(f.packets.at(-1)[1],45,'First shot alignment was deferred with cosmetic spin');
+  socket.bufferedAmount=4096;f.mod.setSetting('AimBotEnabled',true);f.mod.beforeFire();assert.deepEqual(f.packets,[[6,189]],'Shot alignment added an angle to the blocked queue');
+  socket.bufferedAmount=0;f.mod.beforeFire();assert.equal(f.packets.at(-1)[1],45,'First writable shot did not align after the queue drained');
  }finally{f.mod.dispose();}
 });

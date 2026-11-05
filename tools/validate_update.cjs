@@ -231,9 +231,34 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(transport.packets.length===1&&transport.packets[0][0]===6,'Jitter replayed a queue of stale angles');
     m.observeSocket(null);m.setSetting('JitterEnabled',false);
     m.setSetting('AimBotEnabled',true);transport.packets.length=0;blockedSocket.bufferedAmount=4096;m.observeSocket(blockedSocket);
-    for(let i=0;i<20;i++)m.aim.refresh();check(transport.packets.length===1,'Native transport did not coalesce equal ILM directions');
-    blockedSocket.readyState=3;blockedSocket.bufferedAmount=0;m.aim.refresh();check(transport.packets.length===1,'ILM sent through a non-open socket');
-    blockedSocket.readyState=1;m.aim.refresh();check(transport.packets.length===1,'Open socket resent a direction already retained by the server');
+    for(let i=0;i<20;i++)m.aim.refresh();check(transport.packets.length===0,'Aim extended a backed-up socket queue');
+    blockedSocket.readyState=3;blockedSocket.bufferedAmount=0;m.aim.refresh();check(transport.packets.length===0,'ILM sent through a non-open socket');
+    blockedSocket.readyState=1;m.aim.refresh();check(transport.packets.length===1,'Writable socket failed to send the current direction');
+    m.aim.refresh();check(transport.packets.length===1,'Open socket resent an unchanged direction');
+    // Changing directions and real target turn history defeated the former
+    // stationary-only coalescing check. Exercise all automatic opcodes here.
+    for(const autoFire of [false,true]){
+     m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);
+     m.setSetting('autoFire',autoFire);transport.packets.length=0;blockedSocket.bufferedAmount=8192;
+     for(let i=0;i<100;i++){
+      m.trackPacket(0,2,1,1500+(i%2)*100,1000+i*5,true);m.aim.refresh();
+     }
+     check(transport.packets.length===0,'Moving aim or autoFire grew an existing queue');
+     blockedSocket.bufferedAmount=0;m.aim.refresh();
+     check(JSON.stringify(transport.packets.map(p=>p[0]))===JSON.stringify(autoFire?[6,4,5]:[6]),'Recovery replayed old cycles or split a native shot: '+JSON.stringify({autoFire,packets:transport.packets}));
+    }
+    transport.packets.length=0;
+    for(const x of [1500,1600,1500])m.trackPacket(0,2,1,x,1200,true);
+    m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);
+    let queueReads=0;
+    Object.defineProperty(blockedSocket,'bufferedAmount',{configurable:true,get(){queueReads++;return transport.packets.length?128:0;}});
+    m.aim.refresh();
+    check(JSON.stringify(transport.packets.map(p=>p[0]))==='[6,4,5]'&&queueReads===1,'Newly queued angle discarded its attack/release partners');
+    m.aim.refresh();check(transport.packets.length===3,'Next tick extended the newly created queue');
+    Object.defineProperty(blockedSocket,'bufferedAmount',{value:8192,writable:true,configurable:true});
+    transport.packets.length=0;m.beforeFire();check(transport.packets.length===0,'Forced shot direction bypassed queue protection');
+    blockedSocket.bufferedAmount=0;m.beforeFire();check(transport.packets.length===1&&transport.packets[0][0]===6,'Resumed first shot reused an unaligned blocked burst');
+    m.setSetting('autoFire',false);
     m.observeSocket(null);m.setSetting('AimBotEnabled',false);transport.packets.length=0;
     m.render(performance.now());const stableRecords=m.records,stableEntries=m.records.slice();m.render(performance.now());
     check(stableEntries.length>0&&m.records===stableRecords&&stableEntries.every((r,i)=>m.records[i]===r),'Frame collection rebuilt stable native entity records');
@@ -384,7 +409,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {curved_target_and_chaser_interception:true,curve_comparison:m.curveVerification,menu:true,connection_close_origin_diagnostics:true,native_shot_direction_and_render_sync:true,coalesced_aim_directions_and_native_idle:true,original_ilm_mechanics:true,original_ilm_comparison:m.originalIlmVerification,automation_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {curved_target_and_chaser_interception:true,curve_comparison:m.curveVerification,menu:true,connection_close_origin_diagnostics:true,native_shot_direction_and_render_sync:true,coalesced_aim_directions_and_native_idle:true,original_ilm_mechanics:true,original_ilm_comparison:m.originalIlmVerification,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:JSON.parse(z.gunzipSync(fs.readFileSync('recovery/ilm-aim-reference.json.gz')))});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}
