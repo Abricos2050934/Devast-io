@@ -63,6 +63,16 @@ def artifacts(root, output):
             raise ValueError('Native shot direction and render sync were not verified in browser: ' + browser)
         if 'verbatim-original-ilm-aim' in contract.get('features', []) and report.get('native', {}).get('original_ilm_mechanics') is not True:
             raise ValueError('Original ILM aim mechanics were not verified in browser: ' + browser)
+        if 'verbatim-message15-aim' in contract.get('features', []):
+            native = report.get('native', {})
+            comparison, extra = native.get('message15_comparison', {}), native.get('message15_extra', {})
+            if (comparison.get('status') != 'passed' or comparison.get('comparison_points', 0) < 1400
+                    or extra.get('status') != 'passed' or extra.get('comparison_points', 0) < 5800):
+                raise ValueError('Message15 source comparison was not verified in browser: ' + browser)
+        if 'message15-native-lifecycle' in contract.get('features', []) and report.get('native', {}).get('message15_transport', {}).get('status') != 'passed':
+            raise ValueError('Message15 native lifecycle was not verified in browser: ' + browser)
+        if 'immediate-aim-numeric-settings' in contract.get('features', []) and report.get('physical_numeric', {}).get('status') != 'passed':
+            raise ValueError('Physical aim numeric entry was not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'
@@ -78,6 +88,8 @@ def artifacts(root, output):
 
 Обновление: проверка сайта, расшифровка, перенос текущих модулей и браузерные тесты.
 Новая версия публикуется только после проверок; неизвестные изменения блокируют замену.
+Аимбот Message15 перенесён из отдельного JS: Z — аимбот, H — меню.
+J сохраняет прежнее вращение; Jitter источника включается в меню.
 Нижние дополнительные показатели и надпись AIM BOT удалены. Адаптер наведения оптимизирован.
 Ники #ID, остальные функции и исправление повторного входа сохранены.
 

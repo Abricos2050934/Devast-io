@@ -15,7 +15,7 @@ const nativeAnalysis=require('./updater/static.cjs').analyze(output),tree=native
 assert.equal(profile.operations.filter(op=>op.id.startsWith('native-integrity-signature-')).length,3,'All three native signature compatibility operations are required');
 assert.equal(roles.nativeIntegritySigners?.length,3,'Three reviewed native signers required');
 assert.ok(body,'Full native client IIFE required');
-for(const name of ['__installDevastMod','__createIlmAim'])assert.equal(body.filter(n=>n.id?.name===name).length,1);
+for(const name of ['__installDevastMod','__createMessage15Aim'])assert.equal(body.filter(n=>n.id?.name===name).length,1);
 const installer=body.find(n=>n.id?.name==='__installDevastMod');
 fs.writeFileSync(path.join(dir,'installer.fixture.js'),output.slice(installer.start,installer.end));
 const installerSource=output.slice(installer.start,installer.end);
@@ -26,17 +26,18 @@ for(const file of ['mod/bootstrap.js','vendor/dat.gui.recovered.js']) {
 }
 assert.equal(output.slice(installer.start,installer.end),translate(fs.readFileSync(path.join(root,'mod/responsive.js'),'utf8'),symbols).trim());
 function normalize(value){if(Array.isArray(value))return value.map(normalize);if(!value||typeof value!=='object')return value;return Object.fromEntries(Object.entries(value).filter(([key])=>!['start','end','raw'].includes(key)).map(([key,v])=>[key,normalize(v)]));}
-const canonical=acorn.parse(fs.readFileSync(path.join(root,'mod/ilm-aim.js'),'utf8'),{ecmaVersion:'latest'}).body.find(n=>n.id?.name==='__createIlmAim');
-assert.deepEqual(normalize(body.find(n=>n.id?.name==='__createIlmAim')),normalize(canonical),'ILM algorithm changed');
+const reference=require('./audit_message15.cjs').reference();
+require('./audit_message15.cjs').audit(read('ilm-aim.js'),installerSource);
+for(const block of reference.blocks)assert.ok(output.includes(block.source),'Missing exact source block: '+block.label);
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
-assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2']),'Every reviewed native patch is required');
+assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2','message15-native-afterRelease','message15-native-onMove','message15-handshake','message15-session-start']),'Every reviewed native patch is required');
 const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ԁ̶ϲ':'release','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave','ᴀᄁ︃':'landmineRender','рոᴎ':'wireRender','ᅠ̘ܛ':'trapRender'};
 const closeOperation=profile.operations.find(p=>p.id==='native-disconnect-without-socket');
 const closeName=acorn.parse(closeOperation.after,{ecmaVersion:'latest'}).body[0].id.name;
-functions[closeName]='nativeClose';
+functions[closeName]='nativeClose';functions[roles.messageMove]='move';functions[roles.messageHandshake]='handshake';
 const edits=[],placements=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;
  if(n.type==='ArrayExpression'&&nativeAnalysis.constant(n.elements[0])===14&&n.elements.length===4&&n.elements[1]?.object?.type==='MemberExpression')placements.push(n);
- if(n.type==='FunctionDeclaration')for(const [old,name]of Object.entries(functions))if(n.id.name===(name==='nativeClose'?closeName:roles[old])){
+ if(n.type==='FunctionDeclaration')for(const [old,name]of Object.entries(functions))if(n.id.name===(name==='nativeClose'?closeName:(roles[old]||old))){
   let text=`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.${name}=${n.id.name};`;
   if(name==='fire')text+=`window.__updateFunctions.capturePackets=()=>{const codec=${roles['еϲᄄ']},key=${JSON.stringify(roles['ᴎ︅ހ'])},encode=codec[key],socket=${roles['І̎ܘ']},packets=[];codec[key]=p=>{packets.push(p.slice());return '';};${roles['І̎ܘ']}={send(){}};return {packets,restore(){codec[key]=encode;${roles['І̎ܘ']}=socket;}};};`;
   if(name==='nativeClose')text+=`window.__updateFunctions.exerciseNativeClose=readyState=>{const previous=${roles['І̎ܘ']};let closes=0;const socket={readyState,close(){closes++;}};${roles['І̎ܘ']}=socket;__responsiveMod.observeSocket(socket);try{${n.id.name}();return closes;}finally{${roles['І̎ܘ']}=previous;__responsiveMod.observeSocket(previous);}};`;
@@ -64,11 +65,11 @@ assert.equal(idleMatches.length,1,'Unique native idle ping required');const idle
 edits.push({at:idle.fn.start,text:`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.idleProbe={read:()=>({now:${nativeNow},activity:${lastActivity},limit:${idle.limit}}),setNow:value=>{${nativeNow}=value},restore:value=>{${nativeNow}=value.now;${lastActivity}=value.activity},ping:()=>${idle.fn.id.name}()};`});
 assert.equal(placements.length,1,'One native cursor placement expression required');
 const end=tree.body[0].expression.callee.body.end-1;
-edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},types:${symbols['εᚇ๓']},graphics:${symbols['ᴘᚉ٦']},items:${symbols['ιᄅᴄ']},get view(){return __responsiveView},set view(value){__responsiveView=value},get ctx(){return ${symbols['а०̅']}},nativePlacement:()=>${output.slice(placements[0].start,placements[0].end)},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
+edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,keyboard:${roles.messageKeyboard},world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},types:${symbols['εᚇ๓']},graphics:${symbols['ᴘᚉ٦']},items:${symbols['ιᄅᴄ']},get view(){return __responsiveView},set view(value){__responsiveView=value},get ctx(){return ${symbols['а०̅']}},nativePlacement:()=>${output.slice(placements[0].start,placements[0].end)},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
 edits.push({at:tree.body[0].expression.callee.body.end-1,text:`window.__updateIntegrityProbe={read:()=>${roles.nativeIntegrityFlag},set:value=>${roles.nativeIntegrityFlag}=value,signers:[${roles.nativeIntegritySigners.join(',')}]};`});
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
 (async()=>{
- const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',ilm_core:'identical',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
+ const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',message15_core:'byte-identical source declarations',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
  let browser;
  try{
   const engine=process.env.DEVAST_BROWSER||'chromium';assert.ok(['chromium','firefox'].includes(engine),'Unsupported browser');report.browser=engine;
@@ -93,15 +94,16 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   await page.route(source.page_url,r=>r.fulfill({status:200,contentType:'text/html',body:read('index.html')}));
   await page.route(source.script_url,r=>r.fulfill({status:200,contentType:'text/javascript',body:override.data[0].rules[0].file}));
   await page.route(url=>url.hostname==='raw.githubusercontent.com'&&url.pathname==='/Abricos2050934/Devast-io/updates/game.modded.js',r=>r.fulfill({status:200,contentType:'text/plain',headers:{'access-control-allow-origin':'*'},body:code}));
-  await page.addInitScript('window.__verifyAimValidity='+require('./verify_aim_validity.cjs').verifyAimValidity.toString());
-  await page.addInitScript('window.__verifyOriginalIlm='+require('./verify_ilm_mechanics.cjs').verifyOriginalIlm.toString());
-  await page.addInitScript('window.__verifyCurvedAim='+require('./verify_curved_aim.cjs').verifyCurvedAim.toString());
+  await page.addInitScript('window.__verifyMessage15Aim='+require('./verify_message15_aim.cjs').verifyMessage15Aim.toString());
+  await page.addInitScript('window.__verifyMessage15Extra='+require('./verify_message15_extra.cjs').verifyMessage15Extra.toString());
+  await page.addInitScript('window.__verifyMessage15Transport='+require('./verify_message15_transport.cjs').verifyMessage15Transport.toString());
+  await page.addInitScript(()=>{const raf=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=callback=>raf(time=>{if(!window.__numericPauseWorld)callback(time);});});
   await page.goto(source.page_url,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForFunction(()=>!!window.__updateProbe&&!!window.__devastMod?.menu,{timeout:25000});
   report.reload_identity=[];
   for(let attempt=0;attempt<3;attempt++){
    if(attempt)await page.reload({waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForFunction(key=>!!window.__devastMod?.menu&&typeof window.__updateProbe?.network[key]==='function',symbols['ᅠϲ᠍'],{timeout:25000});
-   const kept=await page.evaluate(()=>({token:localStorage.getItem('token')==='fixture-original-token',tokenId:localStorage.getItem('tokenId')==='123',userId:localStorage.getItem('userId')==='2',cookie:document.cookie.includes('devast_fixture_cookie=retained'),settings:window.__devastMod.settings.mouseFov===777&&window.__devastMod.settings.zoomFactor===.8,loot:!window.__devastMod.loot.steel.acquire}));
+   const kept=await page.evaluate(()=>({token:localStorage.getItem('token')==='fixture-original-token',tokenId:localStorage.getItem('tokenId')==='123',userId:localStorage.getItem('userId')==='2',cookie:document.cookie.includes('devast_fixture_cookie=retained'),settings:window.__devastMod.settings.mouseFov===(localStorage.getItem('DevastMessage15:aim:v1')?JSON.parse(localStorage.getItem('DevastMessage15:aim:v1')).mouseFov:696969)&&window.__devastMod.settings.zoomFactor===.8,loot:!window.__devastMod.loot.steel.acquire}));
    assert.ok(Object.values(kept).every(Boolean),'Native startup changed the saved identity or migrated settings');report.reload_identity.push(kept);
    await page.evaluate(()=>window.__devastMod.setSetting('zoomFactor',.8));
   }
@@ -123,7 +125,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    check(m.targets.players[2].prevX[0]===1100&&m.targets.players[2].x===1120&&m.targets.ghouls[17].x===1200,'Current packet bindings failed');
    packet(13,0,17,0,0,false);packet(0,2,1,0,0,false);check(!m.targets.players[2].active&&!m.targets.ghouls[17].active,'Removal binding failed');
    self.id=1;const e=n.entities.get(1,0,1,0);e[s['ᴘ४１']]=1;e.id=0;e[r['ᴎ٨ߍ']]=.25;e[r['ᴑ٧ߓ']]=1;n.input.angle=2;
-   for(const [mode,on]of [['withAim',false],['withAim',true],['always',false]]){m.menu.__folders['Aim Bot'].__controllers.find(c=>c.property==='ShowRealAngles').setValue(mode);m.setSetting('AimBotEnabled',on);e.angle=0;n.update(e);check(Math.abs(e.angle-((mode==='always'||on)?0.5:2))<1e-8,'Self angle binding failed');}
+   for(const [mode,on]of [['withAim',false],['withAim',true],['always',false]]){m.menu.__folders['Best Aim Bot #1'].__controllers.find(c=>c.property==='ShowRealAngles').setValue(mode);m.setSetting('AimBotEnabled',on);e.angle=0;n.update(e);check(Math.abs(e.angle-((mode==='always'||on)?0.5:2))<1e-8,'Self angle binding failed');}
    n.spawn([0,1,123,'Self',0,0]);
    const clans=w[s['ﾠࡅ‍']];clans[0]={name:'ALLY',[s['ոᚄރ']]:7,[s['ᴌ५ᚂ']]:null};clans[1]={name:'ENEMY',[s['ոᚄރ']]:8,[s['ᴌ५ᚂ']]:null};
    Object.assign(players[1],{[s['а༤̘']]:0,[s['ᴌ̗ⲟ']]:7});Object.assign(players[2],{[s['а༤̘']]:1,[s['ᴌ̗ⲟ']]:8});Object.assign(players[120],{[s['а༤̘']]:0,[s['ᴌ̗ⲟ']]:7});
@@ -172,96 +174,12 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
 
    const transport=n.capturePackets();
    try{
-    const savedClock=n.idleProbe.read();
-    try{
-     check(savedClock.limit>0&&savedClock.limit<=60000,'Unexpected native idle ping interval');
-     m.setSetting('JitterEnabled',false);m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);
-     for(let i=0;i<2;i++){m.trackPacket(0,1,1,1000,1000,true);m.trackPacket(0,2,1,1500,1000,true);}
-     transport.packets.length=0;const base=savedClock.now+1000;n.idleProbe.setNow(base);m.aim.refresh();
-     for(let elapsed=50;elapsed<=savedClock.limit*2+100;elapsed+=50){n.idleProbe.setNow(base+elapsed);m.aim.refresh();n.idleProbe.ping();}
-     check(transport.packets.filter(p=>p[0]===6).length===1,'Stationary aim still sends duplicate directions');
-     check(transport.packets.filter(p=>p[0]===0).length>=1,'Aim prevents the native idle ping');
-     check(transport.packets.every(p=>p[0]===0||p[0]===6),'Idle transport changed unrelated commands');
-    }finally{n.idleProbe.restore(savedClock);transport.packets.length=0;}
-    m.trackPacket(0,1,1,1000,1000,true);m.trackPacket(0,2,1,1100,1050,true);m.aim.refresh();transport.packets.length=0;
-    m.step(0);const history=JSON.stringify(m.targets.players[2]);n.network.state=64;m.step(16);m.aim.refresh();n.network.state=1;m.step(32);
-    check(JSON.stringify(m.targets.players[2])===history,'Temporary disconnection erased native packet history');
-    for(const [x,y]of [[1080,1100],[900,900],[1100,900],[950,1150]]){
-     m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);
-     transport.packets.length=0;m.trackPacket(0,2,1,x,y,true);n.input.angle=-2;
-     n.network[s['ѕ᠋༢']]();n.network[s['ρ٨٨']]();n.network[r['ᴎ༩༣']]();
-     const line=m.targets.lines[0],angle=(Math.round(Math.atan2(line.y2-line.y1,line.x2-line.x1)*180/Math.PI)+360)%360;
-     check(JSON.stringify(transport.packets)===JSON.stringify([[6,angle],[4]]),'Native shot does not follow the current ILM line: '+JSON.stringify({packets:transport.packets,angle,line}));
-     e.angle=-2;e[r['ᴑ٧ߓ']]=-1;n.update(e);
-     check(Math.abs(e.angle-angle*Math.PI/180)<1e-6,'Native self sprite follows a stale server angle instead of its sent aim direction');
-     check(n.input.angle===-2,'Aim synchronization overwrote native movement/pointer angle');
-     const before=JSON.stringify(line);transport.packets.length=0;m.trackPacket(0,2,1,x+5,y+5,true);n.network[r['ᴎ༩༣']]();
-     check(JSON.stringify(transport.packets)==='[[4]]'&&JSON.stringify(m.targets.lines[0])===before,'Manual fire inserted a calculation outside the ILM timer');
-    }
-    // A cached equal direction is not enough when a native action has changed
-    // the server's direction. Reassert once before the first attack of a burst.
-    m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);m.aim.refresh();
-    const cachedDirection=m.aimRenderAngle;check(Number.isFinite(cachedDirection),'Missing sent-angle renderer state');
-    n.network[s['ᴎᚂρ']]('[6,180]');transport.packets.length=0;n.network[r['ᴎ༩༣']]();
-    check(JSON.stringify(transport.packets)===JSON.stringify([[6,Math.round(cachedDirection*180/Math.PI)],[4]]),'Cached aim hid a native direction overwrite before the shot');
-    await new Promise(resolve=>setTimeout(resolve,160));
-    // Jitter owns the idle angle, but a real native shot must encode aim first.
-    n.input.angle=0;m.setSetting('JitterEnabled',true);m.setSetting('JitterSpeed',360);
-    const nativeInput={angle:n.input.angle,x:n.input.x,y:n.input.y,state:n.input.state};
-    const jitterNow=performance.now();m.step(jitterNow);m.step(jitterNow+250);m.aim.refresh();
-    check(Object.keys(nativeInput).every(k=>n.input[k]===nativeInput[k]),'Jitter overwrote native pointer or movement state');
-    check(Math.abs(m.jitterAngle-Math.PI/2)<1e-6,'Jitter rotation speed is disconnected');
-    e.angle=0;n.update(e);check(Math.abs(e.angle-m.jitterAngle)<1e-6,'Native player sprite does not rotate with Jitter');
-    transport.packets.length=0;n.input.angle=-2;n.network[s['ѕ᠋༢']]();n.network[s['ρ٨٨']]();
-    check(transport.packets.length===0,'Native mouse direction overwrote Jitter');
-    n.network[r['ᴎ༩༣']]();
-    const jitterLine=m.targets.lines[0],jitterShot=(Math.round(Math.atan2(jitterLine.y2-jitterLine.y1,jitterLine.x2-jitterLine.x1)*180/Math.PI)+360)%360;
-    check(JSON.stringify(transport.packets)===JSON.stringify([[6,jitterShot],[4]]),'Jitter shot encoded attack before corrected aim');
-    check(m.jitterAngle===null,'Jitter continued spinning during a shot');
-    transport.packets.length=0;const heldLine=JSON.stringify(m.targets.lines[0]);
-    for(let i=0;i<20;i++)n.network[r['ᴎ༩༣']]();
-    check(transport.packets.length===20&&transport.packets.every(p=>p.length===1&&p[0]===4),'Repeated native attacks flooded extra aim packets');
-    check(JSON.stringify(m.targets.lines[0])===heldLine,'Repeated native attacks recalculated prediction between ILM ticks');
-    transport.packets.length=0;m.trackPacket(0,2,1,1300,1600,true);m.aim.refresh();check(transport.packets.length===1&&transport.packets[0][0]===6,'Continuous fire lost its updated aim direction');
-    m.setSetting('AimBotEnabled',false);
-    const blockedSocket={readyState:1,bufferedAmount:4096};m.observeSocket(blockedSocket);
-    await new Promise(resolve=>setTimeout(resolve,160));transport.packets.length=0;
-    m.step(performance.now());m.aim.refresh();
-    check(transport.packets.length===0,'Jitter added cosmetic directions to a backed-up socket');
-    check(m.jitterAngle!==null,'Socket backlog stopped local Jitter rendering');
-    blockedSocket.bufferedAmount=0;m.aim.refresh();
-    check(transport.packets.length===1&&transport.packets[0][0]===6,'Jitter replayed a queue of stale angles');
-    m.observeSocket(null);m.setSetting('JitterEnabled',false);
-    m.setSetting('AimBotEnabled',true);transport.packets.length=0;blockedSocket.bufferedAmount=4096;m.observeSocket(blockedSocket);
-    for(let i=0;i<20;i++)m.aim.refresh();check(transport.packets.length===0,'Aim extended a backed-up socket queue');
-    blockedSocket.readyState=3;blockedSocket.bufferedAmount=0;m.aim.refresh();check(transport.packets.length===0,'ILM sent through a non-open socket');
-    blockedSocket.readyState=1;m.aim.refresh();check(transport.packets.length===1,'Writable socket failed to send the current direction');
-    m.aim.refresh();check(transport.packets.length===1,'Open socket resent an unchanged direction');
-    // Changing directions and real target turn history defeated the former
-    // stationary-only coalescing check. Exercise all automatic opcodes here.
-    for(const autoFire of [false,true]){
-     m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);
-     m.setSetting('autoFire',autoFire);transport.packets.length=0;blockedSocket.bufferedAmount=8192;
-     for(let i=0;i<100;i++){
-      m.trackPacket(0,2,1,1500+(i%2)*100,1000+i*5,true);m.aim.refresh();
-     }
-     check(transport.packets.length===0,'Moving aim or autoFire grew an existing queue');
-     blockedSocket.bufferedAmount=0;m.aim.refresh();
-     check(JSON.stringify(transport.packets.map(p=>p[0]))===JSON.stringify(autoFire?[6,4,5]:[6]),'Recovery replayed old cycles or split a native shot: '+JSON.stringify({autoFire,packets:transport.packets}));
-    }
-    transport.packets.length=0;
-    for(const x of [1500,1600,1500])m.trackPacket(0,2,1,x,1200,true);
-    m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);
-    let queueReads=0;
-    Object.defineProperty(blockedSocket,'bufferedAmount',{configurable:true,get(){queueReads++;return transport.packets.length?128:0;}});
-    m.aim.refresh();
-    check(JSON.stringify(transport.packets.map(p=>p[0]))==='[6,4,5]'&&queueReads===1,'Newly queued angle discarded its attack/release partners');
-    m.aim.refresh();check(transport.packets.length===3,'Next tick extended the newly created queue');
-    Object.defineProperty(blockedSocket,'bufferedAmount',{value:8192,writable:true,configurable:true});
-    transport.packets.length=0;m.beforeFire();check(transport.packets.length===0,'Forced shot direction bypassed queue protection');
-    blockedSocket.bufferedAmount=0;m.beforeFire();check(transport.packets.length===1&&transport.packets[0][0]===6,'Resumed first shot reused an unaligned blocked burst');
-    m.setSetting('autoFire',false);
-    m.observeSocket(null);m.setSetting('AimBotEnabled',false);transport.packets.length=0;
+    m.messageAimVerification=window.__verifyMessage15Aim(m,n,s,r,originalAim);
+    check(m.messageAimVerification.comparison_points>1400,'Incomplete imported source comparison');
+    m.messageAimExtra=window.__verifyMessage15Extra(m,n,s,originalAim);
+    m.messageTransportVerification=window.__verifyMessage15Transport(m,n,s,r);
+    m.setSetting('AimBotEnabled',false);m.setSetting('JitterEnabled',false);m.setSetting('jitterActive',false);m.aim.mouseDown=false;
+    const blockedSocket={readyState:1,bufferedAmount:4096};transport.packets.length=0;
     m.render(performance.now());const stableRecords=m.records,stableEntries=m.records.slice();m.render(performance.now());
     check(stableEntries.length>0&&m.records===stableRecords&&stableEntries.every((r,i)=>m.records[i]===r),'Frame collection rebuilt stable native entity records');
     const loot=[];for(const id of [10,11]){const drop=n.entities.get(0,id,1,1);Object.assign(drop,{id,x:self.x+10,y:self.y,[s['е̝ހ']]:0,[s['Іࡈ５']]:6});loot.push(drop);}
@@ -279,11 +197,6 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
      check(JSON.stringify(transport.packets)===JSON.stringify([n.nativePlacement(),n.nativePlacement()]),'AutoBuild differs from the native cursor placement cell or rotation');
      self[s['օⲥᚁ']]=0;m.render(16);check(transport.packets.length===2,'AutoBuild sent an invalid native preview');
     }finally{m.setSetting('AutoBuiledEnabled',false);}
-    m.aimValidityVerification=window.__verifyAimValidity(m,n,s,r);
-    const originalComparison=window.__verifyOriginalIlm(m,n,s,originalAim);
-    check(originalComparison.ticks===432,'Incomplete original ILM comparison');
-    m.originalIlmVerification=originalComparison;
-    m.curveVerification=window.__verifyCurvedAim(m,n,s,r,e);
     const identity=[localStorage.getItem('token'),localStorage.getItem('tokenId'),Number(localStorage.getItem('userId'))];
     n.network.state=64;const restore=n.joinPayload(35);n.network.state=0;const normal=n.joinPayload(35);
     check(restore[4]===1&&normal[4]===0&&JSON.stringify(restore.slice(1,4))===JSON.stringify(identity)&&JSON.stringify(normal.slice(1,4))===JSON.stringify(identity),'Native rejoin payload changes identity');
@@ -417,8 +330,9 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {curved_target_and_chaser_interception:true,curve_comparison:m.curveVerification,menu:true,connection_close_origin_diagnostics:true,native_shot_direction_and_render_sync:true,coalesced_aim_directions_and_native_idle:true,original_ilm_mechanics:true,original_ilm_comparison:m.originalIlmVerification,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,valid_live_aim_targets:true,aim_validity:m.aimValidityVerification,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
-  },{s:symbols,r:roles,originalAim:JSON.parse(z.gunzipSync(fs.readFileSync('recovery/ilm-aim-reference.json.gz')))});
+   return {message15_comparison:m.messageAimVerification,message15_extra:m.messageAimExtra,message15_transport:m.messageTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+  },{s:symbols,r:roles,originalAim:reference});
+  report.physical_numeric=await require('./verify_message15_physical.cjs').verifyPhysical(page,symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}
  finally{report.finished_at=new Date().toISOString();fs.writeFileSync(path.join(dir,'validation.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));if(browser)await browser.close();}

@@ -377,7 +377,11 @@
     "ᅟ᠌５": "с͡ܘ",
     "ᴀᄁ︃": "ϲᴌ९",
     "рոᴎ": "ᅠ̣ޅ",
-    "ᅠ̘ܛ": "ܐ̎ᴎ"
+    "ᅠ̘ܛ": "ܐ̎ᴎ",
+    "messageKeyboard": "ᴑ︋ބ",
+    "messageKeyboardDown": "ᴑⲣޅ",
+    "messageKeyboardUp": "ⲟ٥ߋ",
+    "messageMovePoll": "ɑ٧ᚁ"
   },
   "integrity": {
     "flag": "а̡ѕ",
@@ -386,5 +390,8 @@
       "ࡀᚆࡄ",
       "а᠋︃"
     ]
+  },
+  "native_protocol": {
+    "moveOpcode": 2
   }
 }

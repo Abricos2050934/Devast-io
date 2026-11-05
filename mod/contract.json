@@ -1,15 +1,13 @@
 {
   "schema": 1,
-  "name": "Devast-io ILM mod",
+  "name": "Devast-io Message15 mod",
   "modules": [
     "mod/responsive.js",
     "mod/bootstrap.js",
-    "mod/ilm-aim.js",
-    "mod/curved-aim.js",
-    "vendor/dat.gui.recovered.js"
+    "vendor/dat.gui.recovered.js",
+    "mod/message15-aim.js"
   ],
   "features": [
-    "ilm-aim",
     "prediction-and-auto-fire",
     "player-ghoul-history",
     "native-nickname-id",
@@ -35,13 +33,11 @@
     "right-click-door-independent-of-native-prompt",
     "independent-door-control-and-server-state-feedback",
     "automation-socket-backpressure",
-    "verbatim-original-ilm-aim",
-    "coalesced-aim-directions",
-    "native-shot-direction-and-render-sync",
     "connection-close-origin-diagnostics",
-    "curved-target-and-chaser-interception",
     "aim-cycle-socket-backpressure",
-    "valid-live-aim-targets"
+    "verbatim-message15-aim",
+    "message15-native-lifecycle",
+    "immediate-aim-numeric-settings"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -51,7 +47,6 @@
     "tests/mod.test.cjs",
     "tests/aim-settings.test.cjs",
     "tests/mod-performance.test.cjs",
-    "tests/ilm-parity.test.cjs",
     "tests/rejoin-recovery.test.cjs",
     "tests/ilm-autobuild.test.cjs",
     "tests/jitter.test.cjs",
@@ -59,12 +54,8 @@
     "tests/world-visuals.test.cjs",
     "tests/door-click.test.cjs",
     "tests/automation-transport.test.cjs",
-    "tests/shot-line.test.cjs",
-    "tests/ilm-restoration.test.cjs",
-    "tests/angle-transport.test.cjs",
-    "tests/curved-aim.test.cjs",
     "tests/aim-backpressure.test.cjs",
-    "tests/aim-validity.test.cjs"
+    "tests/message15-source.test.cjs"
   ],
   "required_browsers": [
     "chromium",

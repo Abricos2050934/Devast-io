@@ -15,7 +15,7 @@ test('raw and automatically decoded native direction hooks preserve ILM timing a
   let patched=patch.decoded_after;
   if(representation==='raw'){
    native.source=patch.decoded_before;native.index=patches.indexOf(patch);
-   vm.runInContext(fs.readFileSync('mod/ilm-aim.js','utf8'),native);
+   vm.runInContext(fs.readFileSync('mod/message15-aim.js','utf8'),native);
    patched=vm.runInContext('__ilmPatchNativeDirection(source,index)',native);
    assert.equal(patched,patch.decoded_after);
   }

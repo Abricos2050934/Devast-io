@@ -17,25 +17,8 @@ test('a dense aim scan reads self once and uses no linear clan lookup, while met
  f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,3);
  f.world['ᴎ︃ᄉ'][2]['ᴌ̗ⲟ']=6;f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,2);f.mod.dispose();
 });
-test('ILM angle mode renders only its four original lines in a dense scene',()=>{
- const f=fixture({dom:true});scene(f,1,Array.from({length:120},(_,i)=>player(i+1,i*20,i*30)));
- for(let i=1;i<=120;i++)f.world['ᴎ︃ᄉ'][i]={'а༤̘':-1};
- f.mod.setSetting('visualizeResolving',true);f.mod.setSetting('AimBotEnabled',true);f.mod.step(0);
- assert.equal(f.dom.calls.filter(c=>c.name==='lineTo').length,4);
- f.dom.calls.length=0;f.mod.setSetting('visualizeResolving',false);f.mod.step(20);
- assert.equal(f.dom.calls.filter(c=>c.name==='lineTo').length,4);f.mod.dispose();
-});
-test('dense metadata slots preserve extended player IDs, ghoul UIDs and fresh clan membership',()=>{
- const f=fixture();try{
-  f.mod.trackPacket(1,1,1,0,0,true);f.mod.trackPacket(1,2048,1,200,200,true);
-  f.mod.trackPacket(13,0,998,100,100,true);f.mod.setSetting('target','all');f.mod.setSetting('mouseFovEnable',false);
-  f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer,f.mod.targets.ghouls[998]);
-  f.world['ﾠࡅ‍'][0]={'ոᚄރ':7};
-  for(const id of [1,998])f.world['ᴎ︃ᄉ'][id]={'а༤̘':0,'ᴌ̗ⲟ':7};
-  f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer,f.mod.targets.players[2048]);
-  f.world['ᴎ︃ᄉ'][998]['ᴌ̗ⲟ']=6;f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer,f.mod.targets.ghouls[998]);
- }finally{f.mod.dispose();}
-});
+
+
 test('building owner labels read cursor layout once per frame even with hundreds of buildings',()=>{
  const f=fixture({dom:true});try{
   f.B.items[0]={'ࡀ︂̄':7};f.world['ᴎ︃ᄉ'][2]['ο̏︇']='Owner';
@@ -61,7 +44,7 @@ test('frame entity collection reuses records while preserving removal, replaceme
 });
 test('movement report separates browser frame timing from automation traffic and ignores hidden-tab gaps',()=>{
  const f=fixture();try{
-  const tick=f.frames.values().next().value;for(let i=0;i<=130;i++)tick(i*20);
+  const tick=[...f.frames.values()].at(-1);for(let i=0;i<=130;i++)tick(i*20);
   let report=f.mod.connectionInfo();assert.equal(report.animationTiming.samples,120);assert.equal(report.animationTiming.fpsEstimate,50);assert.equal(report.animationTiming.p95GapMs,20);
   f.document.hidden=true;tick(5000);f.document.hidden=false;tick(10000);tick(10020);assert.equal(f.mod.connectionInfo().animationTiming.fpsEstimate,50);
   Object.assign(f.world['ᅠᏧ‍'],{'ε︁ᚂ':1,'օⲥᚁ':1,'α०ᚂ':0,'ρⲅ️':2,'ᴎ︆ࡉ':3});f.mod.setSetting('AutoBuiledEnabled',true);f.mod.step(10040);report=f.mod.connectionInfo();assert.equal(report.automationSettings.autoBuild,true);assert.ok(report.modCommandsByOpcode[14]>0);

@@ -190,7 +190,7 @@ def pipeline(root, work, url):
         atomic_json(work / ('validation-' + browser + '.json'), report)
         if validation is None:
             validation = dict(report)
-        browsers[browser] = {key: report.get(key) for key in ('status', 'output_sha256', 'browser_version', 'native', 'page_errors', 'reload_identity', 'integrity_compatibility', 'world_visibility')}
+        browsers[browser] = {key: report.get(key) for key in ('status', 'output_sha256', 'browser_version', 'native', 'page_errors', 'reload_identity', 'integrity_compatibility', 'world_visibility', 'physical_numeric')}
     validation['browsers'] = browsers
     candidate_env = dict(os.environ, DEVAST_TEST_CANDIDATE=str(work))
     run(['node', '--test', *contract['candidate_tests']], root, work / 'candidate-tests.log', env=candidate_env)

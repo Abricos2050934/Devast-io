@@ -27,15 +27,19 @@ function fixture(options={}) {
   const document=dom?.document||{readyState:'loading',getElementById:()=>null};
   const B={world,network,entities,categories:{player:1,loot:2},items:[],karma:[],graphics:{options:{}},view:()=>({x:0,y:0,scale:1,ctx:dom?.canvas.getContext('2d')}),chatActive:()=>false};
   if(options.fireKey){B.fireKey=options.fireKey;network[options.fireKey]=()=>packets.push([4]);}
+  window.Math=Math;window.JSON=JSON;window.dispatchEvent=e=>{for(const fn of listeners.get(e.type)||[])fn(e);};
+  window.setTimeout=(fn,delay)=>{const id=++next;timers.set(id,fn);timerPeriods.set(id,delay);return id;};window.clearTimeout=id=>{timers.delete(id);timerPeriods.delete(id);};
+  window.WebSocket=class {send(){}};window.CanvasRenderingContext2D=class {fillText(){}};window.KeyboardEvent=class {constructor(type,data){this.type=type;Object.assign(this,data);}};
+  document.addEventListener=window.addEventListener;document.removeEventListener=window.removeEventListener;
   const clipboard=[];
   const navigator={clipboard:{writeText:async text=>{clipboard.push(text);}}};
   const candidate=process.env.DEVAST_TEST_CANDIDATE?require('../tools/updater/candidate-fixture.cjs').candidateFixture(B,process.env.DEVAST_TEST_CANDIDATE):null;
   const context = vm.createContext({
     window, document,
     localStorage: {getItem: k => storage.get(k) ?? null, setItem: (k,v) => storage.set(k,v)},
-    console, performance: {now: () => clock},navigator,alert(){},B:candidate?.B||B,
+    console, performance: {now: () => clock},Date:class extends Date{static now(){return clock;}},navigator,alert(){},B:candidate?.B||B,
   });
-  vm.runInContext((candidate?.source||(fs.readFileSync('mod/ilm-aim.js','utf8') + '\n' + fs.readFileSync('mod/curved-aim.js','utf8') + '\n' + fs.readFileSync('mod/responsive.js', 'utf8'))) + '\nglobalThis.mod = __installDevastMod(B);', context, {timeout: 1000});
+  vm.runInContext((candidate?.source||(fs.readFileSync('mod/message15-aim.js','utf8') + '\n' + fs.readFileSync('mod/responsive.js', 'utf8'))) + '\nglobalThis.mod = __installDevastMod(B);', context, {timeout: 1000});
   return {mod: candidate?candidate.adaptMod(context.mod):context.mod, context, B,window,document,dom,navigator,clipboard,setClock:value=>{clock=value;},network, world, entities, storage, packets, listeners, timers, timerPeriods, frames, get nativeCalls(){return nativeCalls;}};
 }
 

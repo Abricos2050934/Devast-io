@@ -27,13 +27,13 @@ function assemble(baseline, profile, symbols, payload, bootstrap, gui, aim = '')
   return source;
 }
 function build() {
-  const baseline = zlib.gunzipSync(fs.readFileSync(path.join(root,'baselines/current.js.gz')));
-  const profile = JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json')));
-  const bindings = JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-bindings.json')));
   const read = file => fs.readFileSync(path.join(root,file),'utf8');
-  const source = assemble(baseline,profile,bindings.symbols,read('mod/responsive.js'),read('mod/bootstrap.js'),read('vendor/dat.gui.recovered.js'),read('mod/ilm-aim.js')+'\n'+read('mod/curved-aim.js'));
+  const reference=require('./updater/references.cjs').loadReference(root,'');
+  const result=require('./auto_port.cjs').port(reference.source,reference.source,reference.profile,reference.bindings,read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/message15-aim.js'),read('vendor/dat.gui.recovered.js'));
+  const source=result.output,profile=result.profile;
   const status = {status:'static_checks_passed',source_url:profile.source_url,
     baseline_sha256:profile.baseline_sha256,output_sha256:hash(source),output_bytes:Buffer.byteLength(source),
+    bindings:result.bindings.symbols,
     applied_patches:profile.operations.map(p=>p.id),live_server_test:'see build/browser-report.json',publication:'not_published'};
   const dist = path.join(root,'dist');fs.mkdirSync(dist,{recursive:true});
   // All transformations and parsing finish before either existing artifact is replaced.
@@ -43,5 +43,5 @@ function build() {
   fs.renameSync(path.join(dist,'update-status.json.tmp'),path.join(dist,'update-status.json'));
   console.log(JSON.stringify(status,null,2));
 }
-if(require.main===module) build();
 module.exports={assemble,once,hash};
+if(require.main===module) build();

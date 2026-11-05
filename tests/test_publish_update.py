@@ -128,6 +128,19 @@ class PublicationTests(unittest.TestCase):
   self.validation['browsers']['firefox']['native']['coalesced_aim_directions_and_native_idle']=False;self.save()
   with self.assertRaisesRegex(ValueError,'Coalesced.*firefox'):p.artifacts(self.root,self.out)
 
+ def test_message15_source_and_numeric_proofs_are_required_in_both_browsers(self):
+  self.contract['features']=['verbatim-message15-aim','message15-native-lifecycle','immediate-aim-numeric-settings']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():
+   report['native']={'message15_comparison':{'status':'passed','comparison_points':1496},'message15_extra':{'status':'passed','comparison_points':5856},'message15_transport':{'status':'passed'}}
+   report['physical_numeric']={'status':'passed'}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  report=self.validation['browsers']['firefox']
+  for owner in [report['native']['message15_comparison'],report['native']['message15_extra'],report['native']['message15_transport'],report['physical_numeric']]:
+   owner['status']='failed';self.save()
+   with self.assertRaisesRegex(ValueError,'verified in browser: firefox'):p.artifacts(self.root,self.out)
+   owner['status']='passed'
+
  def test_close_origin_diagnostics_require_both_browsers(self):
   self.contract['features']=['connection-close-origin-diagnostics']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

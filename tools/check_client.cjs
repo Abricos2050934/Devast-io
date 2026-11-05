@@ -4,7 +4,9 @@ const assert = require('node:assert/strict');
 const {parse} = require('./parser.cjs');
 const {translate} = require('./translate_payload.cjs');
 const options = {ecmaVersion: 'latest', sourceType: 'script'};
-const symbols=JSON.parse(fs.readFileSync('patches/recovered-bindings.json')).symbols;
+const status=JSON.parse(fs.readFileSync('dist/update-status.json'));
+const symbols=status.bindings;
+assert.ok(symbols,'Build bindings are required; run npm run build');
 const canonical=parse(fs.readFileSync('mod/responsive.js','utf8'),options);
 const pending=[canonical];
 while(pending.length){
@@ -16,6 +18,7 @@ while(pending.length){
 }
 const payload = translate(fs.readFileSync('mod/responsive.js', 'utf8'),symbols);
 const client = fs.readFileSync('dist/game.modded.js', 'utf8');
+assert.equal(require('./build_client.cjs').hash(client),status.output_sha256,'Build status does not match the compiled client');
 const mod = parse(payload, options);
 assert.equal(mod.body.length, 1);
 assert.equal(mod.body[0].type, 'FunctionDeclaration');
@@ -33,11 +36,11 @@ assert.equal(bindings.length, 1);
 assert.equal(bindings[0].init.callee.name, '__installDevastMod');
 console.log('AST OK: full client, one installer, one bootstrap; extracted payload matches');
 
-require('./audit_ilm_port.cjs').audit();
-const aimSource=fs.readFileSync('mod/ilm-aim.js','utf8')+'\n'+fs.readFileSync('mod/curved-aim.js','utf8');
-for(const declaration of parse(aimSource,options).body) {
+require('./audit_message15.cjs').audit();
+const aimSource=fs.readFileSync('mod/message15-aim.js','utf8');
+for(const declaration of parse(aimSource,options).body.filter(n=>n.type==='FunctionDeclaration'&&!['__ilmPatchPlayerMetadata','__ilmPatchNativeDirection','__jitterPatchNativeFire'].includes(n.id.name))) {
   const installed=body.filter(n=>n.type==='FunctionDeclaration'&&n.id.name===declaration.id.name);
   assert.equal(installed.length,1);
   assert.equal(client.slice(installed[0].start,installed[0].end),aimSource.slice(declaration.start,declaration.end));
 }
-console.log('ILM AST OK: all four original classes and tick; compiled module matches source');
+console.log('Message15 AST OK: complete source declarations, menu and defaults; retired aim engines absent');

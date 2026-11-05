@@ -1,0 +1,12 @@
+{
+  "mod.test.cjs": [
+    "packet history drives the same prediction line",
+    "ILM retains last angle",
+    "original ILM line color",
+    "ILM mouse fields"
+  ],
+  "mod-performance.test.cjs": [
+    "ILM angle mode",
+    "dense metadata slots"
+  ]
+}

@@ -17,13 +17,13 @@ for(const scenario of ['unknown-baseline','ambiguous-anchor'])test('build preser
     fs.writeFileSync(path.join(root,'dist/game.modded.js'),'previous verified client');
     fs.writeFileSync(path.join(root,'dist/update-status.json'),'previous status');
     if(scenario==='unknown-baseline'){
-      const file=path.join(root,'baselines/current.js.gz');const data=zlib.gunzipSync(fs.readFileSync(file));data[20]^=1;fs.writeFileSync(file,zlib.gzipSync(data));
+      const file=path.join(root,'baselines/native-2026-11-05.js.gz');const data=zlib.gunzipSync(fs.readFileSync(file));data[20]^=1;fs.writeFileSync(file,zlib.gzipSync(data));
     }else{
-      const file=path.join(root,'patches/recovered-current.json');const data=JSON.parse(fs.readFileSync(file));data.operations[0].before='var ';fs.writeFileSync(file,JSON.stringify(data));
+      const file=path.join(root,'patches/native-2026-11-05.json');const data=JSON.parse(fs.readFileSync(file));data.operations[0].decoded_before='var ';fs.writeFileSync(file,JSON.stringify(data));
     }
     const result=spawnSync(process.execPath,['tools/build_client.cjs'],{cwd:root,encoding:'utf8'});
     assert.notEqual(result.status,0);
-    assert.match(result.stderr,scenario==='unknown-baseline'?/Unsupported baseline/:/exactly one anchor/);
+    assert.match(result.stderr,scenario==='unknown-baseline'?/checksum mismatch/:/Reference anchor/);
     assert.equal(fs.readFileSync(path.join(root,'dist/game.modded.js'),'utf8'),'previous verified client');
     assert.equal(fs.readFileSync(path.join(root,'dist/update-status.json'),'utf8'),'previous status');
   }finally{fs.rmSync(root,{recursive:true,force:true});}

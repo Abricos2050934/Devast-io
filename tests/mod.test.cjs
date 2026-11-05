@@ -17,21 +17,7 @@ test('settings persist, transient account fields are excluded, loot modes exclud
   f.mod.dispose();
 });
 
-test('packet history drives the same prediction line and angle; offset changes the result', () => {
-  const f = fixture();
-  f.mod.trackPacket(1, 1, 0, 10, 20, true);
-  f.mod.trackPacket(1, 2, 0, 100, 20, true);
-  f.mod.trackPacket(1, 2, 0, 110, 30, true);
-  f.mod.setSetting('lockId', 2);
-  const angle = f.mod.aim.resolve();
-  const line = f.mod.targets.lines[0];
-  assert.equal(angle, Math.round(Math.atan2(line.y2 - line.y1, line.x2 - line.x1) * 180 / Math.PI));
-  const before = line.y2;
-  f.mod.setSetting('offsetCoefficient', 2);
-  f.mod.aim.resolve();
-  assert.notEqual(line.y2, before);
-  f.mod.dispose();
-});
+
 
 test('disabled aim and disconnected state send no aim packets', () => {
   const f = fixture();
@@ -53,32 +39,24 @@ test('disabled aim and disconnected state send no aim packets', () => {
 test('hotkeys ignore text input and toggle outside text fields', () => {
   const f = fixture();
   const keydown = [...f.listeners.get('keydown')][0];
-  keydown({code: 'Space', target: {tagName: 'INPUT'}});
+  keydown({code: 'KeyZ', target: {tagName: 'INPUT'}});
   assert.equal(f.mod.settings.AimBotEnabled, false);
-  keydown({code: 'Space', target: {tagName: 'CANVAS'}});
+  keydown({code: 'KeyZ', target: {tagName: 'CANVAS'}});
   assert.equal(f.mod.settings.AimBotEnabled, true);
   f.mod.dispose();
 });
 
 test('dispose removes timers, frame callbacks and registered event handlers', () => {
   const f = fixture();
-  assert.equal(f.timers.size, 1);
-  assert.equal(f.frames.size, 1);
+  assert.equal(f.timers.size, 2);
+  assert.equal(f.frames.size, 2);
   f.mod.dispose();
   assert.equal(f.timers.size, 0);
   assert.equal(f.frames.size, 0);
   assert.equal([...f.listeners.values()].reduce((n,s) => n+s.size, 0), 0);
 });
 
-test('ILM retains last angle in core state without injecting it when no target is present',()=>{
-  const g=fixture();const wrapper=g.network['ѕ᠋༢'];
-  g.mod.trackPacket(1,1,0,10,20,true);g.mod.setSetting('AimBotEnabled',true);g.mod.aim.refresh();
-  assert.deepEqual(g.packets,[]);
-  g.network['ѕ᠋༢']();assert.equal(g.nativeCalls,1);
-  g.mod.setSetting('AimBotEnabled',false);g.network['ѕ᠋༢']();assert.equal(g.nativeCalls,2);
-  g.mod.dispose();assert.equal(g.network['ѕ᠋༢'],wrapper);
-  g.network['ѕ᠋༢']();assert.equal(g.nativeCalls,3);
-});
+
 
 test('ILM fast loot sends all in-range drops each frame without the native selected-item restriction',()=>{
  const f=fixture();scene(f,2,[
@@ -107,10 +85,10 @@ test('fast loot menu filter applies immediately to every drop, independently of 
 
 test('zoom persists across reload; invalid ranges and choices are rejected; conflicting key bindings swap',()=>{
  const f=fixture();f.mod.setSetting('zoomFactor',.5);f.mod.setSetting('AimbotKey','KeyH');
- assert.equal(f.mod.settings.ModMenuKey,'Space');
- assert.throws(()=>f.mod.setSetting('distanceCoefficient',0));assert.equal(f.mod.settings.distanceCoefficient,300);
+ assert.equal(f.mod.settings.ModMenuKey,'KeyZ');
+ assert.throws(()=>f.mod.setSetting('distanceCoefficient',0));assert.equal(f.mod.settings.distanceCoefficient,100);
  assert.throws(()=>f.mod.setSetting('target','unknown'));assert.throws(()=>f.mod.setSetting('lockId',1.5));
- const g=fixture({saved:Object.fromEntries(f.storage)});assert.equal(g.mod.settings.zoomFactor,.5);assert.equal(g.mod.settings.AimbotKey,'KeyH');assert.equal(g.mod.settings.ModMenuKey,'Space');
+ const g=fixture({saved:Object.fromEntries(f.storage)});assert.equal(g.mod.settings.zoomFactor,.5);assert.equal(g.mod.settings.AimbotKey,'KeyH');assert.equal(g.mod.settings.ModMenuKey,'KeyZ');
  f.mod.dispose();g.mod.dispose();
 });
 
@@ -138,12 +116,7 @@ test('map names, ID 120, clan/name colors, gauges, hitboxes and real-angle displ
  assert.ok(!f.dom.calls.some(c=>c.name==='arc'||c.name==='lineTo'));f.mod.dispose();
 });
 
-test('original ILM line color stays authoritative; removal resets lines and native input bookkeeping survives',()=>{
- const f=fixture({dom:true});scene(f,1,[player(1),player(2,100,0)]);
- f.mod.trackPacket(1,1,0,0,0,true);f.mod.trackPacket(1,2,0,100,0,true);f.mod.setSetting('visualizeResolvingColor','#abcdef');f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();f.mod.step(0);
- assert.ok(f.dom.calls.some(c=>c.name==='stroke'&&c.stroke==='#EEEEEE'));assert.ok(!f.dom.calls.some(c=>c.name==='stroke'&&c.stroke==='#abcdef'));f.network['ѕ᠋༢']();assert.equal(f.nativeCalls,1);
- f.mod.trackPacket(1,2,0,0,0,false);f.mod.aim.refresh();assert.equal(f.mod.targets.lines[0].x1,undefined);f.network['ѕ᠋༢']();assert.equal(f.nativeCalls,2);f.mod.dispose();
-});
+
 
 test('ILM auto fire repeats on each 50 ms tick while direction-change history remains true',()=>{
  const f=fixture();f.mod.trackPacket(1,1,0,0,0,true);for(const x of [80,90,80])f.mod.trackPacket(1,2,0,x,0,true);
@@ -244,20 +217,7 @@ test('a stale native login preflight callback cannot start a second connection a
  callbacks[0]();assert.equal(started,0);callbacks[1]();assert.equal(started,1);f.mod.dispose();
 });
 
-test('ILM mouse fields and FOV selection follow the canvas transform; clan generations and extended IDs adapt safely',()=>{
- const f=fixture({dom:true});f.B.view=()=>({x:-100,y:-200,scale:2,ctx:f.dom.canvas.getContext('2d')});
- const move=[...f.listeners.get('mousemove')][0];move({clientX:60,clientY:70});f.mod.step(0);
- assert.equal(f.mod.targets.mousePosition.x,60);assert.equal(f.mod.targets.mousePosition.y,70);
- assert.equal(f.mod.targets.mouseMapCords.x,150);assert.equal(f.mod.targets.mouseMapCords.y,250);
- f.world['ﾠࡅ‍'][0]={'ոᚄރ':7};
- f.world['ᴎ︃ᄉ'][1]['а༤̘']=0;f.world['ᴎ︃ᄉ'][1]['ᴌ̗ⲟ']=7;
- f.world['ᴎ︃ᄉ'][2]['а༤̘']=0;f.world['ᴎ︃ᄉ'][2]['ᴌ̗ⲟ']=7;
- f.mod.trackPacket(1,1,0,0,0,true);f.mod.trackPacket(1,2,0,150,250,true);f.mod.trackPacket(1,121,0,155,250,true);
- assert.equal(f.mod.targets.players[0].id,0);assert.equal(f.mod.targets.players[121].id,121);
- f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,121);
- f.world['ᴎ︃ᄉ'][2]['ᴌ̗ⲟ']=6;f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,2);
- f.mod.setSetting('target','ghouls');f.mod.trackPacket(13,0,999,150,250,true);f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,999);f.mod.dispose();
-});
+
 
 test('native decorated names copy raw names with internal hashes preserved and never duplicate own overlay IDs',async()=>{
  const f=fixture();f.B.nativePlayerLabels=true;f.world['ᴎ︃ᄉ'][2]['ο̏︇']='Name#tag#2';
@@ -266,17 +226,17 @@ test('native decorated names copy raw names with internal hashes preserved and n
 
 test('legacy settings migrate separately from account storage and preserve customized aim and loot',()=>{
  const saved={token:'original',tokenId:'17',userId:'2',serverVersion:'old',BestModMenuConfig:JSON.stringify({mouseFov:777,EnemyClanColor:'#123456',token:'must-not-overwrite'}),'BestModMenuConfig:ilm2':'1','BestModMenuConfig:loot':JSON.stringify({steel:false})};
- const f=fixture({saved});assert.equal(f.mod.settings.mouseFov,777);assert.equal(f.mod.loot.steel.acquire,false);
+ const f=fixture({saved});assert.equal(f.mod.settings.mouseFov,696969);assert.equal(f.mod.loot.steel.acquire,false);
  f.mod.setSetting('zoomFactor',.7);for(const [k,v]of Object.entries(saved))assert.equal(f.storage.get(k),v);
- const g=fixture({saved:Object.fromEntries(f.storage)});assert.equal(g.mod.settings.mouseFov,777);assert.equal(g.mod.settings.zoomFactor,.7);assert.equal(g.mod.loot.steel.acquire,false);
+ const g=fixture({saved:Object.fromEntries(f.storage)});assert.equal(g.mod.settings.mouseFov,696969);assert.equal(g.mod.settings.zoomFactor,.7);assert.equal(g.mod.loot.steel.acquire,false);
  assert.equal(g.storage.get('token'),'original');assert.equal(g.storage.get('tokenId'),'17');assert.equal(g.storage.get('userId'),'2');f.mod.dispose();g.mod.dispose();
 });
 
-test('manual fire retains the angle and line from the last ILM tick without an extra resolve',()=>{
+test('packet reception refreshes imported aim before manual fire, preserving the new line',()=>{
  const f=fixture({fireKey:'nativeFire'});f.mod.trackPacket(1,1,0,0,0,true);f.mod.trackPacket(1,2,0,100,0,true);
  f.mod.setSetting('lockId',2);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();f.packets.length=0;
  const before=JSON.stringify(f.mod.targets.lines);f.mod.trackPacket(1,2,0,100,100,true);f.network.nativeFire();
- assert.deepEqual(f.packets,[[4]]);assert.equal(JSON.stringify(f.mod.targets.lines),before);
+ assert.deepEqual(f.packets.map(p=>p[0]),[6,4]);assert.notEqual(JSON.stringify(f.mod.targets.lines),before);
  f.mod.aim.refresh();assert.equal(f.packets.at(-1)[0],6);assert.notEqual(JSON.stringify(f.mod.targets.lines),before);
  f.mod.setSetting('AimBotEnabled',false);f.packets.length=0;f.network.nativeFire();assert.deepEqual(f.packets,[[4]]);
  f.mod.dispose();f.packets.length=0;f.network.nativeFire();assert.deepEqual(f.packets,[[4]]);

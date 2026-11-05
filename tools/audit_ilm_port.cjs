@@ -4,6 +4,7 @@ const a=require('./parser.cjs'),{names,clean}=require('./extract_ilm_aim.cjs');
 const options={ecmaVersion:'latest'};
 function normalize(node){if(Array.isArray(node))return node.map(normalize);if(!node||typeof node!=='object')return node;return Object.fromEntries(Object.entries(node).filter(([k])=>!['start','end','raw'].includes(k)).map(([k,v])=>[k,normalize(v)]));}
 function audit(){
+ if(!fs.existsSync('mod/ilm-aim.js'))throw Error('ILM engine retired; use tools/audit_message15.cjs for the current build');
  const ref=JSON.parse(z.gunzipSync(fs.readFileSync('recovery/ilm-aim-reference.json.gz')));
  const src=fs.readFileSync('mod/ilm-aim.js','utf8'),factory=a.parse(src,options).body.find(n=>n.id?.name==='__createIlmAim');
  const begin='// BEGIN ORIGINAL ILM CORE\n',end='\n\n// END ORIGINAL ILM CORE';
