@@ -1,8 +1,9 @@
 // Reviewed native signature compatibility. Unknown contracts stop publication.
 const {canonical,isFunction}=require('./static.cjs');
-const owners=new Set(['а１๐','ⲅࡃ०','ܐ̄︁']);
-function integrityOperations(reference,candidate,pairs){
- const predicates=reference.nodes.filter(n=>n.type==='BinaryExpression'&&n.operator==='==='&&n.left.name==='ѕ०̊'&&reference.constant(n.right)===1);
+function integrityOperations(reference,candidate,pairs,reviewed={flag:'ѕ०̊',signers:['а１๐','ⲅࡃ०','ܐ̄︁']}){
+ const owners=new Set(reviewed.signers);
+ if(owners.size!==3||typeof reviewed.flag!=='string')throw Error('Invalid reviewed integrity metadata');
+ const predicates=reference.nodes.filter(n=>n.type==='BinaryExpression'&&n.operator==='==='&&n.left.name===reviewed.flag&&reference.constant(n.right)===1);
  if(predicates.length!==3)throw Error('Expected three reviewed integrity signature predicates');
  const operations=[],signers=[],seen=new Set(),bindings=new Set(),reads=new Set();let flag;
  for(const predicate of predicates){

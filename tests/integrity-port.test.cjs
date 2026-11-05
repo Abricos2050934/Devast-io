@@ -26,3 +26,12 @@ test('missing reviewed predicates do not silently produce an unpatched update',(
  const a=analyze('var ѕ०̊=0;function а１๐(){return ѕ०̊===1}');
  assert.throws(()=>integrityOperations(a,a,new Map()),/three reviewed/);
 });
+test('a separate reviewed reference can name its native flag and three signers without relaxing contracts',()=>{
+ const next=source.replaceAll('ѕ०̊','newFlag').replaceAll('а１๐','first').replaceAll('ⲅࡃ०','second').replaceAll('ܐ̄︁','third');
+ const a=analyze(next),pairs=new Map(a.functions.map(fn=>[fn,fn]));
+ const metadata={flag:'newFlag',signers:['first','second','third']};
+ assert.equal(integrityOperations(a,a,pairs,metadata).operations.length,3);
+ const changed=analyze(next.replace('x+2','x+7'));
+ assert.throws(()=>integrityOperations(a,changed,new Map(a.functions.map(fn=>[fn,changed.functions.find(n=>n.id.name===fn.id.name)])),metadata),/contract changed/);
+ assert.throws(()=>integrityOperations(a,a,pairs,{...metadata,signers:['first','second','second']}),/Invalid reviewed/);
+});

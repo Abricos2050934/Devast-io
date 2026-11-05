@@ -3,6 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),zlib=require('node:zlib'),
 const {analyze,canonical,isFunction,obfuscated,hash}=require('./updater/static.cjs');
 const {deobfuscate}=require('./updater/decoder.cjs');
 const {integrityOperations}=require('./updater/integrity.cjs');
+const {directionDelay,exportNames}=require('./updater/network-contracts.cjs');
 const {translate}=require('./translate_payload.cjs'),{assemble}=require('./build_client.cjs');
 const root=path.resolve(__dirname,'..');
 function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
@@ -22,6 +23,13 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   }return local;
  }
  for(const [key,list]of og){const next=ng.get(key);if(list.length===1&&next?.length===1){pairs.set(list[0],next[0]);learn(oldCanon.get(list[0]),curCanon.get(next[0]));}}
+ // An exact reviewed source also proves identities that are ambiguous across
+ // renamed clients (for example, repeated local function names).
+ if(old.source===cur.source){
+  const byStart=new Map(cur.functions.map(fn=>[fn.start,fn]));
+  for(const fn of old.functions){const next=byStart.get(fn.start);if(next)pairs.set(fn,next);}
+  for(const node of old.nodes)if(node.type==='Identifier')votes.set(node.name,new Set([node.name]));
+ }
  // Projectile metadata is a required contract for circular interception.
  function curveWeaponFields(a){
   const found=[];
@@ -68,9 +76,23 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   for(const n of a.nodes)if(n.type==='VariableDeclarator'&&n.id.name===entry.value.name&&n.start>=scope.start&&n.end<=scope.end&&n.init&&isFunction(n.init))defs.push(n.init);
   return defs.length===1?defs[0]:null;
  }
+ const nextExports=exportNames(cur,nextReturn,provisional[bindings.symbols['о̃༩']]);
  for(const key of ['ᴎᚂρ','ѕ᠋༢','ρ٨٨','ᴎ༩༣','ᅠϲ᠍','е̅ܙ','εܖᴏ','ⲅ︊ᄃ']){
-  const name=bindings.symbols[key],left=entryDefinition(old,networkReturn,networkScope,name,bindings.symbols['о̃༩']),right=entryDefinition(cur,nextReturn,nextNetwork,provisional[name],provisional[bindings.symbols['о̃༩']]);
+  const name=bindings.symbols[key],left=entryDefinition(old,networkReturn,networkScope,name,bindings.symbols['о̃༩']);
+  const direction=key==='ѕ᠋༢'||key==='ρ٨٨';
+  if(!provisional[name]){
+   const delay=directionDelay(old,left),matches=[];
+   if(direction&&delay===null)throw Error('Unsupported reference direction timer: '+key);
+   for(const nextName of nextExports){
+    const fn=entryDefinition(cur,nextReturn,nextNetwork,nextName,provisional[bindings.symbols['о̃༩']]);
+    if(fn&&oldCanon.get(left)?.hash===curCanon.get(fn)?.hash&&(!direction||directionDelay(cur,fn)===delay))matches.push(nextName);
+   }
+   if(matches.length!==1)throw Error('Ambiguous native network export: '+key);
+   provisional[name]=matches[0];propose(name,matches[0]);
+  }
+  const right=entryDefinition(cur,nextReturn,nextNetwork,provisional[name],provisional[bindings.symbols['о̃༩']]);
   if(!left||!right||oldCanon.get(left)?.hash!==curCanon.get(right)?.hash)throw Error('Native network contract changed or ambiguous: '+key);
+  if(direction&&(directionDelay(old,left)===null||directionDelay(old,left)!==directionDelay(cur,right)))throw Error('Native direction timing changed: '+key);
   pairs.set(left,right);learn(oldCanon.get(left),curCanon.get(right));nativeContracts.push(key);
  }
  const canonicalRequired=new Set();for(const source of [payload,bootstrap])for(const tok of acorn.tokenizer(source,{ecmaVersion:'latest'}))if(Object.hasOwn(bindings.symbols,tok.value))canonicalRequired.add(tok.value);
@@ -93,7 +115,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const patchAnchors=ops.map(op=>({op,match:anchor(op.before,op.id)}));
  const boot=anchor(profile.bootstrap_anchor,'bootstrap');
  const map=globalMap();
- const integrity=integrityOperations(old,cur,pairs);
+ const integrity=integrityOperations(old,cur,pairs,bindings.integrity);
  const outputBindings={schema:'automatic-port-v1',symbols:{},evidence:{}};
  // The home activation method shares its obfuscated spelling with many local
  // functions. Resolve the exported method in the home object namespace.
@@ -141,7 +163,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  if(fireHelper&&fireRule) adaptedAim=adaptedAim.slice(0,fireHelper.start)+`function __jitterPatchNativeFire(source){const before=${JSON.stringify(fireRule.before)};if(source.split(before).length!==2)throw Error('Unsupported native fire handler');return source.replace(before,${JSON.stringify(fireRule.after)});}`+adaptedAim.slice(fireHelper.end);
  const output=assemble(Buffer.from(cur.source),generated,outputBindings.symbols,payload,bootstrap,gui,adaptedAim);
  const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴎܕα','ᴎ༩༣','ԁ̶ϲ','І̎ܘ','еϲᄄ','ᴎ︅ހ','ѕ٨ᚄ','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠','рܙ๕','ᅟ᠌５','ᴀᄁ︃','рոᴎ','ᅠ̘ܛ'];
- const roles={nativeIntegrityFlag:integrity.flag,nativeIntegritySigners:integrity.signers};for(const key of requiredNative){const next=map[key];if(!next)throw Error('Missing browser validation binding '+key);roles[key]=next;}
+ const roles={nativeIntegrityFlag:integrity.flag,nativeIntegritySigners:integrity.signers};for(const key of requiredNative){const next=map[bindings.roles?.[key]||key];if(!next)throw Error('Missing browser validation binding '+key);roles[key]=next;}
  return {source:cur.source,output,profile:generated,bindings:outputBindings,aim:adaptedAim,roles,
   report:{raw_sha256:hash(candidate),reference_sha256:hash(reference),deobfuscated_sha256:hash(cur.source),output_sha256:hash(output),matched_functions:pairs.size,native_network_contracts:nativeContracts,required_bindings:canonicalRequired.size,patches:operations.map(x=>x.id),integrity_compatibility:{status:'applied',predicates:integrity.operations.length},decoder_blocks:decodedNew.evidence,live_server:'not_tested'}};
 }
@@ -149,7 +171,8 @@ if(require.main===module){
  try{
   const [, ,input,out]=process.argv;if(!input||!out)throw Error('Usage: node tools/auto_port.cjs RAW_JS OUTPUT_DIR');
   const read=f=>fs.readFileSync(path.join(root,f),'utf8');
-  const result=port(require('node:zlib').gunzipSync(fs.readFileSync(path.join(root,'baselines/current.js.gz'))).toString(),fs.readFileSync(input,'utf8'),JSON.parse(read('patches/recovered-current.json')),JSON.parse(read('patches/recovered-bindings.json')),read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/ilm-aim.js')+'\n'+read('mod/curved-aim.js'),read('vendor/dat.gui.recovered.js'));
+  const candidate=fs.readFileSync(input,'utf8'),reference=require('./updater/references.cjs').loadReference(root,candidate);
+  const result=port(reference.source,candidate,reference.profile,reference.bindings,read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/ilm-aim.js')+'\n'+read('mod/curved-aim.js'),read('vendor/dat.gui.recovered.js'));
   fs.mkdirSync(out,{recursive:true});for(const [name,data]of Object.entries({'native.js':result.source,'game.modded.js':result.output,'profile.json':JSON.stringify(result.profile,null,2),'bindings.json':JSON.stringify(result.bindings,null,2),'ilm-aim.js':result.aim,'roles.json':JSON.stringify(result.roles,null,2),'port-report.json':JSON.stringify(result.report,null,2)}))fs.writeFileSync(path.join(out,name),data);
   console.log(JSON.stringify({status:'ported',...result.report,decoder_blocks:result.report.decoder_blocks.length}));
  }catch(error){console.error(error.message);process.exitCode=1;}

@@ -2,6 +2,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),z=require('node:zlib');
 const acorn=require('./parser.cjs'),{hash}=require('./build_client.cjs'),{translate}=require('./translate_payload.cjs');
 const {chromium,firefox}=require('playwright-core');
+const {elapsedTimer}=require('./updater/network-contracts.cjs');
 const root=path.resolve(__dirname,'..'),dir=path.resolve(process.argv[2]||'');
 const read=f=>fs.readFileSync(path.join(dir,f),'utf8'),json=f=>JSON.parse(read(f));
 const overrideBytes=fs.readFileSync(path.join(root,'resource-override/Devast-io-GitHub-Resource-Override.json'));
@@ -10,7 +11,7 @@ assert.equal(override.v,1);assert.equal(override.data[0].rules[0].type,'fileOver
 const output=read('game.modded.js'),profile=json('profile.json'),symbols=json('bindings.json').symbols,roles=json('roles.json'),source=json('source.json');
 const contract=JSON.parse(fs.readFileSync(path.join(root,'mod/contract.json')));
 const moduleHashes=Object.fromEntries(contract.modules.map(file=>[file,hash(fs.readFileSync(path.join(root,file)))]));
-const tree=acorn.parse(output,{ecmaVersion:'latest'}),body=tree.body[0]?.expression?.callee?.body?.body;
+const nativeAnalysis=require('./updater/static.cjs').analyze(output),tree=nativeAnalysis.tree,body=tree.body[0]?.expression?.callee?.body?.body;
 assert.equal(profile.operations.filter(op=>op.id.startsWith('native-integrity-signature-')).length,3,'All three native signature compatibility operations are required');
 assert.equal(roles.nativeIntegritySigners?.length,3,'Three reviewed native signers required');
 assert.ok(body,'Full native client IIFE required');
@@ -34,7 +35,7 @@ const closeOperation=profile.operations.find(p=>p.id==='native-disconnect-withou
 const closeName=acorn.parse(closeOperation.after,{ecmaVersion:'latest'}).body[0].id.name;
 functions[closeName]='nativeClose';
 const edits=[],placements=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;
- if(n.type==='ArrayExpression'&&n.elements[0]?.value===14&&n.elements.length===4&&n.elements[1]?.object?.type==='MemberExpression')placements.push(n);
+ if(n.type==='ArrayExpression'&&nativeAnalysis.constant(n.elements[0])===14&&n.elements.length===4&&n.elements[1]?.object?.type==='MemberExpression')placements.push(n);
  if(n.type==='FunctionDeclaration')for(const [old,name]of Object.entries(functions))if(n.id.name===(name==='nativeClose'?closeName:roles[old])){
   let text=`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.${name}=${n.id.name};`;
   if(name==='fire')text+=`window.__updateFunctions.capturePackets=()=>{const codec=${roles['еϲᄄ']},key=${JSON.stringify(roles['ᴎ︅ހ'])},encode=codec[key],socket=${roles['І̎ܘ']},packets=[];codec[key]=p=>{packets.push(p.slice());return '';};${roles['І̎ܘ']}={send(){}};return {packets,restore(){codec[key]=encode;${roles['І̎ܘ']}=socket;}};};`;
@@ -55,7 +56,7 @@ assert.ok(assignment?.type==='AssignmentExpression'&&assignment.left.type==='Ide
 const lastActivity=assignment.left.name,nativeNow=assignment.right.name,idleMatches=[];
 for(const fn of networkBody.filter(n=>n.type==='FunctionDeclaration')){
  const pending=[fn.body];while(pending.length){const n=pending.pop();if(!n||typeof n!=='object')continue;
-  if(n.type==='BinaryExpression'&&n.operator==='>'&&n.left.type==='BinaryExpression'&&n.left.operator==='-'&&n.left.left.name===nativeNow&&n.left.right.name===lastActivity&&n.right.type==='Identifier')idleMatches.push({fn,limit:n.right.name});
+  const limit=elapsedTimer(n,nativeNow,lastActivity);if(limit)idleMatches.push({fn,limit});
   for(const v of Object.values(n)){if(Array.isArray(v))pending.push(...v);else if(v&&typeof v==='object')pending.push(v);}
  }
 }
