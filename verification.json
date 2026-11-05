@@ -1,22 +1,20 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "c718473b10558ff33f20dc773c59c3a1d663c2354fd5cfebc67424708e0217e8",
+  "output_sha256": "8684783771d83b148cfb15f245e1ef5cc750b4c61f409aaaef66ea02c36bab60",
   "static_ast": "passed",
-  "ilm_core": "identical",
+  "message15_core": "byte-identical source declarations",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
   "mod_contract": {
     "schema": 1,
-    "name": "Devast-io ILM mod",
+    "name": "Devast-io Message15 mod",
     "modules": [
       "mod/responsive.js",
       "mod/bootstrap.js",
-      "mod/ilm-aim.js",
-      "mod/curved-aim.js",
-      "vendor/dat.gui.recovered.js"
+      "vendor/dat.gui.recovered.js",
+      "mod/message15-aim.js"
     ],
     "features": [
-      "ilm-aim",
       "prediction-and-auto-fire",
       "player-ghoul-history",
       "native-nickname-id",
@@ -42,13 +40,11 @@
       "right-click-door-independent-of-native-prompt",
       "independent-door-control-and-server-state-feedback",
       "automation-socket-backpressure",
-      "verbatim-original-ilm-aim",
-      "coalesced-aim-directions",
-      "native-shot-direction-and-render-sync",
       "connection-close-origin-diagnostics",
-      "curved-target-and-chaser-interception",
       "aim-cycle-socket-backpressure",
-      "valid-live-aim-targets"
+      "verbatim-message15-aim",
+      "message15-native-lifecycle",
+      "immediate-aim-numeric-settings"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -58,7 +54,6 @@
       "tests/mod.test.cjs",
       "tests/aim-settings.test.cjs",
       "tests/mod-performance.test.cjs",
-      "tests/ilm-parity.test.cjs",
       "tests/rejoin-recovery.test.cjs",
       "tests/ilm-autobuild.test.cjs",
       "tests/jitter.test.cjs",
@@ -66,12 +61,8 @@
       "tests/world-visuals.test.cjs",
       "tests/door-click.test.cjs",
       "tests/automation-transport.test.cjs",
-      "tests/shot-line.test.cjs",
-      "tests/ilm-restoration.test.cjs",
-      "tests/angle-transport.test.cjs",
-      "tests/curved-aim.test.cjs",
       "tests/aim-backpressure.test.cjs",
-      "tests/aim-validity.test.cjs"
+      "tests/message15-source.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -79,17 +70,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "13d2e048e216774e6896a06b7322fd6e028742c3e1ded613c3b7e49463399a29",
+    "mod/responsive.js": "e4bf6946a10a1d575fc7d6ed74c5ef222d7b3380b0cc2d167bbd2de53560a1a1",
     "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
-    "mod/ilm-aim.js": "4e486623da342227a35c30a60a06909de3a9f21b8585a6ab0e1a9a1531cb634c",
-    "mod/curved-aim.js": "7d01c15a8a0e8eb2ac604aef7155e8bd1ab7586c25de729cfa2701d288970dd2",
-    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
+    "mod/message15-aim.js": "ce3d816ea56a518704e4145182efe615bb1a93058ca41e58953c49f98055f4e1"
   },
-  "mod_bundle_sha256": "d919db8053744c10ad980c5824758e1ea84fdb2f5a522be38ecbcb939dbe4d78",
+  "mod_bundle_sha256": "64d13c863e64883093c8d072af0fa8b2e1b9653c35d6bd7cbb814aba05f885f9",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -122,56 +112,44 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "db58e8acc1d774702558e7e0e2d5c079b6ab74cea6a2f6a8b0e621d3ce250a14",
+    "fingerprint": "3eec804d263bdfecd124da2d5a8218f762d1f572819d1c575735ca6edf7a16d6",
     "nativeSha256": "3c47755e97f7f7119f1a2e5127f4ed8ad147e0c55e3d36ba6708d30f9f63e410"
   },
   "native": {
-    "curved_target_and_chaser_interception": true,
-    "curve_comparison": {
+    "message15_comparison": {
       "status": "passed",
-      "guns": [
-        {
-          "speed": 1.4,
-          "legacy_miss": 51.10608220387333,
-          "curved_miss": 1.2845696549971775,
-          "mode": "curve"
-        },
-        {
-          "speed": 1.45,
-          "legacy_miss": 49.356681366954035,
-          "curved_miss": 1.2467398562114962,
-          "mode": "curve"
-        }
-      ],
-      "shooter_and_target": "both_moving_around_same_obstacle",
-      "obstacle_collision": "not_simulated"
+      "scenes": 24,
+      "comparison_points": 1496,
+      "history_and_formulas": "source identical",
+      "native_fire_release_order": "source identical",
+      "native_dodge_and_movement": true,
+      "native_other_player_death": true,
+      "original_menu_controls": 21
+    },
+    "message15_extra": {
+      "status": "passed",
+      "boundary_scenes": 96,
+      "comparison_points": 5856,
+      "coordinate_cases": 36,
+      "gui_formula_controls": true,
+      "linear_bullet_coefficient": "unused exactly as source",
+      "trigonometric_bullet_coefficient": "affects angle exactly as source",
+      "auto_fire_and_hide_angle_commands": true,
+      "color_normalization_and_line_renderer": true,
+      "label_filter_bitmap": true
+    },
+    "message15_transport": {
+      "status": "passed",
+      "blocked_cycles_dropped": true,
+      "whole_attack_release_cycle": true,
+      "non_open_sockets": true,
+      "server_death_sends_no_commands": true,
+      "session_lifecycle": true
     },
     "menu": true,
     "connection_close_origin_diagnostics": true,
-    "native_shot_direction_and_render_sync": true,
-    "coalesced_aim_directions_and_native_idle": true,
-    "original_ilm_mechanics": true,
-    "original_ilm_comparison": {
-      "scenes": 36,
-      "ticks": 432,
-      "exact_core_state": true,
-      "native_commands": "original angles and attack/release cycles with direction coalescing; blocked cycles and invalid targets discarded",
-      "original_menu_controls": 5,
-      "native_shot_sync": "verified_separately_without_changing_core_formula",
-      "line_visibility_and_color": "original_ILM"
-    },
     "automation_socket_backpressure": true,
     "aim_cycle_socket_backpressure": true,
-    "valid_live_aim_targets": true,
-    "aim_validity": {
-      "status": "passed",
-      "removed_target": true,
-      "missing_or_removed_self": true,
-      "native_pointer_resumes": true,
-      "reacquisition_reasserts": true,
-      "self_lock_rejected": true,
-      "outgoing_5_is_native_release": true
-    },
     "server_death_sends_no_commands": true,
     "right_click_hovered_door": true,
     "right_click_without_native_prompt": true,
@@ -187,15 +165,7 @@
     "native_clan_colors_and_cache": true,
     "native_nickname_color_and_cache": true,
     "full_player_list_and_native_lifecycle": true,
-    "native_shot_matches_ilm_line": true,
-    "jitter_rotation_and_shot_priority": true,
-    "jitter_preserves_native_input": true,
-    "jitter_socket_backpressure": true,
     "stable_frame_entity_records": true,
-    "firing_display_original_ilm_interpolation": true,
-    "continuous_fire_ilm_cadence": true,
-    "ilm_manual_fire_cadence": true,
-    "disconnect_preserves_aim_history": true,
     "native_fast_loot_cadence": true,
     "native_autobuild_cursor_preview": true,
     "native_rejoin_identity": true,
@@ -203,6 +173,311 @@
     "native_death_observation": true,
     "death_stops_restore_retries": true,
     "mod_errors": []
+  },
+  "physical_numeric": {
+    "status": "passed",
+    "saved_after_reload": {
+      "resolverType": "trygonometrical",
+      "distanceCoefficient": 970,
+      "offsetCoefficient": 0.5,
+      "bulletSpeedCoefficient": 15,
+      "mouseFov": 0,
+      "lockId": 120,
+      "jitterOffset": 360,
+      "DodgeDetectRadius": 800
+    },
+    "physical_text_entry": true,
+    "enter_and_tab_commit": true,
+    "slider_drag": true,
+    "native_angle_changes": true,
+    "uncommitted_input_changes_setting": true,
+    "samples": [
+      {
+        "label": "initial",
+        "key": "distanceCoefficient",
+        "input": "100",
+        "value": 100,
+        "type": "number",
+        "mode": "linear",
+        "angle": 48,
+        "line": {
+          "x": 2000,
+          "y": 2114
+        },
+        "native_angle": 48,
+        "saved": 100
+      },
+      {
+        "label": "typed 10 uncommitted",
+        "key": "distanceCoefficient",
+        "input": "10",
+        "value": 10,
+        "type": "number",
+        "mode": "linear",
+        "angle": 84,
+        "line": {
+          "x": 2000,
+          "y": 11150
+        },
+        "native_angle": 84,
+        "saved": 10
+      },
+      {
+        "label": "typed 10 Enter",
+        "key": "distanceCoefficient",
+        "input": "10",
+        "value": 10,
+        "type": "number",
+        "mode": "linear",
+        "angle": 84,
+        "line": {
+          "x": 2000,
+          "y": 11150
+        },
+        "native_angle": 84,
+        "saved": 10
+      },
+      {
+        "label": "typed 1000 Tab",
+        "key": "distanceCoefficient",
+        "input": "1000",
+        "value": 1000,
+        "type": "number",
+        "mode": "linear",
+        "angle": 11,
+        "line": {
+          "x": 2000,
+          "y": 1210.4
+        },
+        "native_angle": 11,
+        "saved": 1000
+      },
+      {
+        "label": "typed 0 Enter",
+        "key": "offsetCoefficient",
+        "input": "0",
+        "value": 0,
+        "type": "number",
+        "mode": "linear",
+        "angle": 11,
+        "line": {
+          "x": 2000,
+          "y": 1200.4
+        },
+        "native_angle": 11,
+        "saved": 0
+      },
+      {
+        "label": "typed 3 Tab",
+        "key": "offsetCoefficient",
+        "input": "3",
+        "value": 3,
+        "type": "number",
+        "mode": "linear",
+        "angle": 26,
+        "line": {
+          "x": 2000,
+          "y": 1500.4
+        },
+        "native_angle": 26,
+        "saved": 3
+      },
+      {
+        "label": "slider left",
+        "key": "distanceCoefficient",
+        "input": "20",
+        "value": 20,
+        "type": "number",
+        "mode": "linear",
+        "angle": 79,
+        "line": {
+          "x": 2000,
+          "y": 6420
+        },
+        "native_angle": 79,
+        "saved": 20
+      },
+      {
+        "label": "slider right",
+        "key": "distanceCoefficient",
+        "input": "970",
+        "value": 970,
+        "type": "number",
+        "mode": "linear",
+        "angle": 26,
+        "line": {
+          "x": 2000,
+          "y": 1503.5051546391753
+        },
+        "native_angle": 26,
+        "saved": 970
+      },
+      {
+        "label": "typed 0,5 uncommitted",
+        "key": "offsetCoefficient",
+        "input": "0.5",
+        "value": 0.5,
+        "type": "number",
+        "mode": "linear",
+        "angle": 14,
+        "line": {
+          "x": 2000,
+          "y": 1253.5051546391753
+        },
+        "native_angle": 14,
+        "saved": 0.5
+      },
+      {
+        "label": "typed 1 Enter",
+        "key": "bulletSpeedCoefficient",
+        "input": "1",
+        "value": 1,
+        "type": "number",
+        "mode": "linear",
+        "angle": 14,
+        "line": {
+          "x": 2000,
+          "y": 1253.5051546391753
+        },
+        "native_angle": 14,
+        "saved": 1
+      },
+      {
+        "label": "typed 15 Tab",
+        "key": "bulletSpeedCoefficient",
+        "input": "15",
+        "value": 15,
+        "type": "number",
+        "mode": "linear",
+        "angle": 14,
+        "line": {
+          "x": 2000,
+          "y": 1253.5051546391753
+        },
+        "native_angle": 14,
+        "saved": 15
+      },
+      {
+        "label": "typed 1 Enter",
+        "key": "bulletSpeedCoefficient",
+        "input": "1",
+        "value": 1,
+        "type": "number",
+        "mode": "trygonometrical",
+        "angle": 10,
+        "line": {
+          "x": 2000,
+          "y": 1176.326980708465
+        },
+        "native_angle": 10,
+        "saved": 1
+      },
+      {
+        "label": "typed 15 Tab",
+        "key": "bulletSpeedCoefficient",
+        "input": "15",
+        "value": 15,
+        "type": "number",
+        "mode": "trygonometrical",
+        "angle": 91,
+        "line": {
+          "x": 2000,
+          "y": -56289.96163075949
+        },
+        "native_angle": 91,
+        "saved": 15
+      },
+      {
+        "label": "typed 696969 Enter",
+        "key": "mouseFov",
+        "input": "696969",
+        "value": 696969,
+        "type": "number",
+        "mode": "trygonometrical",
+        "angle": 91,
+        "line": {
+          "x": 2000,
+          "y": -56289.96163075949
+        },
+        "native_angle": 91,
+        "saved": 696969
+      },
+      {
+        "label": "typed 0 Enter",
+        "key": "mouseFov",
+        "input": "0",
+        "value": 0,
+        "type": "number",
+        "mode": "trygonometrical",
+        "angle": 91,
+        "line": {
+          "x": 2000,
+          "y": -56289.96163075949
+        },
+        "native_angle": 91,
+        "saved": 0
+      },
+      {
+        "label": "typed -1 Enter",
+        "key": "lockId",
+        "input": "-1",
+        "value": -1,
+        "type": "number",
+        "mode": "trygonometrical",
+        "angle": 91,
+        "line": {
+          "x": 2000,
+          "y": -56289.96163075949
+        },
+        "native_angle": 91,
+        "saved": -1
+      },
+      {
+        "label": "typed 120 Enter",
+        "key": "lockId",
+        "input": "120",
+        "value": 120,
+        "type": "number",
+        "mode": "trygonometrical",
+        "angle": 91,
+        "line": {
+          "x": 2000,
+          "y": -56289.96163075949
+        },
+        "native_angle": 91,
+        "saved": 120
+      },
+      {
+        "label": "typed 360 Enter",
+        "key": "jitterOffset",
+        "input": "360",
+        "value": 360,
+        "type": "number",
+        "mode": "trygonometrical",
+        "angle": 91,
+        "line": {
+          "x": 2000,
+          "y": -56289.96163075949
+        },
+        "native_angle": 91,
+        "saved": 360
+      },
+      {
+        "label": "typed 800 Enter",
+        "key": "DodgeDetectRadius",
+        "input": "800",
+        "value": 800,
+        "type": "number",
+        "mode": "trygonometrical",
+        "angle": 91,
+        "line": {
+          "x": 2000,
+          "y": -56289.96163075949
+        },
+        "native_angle": 91,
+        "saved": 800
+      }
+    ]
   },
   "world_visibility": {
     "status": "passed",
@@ -212,59 +487,47 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-05T22:18:43.028Z",
+  "finished_at": "2026-11-05T23:26:06.250Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "c718473b10558ff33f20dc773c59c3a1d663c2354fd5cfebc67424708e0217e8",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "8684783771d83b148cfb15f245e1ef5cc750b4c61f409aaaef66ea02c36bab60",
+      "browser_version": "154.0.8037.57",
       "native": {
-        "curved_target_and_chaser_interception": true,
-        "curve_comparison": {
+        "message15_comparison": {
           "status": "passed",
-          "guns": [
-            {
-              "speed": 1.4,
-              "legacy_miss": 51.10608220387333,
-              "curved_miss": 1.2845696549971775,
-              "mode": "curve"
-            },
-            {
-              "speed": 1.45,
-              "legacy_miss": 49.356681366954035,
-              "curved_miss": 1.2467398562114962,
-              "mode": "curve"
-            }
-          ],
-          "shooter_and_target": "both_moving_around_same_obstacle",
-          "obstacle_collision": "not_simulated"
+          "scenes": 24,
+          "comparison_points": 1496,
+          "history_and_formulas": "source identical",
+          "native_fire_release_order": "source identical",
+          "native_dodge_and_movement": true,
+          "native_other_player_death": true,
+          "original_menu_controls": 21
+        },
+        "message15_extra": {
+          "status": "passed",
+          "boundary_scenes": 96,
+          "comparison_points": 5856,
+          "coordinate_cases": 36,
+          "gui_formula_controls": true,
+          "linear_bullet_coefficient": "unused exactly as source",
+          "trigonometric_bullet_coefficient": "affects angle exactly as source",
+          "auto_fire_and_hide_angle_commands": true,
+          "color_normalization_and_line_renderer": true,
+          "label_filter_bitmap": true
+        },
+        "message15_transport": {
+          "status": "passed",
+          "blocked_cycles_dropped": true,
+          "whole_attack_release_cycle": true,
+          "non_open_sockets": true,
+          "server_death_sends_no_commands": true,
+          "session_lifecycle": true
         },
         "menu": true,
         "connection_close_origin_diagnostics": true,
-        "native_shot_direction_and_render_sync": true,
-        "coalesced_aim_directions_and_native_idle": true,
-        "original_ilm_mechanics": true,
-        "original_ilm_comparison": {
-          "scenes": 36,
-          "ticks": 432,
-          "exact_core_state": true,
-          "native_commands": "original angles and attack/release cycles with direction coalescing; blocked cycles and invalid targets discarded",
-          "original_menu_controls": 5,
-          "native_shot_sync": "verified_separately_without_changing_core_formula",
-          "line_visibility_and_color": "original_ILM"
-        },
         "automation_socket_backpressure": true,
         "aim_cycle_socket_backpressure": true,
-        "valid_live_aim_targets": true,
-        "aim_validity": {
-          "status": "passed",
-          "removed_target": true,
-          "missing_or_removed_self": true,
-          "native_pointer_resumes": true,
-          "reacquisition_reasserts": true,
-          "self_lock_rejected": true,
-          "outgoing_5_is_native_release": true
-        },
         "server_death_sends_no_commands": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
@@ -280,15 +543,7 @@
         "native_clan_colors_and_cache": true,
         "native_nickname_color_and_cache": true,
         "full_player_list_and_native_lifecycle": true,
-        "native_shot_matches_ilm_line": true,
-        "jitter_rotation_and_shot_priority": true,
-        "jitter_preserves_native_input": true,
-        "jitter_socket_backpressure": true,
         "stable_frame_entity_records": true,
-        "firing_display_original_ilm_interpolation": true,
-        "continuous_fire_ilm_cadence": true,
-        "ilm_manual_fire_cadence": true,
-        "disconnect_preserves_aim_history": true,
         "native_fast_loot_cadence": true,
         "native_autobuild_cursor_preview": true,
         "native_rejoin_identity": true,
@@ -331,59 +586,352 @@
       "world_visibility": {
         "status": "passed",
         "native_renderers": 3
+      },
+      "physical_numeric": {
+        "status": "passed",
+        "saved_after_reload": {
+          "resolverType": "trygonometrical",
+          "distanceCoefficient": 970,
+          "offsetCoefficient": 0.5,
+          "bulletSpeedCoefficient": 15,
+          "mouseFov": 0,
+          "lockId": 120,
+          "jitterOffset": 360,
+          "DodgeDetectRadius": 800
+        },
+        "physical_text_entry": true,
+        "enter_and_tab_commit": true,
+        "slider_drag": true,
+        "native_angle_changes": true,
+        "uncommitted_input_changes_setting": true,
+        "samples": [
+          {
+            "label": "initial",
+            "key": "distanceCoefficient",
+            "input": "100",
+            "value": 100,
+            "type": "number",
+            "mode": "linear",
+            "angle": 48,
+            "line": {
+              "x": 2000,
+              "y": 2114
+            },
+            "native_angle": 48,
+            "saved": 100
+          },
+          {
+            "label": "typed 10 uncommitted",
+            "key": "distanceCoefficient",
+            "input": "10",
+            "value": 10,
+            "type": "number",
+            "mode": "linear",
+            "angle": 84,
+            "line": {
+              "x": 2000,
+              "y": 11150
+            },
+            "native_angle": 84,
+            "saved": 10
+          },
+          {
+            "label": "typed 10 Enter",
+            "key": "distanceCoefficient",
+            "input": "10",
+            "value": 10,
+            "type": "number",
+            "mode": "linear",
+            "angle": 84,
+            "line": {
+              "x": 2000,
+              "y": 11150
+            },
+            "native_angle": 84,
+            "saved": 10
+          },
+          {
+            "label": "typed 1000 Tab",
+            "key": "distanceCoefficient",
+            "input": "1000",
+            "value": 1000,
+            "type": "number",
+            "mode": "linear",
+            "angle": 11,
+            "line": {
+              "x": 2000,
+              "y": 1210.4
+            },
+            "native_angle": 11,
+            "saved": 1000
+          },
+          {
+            "label": "typed 0 Enter",
+            "key": "offsetCoefficient",
+            "input": "0",
+            "value": 0,
+            "type": "number",
+            "mode": "linear",
+            "angle": 11,
+            "line": {
+              "x": 2000,
+              "y": 1200.4
+            },
+            "native_angle": 11,
+            "saved": 0
+          },
+          {
+            "label": "typed 3 Tab",
+            "key": "offsetCoefficient",
+            "input": "3",
+            "value": 3,
+            "type": "number",
+            "mode": "linear",
+            "angle": 26,
+            "line": {
+              "x": 2000,
+              "y": 1500.4
+            },
+            "native_angle": 26,
+            "saved": 3
+          },
+          {
+            "label": "slider left",
+            "key": "distanceCoefficient",
+            "input": "20",
+            "value": 20,
+            "type": "number",
+            "mode": "linear",
+            "angle": 79,
+            "line": {
+              "x": 2000,
+              "y": 6420
+            },
+            "native_angle": 79,
+            "saved": 20
+          },
+          {
+            "label": "slider right",
+            "key": "distanceCoefficient",
+            "input": "970",
+            "value": 970,
+            "type": "number",
+            "mode": "linear",
+            "angle": 26,
+            "line": {
+              "x": 2000,
+              "y": 1503.5051546391753
+            },
+            "native_angle": 26,
+            "saved": 970
+          },
+          {
+            "label": "typed 0,5 uncommitted",
+            "key": "offsetCoefficient",
+            "input": "0.5",
+            "value": 0.5,
+            "type": "number",
+            "mode": "linear",
+            "angle": 14,
+            "line": {
+              "x": 2000,
+              "y": 1253.5051546391753
+            },
+            "native_angle": 14,
+            "saved": 0.5
+          },
+          {
+            "label": "typed 1 Enter",
+            "key": "bulletSpeedCoefficient",
+            "input": "1",
+            "value": 1,
+            "type": "number",
+            "mode": "linear",
+            "angle": 14,
+            "line": {
+              "x": 2000,
+              "y": 1253.5051546391753
+            },
+            "native_angle": 14,
+            "saved": 1
+          },
+          {
+            "label": "typed 15 Tab",
+            "key": "bulletSpeedCoefficient",
+            "input": "15",
+            "value": 15,
+            "type": "number",
+            "mode": "linear",
+            "angle": 14,
+            "line": {
+              "x": 2000,
+              "y": 1253.5051546391753
+            },
+            "native_angle": 14,
+            "saved": 15
+          },
+          {
+            "label": "typed 1 Enter",
+            "key": "bulletSpeedCoefficient",
+            "input": "1",
+            "value": 1,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 10,
+            "line": {
+              "x": 2000,
+              "y": 1176.326980708465
+            },
+            "native_angle": 10,
+            "saved": 1
+          },
+          {
+            "label": "typed 15 Tab",
+            "key": "bulletSpeedCoefficient",
+            "input": "15",
+            "value": 15,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 15
+          },
+          {
+            "label": "typed 696969 Enter",
+            "key": "mouseFov",
+            "input": "696969",
+            "value": 696969,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 696969
+          },
+          {
+            "label": "typed 0 Enter",
+            "key": "mouseFov",
+            "input": "0",
+            "value": 0,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 0
+          },
+          {
+            "label": "typed -1 Enter",
+            "key": "lockId",
+            "input": "-1",
+            "value": -1,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": -1
+          },
+          {
+            "label": "typed 120 Enter",
+            "key": "lockId",
+            "input": "120",
+            "value": 120,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 120
+          },
+          {
+            "label": "typed 360 Enter",
+            "key": "jitterOffset",
+            "input": "360",
+            "value": 360,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 360
+          },
+          {
+            "label": "typed 800 Enter",
+            "key": "DodgeDetectRadius",
+            "input": "800",
+            "value": 800,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 800
+          }
+        ]
       }
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "c718473b10558ff33f20dc773c59c3a1d663c2354fd5cfebc67424708e0217e8",
+      "output_sha256": "8684783771d83b148cfb15f245e1ef5cc750b4c61f409aaaef66ea02c36bab60",
       "browser_version": "153.0",
       "native": {
-        "curved_target_and_chaser_interception": true,
-        "curve_comparison": {
+        "message15_comparison": {
           "status": "passed",
-          "guns": [
-            {
-              "speed": 1.4,
-              "legacy_miss": 51.10608220387333,
-              "curved_miss": 1.2845696549971644,
-              "mode": "curve"
-            },
-            {
-              "speed": 1.45,
-              "legacy_miss": 49.356681366954035,
-              "curved_miss": 1.2467398562114962,
-              "mode": "curve"
-            }
-          ],
-          "shooter_and_target": "both_moving_around_same_obstacle",
-          "obstacle_collision": "not_simulated"
+          "scenes": 24,
+          "comparison_points": 1496,
+          "history_and_formulas": "source identical",
+          "native_fire_release_order": "source identical",
+          "native_dodge_and_movement": true,
+          "native_other_player_death": true,
+          "original_menu_controls": 21
+        },
+        "message15_extra": {
+          "status": "passed",
+          "boundary_scenes": 96,
+          "comparison_points": 5856,
+          "coordinate_cases": 36,
+          "gui_formula_controls": true,
+          "linear_bullet_coefficient": "unused exactly as source",
+          "trigonometric_bullet_coefficient": "affects angle exactly as source",
+          "auto_fire_and_hide_angle_commands": true,
+          "color_normalization_and_line_renderer": true,
+          "label_filter_bitmap": true
+        },
+        "message15_transport": {
+          "status": "passed",
+          "blocked_cycles_dropped": true,
+          "whole_attack_release_cycle": true,
+          "non_open_sockets": true,
+          "server_death_sends_no_commands": true,
+          "session_lifecycle": true
         },
         "menu": true,
         "connection_close_origin_diagnostics": true,
-        "native_shot_direction_and_render_sync": true,
-        "coalesced_aim_directions_and_native_idle": true,
-        "original_ilm_mechanics": true,
-        "original_ilm_comparison": {
-          "scenes": 36,
-          "ticks": 432,
-          "exact_core_state": true,
-          "native_commands": "original angles and attack/release cycles with direction coalescing; blocked cycles and invalid targets discarded",
-          "original_menu_controls": 5,
-          "native_shot_sync": "verified_separately_without_changing_core_formula",
-          "line_visibility_and_color": "original_ILM"
-        },
         "automation_socket_backpressure": true,
         "aim_cycle_socket_backpressure": true,
-        "valid_live_aim_targets": true,
-        "aim_validity": {
-          "status": "passed",
-          "removed_target": true,
-          "missing_or_removed_self": true,
-          "native_pointer_resumes": true,
-          "reacquisition_reasserts": true,
-          "self_lock_rejected": true,
-          "outgoing_5_is_native_release": true
-        },
         "server_death_sends_no_commands": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
@@ -399,15 +947,7 @@
         "native_clan_colors_and_cache": true,
         "native_nickname_color_and_cache": true,
         "full_player_list_and_native_lifecycle": true,
-        "native_shot_matches_ilm_line": true,
-        "jitter_rotation_and_shot_priority": true,
-        "jitter_preserves_native_input": true,
-        "jitter_socket_backpressure": true,
         "stable_frame_entity_records": true,
-        "firing_display_original_ilm_interpolation": true,
-        "continuous_fire_ilm_cadence": true,
-        "ilm_manual_fire_cadence": true,
-        "disconnect_preserves_aim_history": true,
         "native_fast_loot_cadence": true,
         "native_autobuild_cursor_preview": true,
         "native_rejoin_identity": true,
@@ -450,6 +990,311 @@
       "world_visibility": {
         "status": "passed",
         "native_renderers": 3
+      },
+      "physical_numeric": {
+        "status": "passed",
+        "saved_after_reload": {
+          "resolverType": "trygonometrical",
+          "distanceCoefficient": 970,
+          "offsetCoefficient": 0.5,
+          "bulletSpeedCoefficient": 15,
+          "mouseFov": 0,
+          "lockId": 120,
+          "jitterOffset": 360,
+          "DodgeDetectRadius": 800
+        },
+        "physical_text_entry": true,
+        "enter_and_tab_commit": true,
+        "slider_drag": true,
+        "native_angle_changes": true,
+        "uncommitted_input_changes_setting": true,
+        "samples": [
+          {
+            "label": "initial",
+            "key": "distanceCoefficient",
+            "input": "100",
+            "value": 100,
+            "type": "number",
+            "mode": "linear",
+            "angle": 48,
+            "line": {
+              "x": 2000,
+              "y": 2114
+            },
+            "native_angle": 48,
+            "saved": 100
+          },
+          {
+            "label": "typed 10 uncommitted",
+            "key": "distanceCoefficient",
+            "input": "10",
+            "value": 10,
+            "type": "number",
+            "mode": "linear",
+            "angle": 84,
+            "line": {
+              "x": 2000,
+              "y": 11150
+            },
+            "native_angle": 84,
+            "saved": 10
+          },
+          {
+            "label": "typed 10 Enter",
+            "key": "distanceCoefficient",
+            "input": "10",
+            "value": 10,
+            "type": "number",
+            "mode": "linear",
+            "angle": 84,
+            "line": {
+              "x": 2000,
+              "y": 11150
+            },
+            "native_angle": 84,
+            "saved": 10
+          },
+          {
+            "label": "typed 1000 Tab",
+            "key": "distanceCoefficient",
+            "input": "1000",
+            "value": 1000,
+            "type": "number",
+            "mode": "linear",
+            "angle": 11,
+            "line": {
+              "x": 2000,
+              "y": 1210.4
+            },
+            "native_angle": 11,
+            "saved": 1000
+          },
+          {
+            "label": "typed 0 Enter",
+            "key": "offsetCoefficient",
+            "input": "0",
+            "value": 0,
+            "type": "number",
+            "mode": "linear",
+            "angle": 11,
+            "line": {
+              "x": 2000,
+              "y": 1200.4
+            },
+            "native_angle": 11,
+            "saved": 0
+          },
+          {
+            "label": "typed 3 Tab",
+            "key": "offsetCoefficient",
+            "input": "3",
+            "value": 3,
+            "type": "number",
+            "mode": "linear",
+            "angle": 26,
+            "line": {
+              "x": 2000,
+              "y": 1500.4
+            },
+            "native_angle": 26,
+            "saved": 3
+          },
+          {
+            "label": "slider left",
+            "key": "distanceCoefficient",
+            "input": "20",
+            "value": 20,
+            "type": "number",
+            "mode": "linear",
+            "angle": 79,
+            "line": {
+              "x": 2000,
+              "y": 6420
+            },
+            "native_angle": 79,
+            "saved": 20
+          },
+          {
+            "label": "slider right",
+            "key": "distanceCoefficient",
+            "input": "970",
+            "value": 970,
+            "type": "number",
+            "mode": "linear",
+            "angle": 26,
+            "line": {
+              "x": 2000,
+              "y": 1503.5051546391753
+            },
+            "native_angle": 26,
+            "saved": 970
+          },
+          {
+            "label": "typed 0,5 uncommitted",
+            "key": "offsetCoefficient",
+            "input": "0.5",
+            "value": 0.5,
+            "type": "number",
+            "mode": "linear",
+            "angle": 14,
+            "line": {
+              "x": 2000,
+              "y": 1253.5051546391753
+            },
+            "native_angle": 14,
+            "saved": 0.5
+          },
+          {
+            "label": "typed 1 Enter",
+            "key": "bulletSpeedCoefficient",
+            "input": "1",
+            "value": 1,
+            "type": "number",
+            "mode": "linear",
+            "angle": 14,
+            "line": {
+              "x": 2000,
+              "y": 1253.5051546391753
+            },
+            "native_angle": 14,
+            "saved": 1
+          },
+          {
+            "label": "typed 15 Tab",
+            "key": "bulletSpeedCoefficient",
+            "input": "15",
+            "value": 15,
+            "type": "number",
+            "mode": "linear",
+            "angle": 14,
+            "line": {
+              "x": 2000,
+              "y": 1253.5051546391753
+            },
+            "native_angle": 14,
+            "saved": 15
+          },
+          {
+            "label": "typed 1 Enter",
+            "key": "bulletSpeedCoefficient",
+            "input": "1",
+            "value": 1,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 10,
+            "line": {
+              "x": 2000,
+              "y": 1176.326980708465
+            },
+            "native_angle": 10,
+            "saved": 1
+          },
+          {
+            "label": "typed 15 Tab",
+            "key": "bulletSpeedCoefficient",
+            "input": "15",
+            "value": 15,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 15
+          },
+          {
+            "label": "typed 696969 Enter",
+            "key": "mouseFov",
+            "input": "696969",
+            "value": 696969,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 696969
+          },
+          {
+            "label": "typed 0 Enter",
+            "key": "mouseFov",
+            "input": "0",
+            "value": 0,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 0
+          },
+          {
+            "label": "typed -1 Enter",
+            "key": "lockId",
+            "input": "-1",
+            "value": -1,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": -1
+          },
+          {
+            "label": "typed 120 Enter",
+            "key": "lockId",
+            "input": "120",
+            "value": 120,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 120
+          },
+          {
+            "label": "typed 360 Enter",
+            "key": "jitterOffset",
+            "input": "360",
+            "value": 360,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 360
+          },
+          {
+            "label": "typed 800 Enter",
+            "key": "DodgeDetectRadius",
+            "input": "800",
+            "value": 800,
+            "type": "number",
+            "mode": "trygonometrical",
+            "angle": 91,
+            "line": {
+              "x": 2000,
+              "y": -56289.96163075949
+            },
+            "native_angle": 91,
+            "saved": 800
+          }
+        ]
       }
     }
   },
@@ -459,7 +1304,6 @@
       "tests/mod.test.cjs",
       "tests/aim-settings.test.cjs",
       "tests/mod-performance.test.cjs",
-      "tests/ilm-parity.test.cjs",
       "tests/rejoin-recovery.test.cjs",
       "tests/ilm-autobuild.test.cjs",
       "tests/jitter.test.cjs",
@@ -467,18 +1311,14 @@
       "tests/world-visuals.test.cjs",
       "tests/door-click.test.cjs",
       "tests/automation-transport.test.cjs",
-      "tests/shot-line.test.cjs",
-      "tests/ilm-restoration.test.cjs",
-      "tests/angle-transport.test.cjs",
-      "tests/curved-aim.test.cjs",
       "tests/aim-backpressure.test.cjs",
-      "tests/aim-validity.test.cjs"
+      "tests/message15-source.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 208,
-    "python_tests": 47
+    "node_tests": 147,
+    "python_tests": 48
   }
 }
