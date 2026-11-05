@@ -118,5 +118,14 @@
     "The previous schema-2 user log contains terminal events both with and without aim; it cannot establish the cause in the current build",
     "80 seconds of live observation, including 60 with aim, is not a long-session stability guarantee",
     "Manual game commands and native close/death handling are preserved"
-  ]
+  ],
+  "publication": {
+    "source_commit": "e30961f",
+    "updates_commit": "04dd3a36b0ef36884c54b46149e98086fc77225e",
+    "stable_http": 200,
+    "stable_sha256": "74d3ef2b9ba390f9a3a67ed04960cad898918c4cf359ece2b6ba6d4f482112fc",
+    "pinned_http": 200,
+    "pinned_sha256": "74d3ef2b9ba390f9a3a67ed04960cad898918c4cf359ece2b6ba6d4f482112fc",
+    "native_backpressure_checks_publicly_verified": true
+  }
 }
