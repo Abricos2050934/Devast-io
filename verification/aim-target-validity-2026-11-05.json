@@ -1,0 +1,199 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "source_base": "5f3ea95",
+  "release": "64841a68628a0a7a222d965cf67d696f16080b0f3fa38a700056030e42023e2c",
+  "output_sha256": "829023ad9aa4355fddd796b368ed03229997d6e8c5de245a8baa895f795c08eb",
+  "raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+  "protocol": {
+    "client_to_server_4": "native attack",
+    "client_to_server_5": "native attack release; explicitly executed in both native browser fixtures",
+    "server_to_client_5": "native game-over handler; this observation sends no combat command",
+    "outgoing_death_command_found": false,
+    "native_death_handler": "retained; not suppressed"
+  },
+  "reproduced_defects": [
+    {
+      "scenario": "Locked player removed after initial direction 0 degrees",
+      "before_packets": [
+        [
+          6,
+          0
+        ],
+        [
+          6,
+          225
+        ]
+      ],
+      "target_coordinates_after_removal": [
+        -1,
+        -1
+      ],
+      "after_packets": [
+        [
+          6,
+          0
+        ]
+      ]
+    },
+    {
+      "scenario": "Target present but self history not received",
+      "before_packets": [
+        [
+          6,
+          40
+        ]
+      ],
+      "after_packets": []
+    }
+  ],
+  "fix": [
+    "Only active self and target positions can produce aim/automatic attack packets",
+    "Own player cannot be its own locked aim target",
+    "Return direction to the native mouse handlers without a valid target",
+    "Invalidate the sent-angle cache when the target or self slot is removed; reassert direction on reacquisition",
+    "Stop mod automatic aim/fire and Jitter immediately upon the received game-over event, before native state changes"
+  ],
+  "preserved": [
+    "original ILM core formulas and exact core-state comparisons",
+    "curved prediction",
+    "50 ms aim timer",
+    "whole-cycle socket backpressure",
+    "native release command 5",
+    "native incoming game-over handling"
+  ],
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 201,
+    "python_tests": 47
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/aim-settings.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/ilm-parity.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/jitter.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/shot-line.test.cjs",
+      "tests/ilm-restoration.test.cjs",
+      "tests/angle-transport.test.cjs",
+      "tests/curved-aim.test.cjs",
+      "tests/aim-backpressure.test.cjs",
+      "tests/aim-validity.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "154.0.8037.57",
+      "aim_validity": {
+        "status": "passed",
+        "removed_target": true,
+        "missing_or_removed_self": true,
+        "native_pointer_resumes": true,
+        "reacquisition_reasserts": true,
+        "self_lock_rejected": true,
+        "outgoing_5_is_native_release": true
+      },
+      "death_sends_no_commands": true,
+      "core_state_parity": true,
+      "page_errors": []
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "aim_validity": {
+        "status": "passed",
+        "removed_target": true,
+        "missing_or_removed_self": true,
+        "native_pointer_resumes": true,
+        "reacquisition_reasserts": true,
+        "self_lock_rejected": true,
+        "outgoing_5_is_native_release": true
+      },
+      "death_sends_no_commands": true,
+      "core_state_parity": true,
+      "page_errors": []
+    }
+  },
+  "live_validation": {
+    "result": "not_stable_in_this_observation",
+    "instrumented_candidate": {
+      "result": "failed",
+      "failure": "Session ended during live observation",
+      "terminal_events": [
+        {
+          "type": "server-death",
+          "at": 39707,
+          "state": 1,
+          "aim": true,
+          "autoFire": false,
+          "health": 255,
+          "commandsInLast2s": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          },
+          "deathOpcode": 5,
+          "deathPacketLength": 3,
+          "deathPrefixHex": "05 00 00"
+        },
+        {
+          "type": "socket-close",
+          "at": 40757,
+          "state": 0,
+          "aim": true,
+          "autoFire": false,
+          "health": 255,
+          "commandsInLast2s": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          },
+          "code": 1005,
+          "clean": true,
+          "localCloseObserved": false
+        }
+      ],
+      "mod_errors": []
+    },
+    "unmodified_script_control": [
+      {
+        "mode": "native",
+        "result": "session-ended",
+        "terminal_observed_at_seconds": 5,
+        "entry_error": null,
+        "script": "native website script"
+      },
+      {
+        "mode": "mod-off",
+        "result": "check-failed",
+        "terminal_observed_at_seconds": null,
+        "entry_error": "locator.waitFor: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#nicknameInput') to be hidden\u001b[22m\n\u001b[2m    77 × locator resolved to visible <input type=\"text\" maxlength=\"16\" id=\"nicknameInput\" placeholder=\"Nickname\"/>\u001b[22m\n",
+        "script": "exact validated artifact; no native instrumentation"
+      },
+      {
+        "mode": "mod-on",
+        "result": "check-failed",
+        "terminal_observed_at_seconds": null,
+        "entry_error": "page.waitForFunction: Timeout 30000ms exceeded.",
+        "script": "exact validated artifact; no native instrumentation"
+      }
+    ],
+    "conclusion": "Game-over occurred with the instrumented mod and also with the unmodified native script; the two remaining A/B entry attempts failed. The live comparison does not establish the server-side cause."
+  },
+  "limits": [
+    "This release fixes the reproduced invalid-state aim transmissions, not an established anti-cheat rejection",
+    "An incoming game-over packet does not expose the server-side termination reason",
+    "Suppressing the incoming handler cannot restore a server-terminated character",
+    "No claim of fixed kicks or long-session stability"
+  ]
+}

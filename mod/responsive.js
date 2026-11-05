@@ -809,6 +809,9 @@ function __installDevastMod(B) {
     // Admit the whole automatic direction/attack/release cycle once. Checking
     // bufferedAmount between its packets could discard release after attack.
     if (!aimTickWritable) return false;
+    // The original resolver can retain a removed locked slot, or calculate
+    // from the self slot's initial (-1,-1). Neither is a live firing solution.
+    if (!validAimTarget()) {lastSentAngle=null;return false;}
     if (MOD.JitterEnabled && packet[0] === 6 && (!jitterAiming() || !Aimbot.targetPlayer?.active)) return false;
     // Like ILM's ws sender, a non-open socket suppresses transmission only.
     if (connectionSocket && connectionSocket.readyState!==1) return false;
@@ -841,7 +844,7 @@ function __installDevastMod(B) {
   // failure or a newly received player ID must not erase packet history.
   Aimbot.refresh = () => {
     if (stopped) return;
-    aimTickWritable=MOD.AimBotEnabled && playing() && automationReady('aim');
+    aimTickWritable=MOD.AimBotEnabled && playing() && !reconnect.sessionEnded && automationReady('aim');
     try {
       // Keep history, selection and the prediction line live while transport
       // is blocked. A skipped cycle is discarded, never queued for replay.
@@ -963,6 +966,11 @@ function __installDevastMod(B) {
   function playing() {
     return !stopped && B.network.state === 1 && B.world.ᅠᏧ‍ && B.world.ᅠᏧ‍.id > 0;
   }
+  function validAimTarget() {
+    const self=GetAllTargets.players[B.world.ᅠᏧ‍?.id],target=Aimbot.targetPlayer;
+    return target!==self && [self,target].every(p=>p?.active &&
+      Number.isFinite(p.x) && Number.isFinite(p.y) && p.x>=0 && p.y>=0);
+  }
   let lastSentAngle = null,lastSentPlayer = 0;
   const appliedToggles={AimBotEnabled:MOD.AimBotEnabled,JitterEnabled:MOD.JitterEnabled};
   function __send(value, forceAngle = false) {
@@ -998,7 +1006,7 @@ function __installDevastMod(B) {
     jitter.lastSentAt = -Infinity;
   }
   function updateJitter(now, sendDirection=false) {
-    if (!MOD.JitterEnabled || !playing() || Aimbot.mouseDown || now < jitter.fireUntil || jitterAiming() || B.chatActive?.()) {
+    if (!MOD.JitterEnabled || !playing() || reconnect.sessionEnded || Aimbot.mouseDown || now < jitter.fireUntil || jitterAiming() || B.chatActive?.()) {
       stopJitter();
       return;
     }
@@ -1022,7 +1030,7 @@ function __installDevastMod(B) {
     }
   }
   function beforeFire() {
-    if (!playing()) return;
+    if (!playing() || reconnect.sessionEnded) return;
     const now=performance.now();
     if (!MOD.JitterEnabled && !MOD.AimBotEnabled) return;
     const continuingBurst=now<jitter.fireUntil && !jitter.spinning;
@@ -1037,9 +1045,9 @@ function __installDevastMod(B) {
     if (MOD.AimBotEnabled) {
       // A native burst may start before the next 50 ms tick. Use ILM itself
       // once before its first attack; held fire stays on the existing timer.
-      if (continuingBurst && Aimbot.targetPlayer?.active && Number.isFinite(lastSentAngle) && lastSentPlayer === B.world.ᅠᏧ‍.id) return;
+      if (continuingBurst && validAimTarget() && Number.isFinite(lastSentAngle) && lastSentPlayer === B.world.ᅠᏧ‍.id) return;
       const angle = Aimbot.resolve();
-      if (Aimbot.targetPlayer?.active) {
+      if (validAimTarget()) {
         // The native mouse may have changed the server direction since our
         // cached send. Reassert it once per burst, including an equal angle.
         __send([6,angle],true);
@@ -1111,7 +1119,10 @@ function __installDevastMod(B) {
     // Fill any extended slots: original ILM iterates densely over both arrays.
     while(group.length<=id) group.push(new ilm.Target(group.length));
     ensureAimTeams(id);
-    if(!active) {curvedAim.forget(group[id]);group[id].setInactive();return;}
+    if(!active) {
+      if(group[id]===Aimbot.targetPlayer || group[id]===GetAllTargets.players[B.world.ᅠᏧ‍?.id]) lastSentAngle=null;
+      curvedAim.forget(group[id]);group[id].setInactive();return;
+    }
     if(Number.isFinite(x)&&Number.isFinite(y)) {
       if(!group[id].active)curvedAim.forget(group[id]);
       group[id].update(x,y);curvedAim.observe(group[id]);
@@ -2297,10 +2308,13 @@ function __installDevastMod(B) {
   return {
     settings: MOD,
     beforeFire,
+    get controlsAimDirection() {
+      return playing() && !reconnect.sessionEnded && (MOD.JitterEnabled || MOD.AimBotEnabled && validAimTarget());
+    },
     get jitterAngle() { return jitter.spinning ? jitter.angle * Math.PI / 180 : null; },
     get curvedAimMode(){return MOD.CurvedAimEnabled?curvedAim.mode:'ilm';},
     get aimRenderAngle() {
-      return playing() && MOD.AimBotEnabled && Aimbot.targetPlayer?.active &&
+      return playing() && !reconnect.sessionEnded && MOD.AimBotEnabled && validAimTarget() &&
         lastSentPlayer===B.world.ᅠᏧ‍.id && Number.isFinite(lastSentAngle) ? lastSentAngle*Math.PI/180 : null;
     },
     targets: GetAllTargets,

@@ -201,7 +201,7 @@ test('receive timing distinguishes a quiet socket from a client close without re
  assert.ok(!JSON.stringify(next).includes(account.token));f.mod.dispose();assert.equal(handlers.size,0);
 });
 test('combat snapshots expire idle commands and cannot be changed by the report consumer',()=>{
- const f=fixture();f.mod.trackPacket(1,1,1,0,0,true);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();
+ const f=fixture();f.mod.trackPacket(1,1,1,0,0,true);f.mod.trackPacket(1,2,1,100,100,true);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();
  f.mod.observeDeath();const report=f.mod.connectionInfo();report.events[0].commandsInLast2s.angle=999;
  assert.equal(f.mod.connectionInfo().events[0].commandsInLast2s.angle,1);
  f.setClock(4000);f.mod.observeDeath();assert.equal(f.mod.connectionInfo().events.at(-1).commandsInLast2s.angle,0);f.mod.dispose();

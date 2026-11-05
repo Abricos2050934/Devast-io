@@ -160,3 +160,13 @@ class PublicationTests(unittest.TestCase):
   for state in [False,None]:
    self.validation['browsers']['firefox']['native']['aim_cycle_socket_backpressure']=state;self.save()
    with self.assertRaisesRegex(ValueError,'Aim cycle.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_valid_targets_and_death_handling_require_both_native_browsers(self):
+  self.contract['features']=['valid-live-aim-targets']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'valid_live_aim_targets':True,'server_death_sends_no_commands':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for key in ['valid_live_aim_targets','server_death_sends_no_commands']:
+   self.validation['browsers']['firefox']['native'][key]=False;self.save()
+   with self.assertRaisesRegex(ValueError,'Live aim.*firefox'):p.artifacts(self.root,self.out)
+   self.validation['browsers']['firefox']['native'][key]=True

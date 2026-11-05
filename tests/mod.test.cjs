@@ -70,10 +70,10 @@ test('dispose removes timers, frame callbacks and registered event handlers', ()
   assert.equal([...f.listeners.values()].reduce((n,s) => n+s.size, 0), 0);
 });
 
-test('ILM retains last angle without a target; native input resumes after disabling and dispose',()=>{
+test('ILM retains last angle in core state without injecting it when no target is present',()=>{
   const g=fixture();const wrapper=g.network['ѕ᠋༢'];
   g.mod.trackPacket(1,1,0,10,20,true);g.mod.setSetting('AimBotEnabled',true);g.mod.aim.refresh();
-  assert.deepEqual(g.packets,[[6,0]]);
+  assert.deepEqual(g.packets,[]);
   g.network['ѕ᠋༢']();assert.equal(g.nativeCalls,1);
   g.mod.setSetting('AimBotEnabled',false);g.network['ѕ᠋༢']();assert.equal(g.nativeCalls,2);
   g.mod.dispose();assert.equal(g.network['ѕ᠋༢'],wrapper);

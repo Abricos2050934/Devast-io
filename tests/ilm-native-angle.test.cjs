@@ -11,7 +11,7 @@ test('raw and automatically decoded native direction hooks preserve ILM timing a
  for(const patch of patches)for(const representation of ['raw','decoded']){
   const fn=parser.parse(patch.decoded_before,{ecmaVersion:'latest'}).body[0],name=fn.id.name;
   const intervalName=fn.body.body[0].test.right.name,interval=100;assert.ok(intervalName,'Native configurable interval required');
-  const native=vm.createContext({...constants,[intervalName]:interval,__responsiveMod:{settings:{AimBotEnabled:false}},'ᴉ̡̂':0,'ѕܓ́':0,'ⲅᚂߌ':0,'ﾠࠂ̶':0,'ㅤ๘މ':{angle:0},packets:[],codecCalls:0});
+  const native=vm.createContext({...constants,[intervalName]:interval,__responsiveMod:{settings:{AimBotEnabled:false},controlsAimDirection:false},'ᴉ̡̂':0,'ѕܓ́':0,'ⲅᚂߌ':0,'ﾠࠂ̶':0,'ㅤ๘މ':{angle:0},packets:[],codecCalls:0});
   let patched=patch.decoded_after;
   if(representation==='raw'){
    native.source=patch.decoded_before;native.index=patches.indexOf(patch);
@@ -24,7 +24,7 @@ test('raw and automatically decoded native direction hooks preserve ILM timing a
   const source=hooks.find(h=>h.name===(name==='օ︃２'?'_0x307373':'_0x29d073')).source;
   vm.runInContext('var _0x5096af={send:p=>packets.push(JSON.parse(p))};'+source+';var call='+(name==='օ︃２'?'_0x307373':'_0x29d073')+';',original);
   for(const [time,angle,enabled]of [[interval+1,.7,true],[interval+2,.8,true],[interval*2+3,1.4,true],[interval*2+4,1.4,false],[interval*3+6,-2,false],[interval*4+8,Math.PI,true],[interval*5+10,Math.PI,false],[interval*6+12,0,false]]){
-   native['ᴉ̡̂']=time;native['ㅤ๘މ'].angle=angle;native.__responsiveMod.settings.AimBotEnabled=enabled;
+   native['ᴉ̡̂']=time;native['ㅤ๘މ'].angle=angle;native.__responsiveMod.settings.AimBotEnabled=enabled;native.__responsiveMod.controlsAimDirection=enabled;
    original._0x565a20=time;original._0x51a9fc.angle=angle;original._0x2ea565.AimBotEnabled=enabled;
    vm.runInContext('call();',native,{timeout:1000});vm.runInContext('call();',original,{timeout:1000});
    const actual=vm.runInContext('JSON.stringify({last:ѕܓ́,angle:ⲅᚂߌ,sent:ﾠࠂ̶,packets})',native);

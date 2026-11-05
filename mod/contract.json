@@ -40,7 +40,8 @@
     "native-shot-direction-and-render-sync",
     "connection-close-origin-diagnostics",
     "curved-target-and-chaser-interception",
-    "aim-cycle-socket-backpressure"
+    "aim-cycle-socket-backpressure",
+    "valid-live-aim-targets"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -62,7 +63,8 @@
     "tests/ilm-restoration.test.cjs",
     "tests/angle-transport.test.cjs",
     "tests/curved-aim.test.cjs",
-    "tests/aim-backpressure.test.cjs"
+    "tests/aim-backpressure.test.cjs",
+    "tests/aim-validity.test.cjs"
   ],
   "required_browsers": [
     "chromium",

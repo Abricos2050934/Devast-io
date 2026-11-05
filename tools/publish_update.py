@@ -51,6 +51,8 @@ def artifacts(root, output):
             raise ValueError('Automation socket backpressure was not verified in browser: ' + browser)
         if 'aim-cycle-socket-backpressure' in contract.get('features', []) and report.get('native', {}).get('aim_cycle_socket_backpressure') is not True:
             raise ValueError('Aim cycle socket backpressure was not verified in browser: ' + browser)
+        if 'valid-live-aim-targets' in contract.get('features', []) and not all(report.get('native', {}).get(key) is True for key in ('valid_live_aim_targets', 'server_death_sends_no_commands')):
+            raise ValueError('Live aim targets and server death send behavior were not verified in browser: ' + browser)
         if 'connection-close-origin-diagnostics' in contract.get('features', []) and report.get('native', {}).get('connection_close_origin_diagnostics') is not True:
             raise ValueError('Connection close origin diagnostics not verified in browser: ' + browser)
         if 'coalesced-aim-directions' in contract.get('features', []) and report.get('native', {}).get('coalesced_aim_directions_and_native_idle') is not True:

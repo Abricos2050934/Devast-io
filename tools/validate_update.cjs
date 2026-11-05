@@ -29,7 +29,7 @@ const canonical=acorn.parse(fs.readFileSync(path.join(root,'mod/ilm-aim.js'),'ut
 assert.deepEqual(normalize(body.find(n=>n.id?.name==='__createIlmAim')),normalize(canonical),'ILM algorithm changed');
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
 assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2']),'Every reviewed native patch is required');
-const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave','ᴀᄁ︃':'landmineRender','рոᴎ':'wireRender','ᅠ̘ܛ':'trapRender'};
+const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ԁ̶ϲ':'release','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave','ᴀᄁ︃':'landmineRender','рոᴎ':'wireRender','ᅠ̘ܛ':'trapRender'};
 const closeOperation=profile.operations.find(p=>p.id==='native-disconnect-without-socket');
 const closeName=acorn.parse(closeOperation.after,{ecmaVersion:'latest'}).body[0].id.name;
 functions[closeName]='nativeClose';
@@ -92,6 +92,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   await page.route(source.page_url,r=>r.fulfill({status:200,contentType:'text/html',body:read('index.html')}));
   await page.route(source.script_url,r=>r.fulfill({status:200,contentType:'text/javascript',body:override.data[0].rules[0].file}));
   await page.route(url=>url.hostname==='raw.githubusercontent.com'&&url.pathname==='/Abricos2050934/Devast-io/updates/game.modded.js',r=>r.fulfill({status:200,contentType:'text/plain',headers:{'access-control-allow-origin':'*'},body:code}));
+  await page.addInitScript('window.__verifyAimValidity='+require('./verify_aim_validity.cjs').verifyAimValidity.toString());
   await page.addInitScript('window.__verifyOriginalIlm='+require('./verify_ilm_mechanics.cjs').verifyOriginalIlm.toString());
   await page.addInitScript('window.__verifyCurvedAim='+require('./verify_curved_aim.cjs').verifyCurvedAim.toString());
   await page.goto(source.page_url,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForFunction(()=>!!window.__updateProbe&&!!window.__devastMod?.menu,{timeout:25000});
@@ -277,6 +278,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
      check(JSON.stringify(transport.packets)===JSON.stringify([n.nativePlacement(),n.nativePlacement()]),'AutoBuild differs from the native cursor placement cell or rotation');
      self[s['օⲥᚁ']]=0;m.render(16);check(transport.packets.length===2,'AutoBuild sent an invalid native preview');
     }finally{m.setSetting('AutoBuiledEnabled',false);}
+    m.aimValidityVerification=window.__verifyAimValidity(m,n,s,r);
     const originalComparison=window.__verifyOriginalIlm(m,n,s,originalAim);
     check(originalComparison.ticks===432,'Incomplete original ILM comparison');
     m.originalIlmVerification=originalComparison;
@@ -305,17 +307,22 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Returning from loading changed identity');
    }finally{nativeMenu[uiKey]=nativeUi;}
    const deathKey=s['ι︃２'],nativeDeath=n.network[deathKey],health=w[s['ᴘρࡀ']][s['ᴇ༤ᚆ']].value;let deathCalls=0;
+   const deathCapture=n.capturePackets(),deathSettings=Object.fromEntries(['AimBotEnabled','autoFire','JitterEnabled'].map(k=>[k,m.settings[k]]));
    try{
+    n.network.state=1;self.id=1;m.setSetting('AimBotEnabled',true);m.setSetting('autoFire',true);
     n.network[deathKey]=code=>{check(code===128,'Native death error code changed');deathCalls++;};n.death(new Uint8Array([5,0,2]));
     const event=m.connectionInfo().events.at(-1);
     check(event.type==='server-death'&&event.health===health,'Native death lost its pre-handler health snapshot');
     check(event.deathOpcode===5&&event.deathPacketLength===3&&event.deathPrefixHex==='05 00 02','Native death packet was not captured');
     check(deathCalls===1,'Death observation changed native handling');
+    check(deathCapture.packets.length===0,'Handling server death sent a command');
+    for(let i=0;i<50;i++){m.aim.refresh();m.beforeFire();}
+    check(deathCapture.packets.length===0&&!m.controlsAimDirection,'Terminated session kept sending combat packets');
     check(m.connectionInfo().sessionEnded&&m.connectionInfo().awaitingPlay,'Death did not terminate session restoration');
     n.network.state=64;m.step(performance.now());
     check(n.network.state===0&&m.connectionInfo().phase==='dead','Closed socket revived restore mode after death');
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Death recovery changed stored identity');
-   }finally{n.network[deathKey]=nativeDeath;}
+   }finally{deathCapture.restore();n.network[deathKey]=nativeDeath;for(const [k,v]of Object.entries(deathSettings))m.setSetting(k,v);}
    const drawKey=s['ᴑ̸ᴘ'],originalDraw=n.graphics[drawKey],visualState={id:self.id,state:n.network.state,alpha:n.ctx.globalAlpha};
    try{
     self.id=1;n.network.state=1;m.setSetting('ShowMines',true);m.setSetting('ShowWires',true);
@@ -409,7 +416,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {curved_target_and_chaser_interception:true,curve_comparison:m.curveVerification,menu:true,connection_close_origin_diagnostics:true,native_shot_direction_and_render_sync:true,coalesced_aim_directions_and_native_idle:true,original_ilm_mechanics:true,original_ilm_comparison:m.originalIlmVerification,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {curved_target_and_chaser_interception:true,curve_comparison:m.curveVerification,menu:true,connection_close_origin_diagnostics:true,native_shot_direction_and_render_sync:true,coalesced_aim_directions_and_native_idle:true,original_ilm_mechanics:true,original_ilm_comparison:m.originalIlmVerification,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,valid_live_aim_targets:true,aim_validity:m.aimValidityVerification,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,native_shot_matches_ilm_line:true,jitter_rotation_and_shot_priority:true,jitter_preserves_native_input:true,jitter_socket_backpressure:true,stable_frame_entity_records:true,firing_display_original_ilm_interpolation:true,continuous_fire_ilm_cadence:true,ilm_manual_fire_cadence:true,disconnect_preserves_aim_history:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:JSON.parse(z.gunzipSync(fs.readFileSync('recovery/ilm-aim-reference.json.gz')))});
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}
