@@ -1,0 +1,183 @@
+{
+  "scope": "Original native code vs exact published mod; only an exported observer and extracted native check added. Forwarding toString hook is the only mutation; no manual flag injection. Fixed synthetic nonce, no server session.",
+  "browser": "154.0.8037.57",
+  "published_output_sha256": "829023ad9aa4355fddd796b368ed03229997d6e8c5de245a8baa895f795c08eb",
+  "rows": [
+    {
+      "version": "native",
+      "signer": 0,
+      "tampered": false,
+      "hookApplied": false,
+      "startupFlag": 0,
+      "detectedFlag": 0,
+      "flagAfter": 0,
+      "changed": {
+        "ᴑ︈օ": "i_540040752",
+        "ѕމ༥": 48,
+        "Ꮷ︄ߏ": 540040752
+      },
+      "pageErrors": []
+    },
+    {
+      "version": "native",
+      "signer": 0,
+      "tampered": true,
+      "hookApplied": true,
+      "startupFlag": 0,
+      "detectedFlag": 1,
+      "flagAfter": 1,
+      "changed": {
+        "ᴑ︈օ": "i_540040753",
+        "ѕމ༥": 49,
+        "Ꮷ︄ߏ": 540040753
+      },
+      "pageErrors": []
+    },
+    {
+      "version": "native",
+      "signer": 1,
+      "tampered": false,
+      "hookApplied": false,
+      "startupFlag": 0,
+      "detectedFlag": 0,
+      "flagAfter": 0,
+      "changed": {
+        "ρ०ᄇ": "n_702734209",
+        "ѕމ༥": 129,
+        "ᴄᄁࠅ": 702734209
+      },
+      "pageErrors": []
+    },
+    {
+      "version": "native",
+      "signer": 1,
+      "tampered": true,
+      "hookApplied": true,
+      "startupFlag": 0,
+      "detectedFlag": 1,
+      "flagAfter": 1,
+      "changed": {
+        "ρ०ᄇ": "n_702734210",
+        "ѕމ༥": 130,
+        "ᴄᄁࠅ": 702734210
+      },
+      "pageErrors": []
+    },
+    {
+      "version": "native",
+      "signer": 2,
+      "tampered": false,
+      "hookApplied": false,
+      "startupFlag": 0,
+      "detectedFlag": 0,
+      "flagAfter": 0,
+      "changed": {
+        "ⲅ٢ᴑ": "t_702734209",
+        "сࡈ５": 702734209
+      },
+      "pageErrors": []
+    },
+    {
+      "version": "native",
+      "signer": 2,
+      "tampered": true,
+      "hookApplied": true,
+      "startupFlag": 0,
+      "detectedFlag": 1,
+      "flagAfter": 1,
+      "changed": {
+        "ⲅ٢ᴑ": "t_702734210",
+        "сࡈ５": 702734210
+      },
+      "pageErrors": []
+    },
+    {
+      "version": "published_mod",
+      "signer": 0,
+      "tampered": false,
+      "hookApplied": false,
+      "startupFlag": 0,
+      "detectedFlag": 0,
+      "flagAfter": 0,
+      "changed": {
+        "ᴑ︈օ": "i_540040752",
+        "ѕމ༥": 48,
+        "Ꮷ︄ߏ": 540040752
+      },
+      "pageErrors": []
+    },
+    {
+      "version": "published_mod",
+      "signer": 0,
+      "tampered": true,
+      "hookApplied": true,
+      "startupFlag": 0,
+      "detectedFlag": 1,
+      "flagAfter": 1,
+      "changed": {
+        "ᴑ︈օ": "i_540040752",
+        "ѕމ༥": 48,
+        "Ꮷ︄ߏ": 540040752
+      },
+      "pageErrors": []
+    },
+    {
+      "version": "published_mod",
+      "signer": 1,
+      "tampered": false,
+      "hookApplied": false,
+      "startupFlag": 0,
+      "detectedFlag": 0,
+      "flagAfter": 0,
+      "changed": {
+        "ρ०ᄇ": "n_702734209",
+        "ѕމ༥": 129,
+        "ᴄᄁࠅ": 702734209
+      },
+      "pageErrors": []
+    },
+    {
+      "version": "published_mod",
+      "signer": 1,
+      "tampered": true,
+      "hookApplied": true,
+      "startupFlag": 0,
+      "detectedFlag": 1,
+      "flagAfter": 1,
+      "changed": {
+        "ρ०ᄇ": "n_702734209",
+        "ѕމ༥": 129,
+        "ᴄᄁࠅ": 702734209
+      },
+      "pageErrors": []
+    },
+    {
+      "version": "published_mod",
+      "signer": 2,
+      "tampered": false,
+      "hookApplied": false,
+      "startupFlag": 0,
+      "detectedFlag": 0,
+      "flagAfter": 0,
+      "changed": {
+        "ⲅ٢ᴑ": "t_702734209",
+        "сࡈ５": 702734209
+      },
+      "pageErrors": []
+    },
+    {
+      "version": "published_mod",
+      "signer": 2,
+      "tampered": true,
+      "hookApplied": true,
+      "startupFlag": 0,
+      "detectedFlag": 1,
+      "flagAfter": 1,
+      "changed": {
+        "ⲅ٢ᴑ": "t_702734209",
+        "сࡈ５": 702734209
+      },
+      "pageErrors": []
+    }
+  ]
+}

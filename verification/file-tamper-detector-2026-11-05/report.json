@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "native_raw_sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1",
+  "decoded_view": "build/network-diff/new-native.full.js",
+  "source_location": {
+    "begin_line": 3087,
+    "end_line": 3146,
+    "begin": 126608,
+    "end": 128191
+  },
+  "detector": "ᴄс٧",
+  "flag": "ѕ०̊",
+  "checks": [
+    "Function.prototype.toString source contains [native code]",
+    "Source length no more than 100",
+    "Native-code marker and length checked through both direct and Reflect.apply calls",
+    "Native toString arity zero and undefined prototype property"
+  ],
+  "confirmed_trigger": "A forwarding Function.prototype.toString wrapper sets the integrity flag through the extracted native block; clean and comment-only controls remain zero in Chromium and Firefox",
+  "unit_cases": 8,
+  "native_integration_cases": 12,
+  "flag_set_manually": false,
+  "native_flag_effect": "Synthetic i_/n_/t_ signature fields differ by one when the detected flag is set",
+  "published_mod_sha256": "829023ad9aa4355fddd796b368ed03229997d6e8c5de245a8baa895f795c08eb",
+  "published_mod_result": "The flag is observed, but three known signature consumers already ignore it; all three tested signature outputs remain equal to clean native values",
+  "whole_checker_isolation_limit": "A separate extraction of the entire larger checker reported flag=1 even for the clean harness. It is not used as causal proof; the demonstrated result is the isolated exact source block and its synthetic signature integration.",
+  "not_established": [
+    "A checksum comparison of the entire downloaded JS file",
+    "The server-side decision or rule causing the reported game-over",
+    "That this already-neutralized flag explains continuing disconnects"
+  ],
+  "server_session_started": false,
+  "status": "controlled_client_detection_and_data_flow_confirmed"
+}

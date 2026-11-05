@@ -1,0 +1,63 @@
+{
+  "scope": "Exact extracted Function.prototype.toString validation block; no game session and no manual integrity flag injection",
+  "source": "new-native.full.js:3087-3146",
+  "rows": [
+    {
+      "engine": "chromium",
+      "version": "154.0.8037.57",
+      "mode": "clean",
+      "flag": 0,
+      "source": "function toString() { [native code] }"
+    },
+    {
+      "engine": "chromium",
+      "version": "154.0.8037.57",
+      "mode": "comment_only",
+      "flag": 0,
+      "source": "function toString() { [native code] }"
+    },
+    {
+      "engine": "chromium",
+      "version": "154.0.8037.57",
+      "mode": "forwarding_toString",
+      "flag": 1,
+      "source": "function(...args){return Reflect.apply(original,this,args);}"
+    },
+    {
+      "engine": "chromium",
+      "version": "154.0.8037.57",
+      "mode": "forwarding_imul",
+      "flag": 0,
+      "source": "function toString() { [native code] }"
+    },
+    {
+      "engine": "firefox",
+      "version": "153.0",
+      "mode": "clean",
+      "flag": 0,
+      "source": "function toString() {\n    [native code]\n}"
+    },
+    {
+      "engine": "firefox",
+      "version": "153.0",
+      "mode": "comment_only",
+      "flag": 0,
+      "source": "function toString() {\n    [native code]\n}"
+    },
+    {
+      "engine": "firefox",
+      "version": "153.0",
+      "mode": "forwarding_toString",
+      "flag": 1,
+      "source": "function(...args){return Reflect.apply(original,this,args);}"
+    },
+    {
+      "engine": "firefox",
+      "version": "153.0",
+      "mode": "forwarding_imul",
+      "flag": 0,
+      "source": "function toString() {\n    [native code]\n}"
+    }
+  ],
+  "passed": true
+}
