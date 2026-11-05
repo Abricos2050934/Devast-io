@@ -1,0 +1,303 @@
+{
+  "scope": "Entire supplied old native client vs freshly verified native client, not a comparison of mod overlays",
+  "sources": {
+    "old": {
+      "sha256": "0df8c5c87e355da537e098641e2e7c135860575413ad5eabce3c9b3b21c4df5a",
+      "bytes": 14675300,
+      "lines": 227077
+    },
+    "new": {
+      "sha256": "809f3a89f13287f35ee03ce4e12a26a8bef18b956ef4654473944d9c136d3eab",
+      "bytes": 14703478,
+      "lines": 223091
+    }
+  },
+  "functions": {
+    "old": 15168,
+    "new": 16340,
+    "unmatched_new_definition": 7735,
+    "candidate_modified_requires_review": 200,
+    "same_normalized_ast": 8405,
+    "unmatched_old_definition": 6563
+  },
+  "top_statements": {
+    "old": 8715,
+    "new": 8371,
+    "same_normalized_shape_occurrences": 3743
+  },
+  "integrity_markers": [
+    {
+      "marker": "() { [native code] }",
+      "old_count": 22,
+      "new_count": 22,
+      "same_owner_shape_occurrences": 0,
+      "old_owners": [
+        "(anonymous)"
+      ],
+      "new_owners": [
+        "(anonymous)"
+      ],
+      "old_lines": [
+        2943,
+        3010,
+        3221,
+        3415,
+        3483,
+        3667,
+        3690,
+        3710,
+        3737,
+        3757,
+        3776,
+        3912,
+        3934,
+        4010,
+        4063,
+        4165,
+        4316,
+        4344,
+        4384,
+        4562,
+        4608,
+        4725
+      ],
+      "new_lines": [
+        3321,
+        3430,
+        3522,
+        3708,
+        3737,
+        3813,
+        3852,
+        3878,
+        3906,
+        3964,
+        4003,
+        4080,
+        4273,
+        4289,
+        4485,
+        4504,
+        4593,
+        4620,
+        4689,
+        4705,
+        4775,
+        4950
+      ]
+    },
+    {
+      "marker": "[native code]",
+      "old_count": 5,
+      "new_count": 5,
+      "same_owner_shape_occurrences": 0,
+      "old_owners": [
+        "(anonymous)",
+        "ﾠ̋ᚅ"
+      ],
+      "new_owners": [
+        "(anonymous)",
+        "рܕρ"
+      ],
+      "old_lines": [
+        2834,
+        2840,
+        6660,
+        6894,
+        126002
+      ],
+      "new_lines": [
+        3103,
+        3122,
+        6614,
+        7268,
+        166565
+      ]
+    },
+    {
+      "marker": "coercion_count,",
+      "old_count": 2,
+      "new_count": 2,
+      "same_owner_shape_occurrences": 2,
+      "old_owners": [
+        "ࡀވܙ͡"
+      ],
+      "new_owners": [
+        "ᴘࠃހ༥"
+      ],
+      "old_lines": [
+        5499,
+        5854
+      ],
+      "new_lines": [
+        5796,
+        6150
+      ]
+    },
+    {
+      "marker": "lockdown_tooling",
+      "old_count": 9,
+      "new_count": 9,
+      "same_owner_shape_occurrences": 7,
+      "old_owners": [
+        "(anonymous)",
+        "ࡀވܙ͡"
+      ],
+      "new_owners": [
+        "(anonymous)",
+        "ᴘࠃހ༥"
+      ],
+      "old_lines": [
+        5308,
+        5309,
+        5408,
+        5661,
+        5662,
+        5763,
+        5806,
+        6228,
+        6750
+      ],
+      "new_lines": [
+        5606,
+        5607,
+        5705,
+        5958,
+        5959,
+        6059,
+        6103,
+        6649,
+        7120
+      ]
+    },
+    {
+      "marker": "stack_capture_count,",
+      "old_count": 2,
+      "new_count": 2,
+      "same_owner_shape_occurrences": 2,
+      "old_owners": [
+        "ࡀވܙ͡"
+      ],
+      "new_owners": [
+        "ᴘࠃހ༥"
+      ],
+      "old_lines": [
+        5476,
+        5832
+      ],
+      "new_lines": [
+        5773,
+        6128
+      ]
+    },
+    {
+      "marker": "stack_depth,",
+      "old_count": 2,
+      "new_count": 2,
+      "same_owner_shape_occurrences": 2,
+      "old_owners": [
+        "ࡀވܙ͡"
+      ],
+      "new_owners": [
+        "ᴘࠃހ༥"
+      ],
+      "old_lines": [
+        5497,
+        5846
+      ],
+      "new_lines": [
+        5794,
+        6142
+      ]
+    },
+    {
+      "marker": "stack_empty,",
+      "old_count": 2,
+      "new_count": 2,
+      "same_owner_shape_occurrences": 2,
+      "old_owners": [
+        "ࡀވܙ͡"
+      ],
+      "new_owners": [
+        "ᴘࠃހ༥"
+      ],
+      "old_lines": [
+        5477,
+        5833
+      ],
+      "new_lines": [
+        5774,
+        6129
+      ]
+    },
+    {
+      "marker": "stack_forbidden_keyword:",
+      "old_count": 2,
+      "new_count": 2,
+      "same_owner_shape_occurrences": 2,
+      "old_owners": [
+        "ࡀވܙ͡"
+      ],
+      "new_owners": [
+        "ᴘࠃހ༥"
+      ],
+      "old_lines": [
+        5490,
+        5849
+      ],
+      "new_lines": [
+        5787,
+        6145
+      ]
+    }
+  ],
+  "network_sink_counts": {
+    "old": {
+      "send": 6,
+      "close": 4,
+      "WebSocket": 3,
+      "open": 16,
+      "XMLHttpRequest": 2
+    },
+    "new": {
+      "send": 7,
+      "close": 17,
+      "WebSocket": 3,
+      "open": 26,
+      "XMLHttpRequest": 3
+    }
+  },
+  "string_literals": {
+    "new_only": 1689,
+    "old_only": 434,
+    "changed_counts": 365
+  },
+  "unresolved_eval": {
+    "old": [
+      {
+        "line": 15487,
+        "expression": "eval(ѕ̆ܓ(ᴌߍ३))"
+      },
+      {
+        "line": 17375,
+        "expression": "eval(ᴘᚁⲣ(ᴌߍ३))"
+      }
+    ],
+    "new": [
+      {
+        "line": 19658,
+        "expression": "eval(ᴀ๖ᚇ(ⲟߒ９))"
+      },
+      {
+        "line": 210845,
+        "expression": "eval(ᅠܐɑ(ⲟߒ９))"
+      }
+    ]
+  },
+  "limits": [
+    "Same normalized AST means same syntax after local/name normalization, not an independently proved equivalence of every external binding",
+    "Candidate modified pairs are anchor-based similarity results and require review",
+    "Unmatched definitions are not automatically new features: obfuscation and moved code also produce unmatched functions",
+    "Full textual diff covers all visible decoded source changes; two argument-dependent eval sites remain in each static input view"
+  ]
+}

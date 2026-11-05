@@ -1,0 +1,730 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "method": "Full AST inventories and source diff of decoded files; exact normalized-structure matching plus explicitly uncertain semantic-anchor candidates",
+  "freshness": {
+    "page": {
+      "url": "https://devast.io/",
+      "status": 200,
+      "bytes": 79065,
+      "sha256": "9da8965c65f94ca17c5f7869c4944c5f48ffb40aef3d3c928ddfee6a20a041bb"
+    },
+    "known_native": {
+      "url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
+      "status": 200,
+      "bytes": 6923876,
+      "sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1"
+    },
+    "github": {
+      "url": "https://api.github.com/repos/Abricos2050934/Devast-io",
+      "status": 200,
+      "bytes": 5774,
+      "sha256": "4c09ca01aab4b9b5c80efbbb04b9d083de91616d6c7e0ac95417d9d97d38ddd0"
+    }
+  },
+  "raw_inputs": {
+    "old_native": {
+      "filename": "ToTAQQprwookozBp85ZQ1yzBT.js",
+      "sha256": "e090cec7542760cb9413e1807470f57b60bed1f43de57f6d4da8652f4c8f4853",
+      "bytes": 6443883
+    },
+    "old_prp": {
+      "filename": "prp-aimbot-v2_LICENSE (2).js",
+      "sha256": "8a93fecd24a64900a643bec42753fb3b989e8819b1e9c4847a1957bc196d72b9",
+      "bytes": 7449904
+    },
+    "new_native": {
+      "url": "https://devast.io/js/GqIvLJdVfXmKlyX.js",
+      "status": 200,
+      "bytes": 6923876,
+      "sha256": "b2752241a0a1491b5bd48146c7c3c4937f490928df5cab058ba80d32a413acc1"
+    }
+  },
+  "native_comparison": {
+    "scope": "Entire supplied old native client vs freshly verified native client, not a comparison of mod overlays",
+    "sources": {
+      "old": {
+        "sha256": "0df8c5c87e355da537e098641e2e7c135860575413ad5eabce3c9b3b21c4df5a",
+        "bytes": 14675300,
+        "lines": 227077
+      },
+      "new": {
+        "sha256": "809f3a89f13287f35ee03ce4e12a26a8bef18b956ef4654473944d9c136d3eab",
+        "bytes": 14703478,
+        "lines": 223091
+      }
+    },
+    "functions": {
+      "old": 15168,
+      "new": 16340,
+      "unmatched_new_definition": 7735,
+      "candidate_modified_requires_review": 200,
+      "same_normalized_ast": 8405,
+      "unmatched_old_definition": 6563
+    },
+    "top_statements": {
+      "old": 8715,
+      "new": 8371,
+      "same_normalized_shape_occurrences": 3743
+    },
+    "integrity_markers": [
+      {
+        "marker": "() { [native code] }",
+        "old_count": 22,
+        "new_count": 22,
+        "same_owner_shape_occurrences": 0,
+        "old_owners": [
+          "(anonymous)"
+        ],
+        "new_owners": [
+          "(anonymous)"
+        ],
+        "old_lines": [
+          2943,
+          3010,
+          3221,
+          3415,
+          3483,
+          3667,
+          3690,
+          3710,
+          3737,
+          3757,
+          3776,
+          3912,
+          3934,
+          4010,
+          4063,
+          4165,
+          4316,
+          4344,
+          4384,
+          4562,
+          4608,
+          4725
+        ],
+        "new_lines": [
+          3321,
+          3430,
+          3522,
+          3708,
+          3737,
+          3813,
+          3852,
+          3878,
+          3906,
+          3964,
+          4003,
+          4080,
+          4273,
+          4289,
+          4485,
+          4504,
+          4593,
+          4620,
+          4689,
+          4705,
+          4775,
+          4950
+        ]
+      },
+      {
+        "marker": "[native code]",
+        "old_count": 5,
+        "new_count": 5,
+        "same_owner_shape_occurrences": 0,
+        "old_owners": [
+          "(anonymous)",
+          "ﾠ̋ᚅ"
+        ],
+        "new_owners": [
+          "(anonymous)",
+          "рܕρ"
+        ],
+        "old_lines": [
+          2834,
+          2840,
+          6660,
+          6894,
+          126002
+        ],
+        "new_lines": [
+          3103,
+          3122,
+          6614,
+          7268,
+          166565
+        ]
+      },
+      {
+        "marker": "coercion_count,",
+        "old_count": 2,
+        "new_count": 2,
+        "same_owner_shape_occurrences": 2,
+        "old_owners": [
+          "ࡀވܙ͡"
+        ],
+        "new_owners": [
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          5499,
+          5854
+        ],
+        "new_lines": [
+          5796,
+          6150
+        ]
+      },
+      {
+        "marker": "lockdown_tooling",
+        "old_count": 9,
+        "new_count": 9,
+        "same_owner_shape_occurrences": 7,
+        "old_owners": [
+          "(anonymous)",
+          "ࡀވܙ͡"
+        ],
+        "new_owners": [
+          "(anonymous)",
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          5308,
+          5309,
+          5408,
+          5661,
+          5662,
+          5763,
+          5806,
+          6228,
+          6750
+        ],
+        "new_lines": [
+          5606,
+          5607,
+          5705,
+          5958,
+          5959,
+          6059,
+          6103,
+          6649,
+          7120
+        ]
+      },
+      {
+        "marker": "stack_capture_count,",
+        "old_count": 2,
+        "new_count": 2,
+        "same_owner_shape_occurrences": 2,
+        "old_owners": [
+          "ࡀވܙ͡"
+        ],
+        "new_owners": [
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          5476,
+          5832
+        ],
+        "new_lines": [
+          5773,
+          6128
+        ]
+      },
+      {
+        "marker": "stack_depth,",
+        "old_count": 2,
+        "new_count": 2,
+        "same_owner_shape_occurrences": 2,
+        "old_owners": [
+          "ࡀވܙ͡"
+        ],
+        "new_owners": [
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          5497,
+          5846
+        ],
+        "new_lines": [
+          5794,
+          6142
+        ]
+      },
+      {
+        "marker": "stack_empty,",
+        "old_count": 2,
+        "new_count": 2,
+        "same_owner_shape_occurrences": 2,
+        "old_owners": [
+          "ࡀވܙ͡"
+        ],
+        "new_owners": [
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          5477,
+          5833
+        ],
+        "new_lines": [
+          5774,
+          6129
+        ]
+      },
+      {
+        "marker": "stack_forbidden_keyword:",
+        "old_count": 2,
+        "new_count": 2,
+        "same_owner_shape_occurrences": 2,
+        "old_owners": [
+          "ࡀވܙ͡"
+        ],
+        "new_owners": [
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          5490,
+          5849
+        ],
+        "new_lines": [
+          5787,
+          6145
+        ]
+      }
+    ],
+    "network_sink_counts": {
+      "old": {
+        "send": 6,
+        "close": 4,
+        "WebSocket": 3,
+        "open": 16,
+        "XMLHttpRequest": 2
+      },
+      "new": {
+        "send": 7,
+        "close": 17,
+        "WebSocket": 3,
+        "open": 26,
+        "XMLHttpRequest": 3
+      }
+    },
+    "string_literals": {
+      "new_only": 1689,
+      "old_only": 434,
+      "changed_counts": 365
+    },
+    "unresolved_eval": {
+      "old": [
+        {
+          "line": 15487,
+          "expression": "eval(ѕ̆ܓ(ᴌߍ३))"
+        },
+        {
+          "line": 17375,
+          "expression": "eval(ᴘᚁⲣ(ᴌߍ३))"
+        }
+      ],
+      "new": [
+        {
+          "line": 19658,
+          "expression": "eval(ᴀ๖ᚇ(ⲟߒ９))"
+        },
+        {
+          "line": 210845,
+          "expression": "eval(ᅠܐɑ(ⲟߒ９))"
+        }
+      ]
+    },
+    "limits": [
+      "Same normalized AST means same syntax after local/name normalization, not an independently proved equivalence of every external binding",
+      "Candidate modified pairs are anchor-based similarity results and require review",
+      "Unmatched definitions are not automatically new features: obfuscation and moved code also produce unmatched functions",
+      "Full textual diff covers all visible decoded source changes; two argument-dependent eval sites remain in each static input view"
+    ]
+  },
+  "prp_comparison": {
+    "scope": "Entire old-prp vs freshly verified native client; old-prp includes its historical mod overlay",
+    "sources": {
+      "old": {
+        "sha256": "997656c5978107d178ee98703a99f9527ad9b3b6d5ba58e13a3a8886cf0d6d83",
+        "bytes": 14570557,
+        "lines": 253756
+      },
+      "new": {
+        "sha256": "809f3a89f13287f35ee03ce4e12a26a8bef18b956ef4654473944d9c136d3eab",
+        "bytes": 14703478,
+        "lines": 223091
+      }
+    },
+    "functions": {
+      "old": 15614,
+      "new": 16340,
+      "unmatched_new_definition": 7851,
+      "candidate_modified_requires_review": 197,
+      "same_normalized_ast": 8292,
+      "unmatched_old_definition": 7125
+    },
+    "top_statements": {
+      "old": 29,
+      "new": 8371,
+      "same_normalized_shape_occurrences": 0
+    },
+    "integrity_markers": [
+      {
+        "marker": "() { [native code] }",
+        "old_count": 22,
+        "new_count": 22,
+        "same_owner_shape_occurrences": 0,
+        "old_owners": [
+          "(anonymous)"
+        ],
+        "new_owners": [
+          "(anonymous)"
+        ],
+        "old_lines": [
+          3782,
+          3798,
+          3836,
+          3865,
+          4097,
+          4186,
+          4293,
+          4352,
+          4368,
+          4483,
+          4633,
+          4649,
+          4680,
+          4727,
+          4889,
+          4939,
+          5149,
+          5169,
+          5229,
+          5318,
+          5364,
+          5383
+        ],
+        "new_lines": [
+          3321,
+          3430,
+          3522,
+          3708,
+          3737,
+          3813,
+          3852,
+          3878,
+          3906,
+          3964,
+          4003,
+          4080,
+          4273,
+          4289,
+          4485,
+          4504,
+          4593,
+          4620,
+          4689,
+          4705,
+          4775,
+          4950
+        ]
+      },
+      {
+        "marker": "[native code]",
+        "old_count": 5,
+        "new_count": 5,
+        "same_owner_shape_occurrences": 0,
+        "old_owners": [
+          "(anonymous)",
+          "ᴘ̘٢"
+        ],
+        "new_owners": [
+          "(anonymous)",
+          "рܕρ"
+        ],
+        "old_lines": [
+          3494,
+          3508,
+          6795,
+          7304,
+          167942
+        ],
+        "new_lines": [
+          3103,
+          3122,
+          6614,
+          7268,
+          166565
+        ]
+      },
+      {
+        "marker": "coercion_count,",
+        "old_count": 2,
+        "new_count": 2,
+        "same_owner_shape_occurrences": 2,
+        "old_owners": [
+          "ᴏ९̄๙"
+        ],
+        "new_owners": [
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          6180,
+          6538
+        ],
+        "new_lines": [
+          5796,
+          6150
+        ]
+      },
+      {
+        "marker": "lockdown_tooling",
+        "old_count": 9,
+        "new_count": 9,
+        "same_owner_shape_occurrences": 7,
+        "old_owners": [
+          "(anonymous)",
+          "ᴏ९̄๙"
+        ],
+        "new_owners": [
+          "(anonymous)",
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          5988,
+          5989,
+          6089,
+          6342,
+          6343,
+          6445,
+          6488,
+          6986,
+          7185
+        ],
+        "new_lines": [
+          5606,
+          5607,
+          5705,
+          5958,
+          5959,
+          6059,
+          6103,
+          6649,
+          7120
+        ]
+      },
+      {
+        "marker": "stack_capture_count,",
+        "old_count": 2,
+        "new_count": 2,
+        "same_owner_shape_occurrences": 2,
+        "old_owners": [
+          "ᴏ९̄๙"
+        ],
+        "new_owners": [
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          6157,
+          6516
+        ],
+        "new_lines": [
+          5773,
+          6128
+        ]
+      },
+      {
+        "marker": "stack_depth,",
+        "old_count": 2,
+        "new_count": 2,
+        "same_owner_shape_occurrences": 2,
+        "old_owners": [
+          "ᴏ९̄๙"
+        ],
+        "new_owners": [
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          6178,
+          6530
+        ],
+        "new_lines": [
+          5794,
+          6142
+        ]
+      },
+      {
+        "marker": "stack_empty,",
+        "old_count": 2,
+        "new_count": 2,
+        "same_owner_shape_occurrences": 2,
+        "old_owners": [
+          "ᴏ९̄๙"
+        ],
+        "new_owners": [
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          6158,
+          6517
+        ],
+        "new_lines": [
+          5774,
+          6129
+        ]
+      },
+      {
+        "marker": "stack_forbidden_keyword:",
+        "old_count": 2,
+        "new_count": 2,
+        "same_owner_shape_occurrences": 2,
+        "old_owners": [
+          "ᴏ९̄๙"
+        ],
+        "new_owners": [
+          "ᴘࠃހ༥"
+        ],
+        "old_lines": [
+          6171,
+          6533
+        ],
+        "new_lines": [
+          5787,
+          6145
+        ]
+      }
+    ],
+    "network_sink_counts": {
+      "old": {
+        "fetch": 1,
+        "XMLHttpRequest": 3,
+        "open": 17,
+        "send": 7,
+        "sendBeacon": 1,
+        "close": 7,
+        "WebSocket": 3
+      },
+      "new": {
+        "send": 7,
+        "close": 17,
+        "WebSocket": 3,
+        "open": 26,
+        "XMLHttpRequest": 3
+      }
+    },
+    "string_literals": {
+      "new_only": 1684,
+      "old_only": 942,
+      "changed_counts": 388
+    },
+    "unresolved_eval": {
+      "old": [
+        {
+          "line": 132984,
+          "expression": "eval(ࡀ̅᠋(ㅤ̜٧))"
+        },
+        {
+          "line": 143213,
+          "expression": "eval(а̏९(ㅤ̜٧))"
+        }
+      ],
+      "new": [
+        {
+          "line": 19658,
+          "expression": "eval(ᴀ๖ᚇ(ⲟߒ９))"
+        },
+        {
+          "line": 210845,
+          "expression": "eval(ᅠܐɑ(ⲟߒ９))"
+        }
+      ]
+    },
+    "limits": [
+      "Same normalized AST means same syntax after local/name normalization, not an independently proved equivalence of every external binding",
+      "Candidate modified pairs are anchor-based similarity results and require review",
+      "Unmatched definitions are not automatically new features: obfuscation and moved code also produce unmatched functions",
+      "Full textual diff covers all visible decoded source changes; two argument-dependent eval sites remain in each static input view"
+    ]
+  },
+  "confirmed_stack_probe": {
+    "old": {
+      "name": "ࡀވܙ͡",
+      "line": 5183,
+      "chars": 26133
+    },
+    "new": {
+      "name": "ᴘࠃހ༥",
+      "line": 5481,
+      "chars": 26090
+    },
+    "normalized_ast_sha256": "33c26a04645a800e7b8a05fb28c4ff04bb0f7ced18cb790754ad49b1ddc87ea4",
+    "same_normalized_ast": true,
+    "newly_added": false
+  },
+  "confirmed_changes": [
+    "Account API https://account.devast.io/v1/ with authentication/profile/rank/clan UI",
+    "Login payload length 11 to 13: one-use account login ticket and account ID appended",
+    "Outgoing opcodes 39 and 40 at turret controls",
+    "New modal close operations; their counts must not be treated as new socket-disconnect checks",
+    "New account and clan moderation messages; word kick is not by itself an anti-cheat signal"
+  ],
+  "confirmed_existing_protection": {
+    "stack_and_coercion_probe": "Same normalized AST for the selected complete probe function",
+    "native_function_source_checks": "Present in both; enclosing obfuscation wrapper changes are not proved semantically identical",
+    "local_websocket_probes": "Two wss://127.0.0.1:1 constructor sites in each static file",
+    "integrity_flag": {
+      "old": "ո̌︃",
+      "new": "ѕ०̊",
+      "known_signature_read_sites_each": 3
+    },
+    "new_aim_check_identified": false
+  },
+  "network_counts_interpretation": {
+    "WebSocket_constructors": {
+      "old": 3,
+      "new": 3,
+      "two_local_probes_and_one_game_socket": true
+    },
+    "send_sites": {
+      "old": 6,
+      "new": 7,
+      "additional_named_function": "account XMLHttpRequest helper"
+    },
+    "close_sites": {
+      "old": 4,
+      "new": 17,
+      "additional_13": "modal UI closes, not new direct WebSocket close sites"
+    }
+  },
+  "dynamic_decode_attempt": {
+    "responses": [
+      {
+        "status": 404
+      }
+    ],
+    "captured": [],
+    "errors": [
+      "Cannot read properties of undefined (reading 'close')",
+      "Cannot read properties of null (reading 'style')",
+      "Cannot read properties of null (reading 'style')",
+      "Cannot read properties of null (reading 'style')",
+      "Cannot read properties of null (reading 'style')"
+    ],
+    "scope": "Isolated decoder request in a fresh browser, game WebSockets blocked; no playable session; old PRP license initializer omitted only in the observation harness"
+  },
+  "verification": {
+    "full_diff_reconstructs_new_file": true,
+    "old_prp_diff_reconstructs_new_file": true,
+    "function_catalogue_complete": true,
+    "exact_pairs_rechecked": 8405
+  },
+  "conclusion": "The known anti-tamper stack/coercion probe is already present in the supplied old JS. This comparison does not establish a newly added aim-specific anti-cheat or a server-side rule causing the reported disconnect.",
+  "limits": [
+    "Two server-response-dependent eval sites remain in each primary static view",
+    "The old native token endpoint returned HTTP 404, so its historical dynamic response bodies were not recovered",
+    "No claim that all possible runtime behavior or original source names have been recovered",
+    "Unmatched definitions and similarity candidates are not proved newly introduced anti-cheat functions"
+  ]
+}

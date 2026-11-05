@@ -195,5 +195,23 @@
     "An incoming game-over packet does not expose the server-side termination reason",
     "Suppressing the incoming handler cannot restore a server-terminated character",
     "No claim of fixed kicks or long-session stability"
-  ]
+  ],
+  "publication": {
+    "source_commit": "9397433",
+    "updates_commit": "611c4b150f1f44357090c122abd6b0936f0393c4",
+    "public_checks": {
+      "game.modded.js": {
+        "http": 200,
+        "sha256": "829023ad9aa4355fddd796b368ed03229997d6e8c5de245a8baa895f795c08eb"
+      },
+      "current.json": {
+        "http": 200,
+        "output_sha256": "829023ad9aa4355fddd796b368ed03229997d6e8c5de245a8baa895f795c08eb"
+      },
+      "verification.json": {
+        "http": 200,
+        "output_sha256": "829023ad9aa4355fddd796b368ed03229997d6e8c5de245a8baa895f795c08eb"
+      }
+    }
+  }
 }
