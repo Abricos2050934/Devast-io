@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "74d3ef2b9ba390f9a3a67ed04960cad898918c4cf359ece2b6ba6d4f482112fc",
+  "output_sha256": "829023ad9aa4355fddd796b368ed03229997d6e8c5de245a8baa895f795c08eb",
   "static_ast": "passed",
   "ilm_core": "identical",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -47,7 +47,8 @@
       "native-shot-direction-and-render-sync",
       "connection-close-origin-diagnostics",
       "curved-target-and-chaser-interception",
-      "aim-cycle-socket-backpressure"
+      "aim-cycle-socket-backpressure",
+      "valid-live-aim-targets"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -69,7 +70,8 @@
       "tests/ilm-restoration.test.cjs",
       "tests/angle-transport.test.cjs",
       "tests/curved-aim.test.cjs",
-      "tests/aim-backpressure.test.cjs"
+      "tests/aim-backpressure.test.cjs",
+      "tests/aim-validity.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -77,13 +79,13 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "bb603c75564147546fcb643f744f42fe9c9d9d103074323e9dd9c8534ce38df1",
+    "mod/responsive.js": "13d2e048e216774e6896a06b7322fd6e028742c3e1ded613c3b7e49463399a29",
     "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
-    "mod/ilm-aim.js": "950b2dc1af051ce99e4168aa866d117f87f654a40a2f5cbb269b3de859ad0560",
+    "mod/ilm-aim.js": "4e486623da342227a35c30a60a06909de3a9f21b8585a6ab0e1a9a1531cb634c",
     "mod/curved-aim.js": "7d01c15a8a0e8eb2ac604aef7155e8bd1ab7586c25de729cfa2701d288970dd2",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
   },
-  "mod_bundle_sha256": "9fc38a4024a5d7b84ff7d7190003dacfa6ea53768672bdd1804d60aa8981d4b3",
+  "mod_bundle_sha256": "d919db8053744c10ad980c5824758e1ea84fdb2f5a522be38ecbcb939dbe4d78",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
@@ -120,7 +122,7 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "68214b5f576f92d4d2f1d781bccc2a521d03a9b5caa89bb2e3d1eb7f8b4cabea",
+    "fingerprint": "c936291fcb52b48c6fa36eb8269eb4bdd3f03fdcdc9b8a97a129136714fe503b",
     "nativeSha256": "645fe8e99382cedd1b1849e86c51588cdc3e51c3802904412b27d06a8bf726e1"
   },
   "native": {
@@ -153,13 +155,24 @@
       "scenes": 36,
       "ticks": 432,
       "exact_core_state": true,
-      "native_commands": "original angles and attack/release cycles with direction coalescing; blocked cycles discarded",
+      "native_commands": "original angles and attack/release cycles with direction coalescing; blocked cycles and invalid targets discarded",
       "original_menu_controls": 5,
       "native_shot_sync": "verified_separately_without_changing_core_formula",
       "line_visibility_and_color": "original_ILM"
     },
     "automation_socket_backpressure": true,
     "aim_cycle_socket_backpressure": true,
+    "valid_live_aim_targets": true,
+    "aim_validity": {
+      "status": "passed",
+      "removed_target": true,
+      "missing_or_removed_self": true,
+      "native_pointer_resumes": true,
+      "reacquisition_reasserts": true,
+      "self_lock_rejected": true,
+      "outgoing_5_is_native_release": true
+    },
+    "server_death_sends_no_commands": true,
     "right_click_hovered_door": true,
     "right_click_without_native_prompt": true,
     "right_click_real_mouse": true,
@@ -199,11 +212,11 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-05T15:56:54.135Z",
+  "finished_at": "2026-11-05T16:20:57.168Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "74d3ef2b9ba390f9a3a67ed04960cad898918c4cf359ece2b6ba6d4f482112fc",
+      "output_sha256": "829023ad9aa4355fddd796b368ed03229997d6e8c5de245a8baa895f795c08eb",
       "browser_version": "154.0.8037.57",
       "native": {
         "curved_target_and_chaser_interception": true,
@@ -235,13 +248,24 @@
           "scenes": 36,
           "ticks": 432,
           "exact_core_state": true,
-          "native_commands": "original angles and attack/release cycles with direction coalescing; blocked cycles discarded",
+          "native_commands": "original angles and attack/release cycles with direction coalescing; blocked cycles and invalid targets discarded",
           "original_menu_controls": 5,
           "native_shot_sync": "verified_separately_without_changing_core_formula",
           "line_visibility_and_color": "original_ILM"
         },
         "automation_socket_backpressure": true,
         "aim_cycle_socket_backpressure": true,
+        "valid_live_aim_targets": true,
+        "aim_validity": {
+          "status": "passed",
+          "removed_target": true,
+          "missing_or_removed_self": true,
+          "native_pointer_resumes": true,
+          "reacquisition_reasserts": true,
+          "self_lock_rejected": true,
+          "outgoing_5_is_native_release": true
+        },
+        "server_death_sends_no_commands": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
         "right_click_real_mouse": true,
@@ -311,7 +335,7 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "74d3ef2b9ba390f9a3a67ed04960cad898918c4cf359ece2b6ba6d4f482112fc",
+      "output_sha256": "829023ad9aa4355fddd796b368ed03229997d6e8c5de245a8baa895f795c08eb",
       "browser_version": "153.0",
       "native": {
         "curved_target_and_chaser_interception": true,
@@ -343,13 +367,24 @@
           "scenes": 36,
           "ticks": 432,
           "exact_core_state": true,
-          "native_commands": "original angles and attack/release cycles with direction coalescing; blocked cycles discarded",
+          "native_commands": "original angles and attack/release cycles with direction coalescing; blocked cycles and invalid targets discarded",
           "original_menu_controls": 5,
           "native_shot_sync": "verified_separately_without_changing_core_formula",
           "line_visibility_and_color": "original_ILM"
         },
         "automation_socket_backpressure": true,
         "aim_cycle_socket_backpressure": true,
+        "valid_live_aim_targets": true,
+        "aim_validity": {
+          "status": "passed",
+          "removed_target": true,
+          "missing_or_removed_self": true,
+          "native_pointer_resumes": true,
+          "reacquisition_reasserts": true,
+          "self_lock_rejected": true,
+          "outgoing_5_is_native_release": true
+        },
+        "server_death_sends_no_commands": true,
         "right_click_hovered_door": true,
         "right_click_without_native_prompt": true,
         "right_click_real_mouse": true,
@@ -436,13 +471,14 @@
       "tests/ilm-restoration.test.cjs",
       "tests/angle-transport.test.cjs",
       "tests/curved-aim.test.cjs",
-      "tests/aim-backpressure.test.cjs"
+      "tests/aim-backpressure.test.cjs",
+      "tests/aim-validity.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 195,
-    "python_tests": 46
+    "node_tests": 201,
+    "python_tests": 47
   }
 }
