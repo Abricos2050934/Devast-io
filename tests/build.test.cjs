@@ -2,6 +2,7 @@ const test=require('node:test'),assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),zlib=require('node:zlib');
 const {spawnSync}=require('node:child_process');
 const {translate}=require('../tools/translate_payload.cjs');
+const {selectReference}=require('../tools/updater/references.cjs');
 
 test('translation changes own identifiers and binding strings, preserving comments and unrelated text',()=>{
   const result=translate('/* старое */ const поле = obj.поле; const key="поле"; const text="other";',{'поле':'currentField'});
@@ -17,9 +18,9 @@ for(const scenario of ['unknown-baseline','ambiguous-anchor'])test('build preser
     fs.writeFileSync(path.join(root,'dist/game.modded.js'),'previous verified client');
     fs.writeFileSync(path.join(root,'dist/update-status.json'),'previous status');
     if(scenario==='unknown-baseline'){
-      const file=path.join(root,'baselines/native-2026-11-05.js.gz');const data=zlib.gunzipSync(fs.readFileSync(file));data[20]^=1;fs.writeFileSync(file,zlib.gzipSync(data));
+      const file=path.join(root,selectReference('').baseline);const data=zlib.gunzipSync(fs.readFileSync(file));data[20]^=1;fs.writeFileSync(file,zlib.gzipSync(data));
     }else{
-      const file=path.join(root,'patches/native-2026-11-05.json');const data=JSON.parse(fs.readFileSync(file));data.operations[0].decoded_before='var ';fs.writeFileSync(file,JSON.stringify(data));
+      const file=path.join(root,selectReference('').profile);const data=JSON.parse(fs.readFileSync(file));data.operations[0].decoded_before='var ';fs.writeFileSync(file,JSON.stringify(data));
     }
     const result=spawnSync(process.execPath,['tools/build_client.cjs'],{cwd:root,encoding:'utf8'});
     assert.notEqual(result.status,0);

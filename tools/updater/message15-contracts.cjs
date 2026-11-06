@@ -32,10 +32,20 @@ function message15Operations(a,operations,symbols,roles,protocol={moveOpcode:2},
  const entries=a.nodes.filter(n=>n.type==='Property'&&(n.computed?a.constant(n.key):n.key.name??n.key.value)===symbols['ⲟࠀᄀ']);
  if(entries.length!==1)throw Error('Unique Message15 session export required');
  const defs=a.functions.filter(n=>n.type==='FunctionDeclaration'&&n.id.name===entries[0].value.name);
- if(defs.length!==1||defs[0].body.body[0]?.type!=='IfStatement'||defs[0].body.body[0].consequent.type!=='BlockStatement')throw Error('Native session start contract changed');
- const start=defs[0],block=start.body.body[0].consequent,before=a.source.slice(start.start,start.end),offset=block.start+1-start.start;
+ if(defs.length!==1)throw Error('Native session start contract changed');
+ const start=defs[0],statement=start.body.body[0],before=a.source.slice(start.start,start.end);
+ let after;
+ if(statement?.type==='IfStatement'&&statement.consequent.type==='BlockStatement'){
+  const offset=statement.consequent.start+1-start.start;
+  after=before.slice(0,offset)+'if(__responsiveMod)__responsiveMod.onSessionStart();'+before.slice(offset);
+ }else if(start.body.body.length===1&&statement?.type==='ExpressionStatement'&&statement.expression.type==='LogicalExpression'&&statement.expression.operator==='&&'&&statement.expression.right.type==='SequenceExpression'){
+  // A protected start body can also be emitted as guard && (save, save, connect).
+  // Wrap only its guarded operand, preserving the native guard and return value.
+  const body=statement.expression.right,from=body.start-start.start,to=body.end-start.start;
+  after=before.slice(0,from)+'(__responsiveMod&&__responsiveMod.onSessionStart(),'+before.slice(from,to)+')'+before.slice(to);
+ }else throw Error('Native session start contract changed');
  owner(start);
- add('message15-session-start',start,before.slice(0,offset)+'if(__responsiveMod)__responsiveMod.onSessionStart();'+before.slice(offset));roles.messageSessionStart=start.id.name;
+ add('message15-session-start',start,after);roles.messageSessionStart=start.id.name;
  return ops;
 }
 module.exports={message15Operations};

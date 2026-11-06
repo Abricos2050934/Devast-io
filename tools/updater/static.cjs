@@ -24,14 +24,14 @@ function analyze(source){
   for(const [,,x]of children(n))visit(x,current,n);
  }
  visit(tree,root,null);
- const tables=require('./string-table.cjs').decodeStringTable(tree,nodes);
+ let tables=new Map();
  const binding=n=>{for(let s=scopeOf.get(n);s;s=s.parent)if(s.bindings.has(n.name))return s.bindings.get(n.name);};
  const memo=new Map(),pending=new Set();
  function constant(n){
   if(!n)return undefined;
   if(n.type==='Literal'&&['string','number','boolean'].includes(typeof n.value))return n.value;
   if(n.type==='Literal'&&n.value===null)return null;
-  if(n.type==='MemberExpression'&&n.computed){const object=n.object.type==='Identifier'?tables.get(n.object.name):null;const key=constant(n.property);return object&&Number.isInteger(key)?object[key]:undefined;}
+  if(n.type==='MemberExpression'&&n.computed){const object=n.object.type==='Identifier'?tables.get(binding(n.object)||'global:'+n.object.name):null;const key=constant(n.property);return object&&Number.isInteger(key)?object[key]:undefined;}
   if(n.type==='Identifier'){
    const b=binding(n);if(!b||b.kind!=='const'||!b.init)return undefined;
    if(memo.has(b))return memo.get(b);if(pending.has(b))return undefined;pending.add(b);const v=constant(b.init);pending.delete(b);memo.set(b,v);return v;
@@ -42,6 +42,8 @@ function analyze(source){
    switch(n.operator){case '+':return l+r;case '-':return l-r;case '*':return l*r;case '/':return l/r;case '%':return l%r;case '^':return l^r;case '|':return l|r;case '&':return l&r;case '<<':return l<<r;case '>>':return l>>r;case '>>>':return l>>>r;}
   }
  }
+ tables=require('./string-table.cjs').decodeStringTable(tree,nodes,{constant,binding,parent});
+ memo.clear();pending.clear();
  return {source,tree,nodes,parent,scopeOf,binding,constant,functions:nodes.filter(isFunction)};
 }
 function canonical(analysis,node){

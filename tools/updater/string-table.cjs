@@ -1,11 +1,22 @@
 // Decode the reviewed symbol table + four-round byte transform from data.
 // No downloaded decoder function is evaluated.
-function decodeStringTable(tree,nodes){
- const arrays=nodes.filter(n=>n.type==='VariableDeclarator'&&n.init?.type==='ArrayExpression'&&n.init.elements.length>100&&n.init.elements.every(e=>e?.type==='Literal'&&typeof e.value==='string'&&/[\ufe00-\ufe0f\ue000-\ue0ff]/.test(e.value)));
- if(!arrays.length)return new Map();if(arrays.length!==1)throw Error('Ambiguous encoded string table');const array=arrays[0];
- const nibbleMaps=nodes.filter(n=>n.type==='ObjectExpression'&&n.end<array.start&&n.properties.length===16&&n.properties.every(p=>p.key.type==='Literal'&&p.key.value>=0xfe00&&p.key.value<=0xfe0f&&p.value.type==='Literal'&&Number.isInteger(p.value.value)));
- const byteMaps=nodes.filter(n=>n.type==='ObjectExpression'&&n.end<array.start&&n.properties.length===256&&n.properties.every(p=>p.key.type==='Literal'&&p.key.value>=0xe000&&p.key.value<=0xe0ff&&p.value.type==='Literal'&&Number.isInteger(p.value.value)));
- const maps=[...nibbleMaps,...byteMaps];
+function decodeStringTable(tree,nodes,analysis){
+ const arrays=nodes.filter(n=>n.type==='VariableDeclarator'&&n.init?.type==='ArrayExpression'&&n.init.elements.length>100&&n.init.elements.every(e=>e?.type==='Literal'&&typeof e.value==='string'&&e.value.length));
+ // The permutation, rather than a fixed Unicode range, defines the alphabet.
+ // Rotating between variation selectors, private-use and fullwidth symbols
+ // changes the representation only; downloaded decoder code is never executed.
+ const substitutions=nodes.filter(n=>n.type==='ObjectExpression'&&[16,256].includes(n.properties.length)&&n.properties.every(p=>p.type==='Property'&&p.key.type==='Literal'&&Number.isInteger(p.key.value)&&p.key.value>127&&p.key.value<=65535&&!(p.key.value>=0xd800&&p.key.value<=0xdfff)&&p.value.type==='Literal'&&Number.isInteger(p.value.value)));
+ if(analysis)substitutions.push(...require('./affine-alphabet.cjs').affineAlphabets(nodes,analysis));
+ const candidates=[];
+ for(const array of arrays)for(const map of substitutions){
+  if(map.end>=array.start)continue;
+  const alphabet=new Set(map.properties.map(p=>p.key.value));
+  // The historical encoder intersperses lowercase ASCII filler, which its
+  // decoder ignores. Require real alphabet symbols in every encoded entry.
+  if(array.init.elements.every(e=>[...e.value].some(c=>alphabet.has(c.charCodeAt(0)))&&[...e.value].every(c=>alphabet.has(c.charCodeAt(0))||/^[a-z]$/.test(c))))candidates.push({array,map});
+ }
+ if(!candidates.length)return new Map();if(candidates.length!==1)throw Error('Ambiguous encoded string table');
+ const {array,map}=candidates[0],maps=[map];
  const keys=nodes.filter(n=>n.type==='ArrayExpression'&&n.end<array.start&&n.elements.length===4&&n.elements.every(x=>x?.type==='Literal'&&Number.isInteger(x.value)&&x.value>=0&&x.value<=255));
  if(maps.length!==1||keys.length!==1)throw Error('Unknown string table cipher');
  const width=maps[0].properties.length,symbols=new Map(maps[0].properties.map(p=>[p.key.value,p.value.value])),key=keys[0].elements.map(x=>x.value);
@@ -22,6 +33,7 @@ function decodeStringTable(tree,nodes){
  const aliasGroups=nodes.filter(n=>n.type==='VariableDeclaration'&&n.start>array.end&&n.declarations.length>100&&n.declarations.every(d=>d.init?.type==='MemberExpression'&&d.init.object.type==='Identifier'&&d.init.property.type==='Literal'));
  if(aliasGroups.length!==1)throw Error('Unknown string alias table');const name=aliasGroups[0].declarations[0].init.object.name;
  if(!aliasGroups[0].declarations.every(d=>d.init.object.name===name))throw Error('Mixed string alias tables');
- return new Map([[name,decoded]]);
+ const table=analysis?(analysis.binding(aliasGroups[0].declarations[0].init.object)||'global:'+name):name;
+ return new Map([[table,decoded]]);
 }
 module.exports={decodeStringTable};

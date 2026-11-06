@@ -19,8 +19,8 @@ test('bounded decoder captures text rather than executing it',()=>{
  const a=analyze('{const data="process.exit(9)";eval(data)}');
  const out=interpret(a.tree.body[0],a);assert.equal(out.source,'process.exit(9)');
 });
-function encodedTableFixture(width){
- const key=[74,227,216,17],start=width===256?0xe000:0xfe00;
+function encodedTableFixture(width,start=width===256?0xe000:0xfe00,filler=false){
+ const key=[74,227,216,17];
  const permutation=Array.from({length:width},(_,i)=>(i*(width===256?73:5)+3)%width);
  const inverse=new Map(permutation.map((value,i)=>[value,String.fromCharCode(start+i)]));
  const names=Array.from({length:101},(_,i)=>['length','charCodeAt','fromCharCode','window','process.exit(9)'][i%5]);
@@ -28,15 +28,16 @@ function encodedTableFixture(width){
   const data=Buffer.from(text,'latin1').toString('base64'),plain=[data.length>>8,data.length&255,...Buffer.from(data)];
   const pad=2-plain.length%2;plain.push(...Array(pad).fill(pad));const cipher=[];
   for(let i=0;i<plain.length;i+=2){let l=plain[i],r=plain[i+1];for(const k of key)[l,r]=[r,l^((r*k+k)&255)];cipher.push(l,r);}
-  return cipher.map(byte=>width===256?inverse.get(byte):inverse.get(byte>>4)+inverse.get(byte&15)).join('');
+  const symbols=cipher.map(byte=>width===256?inverse.get(byte):inverse.get(byte>>4)+inverse.get(byte&15)).join('');
+  return filler?[...symbols].map((c,i)=>String.fromCharCode(97+i%26)+c).join(''):symbols;
  }
  const map='{'+permutation.map((value,i)=>(start+i)+':'+value).join(',')+'}';
  const source='const alphabet='+map+';const key='+JSON.stringify(key)+';const encoded='+JSON.stringify(names.map(encode))+';const table=[];const '+names.map((_,i)=>'alias'+i+'=table['+i+']').join(',')+';function read(){return ['+names.map((_,i)=>'alias'+i).join(',')+']}';
  return {source,names};
 }
-test('both native symbol alphabets decode string aliases as data, including executable-looking text',()=>{
- for(const width of [16,256]){
-  const {source,names}=encodedTableFixture(width),a=analyze(source);
+test('rotated native symbol alphabets decode string aliases as data, including executable-looking text',()=>{
+ for(const [width,start,filler]of [[16,0xfe00],[16,0xfe00,true],[256,0xe000],[16,0xff01],[16,0x2460],[256,0xe100]]){
+  const {source,names}=encodedTableFixture(width,start,filler),a=analyze(source);
   const returned=a.nodes.find(n=>n.type==='ReturnStatement').argument;
   assert.deepEqual(returned.elements.map(n=>a.constant(n)),names);
  }
@@ -45,6 +46,20 @@ test('native string tables reject duplicate and out-of-range byte substitutions'
  const {source}=encodedTableFixture(256);
  assert.throws(()=>analyze(source.replace('57345:76','57345:3')),/Invalid symbol table/);
  assert.throws(()=>analyze(source.replace('57344:3','57344:256')),/Invalid symbol table/);
+});
+test('a shadowed string-table name never borrows decoded values from the outer table',()=>{
+ const {source}=encodedTableFixture(16,0xff01);
+ const a=analyze(source+';function shadow(table){return table[0]}');
+ const shadow=a.functions.find(fn=>fn.id?.name==='shadow');
+ assert.equal(a.constant(shadow.body.body[0].argument),undefined);
+});
+test('affine alphabets decode rotated ranges and offsets without executing the decoder function',()=>{
+ for(const [width,start]of [[16,0xff01],[16,0x2460],[256,0xe200]]){
+  const {source,names}=encodedTableFixture(width,start),mapEnd=source.indexOf(';const key=');
+  const formula=`const shift=3;const unpack=function(text){let input=text;let code;const output=[];process.exit(9);for(let i=0;i<input.length;i++){code=input.charCodeAt(i);if(code>=${start}&&code<=${start+width-1})output.push(((code-${start})*${width===256?73:5}+shift)%${width});}return output;}`;
+  const a=analyze(formula+source.slice(mapEnd));
+  assert.deepEqual(a.nodes.find(n=>n.type==='ReturnStatement'&&n.argument.type==='ArrayExpression').argument.elements.map(n=>a.constant(n)),names);
+ }
 });
 test('identical direction handlers retain their distinct read-only native timers',()=>{
  const {directionDelay}=require('../tools/updater/network-contracts.cjs');
@@ -81,11 +96,11 @@ test('reference selection preserves the historical client and uses the latest re
  const {selectReference,loadReference}=require('../tools/updater/references.cjs');
  const fs=require('node:fs'),zlib=require('node:zlib'),path=require('node:path');
  const root=path.resolve(__dirname,'..');
- for(const file of ['baselines/current.js.gz','baselines/native-2026-11-05.js.gz']){
+ for(const file of ['baselines/current.js.gz','baselines/native-2026-11-05.js.gz','baselines/native-2026-11-06.js.gz']){
   const candidate=zlib.gunzipSync(fs.readFileSync(path.join(root,file))).toString();
   const reference=loadReference(root,candidate);
   assert.equal(reference.source,candidate);
   assert.equal(selectReference(require('../tools/updater/static.cjs').hash(candidate)).baseline,file);
  }
- assert.equal(selectReference('unreviewed-hash').baseline,'baselines/native-2026-11-05.js.gz');
+ assert.equal(selectReference('unreviewed-hash').baseline,'baselines/native-2026-11-06.js.gz');
 });
