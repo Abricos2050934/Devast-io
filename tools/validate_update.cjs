@@ -177,7 +177,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     m.messageAimVerification=window.__verifyMessage15Aim(m,n,s,r,originalAim);
     check(m.messageAimVerification.comparison_points>1400,'Incomplete imported source comparison');
     m.messageAimExtra=window.__verifyMessage15Extra(m,n,s,originalAim);
-    m.messageTransportVerification=window.__verifyMessage15Transport(m,n,s,r);
+    m.messageTransportVerification=window.__verifyMessage15Transport(m,n,s,r,originalAim);
     m.setSetting('AimBotEnabled',false);m.setSetting('JitterEnabled',false);m.setSetting('jitterActive',false);m.aim.mouseDown=false;
     const blockedSocket={readyState:1,bufferedAmount:4096};transport.packets.length=0;
     m.render(performance.now());const stableRecords=m.records,stableEntries=m.records.slice();m.render(performance.now());

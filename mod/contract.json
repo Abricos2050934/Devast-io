@@ -37,7 +37,8 @@
     "aim-cycle-socket-backpressure",
     "verbatim-message15-aim",
     "message15-native-lifecycle",
-    "immediate-aim-numeric-settings"
+    "immediate-aim-numeric-settings",
+    "aim-small-queue-source-parity"
   ],
   "removed_overlays": [
     "bottom-gauge-text",

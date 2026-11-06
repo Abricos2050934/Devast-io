@@ -71,6 +71,8 @@ def artifacts(root, output):
                 raise ValueError('Message15 source comparison was not verified in browser: ' + browser)
         if 'message15-native-lifecycle' in contract.get('features', []) and report.get('native', {}).get('message15_transport', {}).get('status') != 'passed':
             raise ValueError('Message15 native lifecycle was not verified in browser: ' + browser)
+        if 'aim-small-queue-source-parity' in contract.get('features', []) and report.get('native', {}).get('message15_transport', {}).get('small_queue_source_parity') is not True:
+            raise ValueError('Message15 small-queue parity was not verified in browser: ' + browser)
         if 'immediate-aim-numeric-settings' in contract.get('features', []) and report.get('physical_numeric', {}).get('status') != 'passed':
             raise ValueError('Physical aim numeric entry was not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}

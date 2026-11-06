@@ -7,6 +7,7 @@ test('installed histories, source formulas and packet cycles match the independe
  const blocks=reference().blocks.filter(b=>['GetAllTargetsCon','GetTarget','AimbotCon','JitterCon','LinesCon','_lineIntersect'].includes(b.label)).map(b=>b.source).join('\n');let comparisons=0;
  for(let scene=0;scene<24;scene++){
   const f=fixture();let now=1000;const packets=[];const world={PLAYER:{id:1,team:-1},players:Array.from({length:1000},()=>({team:-1}))};
+  f.mod.observeSocket({readyState:1,bufferedAmount:[0,1,16,128,1024,4095][scene%6]});
   const normalize=p=>p[0]===6?[6,(Math.round(p[1])%360+360)%360]:p;
   const context=vm.createContext({MOD:{...f.mod.settings},World:world,Client:{state:1,sendPacket:text=>{const p=JSON.parse(text);if(p.every(x=>typeof x==='number'&&Number.isFinite(x)))packets.push(normalize(p));}},window:{Math,JSON,dispatchEvent(){}},Entitie:{units:[],border:[]},__ENTITIE_BULLET__:2,KeyboardEvent:class{},Date:{now:()=>now}});
   vm.runInContext(blocks+'\nvar GetAllTargets=new GetAllTargetsCon(),Aimbot=new AimbotCon(),Jitter=new JitterCon();',context);

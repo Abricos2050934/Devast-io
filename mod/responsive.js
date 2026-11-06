@@ -835,8 +835,15 @@ function __installDevastMod(B) {
   }
   const recentCombatCommands = [], connectionEvents = [];
   const automationDeferrals={aim:0,loot:0,build:0,take:0,chat:0,keepAlive:0};
+  const AIM_BUFFER_HIGH_WATER=4096;
   function automationReady(kind) {
-    if(!connectionSocket || connectionSocket.readyState===1&&!(connectionSocket.bufferedAmount>0))return true;
+    if(!connectionSocket)return true;
+    if(connectionSocket.readyState===1){
+      const bytes=connectionSocket.bufferedAmount;
+      // Native traffic and earlier source directions can remain buffered for
+      // a turn of the event loop. They must not freeze fresh aim directions.
+      if(!(kind==='aim'?bytes>=AIM_BUFFER_HIGH_WATER:bytes>0))return true;
+    }
     automationDeferrals[kind]++;
     return false;
   }
@@ -1624,7 +1631,7 @@ function __installDevastMod(B) {
       modCommandsByOpcode:{...diagnostics.commandsByOpcode},
       automationSettings:{autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled},
       jitterTransport:{deferredDirections:jitter.deferredDirections,rateLimitHz:20},
-      automationTransport:{deferred:{...automationDeferrals}},
+      automationTransport:{deferred:{...automationDeferrals},aimHighWaterBytes:AIM_BUFFER_HIGH_WATER},
       aimSettings:{enabled:MOD.AimBotEnabled,source:'message15',autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}}))};

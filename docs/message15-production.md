@@ -21,6 +21,15 @@ The formulas and histories continue while transmission is blocked; no replay
 queue is introduced. Imported aim directions retain their original repeated
 send behavior rather than the retired ILM coalescing behavior.
 
+Ordinary queued bytes no longer suppress those directions. The aim admission
+snapshot accepts an open socket below 4096 buffered bytes and pauses new cycles
+at or above that boundary; attack/release still share the cycle's admission.
+The previous any-nonzero-byte check could suppress every fresh direction during
+ordinary traffic even though the imported predictor continued computing them.
+Native Chromium/Firefox fixtures compare the original uploaded engine's packet
+sequences at 1, 16, 128, 1024 and 4095 queued bytes, in addition to full-queue and
+closed-socket checks. This check is required by the publisher.
+
 `tools/updater/message15-contracts.cjs` adds native fire/release, movement,
 handshake and session-start hooks. It handles a send nested inside a native
 conditional/sequence expression, and checks unique packet/identity anchors and
