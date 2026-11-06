@@ -15,7 +15,7 @@ function message15Operations(a,operations,symbols,roles,protocol={moveOpcode:2},
  for(const e of edits.reverse())angle.after=angle.after.slice(0,e.start)+e.text+angle.after.slice(e.end);
  const calls=a.nodes.filter(n=>n.type==='CallExpression'&&n.arguments[0]?.type==='CallExpression'&&n.arguments[0].callee.object?.name===roles['еϲᄄ']);
  function sender(opcode,length){const hits=calls.filter(n=>{const arr=n.arguments[0].arguments[0];return arr?.type==='ArrayExpression'&&arr.elements.length===length&&a.constant(arr.elements[0])===opcode;});if(hits.length!==1)throw Error('Ambiguous Message15 native opcode '+opcode+': '+hits.length);return hits[0];}
- function owner(n){while(n&&n.type!=='FunctionDeclaration')n=a.parent.get(n);if(!n)throw Error('Missing native hook owner');if(reviewedOwners&&!reviewedOwners.has(n))throw Error('Native Message15 lifecycle contract changed: '+n.id.name);return n;}
+ function owner(n,anchored=false){while(n&&n.type!=='FunctionDeclaration')n=a.parent.get(n);if(!n)throw Error('Missing native hook owner');if(!anchored&&reviewedOwners&&!reviewedOwners.has(n))throw Error('Native Message15 lifecycle contract changed: '+n.id.name);return n;}
  function add(id,node,after){const before=a.source.slice(node.start,node.end);ops.push({id,expected:1,before,after});}
  roles.messageMoveOpcode=protocol.moveOpcode;
  for(const [opcode,length,method]of [[5,1,'afterRelease'],[protocol.moveOpcode,2,'onMove']]){
@@ -28,7 +28,10 @@ function message15Operations(a,operations,symbols,roles,protocol={moveOpcode:2},
  const world=symbols['еܞ︌'],self=symbols['ᅠᏧ‍'];
  const ids=a.nodes.filter(n=>n.type==='AssignmentExpression'&&n.left.type==='MemberExpression'&&n.left.object.type==='MemberExpression'&&n.left.object.object.name===world&&(n.left.object.computed?a.constant(n.left.object.property):n.left.object.property.name)===self&&(n.left.computed?a.constant(n.left.property):n.left.property.name)==='id'&&n.right.type==='MemberExpression'&&a.constant(n.right.property)===1);
  if(ids.length!==1)throw Error('Unique Message15 handshake identity required');
- const id=ids[0];add('message15-handshake',id,'('+a.source.slice(id.start,id.end)+',__responsiveMod&&__responsiveMod.onHandshake())');roles.messageHandshake=owner(id).id.name;
+ const id=ids[0],handshake=owner(id,true);let context=id;
+ while(a.parent.get(context)?.type==='SequenceExpression')context=a.parent.get(context);
+ if(id.operator!=='='||id.right.object.type!=='Identifier'||!handshake.params.some(p=>p.name===id.right.object.name)||a.parent.get(context)?.type!=='ExpressionStatement')throw Error('Native handshake assignment context changed');
+ add('message15-handshake',id,'('+a.source.slice(id.start,id.end)+',__responsiveMod&&__responsiveMod.onHandshake())');roles.messageHandshake=handshake.id.name;
  const entries=a.nodes.filter(n=>n.type==='Property'&&(n.computed?a.constant(n.key):n.key.name??n.key.value)===symbols['ⲟࠀᄀ']);
  if(entries.length!==1)throw Error('Unique Message15 session export required');
  const defs=a.functions.filter(n=>n.type==='FunctionDeclaration'&&n.id.name===entries[0].value.name);

@@ -5,7 +5,8 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '*/15 * * * *'
+    # Avoid the busiest quarter-hour boundaries in GitHub's scheduler.
+    - cron: '7,22,37,52 * * * *'
 
 # Publish only the fully verified current mod to the updates branch.
 permissions:

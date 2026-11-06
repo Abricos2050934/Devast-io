@@ -35,3 +35,14 @@ test('a separate reviewed reference can name its native flag and three signers w
  assert.throws(()=>integrityOperations(a,changed,new Map(a.functions.map(fn=>[fn,changed.functions.find(n=>n.id.name===fn.id.name)])),metadata),/contract changed/);
  assert.throws(()=>integrityOperations(a,a,pairs,{...metadata,signers:['first','second','second']}),/Invalid reviewed/);
 });
+
+test('opaque native signer rotation retains new formulas and rejects an extra flag reader',()=>{
+ const pad='/*'+'.'.repeat(8100)+'*/';
+ const native=source.replace('const one=1;','const one=1;function check(f){if(f.toString().indexOf("[native code]")<0){ѕ०̊=1;ѕ०̊=1;ѕ०̊=1}}').replaceAll('{return','{'+pad+'return');
+ const next=native.replaceAll('ѕ०̊','rotated').replaceAll('а１๐','alpha').replaceAll('ⲅࡃ०','beta').replaceAll('ܐ̄︁','gamma').replace('x+2','x+7');
+ const old=analyze(native),cur=analyze(next),result=integrityOperations(old,cur,new Map());
+ assert.equal(result.flag,'rotated');assert.equal(result.operations.length,3);
+ let patched=next;for(const op of result.operations)patched=patched.replace(op.before,op.after);
+ for(const flag of [0,1]){const context={};require('node:vm').runInNewContext(patched+`;rotated=${flag};result=[alpha(10),beta(10),gamma(10)]`,context,{timeout:1000});assert.equal(JSON.stringify(context.result),'[[11,false],[17,false],[13,false]]');}
+ assert.throws(()=>integrityOperations(old,analyze(next+'function extra(){return rotated}'),new Map()),/contract changed/);
+});

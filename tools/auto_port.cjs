@@ -1,25 +1,26 @@
 // Port only structurally unchanged native contracts; ambiguous changes are errors.
 const fs=require('node:fs'),path=require('node:path'),zlib=require('node:zlib'),acorn=require('./parser.cjs');
-const {analyze,canonical,isFunction,obfuscated,hash}=require('./updater/static.cjs');
+const {analyze,isFunction,obfuscated,hash}=require('./updater/static.cjs');
+const {readonlyConstants,semanticCanonical:canonical}=require('./updater/semantic.cjs');
 const {deobfuscate}=require('./updater/decoder.cjs');
 const {integrityOperations}=require('./updater/integrity.cjs');
-const {directionDelay,exportNames}=require('./updater/network-contracts.cjs');
+const {directionDelay,exportNames,serverListSchema}=require('./updater/network-contracts.cjs');
 const {translate}=require('./translate_payload.cjs'),{assemble}=require('./build_client.cjs');
 const root=path.resolve(__dirname,'..');
 function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  if(hash(reference)!==profile.baseline_sha256)throw Error('Reference baseline checksum mismatch');
  const decodedOld=deobfuscate(reference),decodedNew=reference===candidate?decodedOld:deobfuscate(candidate);
- const old=analyze(decodedOld.source),cur=analyze(decodedNew.source),oldCanon=new Map(),curCanon=new Map();
+ const old=readonlyConstants(analyze(decodedOld.source)),cur=readonlyConstants(analyze(decodedNew.source)),oldCanon=new Map(),curCanon=new Map();
  const group=(a,cache)=>{const map=new Map();for(const n of a.functions){if(n.end-n.start>80000)continue;const c=canonical(a,n);cache.set(n,c);if(!map.has(c.hash))map.set(c.hash,[]);map.get(c.hash).push(n);}return map;};
  const og=group(old,oldCanon),ng=group(cur,curCanon),pairs=new Map(),votes=new Map();
- const propose=(a,b)=>{if(!a||!b)return;if(!votes.has(a))votes.set(a,new Set());votes.get(a).add(b);};
+ const propose=(a,b)=>{if(!a||!b||!obfuscated(a)&&a!==b)return;if(!votes.has(a))votes.set(a,new Set());votes.get(a).add(b);};
  function prop(a,n){if(n.type==='MemberExpression')return n.computed?a.constant(n.property):n.property.name;if(n.type==='Property')return n.computed?a.constant(n.key):n.key.name??n.key.value;}
  function learn(oc,nc){const local=new Map();function add(a,b){if(a===undefined||b===undefined)return;if(local.has(a)&&local.get(a)!==b)throw Error('Inconsistent structural binding '+a);local.set(a,b);propose(a,b);}
   for(const [p,n]of oc.entries){const m=nc.entries.get(p);if(!m)continue;
    if(n.type==='Identifier'&&m.type==='Identifier'&&
-      (old.constant(n)===undefined||old.binding(n)?.node===n)&&
-      (cur.constant(m)===undefined||cur.binding(m)?.node===m))add(n.name,m.name);
-   if(n.type===m.type&&['MemberExpression','Property'].includes(n.type)){const a=prop(old,n),b=prop(cur,m);if(typeof a==='string'&&typeof b==='string')add(a,b);}
+      (old.constant(n)===undefined&&!old.isUndefined(n)||old.binding(n)?.node===n)&&
+      (cur.constant(m)===undefined&&!cur.isUndefined(m)||cur.binding(m)?.node===m))add(n.name,m.name);
+   if(n.type===m.type&&['MemberExpression','Property'].includes(n.type)){const a=prop(old,n),b=prop(cur,m);if(typeof a==='string'&&typeof b==='string'&&obfuscated(a))add(a,b);}
   }return local;
  }
  for(const [key,list]of og){const next=ng.get(key);if(list.length===1&&next?.length===1){pairs.set(list[0],next[0]);learn(oldCanon.get(list[0]),curCanon.get(next[0]));}}
@@ -77,6 +78,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   return defs.length===1?defs[0]:null;
  }
  const nextExports=exportNames(cur,nextReturn,provisional[bindings.symbols['о̃༩']]);
+ function jsonReader(a,fn){return fn&&fn.params.length===2&&serverListSchema(a,fn)&&a.nodes.filter(n=>n.start>=fn.start&&n.end<=fn.end&&n.type==='CallExpression'&&n.callee.type==='MemberExpression'&&n.callee.object.name==='JSON'&&prop(a,n.callee)==='parse').length===1;}
  for(const key of ['ᴎᚂρ','ѕ᠋༢','ρ٨٨','ᴎ༩༣','ᅠϲ᠍','е̅ܙ','εܖᴏ','ⲅ︊ᄃ']){
   const name=bindings.symbols[key],left=entryDefinition(old,networkReturn,networkScope,name,bindings.symbols['о̃༩']);
   const direction=key==='ѕ᠋༢'||key==='ρ٨٨';
@@ -85,13 +87,23 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
    if(direction&&delay===null)throw Error('Unsupported reference direction timer: '+key);
    for(const nextName of nextExports){
     const fn=entryDefinition(cur,nextReturn,nextNetwork,nextName,provisional[bindings.symbols['о̃༩']]);
-    if(fn&&oldCanon.get(left)?.hash===curCanon.get(fn)?.hash&&(!direction||directionDelay(cur,fn)===delay))matches.push(nextName);
+    if(fn&&(key==='ⲅ︊ᄃ'?jsonReader(old,left)&&jsonReader(cur,fn):oldCanon.get(left)?.hash===curCanon.get(fn)?.hash&&(!direction||directionDelay(cur,fn)===delay)))matches.push(nextName);
    }
    if(matches.length!==1)throw Error('Ambiguous native network export: '+key);
    provisional[name]=matches[0];propose(name,matches[0]);
   }
   const right=entryDefinition(cur,nextReturn,nextNetwork,provisional[name],provisional[bindings.symbols['о̃༩']]);
-  if(!left||!right||oldCanon.get(left)?.hash!==curCanon.get(right)?.hash)throw Error('Native network contract changed or ambiguous: '+key);
+  if(!left||!right)throw Error('Native network contract changed or ambiguous: '+key);
+  if(oldCanon.get(left)?.hash!==curCanon.get(right)?.hash){
+   if(key==='ⲅ︊ᄃ'&&jsonReader(old,left)&&jsonReader(cur,right)){nativeContracts.push(key);continue;}
+   // The protected preflight implementation stays entirely native. Bind its
+   // export through the independently matched login caller, not cipher text.
+   const loginOld=entryDefinition(old,networkReturn,networkScope,bindings.symbols['ᅠϲ᠍'],bindings.symbols['о̃༩']);
+   const loginNew=entryDefinition(cur,nextReturn,nextNetwork,provisional[bindings.symbols['ᅠϲ᠍']],provisional[bindings.symbols['о̃༩']]);
+   function calls(a,fn,target,namespace,name){return a.nodes.filter(n=>n.start>=fn.start&&n.end<=fn.end&&n.type==='CallExpression'&&(n.callee.type==='Identifier'&&n.callee.name===target.id?.name||n.callee.type==='MemberExpression'&&n.callee.object.name===namespace&&prop(a,n.callee)===name));}
+   if(key!=='εܖᴏ'||left.params.length!==right.params.length||!loginOld||!loginNew||oldCanon.get(loginOld)?.hash!==curCanon.get(loginNew)?.hash||calls(old,loginOld,left,bindings.symbols['о̃༩'],name).length!==1||calls(cur,loginNew,right,provisional[bindings.symbols['о̃༩']],provisional[name]).length!==1)throw Error('Native network contract changed or ambiguous: '+key);
+   nativeContracts.push(key);continue;
+  }
   if(direction&&(directionDelay(old,left)===null||directionDelay(old,left)!==directionDelay(cur,right)))throw Error('Native direction timing changed: '+key);
   pairs.set(left,right);learn(oldCanon.get(left),curCanon.get(right));nativeContracts.push(key);
  }
@@ -102,11 +114,26 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   const at=old.source.indexOf(text);if(at<0||old.source.indexOf(text,at+1)>=0)throw Error('Reference anchor is not unique: '+id);
   const n=old.nodes.find(n=>n.start===at&&n.end===at+text.length);if(!n)throw Error('Reference anchor is not an AST node: '+id);
   let fn=n;while(fn&&!isFunction(fn))fn=old.parent.get(fn);
+  if(id==='native-guard-stale-preflight-response'){
+   const oldList=entryDefinition(old,networkReturn,networkScope,bindings.symbols['ⲅ︊ᄃ'],bindings.symbols['о̃༩']);
+   const nextList=entryDefinition(cur,nextReturn,nextNetwork,provisional[bindings.symbols['ⲅ︊ᄃ']],provisional[bindings.symbols['о̃༩']]);
+   function helper(a,list,scope){
+    const calls=a.nodes.filter(n=>n.start>=list.start&&n.end<=list.end&&n.type==='CallExpression'&&n.callee.type==='Identifier'&&n.arguments.length===3&&n.arguments[0].name===list.params[0].name&&isFunction(n.arguments[1])&&isFunction(n.arguments[2]));
+    if(calls.length!==1)return;
+    function xhr(n){if(n.type!=='NewExpression')return false;if(n.callee.name==='XMLHttpRequest')return true;if(n.callee.type!=='MemberExpression'||prop(a,n.callee)!=='XMLHttpRequest')return false;let obj=n.callee.object,seen=new Set();while(obj?.type==='Identifier'&&!seen.has(obj)){seen.add(obj);if(obj.name==='window'&&!a.binding(obj))return true;const b=a.binding(obj);if(b?.kind!=='const')break;obj=b.init;}return false;}
+    const defs=a.functions.filter(f=>f.id?.name===calls[0].callee.name&&f.start>=scope.start&&f.end<=scope.end&&f.params.length===3&&a.nodes.some(n=>n.start>=f.start&&n.end<=f.end&&(xhr(n)||n.type==='Identifier'&&n.name==='XMLHttpRequest'||a.constant(n)==='XMLHttpRequest')));
+    return defs.length===1?defs[0]:undefined;
+   }
+   const previous=helper(old,oldList,networkScope),current=helper(cur,nextList,nextNetwork);
+   if(previous!==fn||!current||n!==fn)throw Error('Native HTTP callback interface changed');
+   propose(fn.id.name,current.id.name);const local=new Map(fn.params.map((p,i)=>[p.name,current.params[i].name]));
+   return {old:n,current,local,callbackGuard:true};
+  }
   if(fn&&fn!==old.tree.body[0]?.expression?.callee){
    const matched=pairs.get(fn);if(!matched)throw Error('Native contract changed or ambiguous: '+id);
    const oc=oldCanon.get(fn),nc=curCanon.get(matched),p=[...oc.entries].find(([,v])=>v===n)?.[0];
    const target=nc.entries.get(p);if(!target)throw Error('Unmapped patch node '+id);
-   return {old:n,current:target,local:learn(oc,nc)};
+   return {old:n,current:target,local:learn(oc,nc),projection:new Map([...oc.entries].filter(([p])=>nc.entries.has(p)).map(([p,n])=>[n,nc.entries.get(p)]))};
   }
   const oc=canonical(old,n),list=cur.nodes.filter(m=>m.type===n.type&&cur.parent.get(m)===cur.tree.body[0]?.expression?.callee?.body).filter(m=>canonical(cur,m).hash===oc.hash);
   if(list.length!==1)throw Error('Bootstrap anchor changed or ambiguous: '+id);
@@ -135,17 +162,26 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   if(!next)throw Error('Missing or ambiguous required native binding: '+key+' ('+previous+')');outputBindings.symbols[key]=next;outputBindings.evidence[key]='unique normalized native function correspondence';
  }
  // Every fragment is a reviewed patch. Materialize only immutable literal aliases.
- const literalSets=new Map();for(const n of old.nodes)if(n.type==='Identifier'){const v=old.constant(n);if(v!==undefined){if(!literalSets.has(n.name))literalSets.set(n.name,new Map());literalSets.get(n.name).set(JSON.stringify(v),v);}}const literals=new Map([...literalSets].filter(([,v])=>v.size===1).map(([k,v])=>[k,[...v.values()][0]]));
- function nativeFragment(text,local){const edits=[];for(const tok of acorn.tokenizer(text,{ecmaVersion:'latest'})){
+ const literalSets=new Map();for(const n of old.nodes)if(n.type==='Identifier'){const v=old.constant(n);if(v!==undefined||old.isUndefined(n)){if(!literalSets.has(n.name))literalSets.set(n.name,new Map());literalSets.get(n.name).set(v===undefined?'undefined':JSON.stringify(v),v);}}const literals=new Map([...literalSets].filter(([,v])=>v.size===1).map(([k,v])=>[k,[...v.values()][0]]));
+ function nativeFragment(text,local,preserved=[]){const edits=[...preserved],properties=new Set(),pending=[acorn.parse(text,{ecmaVersion:'latest'})];
+  while(pending.length){const n=pending.pop();if(n.type==='MemberExpression'&&!n.computed&&n.property.type==='Identifier'&&!obfuscated(n.property.name))properties.add(n.property.start);if(n.type==='Property'&&!n.computed&&n.key.type==='Identifier'&&!obfuscated(n.key.name))properties.add(n.key.start);for(const v of Object.values(n))if(Array.isArray(v))pending.push(...v.filter(x=>x?.type));else if(v?.type)pending.push(v);}
+  for(const tok of acorn.tokenizer(text,{ecmaVersion:'latest'})){
+   if(preserved.some(e=>tok.start>=e.start&&tok.end<=e.end))continue;
    if(tok.type.label==='name'){
+    if(properties.has(tok.start))continue;
     const value=local.get(tok.value)??map[tok.value];
     if(value!==undefined)edits.push({start:tok.start,end:tok.end,text:value});
-    else if(literals.has(tok.value))edits.push({start:tok.start,end:tok.end,text:JSON.stringify(literals.get(tok.value))});
+    else if(literals.has(tok.value))edits.push({start:tok.start,end:tok.end,text:literals.get(tok.value)===undefined?'undefined':JSON.stringify(literals.get(tok.value))});
     else if(obfuscated(tok.value))throw Error('Unresolved native patch identifier: '+tok.value);
    }else if(tok.type.label==='string'&&Object.hasOwn(map,tok.value))edits.push({start:tok.start,end:tok.end,text:JSON.stringify(map[tok.value])});
-  }for(const e of edits.reverse())text=text.slice(0,e.start)+e.text+text.slice(e.end);return text;
+  }for(const e of edits.sort((a,b)=>b.start-a.start))text=text.slice(0,e.start)+e.text+text.slice(e.end);return text;
  }
- const operations=patchAnchors.map(({op,match})=>({id:op.id,expected:1,before:cur.source.slice(match.current.start,match.current.end),after:nativeFragment(op.after,match.local)})).concat(integrity.operations);
+ const operations=patchAnchors.map(({op,match})=>{
+  const before=cur.source.slice(match.current.start,match.current.end);
+  let after=match.callbackGuard?before:nativeFragment(op.after,match.local,require('./updater/project-fragment.cjs').preservedSpans(old,cur,match,op.after));
+  if(match.callbackGuard){const [url,ok]=match.current.params.map(p=>p.name),at=match.current.body.start+1-match.current.start;after=before.slice(0,at)+`if(__responsiveMod)${ok}=__responsiveMod.guardHandshakeCallback(${url},${ok});`+before.slice(at);}
+  return {id:op.id,expected:1,before,after};
+ }).concat(integrity.operations);
  const fn=cur.tree.body[0]?.expression?.callee;
  if(!fn||fn.type!=='FunctionExpression'||cur.tree.body.length!==1||!fn.body.body.length)throw Error('Unsupported native bootstrap shape');
  const generated={schema:'automatic-port-v1',source_url:profile.source_url,baseline_sha256:hash(cur.source),operations,
@@ -175,6 +211,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   const rule=generated.operations.find(op=>op.id==='jitter-native-fire-priority');
   adaptedAim=adaptedAim.slice(0,helper.start)+`function __jitterPatchNativeFire(source){const before=${JSON.stringify(rule.before)};if(source.split(before).length!==2)throw Error('Unsupported native fire handler');return source.replace(before,${JSON.stringify(rule.after)});}`+adaptedAim.slice(helper.end);
  }
+ for(const op of generated.operations){try{acorn.parse(op.after,{ecmaVersion:'latest'});}catch(error){throw Error('Invalid emitted patch '+op.id+': '+error.message+' near '+op.after.slice(Math.max(0,error.pos-70),error.pos+70));}}
  const output=assemble(Buffer.from(cur.source),generated,outputBindings.symbols,payload,bootstrap,gui,adaptedAim);
  return {source:cur.source,output,profile:generated,bindings:outputBindings,aim:adaptedAim,roles,
   report:{raw_sha256:hash(candidate),reference_sha256:hash(reference),deobfuscated_sha256:hash(cur.source),output_sha256:hash(output),matched_functions:pairs.size,native_network_contracts:nativeContracts,required_bindings:canonicalRequired.size,patches:generated.operations.map(x=>x.id),integrity_compatibility:{status:'applied',predicates:integrity.operations.length},decoder_blocks:decodedNew.evidence,live_server:'not_tested'}};

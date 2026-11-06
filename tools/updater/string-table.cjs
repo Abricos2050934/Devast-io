@@ -15,7 +15,13 @@ function decodeStringTable(tree,nodes,analysis){
   // decoder ignores. Require real alphabet symbols in every encoded entry.
   if(array.init.elements.every(e=>[...e.value].some(c=>alphabet.has(c.charCodeAt(0)))&&[...e.value].every(c=>alphabet.has(c.charCodeAt(0))||/^[a-z]$/.test(c))))candidates.push({array,map});
  }
- if(!candidates.length)return new Map();if(candidates.length!==1)throw Error('Ambiguous encoded string table');
+ if(!candidates.length){
+  const aliases=nodes.filter(n=>n.type==='VariableDeclaration'&&n.declarations.length>100&&n.declarations.every(d=>d.init?.type==='MemberExpression'&&d.init.object.type==='Identifier'&&d.init.property.type==='Literal'));
+  if(!arrays.length||!aliases.length)return new Map();
+  if(aliases.length!==1||!analysis)throw Error('Ambiguous encoded string table');
+  return require('./data-table.cjs').decodeDataTable(analysis,nodes,aliases[0]);
+ }
+ if(candidates.length!==1)throw Error('Ambiguous encoded string table');
  const {array,map}=candidates[0],maps=[map];
  const keys=nodes.filter(n=>n.type==='ArrayExpression'&&n.end<array.start&&n.elements.length===4&&n.elements.every(x=>x?.type==='Literal'&&Number.isInteger(x.value)&&x.value>=0&&x.value<=255));
  if(maps.length!==1||keys.length!==1)throw Error('Unknown string table cipher');

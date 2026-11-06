@@ -5,6 +5,8 @@ function integrityOperations(reference,candidate,pairs,reviewed={flag:'ѕ०̊',
  if(owners.size!==3||typeof reviewed.flag!=='string')throw Error('Invalid reviewed integrity metadata');
  const predicates=reference.nodes.filter(n=>n.type==='BinaryExpression'&&n.operator==='==='&&n.left.name===reviewed.flag&&reference.constant(n.right)===1);
  if(predicates.length!==3)throw Error('Expected three reviewed integrity signature predicates');
+ const nativeOwners=reference.functions.filter(fn=>owners.has(fn.id?.name));
+ if(nativeOwners.some(fn=>!pairs.get(fn)||canonical(reference,fn).hash!==canonical(candidate,pairs.get(fn)).hash))return require('./integrity-surface.cjs').surfaceOperations(reference,candidate,reviewed);
  const operations=[],signers=[],seen=new Set(),bindings=new Set(),reads=new Set();let flag;
  for(const predicate of predicates){
   let owner=reference.parent.get(predicate);
