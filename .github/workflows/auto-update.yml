@@ -17,7 +17,8 @@ concurrency:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    # Keep Playwright's supported OS stable across GitHub runner-image rollouts.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -29,7 +30,17 @@ jobs:
         with:
           python-version: '3.12'
       - run: npm ci --ignore-scripts
-      - run: npx playwright-core install --with-deps chromium firefox
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: devast-playwright-${{ runner.os }}-ubuntu-24.04-${{ hashFiles('package-lock.json') }}
+      - name: Install browser system dependencies
+        timeout-minutes: 5
+        run: npx playwright-core install-deps chromium firefox
+      - name: Install Chromium and Firefox
+        timeout-minutes: 5
+        run: npx playwright-core install chromium firefox
       - run: npm run build
       - name: Restore local updater history
         uses: actions/cache/restore@v4
