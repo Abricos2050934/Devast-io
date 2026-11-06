@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "e5be08fc29670a6ddc5272d90ce23beac7962d321dfc77a434dd3bebdb105df7",
+  "output_sha256": "56e4877822b0d5a970dc5efc90989dcb0a0bd073b8806314f7ea486724621426",
   "static_ast": "passed",
   "message15_core": "byte-identical source declarations",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -112,8 +112,8 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "3e22b55ebfe162bc05197166137907595577fe21f27befdcd91bae1f584a9f76",
-    "nativeSha256": "4850bf208913c7e83662870f1edb006f8f2522349917b7fcea9327cff08ab740"
+    "fingerprint": "a4c02d2a1ba40136885744e7adea99836e0d2dbd55a23907e1923f668bd19186",
+    "nativeSha256": "e1799132e4369cde75e8b153a9629f96e959e4053991fa5d33df3b9c3feaafdf"
   },
   "native": {
     "message15_comparison": {
@@ -487,11 +487,11 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-06T07:30:52.561Z",
+  "finished_at": "2026-11-06T09:25:23.130Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "e5be08fc29670a6ddc5272d90ce23beac7962d321dfc77a434dd3bebdb105df7",
+      "output_sha256": "56e4877822b0d5a970dc5efc90989dcb0a0bd073b8806314f7ea486724621426",
       "browser_version": "156.0.8078.0",
       "native": {
         "message15_comparison": {
@@ -895,7 +895,7 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "e5be08fc29670a6ddc5272d90ce23beac7962d321dfc77a434dd3bebdb105df7",
+      "output_sha256": "56e4877822b0d5a970dc5efc90989dcb0a0bd073b8806314f7ea486724621426",
       "browser_version": "153.0",
       "native": {
         "message15_comparison": {
@@ -1318,7 +1318,7 @@
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 152,
+    "node_tests": 163,
     "python_tests": 48
   }
 }
