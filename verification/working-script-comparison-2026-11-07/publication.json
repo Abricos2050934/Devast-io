@@ -1,0 +1,27 @@
+{
+  "publication": {
+    "status": "published",
+    "commit": "ebf20cee30224ac8ba1f13616ba4bcd66196a4db",
+    "branch": "updates"
+  },
+  "public_readback": {
+    "status": "passed",
+    "results": [
+      {
+        "file": "game.modded.js",
+        "http": 200,
+        "sha256": "64690dfe34d44a4351c1d69cd41357c5e52eb3b7250c98342db5ae88eeb55f97"
+      },
+      {
+        "file": "current.json",
+        "http": 200,
+        "verified": true
+      },
+      {
+        "file": "verification.json",
+        "http": 200,
+        "verified": true
+      }
+    ]
+  }
+}
