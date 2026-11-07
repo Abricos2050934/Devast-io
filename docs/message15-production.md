@@ -63,3 +63,9 @@ and type numbers and drag sliders in Chromium and Firefox. Other mod features
 keep their regression and native browser checks. Historical ILM-specific tests
 are archived; the current suite compares against the Message15 reference.
 Browser fixtures do not establish live-server hit accuracy or absence of kicks.
+
+Direction ownership is also checked through both native 150 ms / 60 ms handlers.
+Yielding to native mouse input invalidates the cached server angle; reacquiring
+the same aim angle reasserts it before the next shot. Imported Jitter retains
+ownership without a target while enabled together with aim. The
+`aim-pointer-ownership-resync` release gate checks these paths in both browsers.

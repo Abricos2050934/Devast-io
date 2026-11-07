@@ -805,7 +805,7 @@ function __installDevastMod(B) {
   let messageCycleWritable=false,messageCycleHasDirection=false,messageShotAligning=false,messagePendingAngle=null;
   const AIM_SEND_INTERVAL_MS=50;
   let messageLastCycleAt=-Infinity;
-  const aimTransport={rateLimitedCycles:0,invalidTargets:0,cycles:0};
+  const aimTransport={rateLimitedCycles:0,invalidTargets:0,cycles:0,nativeYields:0};
   function flushMessageAngle(){
     if(!messagePendingAngle)return messageCycleHasDirection;
     const packet=messagePendingAngle;messagePendingAngle=null;
@@ -2327,7 +2327,13 @@ function __installDevastMod(B) {
     onHandshake:()=>{messageLastCycleAt=-Infinity;lastSentAngle=null;messageAim.onHandshake();},
     onSessionStart:()=>{messageLastCycleAt=-Infinity;lastSentAngle=null;Aimbot.onDeath();},
     get controlsAimDirection() {
-      return playing() && !reconnect.sessionEnded && (MOD.JitterEnabled || MOD.AimBotEnabled&&validAimTarget());
+      const controls=playing() && !reconnect.sessionEnded &&
+        (MOD.JitterEnabled || MOD.AimBotEnabled&&(MOD.jitterActive||validAimTarget()));
+      // Both native direction handlers query this immediately before sending.
+      // Once mouse input can change the server angle, our cache no longer proves
+      // its value. Reacquisition must reassert even the same predicted angle.
+      if(!controls&&lastSentAngle!==null){lastSentAngle=null;lastSentPlayer=0;messageLastCycleAt=-Infinity;aimTransport.nativeYields++;}
+      return controls;
     },
     get jitterAngle() { return jitter.spinning ? jitter.angle * Math.PI / 180 : null; },
     get aimRenderAngle() { return null; },

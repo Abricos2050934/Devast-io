@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "date_moscow": "2026-11-07",
+  "source_base_commit": "6f4ef0e",
+  "baseline_output_sha256": "a6a3a619049a94c4a9a74af9e1a7ec792be9f59eb8897a87309c8c8e6f5b79c6",
+  "release": "79f420d5d5e85c67f2c0ebcd3bccc5921919f819ed2958fbd6fc910b3abe8ab9",
+  "output_sha256": "391ea28a62c92623cd3e117cdaecfc92c03ccec2a312787df00331367a598169",
+  "source_url": "https://devast.io/js/qYOh6D5MhvXhWnq.js",
+  "raw_sha256": "74720aca77141a313015167051e60c2dfc566310202a5b41d4445258e4937f2e",
+  "inputs_sha256": "b884572fbb9ccb44bb0fdd0ea7292bf6e6cfb9fd23ea264bbf664bdbc72b9b06",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 172,
+    "python_tests": 51
+  },
+  "candidate_tests": {
+    "status": "passed",
+    "tests": 118
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "154.0.8037.57",
+      "output_sha256": "391ea28a62c92623cd3e117cdaecfc92c03ccec2a312787df00331367a598169",
+      "ownership": {
+        "status": "passed",
+        "native_handlers": 2,
+        "cases": [
+          {
+            "native_handler": 0,
+            "mouse_direction": 90,
+            "reacquired_direction": 0,
+            "packets": [
+              [
+                6,
+                0
+              ],
+              [
+                4
+              ]
+            ]
+          },
+          {
+            "native_handler": 1,
+            "mouse_direction": 90,
+            "reacquired_direction": 0,
+            "packets": [
+              [
+                6,
+                0
+              ],
+              [
+                4
+              ]
+            ]
+          }
+        ],
+        "imported_jitter_exclusive_ownership": true,
+        "release_on_disable": true
+      },
+      "bounded_send_rate": {
+        "status": "passed",
+        "interval_ms": 50,
+        "stationary_directions_in_10s": 1,
+        "moving_directions_in_10s": 57,
+        "manual_shot_priority": true,
+        "native_idle_ping": true
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "output_sha256": "391ea28a62c92623cd3e117cdaecfc92c03ccec2a312787df00331367a598169",
+      "ownership": {
+        "status": "passed",
+        "native_handlers": 2,
+        "cases": [
+          {
+            "native_handler": 0,
+            "mouse_direction": 90,
+            "reacquired_direction": 0,
+            "packets": [
+              [
+                6,
+                0
+              ],
+              [
+                4
+              ]
+            ]
+          },
+          {
+            "native_handler": 1,
+            "mouse_direction": 90,
+            "reacquired_direction": 0,
+            "packets": [
+              [
+                6,
+                0
+              ],
+              [
+                4
+              ]
+            ]
+          }
+        ],
+        "imported_jitter_exclusive_ownership": true,
+        "release_on_disable": true
+      },
+      "bounded_send_rate": {
+        "status": "passed",
+        "interval_ms": 50,
+        "stationary_directions_in_10s": 1,
+        "moving_directions_in_10s": 57,
+        "manual_shot_priority": true,
+        "native_idle_ping": true
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    }
+  },
+  "test_probes_in_production": false,
+  "live_server_tested": false,
+  "server_disconnect_cause_established": false
+}

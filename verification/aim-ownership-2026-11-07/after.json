@@ -1,0 +1,27 @@
+{
+  "initial": [
+    [
+      6,
+      0
+    ],
+    [
+      6,
+      0
+    ]
+  ],
+  "yielded": true,
+  "nativePointer": [
+    6,
+    90
+  ],
+  "reacquisitionPackets": [
+    [
+      6,
+      0
+    ],
+    [
+      4
+    ]
+  ],
+  "predictedAngle": 0
+}

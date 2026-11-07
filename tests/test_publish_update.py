@@ -165,6 +165,14 @@ class PublicationTests(unittest.TestCase):
   self.validation['browsers']['firefox']['native']['message15_transport']['bounded_send_rate']['status']='failed';self.save()
   with self.assertRaisesRegex(ValueError,'Bounded aim.*firefox'):p.artifacts(self.root,self.out)
 
+ def test_aim_ownership_resync_requires_both_native_browsers(self):
+  self.contract['features']=['aim-pointer-ownership-resync']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'aim_ownership':{'status':'passed'}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['aim_ownership']['status']='failed';self.save()
+  with self.assertRaisesRegex(ValueError,'ownership resync.*firefox'):p.artifacts(self.root,self.out)
+
  def test_native_shot_and_render_sync_require_both_browsers(self):
   self.contract['features']=['native-shot-direction-and-render-sync']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

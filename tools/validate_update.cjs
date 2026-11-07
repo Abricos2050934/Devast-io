@@ -35,12 +35,27 @@ const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLab
 const closeOperation=profile.operations.find(p=>p.id==='native-disconnect-without-socket');
 const closeName=acorn.parse(closeOperation.after,{ecmaVersion:'latest'}).body[0].id.name;
 functions[closeName]='nativeClose';functions[roles.messageMove]='move';functions[roles.messageHandshake]='handshake';
+for(const [index,suffix]of ['primary','secondary'].entries()){
+ const op=profile.operations.find(p=>p.id==='ilm-native-angle-bookkeeping-'+suffix);
+ const fn=acorn.parse(op.after,{ecmaVersion:'latest'}).body[0];
+ functions[fn.id.name]=index===0?'directionPrimary':'directionSecondary';
+}
 const edits=[],placements=[],todo=[tree];while(todo.length){const n=todo.pop();if(!n||typeof n!=='object')continue;
  if(n.type==='ArrayExpression'&&nativeAnalysis.constant(n.elements[0])===14&&n.elements.length===4&&n.elements[1]?.object?.type==='MemberExpression')placements.push(n);
  if(n.type==='FunctionDeclaration')for(const [old,name]of Object.entries(functions))if(n.id.name===(name==='nativeClose'?closeName:(roles[old]||old))){
   let text=`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.${name}=${n.id.name};`;
   if(name==='fire')text+=`window.__updateFunctions.capturePackets=()=>{const codec=${roles['еϲᄄ']},key=${JSON.stringify(roles['ᴎ︅ހ'])},encode=codec[key],socket=${roles['І̎ܘ']},packets=[];codec[key]=p=>{packets.push(p.slice());return '';};${roles['І̎ܘ']}={send(){}};return {packets,restore(){codec[key]=encode;${roles['І̎ܘ']}=socket;}};};`;
   if(name==='nativeClose')text+=`window.__updateFunctions.exerciseNativeClose=readyState=>{const previous=${roles['І̎ܘ']};let closes=0;const socket={readyState,close(){closes++;}};${roles['І̎ܘ']}=socket;__responsiveMod.observeSocket(socket);try{${n.id.name}();return closes;}finally{${roles['І̎ܘ']}=previous;__responsiveMod.observeSocket(previous);}};`;
+  if(name==='directionPrimary'||name==='directionSecondary'){
+   const test=n.body.body[0]?.test,elapsed=test?.operator==='>'?test.left:test?.operator==='<'?test.right:null;
+   assert.ok(elapsed?.type==='BinaryExpression'&&elapsed.operator==='-'&&elapsed.left.type==='Identifier'&&elapsed.right.type==='Identifier','Native direction clock changed');
+   const assignments=nativeAnalysis.nodes.filter(x=>x.start>=n.start&&x.end<=n.end&&x.type==='AssignmentExpression'&&x.operator==='='&&x.left.type==='Identifier');
+   const cache=assignments.filter(x=>x.right.type==='MemberExpression'&&x.right.object.name===symbols['ρ̃५']);
+   assert.equal(cache.length,1,'Unique native angle cache required');
+   const now=elapsed.left.name,variables=[...new Set([now,...assignments.filter(x=>x.right.type==='Identifier'&&x.right.name===now).map(x=>x.left.name),cache[0].left.name])];
+   const input=output.slice(cache[0].right.start,cache[0].right.end),values=variables.concat(input),index=name==='directionPrimary'?0:1;
+   text+=`window.__updateFunctions.directionProbes=window.__updateFunctions.directionProbes||[];window.__updateFunctions.directionProbes[${index}]=angle=>{const previous=[${values.join(',')}];try{${now}=Math.max(${now},${elapsed.right.name})+1000;${cache[0].left.name}=0;${input}=angle;${n.id.name}();}finally{${values.map((v,i)=>v+'=previous['+i+'];').join('')}}};`;
+  }
   edits.push({at:n.start,text});
  }
  for(const v of Object.values(n)){if(Array.isArray(v))todo.push(...v);else if(v&&typeof v==='object')todo.push(v);}
@@ -97,6 +112,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   await page.addInitScript('window.__verifyMessage15Aim='+require('./verify_message15_aim.cjs').verifyMessage15Aim.toString());
   await page.addInitScript('window.__verifyMessage15Extra='+require('./verify_message15_extra.cjs').verifyMessage15Extra.toString());
   await page.addInitScript('window.__verifyMessage15Transport='+require('./verify_message15_transport.cjs').verifyMessage15Transport.toString());
+  await page.addInitScript('window.__verifyAimOwnership='+require('./verify_aim_ownership.cjs').verifyAimOwnership.toString());
   await page.addInitScript(()=>{const raf=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=callback=>raf(time=>{if(!window.__numericPauseWorld)callback(time);});});
   await page.goto(source.page_url,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForFunction(()=>!!window.__updateProbe&&!!window.__devastMod?.menu,{timeout:25000});
   report.reload_identity=[];
@@ -178,6 +194,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.messageAimVerification.comparison_points>1400,'Incomplete imported source comparison');
     m.messageAimExtra=window.__verifyMessage15Extra(m,n,s,originalAim);
     m.messageTransportVerification=window.__verifyMessage15Transport(m,n,s,r,originalAim);
+    m.aimOwnershipVerification=window.__verifyAimOwnership(m,n,s);
     m.setSetting('AimBotEnabled',false);m.setSetting('JitterEnabled',false);m.setSetting('jitterActive',false);m.aim.mouseDown=false;
     const blockedSocket={readyState:1,bufferedAmount:4096};transport.packets.length=0;
     m.render(performance.now());const stableRecords=m.records,stableEntries=m.records.slice();m.render(performance.now());
@@ -330,7 +347,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {message15_comparison:m.messageAimVerification,message15_extra:m.messageAimExtra,message15_transport:m.messageTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {aim_ownership:m.aimOwnershipVerification,message15_comparison:m.messageAimVerification,message15_extra:m.messageAimExtra,message15_transport:m.messageTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:reference});
   report.physical_numeric=await require('./verify_message15_physical.cjs').verifyPhysical(page,symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';

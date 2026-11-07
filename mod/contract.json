@@ -39,7 +39,8 @@
     "message15-native-lifecycle",
     "immediate-aim-numeric-settings",
     "aim-small-queue-admission",
-    "bounded-aim-send-rate"
+    "bounded-aim-send-rate",
+    "aim-pointer-ownership-resync"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -58,7 +59,8 @@
     "tests/automation-transport.test.cjs",
     "tests/aim-backpressure.test.cjs",
     "tests/message15-source.test.cjs",
-    "tests/aim-send-rate.test.cjs"
+    "tests/aim-send-rate.test.cjs",
+    "tests/aim-ownership.test.cjs"
   ],
   "required_browsers": [
     "chromium",
