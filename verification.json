@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "64690dfe34d44a4351c1d69cd41357c5e52eb3b7250c98342db5ae88eeb55f97",
+  "output_sha256": "4f18c90639273b4d85906c84b9633d16b4f991436fc08b4a7445cdf11b59cd37",
   "static_ast": "passed",
   "message15_core": "byte-identical source declarations",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -46,7 +46,7 @@
       "message15-native-lifecycle",
       "immediate-aim-numeric-settings",
       "aim-small-queue-admission",
-      "bounded-aim-send-rate",
+      "immediate-message15-directions-and-bounded-auto-fire",
       "aim-pointer-ownership-resync",
       "native-aim-transport-preserves-idle"
     ],
@@ -77,16 +77,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "1209bb12748972aa0564d9c594d3dc89c995ba1fdebcca50e00b09a0228b5f21",
+    "mod/responsive.js": "c8ef59372696b743cc76200d6faa83b9cc8a253b346020f6f12f6a4dfd7c4dd5",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
     "mod/message15-aim.js": "3b65714cfec3de8db338f8251edcbade17c3b1cf3021530f7fc4b67ef49d4427"
   },
-  "mod_bundle_sha256": "3952e6c1697cafe0d713796172563e94fe5e02bfd22b6a64973ec5a7921f3953",
+  "mod_bundle_sha256": "13d9aa00528e96712d408330728e80c312365405480497b6b7bfac3529d48765",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -119,7 +119,7 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "7ab019714124e62eb36785b9e568eb729567c5b0569466ab048c7c72a7f7adb2",
+    "fingerprint": "2727aca5a1b9cc51b8a12bdf5b608f74c632dea5e91572d55b8ac3df30602949",
     "nativeSha256": "e1799132e4369cde75e8b153a9629f96e959e4053991fa5d33df3b9c3feaafdf"
   },
   "native": {
@@ -218,11 +218,14 @@
     "message15_transport": {
       "status": "passed",
       "small_queue_admission": true,
-      "bounded_send_rate": {
+      "immediate_directions": {
         "status": "passed",
-        "interval_ms": 50,
+        "independent_source_comparisons": 1000,
+        "changed_directions_immediate": true,
+        "auto_fire_interval_ms": 50,
+        "auto_fire_pairs_in_10s": 200,
         "stationary_directions_in_10s": 1,
-        "moving_directions_in_10s": 57,
+        "moving_directions_in_10s": 1000,
         "manual_shot_priority": true,
         "native_idle_ping": true
       },
@@ -581,12 +584,12 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-07T19:29:08.291Z",
+  "finished_at": "2026-11-07T20:05:14.158Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "64690dfe34d44a4351c1d69cd41357c5e52eb3b7250c98342db5ae88eeb55f97",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "4f18c90639273b4d85906c84b9633d16b4f991436fc08b4a7445cdf11b59cd37",
+      "browser_version": "154.0.8037.57",
       "native": {
         "native_aim_transport": {
           "status": "passed",
@@ -683,11 +686,14 @@
         "message15_transport": {
           "status": "passed",
           "small_queue_admission": true,
-          "bounded_send_rate": {
+          "immediate_directions": {
             "status": "passed",
-            "interval_ms": 50,
+            "independent_source_comparisons": 1000,
+            "changed_directions_immediate": true,
+            "auto_fire_interval_ms": 50,
+            "auto_fire_pairs_in_10s": 200,
             "stationary_directions_in_10s": 1,
-            "moving_directions_in_10s": 57,
+            "moving_directions_in_10s": 1000,
             "manual_shot_priority": true,
             "native_idle_ping": true
           },
@@ -1076,7 +1082,7 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "64690dfe34d44a4351c1d69cd41357c5e52eb3b7250c98342db5ae88eeb55f97",
+      "output_sha256": "4f18c90639273b4d85906c84b9633d16b4f991436fc08b4a7445cdf11b59cd37",
       "browser_version": "153.0",
       "native": {
         "native_aim_transport": {
@@ -1174,11 +1180,14 @@
         "message15_transport": {
           "status": "passed",
           "small_queue_admission": true,
-          "bounded_send_rate": {
+          "immediate_directions": {
             "status": "passed",
-            "interval_ms": 50,
+            "independent_source_comparisons": 1000,
+            "changed_directions_immediate": true,
+            "auto_fire_interval_ms": 50,
+            "auto_fire_pairs_in_10s": 200,
             "stationary_directions_in_10s": 1,
-            "moving_directions_in_10s": 57,
+            "moving_directions_in_10s": 1000,
             "manual_shot_priority": true,
             "native_idle_ping": true
           },
@@ -1589,7 +1598,7 @@
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 175,
+    "node_tests": 176,
     "python_tests": 52
   }
 }
