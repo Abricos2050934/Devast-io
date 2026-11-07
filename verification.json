@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "391ea28a62c92623cd3e117cdaecfc92c03ccec2a312787df00331367a598169",
+  "output_sha256": "64690dfe34d44a4351c1d69cd41357c5e52eb3b7250c98342db5ae88eeb55f97",
   "static_ast": "passed",
   "message15_core": "byte-identical source declarations",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -47,7 +47,8 @@
       "immediate-aim-numeric-settings",
       "aim-small-queue-admission",
       "bounded-aim-send-rate",
-      "aim-pointer-ownership-resync"
+      "aim-pointer-ownership-resync",
+      "native-aim-transport-preserves-idle"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -67,7 +68,8 @@
       "tests/aim-backpressure.test.cjs",
       "tests/message15-source.test.cjs",
       "tests/aim-send-rate.test.cjs",
-      "tests/aim-ownership.test.cjs"
+      "tests/aim-ownership.test.cjs",
+      "tests/native-aim-transport.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -75,16 +77,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "76dfdb9a96f07173d96470d255d46ec947b02b70fec0932a23d4734c2b65d2bb",
-    "mod/bootstrap.js": "9af79fd81c73e8ff70cf02eb63fc80caf1f3ead6e82ae73db2b8efe57d6213a0",
+    "mod/responsive.js": "1209bb12748972aa0564d9c594d3dc89c995ba1fdebcca50e00b09a0228b5f21",
+    "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
     "mod/message15-aim.js": "3b65714cfec3de8db338f8251edcbade17c3b1cf3021530f7fc4b67ef49d4427"
   },
-  "mod_bundle_sha256": "8d2194a007ed18b15bc21c01acae780084ee28904b7c96a1a66b362f52860b3a",
+  "mod_bundle_sha256": "3952e6c1697cafe0d713796172563e94fe5e02bfd22b6a64973ec5a7921f3953",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -117,10 +119,44 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "51cbdefcc47d31e89657483035a2faea14ef5dc410f1aec46bf7553741c6cfbc",
+    "fingerprint": "7ab019714124e62eb36785b9e568eb729567c5b0569466ab048c7c72a7f7adb2",
     "nativeSha256": "e1799132e4369cde75e8b153a9629f96e959e4053991fa5d33df3b9c3feaafdf"
   },
   "native": {
+    "native_aim_transport": {
+      "status": "passed",
+      "idle_period_ms": 60000,
+      "sustained_duration_ms": 121000,
+      "directions": 2420,
+      "heartbeats": 2,
+      "real_input_updates_activity": true,
+      "wire_cases": [
+        {
+          "seed": [
+            0,
+            0
+          ],
+          "bytes": 10,
+          "equal": true
+        },
+        {
+          "seed": [
+            0,
+            1
+          ],
+          "bytes": 10,
+          "equal": true
+        },
+        {
+          "seed": [
+            18,
+            52
+          ],
+          "bytes": 10,
+          "equal": true
+        }
+      ]
+    },
     "aim_ownership": {
       "status": "passed",
       "native_handlers": 2,
@@ -545,13 +581,47 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-07T12:24:38.492Z",
+  "finished_at": "2026-11-07T19:21:56.021Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "391ea28a62c92623cd3e117cdaecfc92c03ccec2a312787df00331367a598169",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "64690dfe34d44a4351c1d69cd41357c5e52eb3b7250c98342db5ae88eeb55f97",
+      "browser_version": "154.0.8037.57",
       "native": {
+        "native_aim_transport": {
+          "status": "passed",
+          "idle_period_ms": 60000,
+          "sustained_duration_ms": 121000,
+          "directions": 2420,
+          "heartbeats": 2,
+          "real_input_updates_activity": true,
+          "wire_cases": [
+            {
+              "seed": [
+                0,
+                0
+              ],
+              "bytes": 10,
+              "equal": true
+            },
+            {
+              "seed": [
+                0,
+                1
+              ],
+              "bytes": 10,
+              "equal": true
+            },
+            {
+              "seed": [
+                18,
+                52
+              ],
+              "bytes": 10,
+              "equal": true
+            }
+          ]
+        },
         "aim_ownership": {
           "status": "passed",
           "native_handlers": 2,
@@ -1006,9 +1076,43 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "391ea28a62c92623cd3e117cdaecfc92c03ccec2a312787df00331367a598169",
+      "output_sha256": "64690dfe34d44a4351c1d69cd41357c5e52eb3b7250c98342db5ae88eeb55f97",
       "browser_version": "153.0",
       "native": {
+        "native_aim_transport": {
+          "status": "passed",
+          "idle_period_ms": 60000,
+          "sustained_duration_ms": 121000,
+          "directions": 2420,
+          "heartbeats": 2,
+          "real_input_updates_activity": true,
+          "wire_cases": [
+            {
+              "seed": [
+                0,
+                0
+              ],
+              "bytes": 10,
+              "equal": true
+            },
+            {
+              "seed": [
+                0,
+                1
+              ],
+              "bytes": 10,
+              "equal": true
+            },
+            {
+              "seed": [
+                18,
+                52
+              ],
+              "bytes": 10,
+              "equal": true
+            }
+          ]
+        },
         "aim_ownership": {
           "status": "passed",
           "native_handlers": 2,
@@ -1478,13 +1582,14 @@
       "tests/aim-backpressure.test.cjs",
       "tests/message15-source.test.cjs",
       "tests/aim-send-rate.test.cjs",
-      "tests/aim-ownership.test.cjs"
+      "tests/aim-ownership.test.cjs",
+      "tests/native-aim-transport.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 172,
-    "python_tests": 51
+    "node_tests": 175,
+    "python_tests": 52
   }
 }
