@@ -1,0 +1,7 @@
+{
+  "samples": 200,
+  "maxDifferenceDegrees": 0,
+  "staleSamples": 0,
+  "directions": 200,
+  "scope": "transmitted angle vs current byte-identical Message15 calculation; synthetic moving target; no live server"
+}

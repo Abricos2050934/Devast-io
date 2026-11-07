@@ -39,3 +39,22 @@ test('source direction timer, refresh-on-packet and source death reset are insta
   f.mod.onSessionStart();assert.equal(f.mod.aim.dead,true);assert.equal(f.mod.targets.players[1].active,false);f.mod.onHandshake();assert.equal(f.mod.aim.dead,false);
  }finally{f.mod.dispose();}assert.equal(f.timers.size,0);assert.equal(f.frames.size,0);
 });
+test('every fast target update transmits the current independent Message15 direction at near and far distances',()=>{
+ const blocks=reference().blocks.filter(b=>['GetAllTargetsCon','GetTarget','AimbotCon','JitterCon','LinesCon','_lineIntersect'].includes(b.label)).map(b=>b.source).join('\n');
+ for(const resolverType of ['linear','trygonometrical'])for(const radius of [100,500,1200])for(const interval of [8,17]){
+  const f=fixture();let now=1000;const packets=[],settings={...f.mod.settings,AimBotEnabled:false,autoFire:false,mouseFovEnable:false,lockId:2,jitterActive:false,JitterEnabled:false,resolverType};
+  const context=vm.createContext({MOD:settings,World:{PLAYER:{id:1,team:-1},players:Array.from({length:1000},()=>({team:-1}))},Client:{state:1,sendPacket:text=>packets.push(JSON.parse(text))},window:{Math,JSON,dispatchEvent(){}},Entitie:{units:[],border:[]},__ENTITIE_BULLET__:2,KeyboardEvent:class{},Date:{now:()=>now}});
+  vm.runInContext(blocks+'\nvar GetAllTargets=new GetAllTargetsCon(),Aimbot=new AimbotCon(),Jitter=new JitterCon();',context);
+  try{
+   for(const [k,v]of Object.entries(settings))f.mod.setSetting(k,v);
+   for(const [id,x,y]of [[1,1500,1500],[2,1500+radius,1500]]){f.mod.trackPacket(1,id,1,x,y,true);context.GetAllTargets.players[id].update(x,y);}
+   f.mod.setSetting('AimBotEnabled',true);settings.AimBotEnabled=true;
+   for(let step=0;step<200;step++){
+    now=2000+step*interval;f.setClock(now);const x=1500+radius*Math.cos(step/25),y=1500+radius*Math.sin(step/25);
+    f.mod.trackPacket(1,2,1,x,y,true);context.GetAllTargets.players[2].update(x,y);
+    const source=packets.filter(p=>p[0]===6).at(-1);assert.ok(source,'Independent source produced no direction');
+    assert.equal(f.packets.filter(p=>p[0]===6).at(-1)?.[1],(Math.round(source[1])%360+360)%360,`${resolverType}, radius ${radius}, interval ${interval}, step ${step}: wire angle lagged behind Message15`);
+   }
+  }finally{f.mod.dispose();}
+ }
+});

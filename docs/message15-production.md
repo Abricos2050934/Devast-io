@@ -19,11 +19,12 @@ the formulas. A missing locked target must prepare team data for the original
 fallback search, including lock IDs 0 and 120. The existing transport snapshot
 admits or drops an entire automatic direction/attack/release cycle together.
 The formulas and histories continue while transmission is blocked; no replay
-queue is introduced. Background cycles are admitted at most once per 50 ms;
-identical normalized directions are coalesced. The source prediction and line
-continue to update between sends. Missing targets and a lock on self cannot
+queue is introduced. Changed directions are transmitted immediately after each
+source update; identical normalized directions are coalesced. Only automatic
+attack/release pairs are limited to one per 50 ms. The former shared 50 ms gate
+could leave the transmitted angle behind the current prediction and was removed. Missing targets and a lock on self cannot
 forward stale directions. A native manual shot reasserts the latest prediction
-before attack, independently of the background interval.
+before attack, including between background callbacks.
 
 Ordinary queued bytes no longer suppress those directions. The aim admission
 snapshot accepts an open socket below 4096 buffered bytes and pauses new cycles
@@ -32,8 +33,9 @@ The previous any-nonzero-byte check could suppress every fresh direction during
 ordinary traffic even though the imported predictor continued computing them.
 Native Chromium/Firefox fixtures verify fresh directions at 1, 16, 128, 1024
 and 4095 queued bytes, in addition to full-queue and closed-socket checks. They
-also require stationary-direction coalescing, a 20 Hz moving-target bound and
-manual-shot priority. These checks are required by the publisher. The 24-scene
+also compare the transmitted angle with the independent Message15 source after
+each of 1000 updates spaced 10 ms apart. Stationary-direction coalescing,
+automatic attack/release cadence and manual-shot priority are checked separately. These checks are required by the publisher. The 24-scene
 and 96-scene comparisons retain exact source state/formulas while verifying
 that forwarded commands form an ordered subset of the source output; wire
 repetition is deliberately different from the upload.
@@ -69,3 +71,8 @@ Yielding to native mouse input invalidates the cached server angle; reacquiring
 the same aim angle reasserts it before the next shot. Imported Jitter retains
 ownership without a target while enabled together with aim. The
 `aim-pointer-ownership-resync` release gate checks these paths in both browsers.
+
+Automated combat uses the reviewed native codec/binary-send bridge through
+`B.aimSend`, preserving the native activity clock and its periodic idle packets.
+The `native-aim-transport-preserves-idle` gate remains required in both browsers;
+restoring immediate directions does not restore the JSON sender activity reset.

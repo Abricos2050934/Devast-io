@@ -157,13 +157,13 @@ class PublicationTests(unittest.TestCase):
   self.validation['browsers']['firefox']['native']['message15_transport']['small_queue_admission']=False;self.save()
   with self.assertRaisesRegex(ValueError,'small-queue admission.*firefox'):p.artifacts(self.root,self.out)
 
- def test_bounded_aim_stream_is_required_in_each_browser(self):
-  self.contract['features']=['bounded-aim-send-rate']
+ def test_immediate_message15_directions_are_required_in_each_browser(self):
+  self.contract['features']=['immediate-message15-directions-and-bounded-auto-fire']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
-  for report in self.validation['browsers'].values():report['native']={'message15_transport':{'bounded_send_rate':{'status':'passed'}}}
+  for report in self.validation['browsers'].values():report['native']={'message15_transport':{'immediate_directions':{'status':'passed'}}}
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
-  self.validation['browsers']['firefox']['native']['message15_transport']['bounded_send_rate']['status']='failed';self.save()
-  with self.assertRaisesRegex(ValueError,'Bounded aim.*firefox'):p.artifacts(self.root,self.out)
+  self.validation['browsers']['firefox']['native']['message15_transport']['immediate_directions']['status']='failed';self.save()
+  with self.assertRaisesRegex(ValueError,'Immediate Message15.*firefox'):p.artifacts(self.root,self.out)
 
  def test_aim_ownership_resync_requires_both_native_browsers(self):
   self.contract['features']=['aim-pointer-ownership-resync']

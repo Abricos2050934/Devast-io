@@ -235,8 +235,11 @@ test('legacy settings migrate separately from account storage and preserve custo
 test('packet reception refreshes imported aim before manual fire, preserving the new line',()=>{
  const f=fixture({fireKey:'nativeFire'});f.mod.trackPacket(1,1,0,0,0,true);f.mod.trackPacket(1,2,0,100,0,true);
  f.mod.setSetting('lockId',2);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();f.packets.length=0;
- const before=JSON.stringify(f.mod.targets.lines);f.mod.trackPacket(1,2,0,100,100,true);f.mod.beforeFire();f.network.nativeFire();
- assert.deepEqual(f.packets.map(p=>p[0]),[6,4]);assert.notEqual(JSON.stringify(f.mod.targets.lines),before);
+ const before=JSON.stringify(f.mod.targets.lines);f.mod.trackPacket(1,2,0,100,100,true);
+ const angle=(Math.round(f.mod.aim.lastAngle)%360+360)%360;
+ assert.deepEqual(f.packets,[[6,angle]],'Position reception must send the fresh angle before any shot');
+ f.mod.beforeFire();f.network.nativeFire();
+ assert.deepEqual(f.packets,[[6,angle],[6,angle],[4]],'The first native shot reasserts the current direction before attack');assert.notEqual(JSON.stringify(f.mod.targets.lines),before);
  const count=f.packets.length;f.mod.aim.refresh();assert.equal(f.packets.length,count);assert.notEqual(JSON.stringify(f.mod.targets.lines),before);
  f.mod.setSetting('AimBotEnabled',false);f.packets.length=0;f.network.nativeFire();assert.deepEqual(f.packets,[[4]]);
  f.mod.dispose();f.packets.length=0;f.network.nativeFire();assert.deepEqual(f.packets,[[4]]);

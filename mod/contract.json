@@ -39,7 +39,7 @@
     "message15-native-lifecycle",
     "immediate-aim-numeric-settings",
     "aim-small-queue-admission",
-    "bounded-aim-send-rate",
+    "immediate-message15-directions-and-bounded-auto-fire",
     "aim-pointer-ownership-resync",
     "native-aim-transport-preserves-idle"
   ],

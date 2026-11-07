@@ -73,8 +73,8 @@ def artifacts(root, output):
             raise ValueError('Message15 native lifecycle was not verified in browser: ' + browser)
         if 'aim-small-queue-admission' in contract.get('features', []) and report.get('native', {}).get('message15_transport', {}).get('small_queue_admission') is not True:
             raise ValueError('Message15 small-queue admission was not verified in browser: ' + browser)
-        if 'bounded-aim-send-rate' in contract.get('features', []) and report.get('native', {}).get('message15_transport', {}).get('bounded_send_rate', {}).get('status') != 'passed':
-            raise ValueError('Bounded aim sends and manual shot priority were not verified in browser: ' + browser)
+        if 'immediate-message15-directions-and-bounded-auto-fire' in contract.get('features', []) and report.get('native', {}).get('message15_transport', {}).get('immediate_directions', {}).get('status') != 'passed':
+            raise ValueError('Immediate Message15 directions and automatic fire cadence were not verified in browser: ' + browser)
         if 'aim-pointer-ownership-resync' in contract.get('features', []) and report.get('native', {}).get('aim_ownership', {}).get('status') != 'passed':
             raise ValueError('Aim pointer ownership resync was not verified in browser: ' + browser)
         if 'native-aim-transport-preserves-idle' in contract.get('features', []) and report.get('native', {}).get('native_aim_transport', {}).get('status') != 'passed':
