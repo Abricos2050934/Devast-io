@@ -1,0 +1,10 @@
+{
+  "status": "published",
+  "commit": "d0c409d67c688a98139658be16f5789341b568ca",
+  "branch": "updates",
+  "source_commit": "2f0bf5622b55654ce351a00b017f1649d80aa074",
+  "release": "3dffe32a3c6127ff1e4797288e4faba425fdd0645b07394bda295f98015923f3",
+  "output_sha256": "f7eef588b9a2f7951369a9a04db55850f32a79fa0684b3597dd03fe3736987f5",
+  "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/game.modded.js",
+  "public_readback": "public-readback.json"
+}

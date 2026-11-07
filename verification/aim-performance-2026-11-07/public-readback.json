@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "release": "3dffe32a3c6127ff1e4797288e4faba425fdd0645b07394bda295f98015923f3",
+  "files": {
+    "game.modded.js": {
+      "http_status": 200,
+      "bytes": 4468339,
+      "sha256": "f7eef588b9a2f7951369a9a04db55850f32a79fa0684b3597dd03fe3736987f5"
+    },
+    "current.json": {
+      "http_status": 200,
+      "bytes": 937,
+      "sha256": "d407913e3905ac920dc962b4e1346486e2c398f099af4929806120d3ce079e4f"
+    },
+    "verification.json": {
+      "http_status": 200,
+      "bytes": 44489,
+      "sha256": "bcad606bb232304159ba3f4b77b99ff060f5327074444ec571f9e408f3e6a459"
+    }
+  }
+}
