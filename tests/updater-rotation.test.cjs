@@ -12,7 +12,7 @@ test('an unseen RC4 client ports from the earlier reviewed client without regist
  assert.notEqual(selectReference(raw).sha256,raw,'Rotation must remain an unregistered input');
  const result=port(ref.source,input,ref.profile,ref.bindings,read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/message15-aim.js'),read('vendor/dat.gui.recovered.js'));
  assert.equal(result.report.reference_sha256,'f3d84ce3b601811fd834d8204d6334e5c50858824fedd1d567bbfa6ce75096d7');
- assert.equal(result.report.decoder_blocks.length,30);assert.equal(result.profile.operations.length,35);
+ assert.equal(result.report.decoder_blocks.length,30);assert.equal(result.profile.operations.length,36);
  assert.equal(result.report.native_network_contracts.length,8);assert.equal(result.report.required_bindings,83);
  assert.equal(result.bindings.symbols.get,'get','Native get method must not borrow a renamed HTTP parameter');
  for(const block of require('../tools/audit_message15.cjs').reference().blocks)assert.ok(result.output.includes(block.source),'Message15 source block '+block.label);

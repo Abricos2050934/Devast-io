@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "reference_file": "Untitled-1_mod_v4.js",
+  "reference_uploaded_bytes": 8072407,
+  "reference_uploaded_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+  "baseline_output_sha256": "391ea28a62c92623cd3e117cdaecfc92c03ccec2a312787df00331367a598169",
+  "decoded_inline_blocks": 28,
+  "runtime_server_eval_calls": 2,
+  "whole_file_index": {
+    "reference": {
+      "ast_nodes": 718739,
+      "functions": 16567,
+      "canonical_functions": 16530,
+      "large_function_containers": 37,
+      "candidate_call_counts": {
+        "send": 17,
+        "WebSocket": 3,
+        "setTimeout": 28,
+        "open": 30,
+        "XMLHttpRequest": 3,
+        "eval": 2,
+        "setInterval": 9
+      }
+    },
+    "native": {
+      "ast_nodes": 689446,
+      "functions": 16133,
+      "canonical_functions": 16126,
+      "large_function_containers": 7,
+      "candidate_call_counts": {
+        "send": 7,
+        "WebSocket": 3,
+        "setTimeout": 18,
+        "open": 26,
+        "XMLHttpRequest": 3,
+        "eval": 2,
+        "setInterval": 2
+      }
+    },
+    "ours": {
+      "ast_nodes": 724476,
+      "functions": 16695,
+      "canonical_functions": 16687,
+      "large_function_containers": 8,
+      "candidate_call_counts": {
+        "send": 8,
+        "WebSocket": 3,
+        "setTimeout": 23,
+        "open": 26,
+        "XMLHttpRequest": 3,
+        "eval": 2,
+        "setInterval": 5
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "left": "native",
+      "right": "reference",
+      "total_functions": 16133,
+      "exact_normalized_function_bodies": 14205,
+      "unmatched_or_large": 1928
+    },
+    {
+      "left": "native",
+      "right": "ours",
+      "total_functions": 16133,
+      "exact_normalized_function_bodies": 16089,
+      "unmatched_or_large": 44
+    },
+    {
+      "left": "reference",
+      "right": "ours",
+      "total_functions": 16567,
+      "exact_normalized_function_bodies": 14289,
+      "unmatched_or_large": 2278
+    }
+  ],
+  "confirmed_transport_difference": "Reference aim goes straight through native codec and binary transport, while the prior mod used the JSON wrapper which updates the native user-activity timestamp. Repeated aim directions consequently prevented native idle packets in the prior mod.",
+  "synthetic_test_before": {
+    "duration_ms": 181000,
+    "directions_each": 3620,
+    "native_idle_period_ms": 60000,
+    "reference_heartbeats": 3,
+    "prior_mod_heartbeats": 0
+  },
+  "limitations": [
+    "Function hashes cover bodies up to 80000 source characters; large enclosing containers are indexed but not directly fingerprinted. Their nested functions are indexed normally.",
+    "Unmatched fingerprints can reflect source representation, different mods or semantic changes; they are not automatically anti-cheat.",
+    "Two eval calls consume runtime server responses absent from the uploaded file.",
+    "The client-side behavioral discrepancy is demonstrated; the user-specific server disconnect decision is not reproduced.",
+    "No live server session was started in these comparisons."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "scope": "Exact clients isolated in Chromium, real transport wrappers and native idle timer with prepared codec/socket; no live session",
+  "rows": [
+    {
+      "version": "reference",
+      "idlePeriodMs": 60000,
+      "endingClock": {
+        "now": 181000,
+        "activity": 180150,
+        "limit": 60000
+      },
+      "directions": 3620,
+      "heartbeats": 3,
+      "pageErrors": []
+    },
+    {
+      "version": "ours",
+      "idlePeriodMs": 60000,
+      "endingClock": {
+        "now": 181000,
+        "activity": 181000,
+        "limit": 60000
+      },
+      "directions": 3620,
+      "heartbeats": 0,
+      "pageErrors": []
+    }
+  ]
+}

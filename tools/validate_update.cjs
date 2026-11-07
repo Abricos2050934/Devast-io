@@ -30,7 +30,7 @@ const reference=require('./audit_message15.cjs').reference();
 require('./audit_message15.cjs').audit(read('ilm-aim.js'),installerSource);
 for(const block of reference.blocks)assert.ok(output.includes(block.source),'Missing exact source block: '+block.label);
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
-assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2','message15-native-afterRelease','message15-native-onMove','message15-handshake','message15-session-start']),'Every reviewed native patch is required');
+assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2','message15-native-afterRelease','message15-native-onMove','message15-handshake','message15-session-start','message15-native-aim-transport']),'Every reviewed native patch is required');
 const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ԁ̶ϲ':'release','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave','ᴀᄁ︃':'landmineRender','рոᴎ':'wireRender','ᅠ̘ܛ':'trapRender'};
 const closeOperation=profile.operations.find(p=>p.id==='native-disconnect-without-socket');
 const closeName=acorn.parse(closeOperation.after,{ecmaVersion:'latest'}).body[0].id.name;
@@ -69,6 +69,7 @@ const senderEntry=networkReturn.argument.properties.find(p=>(p.key.name??p.key.v
 const senderDefinition=networkBody.find(n=>n.type==='FunctionDeclaration'&&n.id.name===senderEntry.value.name);
 const assignment=senderDefinition.body.body[0].expression;
 assert.ok(assignment?.type==='AssignmentExpression'&&assignment.left.type==='Identifier'&&assignment.right.type==='Identifier','Native send clock changed');
+edits.push({at:senderDefinition.start,text:`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.captureWire=frame=>{const codec=${roles['еϲᄄ']},key=${JSON.stringify(roles['ᴎ︅ހ'])},encode=codec[key],socket=${roles['І̎ܘ']},bytes=[],inputs=[];codec[key]=packet=>{inputs.push(packet.slice());return new Uint8Array(frame);};${roles['І̎ܘ']}={readyState:1,send(data){bytes.push(Array.from(data));}};return {bytes,inputs,normal:packet=>${senderDefinition.id.name}(JSON.stringify(packet)),aim:packet=>${senderDefinition.id.name}.__devastAimTransport(packet),restore(){codec[key]=encode;${roles['І̎ܘ']}=socket;}};};`});
 const lastActivity=assignment.left.name,nativeNow=assignment.right.name,idleMatches=[];
 for(const fn of networkBody.filter(n=>n.type==='FunctionDeclaration')){
  const pending=[fn.body];while(pending.length){const n=pending.pop();if(!n||typeof n!=='object')continue;
@@ -113,6 +114,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   await page.addInitScript('window.__verifyMessage15Extra='+require('./verify_message15_extra.cjs').verifyMessage15Extra.toString());
   await page.addInitScript('window.__verifyMessage15Transport='+require('./verify_message15_transport.cjs').verifyMessage15Transport.toString());
   await page.addInitScript('window.__verifyAimOwnership='+require('./verify_aim_ownership.cjs').verifyAimOwnership.toString());
+  await page.addInitScript('window.__verifyNativeAimTransport='+require('./verify_native_aim_transport.cjs').verifyNativeAimTransport.toString());
   await page.addInitScript(()=>{const raf=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=callback=>raf(time=>{if(!window.__numericPauseWorld)callback(time);});});
   await page.goto(source.page_url,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForFunction(()=>!!window.__updateProbe&&!!window.__devastMod?.menu,{timeout:25000});
   report.reload_identity=[];
@@ -195,6 +197,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     m.messageAimExtra=window.__verifyMessage15Extra(m,n,s,originalAim);
     m.messageTransportVerification=window.__verifyMessage15Transport(m,n,s,r,originalAim);
     m.aimOwnershipVerification=window.__verifyAimOwnership(m,n,s);
+    m.nativeAimTransportVerification=window.__verifyNativeAimTransport(m,n,s);
     m.setSetting('AimBotEnabled',false);m.setSetting('JitterEnabled',false);m.setSetting('jitterActive',false);m.aim.mouseDown=false;
     const blockedSocket={readyState:1,bufferedAmount:4096};transport.packets.length=0;
     m.render(performance.now());const stableRecords=m.records,stableEntries=m.records.slice();m.render(performance.now());
@@ -347,7 +350,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {aim_ownership:m.aimOwnershipVerification,message15_comparison:m.messageAimVerification,message15_extra:m.messageAimExtra,message15_transport:m.messageTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {native_aim_transport:m.nativeAimTransportVerification,aim_ownership:m.aimOwnershipVerification,message15_comparison:m.messageAimVerification,message15_extra:m.messageAimExtra,message15_transport:m.messageTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:reference});
   report.physical_numeric=await require('./verify_message15_physical.cjs').verifyPhysical(page,symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';

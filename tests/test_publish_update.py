@@ -173,6 +173,14 @@ class PublicationTests(unittest.TestCase):
   self.validation['browsers']['firefox']['native']['aim_ownership']['status']='failed';self.save()
   with self.assertRaisesRegex(ValueError,'ownership resync.*firefox'):p.artifacts(self.root,self.out)
 
+ def test_native_aim_transport_requires_heartbeat_checks_in_each_browser(self):
+  self.contract['features']=['native-aim-transport-preserves-idle']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'native_aim_transport':{'status':'passed'}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['native_aim_transport']['status']='failed';self.save()
+  with self.assertRaisesRegex(ValueError,'periodic idle packets.*firefox'):p.artifacts(self.root,self.out)
+
  def test_native_shot_and_render_sync_require_both_browsers(self):
   self.contract['features']=['native-shot-direction-and-render-sync']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

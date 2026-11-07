@@ -40,7 +40,8 @@
     "immediate-aim-numeric-settings",
     "aim-small-queue-admission",
     "bounded-aim-send-rate",
-    "aim-pointer-ownership-resync"
+    "aim-pointer-ownership-resync",
+    "native-aim-transport-preserves-idle"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -60,7 +61,8 @@
     "tests/aim-backpressure.test.cjs",
     "tests/message15-source.test.cjs",
     "tests/aim-send-rate.test.cjs",
-    "tests/aim-ownership.test.cjs"
+    "tests/aim-ownership.test.cjs",
+    "tests/native-aim-transport.test.cjs"
   ],
   "required_browsers": [
     "chromium",

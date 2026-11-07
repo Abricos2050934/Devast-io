@@ -976,7 +976,8 @@ function __installDevastMod(B) {
         return true;
       }
     }
-    originalSender(JSON.stringify(packet));
+    if([4,5,6].includes(packet[0])&&typeof B.aimSend==='function')B.aimSend(packet.slice());
+    else originalSender(JSON.stringify(packet));
     if ([4,5,6].includes(packet[0])) {
       recentCombatCommands.push({at:performance.now(),op:packet[0]});
       if (recentCombatCommands.length > 180) recentCombatCommands.shift();
@@ -1656,7 +1657,7 @@ function __installDevastMod(B) {
       automationSettings:{autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled},
       jitterTransport:{deferredDirections:jitter.deferredDirections,rateLimitHz:20},
       automationTransport:{deferred:{...automationDeferrals},aimHighWaterBytes:AIM_BUFFER_HIGH_WATER},
-      aimTransport:{...aimTransport,intervalMs:AIM_SEND_INTERVAL_MS,deduplicatedDirections:diagnostics.deduplicatedAngles},
+      aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',intervalMs:AIM_SEND_INTERVAL_MS,deduplicatedDirections:diagnostics.deduplicatedAngles},
       aimSettings:{enabled:MOD.AimBotEnabled,source:'message15',autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}}))};

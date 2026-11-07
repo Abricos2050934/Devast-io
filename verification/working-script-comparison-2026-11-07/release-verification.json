@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "date_moscow": "2026-11-07",
+  "release": "cc7583fd15ec43f5a9b1efbea8b15894f9560d0c99616a663f8196f892bbd87a",
+  "output_sha256": "64690dfe34d44a4351c1d69cd41357c5e52eb3b7250c98342db5ae88eeb55f97",
+  "raw_sha256": "74720aca77141a313015167051e60c2dfc566310202a5b41d4445258e4937f2e",
+  "source_url": "https://devast.io/js/qYOh6D5MhvXhWnq.js",
+  "inputs_sha256": "f6bd426899ef3523ba4a053e4f90646e9e6c138c3e6b749019f0ebb75f48b1b8",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 175,
+    "python_tests": 52
+  },
+  "candidate_tests": {
+    "status": "passed",
+    "tests": 121
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "browser_version": "154.0.8037.57",
+      "output_sha256": "64690dfe34d44a4351c1d69cd41357c5e52eb3b7250c98342db5ae88eeb55f97",
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "bounded_aim": {
+        "status": "passed",
+        "interval_ms": 50,
+        "stationary_directions_in_10s": 1,
+        "moving_directions_in_10s": 57,
+        "manual_shot_priority": true,
+        "native_idle_ping": true
+      },
+      "ownership": "passed"
+    },
+    "firefox": {
+      "status": "passed",
+      "browser_version": "153.0",
+      "output_sha256": "64690dfe34d44a4351c1d69cd41357c5e52eb3b7250c98342db5ae88eeb55f97",
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "bounded_aim": {
+        "status": "passed",
+        "interval_ms": 50,
+        "stationary_directions_in_10s": 1,
+        "moving_directions_in_10s": 57,
+        "manual_shot_priority": true,
+        "native_idle_ping": true
+      },
+      "ownership": "passed"
+    }
+  },
+  "test_probes_in_production": false,
+  "live_server_tested": false,
+  "specific_server_kick_reason_established": false
+}

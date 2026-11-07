@@ -77,6 +77,8 @@ def artifacts(root, output):
             raise ValueError('Bounded aim sends and manual shot priority were not verified in browser: ' + browser)
         if 'aim-pointer-ownership-resync' in contract.get('features', []) and report.get('native', {}).get('aim_ownership', {}).get('status') != 'passed':
             raise ValueError('Aim pointer ownership resync was not verified in browser: ' + browser)
+        if 'native-aim-transport-preserves-idle' in contract.get('features', []) and report.get('native', {}).get('native_aim_transport', {}).get('status') != 'passed':
+            raise ValueError('Native aim transport and periodic idle packets were not verified in browser: ' + browser)
         if 'immediate-aim-numeric-settings' in contract.get('features', []) and report.get('physical_numeric', {}).get('status') != 'passed':
             raise ValueError('Physical aim numeric entry was not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}

@@ -207,6 +207,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   roles.messageMove=map[bindings.roles?.messageMovePoll];
   if(!outputBindings.symbols['ⲟࠀᄀ']||!roles.messageKeyboard)throw Error('Missing Message15 lifecycle bindings');
   generated.operations=require('./updater/message15-contracts.cjs').message15Operations(cur,operations,outputBindings.symbols,roles,bindings.native_protocol,new Set(pairs.values()));
+  generated.operations.push(require('./updater/aim-transport.cjs').aimTransportOperation(cur,outputBindings.symbols,roles,new Set(pairs.values())));
   const helper=acorn.parse(adaptedAim,{ecmaVersion:'latest'}).body.find(n=>n.id?.name==='__jitterPatchNativeFire');
   const rule=generated.operations.find(op=>op.id==='jitter-native-fire-priority');
   adaptedAim=adaptedAim.slice(0,helper.start)+`function __jitterPatchNativeFire(source){const before=${JSON.stringify(rule.before)};if(source.split(before).length!==2)throw Error('Unsupported native fire handler');return source.replace(before,${JSON.stringify(rule.after)});}`+adaptedAim.slice(helper.end);
