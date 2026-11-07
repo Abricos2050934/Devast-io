@@ -6,7 +6,7 @@
 
 Предыдущее изменение nativeAimTransport/idle НЕ откатывать. Обязательны проверки native-aim-transport-preserves-idle и aim-pointer-ownership-resync. Старый контракт bounded-aim-send-rate заменён immediate-message15-directions-and-bounded-auto-fire: оба браузера должны проверить отправленный угол против независимого Message15 на каждом из1000 обновлений, отдельно частоту и целостность автоматических пар. Node независимо сравнивает2400 обновлений на трёх расстояниях и двух resolver. Прежние заметки об общем лимите направлений20Гц являются историей, не текущим поведением.
 
-Отчёт verification/message15-accuracy-2026-11-07/README-ru.md; before.json/after.json содержат замеры задержки, не процент попаданий. Отсутствие киков в живой игре не подтверждено. Проверки пройдены: 176 Node + 52 Python, 122 candidate, Chromium/Firefox. Выпуск 8e02764d0093824ecba0ffda03dc5090dbc4fb0963915546a244b7d0a3624072; JS SHA256 4f18c90639273b4d85906c84b9633d16b4f991436fc08b4a7445cdf11b59cd37. Публикация и повторное скачивание записываются в publication.json/public-readback.json.
+Отчёт verification/message15-accuracy-2026-11-07/README-ru.md; before.json/after.json содержат замеры задержки, не процент попаданий. Отсутствие киков в живой игре не подтверждено. Проверки пройдены: 176 Node + 52 Python, 122 candidate, Chromium/Firefox. Выпуск 8e02764d0093824ecba0ffda03dc5090dbc4fb0963915546a244b7d0a3624072; JS SHA256 4f18c90639273b4d85906c84b9633d16b4f991436fc08b4a7445cdf11b59cd37. Опубликовано в updates aa272139104147ce668312fc17338c990f189a60; публичный JS/манифест/verification повторно скачаны с HTTP200, SHA256 совпал. Доказательства: publication.json/public-readback.json. Ссылка Resource Override прежняя.
 
 ## Предыдущая задача: сравнить полный рабочий Untitled-1_mod_v4.js
 
