@@ -7,6 +7,8 @@
 Контракт bounded-aim-send-rate обязателен для обоих браузеров, проверки исходных формул сохраняют строгую идентичность состояния и допустимость подмножества команд. Прежнее требование дословных повторов пакетов заменено проверкой допуска малой очереди. Отчёт и итоговый выпуск: verification/aim-send-rate-2026-11-07/README-ru.md и release-verification.json.
 Проверено: 169 Node + 50 Python, 115 проверок перенесённого клиента, Chromium и Firefox. Выпуск 7a34f82e6fe386e702affb27bb4dabe26d63e46bf3824151b8e7ae5f38c561de, JS SHA256 a6a3a619049a94c4a9a74af9e1a7ec792be9f59eb8897a87309c8c8e6f5b79c6.
 
+Публикация updates: e57452b2213d15580478e2ce4d410409e5d6372d. Постоянный JS, current.json и verification.json повторно скачаны с GitHub: HTTP200, хеш и выпуск совпадают. Ссылка Resource Override не менялась.
+
 ## Предыдущая задача: разбор message (26).txt
 
 Пользователь прислал лог схемы 3 с fingerprint 7cb3255396b32394ec0f5c3418c2aa3ec636b5f5e61029b0c8b6728275b7129f. Он совпадает с текущим опубликованным JS SHA256 5977a193ffea334817f58f5887f5138ca854aa9401c32fc072bcd440ce3301af (Message15, main 828175a).

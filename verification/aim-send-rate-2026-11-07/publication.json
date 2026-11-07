@@ -1,0 +1,28 @@
+{
+  "publication": {
+    "status": "published",
+    "commit": "e57452b2213d15580478e2ce4d410409e5d6372d",
+    "branch": "updates"
+  },
+  "public_readback": {
+    "status": "passed",
+    "results": [
+      {
+        "file": "game.modded.js",
+        "http": 200,
+        "sha256": "a6a3a619049a94c4a9a74af9e1a7ec792be9f59eb8897a87309c8c8e6f5b79c6",
+        "bytes": 4465982
+      },
+      {
+        "file": "current.json",
+        "http": 200,
+        "release": "7a34f82e6fe386e702affb27bb4dabe26d63e46bf3824151b8e7ae5f38c561de"
+      },
+      {
+        "file": "verification.json",
+        "http": 200,
+        "status": "passed"
+      }
+    ]
+  }
+}
