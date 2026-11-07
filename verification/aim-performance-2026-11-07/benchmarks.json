@@ -1,0 +1,70 @@
+{
+  "scope": "Isolated installed adapter with real browser DOM and canvas, synchronous target batches; excludes game rendering, actual network and live FPS",
+  "baseline_source_commit": "772fbc035b655dfbb4850cbf03557afe18303784",
+  "cases": {
+    "chromium": [
+      {
+        "players": 16,
+        "ghouls": 32,
+        "locked": false,
+        "before_median_ms": 0.4599999999627471,
+        "after_median_ms": 0.17666666662941377,
+        "speedup": 2.603773585243841,
+        "before_metadata_reads": 94080,
+        "after_metadata_reads": 2940
+      },
+      {
+        "players": 120,
+        "ghouls": 128,
+        "locked": false,
+        "before_median_ms": 5.309999999900659,
+        "after_median_ms": 0.9899999999751647,
+        "speedup": 5.3636363636705715,
+        "before_metadata_reads": 956160,
+        "after_metadata_reads": 7470
+      },
+      {
+        "players": 120,
+        "ghouls": 128,
+        "locked": true,
+        "before_median_ms": 0.32000000004967055,
+        "after_median_ms": 0.2433333333581686,
+        "speedup": 1.315068493220591,
+        "before_metadata_reads": 0,
+        "after_metadata_reads": 0
+      }
+    ],
+    "firefox": [
+      {
+        "players": 16,
+        "ghouls": 32,
+        "locked": false,
+        "before_median_ms": 1.0666666666666667,
+        "after_median_ms": 0.18333333333333332,
+        "speedup": 5.818181818181818,
+        "before_metadata_reads": 94080,
+        "after_metadata_reads": 2940
+      },
+      {
+        "players": 120,
+        "ghouls": 128,
+        "locked": false,
+        "before_median_ms": 10.233333333333333,
+        "after_median_ms": 1.0666666666666667,
+        "speedup": 9.59375,
+        "before_metadata_reads": 956160,
+        "after_metadata_reads": 7470
+      },
+      {
+        "players": 120,
+        "ghouls": 128,
+        "locked": true,
+        "before_median_ms": 0.3333333333333333,
+        "after_median_ms": 0.3,
+        "speedup": 1.1111111111111112,
+        "before_metadata_reads": 0,
+        "after_metadata_reads": 0
+      }
+    ]
+  }
+}

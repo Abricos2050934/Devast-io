@@ -165,6 +165,14 @@ class PublicationTests(unittest.TestCase):
   self.validation['browsers']['firefox']['native']['message15_transport']['immediate_directions']['status']='failed';self.save()
   with self.assertRaisesRegex(ValueError,'Immediate Message15.*firefox'):p.artifacts(self.root,self.out)
 
+ def test_efficient_target_search_requires_both_native_browsers(self):
+  self.contract['features']=['equivalent-efficient-aim-target-search']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'efficient_aim_search':{'status':'passed'}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['efficient_aim_search']['status']='failed';self.save()
+  with self.assertRaisesRegex(ValueError,'Efficient aim target search.*firefox'):p.artifacts(self.root,self.out)
+
  def test_aim_ownership_resync_requires_both_native_browsers(self):
   self.contract['features']=['aim-pointer-ownership-resync']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

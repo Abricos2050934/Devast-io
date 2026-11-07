@@ -113,6 +113,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   await page.addInitScript('window.__verifyMessage15Aim='+require('./verify_message15_aim.cjs').verifyMessage15Aim.toString());
   await page.addInitScript('window.__verifyMessage15Extra='+require('./verify_message15_extra.cjs').verifyMessage15Extra.toString());
   await page.addInitScript('window.__verifyMessage15Transport='+require('./verify_message15_transport.cjs').verifyMessage15Transport.toString());
+  await page.addInitScript('window.__verifyAimSearch='+require('./verify_aim_search.cjs').verifyAimSearch.toString());
   await page.addInitScript('window.__verifyAimOwnership='+require('./verify_aim_ownership.cjs').verifyAimOwnership.toString());
   await page.addInitScript('window.__verifyNativeAimTransport='+require('./verify_native_aim_transport.cjs').verifyNativeAimTransport.toString());
   await page.addInitScript(()=>{const raf=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=callback=>raf(time=>{if(!window.__numericPauseWorld)callback(time);});});
@@ -198,6 +199,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     m.messageTransportVerification=window.__verifyMessage15Transport(m,n,s,r,originalAim);
     m.aimOwnershipVerification=window.__verifyAimOwnership(m,n,s);
     m.nativeAimTransportVerification=window.__verifyNativeAimTransport(m,n,s);
+    m.aimSearchVerification=window.__verifyAimSearch(m,n,s);
     m.setSetting('AimBotEnabled',false);m.setSetting('JitterEnabled',false);m.setSetting('jitterActive',false);m.aim.mouseDown=false;
     const blockedSocket={readyState:1,bufferedAmount:4096};transport.packets.length=0;
     m.render(performance.now());const stableRecords=m.records,stableEntries=m.records.slice();m.render(performance.now());
@@ -350,7 +352,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {native_aim_transport:m.nativeAimTransportVerification,aim_ownership:m.aimOwnershipVerification,message15_comparison:m.messageAimVerification,message15_extra:m.messageAimExtra,message15_transport:m.messageTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {efficient_aim_search:m.aimSearchVerification,native_aim_transport:m.nativeAimTransportVerification,aim_ownership:m.aimOwnershipVerification,message15_comparison:m.messageAimVerification,message15_extra:m.messageAimExtra,message15_transport:m.messageTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:reference});
   report.physical_numeric=await require('./verify_message15_physical.cjs').verifyPhysical(page,symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';

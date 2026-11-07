@@ -1,0 +1,76 @@
+{
+  "cases": [
+    {
+      "players": 16,
+      "ghouls": 32,
+      "locked": false,
+      "frames": 60,
+      "samples": [
+        {
+          "msPerBatch": 0.23333333333333334,
+          "metaReads": 2940,
+          "packets": 82
+        },
+        {
+          "msPerBatch": 0.18333333333333332,
+          "metaReads": 2940,
+          "packets": 80
+        },
+        {
+          "msPerBatch": 0.18333333333333332,
+          "metaReads": 2940,
+          "packets": 94
+        }
+      ]
+    },
+    {
+      "players": 120,
+      "ghouls": 128,
+      "locked": false,
+      "frames": 30,
+      "samples": [
+        {
+          "msPerBatch": 1.1,
+          "metaReads": 7470,
+          "packets": 34
+        },
+        {
+          "msPerBatch": 1,
+          "metaReads": 7470,
+          "packets": 48
+        },
+        {
+          "msPerBatch": 1.0666666666666667,
+          "metaReads": 7470,
+          "packets": 46
+        }
+      ]
+    },
+    {
+      "players": 120,
+      "ghouls": 128,
+      "locked": true,
+      "frames": 30,
+      "samples": [
+        {
+          "msPerBatch": 0.26666666666666666,
+          "metaReads": 0,
+          "packets": 34
+        },
+        {
+          "msPerBatch": 0.3333333333333333,
+          "metaReads": 0,
+          "packets": 48
+        },
+        {
+          "msPerBatch": 0.3,
+          "metaReads": 0,
+          "packets": 46
+        }
+      ]
+    }
+  ],
+  "engine": "firefox",
+  "version": "153.0",
+  "scope": "Isolated browser installed adapter; synchronous batched target updates, no game rendering or real server"
+}

@@ -794,8 +794,6 @@ function __installDevastMod(B) {
       if (withTeams) {
         prepareAimTeam(aimSelf.id);
         aimSelf.team=aimTeams[aimSelf.id].team;
-        if (MOD.target==='players'||MOD.target==='all') for (const target of GetAllTargets.players) if (target?.active) prepareAimTeam(target.id);
-        if (MOD.target==='ghouls'||MOD.target==='all') for (const target of GetAllTargets.ghouls) if (target?.active) prepareAimTeam(target.id);
       }
     }
     aimDepth++;
@@ -843,7 +841,39 @@ function __installDevastMod(B) {
   const GetAllTargets=messageAim.targets,Aimbot=messageAim.aim;
   const sourceRefresh=Aimbot.refresh;
   Aimbot.refresh=function(...args){try{return sourceRefresh.apply(this,args);}finally{try{if(messageCycleWritable)flushMessageAngle();}finally{messageCycleWritable=false;messageCycleHasDirection=false;messagePendingAngle=null;messageAutoFireOpen=false;}}};
-  for(const key of ['resolve','findNearestPlayerTo']){const method=Aimbot[key];Object.defineProperty(Aimbot,key,{value:function(...args){return aimSnapshot(()=>method.apply(this,args),key==='findNearestPlayerTo'||MOD.lockId<0||!GetAllTargets.players[MOD.lockId]?.active);}});}
+  const sourceResolve=Aimbot.resolve;
+  Object.defineProperty(Aimbot,'resolve',{value:function(...args){return aimSnapshot(()=>sourceResolve.apply(this,args),MOD.lockId<0||!GetAllTargets.players[MOD.lockId]?.active);}});
+  const aimFloor=Math.floor,aimCeil=Math.ceil,aimSqrt=Math.sqrt,aimPow=Math.pow;
+  // Preserve source order, integer distance, strict FOV and tie behavior. Clan
+  // data is needed only for a closer player when our own clan actually exists;
+  // ghouls never use the player's clan table. No cross-update result cache.
+  Object.defineProperty(Aimbot,'findNearestPlayerTo',{value:function(point,fovLimit){return aimSnapshot(()=>{
+    let nearest=null,minDist=fovLimit,limit=aimCeil(fovLimit);
+    const x=point.x,y=point.y;
+    if(MOD.target==='players'||MOD.target==='all'){
+      const players=GetAllTargets.players;
+      for(let i=1;i<players.length;i++){
+        const p=players[i];if(!p||!p.active||p.id===aimSelf.id)continue;
+        const dx=x-p.x,dy=y-p.y;
+        if(dx>=limit||dx<=-limit||dy>=limit||dy<=-limit)continue;
+        const d=aimFloor(aimSqrt(aimPow(dx,2)+aimPow(dy,2)));
+        if(!(d<minDist))continue;
+        if(aimSelf.team!==-1){prepareAimTeam(p.id);if(aimTeams[p.id]?.team===aimSelf.team)continue;}
+        nearest=p;minDist=d;limit=d;
+      }
+    }
+    if(MOD.target==='ghouls'||MOD.target==='all'){
+      const ghouls=GetAllTargets.ghouls;
+      for(let i=1;i<ghouls.length;i++){
+        const g=ghouls[i];if(!g||!g.active)continue;
+        const dx=x-g.x,dy=y-g.y;
+        if(dx>=limit||dx<=-limit||dy>=limit||dy<=-limit)continue;
+        const d=aimFloor(aimSqrt(aimPow(dx,2)+aimPow(dy,2)));
+        if(d<minDist){nearest=g;minDist=d;limit=d;}
+      }
+    }
+    return nearest;
+  });}});
   const _players_list = [];
   const removers = [];
   const originalSender = B.network.ᴎᚂρ.bind(B.network);

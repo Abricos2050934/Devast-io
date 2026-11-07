@@ -1,0 +1,264 @@
+{
+  "release": "3dffe32a3c6127ff1e4797288e4faba425fdd0645b07394bda295f98015923f3",
+  "output_sha256": "f7eef588b9a2f7951369a9a04db55850f32a79fa0684b3597dd03fe3736987f5",
+  "raw_sha256": "74720aca77141a313015167051e60c2dfc566310202a5b41d4445258e4937f2e",
+  "source_url": "https://devast.io/js/qYOh6D5MhvXhWnq.js",
+  "inputs_sha256": "c88e16245254d8a470dde71d6bb9518a7009c7c6896cd3f674c81a19f52aa494",
+  "schema": 1,
+  "date_utc": "2026-11-07",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 178,
+    "python_tests": 53
+  },
+  "candidate_tests": {
+    "status": "passed",
+    "tests": 124
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "browser_version": "154.0.8037.57",
+      "output_sha256": "f7eef588b9a2f7951369a9a04db55850f32a79fa0684b3597dd03fe3736987f5",
+      "efficient_aim_search": {
+        "status": "passed",
+        "players": 120,
+        "ghouls": 128,
+        "clanless_metadata_reads": 1,
+        "competitive_clan_metadata_reads": 4,
+        "clan_changes_immediate": true,
+        "no_cross_update_target_cache": true
+      },
+      "immediate_directions": {
+        "status": "passed",
+        "independent_source_comparisons": 1000,
+        "changed_directions_immediate": true,
+        "auto_fire_interval_ms": 50,
+        "auto_fire_pairs_in_10s": 200,
+        "stationary_directions_in_10s": 1,
+        "moving_directions_in_10s": 1000,
+        "manual_shot_priority": true,
+        "native_idle_ping": true
+      },
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "message15_comparison": {
+        "status": "passed",
+        "scenes": 24,
+        "comparison_points": 1496,
+        "history_and_formulas": "source identical",
+        "source_fire_release_callbacks": "source identical; native alignment verified separately",
+        "native_dodge_and_movement": true,
+        "native_other_player_death": true,
+        "original_menu_controls": 21
+      },
+      "message15_extra": {
+        "status": "passed",
+        "boundary_scenes": 96,
+        "comparison_points": 5856,
+        "coordinate_cases": 36,
+        "gui_formula_controls": true,
+        "linear_bullet_coefficient": "unused exactly as source",
+        "trigonometric_bullet_coefficient": "affects angle exactly as source",
+        "auto_fire_and_hide_angle_commands": true,
+        "color_normalization_and_line_renderer": true,
+        "label_filter_bitmap": true
+      },
+      "aim_ownership": {
+        "status": "passed",
+        "native_handlers": 2,
+        "cases": [
+          {
+            "native_handler": 0,
+            "mouse_direction": 90,
+            "reacquired_direction": 0,
+            "packets": [
+              [
+                6,
+                0
+              ],
+              [
+                4
+              ]
+            ]
+          },
+          {
+            "native_handler": 1,
+            "mouse_direction": 90,
+            "reacquired_direction": 0,
+            "packets": [
+              [
+                6,
+                0
+              ],
+              [
+                4
+              ]
+            ]
+          }
+        ],
+        "imported_jitter_exclusive_ownership": true,
+        "release_on_disable": true
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "browser_version": "153.0",
+      "output_sha256": "f7eef588b9a2f7951369a9a04db55850f32a79fa0684b3597dd03fe3736987f5",
+      "efficient_aim_search": {
+        "status": "passed",
+        "players": 120,
+        "ghouls": 128,
+        "clanless_metadata_reads": 1,
+        "competitive_clan_metadata_reads": 4,
+        "clan_changes_immediate": true,
+        "no_cross_update_target_cache": true
+      },
+      "immediate_directions": {
+        "status": "passed",
+        "independent_source_comparisons": 1000,
+        "changed_directions_immediate": true,
+        "auto_fire_interval_ms": 50,
+        "auto_fire_pairs_in_10s": 200,
+        "stationary_directions_in_10s": 1,
+        "moving_directions_in_10s": 1000,
+        "manual_shot_priority": true,
+        "native_idle_ping": true
+      },
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "message15_comparison": {
+        "status": "passed",
+        "scenes": 24,
+        "comparison_points": 1496,
+        "history_and_formulas": "source identical",
+        "source_fire_release_callbacks": "source identical; native alignment verified separately",
+        "native_dodge_and_movement": true,
+        "native_other_player_death": true,
+        "original_menu_controls": 21
+      },
+      "message15_extra": {
+        "status": "passed",
+        "boundary_scenes": 96,
+        "comparison_points": 5856,
+        "coordinate_cases": 36,
+        "gui_formula_controls": true,
+        "linear_bullet_coefficient": "unused exactly as source",
+        "trigonometric_bullet_coefficient": "affects angle exactly as source",
+        "auto_fire_and_hide_angle_commands": true,
+        "color_normalization_and_line_renderer": true,
+        "label_filter_bitmap": true
+      },
+      "aim_ownership": {
+        "status": "passed",
+        "native_handlers": 2,
+        "cases": [
+          {
+            "native_handler": 0,
+            "mouse_direction": 90,
+            "reacquired_direction": 0,
+            "packets": [
+              [
+                6,
+                0
+              ],
+              [
+                4
+              ]
+            ]
+          },
+          {
+            "native_handler": 1,
+            "mouse_direction": 90,
+            "reacquired_direction": 0,
+            "packets": [
+              [
+                6,
+                0
+              ],
+              [
+                4
+              ]
+            ]
+          }
+        ],
+        "imported_jitter_exclusive_ownership": true,
+        "release_on_disable": true
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    }
+  },
+  "live_server": "not_tested"
+}

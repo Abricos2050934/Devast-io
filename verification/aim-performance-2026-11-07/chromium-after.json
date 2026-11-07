@@ -1,0 +1,76 @@
+{
+  "cases": [
+    {
+      "players": 16,
+      "ghouls": 32,
+      "locked": false,
+      "frames": 60,
+      "samples": [
+        {
+          "msPerBatch": 0.23833333334575096,
+          "metaReads": 2940,
+          "packets": 82
+        },
+        {
+          "msPerBatch": 0.17666666662941377,
+          "metaReads": 2940,
+          "packets": 80
+        },
+        {
+          "msPerBatch": 0.16333333334575098,
+          "metaReads": 2940,
+          "packets": 94
+        }
+      ]
+    },
+    {
+      "players": 120,
+      "ghouls": 128,
+      "locked": false,
+      "frames": 30,
+      "samples": [
+        {
+          "msPerBatch": 0.9833333333333333,
+          "metaReads": 7470,
+          "packets": 34
+        },
+        {
+          "msPerBatch": 1.0066666666418314,
+          "metaReads": 7470,
+          "packets": 48
+        },
+        {
+          "msPerBatch": 0.9899999999751647,
+          "metaReads": 7470,
+          "packets": 46
+        }
+      ]
+    },
+    {
+      "players": 120,
+      "ghouls": 128,
+      "locked": true,
+      "frames": 30,
+      "samples": [
+        {
+          "msPerBatch": 0.2433333333581686,
+          "metaReads": 0,
+          "packets": 34
+        },
+        {
+          "msPerBatch": 0.22666666669150193,
+          "metaReads": 0,
+          "packets": 48
+        },
+        {
+          "msPerBatch": 0.3,
+          "metaReads": 0,
+          "packets": 46
+        }
+      ]
+    }
+  ],
+  "engine": "chromium",
+  "version": "154.0.8037.57",
+  "scope": "Isolated browser installed adapter; synchronous batched target updates, no game rendering or real server"
+}

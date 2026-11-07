@@ -76,3 +76,14 @@ Automated combat uses the reviewed native codec/binary-send bridge through
 `B.aimSend`, preserving the native activity clock and its periodic idle packets.
 The `native-aim-transport-preserves-idle` gate remains required in both browsers;
 restoring immediate directions does not restore the JSON sender activity reset.
+
+The adapter overrides only the nearest-target search with an equivalent direct
+scan. It retains source traversal order, integer distance, strict FOV and ties;
+a bounding square rejects candidates before square-root calculation. Clan data
+is read only for competitive players when the local player belongs to a clan.
+Ghoul search never reads player clan metadata. No target result is reused across
+updates. The immutable declarations remain available for independent comparisons.
+The `equivalent-efficient-aim-target-search` gate checks metadata access and
+immediate clan changes in both browsers; 6300 differential queries cover FOV
+boundaries, ties, removals and target types. Benchmarks and scope are recorded
+in `verification/aim-performance-2026-11-07/README-ru.md`.

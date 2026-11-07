@@ -72,14 +72,16 @@ test('loot without building tile coordinates does not add owner-overlay layout r
   const rect=f.dom.canvas.getBoundingClientRect;f.dom.canvas.getBoundingClientRect=()=>{reads++;return rect();};f.mod.step(0);assert.equal(reads,1);
  }finally{f.mod.dispose();}
 });
-test('aim snapshot reads each active metadata ID once and never sweeps inactive roster slots',()=>{
+test('aim search reads clan metadata only for competitive players and never for ghouls or inactive slots',()=>{
  const f=fixture();try{
   const self=f.world['ᴎ︃ᄉ'][1],enemy=f.world['ᴎ︃ᄉ'][2];let selfReads=0,enemyReads=0,inactiveReads=0;
+  f.world['ﾠࡅ‍'][0]={'ոᚄރ':7};f.world['ﾠࡅ‍'][1]={'ոᚄރ':8};Object.assign(self,{'а༤̘':0,'ᴌ̗ⲟ':7});Object.assign(enemy,{'а༤̘':1,'ᴌ̗ⲟ':8});
   Object.defineProperty(f.world['ᴎ︃ᄉ'],1,{get(){selfReads++;return self;}});Object.defineProperty(f.world['ᴎ︃ᄉ'],2,{get(){enemyReads++;return enemy;}});
   for(let i=3;i<=120;i++)Object.defineProperty(f.world['ᴎ︃ᄉ'],i,{get(){inactiveReads++;return 0;},configurable:true});
   f.mod.trackPacket(1,1,1,0,0,true);f.mod.trackPacket(1,2,1,100,100,true);f.mod.trackPacket(13,0,2,200,200,true);
   f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('target','all');f.mod.aim.resolve();
   assert.equal(selfReads,1);assert.equal(enemyReads,1);assert.equal(inactiveReads,0);assert.equal(f.mod.aim.targetPlayer,f.mod.targets.players[2]);
+  selfReads=enemyReads=0;self['а༤̘']=-1;f.mod.aim.resolve();assert.equal(selfReads,1);assert.equal(enemyReads,0,'No clan filtering is needed without an own clan');
  }finally{f.mod.dispose();}
 });
 test('aim snapshot refreshes vanished metadata and reused clan membership on every resolve',()=>{

@@ -41,7 +41,8 @@
     "aim-small-queue-admission",
     "immediate-message15-directions-and-bounded-auto-fire",
     "aim-pointer-ownership-resync",
-    "native-aim-transport-preserves-idle"
+    "native-aim-transport-preserves-idle",
+    "equivalent-efficient-aim-target-search"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -51,6 +52,7 @@
     "tests/mod.test.cjs",
     "tests/aim-settings.test.cjs",
     "tests/mod-performance.test.cjs",
+    "tests/aim-search.test.cjs",
     "tests/rejoin-recovery.test.cjs",
     "tests/ilm-autobuild.test.cjs",
     "tests/jitter.test.cjs",
