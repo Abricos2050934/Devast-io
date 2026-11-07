@@ -1,0 +1,30 @@
+{
+  "scope": "Synthetic browser cadence, local extracted mod only, no live server session",
+  "baseline_commit": "caf6d9f",
+  "rows": [
+    {
+      "version": "before",
+      "durationMs": 10000,
+      "stationaryTarget": true,
+      "backupCadenceMs": 4,
+      "rafCadenceMs": 7,
+      "entityUpdateCadenceMs": 50,
+      "sourceCallbacks": 4129,
+      "commandsByOpcode": {
+        "6": 4129
+      }
+    },
+    {
+      "version": "after",
+      "durationMs": 10000,
+      "stationaryTarget": true,
+      "backupCadenceMs": 50,
+      "rafCadenceMs": 7,
+      "entityUpdateCadenceMs": 50,
+      "sourceCallbacks": 1829,
+      "commandsByOpcode": {
+        "6": 1
+      }
+    }
+  ]
+}

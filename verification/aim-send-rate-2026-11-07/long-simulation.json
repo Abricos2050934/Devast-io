@@ -1,0 +1,16 @@
+{
+  "durationMs": 1200000,
+  "mode": "synthetic clock; no live server",
+  "disabledCommands": 0,
+  "maxCommandsPer50ms": 1,
+  "commandsByOpcode": {
+    "6": 1897
+  },
+  "aimTransport": {
+    "rateLimitedCycles": 237600,
+    "invalidTargets": 0,
+    "cycles": 21600,
+    "intervalMs": 50,
+    "deduplicatedDirections": 19703
+  }
+}

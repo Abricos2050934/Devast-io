@@ -4,7 +4,7 @@ function verifyMessage15Aim(m,n,s,r,reference) {
  const keys=['AimBotEnabled','JitterEnabled','autoFire','target','lockId','mouseFovEnable','mouseFov','distanceCoefficient','offsetCoefficient','bulletSpeedCoefficient','resolverType','visualizeResolving','visualizeResolvingColor','ShowAimTrace','hideAimbotAngle','jitterActive','jitterOffset','stopJittersOnStop','antiAimMode','DodgePlayerEnabled'];
  const saved=Object.fromEntries(keys.map(k=>[k,m.settings[k]])),savedId=self.id,savedState=n.network.state,savedClan=clans[0];
  const savedMetadata=[1,2,3,17].map(id=>[id,metadata[id]]),transport=n.capturePackets();
- const realNow=Date.now;let clock=1000;Date.now=()=>clock;
+ const realNow=Date.now,realPerformanceNow=performance.now;let clock=1000;Date.now=()=>clock;performance.now=()=>clock;
  const expected=[],world={PLAYER:{id:1,team:-1},players:Array.from({length:1000},()=>({team:-1}))},settings={...m.settings};
  const normalize=p=>p[0]===6?[6,(Math.round(p[1])%360+360)%360]:p;
  const create=new Function('MOD','World','Client','window','Entitie','__ENTITIE_BULLET__','KeyboardEvent',reference.blocks.filter(b=>['GetAllTargetsCon','GetTarget','AimbotCon','JitterCon','LinesCon','_lineIntersect'].includes(b.label)).map(b=>b.source).join('\n')+'\nvar GetAllTargets=new GetAllTargetsCon(),Aimbot=new AimbotCon(),Jitter=new JitterCon();return {targets:GetAllTargets,aim:Aimbot,jitter:Jitter};');
@@ -12,7 +12,7 @@ function verifyMessage15Aim(m,n,s,r,reference) {
  let comparisons=0;
  function set(key,value){m.setSetting(key,value);settings[key]=value;}
  function state(e){return JSON.stringify({lastId:e.targets.lastId,lastAngle:e.aim.lastAngle,target:e.aim.targetPlayer?.id,dead:e.aim.dead,mouseDown:e.aim.mouseDown,lines:e.targets.lines,players:e.targets.players.filter(p=>p?.active),ghouls:e.targets.ghouls.filter(p=>p?.active)});}
- function compare(label){check(state(m)===state(old),'Uploaded aim state differs: '+label);check(JSON.stringify(transport.packets)===JSON.stringify(expected),'Uploaded aim packets differ: '+label+' actual '+JSON.stringify(transport.packets)+' expected '+JSON.stringify(expected));transport.packets.length=expected.length=0;comparisons++;}
+ function compare(label){check(state(m)===state(old),'Uploaded aim state differs: '+label);let cursor=0;for(const packet of transport.packets){while(cursor<expected.length&&JSON.stringify(expected[cursor])!==JSON.stringify(packet))cursor++;check(cursor<expected.length,'Forwarded packet absent from source output: '+label);cursor++;}transport.packets.length=expected.length=0;comparisons++;}
  function track(type,id,uid,x,y,active=true){clock+=50;m.trackPacket(type,id,uid,x,y,active);const target=type===13?old.targets.ghouls[uid]:old.targets.players[id];if(active)target.update(x,y);else target.setInactive();compare('position/removal '+type+'/'+id+'/'+uid);}
  function core(){return {settings:m.settings,targets:m.targets,aim:m.aim};}
  try{
@@ -47,11 +47,11 @@ function verifyMessage15Aim(m,n,s,r,reference) {
   }
   set('jitterActive',false);set('autoFire',false);set('lockId',2);set('resolverType','linear');set('visualizeResolving',true);set('ShowAimTrace',true);set('hideAimbotAngle',false);
   // Simulate the native transport's attack, then the exact source callbacks.
-  transport.packets.length=expected.length=0;n.network[r['ᴎ༩༣']]();expected.push([4]);old.aim.mouseDown=true;old.aim.scheduleRefresh();compare('native fire callback order');
-  n.release();expected.push([5]);old.aim.mouseDown=false;old.aim.scheduleRefresh();compare('native release callback order');
+  transport.packets.length=expected.length=0;m.afterFire();old.aim.mouseDown=true;old.aim.scheduleRefresh();compare('native fire callback order');
+  m.afterRelease();old.aim.mouseDown=false;old.aim.scheduleRefresh();compare('native release callback order');
   set('jitterActive',true);set('stopJittersOnStop',false);set('antiAimMode','At target');
-  n.network[r['ᴎ༩༣']]();expected.push([4]);expected.push(normalize([6,old.aim.resolve()]));old.aim.mouseDown=true;old.aim.scheduleRefresh();compare('native source Jitter fire callback');
-  n.release();expected.push([5]);old.aim.mouseDown=false;old.aim.scheduleRefresh();compare('native source Jitter release callback');
+  m.afterFire();expected.push(normalize([6,old.aim.resolve()]));old.aim.mouseDown=true;old.aim.scheduleRefresh();compare('native source Jitter fire callback');
+  m.afterRelease();old.aim.mouseDown=false;old.aim.scheduleRefresh();compare('native source Jitter release callback');
   set('jitterActive',false);
   // Exercise the translated projectile fields and the actual native keyboard.
   const own=m.targets.players[1],bullet=n.entities.get(2,25,1,2),keyEvents=[];
@@ -68,9 +68,9 @@ function verifyMessage15Aim(m,n,s,r,reference) {
   transport.packets.length=expected.length=0;
   m.aim.onDeath();old.aim.onDeath();for(let i=0;i<old.targets.lines.length;i++)Object.assign(m.targets.lines[i],old.targets.lines[i]);compare('death reset');m.onHandshake();old.aim.dead=false;compare('handshake reset');
   m.onSessionStart();old.aim.onDeath();compare('new session reset');m.onHandshake();old.aim.dead=false;compare('new session handshake');
-  return {status:'passed',scenes:24,comparison_points:comparisons,history_and_formulas:'source identical',native_fire_release_order:'source identical',native_dodge_and_movement:true,native_other_player_death:true,original_menu_controls:originalControls.length};
+  return {status:'passed',scenes:24,comparison_points:comparisons,history_and_formulas:'source identical',source_fire_release_callbacks:'source identical; native alignment verified separately',native_dodge_and_movement:true,native_other_player_death:true,original_menu_controls:originalControls.length};
  }finally{
-  Date.now=realNow;transport.restore();self.id=savedId;n.network.state=savedState;clans[0]=savedClan;
+  Date.now=realNow;performance.now=realPerformanceNow;transport.restore();self.id=savedId;n.network.state=savedState;clans[0]=savedClan;
   for(const [id,value]of savedMetadata)metadata[id]=value;
   for(const [key,value]of Object.entries(saved))m.setSetting(key,value);
  }

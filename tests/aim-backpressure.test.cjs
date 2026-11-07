@@ -10,7 +10,7 @@ test('one source autoFire cycle keeps its direction, attack and release when the
 test('ordinary queued native bytes retain source cycles, while the high-water boundary pauses new cycles',()=>{
  const f=setup();try{
   assert.equal(f.mod.connectionInfo().automationTransport.aimHighWaterBytes,4096);
-  for(const bytes of [1,16,128,1024,4095]){f.socket.bufferedAmount=bytes;f.packets.length=0;f.mod.aim.refresh();assert.deepEqual(f.packets.map(p=>p[0]),[6,4,5],'Fresh source cycle lost at '+bytes+' buffered bytes');}
+  let at=2000;for(const bytes of [1,16,128,1024,4095]){f.setClock(at+=50);f.mod.setSetting('AimBotEnabled',false);f.mod.setSetting('AimBotEnabled',true);f.socket.bufferedAmount=bytes;f.packets.length=0;f.mod.aim.refresh();assert.deepEqual(f.packets.map(p=>p[0]),[6,4,5],'Fresh source cycle lost at '+bytes+' buffered bytes');}
   f.socket.bufferedAmount=4096;f.packets.length=0;f.mod.aim.refresh();assert.equal(f.packets.length,0);
  }finally{f.mod.dispose();}
 });

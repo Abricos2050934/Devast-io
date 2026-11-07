@@ -1,0 +1,143 @@
+{
+  "schema": 1,
+  "date_moscow": "2026-11-07",
+  "source_base_commit": "caf6d9f490ddcc7edb1137d39668f0b910590941",
+  "release": "7a34f82e6fe386e702affb27bb4dabe26d63e46bf3824151b8e7ae5f38c561de",
+  "output_sha256": "a6a3a619049a94c4a9a74af9e1a7ec792be9f59eb8897a87309c8c8e6f5b79c6",
+  "source_url": "https://devast.io/js/qYOh6D5MhvXhWnq.js",
+  "raw_sha256": "74720aca77141a313015167051e60c2dfc566310202a5b41d4445258e4937f2e",
+  "inputs_sha256": "eafb38d4365b6bf0b9e488b9acad958cc48479c1e04ec7780ea92a5d494f41d0",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 169,
+    "python_tests": 50
+  },
+  "candidate_tests": {
+    "status": "passed",
+    "tests": 115
+  },
+  "integrity_compatibility": {
+    "status": "passed",
+    "predicates": 3
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "browser_version": "154.0.8037.57",
+      "output_sha256": "a6a3a619049a94c4a9a74af9e1a7ec792be9f59eb8897a87309c8c8e6f5b79c6",
+      "transport": {
+        "status": "passed",
+        "small_queue_admission": true,
+        "bounded_send_rate": {
+          "status": "passed",
+          "interval_ms": 50,
+          "stationary_directions_in_10s": 1,
+          "moving_directions_in_10s": 57,
+          "manual_shot_priority": true,
+          "native_idle_ping": true
+        },
+        "small_queue_cases": [
+          1,
+          16,
+          128,
+          1024,
+          4095
+        ],
+        "aim_high_water_bytes": 4096,
+        "blocked_cycles_dropped": true,
+        "whole_attack_release_cycle": true,
+        "non_open_sockets": true,
+        "server_death_sends_no_commands": true,
+        "session_lifecycle": true
+      },
+      "source_comparison": {
+        "status": "passed",
+        "scenes": 24,
+        "comparison_points": 1496,
+        "history_and_formulas": "source identical",
+        "source_fire_release_callbacks": "source identical; native alignment verified separately",
+        "native_dodge_and_movement": true,
+        "native_other_player_death": true,
+        "original_menu_controls": 21
+      },
+      "source_boundary_comparison": {
+        "status": "passed",
+        "boundary_scenes": 96,
+        "comparison_points": 5856,
+        "coordinate_cases": 36,
+        "gui_formula_controls": true,
+        "linear_bullet_coefficient": "unused exactly as source",
+        "trigonometric_bullet_coefficient": "affects angle exactly as source",
+        "auto_fire_and_hide_angle_commands": true,
+        "color_normalization_and_line_renderer": true,
+        "label_filter_bitmap": true
+      },
+      "physical_numeric_status": "passed",
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "browser_version": "153.0",
+      "output_sha256": "a6a3a619049a94c4a9a74af9e1a7ec792be9f59eb8897a87309c8c8e6f5b79c6",
+      "transport": {
+        "status": "passed",
+        "small_queue_admission": true,
+        "bounded_send_rate": {
+          "status": "passed",
+          "interval_ms": 50,
+          "stationary_directions_in_10s": 1,
+          "moving_directions_in_10s": 57,
+          "manual_shot_priority": true,
+          "native_idle_ping": true
+        },
+        "small_queue_cases": [
+          1,
+          16,
+          128,
+          1024,
+          4095
+        ],
+        "aim_high_water_bytes": 4096,
+        "blocked_cycles_dropped": true,
+        "whole_attack_release_cycle": true,
+        "non_open_sockets": true,
+        "server_death_sends_no_commands": true,
+        "session_lifecycle": true
+      },
+      "source_comparison": {
+        "status": "passed",
+        "scenes": 24,
+        "comparison_points": 1496,
+        "history_and_formulas": "source identical",
+        "source_fire_release_callbacks": "source identical; native alignment verified separately",
+        "native_dodge_and_movement": true,
+        "native_other_player_death": true,
+        "original_menu_controls": 21
+      },
+      "source_boundary_comparison": {
+        "status": "passed",
+        "boundary_scenes": 96,
+        "comparison_points": 5856,
+        "coordinate_cases": 36,
+        "gui_formula_controls": true,
+        "linear_bullet_coefficient": "unused exactly as source",
+        "trigonometric_bullet_coefficient": "affects angle exactly as source",
+        "auto_fire_and_hide_angle_commands": true,
+        "color_normalization_and_line_renderer": true,
+        "label_filter_bitmap": true
+      },
+      "physical_numeric_status": "passed",
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      }
+    }
+  },
+  "live_server_tested": false,
+  "user_disconnect_cause_established": false,
+  "fixed_defect": "Duplicate and unbounded Message15 background directions; two-direction hidden/Jitter cycles; stale/invalid-target transmissions; manual shot alignment under rate limiting"
+}

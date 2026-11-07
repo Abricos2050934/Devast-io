@@ -38,7 +38,8 @@
     "verbatim-message15-aim",
     "message15-native-lifecycle",
     "immediate-aim-numeric-settings",
-    "aim-small-queue-source-parity"
+    "aim-small-queue-admission",
+    "bounded-aim-send-rate"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -56,7 +57,8 @@
     "tests/door-click.test.cjs",
     "tests/automation-transport.test.cjs",
     "tests/aim-backpressure.test.cjs",
-    "tests/message15-source.test.cjs"
+    "tests/message15-source.test.cjs",
+    "tests/aim-send-rate.test.cjs"
   ],
   "required_browsers": [
     "chromium",

@@ -5,7 +5,7 @@ test('the complete imported menu retains source order, choices and editable nume
  const f=setup();try{assert.deepEqual(f.folder.__controllers.map(c=>c.property),reference().menu_controls);assert.equal(f.gui.__folders['Aim Bot'],undefined);assert.equal(f.gui.__folders.Prediction,undefined);assert.ok(f.gui.__folders.Visuals.__folders.Colors);assert.equal(f.mod.settings.AimbotKey,'KeyZ');}finally{f.mod.dispose();}
 });
 for(const [key,a,b]of [['distanceCoefficient',10,1000],['offsetCoefficient',0,3]])test(key+' changes the source prediction and native angle through the menu',()=>{
- const f=setup();try{control(f.folder,key).setValue(a);f.mod.aim.refresh();const first=f.packets.at(-1)[1];control(f.folder,key).setValue(b);f.mod.aim.refresh();assert.notEqual(f.packets.at(-1)[1],first);}finally{f.mod.dispose();}
+ const f=setup();try{f.setClock(2000);control(f.folder,key).setValue(a);f.mod.aim.refresh();const first=f.packets.at(-1)[1];f.setClock(2050);control(f.folder,key).setValue(b);f.mod.aim.refresh();assert.notEqual(f.packets.at(-1)[1],first);}finally{f.mod.dispose();}
 });
 test('bullet coefficient keeps its source semantics in linear and trigonometric modes',()=>{
  const f=setup();try{const read=value=>{control(f.folder,'bulletSpeedCoefficient').setValue(value);return f.mod.aim.resolve();};assert.equal(read(1),read(15));control(f.folder,'resolverType').setValue('trygonometrical');assert.notEqual(read(1),read(15));}finally{f.mod.dispose();}

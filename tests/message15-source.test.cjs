@@ -14,7 +14,7 @@ test('installed histories, source formulas and packet cycles match the independe
   const old={targets:context.GetAllTargets,aim:context.Aimbot};
   function set(k,v){f.mod.setSetting(k,v);context.MOD[k]=v;}
   function state(e){return JSON.stringify({lastId:e.targets.lastId,lastAngle:e.aim.lastAngle,target:e.aim.targetPlayer?.id,dead:e.aim.dead,mouseDown:e.aim.mouseDown,lines:e.targets.lines,players:e.targets.players.filter(p=>p?.active),ghouls:e.targets.ghouls.filter(p=>p?.active)});}
-  function compare(label){assert.equal(state(f.mod),state(old),label);assert.equal(JSON.stringify(f.packets),JSON.stringify(packets),label+' packets');f.packets.length=packets.length=0;comparisons++;}
+  function compare(label){assert.equal(state(f.mod),state(old),label);let cursor=0;for(const packet of f.packets){while(cursor<packets.length&&JSON.stringify(packets[cursor])!==JSON.stringify(packet))cursor++;assert.ok(cursor<packets.length,label+' forwarded a packet absent from source output');cursor++;}f.packets.length=packets.length=0;comparisons++;}
   function track(type,id,uid,x,y,active=true){now+=50;f.setClock(now);f.mod.trackPacket(type,id,uid,x,y,active);const p=type===13?old.targets.ghouls[uid]:old.targets.players[id];if(active)p.update(x,y);else p.setInactive();compare('scene '+scene+' track '+type+'/'+id+'/'+uid);}
   try{
    for(const [key,value]of Object.entries({AimBotEnabled:true,autoFire:scene%3===0,target:['players','ghouls','all'][scene%3],mouseFovEnable:scene%2===0,mouseFov:2000,lockId:[-1,0,2,120][scene%4],distanceCoefficient:100+scene*20,offsetCoefficient:(scene%4)*.1,bulletSpeedCoefficient:1+scene%14,resolverType:scene%2?'trygonometrical':'linear',visualizeResolving:true,ShowAimTrace:scene%4===0,hideAimbotAngle:scene%4===1,jitterActive:false}))set(key,value);
@@ -32,10 +32,10 @@ test('installed histories, source formulas and packet cycles match the independe
 });
 test('source direction timer, refresh-on-packet and source death reset are installed and disposed',()=>{
  const f=fixture();try{
-  assert.ok([...f.timerPeriods.values()].includes(1));assert.ok([...f.timerPeriods.values()].includes(50));
+  assert.ok(![...f.timerPeriods.values()].includes(1));assert.ok([...f.timerPeriods.values()].every(period=>period>=50));
   f.mod.setSetting('AimBotEnabled',true);f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('lockId',2);
   f.mod.trackPacket(1,1,1,1000,1000,true);f.mod.trackPacket(1,2,1,1200,1000,true);assert.equal(f.packets.at(-1)[0],6);
-  const before=f.packets.length;for(const [id,fn]of f.timers)if(f.timerPeriods.get(id)===1)fn();assert.ok(f.packets.length>before);
+  const before=f.packets.length;f.setClock(1050);for(const [id,fn]of f.timers)if(f.timerPeriods.get(id)===50)fn();assert.equal(f.packets.length,before,'Backup repeated an unchanged direction');
   f.mod.onSessionStart();assert.equal(f.mod.aim.dead,true);assert.equal(f.mod.targets.players[1].active,false);f.mod.onHandshake();assert.equal(f.mod.aim.dead,false);
  }finally{f.mod.dispose();}assert.equal(f.timers.size,0);assert.equal(f.frames.size,0);
 });

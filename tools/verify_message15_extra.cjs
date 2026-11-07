@@ -2,14 +2,14 @@ function verifyMessage15Extra(m,n,s,reference) {
  const check=(v,message)=>{if(!v)throw Error(message);};
  const self=n.world[s['ᅠᏧ‍']],players=n.world[s['ᴎ︃ᄉ']],clans=n.world[s['ﾠࡅ‍']];
  const savedSettings={...m.settings},savedSelf=self.id,savedState=n.network.state,savedClan=clans[0],savedMetadata=[1,2,3].map(id=>[id,players[id]]);
- const realNow=Date.now;let clock=10000;Date.now=()=>clock;
+ const realNow=Date.now,realPerformanceNow=performance.now;let clock=10000;Date.now=()=>clock;performance.now=()=>clock;
  const transport=n.capturePackets(),expected=[],settings={...m.settings},world={PLAYER:{id:1,team:-1},players:Array.from({length:1000},()=>({team:-1}))};
  const norm=p=>p[0]===6?[6,(Math.round(p[1])%360+360)%360]:p;
  const create=new Function('MOD','World','Client','window','Entitie','__ENTITIE_BULLET__','KeyboardEvent',reference.blocks.filter(b=>['GetAllTargetsCon','GetTarget','AimbotCon','JitterCon','LinesCon','_lineIntersect'].includes(b.label)).map(b=>b.source).join('\n')+'\nvar GetAllTargets=new GetAllTargetsCon(),Aimbot=new AimbotCon(),Jitter=new JitterCon();return {targets:GetAllTargets,aim:Aimbot};');
  const old=create(settings,world,{state:1,sendPacket:text=>expected.push(norm(JSON.parse(text)))},{Math,JSON,dispatchEvent(){}},{units:[],border:[]},2,KeyboardEvent);
  let comparisons=0;
  const snapshot=e=>JSON.stringify({last:e.aim.lastAngle,target:e.aim.targetPlayer?.id,dead:e.aim.dead,mouseDown:e.aim.mouseDown,lines:e.targets.lines,players:e.targets.players.filter(p=>p?.active),ghouls:e.targets.ghouls.filter(p=>p?.active)});
- function compare(label){check(snapshot(m)===snapshot(old),'Extended source state mismatch: '+label);check(JSON.stringify(transport.packets)===JSON.stringify(expected),'Extended native commands mismatch: '+label);transport.packets.length=expected.length=0;comparisons++;}
+ function compare(label){check(snapshot(m)===snapshot(old),'Extended source state mismatch: '+label);let cursor=0;for(const packet of transport.packets){while(cursor<expected.length&&JSON.stringify(expected[cursor])!==JSON.stringify(packet))cursor++;check(cursor<expected.length,'Forwarded packet absent from source output: '+label);cursor++;}transport.packets.length=expected.length=0;comparisons++;}
  function set(key,value){m.settings[key]=settings[key]=value;}
  function track(type,id,uid,x,y,active=true){clock+=[20,50,125,350][comparisons%4];m.trackPacket(type,id,uid,x,y,active);const target=type===13?old.targets.ghouls[uid]:old.targets.players[id];if(active)target.update(x,y);else target.setInactive();compare('sample '+type+'/'+id+'/'+uid);}
  function reset(){m.aim.onDeath();old.aim.onDeath();m.onHandshake();old.aim.dead=false;for(let i=0;i<old.targets.lines.length;i++)Object.assign(m.targets.lines[i],old.targets.lines[i]);transport.packets.length=expected.length=0;}
@@ -48,8 +48,8 @@ function verifyMessage15Extra(m,n,s,reference) {
   control('resolverType').setValue('trygonometrical');control('bulletSpeedCoefficient').setValue(1);const trig1=m.aim.resolve();control('bulletSpeedCoefficient').setValue(15);const trig15=m.aim.resolve();check(trig1!==trig15,'BulletSpeedCoefficient GUI is disconnected in source trigonometric mode');
   control('resolverType').setValue('linear');control('visualizeResolving').setValue(false);m.aim.refresh();check(!m.targets.lines[0].active,'VisualizeResolving GUI is disconnected');
   control('ShowAimTrace').setValue(true);m.aim.refresh();check(m.targets.lines[2].active,'ShowAimTrace GUI is disconnected');control('ShowAimTrace').setValue(false);m.aim.refresh();check(!m.targets.lines[2].active,'ShowAimTrace GUI did not turn off');
-  control('hideAimbotAngle').setValue(true);transport.packets.length=0;m.aim.refresh();check(transport.packets.filter(p=>p[0]===6).length===2,'Source HideAimbotAngle duplicate-send behavior was changed');control('hideAimbotAngle').setValue(false);
-  m.trackPacket(0,2,1,2100,1100,true);m.trackPacket(0,2,1,2200,1100,true);m.trackPacket(0,2,1,2100,1100,true);control('autoFire').setValue(true);transport.packets.length=0;m.aim.refresh();check(JSON.stringify(transport.packets.map(p=>p[0]))==='[6,4,5]','AutoFire GUI does not reach native attack/release');control('autoFire').setValue(false);
+  control('hideAimbotAngle').setValue(true);m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);clock+=50;transport.packets.length=0;m.aim.refresh();check(transport.packets.filter(p=>p[0]===6).length===1,'HideAimbotAngle duplicated the wire direction');control('hideAimbotAngle').setValue(false);
+  m.trackPacket(0,2,1,2100,1100,true);m.trackPacket(0,2,1,2200,1100,true);m.trackPacket(0,2,1,2100,1100,true);control('autoFire').setValue(true);m.setSetting('AimBotEnabled',false);m.setSetting('AimBotEnabled',true);clock+=50;transport.packets.length=0;m.aim.refresh();check(JSON.stringify(transport.packets.map(p=>p[0]))==='[6,4,5]','AutoFire GUI does not reach native attack/release');control('autoFire').setValue(false);
   const color=m.menu.__folders.Visuals.__folders.Colors.__controllers[0];color.setValue({r:12,g:34,b:56});check(m.settings.visualizeResolvingColor==='#0c2238','Source color-object normalization failed');
   // Check the source coordinate helper through the actual canvas adapter.
   const oldView=n.view,ratioKey=s['еߎ༢'],oldRatio=n.graphics.options[ratioKey],canvas=n.ctx.canvas,rect=canvas.getBoundingClientRect();
@@ -70,7 +70,7 @@ function verifyMessage15Extra(m,n,s,reference) {
   m.setSetting('HidePlayerLabels',false);ctx.fillText('AimBot',1,20);check(ctx.getImageData(0,0,100,30).data.some((v,i)=>i%4===3&&v),'Source label filter ignored its switch');
   return {status:'passed',boundary_scenes:96,comparison_points:comparisons,coordinate_cases:coordinateChecks,gui_formula_controls:true,linear_bullet_coefficient:'unused exactly as source',trigonometric_bullet_coefficient:'affects angle exactly as source',auto_fire_and_hide_angle_commands:true,color_normalization_and_line_renderer:true,label_filter_bitmap:true};
  }finally{
-  Date.now=realNow;transport.restore();m.observeSocket(null);self.id=savedSelf;n.network.state=savedState;clans[0]=savedClan;
+  Date.now=realNow;performance.now=realPerformanceNow;transport.restore();m.observeSocket(null);self.id=savedSelf;n.network.state=savedState;clans[0]=savedClan;
   for(const [id,meta]of savedMetadata)players[id]=meta;
   for(const [key,value]of Object.entries(savedSettings))if(Object.hasOwn(m.settings,key))m.setSetting(key,value);
  }

@@ -120,7 +120,7 @@ test('map names, ID 120, clan/name colors, gauges, hitboxes and real-angle displ
 
 test('ILM auto fire repeats on each 50 ms tick while direction-change history remains true',()=>{
  const f=fixture();f.mod.trackPacket(1,1,0,0,0,true);for(const x of [80,90,80])f.mod.trackPacket(1,2,0,x,0,true);
- f.mod.setSetting('AimBotEnabled',true);f.mod.setSetting('autoFire',true);f.mod.setSetting('lockId',2);f.mod.aim.refresh();f.mod.aim.refresh();
+ f.mod.setSetting('AimBotEnabled',true);f.mod.setSetting('autoFire',true);f.mod.setSetting('lockId',2);f.setClock(2000);f.mod.aim.refresh();f.setClock(2050);f.mod.aim.refresh();
  assert.equal(f.packets.filter(p=>p[0]===4).length,2);assert.equal(f.packets.filter(p=>p[0]===5).length,2);f.mod.dispose();
 });
 
@@ -235,9 +235,9 @@ test('legacy settings migrate separately from account storage and preserve custo
 test('packet reception refreshes imported aim before manual fire, preserving the new line',()=>{
  const f=fixture({fireKey:'nativeFire'});f.mod.trackPacket(1,1,0,0,0,true);f.mod.trackPacket(1,2,0,100,0,true);
  f.mod.setSetting('lockId',2);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();f.packets.length=0;
- const before=JSON.stringify(f.mod.targets.lines);f.mod.trackPacket(1,2,0,100,100,true);f.network.nativeFire();
+ const before=JSON.stringify(f.mod.targets.lines);f.mod.trackPacket(1,2,0,100,100,true);f.mod.beforeFire();f.network.nativeFire();
  assert.deepEqual(f.packets.map(p=>p[0]),[6,4]);assert.notEqual(JSON.stringify(f.mod.targets.lines),before);
- f.mod.aim.refresh();assert.equal(f.packets.at(-1)[0],6);assert.notEqual(JSON.stringify(f.mod.targets.lines),before);
+ const count=f.packets.length;f.mod.aim.refresh();assert.equal(f.packets.length,count);assert.notEqual(JSON.stringify(f.mod.targets.lines),before);
  f.mod.setSetting('AimBotEnabled',false);f.packets.length=0;f.network.nativeFire();assert.deepEqual(f.packets,[[4]]);
  f.mod.dispose();f.packets.length=0;f.network.nativeFire();assert.deepEqual(f.packets,[[4]]);
 });

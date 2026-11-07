@@ -149,13 +149,21 @@ class PublicationTests(unittest.TestCase):
   self.validation['browsers']['firefox']['native']['connection_close_origin_diagnostics']=False;self.save()
   with self.assertRaisesRegex(ValueError,'close origin.*firefox'):p.artifacts(self.root,self.out)
 
- def test_small_queue_source_parity_is_required_in_both_browsers(self):
-  self.contract['features']=['aim-small-queue-source-parity']
+ def test_small_queue_admission_is_required_in_both_browsers(self):
+  self.contract['features']=['aim-small-queue-admission']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
-  for report in self.validation['browsers'].values():report['native']={'message15_transport':{'small_queue_source_parity':True}}
+  for report in self.validation['browsers'].values():report['native']={'message15_transport':{'small_queue_admission':True}}
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
-  self.validation['browsers']['firefox']['native']['message15_transport']['small_queue_source_parity']=False;self.save()
-  with self.assertRaisesRegex(ValueError,'small-queue parity.*firefox'):p.artifacts(self.root,self.out)
+  self.validation['browsers']['firefox']['native']['message15_transport']['small_queue_admission']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'small-queue admission.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_bounded_aim_stream_is_required_in_each_browser(self):
+  self.contract['features']=['bounded-aim-send-rate']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'message15_transport':{'bounded_send_rate':{'status':'passed'}}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['message15_transport']['bounded_send_rate']['status']='failed';self.save()
+  with self.assertRaisesRegex(ValueError,'Bounded aim.*firefox'):p.artifacts(self.root,self.out)
 
  def test_native_shot_and_render_sync_require_both_browsers(self):
   self.contract['features']=['native-shot-direction-and-render-sync']

@@ -6,8 +6,9 @@ The main client now uses the aim engine from the previously delivered
 `bee8d9034627b24e8f5919617dff3ed23e946da253b35dcf1805056b5fa7e4a5`.
 
 `mod/message15-aim.js` contains the five original classes and 24 methods,
-all 15 extracted aim/menu/event/rendering blocks, and the original scheduling:
-refresh on target updates, RAF, and the 1 ms direction interval. The old ILM
+all 15 extracted aim/menu/event/rendering blocks. The adapter retains refresh
+on target updates and RAF, and replaces the imported 1 ms resend timer with
+a 50 ms refresh of the current prediction. The old ILM
 engine and curved predictor are stored under `recovery/retired-ilm` for history
 and are excluded from the build. `tools/audit_message15.cjs` checks literal
 source parity and all 23 source defaults. No source authentication service is
@@ -18,17 +19,24 @@ the formulas. A missing locked target must prepare team data for the original
 fallback search, including lock IDs 0 and 120. The existing transport snapshot
 admits or drops an entire automatic direction/attack/release cycle together.
 The formulas and histories continue while transmission is blocked; no replay
-queue is introduced. Imported aim directions retain their original repeated
-send behavior rather than the retired ILM coalescing behavior.
+queue is introduced. Background cycles are admitted at most once per 50 ms;
+identical normalized directions are coalesced. The source prediction and line
+continue to update between sends. Missing targets and a lock on self cannot
+forward stale directions. A native manual shot reasserts the latest prediction
+before attack, independently of the background interval.
 
 Ordinary queued bytes no longer suppress those directions. The aim admission
 snapshot accepts an open socket below 4096 buffered bytes and pauses new cycles
 at or above that boundary; attack/release still share the cycle's admission.
 The previous any-nonzero-byte check could suppress every fresh direction during
 ordinary traffic even though the imported predictor continued computing them.
-Native Chromium/Firefox fixtures compare the original uploaded engine's packet
-sequences at 1, 16, 128, 1024 and 4095 queued bytes, in addition to full-queue and
-closed-socket checks. This check is required by the publisher.
+Native Chromium/Firefox fixtures verify fresh directions at 1, 16, 128, 1024
+and 4095 queued bytes, in addition to full-queue and closed-socket checks. They
+also require stationary-direction coalescing, a 20 Hz moving-target bound and
+manual-shot priority. These checks are required by the publisher. The 24-scene
+and 96-scene comparisons retain exact source state/formulas while verifying
+that forwarded commands form an ordered subset of the source output; wire
+repetition is deliberately different from the upload.
 
 `tools/updater/message15-contracts.cjs` adds native fire/release, movement,
 handshake and session-start hooks. It handles a send nested inside a native

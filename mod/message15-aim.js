@@ -7,7 +7,7 @@ function __createMessage15Aim(MOD, World, environment) {
   const window={Math:actualWindow.Math,JSON:actualWindow.JSON,
     dispatchEvent:event=>actualWindow.dispatchEvent(event),
     requestAnimationFrame:callback=>{if(disposed)return 0;let id=actualWindow.requestAnimationFrame(time=>{pendingFrames.delete(id);if(!disposed)callback(time);});pendingFrames.add(id);return id;},
-    setInterval:(callback,delay)=>{const id=actualWindow.setInterval(()=>{if(!disposed)callback();},delay);pendingIntervals.add(id);return id;},
+    setInterval:(callback,delay)=>{const backup=delay===1;const id=actualWindow.setInterval(()=>{if(!disposed){if(backup)Aimbot.refresh();else callback();}},backup?50:delay);pendingIntervals.add(id);return id;},
     clearInterval:id=>{pendingIntervals.delete(id);actualWindow.clearInterval(id);}
   };
   const setInterval=window.setInterval,setTimeout=(callback,delay)=>{const id=actualWindow.setTimeout(()=>{pendingTimeouts.delete(id);if(!disposed)callback();},delay);pendingTimeouts.add(id);return id;},clearTimeout=id=>{pendingTimeouts.delete(id);actualWindow.clearTimeout(id);};
