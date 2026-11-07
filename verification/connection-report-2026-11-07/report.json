@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "date_moscow": "2026-11-07",
+  "source_commit": "828175a",
+  "release": "6e266a3809471444e08b6c4df8e556698152ea6b02b2ebbab24682806067d96f",
+  "output_sha256": "5977a193ffea334817f58f5887f5138ca854aa9401c32fc072bcd440ce3301af",
+  "reported_build_matches_current": true,
+  "known_integrity_compatibility": {
+    "status": "passed",
+    "predicates": 3
+  },
+  "published_browser_checks": {
+    "chromium": {
+      "status": "passed",
+      "output_sha256": "5977a193ffea334817f58f5887f5138ca854aa9401c32fc072bcd440ce3301af",
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "output_sha256": "5977a193ffea334817f58f5887f5138ca854aa9401c32fc072bcd440ce3301af",
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      }
+    }
+  },
+  "static_integrity_flag_references": {
+    "AssignmentExpression": 159,
+    "VariableDeclarator": 1,
+    "ArrowFunctionExpression": 1
+  },
+  "static_integrity_nonwrite_reads": [
+    {
+      "at": 3279761,
+      "parent": "ArrowFunctionExpression",
+      "text": "̝\",\n  pendingKey:\"ᴇ२̃\",\n  integrity:()=>ⲣᄉε,\n  integrityPatched:()=>__devastIntegri"
+    }
+  ],
+  "native_death_handler": "Ꮷԁߐ",
+  "native_death_payload_interpretation": "256 * packet[1] + packet[2], stored in world.οԁܚ.оᄀ༥ and subsequently rendered as a statistic; this handler does not branch on it as a reason code",
+  "native_error_callback_argument": 128,
+  "browser_fixture_cases": 6,
+  "live_server_tested": false,
+  "production_script_changed": false,
+  "server_cause_established": false
+}

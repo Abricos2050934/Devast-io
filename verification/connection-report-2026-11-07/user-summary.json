@@ -1,0 +1,53 @@
+{
+  "user_report_sha256": "dbe36c8a0ec588f5ca54ab36dda8f786eadd051a92a440339b685b3a01f57b23",
+  "build": {
+    "fingerprint": "7cb3255396b32394ec0f5c3418c2aa3ec636b5f5e61029b0c8b6728275b7129f",
+    "nativeSha256": "e1799132e4369cde75e8b153a9629f96e959e4053991fa5d33df3b9c3feaafdf"
+  },
+  "integrityFlag": 1,
+  "modErrorCount": 0,
+  "aimSource": "message15",
+  "modCommandsByOpcode": {
+    "6": 40481,
+    "12": 869,
+    "15": 3
+  },
+  "sessions": [
+    {
+      "socket": 1,
+      "open_ms": 276257,
+      "health": 0,
+      "prefix": "05 00 01",
+      "commands_last_2s": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "buffered_bytes": 0,
+      "close_after_death_ms": 33,
+      "close_code": 1005,
+      "local_close_observed": false
+    },
+    {
+      "socket": 2,
+      "open_ms": 1253274,
+      "health": 255,
+      "prefix": "05 00 02",
+      "commands_last_2s": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "buffered_bytes": 0,
+      "close_after_death_ms": 22,
+      "close_code": 1005,
+      "local_close_observed": false
+    }
+  ],
+  "limits": [
+    "Only two seconds of mod combat history at each event; older activity unknown.",
+    "Health is a pre-handler client snapshot, not an authoritative cause of death.",
+    "No server-side enforcement reason is present.",
+    "Flag=1 is a client detector result; known signature consumers are already patched."
+  ]
+}

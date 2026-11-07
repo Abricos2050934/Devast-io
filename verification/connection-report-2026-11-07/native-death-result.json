@@ -1,0 +1,105 @@
+{
+  "status": "passed",
+  "output_sha256": "5977a193ffea334817f58f5887f5138ca854aa9401c32fc072bcd440ce3301af",
+  "scope": "Exact published client, native death handler with entity lookup and error callback fixtures; no live game session; numeric payload decoding is not a cause code",
+  "rows": [
+    {
+      "engine": "chromium",
+      "version": "154.0.8037.57",
+      "result": [
+        {
+          "packet": [
+            5,
+            0,
+            1
+          ],
+          "decodedNumber": 1,
+          "nativeErrorCode": 128,
+          "nativeErrorCalls": 1,
+          "state": 0,
+          "event": "server-death",
+          "phase": "dead",
+          "deathPrefix": "05 00 01"
+        },
+        {
+          "packet": [
+            5,
+            0,
+            2
+          ],
+          "decodedNumber": 2,
+          "nativeErrorCode": 128,
+          "nativeErrorCalls": 1,
+          "state": 0,
+          "event": "server-death",
+          "phase": "dead",
+          "deathPrefix": "05 00 02"
+        },
+        {
+          "packet": [
+            5,
+            1,
+            2
+          ],
+          "decodedNumber": 258,
+          "nativeErrorCode": 128,
+          "nativeErrorCalls": 1,
+          "state": 0,
+          "event": "server-death",
+          "phase": "dead",
+          "deathPrefix": "05 01 02"
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "engine": "firefox",
+      "version": "153.0",
+      "result": [
+        {
+          "packet": [
+            5,
+            0,
+            1
+          ],
+          "decodedNumber": 1,
+          "nativeErrorCode": 128,
+          "nativeErrorCalls": 1,
+          "state": 0,
+          "event": "server-death",
+          "phase": "dead",
+          "deathPrefix": "05 00 01"
+        },
+        {
+          "packet": [
+            5,
+            0,
+            2
+          ],
+          "decodedNumber": 2,
+          "nativeErrorCode": 128,
+          "nativeErrorCalls": 1,
+          "state": 0,
+          "event": "server-death",
+          "phase": "dead",
+          "deathPrefix": "05 00 02"
+        },
+        {
+          "packet": [
+            5,
+            1,
+            2
+          ],
+          "decodedNumber": 258,
+          "nativeErrorCode": 128,
+          "nativeErrorCalls": 1,
+          "state": 0,
+          "event": "server-death",
+          "phase": "dead",
+          "deathPrefix": "05 01 02"
+        }
+      ],
+      "pageErrors": []
+    }
+  ]
+}
