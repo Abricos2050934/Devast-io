@@ -1,0 +1,58 @@
+{
+  "current": [
+    {
+      "phase": "active",
+      "packets": [
+        [
+          6,
+          0
+        ]
+      ]
+    },
+    {
+      "phase": "removed",
+      "packets": [
+        [
+          6,
+          225
+        ]
+      ],
+      "target": 2,
+      "coordinates": [
+        -1,
+        -1
+      ],
+      "owns_mouse": true
+    },
+    {
+      "phase": "self_lock",
+      "packets": [
+        [
+          6,
+          0
+        ]
+      ]
+    }
+  ],
+  "reference": [
+    {
+      "phase": "active",
+      "packets": [
+        [
+          6,
+          0
+        ]
+      ]
+    },
+    {
+      "phase": "removed",
+      "packets": [
+        [
+          6,
+          0
+        ]
+      ],
+      "target": null
+    }
+  ]
+}

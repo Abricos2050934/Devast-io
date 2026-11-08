@@ -1,0 +1,150 @@
+{
+  "release": "95611055e74366c6a18a2d1863d90af8230da0bdab3269d0764a8c08d5ee7981",
+  "output_sha256": "90033adeccfa55952c2effa9537ca4c7b8dfa1b2868e3eb2a05c04acee1f0ef9",
+  "raw_sha256": "74720aca77141a313015167051e60c2dfc566310202a5b41d4445258e4937f2e",
+  "source_url": "https://devast.io/js/qYOh6D5MhvXhWnq.js",
+  "inputs_sha256": "924d45c3d4b3ff4703c05e84e4f8f46c0ba203abc0a05c04f1183a2d3f3a8afd",
+  "status": "passed",
+  "checked_at_moscow": "2026-11-08T16:13:23.364262+03:00",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 166,
+    "python_tests": 56
+  },
+  "candidate_tests": 111,
+  "ilm_module_unchanged": true,
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "154.0.8037.57",
+      "features": {
+        "valid_live_aim_targets": true,
+        "bounded_auto_build": true,
+        "aim_session_history_reset": true,
+        "bounded_fast_loot": true,
+        "session_mod_traffic_history": true,
+        "server_death_sends_no_commands": true
+      },
+      "ilm_aim": {
+        "status": "passed",
+        "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+        "scenes": 48,
+        "comparison_points": 2400,
+        "exact_states": true,
+        "exact_normalized_admitted_packets": true,
+        "valid_target_admission": true,
+        "session_target_reset": true,
+        "original_timer_ms": 50,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "native_direction_ownership": true,
+        "server_death_sends_no_commands": true
+      },
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "features": {
+        "valid_live_aim_targets": true,
+        "bounded_auto_build": true,
+        "aim_session_history_reset": true,
+        "bounded_fast_loot": true,
+        "session_mod_traffic_history": true,
+        "server_death_sends_no_commands": true
+      },
+      "ilm_aim": {
+        "status": "passed",
+        "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+        "scenes": 48,
+        "comparison_points": 2400,
+        "exact_states": true,
+        "exact_normalized_admitted_packets": true,
+        "valid_target_admission": true,
+        "session_target_reset": true,
+        "original_timer_ms": 50,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "native_direction_ownership": true,
+        "server_death_sends_no_commands": true
+      },
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    }
+  },
+  "live_server_no_kick": "not_established"
+}

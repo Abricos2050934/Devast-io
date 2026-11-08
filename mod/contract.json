@@ -39,7 +39,10 @@
     "verbatim-original-ilm-aim",
     "ilm-native-lifecycle",
     "bounded-fast-loot",
-    "session-mod-traffic-history"
+    "session-mod-traffic-history",
+    "valid-live-aim-targets",
+    "bounded-auto-build",
+    "aim-session-history-reset"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -56,7 +59,8 @@
     "tests/automation-transport.test.cjs",
     "tests/native-aim-transport.test.cjs",
     "tests/ilm-current.test.cjs",
-    "tests/mod-traffic.test.cjs"
+    "tests/mod-traffic.test.cjs",
+    "tests/aim-validity.test.cjs"
   ],
   "required_browsers": [
     "chromium",

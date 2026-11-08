@@ -291,3 +291,13 @@ test('failed normal joins after death stay normal, are bounded and keep the same
  for(const time of [now+12001,now+12002,now+50000,now+100000]){f.network.state=64;step(time);}
  assert.equal(joins.length,4);assert.deepEqual(identity(f),account);f.mod.dispose();
 });
+
+test('handshake diagnostics distinguish discarded replies during play without logging request URLs',()=>{
+ const f=fixture({saved:account});try{f.network.state=0;f.B.loginKey='login';const replies=[];let accepted=0;
+  f.network.login=()=>replies.push(f.mod.guardHandshakeCallback('/private-path?token=do-not-record',()=>accepted++));
+  f.mod.step(0);f.network.login();replies[0]();assert.equal(accepted,1);
+  f.network.state=1;f.mod.step(16);replies[0]();assert.equal(accepted,1);
+  const info=f.mod.connectionInfo();assert.deepEqual({...info.connectionCallbacks},{wrapped:1,accepted:1,rejectedStale:1,rejectedWhileConnected:1,rejectedAfterDispose:0});
+  assert.ok(!JSON.stringify(info).includes('do-not-record'));info.connectionCallbacks.accepted=999;assert.equal(f.mod.connectionInfo().connectionCallbacks.accepted,1);
+ }finally{f.mod.dispose();}
+});

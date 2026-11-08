@@ -6,7 +6,8 @@ function verifyIlmAim(m,n,s,reference){
  const create=new Function('settings','world','send','const _0x225287=()=>{throw Error("Live decoder")},_0x349c=_0x225287;const _0x2ea565=settings,_0x10898e=world,_0x4c996c=send;'+reference.blocks.map(b=>b.source).join('\n')+';const _0x6cc5f2=new _0x3e2cd1(),_0x41e779=new _0x4b5d6f();return {targets:_0x6cc5f2,aim:_0x41e779,tick:_0x4a7389};');
  const ref=create(settings,world,p=>expected.push(p[0]===6?[6,(Math.round(p[1])%360+360)%360]:p.slice()));let points=0;
  const state=e=>JSON.stringify({lastId:e.targets.lastId,angle:e.aim.lastAngle,target:e.aim.targetPlayer?.id,lines:e.targets.lines,players:e.targets.players.filter(t=>t.active),ghouls:e.targets.ghouls.filter(t=>t.active)});
- function compare(label){check(state(m)===state(ref),'Original ILM state differs: '+label);check(JSON.stringify(capture.packets)===JSON.stringify(expected),'Original ILM packets differ '+label+': '+JSON.stringify({actual:capture.packets,source:expected}));capture.packets.length=expected.length=0;points++;}
+ function referenceAdmits(){const own=ref.targets.players[world.PLAYER.id],target=ref.aim.targetPlayer;return world.PLAYER.id>0&&own?.active&&target?.active&&target.id!==world.PLAYER.id&&[own.x,own.y,target.x,target.y].every(Number.isFinite);}
+ function compare(label){check(state(m)===state(ref),'Original ILM state differs: '+label);const admitted=referenceAdmits()?expected:[];check(JSON.stringify(capture.packets)===JSON.stringify(admitted),'Admitted original ILM packets differ '+label+': '+JSON.stringify({actual:capture.packets,source:expected,admitted}));capture.packets.length=expected.length=0;points++;}
  function track(type,id,x,y,active=true){m.trackPacket(type===13?13:(n.playerType??0),type===13?0:id,type===13?id:1,x,y,active);const p=(type===13?ref.targets.ghouls:ref.targets.players)[id];if(active)p.update(x,y);else p.setInactive();compare('packet '+type+'/'+id);}
  try{
   n.network.state=1;self.id=1;m.reconnect.sessionEnded=false;m.observeSocket(null);clans[0]={[s['ոᚄރ']]:7};
@@ -36,8 +37,18 @@ function verifyIlmAim(m,n,s,reference){
    for(const probe of n.directionProbes){capture.packets.length=0;probe(Math.PI/2);check(capture.packets.length===0,'Native pointer fought ILM');}
    m.setSetting('AimBotEnabled',false);for(const probe of n.directionProbes){capture.packets.length=0;probe(Math.PI/2);check(JSON.stringify(capture.packets)==='[[6,90]]','Disabling ILM did not return native mouse control');}nativeOwnership=true;
   }
+  m.setSetting('AimBotEnabled',true);m.setSetting('autoFire',true);m.setSetting('lockId',2);m.trackPacket(n.playerType??0,2,1,0,0,false);capture.packets.length=0;
+  m.aim.refresh();check(capture.packets.length===0&&!m.controlsAimDirection,'Removed locked target still controlled transport');
+  if(n.directionProbes?.length){for(const probe of n.directionProbes){capture.packets.length=0;probe(Math.PI/2);check(JSON.stringify(capture.packets)==='[[6,90]]','Missing target did not return native pointer control');}}
+  m.setSetting('autoFire',false);m.trackPacket(n.playerType??0,2,1,1500,1000,true);capture.packets.length=0;m.aim.refresh();check(JSON.stringify(capture.packets)==='[[6,0]]','Target recovery failed to reassert the original ILM angle');
+  m.setSetting('lockId',1);capture.packets.length=0;m.aim.refresh();check(capture.packets.length===0&&!m.controlsAimDirection,'Self lock generated automatic commands');
+  m.setSetting('lockId',2);m.trackPacket(n.playerType??0,1,1,0,0,false);capture.packets.length=0;m.aim.refresh();check(capture.packets.length===0&&!m.controlsAimDirection,'Missing own position generated automatic commands');
+  m.trackPacket(n.playerType??0,1,1,1000,1000,true);m.aim.refresh();
+  m.trackPacket(13,0,17,1100,1000,true);m.onSessionStart();m.onHandshake();capture.packets.length=0;m.aim.refresh();
+  check(capture.packets.length===0&&!m.targets.players.some(t=>t.active)&&!m.targets.ghouls.some(t=>t.active),'A rapid new handshake reused previous-session entities');
+  m.trackPacket(n.playerType??0,1,1,4000,4000,true);m.trackPacket(n.playerType??0,2,1,4500,4000,true);capture.packets.length=0;m.aim.refresh();check(JSON.stringify(capture.packets)==='[[6,0]]'&&m.targets.players[2].prevX[0]===-1,'Reused player ID retained old position history');
   capture.packets.length=0;m.observeDeath([5,0,2]);m.aim.refresh();m.afterFire();m.afterRelease();check(capture.packets.length===0,'Server death generated ILM commands');
-  return {status:'passed',upload_sha256:reference.upload_sha256,scenes:48,comparison_points:points,exact_states:true,exact_normalized_packets:true,original_timer_ms:50,whole_auto_fire_cycle:true,small_queue_admission:true,native_direction_ownership:nativeOwnership,server_death_sends_no_commands:true};
+  return {status:'passed',upload_sha256:reference.upload_sha256,scenes:48,comparison_points:points,exact_states:true,exact_normalized_admitted_packets:true,valid_target_admission:true,session_target_reset:true,original_timer_ms:50,whole_auto_fire_cycle:true,small_queue_admission:true,native_direction_ownership:nativeOwnership,server_death_sends_no_commands:true};
  }finally{capture.restore();m.observeSocket(null);Object.assign(m.reconnect,oldReconnect);m.onHandshake();self.id=oldId;n.network.state=oldState;for(const[id,value]of oldMeta)metadata[id]=value;clans[0]=oldClan;for(const[k,v]of Object.entries(saved))m.setSetting(k,v);}
 }
 module.exports={verifyIlmAim};

@@ -751,12 +751,18 @@ function __installDevastMod(B) {
   }
   refreshLootFilter();
   let aimCycleDepth=0,aimCycleWritable=false;
-  const aimTransport={cycles:0,blockedCycles:0,nativeYields:0};
+  const aimTransport={cycles:0,blockedCycles:0,nativeYields:0,invalidCycles:0,lastInvalidReason:null};
   const aimModule=__createIlmAdapter(MOD,{
     window,selfId:()=>B.world.ᅠᏧ‍?.id||0,teamId,
     beginCycle:()=>{if(aimCycleDepth++===0){aimCycleWritable=playing()&&!reconnect.sessionEnded&&automationReady('aim');if(aimCycleWritable)aimTransport.cycles++;else aimTransport.blockedCycles++;}},
     endCycle:()=>{if(--aimCycleDepth===0)aimCycleWritable=false;},
-    send:packet=>{if(!aimCycleWritable||!playing()||reconnect.sessionEnded||connectionSocket&&connectionSocket.readyState!==1)return false;return __send(packet,true);}
+    send:packet=>{
+      if(!aimCycleWritable||!playing()||reconnect.sessionEnded||connectionSocket&&connectionSocket.readyState!==1)return false;
+      // The source calculates first. Reject its whole automatic cycle when
+      // that calculation used a missing player or a removed/own target.
+      if(packet[0]===6){const reason=invalidAimState();if(reason){aimCycleWritable=false;aimTransport.invalidCycles++;aimTransport.lastInvalidReason=reason;return false;}}
+      return __send(packet,true);
+    }
   });
   const GetAllTargets=aimModule.targets,Aimbot=aimModule.aim;
   const _players_list = [];
@@ -792,6 +798,11 @@ function __installDevastMod(B) {
     bucket.commands++;bucket.byOpcode[op]=(bucket.byOpcode[op]||0)+1;
     if(!trafficPeak||bucket.commands>trafficPeak.commands)trafficPeak=bucket;
     trimTraffic(now);
+  }
+  function recordCommand(op) {
+    diagnostics.commands++;
+    diagnostics.commandsByOpcode[op]=(diagnostics.commandsByOpcode[op]||0)+1;
+    recordTraffic(op);
   }
   function trafficInfo() {
     trimTraffic(performance.now());
@@ -863,8 +874,9 @@ function __installDevastMod(B) {
   let playerListPanel, playerListBody, playerListCount, playerListOrder = '';
   const playerListRows = new Map(), departedPlayers = new Map();
   let lastStep = -Infinity, lastLoot = -Infinity;
-  const FAST_LOOT_INTERVAL=25,FAST_LOOT_BURST=8;
+  const FAST_LOOT_INTERVAL=25,FAST_LOOT_BURST=8,AUTO_BUILD_INTERVAL=50;
   let lastFastLoot=-Infinity,fastLootCursor=0;
+  let lastAutoBuild=-Infinity;
   let lastTake = -Infinity, lastKeepAlive = -Infinity, lastChat = -Infinity, nextChatAt = -Infinity;
   const chatState = {
     status: 'Off',
@@ -904,6 +916,22 @@ function __installDevastMod(B) {
   function playing() {
     return !stopped && B.network.state === 1 && B.world.ᅠᏧ‍ && B.world.ᅠᏧ‍.id > 0;
   }
+  function invalidAimState() {
+    if(!playing()||reconnect.sessionEnded||Aimbot.dead)return 'session-inactive';
+    const id=B.world.ᅠᏧ‍.id,own=GetAllTargets.players[id],target=Aimbot.targetPlayer;
+    if(!own?.active||!Number.isFinite(own.x)||!Number.isFinite(own.y))return 'self-position-missing';
+    if(!target?.active||!Number.isFinite(target.x)||!Number.isFinite(target.y))return 'target-missing';
+    if(target.id===id)return 'self-target';
+    return null;
+  }
+  function resetAimForSession() {
+    lastSentAngle=null;
+    Aimbot.onDeath();
+    Aimbot.targetPlayer=null;
+    // A new handshake can finish before the source's next 50 ms id=0 tick.
+    // Clear both entity histories before accepting positions from that session.
+    for(const group of [GetAllTargets.players,GetAllTargets.ghouls])for(const target of group)if(target.active)target.setInactive();
+  }
   let lastSentAngle = null,lastSentPlayer = 0;
   const appliedToggles={AimBotEnabled:MOD.AimBotEnabled};
   function __send(value, forceAngle = false) {
@@ -925,9 +953,7 @@ function __installDevastMod(B) {
       if (recentCombatCommands.length > 180) recentCombatCommands.shift();
     }
     if (packet[0] === 6) {lastSentAngle = packet[1];lastSentPlayer = B.world.ᅠᏧ‍.id;}
-    diagnostics.commands++;
-    diagnostics.commandsByOpcode[packet[0]]=(diagnostics.commandsByOpcode[packet[0]]||0)+1;
-    recordTraffic(packet[0]);
+    recordCommand(packet[0]);
     return true;
   }
   // ILM manual fire uses the last direction sent by its original timer.
@@ -1133,12 +1159,13 @@ function __installDevastMod(B) {
     updateChat(now);
   }
   // Use the same selected building, rotation and cursor preview as native placement.
-  function autoBuildFrame() {
+  function autoBuildFrame(now=performance.now()) {
     if (!playing() || !MOD.AutoBuiledEnabled) return;
+    if(now-lastAutoBuild<AUTO_BUILD_INTERVAL)return;
     const me=B.world.ᅠᏧ‍;
     if (me.ε︁ᚂ!==1 || me.օⲥᚁ!==1) return;
     if(!automationReady('build'))return;
-    __send([14,me.α०ᚂ,me.ρⲅ️,me.ᴎ︆ࡉ]);
+    if(__send([14,me.α०ᚂ,me.ρⲅ️,me.ᴎ︆ࡉ]))lastAutoBuild=now;
   }
   function updateChat(now) {
     if (!MOD.SpamChatEnabled) {
@@ -1166,6 +1193,7 @@ function __installDevastMod(B) {
     if(!automationReady('chat')){chatState.status='Waiting for network';return;}
     const wait = B.network.іߐ̸(text);
     if (wait === 0) {
+      recordCommand(1);
       lastChat = now;
       nextChatAt = -Infinity;
       chatState.sent++;
@@ -1464,7 +1492,7 @@ function __installDevastMod(B) {
           }
         }
       }
-      aimModule.render(ctx,v);
+      if(!invalidAimState())aimModule.render(ctx,v);
       ctx.globalAlpha = 1;
     } finally {ctx.restore();}
   }
@@ -1487,6 +1515,7 @@ function __installDevastMod(B) {
   };
   let connectionSocket = null, adGate = null, removeSocketObservers = () => {};
   let socketSerial=0,socketTrace=null;
+  const callbackTraffic={wrapped:0,accepted:0,rejectedStale:0,rejectedWhileConnected:0,rejectedAfterDispose:0};
   function socketTraffic(now=performance.now()) {
     if(!socketTrace)return null;
     return {id:socketTrace.id,openForMs:socketTrace.openedAt===null?null:Math.max(0,Math.round(now-socketTrace.openedAt)),
@@ -1537,8 +1566,9 @@ function __installDevastMod(B) {
       modCommandsByOpcode:{...diagnostics.commandsByOpcode},
       automationSettings:{autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled},
       automationTransport:{deferred:{...automationDeferrals},aimHighWaterBytes:AIM_BUFFER_HIGH_WATER},
-      automationLimits:{fastLootIntervalMs:FAST_LOOT_INTERVAL,fastLootBurst:FAST_LOOT_BURST},
+      automationLimits:{fastLootIntervalMs:FAST_LOOT_INTERVAL,fastLootBurst:FAST_LOOT_BURST,autoBuildIntervalMs:AUTO_BUILD_INTERVAL},
       modTraffic:trafficInfo(),
+      connectionCallbacks:{...callbackTraffic},
       aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',sourceTickRateMs:50,deduplicatedDirections:diagnostics.deduplicatedAngles},
       aimSettings:{enabled:MOD.AimBotEnabled,source:'ilm-original',autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
@@ -1657,10 +1687,17 @@ function __installDevastMod(B) {
   function guardHandshakeCallback(url, callback) {
     if (!nativeLoginDepth || typeof callback !== 'function') return callback;
     const generation = reconnect.generation;
+    callbackTraffic.wrapped++;
     // Gate the native HTTP response before it can overwrite the current
     // connection's cryptographic state, not only its final start callback.
     return function (...args) {
-      if (stopped || generation !== reconnect.generation) return;
+      if(stopped){callbackTraffic.rejectedAfterDispose++;return;}
+      if(generation!==reconnect.generation){
+        callbackTraffic.rejectedStale++;
+        if(B.network.state===1)callbackTraffic.rejectedWhileConnected++;
+        return;
+      }
+      callbackTraffic.accepted++;
       // Native preflight can issue its next HTTP round from this callback.
       // Carry ownership into that round before the original stack returns.
       nativeLoginDepth++;
@@ -1916,7 +1953,7 @@ function __installDevastMod(B) {
       lastKeepAlive = now;
     }
     if (!B.synchronizedRender) {
-      autoBuildFrame();
+      autoBuildFrame(now);
       records = collect();
       updateTargets();
       updateMouse();
@@ -2191,10 +2228,10 @@ function __installDevastMod(B) {
     afterRelease:()=>aimModule.afterRelease(),
     onMove:move=>aimModule.onMove(move),
     onHandshake:()=>{lastSentAngle=null;aimModule.onHandshake();},
-    onSessionStart:()=>{lastSentAngle=null;Aimbot.onDeath();},
+    onSessionStart:resetAimForSession,
     get controlsAimDirection() {
       const controls=playing() && !reconnect.sessionEnded &&
-        (!Aimbot.dead&&MOD.AimBotEnabled);
+        (MOD.AimBotEnabled&&!invalidAimState());
       // Both native direction handlers query this immediately before sending.
       // Once mouse input can change the server angle, our cache no longer proves
       // its value. Reacquisition must reassert even the same predicted angle.
@@ -2236,7 +2273,7 @@ function __installDevastMod(B) {
       if (stopped) return;
       try {
         if (B.synchronizedRender && playing()) {
-          autoBuildFrame();
+          autoBuildFrame(now);
           records = collect();
           updateTargets();
           updateMouse();

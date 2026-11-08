@@ -27,3 +27,12 @@ test('traffic retention stays bounded over forty minutes and idle reads expire o
   f.mod.setSetting('FAutoLootEnabled',false);f.setClock(4200001);r=f.mod.connectionInfo();assert.equal(r.modTraffic.seconds.length,0);assert.equal(r.modTraffic.lifetimePeak.commands,1);
  }finally{f.mod.dispose();}
 });
+
+test('automated chat contributes opcode counts without recording message contents or rejected sends',()=>{
+ const f=fixture();try{const text='private-chat-message';let result=1000;f.network['іߐ̸']=()=>result;
+  f.mod.setSetting('SpamChatText',text);f.mod.setSetting('SpamChatEnabled',true);f.setClock(1000);f.mod.step(1000);
+  assert.equal(f.mod.connectionInfo().modCommandsByOpcode[1],undefined);
+  result=0;f.setClock(3000);f.mod.step(3000);f.setClock(8000);f.mod.step(8000);
+  const r=f.mod.connectionInfo();assert.equal(r.modCommandsByOpcode[1],2);assert.equal(r.modTraffic.seconds.reduce((n,b)=>n+(b.byOpcode[1]||0),0),2);assert.ok(!JSON.stringify(r).includes(text));
+ }finally{f.mod.dispose();}
+});

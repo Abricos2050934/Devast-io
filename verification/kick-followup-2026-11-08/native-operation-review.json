@@ -1,0 +1,222 @@
+{
+  "scope": "All 36 allowed native replacement operations. The build verifies their exact AST anchors and unchanged operation set; this categorization is not a server-side kick diagnosis.",
+  "raw_sha256": "74720aca77141a313015167051e60c2dfc566310202a5b41d4445258e4937f2e",
+  "operations": [
+    {
+      "id": "camera-world-view",
+      "category": "rendering-and-metadata",
+      "before_sha256": "ed4fb417c9d062b6f870de01f2963385d04291482f44d8be0329206df06bf8e8",
+      "after_sha256": "4d81a340b60866d36a030b647284bf1879047ce2859b06702160bf5766837b23"
+    },
+    {
+      "id": "packet-position-history",
+      "category": "entity-tracking",
+      "before_sha256": "6acfdad0e8b6c6c8ce3956a0c7382aa90fc138adbba2f2d7aa5738feab8e2aa9",
+      "after_sha256": "5b1202cab955cecd6abe716d54b3a01d6b4b24d3b478fd634ad1bd748049f7dd"
+    },
+    {
+      "id": "packet-removal-history",
+      "category": "entity-tracking",
+      "before_sha256": "d1222398696589941445f8e15ce87cf4e5a3f5b9cfe6a0440ae7b97f5082ebbe",
+      "after_sha256": "cf14e7239e9e70a7101d44d7ba1c9994f76d2b2fde8eea86a59827185ca9693d"
+    },
+    {
+      "id": "native-view-scale",
+      "category": "rendering-and-metadata",
+      "before_sha256": "24d1f085530798085e2f8c936868c20b4aa6cb6e0b68373b514e87a7ba61ec66",
+      "after_sha256": "de99595eec8eee3d231722e8ce3a3cb9cf2410bcf46156dc3dbd168c1ee50e05"
+    },
+    {
+      "id": "mine-visibility",
+      "category": "rendering-and-metadata",
+      "before_sha256": "c03fc433b6015c790c8db19bc33e1b7b22a899cd529cd993fa432154704e2562",
+      "after_sha256": "a562f0560355d83f53eac493878ce4327524a05eddf51bac7502b55b3d6e6929"
+    },
+    {
+      "id": "building-opacity",
+      "category": "rendering-and-metadata",
+      "before_sha256": "e3e53f9e782b0df09b77c622c45f3276fead5553a8147231ddd37a2a6d50e2bc",
+      "after_sha256": "88f861b7065fcfb0e6d2e88c60bb08c834b01d773609590702a71c89e57d8766"
+    },
+    {
+      "id": "native-disconnect-without-socket",
+      "category": "connection-lifecycle",
+      "before_sha256": "9fc01e80db1c972b5ed6c59389c784f7fb1ef2b975586a30745ed749aa484320",
+      "after_sha256": "abaae9f01a7a3da99fff4b8eaf6f7643ecea32d5140db4206cdf266a94d7142f"
+    },
+    {
+      "id": "native-invalid-session-id-guard",
+      "category": "connection-lifecycle",
+      "before_sha256": "46c82b26223294fb8814eb9746973086a2a0198317c930691816ac4ab08df65f",
+      "after_sha256": "9764d982d1d708db68c3b69b3304134abec476e6d016444a677d68a8d8c50056"
+    },
+    {
+      "id": "ilm-native-player-nickname-id",
+      "category": "rendering-and-metadata",
+      "before_sha256": "8258a0de6973153a8df26eb575b1ee08c59b41f6d79e4608d78edd5c687a830a",
+      "after_sha256": "2accdc2a177eb2a048d1767a99c285b239ddfa7c675a8ce565a2fa04d54c69c4"
+    },
+    {
+      "id": "ilm-native-self-server-angle",
+      "category": "rendering-and-metadata",
+      "before_sha256": "1caf3053daf5d856e42d1015cdc56dfe8936810f33251d671e34bba44fa25732",
+      "after_sha256": "97fceba5bfed9fc284bd59fde0482d78a0dab30a9f9d001999372b3134245156"
+    },
+    {
+      "id": "ilm-native-initial-nickname-id",
+      "category": "rendering-and-metadata",
+      "before_sha256": "02d21a49188e1f116ef9c0a81d9663aa868982563c6e444402b1225d1cfc5729",
+      "after_sha256": "ed552bde76cc525e8ef8e7be75f34fd1de67ac698669aff9e11abcd3355173b9"
+    },
+    {
+      "id": "ilm-native-clan-colors",
+      "category": "rendering-and-metadata",
+      "before_sha256": "eb501698c3fe3f38965bb93e601e5091e919108c84eea75f1e23501e15bc3fb6",
+      "after_sha256": "6d566c0d41f6bb049aec31dfbb592f0f63d51e91648b8d53c2cea19bcc325715"
+    },
+    {
+      "id": "native-preserve-token-across-version-init",
+      "category": "connection-lifecycle",
+      "before_sha256": "fce13b1c6a32f44079963e19741808ebfcbb03d709b348352b6c4fba9c64b43a",
+      "after_sha256": "85c2ef357fe2db3b13fb00f1c0666044748aabf62825bc41980f4d6195970999"
+    },
+    {
+      "id": "ilm-native-synchronized-render",
+      "category": "rendering-and-metadata",
+      "before_sha256": "36b6120eb9512fb1df886e72615c471ce04902cff681f00677baa40236455b39",
+      "after_sha256": "65769ddc01e8394a7f74b55965fd5a7814b87b9a9cf22967645c73347413a785"
+    },
+    {
+      "id": "ilm-native-angle-bookkeeping-primary",
+      "category": "aim-transport",
+      "before_sha256": "90a2d30010725775f5015610f08cc58a9f0f196c548e99725b12d7d231afb713",
+      "after_sha256": "5add12f8b1e3d1e8a9b4a575fe9129b66b3839e6c9628f01d7a41cbfb94211cf"
+    },
+    {
+      "id": "ilm-native-angle-bookkeeping-secondary",
+      "category": "aim-transport",
+      "before_sha256": "12ff59c12f454eb6965ce101fcca284ff97a1b373ac9e8c657e3c83251dd20e5",
+      "after_sha256": "aa40fcb00437dec6f15fd5f6ca74a7873d561d87607b99895ba0052a02e39c70"
+    },
+    {
+      "id": "native-observe-connection-socket",
+      "category": "connection-lifecycle",
+      "before_sha256": "c4527bfec93def8c326066601203df5cc008343093acfaf5b465b2ec7b45e0fa",
+      "after_sha256": "978b93acc7afb9c5104191c5efc324ca7fbecdcdc5c67a4ea446cc5512ec4101"
+    },
+    {
+      "id": "native-guard-stale-preflight-response",
+      "category": "connection-lifecycle",
+      "before_sha256": "a80c06a74028177ff5a66919092b2dfc2d14ef11b06c9799cc2d6f04bd2a0159",
+      "after_sha256": "a1aecaaefc5504bad462d322c1121de3819721bb2b90934463c6027084510210"
+    },
+    {
+      "id": "native-observe-server-death",
+      "category": "connection-lifecycle",
+      "before_sha256": "a48384a3c205518c5487f63586ebdae3a7818dfca1b54c140bf9d955a382d773",
+      "after_sha256": "86f5d2c0fef1784b1a3b6cd3b5c322ea22a540cf76a58984ac92a87526a12b30"
+    },
+    {
+      "id": "jitter-native-fire-priority",
+      "category": "aim-transport",
+      "before_sha256": "a6686fce45d340619f47bcfa083e4c4d688d812a0eef3378b4b19e918d870077",
+      "after_sha256": "58174224ef7908b7ca407dc32d0331a458a2f2ad1c3c41b61ac8ba6b3395022f"
+    },
+    {
+      "id": "native-nickname-head-color",
+      "category": "rendering-and-metadata",
+      "before_sha256": "d9eee4c11f62eaf4169ab77dbdd379a10588c946640eb75c7fb64b9ecb2f107b",
+      "after_sha256": "0776062c10715f9cdcbf53ffb000f1b78f464b02506a98f776198162b08d8121"
+    },
+    {
+      "id": "native-nickname-leader-color",
+      "category": "rendering-and-metadata",
+      "before_sha256": "80cfd6be5cba2bf20674b4026f3d86535341a1c62f3aa82b0b97e933f1f63fc8",
+      "after_sha256": "32e4673edee9e3ea4a6c30f54b9f477728dfc6709388ce02d9bd16ba9e1a08f6"
+    },
+    {
+      "id": "native-player-list-leave",
+      "category": "rendering-and-metadata",
+      "before_sha256": "052d5f2499bcfc99742cf3669e62eded19fc15d8541e4a231dcc2596b7800f24",
+      "after_sha256": "9660e6a0b3215426f5ccd83dc8ce16319262debb159180881ed5eeada4db51e7"
+    },
+    {
+      "id": "native-play-preparation-recovery",
+      "category": "connection-lifecycle",
+      "before_sha256": "06944d6ce1666253ba152e1df4d60cda6ba9bdfe4e63fa60f71445f8c044b468",
+      "after_sha256": "9f76b23c1f9e8a927975f3b57ed73f57960acf163b881c517c0faed20b2a037c"
+    },
+    {
+      "id": "landmine-visibility",
+      "category": "rendering-and-metadata",
+      "before_sha256": "2dacc2f76af5abe15cc27c3b2337f39651c129817348c9e453d742cd59176887",
+      "after_sha256": "0c1fe1b51bd2f6069a18bf86aeffa683b2af6f9e5eb1e1733ceb5c66c8df6fbb"
+    },
+    {
+      "id": "wire-visibility",
+      "category": "rendering-and-metadata",
+      "before_sha256": "ad22246c4a0568e9f696e9b4d8e3d8aae80083f328022ee58d2f210b43f83cc9",
+      "after_sha256": "2c0a723f668a46d2e546fd660ddcc4a8e8fa56348990d072982a8955b24be216"
+    },
+    {
+      "id": "native-receive-timeout-diagnostics",
+      "category": "connection-lifecycle",
+      "before_sha256": "76c6e29f67abb45a78bc88ecdc9318650518a7ccd9b6135560fac3ac6dfe989e",
+      "after_sha256": "718dd9482166694a4bf7decb9711511c38c5fd0879dc24181a9d52b51d164a65"
+    },
+    {
+      "id": "native-entry-timeout-diagnostics",
+      "category": "connection-lifecycle",
+      "before_sha256": "ceb088682c7972b433276ff3ed43e13ecb9b3832870a18bda7b7e69af24b39d8",
+      "after_sha256": "3d4460beba49903d4a5db9a34e0079d30a9e6a2ad7ab38f50ca03b967f83e0a7"
+    },
+    {
+      "id": "native-integrity-signature-0",
+      "category": "integrity-signatures",
+      "before_sha256": "6dc5abfb9726d20d41cec795c11c945ccf5b8c96ed0287328f7485a96d57ff6a",
+      "after_sha256": "cd569a1417a4b30e9056c723745d1f28d624e9ab0451962b1284f13209a8d71c"
+    },
+    {
+      "id": "native-integrity-signature-1",
+      "category": "integrity-signatures",
+      "before_sha256": "f99e560a2d61e074bcaa000f4f5660963a54a1b56d015419df57d58fb81c3db1",
+      "after_sha256": "9aec078be3c8d36e43f1524d3aa22de9ecba1f83b0af180e60eb1509ed5e55e4"
+    },
+    {
+      "id": "native-integrity-signature-2",
+      "category": "integrity-signatures",
+      "before_sha256": "a11364684ddb50c8b30d06ddd3de86f693e7523eb9eab819b69377c5786643df",
+      "after_sha256": "c5539fa4f1a57488a68361d8714303c0bbce4ac2a176459aac8214e2e9f050e3"
+    },
+    {
+      "id": "message15-native-afterRelease",
+      "category": "aim-transport",
+      "before_sha256": "02ba6f51b3286a3670d05ad0ab0465f100be1596113e9d337ab3bf158d0c06be",
+      "after_sha256": "c5e84d0208caecbcda6bbe77424c615d2049ab4b3b4c74cbf96d860a70ca5b5d"
+    },
+    {
+      "id": "message15-native-onMove",
+      "category": "aim-transport",
+      "before_sha256": "dd5348f73231e3e27cdf0ff7a0fa1d8f847cce02d03ebf076ee2bf89823b0d8e",
+      "after_sha256": "a3c656d9727153280e2fcc82556b6806d652eba5a59af765cc0a5e12478f7027"
+    },
+    {
+      "id": "message15-handshake",
+      "category": "connection-lifecycle",
+      "before_sha256": "9558862da2ae24d548031a95a1e64f1fb0fd82d8816a22e127cff625c0169e9d",
+      "after_sha256": "ac7584b171d11748363cbd7fe3480c60c0e41c328d76f2e7d9397be601cbde59"
+    },
+    {
+      "id": "message15-session-start",
+      "category": "connection-lifecycle",
+      "before_sha256": "6597713306afc5291fc6aa2ef079cf2fa0278e237dd1fcf3b2a6abbb65748b1a",
+      "after_sha256": "d9df6b871ef5faf68dec335967c4e41445de5ac924501b42584ef26f7b158b09"
+    },
+    {
+      "id": "message15-native-aim-transport",
+      "category": "aim-transport",
+      "before_sha256": "240083c2dd2e0d4f927e758b934049626c07a94db1a6a62c28987a7736739760",
+      "after_sha256": "b8f05d71496c0fccd2da94f15d58d56c4edb928b0b659de044a723a97dc64400"
+    }
+  ]
+}
