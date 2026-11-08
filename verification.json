@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+  "output_sha256": "90033adeccfa55952c2effa9537ca4c7b8dfa1b2868e3eb2a05c04acee1f0ef9",
   "static_ast": "passed",
   "ilm_core": "four original classes and original tick",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -44,7 +44,12 @@
       "immediate-aim-numeric-settings",
       "native-aim-transport-preserves-idle",
       "verbatim-original-ilm-aim",
-      "ilm-native-lifecycle"
+      "ilm-native-lifecycle",
+      "bounded-fast-loot",
+      "session-mod-traffic-history",
+      "valid-live-aim-targets",
+      "bounded-auto-build",
+      "aim-session-history-reset"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -60,7 +65,9 @@
       "tests/door-click.test.cjs",
       "tests/automation-transport.test.cjs",
       "tests/native-aim-transport.test.cjs",
-      "tests/ilm-current.test.cjs"
+      "tests/ilm-current.test.cjs",
+      "tests/mod-traffic.test.cjs",
+      "tests/aim-validity.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -68,16 +75,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "5cd42aef3db72a4eff2600f7a9e7bfc34970a6e9817bac1351334932c65cbd83",
+    "mod/responsive.js": "b944069120ccd37013b84524784c5f6cb3e29a0e954b299b3880935b25f6ceb2",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
     "mod/ilm-aim.js": "478493aa80b1f5f8a4d0296c6d25d0a1da391a1ff3a9fe13d9774e0e889eb854"
   },
-  "mod_bundle_sha256": "99f8b8f0538bb49b497afeb614288c6ae3fe7419086ca5b06a8501303b227dd4",
+  "mod_bundle_sha256": "59ddda5367c4b8b77eb8ae644cad99b199993370044b608a4e4f661c14065489",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -110,7 +117,7 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "4ef2539d74de1c4d145b5404270d76151dbb9d360ceb6e70967de3bd619b4c4d",
+    "fingerprint": "09585ae5395526f0d81719d00005639a45916310fd84a5b5c515b6c89a03858d",
     "nativeSha256": "e1799132e4369cde75e8b153a9629f96e959e4053991fa5d33df3b9c3feaafdf"
   },
   "native": {
@@ -120,7 +127,9 @@
       "scenes": 48,
       "comparison_points": 2400,
       "exact_states": true,
-      "exact_normalized_packets": true,
+      "exact_normalized_admitted_packets": true,
+      "valid_target_admission": true,
+      "session_target_reset": true,
       "original_timer_ms": 50,
       "whole_auto_fire_cycle": true,
       "small_queue_admission": true,
@@ -182,7 +191,12 @@
     "full_player_list_and_native_lifecycle": true,
     "stable_frame_entity_records": true,
     "native_fast_loot_cadence": true,
+    "bounded_fast_loot": true,
+    "session_mod_traffic_history": true,
     "native_autobuild_cursor_preview": true,
+    "bounded_auto_build": true,
+    "aim_session_history_reset": true,
+    "valid_live_aim_targets": true,
     "native_rejoin_identity": true,
     "native_ad_failure_recovery": true,
     "native_death_observation": true,
@@ -411,7 +425,7 @@
           "x": -1,
           "y": -1
         },
-        "native_angle": 225,
+        "native_angle": 27,
         "saved": 120
       }
     ]
@@ -424,12 +438,12 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-08T11:49:26.578Z",
+  "finished_at": "2026-11-08T13:10:49.917Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "90033adeccfa55952c2effa9537ca4c7b8dfa1b2868e3eb2a05c04acee1f0ef9",
+      "browser_version": "154.0.8037.57",
       "native": {
         "ilm_aim": {
           "status": "passed",
@@ -437,7 +451,9 @@
           "scenes": 48,
           "comparison_points": 2400,
           "exact_states": true,
-          "exact_normalized_packets": true,
+          "exact_normalized_admitted_packets": true,
+          "valid_target_admission": true,
+          "session_target_reset": true,
           "original_timer_ms": 50,
           "whole_auto_fire_cycle": true,
           "small_queue_admission": true,
@@ -499,7 +515,12 @@
         "full_player_list_and_native_lifecycle": true,
         "stable_frame_entity_records": true,
         "native_fast_loot_cadence": true,
+        "bounded_fast_loot": true,
+        "session_mod_traffic_history": true,
         "native_autobuild_cursor_preview": true,
+        "bounded_auto_build": true,
+        "aim_session_history_reset": true,
+        "valid_live_aim_targets": true,
         "native_rejoin_identity": true,
         "native_ad_failure_recovery": true,
         "native_death_observation": true,
@@ -763,7 +784,7 @@
               "x": -1,
               "y": -1
             },
-            "native_angle": 225,
+            "native_angle": 27,
             "saved": 120
           }
         ]
@@ -771,7 +792,7 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+      "output_sha256": "90033adeccfa55952c2effa9537ca4c7b8dfa1b2868e3eb2a05c04acee1f0ef9",
       "browser_version": "153.0",
       "native": {
         "ilm_aim": {
@@ -780,7 +801,9 @@
           "scenes": 48,
           "comparison_points": 2400,
           "exact_states": true,
-          "exact_normalized_packets": true,
+          "exact_normalized_admitted_packets": true,
+          "valid_target_admission": true,
+          "session_target_reset": true,
           "original_timer_ms": 50,
           "whole_auto_fire_cycle": true,
           "small_queue_admission": true,
@@ -842,7 +865,12 @@
         "full_player_list_and_native_lifecycle": true,
         "stable_frame_entity_records": true,
         "native_fast_loot_cadence": true,
+        "bounded_fast_loot": true,
+        "session_mod_traffic_history": true,
         "native_autobuild_cursor_preview": true,
+        "bounded_auto_build": true,
+        "aim_session_history_reset": true,
+        "valid_live_aim_targets": true,
         "native_rejoin_identity": true,
         "native_ad_failure_recovery": true,
         "native_death_observation": true,
@@ -1106,7 +1134,7 @@
               "x": -1,
               "y": -1
             },
-            "native_angle": 225,
+            "native_angle": 27,
             "saved": 120
           }
         ]
@@ -1125,13 +1153,15 @@
       "tests/door-click.test.cjs",
       "tests/automation-transport.test.cjs",
       "tests/native-aim-transport.test.cjs",
-      "tests/ilm-current.test.cjs"
+      "tests/ilm-current.test.cjs",
+      "tests/mod-traffic.test.cjs",
+      "tests/aim-validity.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 153,
-    "python_tests": 55
+    "node_tests": 166,
+    "python_tests": 56
   }
 }
