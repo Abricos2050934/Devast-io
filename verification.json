@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "90033adeccfa55952c2effa9537ca4c7b8dfa1b2868e3eb2a05c04acee1f0ef9",
+  "output_sha256": "fe776a3a8d37e01a0ec991cd68f65764474a768580f8338759e28c2e572d66fd",
   "static_ast": "passed",
   "ilm_core": "four original classes and original tick",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -49,7 +49,9 @@
       "session-mod-traffic-history",
       "valid-live-aim-targets",
       "bounded-auto-build",
-      "aim-session-history-reset"
+      "aim-session-history-reset",
+      "ilm-native-mouse-and-server-angle-parity",
+      "ilm-pointer-ownership-between-ticks"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -67,7 +69,8 @@
       "tests/native-aim-transport.test.cjs",
       "tests/ilm-current.test.cjs",
       "tests/mod-traffic.test.cjs",
-      "tests/aim-validity.test.cjs"
+      "tests/aim-validity.test.cjs",
+      "tests/ilm-native-pipeline.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -75,16 +78,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "b944069120ccd37013b84524784c5f6cb3e29a0e954b299b3880935b25f6ceb2",
+    "mod/responsive.js": "914941ae6d5a6931fc594d01d374600e6a221ca339b3cc5bf8a40ad6b932295d",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
     "mod/ilm-aim.js": "478493aa80b1f5f8a4d0296c6d25d0a1da391a1ff3a9fe13d9774e0e889eb854"
   },
-  "mod_bundle_sha256": "59ddda5367c4b8b77eb8ae644cad99b199993370044b608a4e4f661c14065489",
+  "mod_bundle_sha256": "3ac6d43252a41c5e27f4e1e0fbdb66b8ade23d630bbe64cedd406ae7b845a4f8",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "154.0.8037.57",
+  "browser_version": "156.0.8078.0",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -117,8 +120,8 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "09585ae5395526f0d81719d00005639a45916310fd84a5b5c515b6c89a03858d",
-    "nativeSha256": "e1799132e4369cde75e8b153a9629f96e959e4053991fa5d33df3b9c3feaafdf"
+    "fingerprint": "4c86c8f66a2ed29aea861873c331cb4df924ba2ad3a867d0c0588b5570ac09f2",
+    "nativeSha256": "33e27585b7e44a9ca4cd0cd7976040e9d712c3cc8b05fcd0c6e036118badccb9"
   },
   "native": {
     "ilm_aim": {
@@ -134,7 +137,25 @@
       "whole_auto_fire_cycle": true,
       "small_queue_admission": true,
       "native_direction_ownership": true,
+      "source_pointer_ownership_on_target_loss": true,
       "server_death_sends_no_commands": true
+    },
+    "ilm_mouse": {
+      "status": "passed",
+      "cases": 18,
+      "source_camera_coordinates": true,
+      "exact_target_and_sent_angle": true,
+      "disabled_fov_retains_coordinates": true
+    },
+    "ilm_server_angle": {
+      "status": "passed",
+      "cases": 72,
+      "frames": 288,
+      "native_player_lerp": 0.15,
+      "zero_position_sentinels_ignored": true,
+      "actual_server_packet_angle": true,
+      "source_wrap_and_interpolation": true,
+      "manual_fire_keeps_source_direction": true
     },
     "native_aim_transport": {
       "status": "passed",
@@ -438,12 +459,12 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-08T13:10:49.917Z",
+  "finished_at": "2026-11-08T14:58:11.902Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "90033adeccfa55952c2effa9537ca4c7b8dfa1b2868e3eb2a05c04acee1f0ef9",
-      "browser_version": "154.0.8037.57",
+      "output_sha256": "fe776a3a8d37e01a0ec991cd68f65764474a768580f8338759e28c2e572d66fd",
+      "browser_version": "156.0.8078.0",
       "native": {
         "ilm_aim": {
           "status": "passed",
@@ -458,7 +479,25 @@
           "whole_auto_fire_cycle": true,
           "small_queue_admission": true,
           "native_direction_ownership": true,
+          "source_pointer_ownership_on_target_loss": true,
           "server_death_sends_no_commands": true
+        },
+        "ilm_mouse": {
+          "status": "passed",
+          "cases": 18,
+          "source_camera_coordinates": true,
+          "exact_target_and_sent_angle": true,
+          "disabled_fov_retains_coordinates": true
+        },
+        "ilm_server_angle": {
+          "status": "passed",
+          "cases": 72,
+          "frames": 288,
+          "native_player_lerp": 0.15,
+          "zero_position_sentinels_ignored": true,
+          "actual_server_packet_angle": true,
+          "source_wrap_and_interpolation": true,
+          "manual_fire_keeps_source_direction": true
         },
         "native_aim_transport": {
           "status": "passed",
@@ -792,7 +831,7 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "90033adeccfa55952c2effa9537ca4c7b8dfa1b2868e3eb2a05c04acee1f0ef9",
+      "output_sha256": "fe776a3a8d37e01a0ec991cd68f65764474a768580f8338759e28c2e572d66fd",
       "browser_version": "153.0",
       "native": {
         "ilm_aim": {
@@ -808,7 +847,25 @@
           "whole_auto_fire_cycle": true,
           "small_queue_admission": true,
           "native_direction_ownership": true,
+          "source_pointer_ownership_on_target_loss": true,
           "server_death_sends_no_commands": true
+        },
+        "ilm_mouse": {
+          "status": "passed",
+          "cases": 18,
+          "source_camera_coordinates": true,
+          "exact_target_and_sent_angle": true,
+          "disabled_fov_retains_coordinates": true
+        },
+        "ilm_server_angle": {
+          "status": "passed",
+          "cases": 72,
+          "frames": 288,
+          "native_player_lerp": 0.15,
+          "zero_position_sentinels_ignored": true,
+          "actual_server_packet_angle": true,
+          "source_wrap_and_interpolation": true,
+          "manual_fire_keeps_source_direction": true
         },
         "native_aim_transport": {
           "status": "passed",
@@ -1155,13 +1212,14 @@
       "tests/native-aim-transport.test.cjs",
       "tests/ilm-current.test.cjs",
       "tests/mod-traffic.test.cjs",
-      "tests/aim-validity.test.cjs"
+      "tests/aim-validity.test.cjs",
+      "tests/ilm-native-pipeline.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 166,
-    "python_tests": 56
+    "node_tests": 183,
+    "python_tests": 58
   }
 }
