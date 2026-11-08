@@ -9,6 +9,7 @@ import subprocess
 import tempfile
 import zipfile
 import io
+import importlib.util
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -153,7 +154,18 @@ verification.json содержит проверенную ревизию мод�
     entries['Devast-io-Resource-Override.zip']=json_buffer.getvalue()
     return entries
 
-def publish(root, entries, branch='updates', remote='origin'):
+def check_publication_source(root, meta):
+    spec = importlib.util.spec_from_file_location('publication_updater', Path(__file__).with_name('update_client.py'))
+    updater = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(updater)
+    config = updater.load_config(Path(root) / 'auto-update.json')
+    receipt = updater.check_source(config, meta['source_url'], meta['raw_sha256'],
+        updater.Fetcher(config, Path(root) / config['state_dir']), meta.get('source_candidates'))
+    if updater.fingerprint(Path(root)) != meta['inputs_sha256']:
+        raise ValueError('Build inputs changed before publication')
+    return receipt
+
+def publish(root, entries, branch='updates', remote='origin', before_push=None):
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9/_-]*', branch) or '..' in branch: raise ValueError('Invalid branch')
     ref = 'refs/heads/' + branch
     def git(*args, env=None, data=None):
@@ -171,6 +183,7 @@ def publish(root, entries, branch='updates', remote='origin'):
             blob = git('hash-object', '-w', '--stdin', data=data)
             git('update-index', '--add', '--cacheinfo', '100644', blob, name, env=env)
         tree = git('write-tree', env=env)
+        if before_push is not None: before_push()
         if parent and tree == git('rev-parse', parent + '^{tree}'): return parent
         args = ['-c', 'user.name=Devast updater', '-c', 'user.email=updater@users.noreply.github.com', 'commit-tree', tree]
         if parent: args += ['-p', parent]
@@ -193,4 +206,6 @@ if __name__ == '__main__':
             target = args.dry_run / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(data)
         print(json.dumps({'status': 'prepared', 'files': list(files)}))
     else:
-        print(json.dumps({'status': 'published', 'commit': publish(ROOT, files, args.branch), 'branch': args.branch}))
+        source_check = {}
+        def check(): source_check.update(check_publication_source(ROOT, json.loads(files['current.json'])))
+        print(json.dumps({'status': 'published', 'commit': publish(ROOT, files, args.branch, before_push=check), 'branch': args.branch, 'source_check': source_check}))

@@ -86,6 +86,40 @@ class UpdaterTests(unittest.TestCase):
         self.responses['https://devast.io/js/client.js?v=1'] = b'new native'
         with self.assertRaisesRegex(u.UpdateError, 'inputs changed'): self.bot.once()
         self.assertEqual(self.bot.current(), before)
+    def test_script_url_changed_during_build_is_not_activated(self):
+        self.bot.once(); before = self.bot.current(); original = self.bot.build
+        def changing(root, work, url):
+            result = original(root, work, url)
+            self.responses['https://devast.io/'] = b'<script src="/js/new.js"></script>'
+            self.responses['https://devast.io/js/new.js'] = b'latest source'
+            return result
+        self.bot.build = changing
+        self.responses['https://devast.io/js/client.js?v=1'] = b'new native before the build'
+        with self.assertRaisesRegex(u.UpdateError, 'script list changed'): self.bot.once()
+        self.assertEqual(self.bot.current(), before)
+
+    def test_script_bytes_changed_during_build_are_not_activated(self):
+        self.bot.once(); before = self.bot.current(); original = self.bot.build
+        def changing(root, work, url):
+            result = original(root, work, url)
+            self.responses[url] = b'newer bytes after the build'
+            return result
+        self.bot.build = changing
+        self.responses['https://devast.io/js/client.js?v=1'] = b'new native before the build'
+        with self.assertRaisesRegex(u.UpdateError, 'script bytes changed'): self.bot.once()
+        self.assertEqual(self.bot.current(), before)
+
+    def test_failed_source_recheck_does_not_activate_a_validated_candidate(self):
+        self.bot.once(); before = self.bot.current(); original = self.bot.build
+        def changing(root, work, url):
+            result = original(root, work, url)
+            self.responses['https://devast.io/'] = u.UpdateError('freshness HTTP 503')
+            return result
+        self.bot.build = changing
+        self.responses['https://devast.io/js/client.js?v=1'] = b'new native before the build'
+        with self.assertRaisesRegex(u.UpdateError, 'freshness HTTP 503'): self.bot.once()
+        self.assertEqual(self.bot.current(), before)
+
     def test_multiple_compatible_clients_are_rejected(self):
         self.bot.once(); before = self.bot.current()
         self.responses['https://devast.io/'] += b'<script src="/js/other.js"></script>'
@@ -151,6 +185,20 @@ class DownloadTests(unittest.TestCase):
         self.assertEqual(self.fetch('https://devast.io/js/client.js', 50), b'client')
         request = self.fetch.opener.open.call_args.args[0]
         self.assertEqual(request.get_header('If-none-match'), 'version1')
+    def test_html_is_unconditional_and_must_not_accept_an_unexpected_304(self):
+        from unittest.mock import Mock
+        url = 'https://devast.io/'
+        self.config['page_url'] = url
+        self.fetch.opener = Mock()
+        self.fetch.opener.open.side_effect = [self.response(b'old html'), self.response(b'fresh html'), urllib.error.HTTPError(url, 304, '', {}, None)]
+        self.assertEqual(self.fetch(url, 50), b'old html')
+        self.assertEqual(self.fetch(url, 50), b'fresh html')
+        request = self.fetch.opener.open.call_args.args[0]
+        self.assertIsNone(request.get_header('If-none-match'))
+        self.assertIsNone(request.get_header('If-modified-since'))
+        self.assertEqual(request.get_header('Cache-control'), 'no-cache')
+        with self.assertRaisesRegex(u.UpdateError, 'Unexpected 304'): self.fetch(url, 50)
+
     def test_corrupt_cache_body_cannot_be_accepted_on_304(self):
         from unittest.mock import Mock
         self.fetch.opener = Mock(); self.fetch.opener.open.return_value = self.response()

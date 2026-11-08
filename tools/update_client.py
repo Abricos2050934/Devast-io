@@ -112,9 +112,11 @@ class Fetcher:
         meta, body = self.cache / (key + '.json'), self.cache / (key + '.body')
         try: previous = read_json(meta) if meta.exists() else {}
         except (OSError, ValueError): previous = {}
-        headers = {'User-Agent': 'Mozilla/5.0 DevastClientUpdater/1.0', 'Accept-Encoding': 'identity'}
+        headers = {'User-Agent': 'Mozilla/5.0 DevastClientUpdater/1.0', 'Accept-Encoding': 'identity',
+                   'Cache-Control': 'no-cache', 'Pragma': 'no-cache'}
+        fresh_page = url == self.config.get('page_url')
         valid_cache = body.exists() and body.stat().st_size <= limit and digest(body.read_bytes()) == previous.get('sha256')
-        if valid_cache:
+        if valid_cache and not fresh_page:
             if previous.get('etag'): headers['If-None-Match'] = previous['etag']
             if previous.get('last_modified'): headers['If-Modified-Since'] = previous['last_modified']
         for attempt in range(self.config['retries'] + 1):
@@ -130,6 +132,7 @@ class Fetcher:
                     return data
             except urllib.error.HTTPError as error:
                 if error.code == 304:
+                    if fresh_page: raise UpdateError('Unexpected 304 for an unconditional page request') from error
                     if not valid_cache: raise UpdateError('304 without a verified cached body') from error
                     return body.read_bytes()
                 if error.code not in (429, 500, 502, 503, 504) or attempt == self.config['retries']:
@@ -138,6 +141,17 @@ class Fetcher:
                 if attempt == self.config['retries']:
                     raise UpdateError('Source network failure: ' + str(error.reason if isinstance(error, urllib.error.URLError) else error)) from error
             time.sleep(min(2 ** attempt, 4))
+
+def check_source(config, url, raw_sha, fetch, expected_urls=None):
+    """Revalidate the source after expensive checks and before a remote write."""
+    page_url = validate_url(config['page_url'], config)
+    html = fetch(page_url, config['max_html_bytes'])
+    urls = discover(html, page_url, config)
+    if urls != (expected_urls if expected_urls is not None else [url]):
+        raise UpdateError('Game script list changed during validation; release is stale')
+    if digest(fetch(url, config['max_script_bytes'])) != raw_sha:
+        raise UpdateError('Game script bytes changed during validation; release is stale')
+    return {'checked_at': now(), 'page_sha256': digest(html), 'source_url': url, 'raw_sha256': raw_sha}
 
 @contextmanager
 def locked(state):
@@ -265,9 +279,11 @@ class Updater:
                 state, url, raw_sha, work = next(iter(unique.values()))
                 if fingerprint(self.root) != inputs:
                     raise UpdateError('Build inputs changed during update; candidate was not activated')
+                source_check = check_source(self.config, url, raw_sha, self.fetch, urls)
                 if state == 'unchanged':
-                    if url != existing['source_url']:
+                    if url != existing['source_url'] or existing.get('source_candidates') != urls:
                         existing['source_url'] = url
+                        existing['source_candidates'] = urls
                         atomic_json(self.output / 'current.json', existing)
                     selected = existing
                 else:
@@ -281,6 +297,7 @@ class Updater:
                     selected = {'schema': SCHEMA, 'release': release, 'raw_sha256': raw_sha, 'inputs_sha256': inputs,
                         'output_sha256': digest((temporary / 'game.modded.js').read_bytes()),
                         'script': 'versions/' + release + '/game.modded.js', 'source_url': url,
+                        'source_candidates': urls,
                         'activated_at': now(), 'previous_release': existing['release'] if existing else None,
                         'validation': 'passed', 'live_server': 'not_tested', 'publication': 'local_only'}
                     atomic_json(temporary / 'release.json', selected)
@@ -291,7 +308,7 @@ class Updater:
                     else: os.replace(temporary, destination)
                     # Single commit point. All files in the pointed-to version already exist.
                     atomic_json(self.output / 'current.json', selected)
-                attempt.update(state=state, finished_at=now(), release=selected['release'], output_sha256=selected['output_sha256'])
+                attempt.update(state=state, finished_at=now(), release=selected['release'], output_sha256=selected['output_sha256'], source_check=source_check)
                 atomic_json(self.output / 'status.json', attempt)
                 return attempt
             except Exception as error:

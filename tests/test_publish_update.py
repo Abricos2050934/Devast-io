@@ -60,6 +60,22 @@ class PublicationTests(unittest.TestCase):
   self.assertEqual(old,b'first')
   self.assertEqual(p.publish(self.root,{'game.modded.js':b'second','versions/second/game.modded.js':b'second'}),second)
 
+ def test_last_source_check_runs_before_remote_write_and_can_reject_an_unchanged_tree(self):
+  import subprocess
+  remote=self.root/'source-guard.git'
+  subprocess.run(['git','init','--quiet','--bare',str(remote)],check=True)
+  subprocess.run(['git','init','--quiet',str(self.root)],check=True)
+  subprocess.run(['git','remote','add','origin',str(remote)],cwd=self.root,check=True)
+  first=p.publish(self.root,{'game.modded.js':b'old'})
+  checks=[]
+  def reject():
+   checks.append(True)
+   raise ValueError('source changed before push')
+  for body in [b'new',b'old']:
+   with self.assertRaisesRegex(ValueError,'source changed'):p.publish(self.root,{'game.modded.js':body},before_push=reject)
+   self.assertEqual(subprocess.check_output(['git','rev-parse','refs/heads/updates'],cwd=remote).decode().strip(),first)
+  self.assertEqual(len(checks),2)
+
  def test_changed_override_after_validation_cannot_publish(self):
   (self.root/'resource-override/Devast-io-GitHub-Resource-Override.json').write_text('{}')
   with self.assertRaisesRegex(ValueError,'Resource Override'):p.artifacts(self.root,self.out)
