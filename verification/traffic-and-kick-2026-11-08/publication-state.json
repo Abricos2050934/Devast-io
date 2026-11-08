@@ -1,0 +1,12 @@
+{
+  "status": "blocked",
+  "checked_at_moscow": "2026-11-08T15:24:15.948401+03:00",
+  "source_fix_commit": "3f8a27e9ab9ec2998aef38b85932c96b74834af0",
+  "last_confirmed_remote_main": "9d4b249a29dc55fe426dd7de95216f401a91834e",
+  "prepared_output_sha256": "7518269520b36c09689f3e82f681279f73f784edaefb37096e53d8cb56a7e3ed",
+  "github_push": "HTTP 503 upstream connect error or disconnect/reset before headers. reset reason: remote connection failure",
+  "fresh_updater": "HTTP 503 for HTML and native JS",
+  "public_autoupdate_replaced": false,
+  "reason_not_proven": "No server-side cause supplied in incoming death packet. Full local validation on the saved known native version passed.",
+  "scope": "Network failure observed inside and outside the sandbox. A cached ls-remote response is not fresh connectivity evidence; no-cache probe failed."
+}
