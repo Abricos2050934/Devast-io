@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "checked_at_moscow": "2026-11-08T16:16:46.262043+03:00",
+  "release": "95611055e74366c6a18a2d1863d90af8230da0bdab3269d0764a8c08d5ee7981",
+  "output_sha256": "90033adeccfa55952c2effa9537ca4c7b8dfa1b2868e3eb2a05c04acee1f0ef9",
+  "published_commit": "b5eb5bedbdeb1736b6c231dc7d958210d1c0d3a2",
+  "files": {
+    "loader_script": {
+      "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/game.modded.js?t=1794143806261",
+      "http_status": 200,
+      "bytes": 4442631,
+      "sha256": "90033adeccfa55952c2effa9537ca4c7b8dfa1b2868e3eb2a05c04acee1f0ef9"
+    },
+    "current": {
+      "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/refs/heads/updates/current.json",
+      "http_status": 200,
+      "bytes": 937,
+      "sha256": "4cf0a360e93ab16ae427bab279e16fe81799bd16f9ec4c18811346094e4c384f"
+    },
+    "verification": {
+      "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/refs/heads/updates/verification.json",
+      "http_status": 200,
+      "bytes": 32197,
+      "sha256": "6c129a0275e4fe7b5ace7b8cdfd1fb6406084c5bf5b0a38453b37d26dbb9345a",
+      "browsers": {
+        "chromium": {
+          "valid_live_aim_targets": true,
+          "bounded_auto_build": true,
+          "aim_session_history_reset": true,
+          "bounded_fast_loot": true,
+          "session_mod_traffic_history": true
+        },
+        "firefox": {
+          "valid_live_aim_targets": true,
+          "bounded_auto_build": true,
+          "aim_session_history_reset": true,
+          "bounded_fast_loot": true,
+          "session_mod_traffic_history": true
+        }
+      }
+    },
+    "immutable_script": {
+      "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/b5eb5bedbdeb1736b6c231dc7d958210d1c0d3a2/game.modded.js",
+      "http_status": 200,
+      "bytes": 4442631,
+      "sha256": "90033adeccfa55952c2effa9537ca4c7b8dfa1b2868e3eb2a05c04acee1f0ef9"
+    }
+  }
+}
