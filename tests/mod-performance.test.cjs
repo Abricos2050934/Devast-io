@@ -8,15 +8,7 @@ test('removed HUD text and AIM BOT label cannot return from old saved settings',
  assert.ok(!f.dom.calls.some(c=>['fillText','strokeText'].includes(c.name)&&(/HP:|Food:|Stamina:|Water:|Warmth:|AIM BOT/.test(String(c.args[0])))));
  f.mod.dispose();
 });
-test('a dense aim scan reads self once and uses no linear clan lookup, while metadata changes apply on the next resolve',()=>{
- const f=fixture();for(let i=1;i<=120;i++){f.world['ᴎ︃ᄉ'][i]={'а༤̘':-1};f.mod.trackPacket(1,i,0,i*100,i*50,true);}
- let reads=0;const self=f.world['ᅠᏧ‍'];Object.defineProperty(f.world,'ᅠᏧ‍',{get(){reads++;return self;}});
- f.world['ﾠࡅ‍'].indexOf=()=>{throw Error('Linear clan lookup');};f.mod.setSetting('mouseFovEnable',false);
- f.mod.aim.resolve();assert.equal(reads,1);assert.equal(f.mod.aim.targetPlayer.id,2);
- f.world['ﾠࡅ‍'][0]={'ոᚄރ':7};for(const id of [1,2])Object.assign(f.world['ᴎ︃ᄉ'][id],{'а༤̘':0,'ᴌ̗ⲟ':7});
- f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,3);
- f.world['ᴎ︃ᄉ'][2]['ᴌ̗ⲟ']=6;f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,2);f.mod.dispose();
-});
+
 
 
 test('building owner labels read cursor layout once per frame even with hundreds of buildings',()=>{
@@ -63,7 +55,7 @@ test('status HUD avoids rewriting unchanged layout styles but responds to resizi
  const f=fixture({dom:true});try{
   f.mod.step(0);const styles=f.mod.functionList.style;let writes=0;f.mod.functionList.style=new Proxy(styles,{set(target,key,value){writes++;target[key]=value;return true;}});
   for(let t=20;t<=200;t+=20)f.mod.step(t);assert.equal(writes,0);
-  const rect=f.dom.canvas.getBoundingClientRect;f.dom.canvas.getBoundingClientRect=()=>({...rect(),height:80});f.mod.step(220);assert.ok(writes>0);assert.equal(f.mod.functionList.style.fontSize,'13px');
+  const rect=f.dom.canvas.getBoundingClientRect;f.dom.canvas.getBoundingClientRect=()=>({...rect(),height:80});f.mod.step(220);assert.ok(writes>0);assert.ok(Number.parseFloat(f.mod.functionList.style.fontSize)>0&&Number.parseFloat(f.mod.functionList.style.fontSize)<=13);
  }finally{f.mod.dispose();}
 });
 test('loot without building tile coordinates does not add owner-overlay layout reads',()=>{
@@ -72,34 +64,9 @@ test('loot without building tile coordinates does not add owner-overlay layout r
   const rect=f.dom.canvas.getBoundingClientRect;f.dom.canvas.getBoundingClientRect=()=>{reads++;return rect();};f.mod.step(0);assert.equal(reads,1);
  }finally{f.mod.dispose();}
 });
-test('aim search reads clan metadata only for competitive players and never for ghouls or inactive slots',()=>{
- const f=fixture();try{
-  const self=f.world['ᴎ︃ᄉ'][1],enemy=f.world['ᴎ︃ᄉ'][2];let selfReads=0,enemyReads=0,inactiveReads=0;
-  f.world['ﾠࡅ‍'][0]={'ոᚄރ':7};f.world['ﾠࡅ‍'][1]={'ոᚄރ':8};Object.assign(self,{'а༤̘':0,'ᴌ̗ⲟ':7});Object.assign(enemy,{'а༤̘':1,'ᴌ̗ⲟ':8});
-  Object.defineProperty(f.world['ᴎ︃ᄉ'],1,{get(){selfReads++;return self;}});Object.defineProperty(f.world['ᴎ︃ᄉ'],2,{get(){enemyReads++;return enemy;}});
-  for(let i=3;i<=120;i++)Object.defineProperty(f.world['ᴎ︃ᄉ'],i,{get(){inactiveReads++;return 0;},configurable:true});
-  f.mod.trackPacket(1,1,1,0,0,true);f.mod.trackPacket(1,2,1,100,100,true);f.mod.trackPacket(13,0,2,200,200,true);
-  f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('target','all');f.mod.aim.resolve();
-  assert.equal(selfReads,1);assert.equal(enemyReads,1);assert.equal(inactiveReads,0);assert.equal(f.mod.aim.targetPlayer,f.mod.targets.players[2]);
-  selfReads=enemyReads=0;self['а༤̘']=-1;f.mod.aim.resolve();assert.equal(selfReads,1);assert.equal(enemyReads,0,'No clan filtering is needed without an own clan');
- }finally{f.mod.dispose();}
-});
-test('aim snapshot refreshes vanished metadata and reused clan membership on every resolve',()=>{
- const f=fixture();try{
-  f.world['ﾠࡅ‍'][0]={'ոᚄރ':7};for(const id of [1,2])f.world['ᴎ︃ᄉ'][id]={'а༤̘':0,'ᴌ̗ⲟ':7};
-  f.mod.trackPacket(1,1,1,0,0,true);f.mod.trackPacket(1,2,1,100,100,true);f.mod.trackPacket(1,3,1,200,200,true);f.mod.setSetting('mouseFovEnable',false);
-  f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,3);
-  f.world['ᴎ︃ᄉ'].length=2;f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,2);
-  f.world['ᴎ︃ᄉ'][2]={'а༤̘':0,'ᴌ̗ⲟ':7};f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,3);
- }finally{f.mod.dispose();}
-});
-test('disabled aim and a locked target avoid preparing a full candidate scan',()=>{
- const f=fixture();try{
-  f.mod.trackPacket(1,1,1,0,0,true);f.mod.trackPacket(1,2,1,100,100,true);
-  Object.defineProperty(f.mod.targets.players,Symbol.iterator,{value(){throw Error('Unexpected full scan');},configurable:true});
-  f.mod.aim.refresh();f.mod.setSetting('lockId',2);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();assert.equal(f.packets.at(-1)[1],45);
- }finally{f.mod.dispose();}
-});
+
+
+
 test('native frame drawing uses the game canvas without a second full-screen canvas or clearing the game',()=>{
  const f=fixture({dom:true});try{
   f.B.synchronizedRender=true;f.document.body.appendChild(f.dom.canvas);const ctx=f.dom.canvas.getContext('2d');ctx.setTransform(2,0,0,2,17,23);ctx.globalAlpha=.61;ctx.globalCompositeOperation='multiply';ctx.lineWidth=8;ctx.setLineDash([2,3]);

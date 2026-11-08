@@ -1,0 +1,178 @@
+{
+  "release": "cf1ce5e63cbf27815fdafa8ff19075e856e715dadf33d8d3d7007c8f597f74bc",
+  "output_sha256": "825c2fca0316a7428303963ce8ce57d7ddf34d2b19debb6d8962f0b7c251c783",
+  "raw_sha256": "74720aca77141a313015167051e60c2dfc566310202a5b41d4445258e4937f2e",
+  "source_url": "https://devast.io/js/qYOh6D5MhvXhWnq.js",
+  "inputs_sha256": "f45f71cebc304a3bf23133306ac8af98cd772c27f64fa39e09238fbe5d35c0f4",
+  "schema": 1,
+  "date_moscow": "2026-11-08",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 155,
+    "python_tests": 54
+  },
+  "candidate_tests": {
+    "status": "passed",
+    "tests": 100
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "browser_version": "154.0.8037.57",
+      "output_sha256": "825c2fca0316a7428303963ce8ce57d7ddf34d2b19debb6d8962f0b7c251c783",
+      "untitled_aim": {
+        "status": "passed",
+        "source_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+        "scenes": 32,
+        "comparison_points": 1984,
+        "exact_tick_packets": true,
+        "source_prediction_and_lines": true,
+        "per_weapon_and_trigonometric": true,
+        "instant_target_updates": true,
+        "native_lifecycle": true,
+        "native_direction_transforms": true,
+        "native_movement_hooks": true,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "server_death_sends_no_commands": true,
+        "self_prediction": true,
+        "spin_jitter_anti_aim": true
+      },
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "physical_numeric": {
+        "status": "passed",
+        "engine": "untitled-v4",
+        "physical_text_entry": true,
+        "slider_drag": true,
+        "native_angle_changes": true,
+        "saved_after_reload": {
+          "distanceCoefficient": 974.2539597315437,
+          "offsetCoefficient": 2,
+          "bulletSpeedCoefficient": 20,
+          "mouseFov": 50,
+          "lockId": 120,
+          "jitterOffset": 180,
+          "smoothLineMs": 200,
+          "aimTickRate": 50
+        }
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "browser_version": "153.0",
+      "output_sha256": "825c2fca0316a7428303963ce8ce57d7ddf34d2b19debb6d8962f0b7c251c783",
+      "untitled_aim": {
+        "status": "passed",
+        "source_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+        "scenes": 32,
+        "comparison_points": 1984,
+        "exact_tick_packets": true,
+        "source_prediction_and_lines": true,
+        "per_weapon_and_trigonometric": true,
+        "instant_target_updates": true,
+        "native_lifecycle": true,
+        "native_direction_transforms": true,
+        "native_movement_hooks": true,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "server_death_sends_no_commands": true,
+        "self_prediction": true,
+        "spin_jitter_anti_aim": true
+      },
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "physical_numeric": {
+        "status": "passed",
+        "engine": "untitled-v4",
+        "physical_text_entry": true,
+        "slider_drag": true,
+        "native_angle_changes": true,
+        "saved_after_reload": {
+          "distanceCoefficient": 974.1135371968898,
+          "offsetCoefficient": 2,
+          "bulletSpeedCoefficient": 20,
+          "mouseFov": 50,
+          "lockId": 120,
+          "jitterOffset": 180,
+          "smoothLineMs": 200,
+          "aimTickRate": 50
+        }
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    }
+  },
+  "live_server": "not_tested"
+}

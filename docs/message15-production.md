@@ -1,3 +1,5 @@
+> Историческое описание: 8 ноября 2026 года Message15 заменён на [Untitled v4](untitled-production.md).
+
 # Message15 in the main client
 
 The main client now uses the aim engine from the previously delivered

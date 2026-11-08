@@ -14,30 +14,6 @@ function __installDevastMod(B) {
       this.AutoBuiledEnabled = false;
       this.AntiKickEnabled = false;
       this.HidePlayerLabels = true;
-      this.DodgePlayerEnabled = false;
-      this.DodgeDetectRadius = 300;
-      this.hideAimbotAngle = false;
-      this.ShowAimTrace = false;
-      this.antiAimMode = "At target";
-      this.jitterActive = false;
-      this.jitterOffset = 5;
-      this.stopJittersOnStop = false;
-      this.resolverType = "linear";
-      this.ShowRealAngles = "withAim";
-      this.target = "players";
-      this.AimBotEnabled = false;
-      this.JitterEnabled = false;
-      this.JitterSpeed = 360;
-      this.JitterKey = "KeyJ";
-      this.mouseFovEnable = true;
-      this.distanceCoefficient = 100;
-      this.bulletSpeedCoefficient = 4;
-      this.offsetCoefficient = 0.1;
-      this.visualizeResolving = true;
-      this.visualizeResolvingColor = "#FFF200";
-      this.autoFire = false;
-      this.lockId = -1;
-      this.mouseFov = 696969;
       this.OpenEverythingByClick = true;
       this.RightClickDoors = true;
       this.ShowBuildingOwner = true;
@@ -74,23 +50,23 @@ function __installDevastMod(B) {
     }
   }
   const MOD = new HackCon();
-  Object.assign(MOD, {zoomFactor:1, showFunctionList:true});
-  const messageAimKeys=["resolverType","ShowRealAngles","target","AimBotEnabled","hideAimbotAngle","mouseFovEnable","distanceCoefficient","bulletSpeedCoefficient","offsetCoefficient","visualizeResolving","ShowAimTrace","visualizeResolvingColor","autoFire","lockId","mouseFov","antiAimMode","jitterActive","jitterOffset","stopJittersOnStop","DodgePlayerEnabled","DodgeDetectRadius","HidePlayerLabels","AimbotKey"];
-  const MESSAGE_AIM_SAVE='DevastMessage15:aim:v1';
-  const messageAimDefaults=Object.fromEntries(messageAimKeys.map(key=>[key,MOD[key]]));
+  Object.assign(MOD, {zoomFactor:1, showFunctionList:true},__untitledAimDefaults());
+  const aimKeys=Object.keys(__untitledAimDefaults());
+  const AIM_SAVE='DevastUntitledV4:aim:v1';
+  const aimDefaults=Object.fromEntries(aimKeys.map(key=>[key,MOD[key]]));
   const defaults = JSON.parse(JSON.stringify(MOD));
   const SAVE = 'DevastILM:settings:v3', LEGACY_SAVE = 'BestModMenuConfig';
   const transient = new Set(['Token', 'token', 'tokenId', 'userId']);
-  const keySettings = ['AimbotKey','JitterKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey'];
-  const limits = {JitterSpeed:[1,3600],mouseFov:[0,696969],lockId:[-1,120],distanceCoefficient:[10,1000],jitterOffset:[0,360],DodgeDetectRadius:[100,800],offsetCoefficient:[0,3],bulletSpeedCoefficient:[1,15],zoomFactor:[.33,2],Xraytransparency:[.05,1]};
-  const choices = {resolverType:['linear','trygonometrical'],antiAimMode:['At target','Round','Round2'],target:['players','ghouls','all'],ShowRealAngles:['always','withAim']};
+  const keySettings = ['AimbotKey','AntiAimbotKey','StrafeWSKey','StrafeADKey','SpinKey','JitterKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey'];
+  const limits = {zoomFactor:[.33,2],Xraytransparency:[.05,1],...__untitledAimConstraints().limits};
+  const choices = __untitledAimConstraints().choices;
   function validateSetting(key,value) {
     if (!Object.prototype.hasOwnProperty.call(defaults,key) || typeof value !== typeof defaults[key]) throw new Error('Invalid setting: '+key);
     if (typeof value === 'number' && !Number.isFinite(value)) throw new Error('Invalid numeric setting');
     if (limits[key] && (value < limits[key][0] || value > limits[key][1])) throw new Error('Setting out of range: '+key);
     if (key === 'lockId' && !Number.isInteger(value)) throw new Error('Player ID must be an integer');
     if (choices[key] && !choices[key].includes(value)) throw new Error('Invalid choice: '+key);
-    if (keySettings.includes(key) && !/^(Key[A-Z]|Digit[0-9]|F(?:[1-9]|1[0-2])|Space|Escape|Tab|Backquote|Minus|Equal|BracketLeft|BracketRight|Backslash|Semicolon|Quote|Comma|Period|Slash|Arrow(?:Up|Down|Left|Right)|(?:Shift|Control|Alt|Meta)(?:Left|Right)|Enter|Backspace|Delete|Insert|Home|End|PageUp|PageDown|Numpad\w+)$/.test(value)) throw new Error('Invalid key code');
+    if (keySettings.includes(key) && value!=='NoKey' && !/^(Key[A-Z]|Digit[0-9]|F(?:[1-9]|1[0-2])|Space|Escape|Tab|Backquote|Minus|Equal|BracketLeft|BracketRight|Backslash|Semicolon|Quote|Comma|Period|Slash|Arrow(?:Up|Down|Left|Right)|(?:Shift|Control|Alt|Meta)(?:Left|Right)|Enter|Backspace|Delete|Insert|Home|End|PageUp|PageDown|Numpad\w+)$/.test(value)) throw new Error('Invalid key code');
     return value;
   }
   try {
@@ -101,10 +77,11 @@ function __installDevastMod(B) {
       }
     }
   } catch (_) {}
-  Object.assign(MOD,messageAimDefaults);
-  try{const saved=JSON.parse(localStorage.getItem(MESSAGE_AIM_SAVE)||'{}');for(const key of messageAimKeys)if(Object.hasOwn(saved,key)){try{MOD[key]=validateSetting(key,saved[key]);}catch(_){}}}catch(_){}
+  Object.assign(MOD,aimDefaults);
+  try{const saved=JSON.parse(localStorage.getItem(AIM_SAVE)||localStorage.getItem('AimbotCfg_v7')||'{}');for(const key of aimKeys)if(Object.hasOwn(saved,key)){try{MOD[key]=validateSetting(key,saved[key]);}catch(_){}}}catch(_){}
   const usedKeys = new Set();
   for (const key of keySettings) {
+    if(MOD[key]==='NoKey')continue;
     if (usedKeys.has(MOD[key])) MOD[key] = defaults[key];
     if (usedKeys.has(MOD[key])) MOD[key] = keySettings.map(k=>defaults[k]).find(code=>!usedKeys.has(code));
     usedKeys.add(MOD[key]);
@@ -773,107 +750,23 @@ function __installDevastMod(B) {
     for (const item of Object.values(LootData)) if(item.acquire) allowedLootIds.add(item.id);
   }
   refreshLootFilter();
-  // Materialize teams only for active candidates. The engine reads plain data,
-  // without per-candidate property getters or a sweep of unused metadata slots.
-  const aimSelf={id:0,team:-1}, aimTeams=[],teamEpochs=[];
-  let aimDepth=0,aimEpoch=0;
-  function ensureAimTeams(id) {
-    while (aimTeams.length<=id) {aimTeams.push({team:-1});teamEpochs.push(0);}
-  }
-  ensureAimTeams(998);
-  function prepareAimTeam(id) {
-    if (teamEpochs[id]===aimEpoch) return;
-    teamEpochs[id]=aimEpoch;
-    aimTeams[id].team=teamId(id);
-  }
-  function aimSnapshot(callback,withTeams=true) {
-    if (aimDepth===0) {
-      aimSelf.id=B.world.ᅠᏧ‍?.id || 0;
-      ensureAimTeams(aimSelf.id);
-      aimEpoch++;
-      if (withTeams) {
-        prepareAimTeam(aimSelf.id);
-        aimSelf.team=aimTeams[aimSelf.id].team;
-      }
+  let aimCycleDepth=0,aimCycleWritable=false;
+  const aimTransport={cycles:0,blockedCycles:0,nativeYields:0};
+  const aimModule=__createUntitledAim(MOD,{
+    window,document,persist:()=>persist(),
+    running:()=>playing()&&!reconnect.sessionEnded,
+    sync:(aim,targets)=>{aim.selfId=B.world.ᅠᏧ‍?.id||-1;},
+    heldItem:()=>B.heldItem?.()||window.__heldItemDef,
+    isTeammate:id=>{const own=teamId(B.world.ᅠᏧ‍?.id);return own!==-1&&teamId(id)===own;},
+    beginCycle:()=>{if(aimCycleDepth++===0){aimCycleWritable=playing()&&!reconnect.sessionEnded&&automationReady('aim');if(aimCycleWritable)aimTransport.cycles++;else aimTransport.blockedCycles++;}},
+    endCycle:()=>{if(--aimCycleDepth===0)aimCycleWritable=false;},
+    send:packet=>{
+      if(!playing()||reconnect.sessionEnded||Aimbot.dead||connectionSocket&&connectionSocket.readyState!==1)return false;
+      if(aimCycleDepth?!aimCycleWritable:!automationReady('aim'))return false;
+      return __send(packet,true);
     }
-    aimDepth++;
-    try { return callback(); } finally { aimDepth--; }
-  }
-  const ilmWorld={PLAYER:aimSelf,players:aimTeams};
-  let messageCycleWritable=false,messageCycleHasDirection=false,messageShotAligning=false,messagePendingAngle=null,messageAutoFireOpen=false;
-  const AUTO_FIRE_INTERVAL_MS=50;
-  let messageLastAutoFireAt=-Infinity;
-  const aimTransport={rateLimitedAutoFire:0,invalidTargets:0,cycles:0,nativeYields:0};
-  function flushMessageAngle(){
-    if(!messagePendingAngle)return messageCycleHasDirection;
-    const packet=messagePendingAngle;messagePendingAngle=null;
-    const sent=__send(packet);
-    if(sent){messageCycleHasDirection=true;aimTransport.cycles++;}
-    return sent;
-  }
-  const bulletCache=new WeakMap();
-  function messageBullet(entity){let item=bulletCache.get(entity);if(!item){item=new Proxy(entity,{get:(e,key)=>({removed:e.е̝ހ,pid:e.ᴘ४１,angleX:e.ееᏧ,angleY:e.ρᄁܔ,nx:e.ᴄࠂ̏,ny:e.ⲅ๙ࠀ,x:e.x,y:e.y})[key]});bulletCache.set(entity,item);}return item;}
-  const messageEntities={get units(){return {[B.categories.projectile]:(B.entities.ᴎ̂２[B.categories.projectile]||[]).map(e=>e&&messageBullet(e))};},get border(){const border=B.entities.border[B.categories.projectile];return {[B.categories.projectile]:border?{border:border.border,cycle:border.ⲣᴑᴏ}:{border:0,cycle:[]}};}};
-  const messageAim=__createMessage15Aim(MOD,ilmWorld,{
-    window,document,entities:messageEntities,bulletType:B.categories.projectile,
-    sync:()=>{
-      aimSnapshot(()=>{},false);messageCycleHasDirection=false;messagePendingAngle=null;messageAutoFireOpen=false;
-      messageCycleWritable=playing()&&!reconnect.sessionEnded&&automationReady('aim');
-    },state:()=>B.network.state,
-    send:packet=>{if(!messageCycleWritable||stopped||connectionSocket&&connectionSocket.readyState!==1)return false;
-      if(messageShotAligning)return false;
-      if(!MOD.jitterActive&&!validAimTarget()){messageCycleWritable=false;aimTransport.invalidTargets++;return false;}
-      if(MOD.JitterEnabled&&packet[0]===6&&(!jitterAiming()||!Aimbot.targetPlayer?.active))return false;
-      if(packet[0]===6){messagePendingAngle=packet;return true;}
-      if(!flushMessageAngle())return false;
-      // Fresh source directions have no time gate. Only repeated automatic
-      // attack/release pairs share a cadence; never delay an updated aim angle.
-      if(packet[0]===4){
-        const now=performance.now();
-        if(now-messageLastAutoFireAt<AUTO_FIRE_INTERVAL_MS){aimTransport.rateLimitedAutoFire++;return false;}
-        messageAutoFireOpen=__send(packet);
-        if(messageAutoFireOpen)messageLastAutoFireAt=now;
-        return messageAutoFireOpen;
-      }
-      if(packet[0]===5){if(!messageAutoFireOpen)return false;messageAutoFireOpen=false;}
-      return __send(packet);}
   });
-  const GetAllTargets=messageAim.targets,Aimbot=messageAim.aim;
-  const sourceRefresh=Aimbot.refresh;
-  Aimbot.refresh=function(...args){try{return sourceRefresh.apply(this,args);}finally{try{if(messageCycleWritable)flushMessageAngle();}finally{messageCycleWritable=false;messageCycleHasDirection=false;messagePendingAngle=null;messageAutoFireOpen=false;}}};
-  const sourceResolve=Aimbot.resolve;
-  Object.defineProperty(Aimbot,'resolve',{value:function(...args){return aimSnapshot(()=>sourceResolve.apply(this,args),MOD.lockId<0||!GetAllTargets.players[MOD.lockId]?.active);}});
-  const aimFloor=Math.floor,aimCeil=Math.ceil,aimSqrt=Math.sqrt,aimPow=Math.pow;
-  // Preserve source order, integer distance, strict FOV and tie behavior. Clan
-  // data is needed only for a closer player when our own clan actually exists;
-  // ghouls never use the player's clan table. No cross-update result cache.
-  Object.defineProperty(Aimbot,'findNearestPlayerTo',{value:function(point,fovLimit){return aimSnapshot(()=>{
-    let nearest=null,minDist=fovLimit,limit=aimCeil(fovLimit);
-    const x=point.x,y=point.y;
-    if(MOD.target==='players'||MOD.target==='all'){
-      const players=GetAllTargets.players;
-      for(let i=1;i<players.length;i++){
-        const p=players[i];if(!p||!p.active||p.id===aimSelf.id)continue;
-        const dx=x-p.x,dy=y-p.y;
-        if(dx>=limit||dx<=-limit||dy>=limit||dy<=-limit)continue;
-        const d=aimFloor(aimSqrt(aimPow(dx,2)+aimPow(dy,2)));
-        if(!(d<minDist))continue;
-        if(aimSelf.team!==-1){prepareAimTeam(p.id);if(aimTeams[p.id]?.team===aimSelf.team)continue;}
-        nearest=p;minDist=d;limit=d;
-      }
-    }
-    if(MOD.target==='ghouls'||MOD.target==='all'){
-      const ghouls=GetAllTargets.ghouls;
-      for(let i=1;i<ghouls.length;i++){
-        const g=ghouls[i];if(!g||!g.active)continue;
-        const dx=x-g.x,dy=y-g.y;
-        if(dx>=limit||dx<=-limit||dy>=limit||dy<=-limit)continue;
-        const d=aimFloor(aimSqrt(aimPow(dx,2)+aimPow(dy,2)));
-        if(d<minDist){nearest=g;minDist=d;limit=d;}
-      }
-    }
-    return nearest;
-  });}});
+  const GetAllTargets=aimModule.targets,Aimbot=aimModule.aim;
   const _players_list = [];
   const removers = [];
   const originalSender = B.network.ᴎᚂρ.bind(B.network);
@@ -917,7 +810,7 @@ function __installDevastMod(B) {
     const health = B.health?.();
     connectionEvents.push({type,at:Math.round(now),state:B.network.state,
       integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,
-      aim:MOD.AimBotEnabled,autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,
+      aim:MOD.AimBotEnabled,autoFire:MOD.autoFire,jitter:MOD.jitterActive,
       autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled,
       socketState:connectionSocket?.readyState??null,socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
       transport:socketTraffic(now),pageHidden:!!document.hidden,
@@ -981,7 +874,9 @@ function __installDevastMod(B) {
   const functionLabels = [
     ['SAutoLootEnabled', 'SAutoLoot'],
     ['AimBotEnabled', 'AimBot'],
-    ['JitterEnabled', 'Jitter'],
+    ['jitterActive', 'Jitter'],
+    ['spinActive','Spin'],
+    ['AntiAimbot','Anti-Aim'],
     ['AutoBuiledEnabled', 'AutoBuild'],
     ['AntiKickEnabled', 'AntiKick'],
     ['FAutoLootEnabled', 'FAutoLoot'],
@@ -996,13 +891,8 @@ function __installDevastMod(B) {
   function playing() {
     return !stopped && B.network.state === 1 && B.world.ᅠᏧ‍ && B.world.ᅠᏧ‍.id > 0;
   }
-  function validAimTarget() {
-    const self=GetAllTargets.players[B.world.ᅠᏧ‍?.id],target=Aimbot.targetPlayer;
-    return target!==self && [self,target].every(p=>p?.active &&
-      Number.isFinite(p.x) && Number.isFinite(p.y) && p.x>=0 && p.y>=0);
-  }
   let lastSentAngle = null,lastSentPlayer = 0;
-  const appliedToggles={AimBotEnabled:MOD.AimBotEnabled,JitterEnabled:MOD.JitterEnabled};
+  const appliedToggles={AimBotEnabled:MOD.AimBotEnabled,jitterActive:MOD.jitterActive,spinActive:MOD.spinActive,AntiAimbot:MOD.AntiAimbot};
   function __send(value, forceAngle = false) {
     if (!playing()) return false;
     const packet = typeof value === 'string' ? JSON.parse(value) : value;
@@ -1015,7 +905,7 @@ function __installDevastMod(B) {
         return true;
       }
     }
-    if([4,5,6].includes(packet[0])&&typeof B.aimSend==='function')B.aimSend(packet.slice());
+    if([2,4,5,6].includes(packet[0])&&typeof B.aimSend==='function')B.aimSend(packet.slice());
     else originalSender(JSON.stringify(packet));
     if ([4,5,6].includes(packet[0])) {
       recentCombatCommands.push({at:performance.now(),op:packet[0]});
@@ -1026,82 +916,18 @@ function __installDevastMod(B) {
     diagnostics.commandsByOpcode[packet[0]]=(diagnostics.commandsByOpcode[packet[0]]||0)+1;
     return true;
   }
-  const jitter = {angle:0,updatedAt:null,lastSentAt:-Infinity,fireUntil:-Infinity,spinning:false,deferredDirections:0};
-  function jitterAiming() {
-    return MOD.AimBotEnabled && (Aimbot.mouseDown || performance.now() < jitter.fireUntil ||
-      (MOD.autoFire && Aimbot.targetPlayer?.active && Aimbot.wannaFire()));
-  }
-  function stopJitter() {
-    jitter.spinning = false;
-    jitter.updatedAt = null;
-    jitter.lastSentAt = -Infinity;
-  }
-  function updateJitter(now, sendDirection=false) {
-    if (!MOD.JitterEnabled || !playing() || reconnect.sessionEnded || Aimbot.mouseDown || now < jitter.fireUntil || jitterAiming() || B.chatActive?.()) {
-      stopJitter();
-      return;
-    }
-    if (jitter.updatedAt === null) {
-      jitter.angle = ((B.input?.angle || 0) * 180 / Math.PI % 360 + 360) % 360;
-      jitter.updatedAt = now;
-    }
-    const visualNow=Math.max(now,jitter.updatedAt);
-    jitter.angle = (jitter.angle + (visualNow - jitter.updatedAt) * MOD.JitterSpeed / 1000) % 360;
-    jitter.updatedAt = visualNow;
-    jitter.spinning = true;
-    // Private visual angle never changes the native mouse/movement input.
-    // Only the 50 ms timer sends idle rotation; RAF cannot enqueue directions.
-    if (sendDirection && now - jitter.lastSentAt >= 50) {
-      if (connectionSocket && (connectionSocket.readyState!==1 || connectionSocket.bufferedAmount>0)) {
-        jitter.deferredDirections++;
-        return;
-      }
-      __send([6,jitter.angle]);
-      jitter.lastSentAt = now;
-    }
-  }
-  function beforeFire() {
-    if (!playing() || reconnect.sessionEnded) return;
-    const now=performance.now();
-    if (!MOD.JitterEnabled&&!MOD.AimBotEnabled) return;
-    const continuingBurst=now<jitter.fireUntil && !jitter.spinning;
-    jitter.fireUntil = now + 150;
-    stopJitter();
-    if (!automationReady('aim')) {
-      // The next writable native shot starts a fresh alignment, even when it
-      // follows this blocked attempt within the normal burst window.
-      jitter.fireUntil=-Infinity;
-      return;
-    }
-    if (MOD.AimBotEnabled) {
-      // A native burst may start before the next 50 ms tick. Use ILM itself
-      // once before its first attack; held fire stays on the existing timer.
-      let angle;
-      messageShotAligning=true;
-      try{angle=Aimbot.resolve();}finally{messageShotAligning=false;}
-      if (validAimTarget()) {
-        if(continuingBurst&&(Math.round(angle)%360+360)%360===lastSentAngle&&lastSentPlayer===B.world.ᅠᏧ‍.id)return;
-        // The native mouse may have changed the server direction since our
-        // cached send. Reassert it once per burst, including an equal angle.
-        __send([6,angle],true);
-        return;
-      }
-    }
-    if (!MOD.JitterEnabled) return;
-    const point = cursorWorld();
-    const me = B.world.ᅠᏧ‍;
-    if (point) __send([6,Math.atan2(point.y-me.y,point.x-me.x)*180/Math.PI],true);
-    else if (B.input && Number.isFinite(B.input.angle)) __send([6,B.input.angle*180/Math.PI],true);
-  }
+  // The uploaded engine aligns in its native after-fire callback, as in the
+  // reference. Its own tick/packetAngle logic owns prediction and shot timing.
+  function beforeFire() {if(!playing()||reconnect.sessionEnded)return;aimModule.sync();}
   function persist() {
     refreshLootFilter();
     const saved = {};
     for (const key of Object.keys(defaults)) if (!transient.has(key)) saved[key] = MOD[key];
     try {
-      localStorage.setItem(MESSAGE_AIM_SAVE,JSON.stringify(Object.fromEntries(messageAimKeys.map(key=>[key,MOD[key]]))));
-      // Preserve previous aim settings for rollback; Message15 has its own key.
+      localStorage.setItem(AIM_SAVE,JSON.stringify(Object.fromEntries(aimKeys.map(key=>[key,MOD[key]]))));
+      // Preserve earlier engine settings for rollback; this engine has its own key.
       const previousAim=JSON.parse(localStorage.getItem(SAVE)||'{}');
-      for(const key of messageAimKeys){if(Object.hasOwn(previousAim,key))saved[key]=previousAim[key];else delete saved[key];}
+      for(const key of aimKeys){if(Object.hasOwn(previousAim,key))saved[key]=previousAim[key];else delete saved[key];}
       localStorage.setItem(SAVE, JSON.stringify(saved));
       localStorage.setItem(SAVE + ':ilm2', '1');
       localStorage.setItem(SAVE + ':loot', JSON.stringify(Object.fromEntries(Object.entries(LootData).map(([k, v]) => [k, v.acquire]))));
@@ -1112,15 +938,14 @@ function __installDevastMod(B) {
     validateSetting(key,value);
     // dat.GUI writes MOD before onChange, so compare the last applied value.
     if(Object.prototype.hasOwnProperty.call(appliedToggles,key)){
-      if(appliedToggles[key]!==value){lastSentAngle=null;messageLastAutoFireAt=-Infinity;if(key==='AimBotEnabled')jitter.fireUntil=-Infinity;}
+      if(appliedToggles[key]!==value)lastSentAngle=null;
       appliedToggles[key]=value;
     }
     if (keySettings.includes(key)) {
-      const conflict = keySettings.find(other=>other!==key && MOD[other]===value);
+      const conflict = value==='NoKey'?null:keySettings.find(other=>other!==key && MOD[other]===value);
       if (conflict) MOD[conflict] = MOD[key];
     }
     MOD[key] = value;
-    if (key === 'JitterEnabled' && !value) stopJitter();
     if (key === 'NicknameColor') {
       for (let id=1;id<B.world.ᴎ︃ᄉ.length;id++) {
         const meta=playerMeta(id);
@@ -1150,21 +975,18 @@ function __installDevastMod(B) {
   }
   // Decode the native protocol; prediction/history stay in the imported engine.
   function trackPacket(type, playerId, uid, x, y, active) {
-    const group=type===B.categories.player?GetAllTargets.players:type===13?GetAllTargets.ghouls:null;
-    const id=type===B.categories.player?playerId:uid;
-    if(!group || !Number.isInteger(id) || id<(active?1:0) || id>65535) return;
-    // Fill any extended slots: original ILM iterates densely over both arrays.
-    while(group.length<=id) group.push(new messageAim.Target(group.length));
-    ensureAimTeams(id);
-    if(!group[id])return;
-    if(!active) {
-      if(group[id]===Aimbot.targetPlayer || group[id]===GetAllTargets.players[B.world.ᅠᏧ‍?.id]) lastSentAngle=null;
-      group[id].setInactive();return;
-    }
-    if(Number.isFinite(x)&&Number.isFinite(y)) {
-      group[id].update(x,y);
+    const kind=type===B.categories.player?'players':type===13?'ghouls':null;
+    const id=kind==='players'?playerId:uid;
+    if(!kind){if(Number.isFinite(x)&&Number.isFinite(y)){if(active)aimModule.obstacles.set(type,playerId,uid,x,y);else aimModule.obstacles.del(type,playerId,uid);}return;}
+    if(!Number.isInteger(id)||id<1||id>65535)return;
+    const target=kind==='players'?GetAllTargets.getPlayerById(id):GetAllTargets.getGhoulByUid(id);
+    if(!active){target.setInactive();if(kind==='players'&&id===B.world.ᅠᏧ‍?.id)Aimbot.onDeath();return;}
+    if(Number.isFinite(x)&&Number.isFinite(y)){
+      aimModule.sync();target.update(x,y);
+      if(kind==='players'&&id===Aimbot.selfId){GetAllTargets.selfPosition={x,y};GetAllTargets.selfFromPacket=Date.now();Aimbot.dead=false;}
     }
   }
+
   function playerMeta(id) {
     return B.world.ᴎ︃ᄉ[id];
   }
@@ -1195,7 +1017,7 @@ function __installDevastMod(B) {
     }
   }
   function observePlayerSpawn(id) { departedPlayers.delete(id); }
-  function observePlayerLeave(id) { messageAim.onOtherDie(id);departedPlayers.set(id,playerMeta(id)); }
+  function observePlayerLeave(id) { aimModule.onOtherDie(id);departedPlayers.set(id,playerMeta(id)); }
   function zoomOffset(nativeOffset) {
     const base = Number.isFinite(nativeOffset) ? nativeOffset : 0;
     return Math.max(-.95, Math.min(3, (1 + base) * MOD.zoomFactor - 1));
@@ -1621,7 +1443,7 @@ function __installDevastMod(B) {
           }
         }
       }
-      messageAim.render(ctx,v);
+      aimModule.render(ctx,v);
       ctx.globalAlpha = 1;
     } finally {ctx.restore();}
   }
@@ -1658,7 +1480,7 @@ function __installDevastMod(B) {
   }
   const widgetWrappers = new Map();
   function observeSocket(socket) {
-    if(socket!==connectionSocket){messageLastAutoFireAt=-Infinity;lastSentAngle=null;}
+    if(socket!==connectionSocket){lastSentAngle=null;}
     removeSocketObservers();
     connectionSocket = socket;
     socketTrace=socket?{id:++socketSerial,openedAt:socket.readyState===1?performance.now():null,lastReceiveAt:null,receivedMessages:0,localCloseSource:null}:null;
@@ -1693,10 +1515,9 @@ function __installDevastMod(B) {
       animationTiming:animationTiming(),
       modCommandsByOpcode:{...diagnostics.commandsByOpcode},
       automationSettings:{autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled},
-      jitterTransport:{deferredDirections:jitter.deferredDirections,rateLimitHz:20},
       automationTransport:{deferred:{...automationDeferrals},aimHighWaterBytes:AIM_BUFFER_HIGH_WATER},
-      aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',changedDirectionsImmediate:true,autoFireIntervalMs:AUTO_FIRE_INTERVAL_MS,deduplicatedDirections:diagnostics.deduplicatedAngles},
-      aimSettings:{enabled:MOD.AimBotEnabled,source:'message15',autoFire:MOD.autoFire,jitter:MOD.JitterEnabled,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
+      aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',sourceTickRateMs:MOD.aimTickRate,turboAim:MOD.turboAim,deduplicatedDirections:diagnostics.deduplicatedAngles},
+      aimSettings:{enabled:MOD.AimBotEnabled,source:'untitled-v4',autoFire:MOD.autoFire,jitter:MOD.jitterActive,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}}))};
   }
@@ -2053,7 +1874,6 @@ function __installDevastMod(B) {
     updateReconnect(now);
     if (!playing()) {
       lastSentAngle = null;
-      stopJitter();
       Aimbot.mouseDown = false;
       if (previousPlayer) {
         previousPlayer = 0;
@@ -2078,7 +1898,6 @@ function __installDevastMod(B) {
       updateTargets();
       updateMouse();
     }
-    updateJitter(now);
     automate(now);
     if (!B.synchronizedRender) draw();
   }
@@ -2103,11 +1922,6 @@ function __installDevastMod(B) {
     }
     nextFrame = window.requestAnimationFrame(tick);
   }
-  // ILM executes its aim loop every 50 ms, independently of rendering.
-  const aimTimer = window.setInterval(() => {
-    if (stopped) return;
-    try { updateJitter(performance.now(),true); } catch (error) { report(error); }
-  }, 50);
   // Native direction functions keep updating their timing/angle bookkeeping;
   // reviewed native patches suppress only their send, exactly as ILM does.
   function keyboard(e) {
@@ -2122,9 +1936,8 @@ function __installDevastMod(B) {
     }
     const t = e.target;
     if (e.repeat || t && (t.isContentEditable || (/^(INPUT|TEXTAREA|SELECT)$/).test(t.tagName)) || B.chatActive && B.chatActive()) return;
+    if([MOD.AimbotKey,MOD.AntiAimbotKey,MOD.StrafeWSKey,MOD.StrafeADKey,MOD.JitterKey,MOD.SpinKey,MOD.ModMenuKey].includes(e.code))return;
     const bindings = {
-      AimbotKey: 'AimBotEnabled',
-      JitterKey: 'JitterEnabled',
       AutoBuiledKey: 'AutoBuiledEnabled',
       SAutoLootKey: 'SAutoLootEnabled',
       FAutoLootKey: 'FAutoLootEnabled',
@@ -2159,11 +1972,7 @@ function __installDevastMod(B) {
       x: e.clientX,
       y: e.clientY
     };
-    if (e.button === 0) {
-      Aimbot.mouseDown = true;
-      if (MOD.JitterEnabled) stopJitter();
 
-    }
     if (e.button === 2 && openUnderMouse()) {
       e.preventDefault();
       e.stopImmediatePropagation();
@@ -2216,9 +2025,9 @@ function __installDevastMod(B) {
     for (const key of ['ShowPosition', 'ShowNamesOnMap', 'ShowMines', 'ShowWires', 'ShowPlayerHitbox', 'KarmaAboveHead', 'ShowBuildingOwner', 'XrayBuildings', 'PlayersListEnabled', 'showFunctionList']) add(visual, key);
     add(visual, 'Xraytransparency', 'Building opacity', .05, 1, .05);
     for (const [key,label] of [['TeamClanColor','Цвет своего клана'],['EnemyClanColor','Цвет чужого клана'],['NicknameColor','Цвет ника']]) visual.addColor(MOD, key).name(label).onChange(value=>setSetting(key,value));
-    const aim = __installMessage15AimMenu(menu,MOD);
-    for (const control of aim.__controllers) control.onChange(value=>{const range=limits[control.property];if(typeof value==='number'&&range)value=Math.max(range[0],Math.min(range[1],value));setSetting(control.property,value);});
-    for(const control of aim.__controllers){
+    const aimControls=aimModule.installMenu(menu).controllers;
+    for (const control of aimControls) control.onChange(value=>{const range=limits[control.property];if(typeof value==='number'&&range)value=Math.max(range[0],Math.min(range[1],value));setSetting(control.property,value);});
+    for(const control of aimControls){
       if(typeof defaults[control.property]!=='number')continue;
       const input=control.domElement.querySelector('input');if(!input)continue;
       input.dataset.aimNumericCommit='immediate-v1';
@@ -2231,11 +2040,6 @@ function __installDevastMod(B) {
         if(document.activeElement===input){input.value=raw;if(start!==null&&end!==null)input.setSelectionRange(start,end);}
       });
     }
-    const aimColorControl=visual.__folders.Colors.__controllers[0],sourceColorChange=aimColorControl.__onChange||aimColorControl.changed;
-    aimColorControl.onChange(function(value){sourceColorChange.call(this,value);setSetting('visualizeResolvingColor',MOD.visualizeResolvingColor);});
-    const jitterMenu = menu.addFolder('Jitter');
-    add(jitterMenu, 'JitterEnabled', 'Enabled');
-    add(jitterMenu, 'JitterSpeed', 'Speed (degrees/sec)', 1, 3600, 1);
     const zoom = menu.addFolder('Zoom');
     zoomControl = add(zoom, 'zoomFactor', 'View scale', .33, 2, .01);
     zoom.add({
@@ -2355,30 +2159,32 @@ function __installDevastMod(B) {
       report(e);
     }
   }); else createMenu();
-  messageAim.start();
+  aimModule.start();
   nextFrame = window.requestAnimationFrame(tick);
   return {
     settings: MOD,
     beforeFire,
-    afterFire:()=>messageAim.afterFire(),
-    afterRelease:()=>messageAim.afterRelease(),
-    onMove:move=>messageAim.onMove(move),
-    onHandshake:()=>{messageLastAutoFireAt=-Infinity;lastSentAngle=null;messageAim.onHandshake();},
-    onSessionStart:()=>{messageLastAutoFireAt=-Infinity;lastSentAngle=null;Aimbot.onDeath();},
+    nativePacketAngle:angle=>{if(!playing()||reconnect.sessionEnded||Aimbot.dead)return angle;aimModule.sync();return Aimbot.packetAngle(angle);},
+    afterFire:()=>aimModule.afterFire(),
+    afterRelease:()=>aimModule.afterRelease(),
+    onMove:move=>aimModule.onMove(move),
+    onHandshake:()=>{lastSentAngle=null;aimModule.onHandshake();},
+    onSessionStart:()=>{lastSentAngle=null;Aimbot.onDeath();},
     get controlsAimDirection() {
       const controls=playing() && !reconnect.sessionEnded &&
-        (MOD.JitterEnabled || MOD.AimBotEnabled&&(MOD.jitterActive||validAimTarget()));
+        (!Aimbot.dead&&(MOD.AimBotEnabled||MOD.AntiAimbot||MOD.hidePlayerAngle));
       // Both native direction handlers query this immediately before sending.
       // Once mouse input can change the server angle, our cache no longer proves
       // its value. Reacquisition must reassert even the same predicted angle.
       if(!controls&&lastSentAngle!==null){lastSentAngle=null;lastSentPlayer=0;aimTransport.nativeYields++;}
       return controls;
     },
-    get jitterAngle() { return jitter.spinning ? jitter.angle * Math.PI / 180 : null; },
+    get jitterAngle() { return null; },
     get aimRenderAngle() { return null; },
     targets: GetAllTargets,
     trackPacket,
     aim: Aimbot,
+    aimModule,
     loot: LootData,
     diagnostics,
     chat: chatState,
@@ -2433,9 +2239,8 @@ function __installDevastMod(B) {
       return functionList;
     },
     dispose() {
-      messageAim.dispose();
-      stopJitter();
-      MOD.JitterEnabled = false;
+      aimModule.dispose();
+      MOD.jitterActive=false;MOD.spinActive=false;MOD.AntiAimbot=false;
       MOD.zoomFactor = 1;
       MOD.AimBotEnabled = false;
       MOD.XrayBuildings = false;
@@ -2445,7 +2250,6 @@ function __installDevastMod(B) {
       removeSocketObservers();
       adGate = null;
       for (const [widget,entries] of widgetWrappers) for (const [method,entry] of Object.entries(entries)) if (widget[method] === entry.wrapped) widget[method] = entry.original;
-      window.clearInterval(aimTimer);
       window.cancelAnimationFrame(nextFrame);
       removers.forEach(f => f());
       if (menu) menu.destroy();

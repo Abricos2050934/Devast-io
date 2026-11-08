@@ -79,6 +79,12 @@ def artifacts(root, output):
             raise ValueError('Aim pointer ownership resync was not verified in browser: ' + browser)
         if 'equivalent-efficient-aim-target-search' in contract.get('features', []) and report.get('native', {}).get('efficient_aim_search', {}).get('status') != 'passed':
             raise ValueError('Efficient aim target search was not verified in browser: ' + browser)
+        if 'verbatim-untitled-v4-aim' in contract.get('features', []):
+            aim = report.get('native', {}).get('untitled_aim', {})
+            if (aim.get('status') != 'passed' or aim.get('comparison_points', 0) < 1000
+                    or aim.get('native_direction_transforms') is not True or aim.get('native_movement_hooks') is not True
+                    or aim.get('whole_auto_fire_cycle') is not True or aim.get('server_death_sends_no_commands') is not True):
+                raise ValueError('Uploaded Untitled aim source comparison was not verified in browser: ' + browser)
         if 'native-aim-transport-preserves-idle' in contract.get('features', []) and report.get('native', {}).get('native_aim_transport', {}).get('status') != 'passed':
             raise ValueError('Native aim transport and periodic idle packets were not verified in browser: ' + browser)
         if 'immediate-aim-numeric-settings' in contract.get('features', []) and report.get('physical_numeric', {}).get('status') != 'passed':
@@ -98,7 +104,7 @@ def artifacts(root, output):
 
 Обновление: проверка сайта, расшифровка, перенос текущих модулей и браузерные тесты.
 Новая версия публикуется только после проверок; неизвестные изменения блокируют замену.
-Аимбот Message15 перенесён из отдельного JS: Z — аимбот, H — меню.
+Аимбот полностью перенесён из Untitled-1_mod_v4.js: Z — аимбот, H — меню.
 J сохраняет прежнее вращение; Jitter источника включается в меню.
 Нижние дополнительные показатели и надпись AIM BOT удалены. Адаптер наведения оптимизирован.
 Ники #ID, остальные функции и исправление повторного входа сохранены.

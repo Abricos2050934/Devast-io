@@ -173,6 +173,14 @@ class PublicationTests(unittest.TestCase):
   self.validation['browsers']['firefox']['native']['efficient_aim_search']['status']='failed';self.save()
   with self.assertRaisesRegex(ValueError,'Efficient aim target search.*firefox'):p.artifacts(self.root,self.out)
 
+ def test_uploaded_untitled_source_requires_complete_comparison_in_each_browser(self):
+  self.contract['features']=['verbatim-untitled-v4-aim']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'untitled_aim':{'status':'passed','comparison_points':1984,'native_direction_transforms':True,'native_movement_hooks':True,'whole_auto_fire_cycle':True,'server_death_sends_no_commands':True}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['untitled_aim']['comparison_points']=100;self.save()
+  with self.assertRaisesRegex(ValueError,'Untitled aim source comparison.*firefox'):p.artifacts(self.root,self.out)
+
  def test_aim_ownership_resync_requires_both_native_browsers(self):
   self.contract['features']=['aim-pointer-ownership-resync']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

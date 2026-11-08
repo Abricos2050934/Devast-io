@@ -28,7 +28,7 @@ test('right click opens the hovered door over a selected container, once, using 
   // Contextmenu follows the same press: it only hides the browser menu.
   for(const fn of f.dom.canvas.listeners.get('contextmenu'))fn({preventDefault(){}});
   assert.equal(f.packets.length,1);
-  f.packets.length=0;press({button:0});assert.equal(f.mod.aim.mouseDown,true);assert.equal(f.packets.length,0);
+  f.packets.length=0;press({button:0});assert.equal(f.mod.aim.mouseDown,false,'The uploaded engine learns attack from native [4], not a canvas click');assert.equal(f.packets.length,0);f.mod.afterFire();assert.equal(f.mod.aim.mouseDown,true);
  }finally{f.mod.dispose();}
 });
 test('right click ignores UI, typing, disabled controls and other tiles',()=>{

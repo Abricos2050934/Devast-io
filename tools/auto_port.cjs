@@ -199,7 +199,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  if(fireHelper&&fireRule) adaptedAim=adaptedAim.slice(0,fireHelper.start)+`function __jitterPatchNativeFire(source){const before=${JSON.stringify(fireRule.before)};if(source.split(before).length!==2)throw Error('Unsupported native fire handler');return source.replace(before,${JSON.stringify(fireRule.after)});}`+adaptedAim.slice(fireHelper.end);
  const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴎܕα','ᴎ༩༣','ԁ̶ϲ','І̎ܘ','еϲᄄ','ᴎ︅ހ','ѕ٨ᚄ','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠','рܙ๕','ᅟ᠌５','ᴀᄁ︃','рոᴎ','ᅠ̘ܛ'];
  const roles={nativeIntegrityFlag:integrity.flag,nativeIntegritySigners:integrity.signers};for(const key of requiredNative){const next=map[bindings.roles?.[key]||key];if(!next)throw Error('Missing browser validation binding '+key);roles[key]=next;}
- if(aim.includes('function __createMessage15Aim(')){
+ if(aim.includes('function __createUntitledAim(')){
   outputBindings.symbols['ⲟࠀᄀ']=map[bindings.symbols['ⲟࠀᄀ']];
   roles.messageKeyboard=map[bindings.roles?.messageKeyboard||'ⲣ๒༩'];
   roles.messageKeyboardDown=map[bindings.roles?.messageKeyboardDown||'ᴌЇ'];
@@ -222,7 +222,7 @@ if(require.main===module){
   const [, ,input,out]=process.argv;if(!input||!out)throw Error('Usage: node tools/auto_port.cjs RAW_JS OUTPUT_DIR');
   const read=f=>fs.readFileSync(path.join(root,f),'utf8');
   const candidate=fs.readFileSync(input,'utf8'),reference=require('./updater/references.cjs').loadReference(root,candidate);
-  const result=port(reference.source,candidate,reference.profile,reference.bindings,read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/message15-aim.js'),read('vendor/dat.gui.recovered.js'));
+  const result=port(reference.source,candidate,reference.profile,reference.bindings,read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/untitled-aim.js'),read('vendor/dat.gui.recovered.js'));
   fs.mkdirSync(out,{recursive:true});for(const [name,data]of Object.entries({'native.js':result.source,'game.modded.js':result.output,'profile.json':JSON.stringify(result.profile,null,2),'bindings.json':JSON.stringify(result.bindings,null,2),'ilm-aim.js':result.aim,'roles.json':JSON.stringify(result.roles,null,2),'port-report.json':JSON.stringify(result.report,null,2)}))fs.writeFileSync(path.join(out,name),data);
   console.log(JSON.stringify({status:'ported',...result.report,decoder_blocks:result.report.decoder_blocks.length}));
  }catch(error){console.error(error.message);process.exitCode=1;}

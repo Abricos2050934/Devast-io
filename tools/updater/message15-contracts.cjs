@@ -21,7 +21,7 @@ function message15Operations(a,operations,symbols,roles,protocol={moveOpcode:2},
  for(const [opcode,length,method]of [[5,1,'afterRelease'],[protocol.moveOpcode,2,'onMove']]){
   const node=sender(opcode,length),before=a.source.slice(node.start,node.end),args=node.arguments[0].arguments[0].elements;
   const argument=method==='onMove'?a.source.slice(args[1].start,args[1].end):'';
-  add('message15-native-'+method,node,'('+before+',__responsiveMod&&__responsiveMod.'+method+'('+argument+'))');
+  add('message15-native-'+method,node,method==='onMove'?'((!__responsiveMod||__responsiveMod.onMove('+argument+')!==false)&&'+before+')':'('+before+',__responsiveMod&&__responsiveMod.'+method+'('+argument+'))');
   if(opcode===5)roles.messageRelease=owner(node).id.name;
   else {roles.messageMoveSender=owner(node).id.name;roles.messageMove??=roles.messageMoveSender;}
  }
@@ -49,6 +49,6 @@ function message15Operations(a,operations,symbols,roles,protocol={moveOpcode:2},
  }else throw Error('Native session start contract changed');
  owner(start);
  add('message15-session-start',start,after);roles.messageSessionStart=start.id.name;
- return ops;
+ return require('./untitled-contracts.cjs').untitledDirectionOperations(ops,a);
 }
 module.exports={message15Operations};

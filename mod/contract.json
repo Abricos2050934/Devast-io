@@ -1,11 +1,11 @@
 {
   "schema": 1,
-  "name": "Devast-io Message15 mod",
+  "name": "Devast-io Untitled v4 imported aim",
   "modules": [
     "mod/responsive.js",
     "mod/bootstrap.js",
     "vendor/dat.gui.recovered.js",
-    "mod/message15-aim.js"
+    "mod/untitled-aim.js"
   ],
   "features": [
     "prediction-and-auto-fire",
@@ -35,14 +35,10 @@
     "automation-socket-backpressure",
     "connection-close-origin-diagnostics",
     "aim-cycle-socket-backpressure",
-    "verbatim-message15-aim",
-    "message15-native-lifecycle",
     "immediate-aim-numeric-settings",
-    "aim-small-queue-admission",
-    "immediate-message15-directions-and-bounded-auto-fire",
-    "aim-pointer-ownership-resync",
     "native-aim-transport-preserves-idle",
-    "equivalent-efficient-aim-target-search"
+    "verbatim-untitled-v4-aim",
+    "untitled-native-lifecycle"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -50,21 +46,15 @@
   ],
   "candidate_tests": [
     "tests/mod.test.cjs",
-    "tests/aim-settings.test.cjs",
     "tests/mod-performance.test.cjs",
-    "tests/aim-search.test.cjs",
     "tests/rejoin-recovery.test.cjs",
     "tests/ilm-autobuild.test.cjs",
-    "tests/jitter.test.cjs",
     "tests/player-labels.test.cjs",
     "tests/world-visuals.test.cjs",
     "tests/door-click.test.cjs",
     "tests/automation-transport.test.cjs",
-    "tests/aim-backpressure.test.cjs",
-    "tests/message15-source.test.cjs",
-    "tests/aim-send-rate.test.cjs",
-    "tests/aim-ownership.test.cjs",
-    "tests/native-aim-transport.test.cjs"
+    "tests/native-aim-transport.test.cjs",
+    "tests/untitled-aim.test.cjs"
   ],
   "required_browsers": [
     "chromium",

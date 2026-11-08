@@ -1,0 +1,383 @@
+{
+  "source_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+  "module_sha256": "8ebf46a5fe7fc0130128f27f81eaedaeb8edd65f5dc9d6ad3ed4fb8236445612",
+  "excluded_general_settings": [
+    "ShowGauges",
+    "ShowMines",
+    "ShowSpikes",
+    "ShowWires",
+    "ShowNamesOnMap",
+    "ShowHousesNamesOnMap",
+    "ShowKarmaOnPlayers"
+  ],
+  "menu_controls": [
+    "AimBotEnabled",
+    "target",
+    "resolverType",
+    "weaponMode",
+    "trigAim",
+    "trigIterations",
+    "aimTickRate",
+    "turboAim",
+    "sendOnlyOnChange",
+    "stickyTarget",
+    "stickyRadius",
+    "hideAimbotAngle",
+    "hidePlayerAngle",
+    "instantAim",
+    "instantMaxExtrap",
+    "ignoreTeammates",
+    "smoothLine",
+    "smoothLineMs",
+    "aimAlongLine",
+    "ShowRealAngles",
+    "mouseFovEnable",
+    "mouseFov",
+    "distanceCoefficient",
+    "bulletSpeedCoefficient",
+    "offsetCoefficient",
+    "autoFire",
+    "autoFireCheckObstacles",
+    "obstacleRadius",
+    "autoFireLine",
+    "TargetTeammate",
+    "lockId",
+    "perWeaponEnabled",
+    "detectedWeapon",
+    "spearDistance",
+    "spearBulletSpeed",
+    "spearOffset",
+    "sniperDistance",
+    "sniperBulletSpeed",
+    "sniperOffset",
+    "ak47Distance",
+    "ak47BulletSpeed",
+    "ak47Offset",
+    "otherDistance",
+    "otherBulletSpeed",
+    "otherOffset",
+    "selfPredictEnabled",
+    "selfPredictCoefficient",
+    "selfPredictAffectsAim",
+    "selfPredictLine",
+    "selfPredictColor",
+    "AntiAntiAim",
+    "antiAntiAimStrength",
+    "aaaMinReversals",
+    "aaaSlowInterval",
+    "aaaReleaseMs",
+    "aaaDeadzone",
+    "antiAntiAimLine",
+    "antiAntiAimColor",
+    "visualizeResolving",
+    "visualizeResolvingColor",
+    "jitterActive",
+    "jitterOffset",
+    "stopJittersOnStop",
+    "spinActive",
+    "spinSpeed",
+    "spinStopOnFire",
+    "AntiAimbot",
+    "antiAimMode",
+    "antiAimSpeed",
+    "antiAimStrafe",
+    "strafeMode",
+    "strafeInterval",
+    "strafeBlockRealMove",
+    "AimbotKey",
+    "AntiAimbotKey",
+    "StrafeWSKey",
+    "StrafeADKey",
+    "JitterKey",
+    "SpinKey",
+    "ModMenuKey"
+  ],
+  "source_file": "Untitled-1_mod_v4.js",
+  "source_bytes": 8072407,
+  "original_settings": 92,
+  "active_aim_settings": 85,
+  "exact_blocks": [
+    {
+      "index": 3,
+      "sha256": "c3cb086274aa80a671b46aed60dfd1335b27467fc74132b5f4f74ad5ecc7cf5f",
+      "preview": "function Settings() {\r\n    this.AimbotKey = \"KeyZ\";\r\n    this.AntiAimbotKey = \"NoKey\";\r\n  "
+    },
+    {
+      "index": 2,
+      "sha256": "7499bec2d4d63f601c80082c1d2c80fe4fbb6425d9d0b65a2ccfecabd2f27b68",
+      "preview": "var RAD = 180 / Math.PI;"
+    },
+    {
+      "index": 10,
+      "sha256": "7a0dbcf7f6fdda9f87b08071975c6cedd0e3433aa508ef2c48758666c01c2216",
+      "preview": "function getDistance(a, b) {\r\n    var dx = a.x - b.x, dy = a.y - b.y;\r\n    return Math.sqr"
+    },
+    {
+      "index": 11,
+      "sha256": "f489a93bf2349663b4aeb1318ad0b393b50623f6750f4634d0ac7462376a2758",
+      "preview": "function norm360(a) {\r\n    return ((a % 360) + 360) % 360;\r\n  }"
+    },
+    {
+      "index": 12,
+      "sha256": "eb446869c7e0c97d6f6409dbae59a7310b08ffad9ec908c0abb1a9a2dc4229d4",
+      "preview": "function angleBetween(from, to) {\r\n    return norm360(Math.atan2(to.y - from.y, to.x - fro"
+    },
+    {
+      "index": 13,
+      "sha256": "b7a5fc41dddbab05d25bb1d16e8733ea75acc2487e7dca4d5ec80f3b568c796a",
+      "preview": "var weaponNameCache = { def: null, name: \"Other\" };"
+    },
+    {
+      "index": 14,
+      "sha256": "eeb6f5b0235093247513f5758c2f5ff67f3bcb1ffc5830ede154b3fa57aa450c",
+      "preview": "function readHeldWeaponName() {\r\n    var def = globalThis.__heldItemDef;\r\n    if (!def) re"
+    },
+    {
+      "index": 15,
+      "sha256": "2c42b992645f680e4099dfdc54c9017622784dd001ac4b6b468843394dedebe3",
+      "preview": "function weaponParams() {\r\n    var w = readHeldWeaponName();\r\n    MOD.detectedWeapon = w;\r"
+    },
+    {
+      "index": 16,
+      "sha256": "cc524db0bf651fc25f8de5e16188db582f7b1b1059bfd05ce519fadc21773bbd",
+      "preview": "function solveIntercept(me, t, wp) {\r\n    var rx = t.x - me.x, ry = t.y - me.y;\r\n    var d"
+    },
+    {
+      "index": 17,
+      "sha256": "db7aa62660662b3f8a1265ded78549da29ff39ba28ca1f5d6286ed9c0effce37",
+      "preview": "var gameGuiOpen = false;"
+    },
+    {
+      "index": 18,
+      "sha256": "287cddc3af1e707e3df49022758dac65c97413b0dfc7cb228676d43b0ad940dd",
+      "preview": "function inOwnGui(el) {\r\n    return !!(el && el.closest && el.closest(\".dg\"));\r\n  }"
+    },
+    {
+      "index": 19,
+      "sha256": "309c7195dba34a42fa8370bca50ad13b8b157eaa725bdbdbf7f023e41b3e6225",
+      "preview": "function isGameCanvas(el) {\r\n    return !!(el && el.tagName === \"CANVAS\");\r\n  }"
+    },
+    {
+      "index": 20,
+      "sha256": "b75ac41113555bebf083e4d885fa64ec94035551fd259071fe645add56a01544",
+      "preview": "function aimPaused() { return false; }"
+    },
+    {
+      "index": 23,
+      "sha256": "d30d78ddf5bfb01ce13085dd96596432f1b85b8b06519a3b1ba4b68d300c3074",
+      "preview": "function Target(id) {\r\n    this.id = id;\r\n    this.x = -1;\r\n    this.y = -1;\r\n    this.pre"
+    },
+    {
+      "index": 24,
+      "sha256": "6db27cd7cd8e3463be60408ac35048ff85052aa380619fcdcd241adfb6bea7a6",
+      "preview": "Target.prototype.trackStrafe = function (dx, dy, now) {\r\n    /* 8-direction tracking: W,A,"
+    },
+    {
+      "index": 25,
+      "sha256": "e5fac7acd5d75b095f476ce702d03e5fe08836ab77a2126a0e9aa044e3a46fc3",
+      "preview": "Target.prototype.evalStrafe = function (now) {\r\n    var a = this.aaa, f = a.flips, n = f.l"
+    },
+    {
+      "index": 26,
+      "sha256": "61fe0b2b6ab9cc1f6e3054db7520efd6bebb8163e9ffd90f0a5b3687ab175932",
+      "preview": "Target.prototype.isStrafing = function () {\r\n    if (this.aaa.active) this.evalStrafe(Date"
+    },
+    {
+      "index": 27,
+      "sha256": "94908dc012aae040f50dd669715927984d8b0c641a7314065a9a0344140571e8",
+      "preview": "Target.prototype.update = function (x, y) {\r\n    var now = Date.now();\r\n    this.active = "
+    },
+    {
+      "index": 28,
+      "sha256": "3a9a62dd44b65fe30fddeeedd16b2de1cb827c9cb3ddbb0289b6c62faeb94eba",
+      "preview": "Target.prototype.now = function () {\r\n    var el = (Date.now() - this.lastUpdate) / Math.m"
+    },
+    {
+      "index": 29,
+      "sha256": "7c463f8079215a9eb8ea6a397ce65c2b9a065f4bdfd4ff2e2a5c3f07f1021b86",
+      "preview": "Target.prototype.speed = function () {\r\n    return Math.sqrt(this.vx * this.vx + this.vy *"
+    },
+    {
+      "index": 30,
+      "sha256": "baa99872a48253c35dfe16b61db48ca1f2ca8eadd470c3dcdda3bad86a362ccc",
+      "preview": "Target.prototype.setInactive = function () {\r\n    this.x = -1;\r\n    this.y = -1;\r\n    this"
+    },
+    {
+      "index": 31,
+      "sha256": "b690812770031d3183385a0ae29a87f459eab45a9de20ce69c36c14646d96cbe",
+      "preview": "function Line(alpha, width, color) {\r\n    this.x1 = -10;\r\n    this.y1 = -10;\r\n    this.x2 "
+    },
+    {
+      "index": 32,
+      "sha256": "cc2987a75fe1f9dd2e8c1bf9758c53d9744c04712632bc5575bd525391c0ea08",
+      "preview": "Line.prototype.reset = function (x1, y1, x2, y2) {\r\n    this.x1 = x1 === undefined ? -10 :"
+    },
+    {
+      "index": 33,
+      "sha256": "3a00dd1081f46a3fb40d86ecdad295a769af62c4e2cde4ff014617ed2a83c491",
+      "preview": "function smoothLineState(l) {\r\n    if (!l) return null;\r\n    var now = (typeof performance"
+    },
+    {
+      "index": 34,
+      "sha256": "4fff2aad53a3449ae526cde9fd18a367d055b2e957c676a2b00b7f1686421368",
+      "preview": "GetAllTargets = {\r\n    players: [],\r\n    ghouls: [],\r\n    lines: [],\r\n    mousePosition: {"
+    },
+    {
+      "index": 35,
+      "sha256": "7239a97d04e2d2385d61e896920ab3081872fa375127c4c5cc50773338c9d95e",
+      "preview": "for (var i = 1; i < 121; i++) GetAllTargets.players[i] = new Target(i);"
+    },
+    {
+      "index": 37,
+      "sha256": "e5f3acca9c52c558b143e5d84b2ae51d55fb33252b3475f20bc315aae7bc58cf",
+      "preview": "for (var g = 1; g < 999; g++) GetAllTargets.ghouls[g] = new Target(g);"
+    },
+    {
+      "index": 38,
+      "sha256": "8a309d512e42daa6afdb5ac32fe11280b6c7b458ecde1de1b1d9814d26659b94",
+      "preview": "GetAllTargets.lines.push(new Line(0.6, 1, MOD.visualizeResolvingColor));"
+    },
+    {
+      "index": 39,
+      "sha256": "c433624e0f13178809249d382b977f3d431d55d5bf69c00e6ae56f5de9b31631",
+      "preview": "GetAllTargets.lines.push(new Line(0.8, 2, MOD.selfPredictColor));"
+    },
+    {
+      "index": 40,
+      "sha256": "89c9cb0f287ee76621a36176b92b5eea50637fdd9eaaf952dda93d72dd1ba982",
+      "preview": "GetAllTargets.lines.push(new Line(0.8, 2, MOD.antiAntiAimColor));"
+    },
+    {
+      "index": 41,
+      "sha256": "b68d030de0e81086ad23b57ddabc6a6430ba6b63deac6d8d64f59420b70c385d",
+      "preview": "GetAllTargets.lines.push(new Line(0.8, 2, \"#0000FF\"));"
+    },
+    {
+      "index": 42,
+      "sha256": "61d58bdc7b499e406390b480db8ec46971902d124afa75db934d6e238093752e",
+      "preview": "var Obstacles = {\r\n    map: {},\r\n    set: function (type, pid, uid, x, y) {\r\n      if (typ"
+    },
+    {
+      "index": 43,
+      "sha256": "eeba085f99c26ebf5d8a0677a003e1613cf6f182662689ca0f66138046750669",
+      "preview": "__aimHub.obstacles = Obstacles;"
+    },
+    {
+      "index": 44,
+      "sha256": "df696082ee8c4bc4fcf34ce134041f20af97cfd21b7172afe1dea049e7d9b195",
+      "preview": "AimbotSelfPredict = {\r\n    x: 0,\r\n    y: 0,\r\n    vx: 0,\r\n    vy: 0,\r\n    last: { x: 0, y: "
+    },
+    {
+      "index": 45,
+      "sha256": "7c4034251715c98940ee8bdbc5283e993213d3afa09d75c0cc6eb525a100da0f",
+      "preview": "AimbotResolver = {\r\n    levelNames: [\"off\", \"slow\", \"fast\", \"very fast\"],\r\n    active: fun"
+    },
+    {
+      "index": 46,
+      "sha256": "8e410d852acbb69ac60ea404e13e4bbd681630ae86125c0ba7c65e182944bc2f",
+      "preview": "Aimbot = {\r\n    lastAngle: 0,\r\n    lastSent: -1,\r\n    currentTarget: null,\r\n    dead: fals"
+    },
+    {
+      "index": 47,
+      "sha256": "9542d6fb428d2000925a8628abac162d9b6b52d76b676b6c944e7e72f5a74c8e",
+      "preview": "AimbotJitter = {\r\n    flip: false,\r\n    tick: function () {\r\n      if (Aimbot.mouseDown) r"
+    },
+    {
+      "index": 48,
+      "sha256": "f6c677e2e9a88f5cf1604734de2ca9c7d29b45cbebc0178c047fa718289f7fe9",
+      "preview": "AimbotSpin = {\r\n    angle: 0,\r\n    tick: function () {\r\n      this.angle = norm360(this.an"
+    },
+    {
+      "index": 49,
+      "sha256": "a600466201c31e191000f61d6af8cf55a71026a91ff892808e43f2182d6df114",
+      "preview": "AimbotAntiAim = {\r\n    angle: 0,\r\n    counter: 1,\r\n    step: 0,\r\n    moves: [1, 2, 4, 8, 1"
+    },
+    {
+      "index": 50,
+      "sha256": "63adad080f6a6f5a253d914b0008608405ae55aad7fa4a7fd158756347e6ed93",
+      "preview": "var KEYS = { w: false, a: false, s: false, d: false };"
+    },
+    {
+      "index": 51,
+      "sha256": "d48eaa93c691ddd5f0bcf20fd711f9c606c337704c894c0b016f01e5eba8fcb4",
+      "preview": "var KMAP = { KeyW: \"w\", KeyA: \"a\", KeyS: \"s\", KeyD: \"d\" };"
+    },
+    {
+      "index": 52,
+      "sha256": "86d289adb598c3771b2c70755f57dfff689cc0d626ae27db7402a5cac61edd1d",
+      "preview": "window.addEventListener(\"keydown\", function (e) { var k = KMAP[e.code]; if (k) KEYS[k] = t"
+    },
+    {
+      "index": 53,
+      "sha256": "732efe0be48cac874a2c7f200c2dbad515f325b510eeb83591f091cac09f3949",
+      "preview": "window.addEventListener(\"keyup\", function (e) { var k = KMAP[e.code]; if (k) KEYS[k] = fal"
+    },
+    {
+      "index": 54,
+      "sha256": "acad0a5ed532ec654b97de4b4d9441cdfdaf819c202eab2d63c6572a7f789527",
+      "preview": "AimbotStrafe = {\r\n    bits: { a: 1, d: 2, s: 4, w: 8 },   /* auto-corrected from your real"
+    },
+    {
+      "index": 56,
+      "sha256": "1143e4dc9be3bcddb6c8abb0eb833a2458d92608a77e9127194cc7a9115c92c2",
+      "preview": "var AutoFire = {\r\n    tick: function () {\r\n      var t = Aimbot.currentTarget;\r\n      if ("
+    },
+    {
+      "index": 57,
+      "sha256": "b69284c6cd831a8271225c07e04a940f2df73876c0ccd60bfdc6da25c4a541d0",
+      "preview": "function aimbotTick() {\r\n    if (Aimbot.dead) return;\r\n\r\n    /* keep the self-predict line"
+    },
+    {
+      "index": 63,
+      "sha256": "df6b8ed950de8ac4863f424d403739e811c11347c26318548f205517a252e601",
+      "preview": "var guiControllers = [];"
+    },
+    {
+      "index": 64,
+      "sha256": "5f29781fcf26aac16c22c628bfe490ea9558a5eb87f2c1da0284b1e8e6d4d58e",
+      "preview": "function refreshGui() {\r\n    guiControllers.forEach(function (c) {\r\n      try {\r\n        c"
+    },
+    {
+      "index": 68,
+      "sha256": "6a769b597f87db34be0804739a134aaad9bf4c8e34a756217d076c81d61d5eae",
+      "preview": "function toggleStrafeMode(mode) {\r\n    if (MOD.AntiAimbot && MOD.antiAimStrafe && MOD.stra"
+    },
+    {
+      "index": 55,
+      "sha256": "51b3b3c318c878c53236d56402be5db83ffb083a1bccc589d43c05f8bc6f0940",
+      "preview": "(function strafeLoop() {\r\n    try { AimbotStrafe.tick(); } catch (e) {}\r\n    setTimeout(st"
+    },
+    {
+      "index": 58,
+      "sha256": "64593c3b4e0f7a91de44f98d58dc4397cbaa282050fedd8994bf3b58eb73325c",
+      "preview": "(function loop() {\r\n    try {\r\n      aimbotTick();\r\n    } catch (e) {}\r\n    var active = M"
+    },
+    {
+      "index": 59,
+      "sha256": "1bcce1998f8bf5fdd6846afb738f6aff85ccc5e78fcb4d7a26d75a8c6b1dc668",
+      "preview": "window.addEventListener(\"mousemove\", function (e) {\r\n    GetAllTargets.mousePosition.x = e"
+    },
+    {
+      "index": 60,
+      "sha256": "01f6a1170157a8961289a8909be1682ecb4489a91f18e65294235ad2980df3ef",
+      "preview": "document.addEventListener(\"mousedown\", function (e) {\r\n    /* handled by hookGameAttack */"
+    },
+    {
+      "index": 61,
+      "sha256": "6990f0bc3cb2b159bf2aeaa5477b8812201523b49d8f92b6f966c33dd3b314c9",
+      "preview": "document.addEventListener(\"mouseup\", function (e) {\r\n    if (e.button === 0 && (inOwnGui(e"
+    },
+    {
+      "index": 62,
+      "sha256": "a1ee61a4813ae3efdf45cb14fdc0f7e5b4f7b8da7002386ee445313cb403a95d",
+      "preview": "window.addEventListener(\"blur\", function () {\r\n    Aimbot.mouseDown = false;\r\n  });"
+    },
+    {
+      "index": 69,
+      "sha256": "4fe909bc12efd784ef69f8bf1c5ad52c604232013fab6ee7ff5ebcd4a45bb9b9",
+      "preview": "window.addEventListener(\"keydown\", function (e) {\r\n    var tag = document.activeElement &&"
+    }
+  ],
+  "retired_engine": "recovery/retired-message15",
+  "reference_file": "recovery/untitled-aim-reference.json.gz"
+}

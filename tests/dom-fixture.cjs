@@ -18,9 +18,9 @@ function domFixture() {
   const document={readyState:'loading',body:element('body'),head:element('head'),activeElement:null,createElement:element,getElementById:id=>id==='can'?canvas:id==='chatInput'?chat:null};
   class GUI {
     constructor(){this.domElement=element('div');this.__controllers=[];this.__folders={};}
-    close(){return this;}
+    close(){return this;}open(){return this;}
     addFolder(name){return this.__folders[name]=new GUI();}
-    add(object,property,...range){const c={object,property,range,domElement:element('div'),name(label){this.label=label;return this;},onChange(fn){this.changed=fn;return this;},listen(){return this;},updateDisplay(){return this;},setValue(value){object[property]=value;this.changed?.(value);return this;}};this.__controllers.push(c);return c;}
+    add(object,property,...range){const c={object,property,range,domElement:element('div'),name(label){this.label=label;return this;},step(value){this.stepValue=value;return this;},onChange(fn){this.changed=fn;return this;},listen(){return this;},updateDisplay(){return this;},setValue(value){object[property]=value;this.changed?.(value);return this;}};this.__controllers.push(c);return c;}
     addColor(...args){return this.add(...args);}updateDisplay(){}destroy(){this.destroyed=true;}
   }
   return {document,canvas,calls,GUI};

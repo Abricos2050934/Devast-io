@@ -32,3 +32,10 @@ test('session hook rejects an unguarded or unsupported native start body',()=>{
  for(const body of ['save(name);connect();','ready||(save(name),connect());','ready&&connect();'])
   assert.throws(()=>sessionPatch(body),/Native session start contract changed/);
 });
+test('uploaded packetAngle transforms both native send sites while preserving timing and codec call count',()=>{
+ const {untitledDirectionOperations}=require('../tools/updater/untitled-contracts.cjs');
+ const source='function direction(){clock=now;cache=angle;(!__responsiveMod||!__responsiveMod.controlsAimDirection)&&send(codec.encode([6,angle]));}';
+ const ops=untitledDirectionOperations(['primary','secondary'].map(suffix=>({id:'ilm-native-angle-bookkeeping-'+suffix,after:source})));
+ for(const op of ops){const sent=[],c={now:100,angle:30,__responsiveMod:{controlsAimDirection:true,nativePacketAngle:x=>x+180},send:p=>sent.push(p),codec:{encode:p=>p}};vm.runInNewContext(op.after+';direction();',c);assert.deepEqual(JSON.parse(JSON.stringify(sent)),[[6,210]]);assert.equal(c.clock,100);assert.equal(c.cache,30);}
+ assert.throws(()=>untitledDirectionOperations([{id:'ilm-native-angle-bookkeeping-primary',after:source}]),/Both reviewed/);
+});

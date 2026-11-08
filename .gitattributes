@@ -1,0 +1,3 @@
+
+# Preserve literal imported source blocks, including CRLF.
+mod/untitled-aim.js -text whitespace=cr-at-eol,-blank-at-eol

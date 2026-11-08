@@ -1,9 +1,10 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {fixture,scene}=require('./mod-fixture.cjs');
 
-test('ILM still computes every tick while queued and non-open sockets suppress its sends',()=>{
+test('Uploaded aim still computes every tick while queued and non-open sockets suppress its sends',()=>{
  const f=fixture();try{
   f.mod.trackPacket(1,1,0,0,0,true);f.mod.trackPacket(1,2,0,100,100,true);
+  for(const[k,v]of Object.entries({selfPredictEnabled:false,smoothLine:false,resolverType:'none'}))f.mod.setSetting(k,v);
   f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('AimBotEnabled',true);
   const socket={readyState:1,bufferedAmount:8192};f.mod.observeSocket(socket);
   for(let t=0;t<500;t+=50){f.setClock(t);f.mod.aim.refresh();}
