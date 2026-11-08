@@ -12,7 +12,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const decodedOld=deobfuscate(reference),decodedNew=reference===candidate?decodedOld:deobfuscate(candidate);
  const old=readonlyConstants(analyze(decodedOld.source)),cur=readonlyConstants(analyze(decodedNew.source)),oldCanon=new Map(),curCanon=new Map();
  const group=(a,cache)=>{const map=new Map();for(const n of a.functions){if(n.end-n.start>80000)continue;const c=canonical(a,n);cache.set(n,c);if(!map.has(c.hash))map.set(c.hash,[]);map.get(c.hash).push(n);}return map;};
- const og=group(old,oldCanon),ng=group(cur,curCanon),pairs=new Map(),votes=new Map();
+ const og=group(old,oldCanon),ng=group(cur,curCanon),pairs=new Map(),votes=new Map(),propertyVotes=new Map();
  const propose=(a,b)=>{if(!a||!b||!obfuscated(a)&&a!==b)return;if(!votes.has(a))votes.set(a,new Set());votes.get(a).add(b);};
  function prop(a,n){if(n.type==='MemberExpression')return n.computed?a.constant(n.property):n.property.name;if(n.type==='Property')return n.computed?a.constant(n.key):n.key.name??n.key.value;}
  function learn(oc,nc){const local=new Map();function add(a,b){if(a===undefined||b===undefined)return;if(local.has(a)&&local.get(a)!==b)throw Error('Inconsistent structural binding '+a);local.set(a,b);propose(a,b);}
@@ -20,7 +20,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
    if(n.type==='Identifier'&&m.type==='Identifier'&&
       (old.constant(n)===undefined&&!old.isUndefined(n)||old.binding(n)?.node===n)&&
       (cur.constant(m)===undefined&&!cur.isUndefined(m)||cur.binding(m)?.node===m))add(n.name,m.name);
-   if(n.type===m.type&&['MemberExpression','Property'].includes(n.type)){const a=prop(old,n),b=prop(cur,m);if(typeof a==='string'&&typeof b==='string'&&obfuscated(a))add(a,b);}
+   if(n.type===m.type&&['MemberExpression','Property'].includes(n.type)){const a=prop(old,n),b=prop(cur,m);if(typeof a==='string'&&typeof b==='string'&&obfuscated(a)){add(a,b);if(n.type==='MemberExpression'){if(!propertyVotes.has(a))propertyVotes.set(a,new Set());propertyVotes.get(a).add(b);}}}
   }return local;
  }
  for(const [key,list]of og){const next=ng.get(key);if(list.length===1&&next?.length===1){pairs.set(list[0],next[0]);learn(oldCanon.get(list[0]),curCanon.get(next[0]));}}
@@ -119,7 +119,20 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  // All eight native method contracts below/above must pass before this
  // independently identified namespace can override conflicting name votes.
  verifiedGlobals.set(bindings.symbols['о̃༩'],provisional[bindings.symbols['о̃༩']]);
- const canonicalRequired=new Set();for(const source of [payload,bootstrap])for(const tok of acorn.tokenizer(source,{ecmaVersion:'latest'}))if(Object.hasOwn(bindings.symbols,tok.value))canonicalRequired.add(tok.value);
+ // Required adapter fields use member-access evidence. Unrelated alpha-equivalent
+ // object literals can reuse the same old property spelling for another field.
+ const canonicalRequired=new Set(),propertyKeys=new Set(),variableKeys=new Set();
+ for(const source of [payload,bootstrap]){
+  for(const tok of acorn.tokenizer(source,{ecmaVersion:'latest'}))if(Object.hasOwn(bindings.symbols,tok.value))canonicalRequired.add(tok.value);
+  const todo=[[acorn.parse(source,{ecmaVersion:'latest'}),null]];while(todo.length){const[n,parent]=todo.pop();
+   if(n.type==='Literal'&&Object.hasOwn(bindings.symbols,n.value))propertyKeys.add(n.value);
+   if(n.type==='Identifier'&&Object.hasOwn(bindings.symbols,n.name)){
+    const field=parent?.type==='MemberExpression'&&!parent.computed&&parent.property===n||parent?.type==='Property'&&!parent.computed&&parent.key===n;
+    (field?propertyKeys:variableKeys).add(n.name);
+   }
+   for(const v of Object.values(n))if(Array.isArray(v))todo.push(...v.filter(x=>x?.type).map(x=>[x,n]));else if(v?.type)todo.push([v,n]);
+  }
+ }
  // Existing protected metadata is decoded to a normal constructor assignment.
  const ops=profile.operations.map(op=>op.decoded_before?{...op,before:op.decoded_before,after:op.decoded_after}:op.id==='ilm-native-initial-nickname-id'?{...op,before:'this.ο३︀ = ο३︀',after:'this.ο३︀ = __ilmPlayerNickname(ο३︀,ᴘ५٢)'}:op);
  function anchor(text,id){
@@ -153,6 +166,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
    return {old:n,current:target,local:learn(oc,nc),projection:new Map([...oc.entries].filter(([p])=>nc.entries.has(p)).map(([p,n])=>[n,nc.entries.get(p)]))};
   }
   const oc=canonical(old,n),list=cur.nodes.filter(m=>m.type===n.type&&cur.parent.get(m)===cur.tree.body[0]?.expression?.callee?.body).filter(m=>canonical(cur,m).hash===oc.hash);
+  if(list.length!==1&&id==='bootstrap')return require('./updater/bootstrap.cjs').initializerBootstrap(old,cur,n,bindings.symbols['ι‌̵'],globalMap()[bindings.symbols['ι‌̵']],pairs);
   if(list.length!==1)throw Error('Bootstrap anchor changed or ambiguous: '+id);
   return {old:n,current:list[0],local:learn(oc,canonical(cur,list[0]))};
  }
@@ -175,7 +189,8 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
    homeProperties.set(prop(old,left),prop(cur,right));
   }
  }
- for(const key of canonicalRequired){const previous=bindings.symbols[key],next=(key==='nativeIntegrityFlag'?integrity.flag:key==='nativeHomeEnter'?homeProperties.get(previous):map[previous])??(!obfuscated(previous)?previous:undefined);
+ if(!homeProperties.has(bindings.symbols.nativeHomeEnter))homeProperties.set(bindings.symbols.nativeHomeEnter,require('./updater/home-activation.cjs').homeActivation(old,cur,homeScope,nextHomeScope,homeReturn,nextHomeReturn,bindings.symbols.nativeHomeEnter,pairs));
+ for(const key of canonicalRequired){const previous=bindings.symbols[key],fields=propertyKeys.has(key)&&!variableKeys.has(key)&&propertyVotes.get(previous),field=fields&&fields.size===1?[...fields][0]:undefined,next=(key==='nativeIntegrityFlag'?integrity.flag:key==='nativeHomeEnter'?homeProperties.get(previous):fields?field:map[previous])??(!obfuscated(previous)?previous:undefined);
   if(!next)throw Error('Missing or ambiguous required native binding: '+key+' ('+previous+')');outputBindings.symbols[key]=next;outputBindings.evidence[key]='unique normalized native function correspondence';
  }
  // Every fragment is a reviewed patch. Materialize only immutable literal aliases.

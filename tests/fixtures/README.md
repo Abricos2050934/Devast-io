@@ -18,3 +18,12 @@ It reproduces conflicting structural votes for the native network namespace.
 The namespace is independently identified by its matched exported functions,
 then all eight native method contracts are still checked. This input is also
 not registered as a baseline or given a version-specific patch profile.
+
+`rotation-2026-11-08b.js.gz` is the unmodified public client from
+`https://devast.io/js/oBgZbNI48tDRbPbHHSZh.js` (2026-11-08), SHA256
+`1a3807a85d8b36df3e97c51b4311c8a6c51a04b3ad65687d7e2366f1e1502c9b`.
+It renames the entity allocator export `init` while retaining its independently
+matched implementation and startup arguments. It also exposes a collision
+between a native tile field and an unrelated object-literal property. The
+adapter field must use unique member-access evidence. This fixture remains
+unregistered and is ported from the same reviewed November 6 baseline.
