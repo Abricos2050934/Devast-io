@@ -200,8 +200,20 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
      m.setSetting('LootDataEnabled',false);m.setSetting('FAutoLootEnabled',true);
      blockedSocket.bufferedAmount=4096;m.observeSocket(blockedSocket);m.render(0);m.render(16);check(transport.packets.length===0,'Fast loot grew the socket backlog');
      m.observeSocket(null);m.render(0);m.render(16);
-     check(JSON.stringify(transport.packets)===JSON.stringify([[12,10],[12,11],[12,10],[12,11]]),'Native fast loot cadence/bindings differ from ILM');
+     check(JSON.stringify(transport.packets)===JSON.stringify([[12,10],[12,11]]),'Fast loot repeated inside the 25 ms interval');m.render(25);check(transport.packets.length===4,'Fast loot failed to resume on its next cycle');
     }finally{m.setSetting('FAutoLootEnabled',false);for(const id of [10,11])n.entities.remove(0,id,1,1,0);}
+    transport.packets.length=0;
+    const denseLoot=[];
+    try{
+     for(let id=10;id<110;id++){const drop=n.entities.get(0,id,1,1);Object.assign(drop,{id,x:self.x+10,y:self.y,[s['е̝ހ']]:0,[s['Іࡈ５']]:6});denseLoot.push(id);}
+     m.setSetting('FAutoLootEnabled',true);
+     for(let frame=0;frame<306;frame++)m.render(1000+frame*1000/153);
+     const lootPackets=transport.packets.filter(p=>p[0]===12);
+     check(lootPackets.length<=640&&lootPackets.length>500,'Fast loot exceeds the reference transport budget');
+     check(new Set(lootPackets.map(p=>p[1])).size===100,'Bounded loot starved later drops');
+     const info=m.connectionInfo();check(info.modTraffic.scope==='mod-generated-commands-only'&&info.modTraffic.seconds.length>0&&info.modTraffic.settingsChanges.length>0,'Session traffic history missing');
+     check(info.automationLimits.fastLootIntervalMs===25&&info.automationLimits.fastLootBurst===8,'Loot rate limits missing');
+    }finally{m.setSetting('FAutoLootEnabled',false);for(const id of denseLoot)n.entities.remove(0,id,1,1,0);}
     transport.packets.length=0;self.x=1234.5;self.y=5678.25;Object.assign(self,{[s['ε︁ᚂ']]:1,[s['օⲥᚁ']]:1,[s['α०ᚂ']]:3,[s['ρⲅ️']]:40,[s['ᴎ︆ࡉ']]:27});m.setSetting('AutoBuiledEnabled',true);
     try{
      m.step(0);m.step(8);check(transport.packets.length===0,'RAF duplicated native AutoBuild');
@@ -343,7 +355,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors: '+m.diagnostics.errors.join('; '));
-   return {ilm_aim:m.ilmAimVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {ilm_aim:m.ilmAimVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,bounded_fast_loot:true,session_mod_traffic_history:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:reference});
   report.physical_numeric=await require('./verify_ilm_physical.cjs').verifyPhysical(page,symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';

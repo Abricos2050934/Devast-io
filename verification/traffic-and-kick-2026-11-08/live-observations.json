@@ -1,0 +1,296 @@
+{
+  "scope": "Separate anonymous headless Chromium contexts; no attacks. Backend host selection and environmental conditions differ; ordinary death and server rejection are not distinguishable from these payloads. Scripts are exact, no browser API wrappers. Proxy root pinned for TLS.",
+  "rows": [
+    {
+      "mode": "reference",
+      "result": "session-ended",
+      "source_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+      "replaced_main_script": 1,
+      "server_label": "Losangeles 2 - 3 players",
+      "joined_ms": 14843,
+      "finished_ms": 25086,
+      "page_errors": [],
+      "sockets": [
+        {
+          "host": "127.0.0.1",
+          "opened_ms": 11732,
+          "incoming": 0,
+          "outgoing": 0,
+          "closed_ms": 11760,
+          "socket_errors": [
+            "Error in connection establishment: net::ERR_UNSAFE_PORT"
+          ]
+        },
+        {
+          "host": "losangeles3.devast.io",
+          "opened_ms": 13222,
+          "incoming": 14,
+          "outgoing": 428,
+          "closed_ms": 23823,
+          "socket_errors": []
+        }
+      ],
+      "samples": [
+        {
+          "elapsed": 5,
+          "state": null,
+          "mod_commands": null,
+          "events": null
+        },
+        {
+          "elapsed": 10,
+          "state": null,
+          "mod_commands": null,
+          "events": null
+        }
+      ]
+    },
+    {
+      "mode": "current-off",
+      "result": "session-ended",
+      "source_sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+      "replaced_main_script": 1,
+      "server_label": "Losangeles 2 - 3 players",
+      "joined_ms": 13891,
+      "finished_ms": 29208,
+      "page_errors": [],
+      "sockets": [
+        {
+          "host": "127.0.0.1",
+          "opened_ms": 11023,
+          "incoming": 0,
+          "outgoing": 0,
+          "closed_ms": 11036,
+          "socket_errors": [
+            "Error in connection establishment: net::ERR_UNSAFE_PORT"
+          ]
+        },
+        {
+          "host": "losangeles1.devast.io",
+          "opened_ms": 11841,
+          "incoming": 57,
+          "outgoing": 2,
+          "closed_ms": 25772,
+          "socket_errors": []
+        }
+      ],
+      "samples": [
+        {
+          "elapsed": 5,
+          "state": 1,
+          "mod_commands": {},
+          "events": []
+        },
+        {
+          "elapsed": 10,
+          "state": 1,
+          "mod_commands": {},
+          "events": []
+        },
+        {
+          "elapsed": 15,
+          "state": 0,
+          "mod_commands": {},
+          "events": [
+            {
+              "type": "server-death",
+              "at": 24704,
+              "state": 1,
+              "integrityFlag": 0,
+              "aim": false,
+              "autoFire": false,
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false,
+              "socketState": 1,
+              "socketBufferedBytes": 0,
+              "transport": {
+                "id": 1,
+                "openForMs": 12238,
+                "receiveGapMs": 1,
+                "receivedMessages": 57,
+                "localCloseSource": null
+              },
+              "pageHidden": false,
+              "frameGapMs": 30,
+              "health": 255,
+              "commandsInLast2s": {
+                "angle": 0,
+                "attack": 0,
+                "release": 0
+              },
+              "deathOpcode": 5,
+              "deathPacketLength": 3,
+              "deathPrefixHex": "05 00 00"
+            },
+            {
+              "type": "socket-close",
+              "at": 25747,
+              "state": 0,
+              "integrityFlag": 0,
+              "aim": false,
+              "autoFire": false,
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false,
+              "socketState": 3,
+              "socketBufferedBytes": 0,
+              "transport": {
+                "id": 1,
+                "openForMs": 13281,
+                "receiveGapMs": 1043,
+                "receivedMessages": 57,
+                "localCloseSource": null
+              },
+              "pageHidden": false,
+              "frameGapMs": 23,
+              "health": 255,
+              "commandsInLast2s": {
+                "angle": 0,
+                "attack": 0,
+                "release": 0
+              },
+              "code": 1005,
+              "clean": true,
+              "localCloseObserved": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "current",
+      "result": "session-ended",
+      "source_sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+      "replaced_main_script": 1,
+      "server_label": "Losangeles 2 - 3 players",
+      "joined_ms": 12297,
+      "finished_ms": 27582,
+      "page_errors": [],
+      "sockets": [
+        {
+          "host": "127.0.0.1",
+          "opened_ms": 10066,
+          "incoming": 0,
+          "outgoing": 0,
+          "closed_ms": 10114,
+          "socket_errors": [
+            "Error in connection establishment: net::ERR_UNSAFE_PORT"
+          ]
+        },
+        {
+          "host": "losangeles3.devast.io",
+          "opened_ms": 10747,
+          "incoming": 44,
+          "outgoing": 251,
+          "closed_ms": 26299,
+          "socket_errors": []
+        }
+      ],
+      "samples": [
+        {
+          "elapsed": 5,
+          "state": 1,
+          "mod_commands": {
+            "6": 96
+          },
+          "events": []
+        },
+        {
+          "elapsed": 10,
+          "state": 1,
+          "mod_commands": {
+            "6": 192
+          },
+          "events": []
+        },
+        {
+          "elapsed": 15,
+          "state": 0,
+          "mod_commands": {
+            "6": 249
+          },
+          "events": [
+            {
+              "type": "server-death",
+              "at": 25190,
+              "state": 1,
+              "integrityFlag": 0,
+              "aim": true,
+              "autoFire": false,
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false,
+              "socketState": 1,
+              "socketBufferedBytes": 0,
+              "transport": {
+                "id": 1,
+                "openForMs": 14248,
+                "receiveGapMs": 1,
+                "receivedMessages": 44,
+                "localCloseSource": null
+              },
+              "pageHidden": false,
+              "frameGapMs": 14,
+              "health": 255,
+              "commandsInLast2s": {
+                "angle": 40,
+                "attack": 0,
+                "release": 0
+              },
+              "deathOpcode": 5,
+              "deathPacketLength": 3,
+              "deathPrefixHex": "05 00 00"
+            },
+            {
+              "type": "socket-close",
+              "at": 26273,
+              "state": 0,
+              "integrityFlag": 0,
+              "aim": true,
+              "autoFire": false,
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false,
+              "socketState": 3,
+              "socketBufferedBytes": 0,
+              "transport": {
+                "id": 1,
+                "openForMs": 15331,
+                "receiveGapMs": 1084,
+                "receivedMessages": 44,
+                "localCloseSource": null
+              },
+              "pageHidden": false,
+              "frameGapMs": 14,
+              "health": 255,
+              "commandsInLast2s": {
+                "angle": 18,
+                "attack": 0,
+                "release": 0
+              },
+              "code": 1005,
+              "clean": true,
+              "localCloseObserved": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusion": "All four observed sessions ended. Current ILM also received server death with all automation disabled since entry and no mod commands. This does not establish the cause of the user disconnect and does not validate no-kick stability.",
+  "later_origin_status": {
+    "html": 503,
+    "native_js": 503,
+    "body": "upstream connect error or disconnect/reset before headers. reset reason: remote connection failure"
+  },
+  "server_runtime_eval": "Attempted passive CDP capture, blocked at entry after origin failure; no server eval source was obtained."
+}

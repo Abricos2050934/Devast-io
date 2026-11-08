@@ -24,6 +24,16 @@ class PublicationTests(unittest.TestCase):
   with zipfile.ZipFile(io.BytesIO(files['Devast-io-Resource-Override.zip'])) as z:
    self.assertEqual(z.namelist(),['Devast-io-GitHub-Resource-Override.json'])
    self.assertEqual(z.read(z.namelist()[0]),files[z.namelist()[0]])
+ def test_loot_budget_and_session_history_require_both_browsers(self):
+  self.contract['features']=['bounded-fast-loot','session-mod-traffic-history']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'bounded_fast_loot':True,'session_mod_traffic_history':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for key in ['bounded_fast_loot','session_mod_traffic_history']:
+   self.validation['browsers']['firefox']['native'][key]=False;self.save()
+   with self.assertRaisesRegex(ValueError,'traffic behavior.*firefox'):p.artifacts(self.root,self.out)
+   self.validation['browsers']['firefox']['native'][key]=True
+
  def test_changed_mod_after_validation_cannot_publish(self):
   (self.root/'mod/test.js').write_text('another mod')
   with self.assertRaisesRegex(ValueError,'another mod'):p.artifacts(self.root,self.out)

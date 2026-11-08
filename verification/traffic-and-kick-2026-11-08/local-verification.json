@@ -1,0 +1,128 @@
+{
+  "status": "passed",
+  "mode": "saved previously verified native source; not a fresh online release check",
+  "output_sha256": "7518269520b36c09689f3e82f681279f73f784edaefb37096e53d8cb56a7e3ed",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 156,
+    "python_tests": 56
+  },
+  "candidate_tests": 101,
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "154.0.8037.57",
+      "bounded_fast_loot": true,
+      "session_mod_traffic_history": true,
+      "ilm_aim": {
+        "status": "passed",
+        "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+        "scenes": 48,
+        "comparison_points": 2400,
+        "exact_states": true,
+        "exact_normalized_packets": true,
+        "original_timer_ms": 50,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "native_direction_ownership": true,
+        "server_death_sends_no_commands": true
+      },
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "bounded_fast_loot": true,
+      "session_mod_traffic_history": true,
+      "ilm_aim": {
+        "status": "passed",
+        "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+        "scenes": 48,
+        "comparison_points": 2400,
+        "exact_states": true,
+        "exact_normalized_packets": true,
+        "original_timer_ms": 50,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "native_direction_ownership": true,
+        "server_death_sends_no_commands": true
+      },
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    }
+  }
+}

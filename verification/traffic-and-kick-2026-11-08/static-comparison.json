@@ -1,0 +1,48 @@
+{
+  "scope": "Full parsed/decrypted saved sources; baseline current ILM release before this fix. Large enclosing bodies have no direct hash, nested functions remain covered. Different fingerprints do not identify anti-cheat.",
+  "baseline_output_sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+  "reference_upload_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+  "indices": {
+    "reference": {
+      "sha256": "dd1ec4e04c5cbcc45c822dfa59c84f96c651d14e6669e2541e64a42e84ad5a76",
+      "nodes": 718739,
+      "functions": 16567,
+      "large_containers": 37
+    },
+    "native": {
+      "sha256": "e1799132e4369cde75e8b153a9629f96e959e4053991fa5d33df3b9c3feaafdf",
+      "nodes": 689446,
+      "functions": 16133,
+      "large_containers": 7
+    },
+    "ours": {
+      "sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+      "nodes": 719700,
+      "functions": 16652,
+      "large_containers": 8
+    }
+  },
+  "comparisons": [
+    {
+      "left": "native",
+      "right": "reference",
+      "total": 16133,
+      "exact_normalized": 14205,
+      "unmatched_count": 1928
+    },
+    {
+      "left": "native",
+      "right": "ours",
+      "total": 16133,
+      "exact_normalized": 16089,
+      "unmatched_count": 44
+    },
+    {
+      "left": "reference",
+      "right": "ours",
+      "total": 16567,
+      "exact_normalized": 14290,
+      "unmatched_count": 2277
+    }
+  ]
+}

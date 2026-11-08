@@ -778,6 +778,28 @@ function __installDevastMod(B) {
     return {samples:gaps.length,meanGapMs:Math.round(mean*100)/100,p95GapMs:gaps.length?Math.round(gaps[Math.floor((gaps.length-1)*.95)]*100)/100:null,fpsEstimate:mean>0?Math.round(1000/mean):null,hidden:!!document.hidden};
   }
   const recentCombatCommands = [], connectionEvents = [];
+  const trafficKeys=['AimBotEnabled','autoFire','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','SpamChatEnabled','AntiKickEnabled'];
+  const trafficSettings=Object.fromEntries(trafficKeys.map(key=>[key,MOD[key]]));
+  const trafficChanges=[{at:Math.round(performance.now()),settings:{...trafficSettings}}],trafficSeconds=[];
+  let trafficPeak=null,trafficDiscardedChanges=0;
+  function trimTraffic(now) {
+    while(trafficSeconds.length&&(trafficSeconds.length>1800||now-trafficSeconds[0].at>=1800000))trafficSeconds.shift();
+  }
+  function recordTraffic(op) {
+    const now=performance.now(),at=Math.floor(now/1000)*1000,socket=socketTrace?.id??null;
+    let bucket=trafficSeconds[trafficSeconds.length-1];
+    if(!bucket||bucket.at!==at||bucket.socket!==socket){bucket={at,socket,commands:0,byOpcode:{}};trafficSeconds.push(bucket);}
+    bucket.commands++;bucket.byOpcode[op]=(bucket.byOpcode[op]||0)+1;
+    if(!trafficPeak||bucket.commands>trafficPeak.commands)trafficPeak=bucket;
+    trimTraffic(now);
+  }
+  function trafficInfo() {
+    trimTraffic(performance.now());
+    const copy=b=>b?{...b,byOpcode:{...b.byOpcode}}:null;
+    return {scope:'mod-generated-commands-only',retentionMs:1800000,maxSeconds:1800,
+      seconds:trafficSeconds.map(copy),lifetimePeak:copy(trafficPeak),
+      settingsChanges:trafficChanges.map(e=>({...e,settings:{...e.settings}})),discardedSettingsChanges:trafficDiscardedChanges};
+  }
   const automationDeferrals={aim:0,loot:0,build:0,take:0,chat:0,keepAlive:0};
   const AIM_BUFFER_HIGH_WATER=4096;
   function automationReady(kind) {
@@ -841,6 +863,8 @@ function __installDevastMod(B) {
   let playerListPanel, playerListBody, playerListCount, playerListOrder = '';
   const playerListRows = new Map(), departedPlayers = new Map();
   let lastStep = -Infinity, lastLoot = -Infinity;
+  const FAST_LOOT_INTERVAL=25,FAST_LOOT_BURST=8;
+  let lastFastLoot=-Infinity,fastLootCursor=0;
   let lastTake = -Infinity, lastKeepAlive = -Infinity, lastChat = -Infinity, nextChatAt = -Infinity;
   const chatState = {
     status: 'Off',
@@ -903,6 +927,7 @@ function __installDevastMod(B) {
     if (packet[0] === 6) {lastSentAngle = packet[1];lastSentPlayer = B.world.ᅠᏧ‍.id;}
     diagnostics.commands++;
     diagnostics.commandsByOpcode[packet[0]]=(diagnostics.commandsByOpcode[packet[0]]||0)+1;
+    recordTraffic(packet[0]);
     return true;
   }
   // ILM manual fire uses the last direction sent by its original timer.
@@ -951,6 +976,11 @@ function __installDevastMod(B) {
     }
     if (key === 'SAutoLootEnabled' && value) MOD.FAutoLootEnabled = false;
     if (key === 'FAutoLootEnabled' && value) MOD.SAutoLootEnabled = false;
+    if(trafficKeys.some(name=>trafficSettings[name]!==MOD[name])){
+      for(const name of trafficKeys)trafficSettings[name]=MOD[name];
+      trafficChanges.push({at:Math.round(performance.now()),settings:{...trafficSettings}});
+      if(trafficChanges.length>64){trafficChanges.shift();trafficDiscardedChanges++;}
+    }
     persist();
     if (menu) menu.updateDisplay();
   }
@@ -1081,7 +1111,7 @@ function __installDevastMod(B) {
   }
   function automate(now) {
     const me = B.world.ᅠᏧ‍;
-    if (!B.synchronizedRender && MOD.FAutoLootEnabled) scanFastLoot();
+    if (!B.synchronizedRender && MOD.FAutoLootEnabled) scanFastLoot(now);
     if (MOD.SAutoLootEnabled && !MOD.FAutoLootEnabled && now - lastLoot >= 200 && automationReady('loot')) {
       lastLoot = now;
       const loot = records.filter(r => r.type === B.categories.loot && (r.e.x - me.x) ** 2 + (r.e.y - me.y) ** 2 < 50000 && lootAllowed(r.e));
@@ -1150,18 +1180,24 @@ function __installDevastMod(B) {
       chatState.status = 'Send not confirmed';
     }
   }
-  function scanFastLoot() {
+  function scanFastLoot(now=performance.now()) {
     if (!playing() || !MOD.FAutoLootEnabled) return;
+    if(now-lastFastLoot<FAST_LOOT_INTERVAL)return;
     if(!automationReady('loot'))return;
-    // ILM visits every nearby drop on each frame, independently of the game's
-    // single cursor-selected interaction. fastDist in ILM is squared distance.
+    // Match the reference's 25 ms loot timer and bounded burst. Rotate the
+    // starting slot so a busy first group cannot starve the remaining drops.
     const me = B.world.ᅠᏧ‍, type = B.categories.loot, border = B.entities.border[type], group = B.entities.ᴎ̂２[type];
-    if (border && group) for (let i = 0; i < border.border; i++) {
+    if(!border||!group||!border.border)return;
+    let visited=0,sent=0;
+    while(visited<border.border&&sent<FAST_LOOT_BURST){
+      const i=(fastLootCursor+visited++)%border.border;
       const e = group[border.ⲣᴑᴏ[i]];
       if (!e || e.е̝ހ !== 0 || !Number.isInteger(e.id) || !Number.isFinite(e.x) || !Number.isFinite(e.y)) continue;
       const distance = (e.x - me.x) ** 2 + (e.y - me.y) ** 2;
-      if (distance < 41000 && (!MOD.LootDataEnabled || allowedLootIds.has(e.Іࡈ５))) __send([12, e.id]);
+      if (distance < 41000 && (!MOD.LootDataEnabled || allowedLootIds.has(e.Іࡈ５))&&__send([12,e.id]))sent++;
     }
+    fastLootCursor=(fastLootCursor+visited)%border.border;
+    if(sent)lastFastLoot=now;
   }
   function building(r) {
     if ([B.categories.player, B.categories.loot, 13].includes(r.type)) return null;
@@ -1501,6 +1537,8 @@ function __installDevastMod(B) {
       modCommandsByOpcode:{...diagnostics.commandsByOpcode},
       automationSettings:{autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled},
       automationTransport:{deferred:{...automationDeferrals},aimHighWaterBytes:AIM_BUFFER_HIGH_WATER},
+      automationLimits:{fastLootIntervalMs:FAST_LOOT_INTERVAL,fastLootBurst:FAST_LOOT_BURST},
+      modTraffic:trafficInfo(),
       aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',sourceTickRateMs:50,deduplicatedDirections:diagnostics.deduplicatedAngles},
       aimSettings:{enabled:MOD.AimBotEnabled,source:'ilm-original',autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,

@@ -52,7 +52,7 @@ test('dispose removes timers, frame callbacks and registered event handlers', ()
 
 
 
-test('ILM fast loot sends all in-range drops each frame without the native selected-item restriction',()=>{
+test('fast loot visits in-range drops on bounded cycles without the native selected-item restriction',()=>{
  const f=fixture();scene(f,2,[
   ...[10,11,12].map(id=>({id,x:20,y:0,'е̝ހ':0,'Іࡈ５':6})),
   {id:13,x:Math.sqrt(41000),y:1,'е̝ހ':0,'Іࡈ５':6},
@@ -60,11 +60,11 @@ test('ILM fast loot sends all in-range drops each frame without the native selec
  ]);
  Object.assign(f.world['ᅠᏧ‍'],{'І๔︊':-1,'ιᄁ८':999});
  f.mod.setSetting('FAutoLootEnabled',true);
- for(const at of [0,16,32]){f.mod.render(at);assert.deepEqual(f.packets.slice(-3),[[12,10],[12,11],[12,12]]);}
+ for(const at of [0,25,50]){f.mod.render(at);assert.deepEqual(f.packets.slice(-3),[[12,10],[12,11],[12,12]]);}
  assert.equal(f.packets.length,9);
- scene(f,2,[{id:11,x:20,y:0,'е̝ހ':0,'Іࡈ５':6}]);f.mod.render(48);assert.deepEqual(f.packets.slice(9),[[12,11]]);
- f.mod.setSetting('FAutoLootEnabled',false);f.mod.render(64);assert.equal(f.packets.length,10);
- f.mod.setSetting('FAutoLootEnabled',true);f.network.state=64;f.mod.render(80);assert.equal(f.packets.length,10);f.mod.dispose();
+ scene(f,2,[{id:11,x:20,y:0,'е̝ހ':0,'Іࡈ５':6}]);f.mod.render(75);assert.deepEqual(f.packets.slice(9),[[12,11]]);
+ f.mod.setSetting('FAutoLootEnabled',false);f.mod.render(100);assert.equal(f.packets.length,10);
+ f.mod.setSetting('FAutoLootEnabled',true);f.network.state=64;f.mod.render(125);assert.equal(f.packets.length,10);f.mod.dispose();
 });
 
 test('fast loot menu filter applies immediately to every drop, independently of cursor interaction',()=>{
@@ -74,7 +74,7 @@ test('fast loot menu filter applies immediately to every drop, independently of 
  steel.setValue(false);scene(f,2,[{id:10,x:10,y:0,'е̝ހ':0,'Іࡈ５':6}]);
  f.mod.render(0);assert.equal(f.packets.length,0);steel.setValue(true);
  f.mod.render(16);assert.deepEqual(f.packets,[[12,10]]);
- f.mod.loot.steel.acquire=false;f.mod.setSetting('LootDataEnabled',false);f.mod.render(32);assert.deepEqual(f.packets,[[12,10],[12,10]]);f.mod.dispose();
+ f.mod.loot.steel.acquire=false;f.mod.setSetting('LootDataEnabled',false);f.mod.render(41);assert.deepEqual(f.packets,[[12,10],[12,10]]);f.mod.dispose();
 });
 
 test('zoom persists across reload; invalid ranges and choices are rejected; conflicting key bindings swap',()=>{
@@ -234,10 +234,10 @@ test('ILM updates on its timer and native fire preserves the last transmitted di
  }finally{f.mod.dispose();}
 });
 
-test('native synchronized rendering picks drops once per game frame without a second RAF scan',()=>{
+test('native synchronized fast loot respects its interval without a second RAF scan',()=>{
  const f=fixture({dom:true});f.B.synchronizedRender=true;
  scene(f,2,[{id:10,x:10,y:0,'е̝ހ':0,'Іࡈ５':6}]);f.mod.setSetting('FAutoLootEnabled',true);
  f.mod.step(0);assert.equal(f.packets.length,0);f.mod.render(0);assert.deepEqual(f.packets,[[12,10]]);
- f.mod.step(16);assert.equal(f.packets.length,1);f.mod.render(16);assert.deepEqual(f.packets,[[12,10],[12,10]]);
+ f.mod.step(16);assert.equal(f.packets.length,1);f.mod.render(16);assert.equal(f.packets.length,1);f.mod.render(25);assert.deepEqual(f.packets,[[12,10],[12,10]]);
  scene(f,2,[]);f.mod.render(32);assert.equal(f.packets.length,2);f.mod.dispose();
 });

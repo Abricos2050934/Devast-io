@@ -37,7 +37,9 @@
     "immediate-aim-numeric-settings",
     "native-aim-transport-preserves-idle",
     "verbatim-original-ilm-aim",
-    "ilm-native-lifecycle"
+    "ilm-native-lifecycle",
+    "bounded-fast-loot",
+    "session-mod-traffic-history"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -53,7 +55,8 @@
     "tests/door-click.test.cjs",
     "tests/automation-transport.test.cjs",
     "tests/native-aim-transport.test.cjs",
-    "tests/ilm-current.test.cjs"
+    "tests/ilm-current.test.cjs",
+    "tests/mod-traffic.test.cjs"
   ],
   "required_browsers": [
     "chromium",

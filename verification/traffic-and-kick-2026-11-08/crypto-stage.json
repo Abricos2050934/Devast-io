@@ -1,0 +1,1 @@
+{"status":"passed","seeds":65536,"scope":"Actual epsilon XOR stage, identical prepared mutable session keys and resolved fixed constants; continuation replaced by a call counter in both variants. Other transport/dispatch stages match normalized source hashes.","continuations":[{"version":"reference","calls":65536},{"version":"native","calls":65536}]}
