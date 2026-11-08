@@ -7,7 +7,9 @@ function surfaces(a){
   if(n.type!=='BinaryExpression'||n.operator!=='===')continue;
   const id=n.left.type==='Identifier'&&a.constant(n.right)===1?n.left:n.right.type==='Identifier'&&a.constant(n.left)===1?n.right:null,b=id&&a.binding(id);
   if(b?.kind!=='var'||a.constant(b.init)!==0)continue;
-  let owner=a.parent.get(n);while(owner&&!(isFunction(owner)&&owner.id))owner=a.parent.get(owner);
+  // Named immediately invoked cipher helpers are not the protocol entrypoint.
+  // Keep the containing native function declaration as the signature owner.
+  let owner=a.parent.get(n);while(owner&&owner.type!=='FunctionDeclaration')owner=a.parent.get(owner);
   if(!owner||owner.end-owner.start<8000)continue;
   if(!groups.has(b))groups.set(b,[]);groups.get(b).push({predicate:n,id,owner});
  }

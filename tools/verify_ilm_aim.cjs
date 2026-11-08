@@ -38,17 +38,17 @@ function verifyIlmAim(m,n,s,reference){
    m.setSetting('AimBotEnabled',false);for(const probe of n.directionProbes){capture.packets.length=0;probe(Math.PI/2);check(JSON.stringify(capture.packets)==='[[6,90]]','Disabling ILM did not return native mouse control');}nativeOwnership=true;
   }
   m.setSetting('AimBotEnabled',true);m.setSetting('autoFire',true);m.setSetting('lockId',2);m.trackPacket(n.playerType??0,2,1,0,0,false);capture.packets.length=0;
-  m.aim.refresh();check(capture.packets.length===0&&!m.controlsAimDirection,'Removed locked target still controlled transport');
-  if(n.directionProbes?.length){for(const probe of n.directionProbes){capture.packets.length=0;probe(Math.PI/2);check(JSON.stringify(capture.packets)==='[[6,90]]','Missing target did not return native pointer control');}}
+  m.aim.refresh();check(capture.packets.length===0&&m.controlsAimDirection,'Removed target generated commands or lost original ILM direction ownership');
+  if(n.directionProbes?.length){for(const probe of n.directionProbes){capture.packets.length=0;probe(Math.PI/2);check(capture.packets.length===0,'Mouse overwrote ILM direction during target loss');}}
   m.setSetting('autoFire',false);m.trackPacket(n.playerType??0,2,1,1500,1000,true);capture.packets.length=0;m.aim.refresh();check(JSON.stringify(capture.packets)==='[[6,0]]','Target recovery failed to reassert the original ILM angle');
-  m.setSetting('lockId',1);capture.packets.length=0;m.aim.refresh();check(capture.packets.length===0&&!m.controlsAimDirection,'Self lock generated automatic commands');
-  m.setSetting('lockId',2);m.trackPacket(n.playerType??0,1,1,0,0,false);capture.packets.length=0;m.aim.refresh();check(capture.packets.length===0&&!m.controlsAimDirection,'Missing own position generated automatic commands');
+  m.setSetting('lockId',1);capture.packets.length=0;m.aim.refresh();check(capture.packets.length===0&&m.controlsAimDirection,'Self lock generated automatic commands or yielded ILM direction');
+  m.setSetting('lockId',2);m.trackPacket(n.playerType??0,1,1,0,0,false);capture.packets.length=0;m.aim.refresh();check(capture.packets.length===0&&m.controlsAimDirection,'Missing own position generated automatic commands or yielded ILM direction');
   m.trackPacket(n.playerType??0,1,1,1000,1000,true);m.aim.refresh();
   m.trackPacket(13,0,17,1100,1000,true);m.onSessionStart();m.onHandshake();capture.packets.length=0;m.aim.refresh();
   check(capture.packets.length===0&&!m.targets.players.some(t=>t.active)&&!m.targets.ghouls.some(t=>t.active),'A rapid new handshake reused previous-session entities');
   m.trackPacket(n.playerType??0,1,1,4000,4000,true);m.trackPacket(n.playerType??0,2,1,4500,4000,true);capture.packets.length=0;m.aim.refresh();check(JSON.stringify(capture.packets)==='[[6,0]]'&&m.targets.players[2].prevX[0]===-1,'Reused player ID retained old position history');
   capture.packets.length=0;m.observeDeath([5,0,2]);m.aim.refresh();m.afterFire();m.afterRelease();check(capture.packets.length===0,'Server death generated ILM commands');
-  return {status:'passed',upload_sha256:reference.upload_sha256,scenes:48,comparison_points:points,exact_states:true,exact_normalized_admitted_packets:true,valid_target_admission:true,session_target_reset:true,original_timer_ms:50,whole_auto_fire_cycle:true,small_queue_admission:true,native_direction_ownership:nativeOwnership,server_death_sends_no_commands:true};
+  return {status:'passed',upload_sha256:reference.upload_sha256,scenes:48,comparison_points:points,exact_states:true,exact_normalized_admitted_packets:true,valid_target_admission:true,session_target_reset:true,original_timer_ms:50,whole_auto_fire_cycle:true,small_queue_admission:true,native_direction_ownership:nativeOwnership,source_pointer_ownership_on_target_loss:true,server_death_sends_no_commands:true};
  }finally{capture.restore();m.observeSocket(null);Object.assign(m.reconnect,oldReconnect);m.onHandshake();self.id=oldId;n.network.state=oldState;for(const[id,value]of oldMeta)metadata[id]=value;clans[0]=oldClan;for(const[k,v]of Object.entries(saved))m.setSetting(k,v);}
 }
 module.exports={verifyIlmAim};

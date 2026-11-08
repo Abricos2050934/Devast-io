@@ -1,0 +1,200 @@
+{
+  "release": {
+    "schema": 1,
+    "release": "2ed517af39c1705e6c322d20bc313c8d2fe5d0c8a2b0568ab4546255a00ce3ec",
+    "raw_sha256": "96dc71ca2e8db9da8e2530e2f2c494f18e63fa5dcbb505cf118f1d9602affa72",
+    "inputs_sha256": "cc65ac4929f7c92ad580259725fad55e658f6d51bf45d8cf66b39662715291dc",
+    "output_sha256": "53a709b277b119d1583069e23f9cfc94e421bfae337634f2af35d653b06e4ce2",
+    "script": "versions/2ed517af39c1705e6c322d20bc313c8d2fe5d0c8a2b0568ab4546255a00ce3ec/game.modded.js",
+    "source_url": "https://devast.io/js/SkDtyOEyCkJMegCiLA.js",
+    "activated_at": "2026-11-08T14:16:54.651142+00:00",
+    "previous_release": "38467a5c2257102036805e86830657fca8e4307dcb0461cad026848585dbae5d",
+    "validation": "passed",
+    "live_server": "not_tested",
+    "publication": "local_only"
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 177,
+    "python_tests": 58
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "ilm": {
+        "status": "passed",
+        "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+        "scenes": 48,
+        "comparison_points": 2400,
+        "exact_states": true,
+        "exact_normalized_admitted_packets": true,
+        "valid_target_admission": true,
+        "session_target_reset": true,
+        "original_timer_ms": 50,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "native_direction_ownership": true,
+        "source_pointer_ownership_on_target_loss": true,
+        "server_death_sends_no_commands": true
+      },
+      "mouse": {
+        "status": "passed",
+        "cases": 18,
+        "source_camera_coordinates": true,
+        "exact_target_and_sent_angle": true,
+        "disabled_fov_retains_coordinates": true
+      },
+      "server_angle": {
+        "status": "passed",
+        "cases": 72,
+        "frames": 288,
+        "native_player_lerp": 0.15,
+        "zero_position_sentinels_ignored": true,
+        "actual_server_packet_angle": true,
+        "source_wrap_and_interpolation": true,
+        "manual_fire_keeps_source_direction": true
+      },
+      "native_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "ilm": {
+        "status": "passed",
+        "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+        "scenes": 48,
+        "comparison_points": 2400,
+        "exact_states": true,
+        "exact_normalized_admitted_packets": true,
+        "valid_target_admission": true,
+        "session_target_reset": true,
+        "original_timer_ms": 50,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "native_direction_ownership": true,
+        "source_pointer_ownership_on_target_loss": true,
+        "server_death_sends_no_commands": true
+      },
+      "mouse": {
+        "status": "passed",
+        "cases": 18,
+        "source_camera_coordinates": true,
+        "exact_target_and_sent_angle": true,
+        "disabled_fov_retains_coordinates": true
+      },
+      "server_angle": {
+        "status": "passed",
+        "cases": 72,
+        "frames": 288,
+        "native_player_lerp": 0.15,
+        "zero_position_sentinels_ignored": true,
+        "actual_server_packet_angle": true,
+        "source_wrap_and_interpolation": true,
+        "manual_fire_keeps_source_direction": true
+      },
+      "native_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      }
+    }
+  },
+  "known_mouse_reproduction": {
+    "actual": {
+      "point": {
+        "x": 1200,
+        "y": 1000
+      },
+      "target": 3,
+      "angle": 27
+    },
+    "original": {
+      "point": {
+        "x": 1400,
+        "y": 1000
+      },
+      "target": 2,
+      "angle": 0
+    }
+  },
+  "known_pointer_reproduction": {
+    "actual": [
+      [
+        6,
+        90
+      ]
+    ],
+    "original": []
+  },
+  "live_server_latency": "not measured; extra native pointer overwrite reproduced and removed"
+}

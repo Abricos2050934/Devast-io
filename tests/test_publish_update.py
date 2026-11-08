@@ -130,6 +130,26 @@ class PublicationTests(unittest.TestCase):
    self.validation['browsers']['firefox']['native']['ilm_aim']['status']=state;self.save()
    with self.assertRaisesRegex(ValueError,'Original ILM.*firefox'):p.artifacts(self.root,self.out)
 
+ def test_original_ilm_mouse_and_server_angle_require_both_browsers(self):
+  self.contract['features']=['ilm-native-mouse-and-server-angle-parity']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():
+   report['native']={'ilm_mouse':{'status':'passed','cases':18,'exact_target_and_sent_angle':True},'ilm_server_angle':{'status':'passed','cases':72,'actual_server_packet_angle':True,'zero_position_sentinels_ignored':True,'manual_fire_keeps_source_direction':True}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for name in ['ilm_mouse','ilm_server_angle']:
+   report=self.validation['browsers']['firefox']['native'][name]
+   report['status']='failed';self.save()
+   with self.assertRaisesRegex(ValueError,'mouse and native server-angle.*firefox'):p.artifacts(self.root,self.out)
+   report['status']='passed'
+
+ def test_original_ilm_pointer_ownership_during_target_loss_is_required(self):
+  self.contract['features']=['ilm-pointer-ownership-between-ticks']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'ilm_aim':{'source_pointer_ownership_on_target_loss':True}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['ilm_aim']['source_pointer_ownership_on_target_loss']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'pointer ownership.*firefox'):p.artifacts(self.root,self.out)
+
  def test_coalesced_directions_require_native_idle_ping_verification(self):
   self.contract['features']=['coalesced-aim-directions']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

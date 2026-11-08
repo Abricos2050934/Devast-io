@@ -4,7 +4,7 @@ const {analyze,isFunction,obfuscated,hash}=require('./updater/static.cjs');
 const {readonlyConstants,semanticCanonical:canonical}=require('./updater/semantic.cjs');
 const {deobfuscate}=require('./updater/decoder.cjs');
 const {integrityOperations}=require('./updater/integrity.cjs');
-const {directionDelay,exportNames,serverListSchema}=require('./updater/network-contracts.cjs');
+const {directionDelay,exportNames,serverListSchema,namespaceByExports}=require('./updater/network-contracts.cjs');
 const {translate}=require('./translate_payload.cjs'),{assemble}=require('./build_client.cjs');
 const root=path.resolve(__dirname,'..');
 function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
@@ -49,7 +49,8 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const curveOld=curveWeaponFields(old),curveNew=curveWeaponFields(cur);
  if(bindings.symbols.curveWeapons!==curveOld.table||bindings.symbols.curveBulletSpeed!==curveOld.speed)throw Error('Reviewed curve weapon bindings changed');
  propose(curveOld.table,curveNew.table);propose(curveOld.speed,curveNew.speed);
- const globalMap=()=>Object.fromEntries([...votes].filter(([,v])=>v.size===1).map(([k,v])=>[k,[...v][0]]));
+ const verifiedGlobals=new Map();
+ const globalMap=()=>Object.fromEntries([...votes].filter(([,v])=>v.size===1).map(([k,v])=>[k,[...v][0]]).concat([...verifiedGlobals]));
  // Check native network entrypoints themselves, not just references to their names.
  const rootBody=old.tree.body[0]?.expression?.callee?.body?.body;
  const networkDefinition=rootBody?.flatMap(n=>n.declarations||[]).find(d=>d.id.name===bindings.symbols['о̃༩']);
@@ -58,9 +59,17 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const nativeContracts=[];
  const provisional=globalMap();
  const nextRoot=cur.tree.body[0]?.expression?.callee?.body?.body;
- const nextNetwork=nextRoot?.flatMap(n=>n.declarations||[]).find(d=>d.id.name===provisional[bindings.symbols['о̃༩']])?.init?.callee;
- const nextReturn=nextNetwork?.body?.body.filter(n=>n.type==='ReturnStatement').at(-1)?.argument;
- if(networkReturn?.type!=='ObjectExpression'||nextReturn?.type!=='ObjectExpression')throw Error('Native network interface is not statically inspectable');
+ let nextNetwork=nextRoot?.flatMap(n=>n.declarations||[]).find(d=>d.id.name===provisional[bindings.symbols['о̃༩']])?.init?.callee;
+ let nextReturn=nextNetwork?.body?.body.filter(n=>n.type==='ReturnStatement').at(-1)?.argument;
+ if(networkReturn?.type!=='ObjectExpression')throw Error('Native network interface is not statically inspectable');
+ if(nextReturn?.type!=='ObjectExpression'){
+  // Independent export-function identities disambiguate a namespace when
+  // unrelated alpha-equivalent fragments vote for different global objects.
+  const anchors=networkReturn.properties.map(p=>entryDefinition(old,networkReturn,networkScope,prop(old,p),bindings.symbols['о̃༩'])).map(fn=>pairs.get(fn)).filter(Boolean);
+  const found=namespaceByExports(cur,nextRoot,anchors);
+  provisional[bindings.symbols['о̃༩']]=found.name;nextNetwork=found.scope;nextReturn=found.object;
+ }
+
  function entryDefinition(a,object,scope,name,namespace){
   const entry=object.properties.find(p=>(p.computed?a.constant(p.key):p.key.name??p.key.value)===name);
   if(!entry){
@@ -107,6 +116,9 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   if(direction&&(directionDelay(old,left)===null||directionDelay(old,left)!==directionDelay(cur,right)))throw Error('Native direction timing changed: '+key);
   pairs.set(left,right);learn(oldCanon.get(left),curCanon.get(right));nativeContracts.push(key);
  }
+ // All eight native method contracts below/above must pass before this
+ // independently identified namespace can override conflicting name votes.
+ verifiedGlobals.set(bindings.symbols['о̃༩'],provisional[bindings.symbols['о̃༩']]);
  const canonicalRequired=new Set();for(const source of [payload,bootstrap])for(const tok of acorn.tokenizer(source,{ecmaVersion:'latest'}))if(Object.hasOwn(bindings.symbols,tok.value))canonicalRequired.add(tok.value);
  // Existing protected metadata is decoded to a normal constructor assignment.
  const ops=profile.operations.map(op=>op.decoded_before?{...op,before:op.decoded_before,after:op.decoded_after}:op.id==='ilm-native-initial-nickname-id'?{...op,before:'this.ο३︀ = ο३︀',after:'this.ο३︀ = __ilmPlayerNickname(ο३︀,ᴘ५٢)'}:op);
@@ -130,7 +142,12 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
    return {old:n,current,local,callbackGuard:true};
   }
   if(fn&&fn!==old.tree.body[0]?.expression?.callee){
-   const matched=pairs.get(fn);if(!matched)throw Error('Native contract changed or ambiguous: '+id);
+   const matched=pairs.get(fn);
+   if(!matched&&id==='native-play-preparation-recovery'&&n===fn){
+    const match=require('./updater/play-preparation.cjs').playPreparation(old,cur,fn,{oldNamespace:bindings.symbols['о̃༩'],oldLogin:bindings.symbols['ᅠϲ᠍'],namespace:provisional[bindings.symbols['о̃༩']],login:provisional[bindings.symbols['ᅠϲ᠍']]});
+    return {...match,local:learn(match.oc,match.nc)};
+   }
+   if(!matched)throw Error('Native contract changed or ambiguous: '+id);
    const oc=oldCanon.get(fn),nc=curCanon.get(matched),p=[...oc.entries].find(([,v])=>v===n)?.[0];
    const target=nc.entries.get(p);if(!target)throw Error('Unmapped patch node '+id);
    return {old:n,current:target,local:learn(oc,nc),projection:new Map([...oc.entries].filter(([p])=>nc.entries.has(p)).map(([p,n])=>[n,nc.entries.get(p)]))};

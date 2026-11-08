@@ -1023,6 +1023,7 @@ function __installDevastMod(B) {
     const kind=type===B.categories.player?'players':type===13?'ghouls':null;
     const id=kind==='players'?playerId:uid;
     if(!kind||!Number.isInteger(id)||id<0||id>65535)return;
+    if(active&&id===0)return; // Original ILM receiver skips zero position sentinels.
     const group=GetAllTargets[kind];while(group.length<=id)group.push(new aimModule.Target(group.length));aimModule.ensure(id);
     if(!active){group[id].setInactive();return;}
     if(Number.isFinite(x)&&Number.isFinite(y))group[id].update(x,y);
@@ -1132,8 +1133,10 @@ function __installDevastMod(B) {
   }
   function updateMouse() {
     if (!MOD.mouseFovEnable) return;
-    const point = cursorWorld(GetAllTargets.mousePosition);
-    if (point) GetAllTargets.mouseMapCords = point;
+    // ILM feeds clientX/clientY to its own camera helper. The canvas/DPI
+    // conversion used by doors and building previews changes its target search.
+    const v = B.view();
+    if (v.scale > 0) GetAllTargets.mouseMapCords = __ilmMouseToWorld(GetAllTargets.mousePosition,v);
   }
   function automate(now) {
     const me = B.world.ᅠᏧ‍;
@@ -2231,7 +2234,10 @@ function __installDevastMod(B) {
     onSessionStart:resetAimForSession,
     get controlsAimDirection() {
       const controls=playing() && !reconnect.sessionEnded &&
-        (MOD.AimBotEnabled&&!invalidAimState());
+        MOD.AimBotEnabled&&!Aimbot.dead;
+      // Like ILM's native handlers, mouse direction yields for the entire
+      // enabled interval, including a short gap in the target's position data.
+      // Automatic commands still require valid self/target coordinates above.
       // Both native direction handlers query this immediately before sending.
       // Once mouse input can change the server angle, our cache no longer proves
       // its value. Reacquisition must reassert even the same predicted angle.

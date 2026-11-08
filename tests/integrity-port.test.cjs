@@ -46,3 +46,12 @@ test('opaque native signer rotation retains new formulas and rejects an extra fl
  for(const flag of [0,1]){const context={};require('node:vm').runInNewContext(patched+`;rotated=${flag};result=[alpha(10),beta(10),gamma(10)]`,context,{timeout:1000});assert.equal(JSON.stringify(context.result),'[[11,false],[17,false],[13,false]]');}
  assert.throws(()=>integrityOperations(old,analyze(next+'function extra(){return rotated}'),new Map()),/contract changed/);
 });
+test('a named IIFE around a flag read retains the outer native signature owner',()=>{
+ const pad='/*'+'.'.repeat(8100)+'*/';
+ const original=source.replace('const one=1;','const one=1;function check(f){if(f.toString().indexOf("[native code]")<0){ѕ०̊=1;ѕ०̊=1;ѕ०̊=1}}').replaceAll('{return','{'+pad+'return');
+ const next=original.replace('x+1,ѕ०̊===1','x+7,(function cipherHelper(){return ѕ०̊===1})()');
+ const result=integrityOperations(analyze(original),analyze(next),new Map());assert.equal(result.operations.length,3);
+ assert.ok(result.operations.some(op=>op.after.includes('function cipherHelper(){return false}')));
+ assert.ok(result.signers.includes('а１๐'));assert.equal(result.signers.includes('cipherHelper'),false);
+ assert.throws(()=>integrityOperations(analyze(original),analyze(next+'function other(){return ѕ०̊}'),new Map()),/contract changed/);
+});

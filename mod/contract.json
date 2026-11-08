@@ -42,7 +42,9 @@
     "session-mod-traffic-history",
     "valid-live-aim-targets",
     "bounded-auto-build",
-    "aim-session-history-reset"
+    "aim-session-history-reset",
+    "ilm-native-mouse-and-server-angle-parity",
+    "ilm-pointer-ownership-between-ticks"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -60,7 +62,8 @@
     "tests/native-aim-transport.test.cjs",
     "tests/ilm-current.test.cjs",
     "tests/mod-traffic.test.cjs",
-    "tests/aim-validity.test.cjs"
+    "tests/aim-validity.test.cjs",
+    "tests/ilm-native-pipeline.test.cjs"
   ],
   "required_browsers": [
     "chromium",

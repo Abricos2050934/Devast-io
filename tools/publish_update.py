@@ -92,6 +92,18 @@ def artifacts(root, output):
                     or aim.get('native_direction_ownership') is not True or aim.get('whole_auto_fire_cycle') is not True
                     or aim.get('server_death_sends_no_commands') is not True):
                 raise ValueError('Original ILM source comparison was not verified in browser: ' + browser)
+        if 'ilm-native-mouse-and-server-angle-parity' in contract.get('features', []):
+            native = report.get('native', {})
+            mouse, angle = native.get('ilm_mouse', {}), native.get('ilm_server_angle', {})
+            if (mouse.get('status') != 'passed' or mouse.get('cases', 0) < 18
+                    or mouse.get('exact_target_and_sent_angle') is not True
+                    or angle.get('status') != 'passed' or angle.get('cases', 0) < 72
+                    or angle.get('actual_server_packet_angle') is not True
+                    or angle.get('zero_position_sentinels_ignored') is not True
+                    or angle.get('manual_fire_keeps_source_direction') is not True):
+                raise ValueError('Original ILM mouse and native server-angle pipeline was not verified in browser: ' + browser)
+        if 'ilm-pointer-ownership-between-ticks' in contract.get('features', []) and report.get('native', {}).get('ilm_aim', {}).get('source_pointer_ownership_on_target_loss') is not True:
+            raise ValueError('Original ILM pointer ownership during target loss was not verified in browser: ' + browser)
         if 'native-aim-transport-preserves-idle' in contract.get('features', []) and report.get('native', {}).get('native_aim_transport', {}).get('status') != 'passed':
             raise ValueError('Native aim transport and periodic idle packets were not verified in browser: ' + browser)
         if 'immediate-aim-numeric-settings' in contract.get('features', []) and report.get('physical_numeric', {}).get('status') != 'passed':

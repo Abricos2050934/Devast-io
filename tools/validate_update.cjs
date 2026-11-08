@@ -27,6 +27,8 @@ for(const file of ['mod/bootstrap.js','vendor/dat.gui.recovered.js']) {
 assert.equal(output.slice(installer.start,installer.end),translate(fs.readFileSync(path.join(root,'mod/responsive.js'),'utf8'),symbols).trim());
 function normalize(value){if(Array.isArray(value))return value.map(normalize);if(!value||typeof value!=='object')return value;return Object.fromEntries(Object.entries(value).filter(([key])=>!['start','end','raw'].includes(key)).map(([key,v])=>[key,normalize(v)]));}
 const reference=require('./audit_ilm_port.cjs').reference();
+const originalHooks=JSON.parse(z.gunzipSync(fs.readFileSync(path.join(root,'recovery/ilm-integration-reference.json.gz'))));
+const originalAngles=JSON.parse(z.gunzipSync(fs.readFileSync(path.join(root,'recovery/ilm-native-angle-reference.json.gz'))));
 require('./audit_ilm_port.cjs').audit(read('ilm-aim.js'),installerSource);
 for(const block of reference.blocks)assert.ok(output.includes(block.source),'Missing original ILM block: '+block.name);
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
@@ -111,6 +113,8 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   await page.route(source.script_url,r=>r.fulfill({status:200,contentType:'text/javascript',body:override.data[0].rules[0].file}));
   await page.route(url=>url.hostname==='raw.githubusercontent.com'&&url.pathname==='/Abricos2050934/Devast-io/updates/game.modded.js',r=>r.fulfill({status:200,contentType:'text/plain',headers:{'access-control-allow-origin':'*'},body:code}));
   await page.addInitScript('window.__verifyIlmAim='+require('./verify_ilm_aim.cjs').verifyIlmAim.toString());
+  await page.addInitScript('window.__verifyIlmMouse='+require('./verify_ilm_native_pipeline.cjs').verifyIlmMouse.toString());
+  await page.addInitScript('window.__verifyIlmServerAngle='+require('./verify_ilm_native_pipeline.cjs').verifyIlmServerAngle.toString());
   await page.addInitScript('window.__verifyNativeAimTransport='+require('./verify_native_aim_transport.cjs').verifyNativeAimTransport.toString());
   await page.addInitScript(()=>{const raf=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=callback=>raf(time=>{if(!window.__numericPauseWorld)callback(time);});});
   await page.goto(source.page_url,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForFunction(()=>!!window.__updateProbe&&!!window.__devastMod?.menu,{timeout:25000});
@@ -127,7 +131,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   report.client_build=await page.evaluate(()=>window.__devastMod.connectionInfo().build);
   assert.match(report.client_build.fingerprint,/^[a-f0-9]{64}$/);assert.equal(report.client_build.nativeSha256,profile.baseline_sha256);
   await page.exposeFunction('__doorClickMouse',point=>page.mouse.click(point.x,point.y,{button:'right'}));
-  report.native=await page.evaluate(async ({s,r,originalAim})=>{
+  report.native=await page.evaluate(async ({s,r,originalAim,originalHooks,originalAngles})=>{
    const n=window.__updateProbe,m=window.__devastMod,w=n.world,players=w[s['ᴎ︃ᄉ']],self=w[s['ᅠᏧ‍']];
    const check=(v,message)=>{if(!v)throw Error(message);};
    w[r['ࡀ︌٨']]=121;const names=Array(121).fill(0);names[2]='Update#fixture';w[r['І︈༧']](names);
@@ -190,6 +194,8 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    const transport=n.capturePackets();
    try{
     m.ilmAimVerification=window.__verifyIlmAim(m,n,s,originalAim);
+    m.ilmMouseVerification=window.__verifyIlmMouse(m,n,s,originalAim,originalHooks);
+    m.ilmServerAngleVerification=window.__verifyIlmServerAngle(m,n,s,r,originalAngles);
     m.nativeAimTransportVerification=window.__verifyNativeAimTransport(m,n,s);
     m.setSetting('AimBotEnabled',false);m.aim.mouseDown=false;
     const blockedSocket={readyState:1,bufferedAmount:4096};transport.packets.length=0;
@@ -358,8 +364,8 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors: '+m.diagnostics.errors.join('; '));
-   return {ilm_aim:m.ilmAimVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,bounded_fast_loot:true,session_mod_traffic_history:true,native_autobuild_cursor_preview:true,bounded_auto_build:true,aim_session_history_reset:m.ilmAimVerification.session_target_reset===true,valid_live_aim_targets:m.ilmAimVerification.valid_target_admission===true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
-  },{s:symbols,r:roles,originalAim:reference});
+   return {ilm_aim:m.ilmAimVerification,ilm_mouse:m.ilmMouseVerification,ilm_server_angle:m.ilmServerAngleVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,bounded_fast_loot:true,session_mod_traffic_history:true,native_autobuild_cursor_preview:true,bounded_auto_build:true,aim_session_history_reset:m.ilmAimVerification.session_target_reset===true,valid_live_aim_targets:m.ilmAimVerification.valid_target_admission===true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+  },{s:symbols,r:roles,originalAim:reference,originalHooks,originalAngles});
   report.physical_numeric=await require('./verify_ilm_physical.cjs').verifyPhysical(page,symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}

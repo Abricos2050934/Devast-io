@@ -34,3 +34,24 @@ test('raw and automatically decoded native direction hooks preserve ILM timing a
   }
  }
 });
+test('brief target loss never lets a native mouse angle replace ILM between source ticks',()=>{
+ const {fixture}=require('./mod-fixture.cjs'),f=fixture();
+ try{
+  for(const[id,x]of [[1,1000],[2,1500]])f.mod.trackPacket(1,id,1,x,1000,true);
+  f.mod.setSetting('AimBotEnabled',true);f.mod.setSetting('lockId',2);f.mod.aim.refresh();
+  const a=analyze(z.gunzipSync(fs.readFileSync('baselines/current.js.gz')).toString()),values=new Map();
+  for(const n of a.nodes)if(n.type==='Identifier'){const v=a.constant(n);if(v!==undefined){if(!values.has(n.name))values.set(n.name,new Map());values.get(n.name).set(JSON.stringify(v),v);}}
+  const constants=Object.fromEntries([...values].filter(([,v])=>v.size===1).map(([k,v])=>[k,[...v.values()][0]]));
+  const patch=JSON.parse(fs.readFileSync('patches/recovered-current.json')).operations.find(o=>o.id==='ilm-native-angle-bookkeeping-secondary'),fn=parser.parse(patch.decoded_after,{ecmaVersion:'latest'}).body[0],interval=fn.body.body[0].test.right.name;
+  const native=vm.createContext({...constants,[interval]:100,__responsiveMod:f.mod,'ᴉ̡̂':1000,'ѕܓ́':0,'ⲅᚂߌ':0,'ﾠࠂ̶':0,'ㅤ๘މ':{angle:Math.PI/2},packets:[]});
+  vm.runInContext('function ιܕ︅(p){packets.push(p)}var еϲᄄ={ᴎ︅ހ:p=>p};'+patch.decoded_after+';var call='+fn.id.name+';',native);
+  const hook=JSON.parse(z.gunzipSync(fs.readFileSync('recovery/ilm-integration-reference.json.gz'))).find(h=>h.name==='_0x29d073');
+  const original=vm.createContext({window:{Math,JSON},_0xb76161:()=>{},_0x2ea565:{AimBotEnabled:true},_0x565a20:1000,_0xbec505:0,_0xe9c528:0,_0x3a4cec:0,_0x51a9fc:{angle:Math.PI/2},_0x30a095:100,packets:[]});
+  vm.runInContext('var _0x5096af={send:p=>packets.push(JSON.parse(p))};'+hook.source+';var call=_0x29d073;',original);
+  f.mod.trackPacket(1,2,1,0,0,false);vm.runInContext('call()',native);vm.runInContext('call()',original);
+  assert.equal(vm.runInContext('JSON.stringify(packets)',native),vm.runInContext('JSON.stringify(packets)',original));assert.equal(native.packets.length,0);
+  f.mod.trackPacket(1,2,1,1500,1000,true);assert.equal(f.mod.controlsAimDirection,true);assert.deepEqual(f.packets,[[6,0]]);
+  f.mod.setSetting('AimBotEnabled',false);native['ᴉ̡̂']=original._0x565a20=2000;native['ㅤ๘މ'].angle=original._0x51a9fc.angle=Math.PI;original._0x2ea565.AimBotEnabled=false;
+  vm.runInContext('call()',native);vm.runInContext('call()',original);assert.equal(vm.runInContext('JSON.stringify(packets)',native),'[[6,180]]');assert.equal(vm.runInContext('JSON.stringify(packets)',original),'[[6,180]]');
+ }finally{f.mod.dispose();}
+});

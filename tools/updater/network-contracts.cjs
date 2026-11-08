@@ -48,4 +48,28 @@ function serverListSchema(a,fn){
  const row=init(lobby.object),list=row?.type==='MemberExpression'&&init(row.object);
  return member(list,'l')&&same(list.object,region.object);
 }
-module.exports={directionDelay,exportNames,elapsedTimer,serverListSchema};
+// Compare lexical function identities, not their spelling or property order.
+// Required entrypoint checks still run after namespace discovery.
+function namespaceByExports(a,body,functions){
+ const anchors=new Set(functions);
+ if(anchors.size<3)throw Error('Insufficient independently matched native namespace exports');
+ const hits=[];
+ for(const d of (body||[]).flatMap(n=>n.declarations||[])){
+  const scope=d.init?.type==='CallExpression'&&d.init.callee;
+  if(scope?.type!=='FunctionExpression'||d.id.type!=='Identifier')continue;
+  const object=scope.body.body.filter(n=>n.type==='ReturnStatement').at(-1)?.argument;
+  if(object?.type!=='ObjectExpression')continue;
+  const exported=new Set(object.properties.filter(p=>p.type==='Property').map(p=>{
+   if(p.value.type!=='Identifier')return p.value;
+   const bound=a.binding(p.value);if(bound?.node)return bound.node;
+   // Decoded blocks contain sloppy block function declarations. Their Annex B
+   // function-scope exports are not represented by the lexical binding index.
+   const defs=a.functions.filter(fn=>fn.id?.name===p.value.name&&fn.start>scope.start&&fn.end<scope.end);
+   return defs.length===1?defs[0]:undefined;
+  }));
+  if([...anchors].every(fn=>exported.has(fn)))hits.push({name:d.id.name,scope,object});
+ }
+ if(hits.length!==1)throw Error('Native network namespace is ambiguous or changed');
+ return hits[0];
+}
+module.exports={directionDelay,exportNames,elapsedTimer,serverListSchema,namespaceByExports};
