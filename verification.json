@@ -1,18 +1,18 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "f7eef588b9a2f7951369a9a04db55850f32a79fa0684b3597dd03fe3736987f5",
+  "output_sha256": "825c2fca0316a7428303963ce8ce57d7ddf34d2b19debb6d8962f0b7c251c783",
   "static_ast": "passed",
   "message15_core": "byte-identical source declarations",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
   "mod_contract": {
     "schema": 1,
-    "name": "Devast-io Message15 mod",
+    "name": "Devast-io Untitled v4 imported aim",
     "modules": [
       "mod/responsive.js",
       "mod/bootstrap.js",
       "vendor/dat.gui.recovered.js",
-      "mod/message15-aim.js"
+      "mod/untitled-aim.js"
     ],
     "features": [
       "prediction-and-auto-fire",
@@ -42,14 +42,10 @@
       "automation-socket-backpressure",
       "connection-close-origin-diagnostics",
       "aim-cycle-socket-backpressure",
-      "verbatim-message15-aim",
-      "message15-native-lifecycle",
       "immediate-aim-numeric-settings",
-      "aim-small-queue-admission",
-      "immediate-message15-directions-and-bounded-auto-fire",
-      "aim-pointer-ownership-resync",
       "native-aim-transport-preserves-idle",
-      "equivalent-efficient-aim-target-search"
+      "verbatim-untitled-v4-aim",
+      "untitled-native-lifecycle"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -57,21 +53,15 @@
     ],
     "candidate_tests": [
       "tests/mod.test.cjs",
-      "tests/aim-settings.test.cjs",
       "tests/mod-performance.test.cjs",
-      "tests/aim-search.test.cjs",
       "tests/rejoin-recovery.test.cjs",
       "tests/ilm-autobuild.test.cjs",
-      "tests/jitter.test.cjs",
       "tests/player-labels.test.cjs",
       "tests/world-visuals.test.cjs",
       "tests/door-click.test.cjs",
       "tests/automation-transport.test.cjs",
-      "tests/aim-backpressure.test.cjs",
-      "tests/message15-source.test.cjs",
-      "tests/aim-send-rate.test.cjs",
-      "tests/aim-ownership.test.cjs",
-      "tests/native-aim-transport.test.cjs"
+      "tests/native-aim-transport.test.cjs",
+      "tests/untitled-aim.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -79,16 +69,16 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "142a8fd7a1087f09e2e2a603d39f99a6e1ea3675667fa180f1d8978ce2b074fd",
+    "mod/responsive.js": "cbfef2900946ebbf452d9d70457d335577419743b8fccfc1dfd3287e830cf42c",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
-    "mod/message15-aim.js": "3b65714cfec3de8db338f8251edcbade17c3b1cf3021530f7fc4b67ef49d4427"
+    "mod/untitled-aim.js": "b289d54f39bbbf36707703c4e27947bc0df68b64d533da8b86a4b4bd72819997"
   },
-  "mod_bundle_sha256": "3df3bd97edf62afa876aaf4c0c9d3182e5509fb73c744ecb27d362dce153d69e",
+  "mod_bundle_sha256": "53da654a0fdeea5ddd825a7ddc12801d45b060918c6ed661ca2edc5756c713ee",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -121,18 +111,27 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "d0d7674a81906ae740cab2f55a3e3c1ac5b26f25ad754bac2ec49fe69264af3d",
+    "fingerprint": "8b08d8b9b2ad393d30a05b747bdac97dc04811967a50308cd5505dd80ff11c30",
     "nativeSha256": "e1799132e4369cde75e8b153a9629f96e959e4053991fa5d33df3b9c3feaafdf"
   },
   "native": {
-    "efficient_aim_search": {
+    "untitled_aim": {
       "status": "passed",
-      "players": 120,
-      "ghouls": 128,
-      "clanless_metadata_reads": 1,
-      "competitive_clan_metadata_reads": 4,
-      "clan_changes_immediate": true,
-      "no_cross_update_target_cache": true
+      "source_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+      "scenes": 32,
+      "comparison_points": 1984,
+      "exact_tick_packets": true,
+      "source_prediction_and_lines": true,
+      "per_weapon_and_trigonometric": true,
+      "instant_target_updates": true,
+      "native_lifecycle": true,
+      "native_direction_transforms": true,
+      "native_movement_hooks": true,
+      "whole_auto_fire_cycle": true,
+      "small_queue_admission": true,
+      "server_death_sends_no_commands": true,
+      "self_prediction": true,
+      "spin_jitter_anti_aim": true
     },
     "native_aim_transport": {
       "status": "passed",
@@ -168,92 +167,6 @@
         }
       ]
     },
-    "aim_ownership": {
-      "status": "passed",
-      "native_handlers": 2,
-      "cases": [
-        {
-          "native_handler": 0,
-          "mouse_direction": 90,
-          "reacquired_direction": 0,
-          "packets": [
-            [
-              6,
-              0
-            ],
-            [
-              4
-            ]
-          ]
-        },
-        {
-          "native_handler": 1,
-          "mouse_direction": 90,
-          "reacquired_direction": 0,
-          "packets": [
-            [
-              6,
-              0
-            ],
-            [
-              4
-            ]
-          ]
-        }
-      ],
-      "imported_jitter_exclusive_ownership": true,
-      "release_on_disable": true
-    },
-    "message15_comparison": {
-      "status": "passed",
-      "scenes": 24,
-      "comparison_points": 1496,
-      "history_and_formulas": "source identical",
-      "source_fire_release_callbacks": "source identical; native alignment verified separately",
-      "native_dodge_and_movement": true,
-      "native_other_player_death": true,
-      "original_menu_controls": 21
-    },
-    "message15_extra": {
-      "status": "passed",
-      "boundary_scenes": 96,
-      "comparison_points": 5856,
-      "coordinate_cases": 36,
-      "gui_formula_controls": true,
-      "linear_bullet_coefficient": "unused exactly as source",
-      "trigonometric_bullet_coefficient": "affects angle exactly as source",
-      "auto_fire_and_hide_angle_commands": true,
-      "color_normalization_and_line_renderer": true,
-      "label_filter_bitmap": true
-    },
-    "message15_transport": {
-      "status": "passed",
-      "small_queue_admission": true,
-      "immediate_directions": {
-        "status": "passed",
-        "independent_source_comparisons": 1000,
-        "changed_directions_immediate": true,
-        "auto_fire_interval_ms": 50,
-        "auto_fire_pairs_in_10s": 200,
-        "stationary_directions_in_10s": 1,
-        "moving_directions_in_10s": 1000,
-        "manual_shot_priority": true,
-        "native_idle_ping": true
-      },
-      "small_queue_cases": [
-        1,
-        16,
-        128,
-        1024,
-        4095
-      ],
-      "aim_high_water_bytes": 4096,
-      "blocked_cycles_dropped": true,
-      "whole_attack_release_cycle": true,
-      "non_open_sockets": true,
-      "server_death_sends_no_commands": true,
-      "session_lifecycle": true
-    },
     "menu": true,
     "connection_close_origin_diagnostics": true,
     "automation_socket_backpressure": true,
@@ -284,21 +197,21 @@
   },
   "physical_numeric": {
     "status": "passed",
-    "saved_after_reload": {
-      "resolverType": "trygonometrical",
-      "distanceCoefficient": 970,
-      "offsetCoefficient": 0.5,
-      "bulletSpeedCoefficient": 15,
-      "mouseFov": 0,
-      "lockId": 120,
-      "jitterOffset": 360,
-      "DodgeDetectRadius": 800
-    },
+    "engine": "untitled-v4",
     "physical_text_entry": true,
     "enter_and_tab_commit": true,
     "slider_drag": true,
     "native_angle_changes": true,
-    "uncommitted_input_changes_setting": true,
+    "saved_after_reload": {
+      "distanceCoefficient": 974.2539597315437,
+      "offsetCoefficient": 2,
+      "bulletSpeedCoefficient": 20,
+      "mouseFov": 50,
+      "lockId": 120,
+      "jitterOffset": 180,
+      "smoothLineMs": 200,
+      "aimTickRate": 50
+    },
     "samples": [
       {
         "label": "initial",
@@ -307,12 +220,12 @@
         "value": 100,
         "type": "number",
         "mode": "linear",
-        "angle": 48,
+        "angle": 20.61825541365488,
         "line": {
           "x": 2000,
-          "y": 2114
+          "y": 1376.2389644524237
         },
-        "native_angle": 48,
+        "native_angle": 21,
         "saved": 100
       },
       {
@@ -322,12 +235,12 @@
         "value": 10,
         "type": "number",
         "mode": "linear",
-        "angle": 84,
+        "angle": 89.9870398199738,
         "line": {
           "x": 2000,
-          "y": 11150
+          "y": 4421909.155596661
         },
-        "native_angle": 84,
+        "native_angle": 90,
         "saved": 10
       },
       {
@@ -337,12 +250,12 @@
         "value": 10,
         "type": "number",
         "mode": "linear",
-        "angle": 84,
+        "angle": 89.9870398199738,
         "line": {
           "x": 2000,
-          "y": 11150
+          "y": 4421909.155596661
         },
-        "native_angle": 84,
+        "native_angle": 90,
         "saved": 10
       },
       {
@@ -352,12 +265,12 @@
         "value": 1000,
         "type": "number",
         "mode": "linear",
-        "angle": 11,
+        "angle": 7.699429250170738,
         "line": {
           "x": 2000,
-          "y": 1210.4
+          "y": 1135.1951610974486
         },
-        "native_angle": 11,
+        "native_angle": 8,
         "saved": 1000
       },
       {
@@ -367,163 +280,118 @@
         "value": 0,
         "type": "number",
         "mode": "linear",
-        "angle": 11,
+        "angle": 7.136025962184533,
         "line": {
           "x": 2000,
-          "y": 1200.4
+          "y": 1125.1951610974486
         },
-        "native_angle": 11,
+        "native_angle": 7,
         "saved": 0
       },
       {
-        "label": "typed 3 Tab",
+        "label": "typed 2 Tab",
         "key": "offsetCoefficient",
-        "input": "3",
-        "value": 3,
+        "input": "2",
+        "value": 2,
         "type": "number",
         "mode": "linear",
-        "angle": 26,
+        "angle": 18.01427467829086,
         "line": {
           "x": 2000,
-          "y": 1500.4
+          "y": 1325.1951610974486
         },
-        "native_angle": 26,
-        "saved": 3
+        "native_angle": 18,
+        "saved": 2
       },
       {
-        "label": "slider left",
-        "key": "distanceCoefficient",
+        "label": "typed 1 Enter",
+        "key": "bulletSpeedCoefficient",
+        "input": "1",
+        "value": 1,
+        "type": "number",
+        "mode": "linear",
+        "angle": 21.90112358601698,
+        "line": {
+          "x": 2000,
+          "y": 1402.0202020202019
+        },
+        "native_angle": 22,
+        "saved": 1
+      },
+      {
+        "label": "typed 20 Tab",
+        "key": "bulletSpeedCoefficient",
         "input": "20",
         "value": 20,
         "type": "number",
         "mode": "linear",
-        "angle": 79,
+        "angle": 16.96314747915943,
         "line": {
           "x": 2000,
-          "y": 6420
+          "y": 1305.027501307884
         },
-        "native_angle": 79,
+        "native_angle": 17,
         "saved": 20
       },
       {
-        "label": "slider right",
+        "label": "slider 0.02",
         "key": "distanceCoefficient",
-        "input": "970",
-        "value": 970,
+        "input": "13",
+        "value": 13.068456375838926,
         "type": "number",
         "mode": "linear",
-        "angle": 26,
+        "angle": 36.266593464979735,
         "line": {
           "x": 2000,
-          "y": 1503.5051546391753
+          "y": 1733.6757438530967
         },
-        "native_angle": 26,
-        "saved": 970
+        "native_angle": 36,
+        "saved": 13.068456375838926
       },
       {
-        "label": "typed 0,5 uncommitted",
-        "key": "offsetCoefficient",
-        "input": "0.5",
-        "value": 0.5,
+        "label": "slider 0.98",
+        "key": "distanceCoefficient",
+        "input": "974",
+        "value": 974.2539597315437,
         "type": "number",
         "mode": "linear",
-        "angle": 14,
+        "angle": 16.9701152399831,
         "line": {
           "x": 2000,
-          "y": 1253.5051546391753
+          "y": 1305.1604314520557
         },
-        "native_angle": 14,
-        "saved": 0.5
+        "native_angle": 17,
+        "saved": 974.2539597315437
       },
       {
-        "label": "typed 1 Enter",
-        "key": "bulletSpeedCoefficient",
-        "input": "1",
-        "value": 1,
-        "type": "number",
-        "mode": "linear",
-        "angle": 14,
-        "line": {
-          "x": 2000,
-          "y": 1253.5051546391753
-        },
-        "native_angle": 14,
-        "saved": 1
-      },
-      {
-        "label": "typed 15 Tab",
-        "key": "bulletSpeedCoefficient",
-        "input": "15",
-        "value": 15,
-        "type": "number",
-        "mode": "linear",
-        "angle": 14,
-        "line": {
-          "x": 2000,
-          "y": 1253.5051546391753
-        },
-        "native_angle": 14,
-        "saved": 15
-      },
-      {
-        "label": "typed 1 Enter",
-        "key": "bulletSpeedCoefficient",
-        "input": "1",
-        "value": 1,
-        "type": "number",
-        "mode": "trygonometrical",
-        "angle": 10,
-        "line": {
-          "x": 2000,
-          "y": 1176.326980708465
-        },
-        "native_angle": 10,
-        "saved": 1
-      },
-      {
-        "label": "typed 15 Tab",
-        "key": "bulletSpeedCoefficient",
-        "input": "15",
-        "value": 15,
-        "type": "number",
-        "mode": "trygonometrical",
-        "angle": 91,
-        "line": {
-          "x": 2000,
-          "y": -56289.96163075949
-        },
-        "native_angle": 91,
-        "saved": 15
-      },
-      {
-        "label": "typed 696969 Enter",
+        "label": "typed 12345 Enter",
         "key": "mouseFov",
-        "input": "696969",
-        "value": 696969,
+        "input": "12345",
+        "value": 12345,
         "type": "number",
-        "mode": "trygonometrical",
-        "angle": 91,
+        "mode": "linear",
+        "angle": 16.9701152399831,
         "line": {
           "x": 2000,
-          "y": -56289.96163075949
+          "y": 1305.1604314520557
         },
-        "native_angle": 91,
-        "saved": 696969
+        "native_angle": 17,
+        "saved": 12345
       },
       {
-        "label": "typed 0 Enter",
+        "label": "typed 50 Enter",
         "key": "mouseFov",
-        "input": "0",
-        "value": 0,
+        "input": "50",
+        "value": 50,
         "type": "number",
-        "mode": "trygonometrical",
-        "angle": 91,
+        "mode": "linear",
+        "angle": 16.9701152399831,
         "line": {
           "x": 2000,
-          "y": -56289.96163075949
+          "y": 1305.1604314520557
         },
-        "native_angle": 91,
-        "saved": 0
+        "native_angle": 17,
+        "saved": 50
       },
       {
         "label": "typed -1 Enter",
@@ -531,13 +399,13 @@
         "input": "-1",
         "value": -1,
         "type": "number",
-        "mode": "trygonometrical",
-        "angle": 91,
+        "mode": "linear",
+        "angle": 16.9701152399831,
         "line": {
           "x": 2000,
-          "y": -56289.96163075949
+          "y": 1305.1604314520557
         },
-        "native_angle": 91,
+        "native_angle": 17,
         "saved": -1
       },
       {
@@ -546,44 +414,74 @@
         "input": "120",
         "value": 120,
         "type": "number",
-        "mode": "trygonometrical",
-        "angle": 91,
+        "mode": "linear",
+        "angle": 16.9701152399831,
         "line": {
           "x": 2000,
-          "y": -56289.96163075949
+          "y": 1305.1604314520557
         },
-        "native_angle": 91,
+        "native_angle": 17,
         "saved": 120
       },
       {
-        "label": "typed 360 Enter",
+        "label": "typed 180 Enter",
         "key": "jitterOffset",
-        "input": "360",
-        "value": 360,
+        "input": "180",
+        "value": 180,
         "type": "number",
-        "mode": "trygonometrical",
-        "angle": 91,
+        "mode": "linear",
+        "angle": 16.9701152399831,
         "line": {
           "x": 2000,
-          "y": -56289.96163075949
+          "y": 1305.1604314520557
         },
-        "native_angle": 91,
-        "saved": 360
+        "native_angle": 17,
+        "saved": 180
       },
       {
-        "label": "typed 800 Enter",
-        "key": "DodgeDetectRadius",
-        "input": "800",
-        "value": 800,
+        "label": "typed 0 Enter",
+        "key": "smoothLineMs",
+        "input": "0",
+        "value": 0,
         "type": "number",
-        "mode": "trygonometrical",
-        "angle": 91,
+        "mode": "linear",
+        "angle": 16.9701152399831,
         "line": {
           "x": 2000,
-          "y": -56289.96163075949
+          "y": 1305.1604314520557
         },
-        "native_angle": 91,
-        "saved": 800
+        "native_angle": 17,
+        "saved": 0
+      },
+      {
+        "label": "typed 200 Enter",
+        "key": "smoothLineMs",
+        "input": "200",
+        "value": 200,
+        "type": "number",
+        "mode": "linear",
+        "angle": 16.9701152399831,
+        "line": {
+          "x": 2000,
+          "y": 1305.1604314520557
+        },
+        "native_angle": 17,
+        "saved": 200
+      },
+      {
+        "label": "typed 50 Enter",
+        "key": "aimTickRate",
+        "input": "50",
+        "value": 50,
+        "type": "number",
+        "mode": "linear",
+        "angle": 16.9701152399831,
+        "line": {
+          "x": 2000,
+          "y": 1305.1604314520557
+        },
+        "native_angle": 17,
+        "saved": 50
       }
     ]
   },
@@ -595,21 +493,30 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-07T20:28:12.842Z",
+  "finished_at": "2026-11-07T22:17:14.304Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "f7eef588b9a2f7951369a9a04db55850f32a79fa0684b3597dd03fe3736987f5",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "825c2fca0316a7428303963ce8ce57d7ddf34d2b19debb6d8962f0b7c251c783",
+      "browser_version": "154.0.8037.57",
       "native": {
-        "efficient_aim_search": {
+        "untitled_aim": {
           "status": "passed",
-          "players": 120,
-          "ghouls": 128,
-          "clanless_metadata_reads": 1,
-          "competitive_clan_metadata_reads": 4,
-          "clan_changes_immediate": true,
-          "no_cross_update_target_cache": true
+          "source_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+          "scenes": 32,
+          "comparison_points": 1984,
+          "exact_tick_packets": true,
+          "source_prediction_and_lines": true,
+          "per_weapon_and_trigonometric": true,
+          "instant_target_updates": true,
+          "native_lifecycle": true,
+          "native_direction_transforms": true,
+          "native_movement_hooks": true,
+          "whole_auto_fire_cycle": true,
+          "small_queue_admission": true,
+          "server_death_sends_no_commands": true,
+          "self_prediction": true,
+          "spin_jitter_anti_aim": true
         },
         "native_aim_transport": {
           "status": "passed",
@@ -644,92 +551,6 @@
               "equal": true
             }
           ]
-        },
-        "aim_ownership": {
-          "status": "passed",
-          "native_handlers": 2,
-          "cases": [
-            {
-              "native_handler": 0,
-              "mouse_direction": 90,
-              "reacquired_direction": 0,
-              "packets": [
-                [
-                  6,
-                  0
-                ],
-                [
-                  4
-                ]
-              ]
-            },
-            {
-              "native_handler": 1,
-              "mouse_direction": 90,
-              "reacquired_direction": 0,
-              "packets": [
-                [
-                  6,
-                  0
-                ],
-                [
-                  4
-                ]
-              ]
-            }
-          ],
-          "imported_jitter_exclusive_ownership": true,
-          "release_on_disable": true
-        },
-        "message15_comparison": {
-          "status": "passed",
-          "scenes": 24,
-          "comparison_points": 1496,
-          "history_and_formulas": "source identical",
-          "source_fire_release_callbacks": "source identical; native alignment verified separately",
-          "native_dodge_and_movement": true,
-          "native_other_player_death": true,
-          "original_menu_controls": 21
-        },
-        "message15_extra": {
-          "status": "passed",
-          "boundary_scenes": 96,
-          "comparison_points": 5856,
-          "coordinate_cases": 36,
-          "gui_formula_controls": true,
-          "linear_bullet_coefficient": "unused exactly as source",
-          "trigonometric_bullet_coefficient": "affects angle exactly as source",
-          "auto_fire_and_hide_angle_commands": true,
-          "color_normalization_and_line_renderer": true,
-          "label_filter_bitmap": true
-        },
-        "message15_transport": {
-          "status": "passed",
-          "small_queue_admission": true,
-          "immediate_directions": {
-            "status": "passed",
-            "independent_source_comparisons": 1000,
-            "changed_directions_immediate": true,
-            "auto_fire_interval_ms": 50,
-            "auto_fire_pairs_in_10s": 200,
-            "stationary_directions_in_10s": 1,
-            "moving_directions_in_10s": 1000,
-            "manual_shot_priority": true,
-            "native_idle_ping": true
-          },
-          "small_queue_cases": [
-            1,
-            16,
-            128,
-            1024,
-            4095
-          ],
-          "aim_high_water_bytes": 4096,
-          "blocked_cycles_dropped": true,
-          "whole_attack_release_cycle": true,
-          "non_open_sockets": true,
-          "server_death_sends_no_commands": true,
-          "session_lifecycle": true
         },
         "menu": true,
         "connection_close_origin_diagnostics": true,
@@ -796,21 +617,21 @@
       },
       "physical_numeric": {
         "status": "passed",
-        "saved_after_reload": {
-          "resolverType": "trygonometrical",
-          "distanceCoefficient": 970,
-          "offsetCoefficient": 0.5,
-          "bulletSpeedCoefficient": 15,
-          "mouseFov": 0,
-          "lockId": 120,
-          "jitterOffset": 360,
-          "DodgeDetectRadius": 800
-        },
+        "engine": "untitled-v4",
         "physical_text_entry": true,
         "enter_and_tab_commit": true,
         "slider_drag": true,
         "native_angle_changes": true,
-        "uncommitted_input_changes_setting": true,
+        "saved_after_reload": {
+          "distanceCoefficient": 974.2539597315437,
+          "offsetCoefficient": 2,
+          "bulletSpeedCoefficient": 20,
+          "mouseFov": 50,
+          "lockId": 120,
+          "jitterOffset": 180,
+          "smoothLineMs": 200,
+          "aimTickRate": 50
+        },
         "samples": [
           {
             "label": "initial",
@@ -819,12 +640,12 @@
             "value": 100,
             "type": "number",
             "mode": "linear",
-            "angle": 48,
+            "angle": 20.61825541365488,
             "line": {
               "x": 2000,
-              "y": 2114
+              "y": 1376.2389644524237
             },
-            "native_angle": 48,
+            "native_angle": 21,
             "saved": 100
           },
           {
@@ -834,12 +655,12 @@
             "value": 10,
             "type": "number",
             "mode": "linear",
-            "angle": 84,
+            "angle": 89.9870398199738,
             "line": {
               "x": 2000,
-              "y": 11150
+              "y": 4421909.155596661
             },
-            "native_angle": 84,
+            "native_angle": 90,
             "saved": 10
           },
           {
@@ -849,12 +670,12 @@
             "value": 10,
             "type": "number",
             "mode": "linear",
-            "angle": 84,
+            "angle": 89.9870398199738,
             "line": {
               "x": 2000,
-              "y": 11150
+              "y": 4421909.155596661
             },
-            "native_angle": 84,
+            "native_angle": 90,
             "saved": 10
           },
           {
@@ -864,12 +685,12 @@
             "value": 1000,
             "type": "number",
             "mode": "linear",
-            "angle": 11,
+            "angle": 7.699429250170738,
             "line": {
               "x": 2000,
-              "y": 1210.4
+              "y": 1135.1951610974486
             },
-            "native_angle": 11,
+            "native_angle": 8,
             "saved": 1000
           },
           {
@@ -879,163 +700,118 @@
             "value": 0,
             "type": "number",
             "mode": "linear",
-            "angle": 11,
+            "angle": 7.136025962184533,
             "line": {
               "x": 2000,
-              "y": 1200.4
+              "y": 1125.1951610974486
             },
-            "native_angle": 11,
+            "native_angle": 7,
             "saved": 0
           },
           {
-            "label": "typed 3 Tab",
+            "label": "typed 2 Tab",
             "key": "offsetCoefficient",
-            "input": "3",
-            "value": 3,
+            "input": "2",
+            "value": 2,
             "type": "number",
             "mode": "linear",
-            "angle": 26,
+            "angle": 18.01427467829086,
             "line": {
               "x": 2000,
-              "y": 1500.4
+              "y": 1325.1951610974486
             },
-            "native_angle": 26,
-            "saved": 3
+            "native_angle": 18,
+            "saved": 2
           },
           {
-            "label": "slider left",
-            "key": "distanceCoefficient",
+            "label": "typed 1 Enter",
+            "key": "bulletSpeedCoefficient",
+            "input": "1",
+            "value": 1,
+            "type": "number",
+            "mode": "linear",
+            "angle": 21.90112358601698,
+            "line": {
+              "x": 2000,
+              "y": 1402.0202020202019
+            },
+            "native_angle": 22,
+            "saved": 1
+          },
+          {
+            "label": "typed 20 Tab",
+            "key": "bulletSpeedCoefficient",
             "input": "20",
             "value": 20,
             "type": "number",
             "mode": "linear",
-            "angle": 79,
+            "angle": 16.96314747915943,
             "line": {
               "x": 2000,
-              "y": 6420
+              "y": 1305.027501307884
             },
-            "native_angle": 79,
+            "native_angle": 17,
             "saved": 20
           },
           {
-            "label": "slider right",
+            "label": "slider 0.02",
             "key": "distanceCoefficient",
-            "input": "970",
-            "value": 970,
+            "input": "13",
+            "value": 13.068456375838926,
             "type": "number",
             "mode": "linear",
-            "angle": 26,
+            "angle": 36.266593464979735,
             "line": {
               "x": 2000,
-              "y": 1503.5051546391753
+              "y": 1733.6757438530967
             },
-            "native_angle": 26,
-            "saved": 970
+            "native_angle": 36,
+            "saved": 13.068456375838926
           },
           {
-            "label": "typed 0,5 uncommitted",
-            "key": "offsetCoefficient",
-            "input": "0.5",
-            "value": 0.5,
+            "label": "slider 0.98",
+            "key": "distanceCoefficient",
+            "input": "974",
+            "value": 974.2539597315437,
             "type": "number",
             "mode": "linear",
-            "angle": 14,
+            "angle": 16.9701152399831,
             "line": {
               "x": 2000,
-              "y": 1253.5051546391753
+              "y": 1305.1604314520557
             },
-            "native_angle": 14,
-            "saved": 0.5
+            "native_angle": 17,
+            "saved": 974.2539597315437
           },
           {
-            "label": "typed 1 Enter",
-            "key": "bulletSpeedCoefficient",
-            "input": "1",
-            "value": 1,
-            "type": "number",
-            "mode": "linear",
-            "angle": 14,
-            "line": {
-              "x": 2000,
-              "y": 1253.5051546391753
-            },
-            "native_angle": 14,
-            "saved": 1
-          },
-          {
-            "label": "typed 15 Tab",
-            "key": "bulletSpeedCoefficient",
-            "input": "15",
-            "value": 15,
-            "type": "number",
-            "mode": "linear",
-            "angle": 14,
-            "line": {
-              "x": 2000,
-              "y": 1253.5051546391753
-            },
-            "native_angle": 14,
-            "saved": 15
-          },
-          {
-            "label": "typed 1 Enter",
-            "key": "bulletSpeedCoefficient",
-            "input": "1",
-            "value": 1,
-            "type": "number",
-            "mode": "trygonometrical",
-            "angle": 10,
-            "line": {
-              "x": 2000,
-              "y": 1176.326980708465
-            },
-            "native_angle": 10,
-            "saved": 1
-          },
-          {
-            "label": "typed 15 Tab",
-            "key": "bulletSpeedCoefficient",
-            "input": "15",
-            "value": 15,
-            "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
-            "line": {
-              "x": 2000,
-              "y": -56289.96163075949
-            },
-            "native_angle": 91,
-            "saved": 15
-          },
-          {
-            "label": "typed 696969 Enter",
+            "label": "typed 12345 Enter",
             "key": "mouseFov",
-            "input": "696969",
-            "value": 696969,
+            "input": "12345",
+            "value": 12345,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.9701152399831,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1604314520557
             },
-            "native_angle": 91,
-            "saved": 696969
+            "native_angle": 17,
+            "saved": 12345
           },
           {
-            "label": "typed 0 Enter",
+            "label": "typed 50 Enter",
             "key": "mouseFov",
-            "input": "0",
-            "value": 0,
+            "input": "50",
+            "value": 50,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.9701152399831,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1604314520557
             },
-            "native_angle": 91,
-            "saved": 0
+            "native_angle": 17,
+            "saved": 50
           },
           {
             "label": "typed -1 Enter",
@@ -1043,13 +819,13 @@
             "input": "-1",
             "value": -1,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.9701152399831,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1604314520557
             },
-            "native_angle": 91,
+            "native_angle": 17,
             "saved": -1
           },
           {
@@ -1058,61 +834,100 @@
             "input": "120",
             "value": 120,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.9701152399831,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1604314520557
             },
-            "native_angle": 91,
+            "native_angle": 17,
             "saved": 120
           },
           {
-            "label": "typed 360 Enter",
+            "label": "typed 180 Enter",
             "key": "jitterOffset",
-            "input": "360",
-            "value": 360,
+            "input": "180",
+            "value": 180,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.9701152399831,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1604314520557
             },
-            "native_angle": 91,
-            "saved": 360
+            "native_angle": 17,
+            "saved": 180
           },
           {
-            "label": "typed 800 Enter",
-            "key": "DodgeDetectRadius",
-            "input": "800",
-            "value": 800,
+            "label": "typed 0 Enter",
+            "key": "smoothLineMs",
+            "input": "0",
+            "value": 0,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.9701152399831,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1604314520557
             },
-            "native_angle": 91,
-            "saved": 800
+            "native_angle": 17,
+            "saved": 0
+          },
+          {
+            "label": "typed 200 Enter",
+            "key": "smoothLineMs",
+            "input": "200",
+            "value": 200,
+            "type": "number",
+            "mode": "linear",
+            "angle": 16.9701152399831,
+            "line": {
+              "x": 2000,
+              "y": 1305.1604314520557
+            },
+            "native_angle": 17,
+            "saved": 200
+          },
+          {
+            "label": "typed 50 Enter",
+            "key": "aimTickRate",
+            "input": "50",
+            "value": 50,
+            "type": "number",
+            "mode": "linear",
+            "angle": 16.9701152399831,
+            "line": {
+              "x": 2000,
+              "y": 1305.1604314520557
+            },
+            "native_angle": 17,
+            "saved": 50
           }
         ]
       }
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "f7eef588b9a2f7951369a9a04db55850f32a79fa0684b3597dd03fe3736987f5",
+      "output_sha256": "825c2fca0316a7428303963ce8ce57d7ddf34d2b19debb6d8962f0b7c251c783",
       "browser_version": "153.0",
       "native": {
-        "efficient_aim_search": {
+        "untitled_aim": {
           "status": "passed",
-          "players": 120,
-          "ghouls": 128,
-          "clanless_metadata_reads": 1,
-          "competitive_clan_metadata_reads": 4,
-          "clan_changes_immediate": true,
-          "no_cross_update_target_cache": true
+          "source_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+          "scenes": 32,
+          "comparison_points": 1984,
+          "exact_tick_packets": true,
+          "source_prediction_and_lines": true,
+          "per_weapon_and_trigonometric": true,
+          "instant_target_updates": true,
+          "native_lifecycle": true,
+          "native_direction_transforms": true,
+          "native_movement_hooks": true,
+          "whole_auto_fire_cycle": true,
+          "small_queue_admission": true,
+          "server_death_sends_no_commands": true,
+          "self_prediction": true,
+          "spin_jitter_anti_aim": true
         },
         "native_aim_transport": {
           "status": "passed",
@@ -1147,92 +962,6 @@
               "equal": true
             }
           ]
-        },
-        "aim_ownership": {
-          "status": "passed",
-          "native_handlers": 2,
-          "cases": [
-            {
-              "native_handler": 0,
-              "mouse_direction": 90,
-              "reacquired_direction": 0,
-              "packets": [
-                [
-                  6,
-                  0
-                ],
-                [
-                  4
-                ]
-              ]
-            },
-            {
-              "native_handler": 1,
-              "mouse_direction": 90,
-              "reacquired_direction": 0,
-              "packets": [
-                [
-                  6,
-                  0
-                ],
-                [
-                  4
-                ]
-              ]
-            }
-          ],
-          "imported_jitter_exclusive_ownership": true,
-          "release_on_disable": true
-        },
-        "message15_comparison": {
-          "status": "passed",
-          "scenes": 24,
-          "comparison_points": 1496,
-          "history_and_formulas": "source identical",
-          "source_fire_release_callbacks": "source identical; native alignment verified separately",
-          "native_dodge_and_movement": true,
-          "native_other_player_death": true,
-          "original_menu_controls": 21
-        },
-        "message15_extra": {
-          "status": "passed",
-          "boundary_scenes": 96,
-          "comparison_points": 5856,
-          "coordinate_cases": 36,
-          "gui_formula_controls": true,
-          "linear_bullet_coefficient": "unused exactly as source",
-          "trigonometric_bullet_coefficient": "affects angle exactly as source",
-          "auto_fire_and_hide_angle_commands": true,
-          "color_normalization_and_line_renderer": true,
-          "label_filter_bitmap": true
-        },
-        "message15_transport": {
-          "status": "passed",
-          "small_queue_admission": true,
-          "immediate_directions": {
-            "status": "passed",
-            "independent_source_comparisons": 1000,
-            "changed_directions_immediate": true,
-            "auto_fire_interval_ms": 50,
-            "auto_fire_pairs_in_10s": 200,
-            "stationary_directions_in_10s": 1,
-            "moving_directions_in_10s": 1000,
-            "manual_shot_priority": true,
-            "native_idle_ping": true
-          },
-          "small_queue_cases": [
-            1,
-            16,
-            128,
-            1024,
-            4095
-          ],
-          "aim_high_water_bytes": 4096,
-          "blocked_cycles_dropped": true,
-          "whole_attack_release_cycle": true,
-          "non_open_sockets": true,
-          "server_death_sends_no_commands": true,
-          "session_lifecycle": true
         },
         "menu": true,
         "connection_close_origin_diagnostics": true,
@@ -1299,21 +1028,21 @@
       },
       "physical_numeric": {
         "status": "passed",
-        "saved_after_reload": {
-          "resolverType": "trygonometrical",
-          "distanceCoefficient": 970,
-          "offsetCoefficient": 0.5,
-          "bulletSpeedCoefficient": 15,
-          "mouseFov": 0,
-          "lockId": 120,
-          "jitterOffset": 360,
-          "DodgeDetectRadius": 800
-        },
+        "engine": "untitled-v4",
         "physical_text_entry": true,
         "enter_and_tab_commit": true,
         "slider_drag": true,
         "native_angle_changes": true,
-        "uncommitted_input_changes_setting": true,
+        "saved_after_reload": {
+          "distanceCoefficient": 974.1135371968898,
+          "offsetCoefficient": 2,
+          "bulletSpeedCoefficient": 20,
+          "mouseFov": 50,
+          "lockId": 120,
+          "jitterOffset": 180,
+          "smoothLineMs": 200,
+          "aimTickRate": 50
+        },
         "samples": [
           {
             "label": "initial",
@@ -1322,12 +1051,12 @@
             "value": 100,
             "type": "number",
             "mode": "linear",
-            "angle": 48,
+            "angle": 20.61825541365488,
             "line": {
               "x": 2000,
-              "y": 2114
+              "y": 1376.2389644524237
             },
-            "native_angle": 48,
+            "native_angle": 21,
             "saved": 100
           },
           {
@@ -1337,12 +1066,12 @@
             "value": 10,
             "type": "number",
             "mode": "linear",
-            "angle": 84,
+            "angle": 89.9870398199738,
             "line": {
               "x": 2000,
-              "y": 11150
+              "y": 4421909.155596661
             },
-            "native_angle": 84,
+            "native_angle": 90,
             "saved": 10
           },
           {
@@ -1352,12 +1081,12 @@
             "value": 10,
             "type": "number",
             "mode": "linear",
-            "angle": 84,
+            "angle": 89.9870398199738,
             "line": {
               "x": 2000,
-              "y": 11150
+              "y": 4421909.155596661
             },
-            "native_angle": 84,
+            "native_angle": 90,
             "saved": 10
           },
           {
@@ -1367,12 +1096,12 @@
             "value": 1000,
             "type": "number",
             "mode": "linear",
-            "angle": 11,
+            "angle": 7.699429250170738,
             "line": {
               "x": 2000,
-              "y": 1210.4
+              "y": 1135.1951610974486
             },
-            "native_angle": 11,
+            "native_angle": 8,
             "saved": 1000
           },
           {
@@ -1382,163 +1111,118 @@
             "value": 0,
             "type": "number",
             "mode": "linear",
-            "angle": 11,
+            "angle": 7.136025962184533,
             "line": {
               "x": 2000,
-              "y": 1200.4
+              "y": 1125.1951610974486
             },
-            "native_angle": 11,
+            "native_angle": 7,
             "saved": 0
           },
           {
-            "label": "typed 3 Tab",
+            "label": "typed 2 Tab",
             "key": "offsetCoefficient",
-            "input": "3",
-            "value": 3,
+            "input": "2",
+            "value": 2,
             "type": "number",
             "mode": "linear",
-            "angle": 26,
+            "angle": 18.01427467829086,
             "line": {
               "x": 2000,
-              "y": 1500.4
+              "y": 1325.1951610974486
             },
-            "native_angle": 26,
-            "saved": 3
+            "native_angle": 18,
+            "saved": 2
           },
           {
-            "label": "slider left",
-            "key": "distanceCoefficient",
+            "label": "typed 1 Enter",
+            "key": "bulletSpeedCoefficient",
+            "input": "1",
+            "value": 1,
+            "type": "number",
+            "mode": "linear",
+            "angle": 21.90112358601698,
+            "line": {
+              "x": 2000,
+              "y": 1402.0202020202019
+            },
+            "native_angle": 22,
+            "saved": 1
+          },
+          {
+            "label": "typed 20 Tab",
+            "key": "bulletSpeedCoefficient",
             "input": "20",
             "value": 20,
             "type": "number",
             "mode": "linear",
-            "angle": 79,
+            "angle": 16.963147479159375,
             "line": {
               "x": 2000,
-              "y": 6420
+              "y": 1305.027501307884
             },
-            "native_angle": 79,
+            "native_angle": 17,
             "saved": 20
           },
           {
-            "label": "slider right",
+            "label": "slider 0.02",
             "key": "distanceCoefficient",
-            "input": "970",
-            "value": 970,
+            "input": "13",
+            "value": 13.013954289426202,
             "type": "number",
             "mode": "linear",
-            "angle": 26,
+            "angle": 36.34912319179034,
             "line": {
               "x": 2000,
-              "y": 1503.5051546391753
+              "y": 1735.8938519183164
             },
-            "native_angle": 26,
-            "saved": 970
+            "native_angle": 36,
+            "saved": 13.013954289426202
           },
           {
-            "label": "typed 0,5 uncommitted",
-            "key": "offsetCoefficient",
-            "input": "0.5",
-            "value": 0.5,
+            "label": "slider 0.98",
+            "key": "distanceCoefficient",
+            "input": "974",
+            "value": 974.1135371968898,
             "type": "number",
             "mode": "linear",
-            "angle": 14,
+            "angle": 16.970154252143004,
             "line": {
               "x": 2000,
-              "y": 1253.5051546391753
+              "y": 1305.1611757493529
             },
-            "native_angle": 14,
-            "saved": 0.5
+            "native_angle": 17,
+            "saved": 974.1135371968898
           },
           {
-            "label": "typed 1 Enter",
-            "key": "bulletSpeedCoefficient",
-            "input": "1",
-            "value": 1,
-            "type": "number",
-            "mode": "linear",
-            "angle": 14,
-            "line": {
-              "x": 2000,
-              "y": 1253.5051546391753
-            },
-            "native_angle": 14,
-            "saved": 1
-          },
-          {
-            "label": "typed 15 Tab",
-            "key": "bulletSpeedCoefficient",
-            "input": "15",
-            "value": 15,
-            "type": "number",
-            "mode": "linear",
-            "angle": 14,
-            "line": {
-              "x": 2000,
-              "y": 1253.5051546391753
-            },
-            "native_angle": 14,
-            "saved": 15
-          },
-          {
-            "label": "typed 1 Enter",
-            "key": "bulletSpeedCoefficient",
-            "input": "1",
-            "value": 1,
-            "type": "number",
-            "mode": "trygonometrical",
-            "angle": 10,
-            "line": {
-              "x": 2000,
-              "y": 1176.326980708465
-            },
-            "native_angle": 10,
-            "saved": 1
-          },
-          {
-            "label": "typed 15 Tab",
-            "key": "bulletSpeedCoefficient",
-            "input": "15",
-            "value": 15,
-            "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
-            "line": {
-              "x": 2000,
-              "y": -56289.96163075949
-            },
-            "native_angle": 91,
-            "saved": 15
-          },
-          {
-            "label": "typed 696969 Enter",
+            "label": "typed 12345 Enter",
             "key": "mouseFov",
-            "input": "696969",
-            "value": 696969,
+            "input": "12345",
+            "value": 12345,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.970154252143004,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1611757493529
             },
-            "native_angle": 91,
-            "saved": 696969
+            "native_angle": 17,
+            "saved": 12345
           },
           {
-            "label": "typed 0 Enter",
+            "label": "typed 50 Enter",
             "key": "mouseFov",
-            "input": "0",
-            "value": 0,
+            "input": "50",
+            "value": 50,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.970154252143004,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1611757493529
             },
-            "native_angle": 91,
-            "saved": 0
+            "native_angle": 17,
+            "saved": 50
           },
           {
             "label": "typed -1 Enter",
@@ -1546,13 +1230,13 @@
             "input": "-1",
             "value": -1,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.970154252143004,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1611757493529
             },
-            "native_angle": 91,
+            "native_angle": 17,
             "saved": -1
           },
           {
@@ -1561,44 +1245,74 @@
             "input": "120",
             "value": 120,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.970154252143004,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1611757493529
             },
-            "native_angle": 91,
+            "native_angle": 17,
             "saved": 120
           },
           {
-            "label": "typed 360 Enter",
+            "label": "typed 180 Enter",
             "key": "jitterOffset",
-            "input": "360",
-            "value": 360,
+            "input": "180",
+            "value": 180,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.970154252143004,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1611757493529
             },
-            "native_angle": 91,
-            "saved": 360
+            "native_angle": 17,
+            "saved": 180
           },
           {
-            "label": "typed 800 Enter",
-            "key": "DodgeDetectRadius",
-            "input": "800",
-            "value": 800,
+            "label": "typed 0 Enter",
+            "key": "smoothLineMs",
+            "input": "0",
+            "value": 0,
             "type": "number",
-            "mode": "trygonometrical",
-            "angle": 91,
+            "mode": "linear",
+            "angle": 16.970154252143004,
             "line": {
               "x": 2000,
-              "y": -56289.96163075949
+              "y": 1305.1611757493529
             },
-            "native_angle": 91,
-            "saved": 800
+            "native_angle": 17,
+            "saved": 0
+          },
+          {
+            "label": "typed 200 Enter",
+            "key": "smoothLineMs",
+            "input": "200",
+            "value": 200,
+            "type": "number",
+            "mode": "linear",
+            "angle": 16.970154252143004,
+            "line": {
+              "x": 2000,
+              "y": 1305.1611757493529
+            },
+            "native_angle": 17,
+            "saved": 200
+          },
+          {
+            "label": "typed 50 Enter",
+            "key": "aimTickRate",
+            "input": "50",
+            "value": 50,
+            "type": "number",
+            "mode": "linear",
+            "angle": 16.970154252143004,
+            "line": {
+              "x": 2000,
+              "y": 1305.1611757493529
+            },
+            "native_angle": 17,
+            "saved": 50
           }
         ]
       }
@@ -1608,27 +1322,21 @@
     "status": "passed",
     "files": [
       "tests/mod.test.cjs",
-      "tests/aim-settings.test.cjs",
       "tests/mod-performance.test.cjs",
-      "tests/aim-search.test.cjs",
       "tests/rejoin-recovery.test.cjs",
       "tests/ilm-autobuild.test.cjs",
-      "tests/jitter.test.cjs",
       "tests/player-labels.test.cjs",
       "tests/world-visuals.test.cjs",
       "tests/door-click.test.cjs",
       "tests/automation-transport.test.cjs",
-      "tests/aim-backpressure.test.cjs",
-      "tests/message15-source.test.cjs",
-      "tests/aim-send-rate.test.cjs",
-      "tests/aim-ownership.test.cjs",
-      "tests/native-aim-transport.test.cjs"
+      "tests/native-aim-transport.test.cjs",
+      "tests/untitled-aim.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 178,
-    "python_tests": 53
+    "node_tests": 155,
+    "python_tests": 54
   }
 }
