@@ -15,7 +15,7 @@ const nativeAnalysis=require('./updater/static.cjs').analyze(output),tree=native
 assert.equal(profile.operations.filter(op=>op.id.startsWith('native-integrity-signature-')).length,3,'All three native signature compatibility operations are required');
 assert.equal(roles.nativeIntegritySigners?.length,3,'Three reviewed native signers required');
 assert.ok(body,'Full native client IIFE required');
-for(const name of ['__installDevastMod','__createUntitledAim'])assert.equal(body.filter(n=>n.id?.name===name).length,1);
+for(const name of ['__installDevastMod','__createIlmAim'])assert.equal(body.filter(n=>n.id?.name===name).length,1);
 const installer=body.find(n=>n.id?.name==='__installDevastMod');
 fs.writeFileSync(path.join(dir,'installer.fixture.js'),output.slice(installer.start,installer.end));
 const installerSource=output.slice(installer.start,installer.end);
@@ -26,9 +26,9 @@ for(const file of ['mod/bootstrap.js','vendor/dat.gui.recovered.js']) {
 }
 assert.equal(output.slice(installer.start,installer.end),translate(fs.readFileSync(path.join(root,'mod/responsive.js'),'utf8'),symbols).trim());
 function normalize(value){if(Array.isArray(value))return value.map(normalize);if(!value||typeof value!=='object')return value;return Object.fromEntries(Object.entries(value).filter(([key])=>!['start','end','raw'].includes(key)).map(([key,v])=>[key,normalize(v)]));}
-const reference=require('./audit_untitled_aim.cjs').reference();
-require('./audit_untitled_aim.cjs').audit(read('ilm-aim.js'),installerSource);
-for(const i of reference.exact_block_indices)assert.ok(output.includes(reference.statements[i].source),'Missing exact uploaded block: '+i);
+const reference=require('./audit_ilm_port.cjs').reference();
+require('./audit_ilm_port.cjs').audit(read('ilm-aim.js'),installerSource);
+for(const block of reference.blocks)assert.ok(output.includes(block.source),'Missing original ILM block: '+block.name);
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
 assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2','message15-native-afterRelease','message15-native-onMove','message15-handshake','message15-session-start','message15-native-aim-transport']),'Every reviewed native patch is required');
 const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ԁ̶ϲ':'release','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave','ᴀᄁ︃':'landmineRender','рոᴎ':'wireRender','ᅠ̘ܛ':'trapRender'};
@@ -85,7 +85,7 @@ edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,keybo
 edits.push({at:tree.body[0].expression.callee.body.end-1,text:`window.__updateIntegrityProbe={read:()=>${roles.nativeIntegrityFlag},set:value=>${roles.nativeIntegrityFlag}=value,signers:[${roles.nativeIntegritySigners.join(',')}]};`});
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
 (async()=>{
- const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',message15_core:'byte-identical source declarations',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
+ const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',ilm_core:'four original classes and original tick',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
  let browser;
  try{
   const engine=process.env.DEVAST_BROWSER||'chromium';assert.ok(['chromium','firefox'].includes(engine),'Unsupported browser');report.browser=engine;
@@ -110,7 +110,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   await page.route(source.page_url,r=>r.fulfill({status:200,contentType:'text/html',body:read('index.html')}));
   await page.route(source.script_url,r=>r.fulfill({status:200,contentType:'text/javascript',body:override.data[0].rules[0].file}));
   await page.route(url=>url.hostname==='raw.githubusercontent.com'&&url.pathname==='/Abricos2050934/Devast-io/updates/game.modded.js',r=>r.fulfill({status:200,contentType:'text/plain',headers:{'access-control-allow-origin':'*'},body:code}));
-  await page.addInitScript('window.__verifyUntitledAim='+require('./verify_untitled_aim.cjs').verifyUntitledAim.toString());
+  await page.addInitScript('window.__verifyIlmAim='+require('./verify_ilm_aim.cjs').verifyIlmAim.toString());
   await page.addInitScript('window.__verifyNativeAimTransport='+require('./verify_native_aim_transport.cjs').verifyNativeAimTransport.toString());
   await page.addInitScript(()=>{const raf=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=callback=>raf(time=>{if(!window.__numericPauseWorld)callback(time);});});
   await page.goto(source.page_url,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForFunction(()=>!!window.__updateProbe&&!!window.__devastMod?.menu,{timeout:25000});
@@ -118,7 +118,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   for(let attempt=0;attempt<3;attempt++){
    if(attempt)await page.reload({waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForFunction(key=>!!window.__devastMod?.menu&&typeof window.__updateProbe?.network[key]==='function',symbols['ᅠϲ᠍'],{timeout:25000});
-   const kept=await page.evaluate(()=>({token:localStorage.getItem('token')==='fixture-original-token',tokenId:localStorage.getItem('tokenId')==='123',userId:localStorage.getItem('userId')==='2',cookie:document.cookie.includes('devast_fixture_cookie=retained'),settings:window.__devastMod.settings.mouseFov===(localStorage.getItem('DevastUntitledV4:aim:v1')?JSON.parse(localStorage.getItem('DevastUntitledV4:aim:v1')).mouseFov:12345)&&window.__devastMod.settings.zoomFactor===.8,loot:!window.__devastMod.loot.steel.acquire}));
+   const kept=await page.evaluate(()=>({token:localStorage.getItem('token')==='fixture-original-token',tokenId:localStorage.getItem('tokenId')==='123',userId:localStorage.getItem('userId')==='2',cookie:document.cookie.includes('devast_fixture_cookie=retained'),settings:window.__devastMod.settings.mouseFov===(localStorage.getItem('DevastILMOriginal:aim:v1')?JSON.parse(localStorage.getItem('DevastILMOriginal:aim:v1')).mouseFov:12345)&&window.__devastMod.settings.zoomFactor===.8,loot:!window.__devastMod.loot.steel.acquire}));
    assert.ok(Object.values(kept).every(Boolean),'Native startup changed the saved identity or migrated settings');report.reload_identity.push(kept);
    await page.evaluate(()=>window.__devastMod.setSetting('zoomFactor',.8));
   }
@@ -140,7 +140,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    check(m.targets.players[2].prevX[0]===1100&&m.targets.players[2].x===1120&&m.targets.ghouls[17].x===1200,'Current packet bindings failed');
    packet(13,0,17,0,0,false);packet(0,2,1,0,0,false);check(!m.targets.players[2].active&&!m.targets.ghouls[17].active,'Removal binding failed');
    self.id=1;const e=n.entities.get(1,0,1,0);e[s['ᴘ४１']]=1;e.id=0;e[r['ᴎ٨ߍ']]=.25;e[r['ᴑ٧ߓ']]=1;n.input.angle=2;
-   for(const [mode,on]of [['withAim',false],['withAim',true],['always',false]]){m.menu.__folders['Aimbot'].__controllers.find(c=>c.property==='ShowRealAngles').setValue(mode);m.setSetting('AimBotEnabled',on);e.angle=0;n.update(e);check(Math.abs(e.angle-((mode==='always'||on)?0.5:2))<1e-8,'Self angle binding failed');}
+   for(const [mode,on]of [['withAim',false],['withAim',true],['always',false]]){m.menu.__folders['Aim Bot'].__controllers.find(c=>c.property==='ShowRealAngles').setValue(mode);m.setSetting('AimBotEnabled',on);e.angle=0;n.update(e);check(Math.abs(e.angle-((mode==='always'||on)?0.5:2))<1e-8,'Self angle binding failed');}
    n.spawn([0,1,123,'Self',0,0]);
    const clans=w[s['ﾠࡅ‍']];clans[0]={name:'ALLY',[s['ոᚄރ']]:7,[s['ᴌ५ᚂ']]:null};clans[1]={name:'ENEMY',[s['ոᚄރ']]:8,[s['ᴌ५ᚂ']]:null};
    Object.assign(players[1],{[s['а༤̘']]:0,[s['ᴌ̗ⲟ']]:7});Object.assign(players[2],{[s['а༤̘']]:1,[s['ᴌ̗ⲟ']]:8});Object.assign(players[120],{[s['а༤̘']]:0,[s['ᴌ̗ⲟ']]:7});
@@ -189,9 +189,9 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
 
    const transport=n.capturePackets();
    try{
-    m.untitledAimVerification=await window.__verifyUntitledAim(m,n,s,originalAim,()=>{},r);
+    m.ilmAimVerification=window.__verifyIlmAim(m,n,s,originalAim);
     m.nativeAimTransportVerification=window.__verifyNativeAimTransport(m,n,s);
-    m.setSetting('AimBotEnabled',false);m.setSetting('jitterActive',false);m.setSetting('jitterActive',false);m.aim.mouseDown=false;
+    m.setSetting('AimBotEnabled',false);m.aim.mouseDown=false;
     const blockedSocket={readyState:1,bufferedAmount:4096};transport.packets.length=0;
     m.render(performance.now());const stableRecords=m.records,stableEntries=m.records.slice();m.render(performance.now());
     check(stableEntries.length>0&&m.records===stableRecords&&stableEntries.every((r,i)=>m.records[i]===r),'Frame collection rebuilt stable native entity records');
@@ -234,7 +234,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identityBefore[i]),'Returning from loading changed identity');
    }finally{nativeMenu[uiKey]=nativeUi;}
    const deathKey=s['ι︃２'],nativeDeath=n.network[deathKey],health=w[s['ᴘρࡀ']][s['ᴇ༤ᚆ']].value;let deathCalls=0;
-   const deathCapture=n.capturePackets(),deathSettings=Object.fromEntries(['AimBotEnabled','autoFire','jitterActive'].map(k=>[k,m.settings[k]]));
+   const deathCapture=n.capturePackets(),deathSettings=Object.fromEntries(['AimBotEnabled','autoFire'].map(k=>[k,m.settings[k]]));
    try{
     n.network.state=1;self.id=1;m.setSetting('AimBotEnabled',true);m.setSetting('autoFire',true);
     n.network[deathKey]=code=>{check(code===128,'Native death error code changed');deathCalls++;};n.death(new Uint8Array([5,0,2]));
@@ -266,7 +266,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    const doorTransport=n.capturePackets(),doorState=n.network.state,doorRecords=m.records.slice(),doorView=n.view,doorRender=m.render;
    const doorKeys=['id',s['І๔︊'],s['ⲟܐ༠'],s['с̣ߏ'],s['ࡀ︂̄']];
    const doorSaved=doorKeys.map(key=>[key,Object.hasOwn(self,key),self[key]]),hidden=[];
-   const doorSettings=Object.fromEntries(['AimBotEnabled','autoFire','jitterActive'].map(key=>[key,m.settings[key]]));
+   const doorSettings=Object.fromEntries(['AimBotEnabled','autoFire'].map(key=>[key,m.settings[key]]));
    const doorClock=performance.now.bind(performance),doorNow=performance.now();
    const doorIdentity=[{object:self,key:'id',value:1},{object:n.network,key:'state',value:1}].map(entry=>({...entry,descriptor:Object.getOwnPropertyDescriptor(entry.object,entry.key)}));
    let hitLayer;
@@ -342,10 +342,10 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(n.exerciseNativeClose(3)===1&&JSON.stringify(m.connectionInfo().events)===beforeClosedSocket,'Remote close was incorrectly recorded as a local request');
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
-   check(!m.diagnostics.errors.length,'Mod reported errors');
-   return {untitled_aim:m.untitledAimVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   check(!m.diagnostics.errors.length,'Mod reported errors: '+m.diagnostics.errors.join('; '));
+   return {ilm_aim:m.ilmAimVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,native_autobuild_cursor_preview:true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:reference});
-  report.physical_numeric=await require('./verify_untitled_physical.cjs').verifyPhysical(page,symbols);
+  report.physical_numeric=await require('./verify_ilm_physical.cjs').verifyPhysical(page,symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;process.exitCode=1;}
  finally{report.finished_at=new Date().toISOString();fs.writeFileSync(path.join(dir,'validation.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));if(browser)await browser.close();}

@@ -1,1 +1,1 @@
-Historical ILM implementation and tests from commit 6c1aa0e. Not loaded or bundled. Their original test paths are available by checking out that revision. Current engine parity and settings are tested against recovery/message15-aim-reference.json.gz.
+Исторические варианты и тесты ILM, включая позднейшее расширение Curved. С 8 ноября2026 исходное ядро восстановлено в mod/ilm-aim.js без Curved. Текущие проверки — tests/ilm-current.test.cjs и tools/verify_ilm_aim.cjs; исторические тесты исполняются в соответствующей старой ревизии.

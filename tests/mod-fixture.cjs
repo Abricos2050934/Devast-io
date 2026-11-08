@@ -39,7 +39,7 @@ function fixture(options={}) {
     localStorage: {getItem: k => storage.get(k) ?? null, setItem: (k,v) => storage.set(k,v)},
     console, performance: {now: () => clock},Date:class extends Date{static now(){return clock;}},navigator,alert(){},B:candidate?.B||B,
   });
-  vm.runInContext((candidate?.source||(fs.readFileSync('mod/untitled-aim.js','utf8') + '\n' + fs.readFileSync('mod/responsive.js', 'utf8'))) + '\nglobalThis.mod = __installDevastMod(B);', context, {timeout: 1000});
+  vm.runInContext((candidate?.source||(fs.readFileSync('mod/ilm-aim.js','utf8') + '\n' + fs.readFileSync('mod/responsive.js', 'utf8'))) + '\nglobalThis.mod = __installDevastMod(B);', context, {timeout: 1000});
   return {mod: candidate?candidate.adaptMod(context.mod):context.mod, context, B,window,document,dom,navigator,clipboard,setClock:value=>{clock=value;},network, world, entities, storage, packets, listeners, timers, timerPeriods, frames, get nativeCalls(){return nativeCalls;}};
 }
 

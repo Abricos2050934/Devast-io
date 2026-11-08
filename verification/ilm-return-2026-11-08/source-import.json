@@ -1,0 +1,31 @@
+{
+  "source_file": "25INVITES-ILM1.0.json",
+  "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+  "classes": 4,
+  "methods_including_constructors": 13,
+  "original_tick_ms": 50,
+  "original_menu_controls": 5,
+  "additional_predictors": 0,
+  "blocks": [
+    {
+      "name": "_0x3e2cd1",
+      "sha256": "0f0969045d0338d20993e17b2768edad04dd39c5d832f97024baddf4951dc9ac"
+    },
+    {
+      "name": "_0x218077",
+      "sha256": "a91b6d8efafe27803969856f292b2729be15463ddd37595ecb035b98052bc5e1"
+    },
+    {
+      "name": "_0x4b5d6f",
+      "sha256": "cf73e763fc781065debd51b77b437f29a25f0612e2c951770d61050204ad2e19"
+    },
+    {
+      "name": "_0x391c19",
+      "sha256": "fa556018e650248b119ac78bd975b57c9022b4bedbcbf8de4c8670a0acfb0b5f"
+    },
+    {
+      "name": "_0x4a7389",
+      "sha256": "0ea4468953408d199e729a29fd722f97c638da8ea9d0c64345595fcae6f6dc23"
+    }
+  ]
+}

@@ -61,8 +61,6 @@ def artifacts(root, output):
             raise ValueError('Curved chasing interception was not verified in browser: ' + browser)
         if 'native-shot-direction-and-render-sync' in contract.get('features', []) and report.get('native', {}).get('native_shot_direction_and_render_sync') is not True:
             raise ValueError('Native shot direction and render sync were not verified in browser: ' + browser)
-        if 'verbatim-original-ilm-aim' in contract.get('features', []) and report.get('native', {}).get('original_ilm_mechanics') is not True:
-            raise ValueError('Original ILM aim mechanics were not verified in browser: ' + browser)
         if 'verbatim-message15-aim' in contract.get('features', []):
             native = report.get('native', {})
             comparison, extra = native.get('message15_comparison', {}), native.get('message15_extra', {})
@@ -85,6 +83,12 @@ def artifacts(root, output):
                     or aim.get('native_direction_transforms') is not True or aim.get('native_movement_hooks') is not True
                     or aim.get('whole_auto_fire_cycle') is not True or aim.get('server_death_sends_no_commands') is not True):
                 raise ValueError('Uploaded Untitled aim source comparison was not verified in browser: ' + browser)
+        if 'verbatim-original-ilm-aim' in contract.get('features', []):
+            aim = report.get('native', {}).get('ilm_aim', {})
+            if (aim.get('status') != 'passed' or aim.get('comparison_points', 0) < 1000
+                    or aim.get('native_direction_ownership') is not True or aim.get('whole_auto_fire_cycle') is not True
+                    or aim.get('server_death_sends_no_commands') is not True):
+                raise ValueError('Original ILM source comparison was not verified in browser: ' + browser)
         if 'native-aim-transport-preserves-idle' in contract.get('features', []) and report.get('native', {}).get('native_aim_transport', {}).get('status') != 'passed':
             raise ValueError('Native aim transport and periodic idle packets were not verified in browser: ' + browser)
         if 'immediate-aim-numeric-settings' in contract.get('features', []) and report.get('physical_numeric', {}).get('status') != 'passed':
@@ -104,8 +108,8 @@ def artifacts(root, output):
 
 Обновление: проверка сайта, расшифровка, перенос текущих модулей и браузерные тесты.
 Новая версия публикуется только после проверок; неизвестные изменения блокируют замену.
-Аимбот полностью перенесён из Untitled-1_mod_v4.js: Z — аимбот, H — меню.
-J сохраняет прежнее вращение; Jitter источника включается в меню.
+Аимбот полностью перенесён из 25INVITES-ILM1.0.json: Space — аимбот, H — меню.
+Исходные настройки — в Aim Bot; включение, FOV и автоогонь — в ILM controls.
 Нижние дополнительные показатели и надпись AIM BOT удалены. Адаптер наведения оптимизирован.
 Ники #ID, остальные функции и исправление повторного входа сохранены.
 

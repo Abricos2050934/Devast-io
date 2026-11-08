@@ -1,5 +1,11 @@
-Текущий модуль аимбота — mod/untitled-aim.js из Untitled-1_mod_v4.js.
-С 8 ноября 2026 года контракты Message15 заменены сверкой Untitled v4:
+Текущий модуль — mod/ilm-aim.js, исходный ILM 1.0 (Space/H).
+Релиз требует verbatim-original-ilm-aim:48сценариев/2400точек сравнения,
+оригинальные классы/меню/линии, нативную мышь, очереди/смерть и idle
+в Chromium/Firefox. Untitled/Message15/Curved архивированы. Далее сохранена история.
+Подробности — docs/ilm-production.md.
+
+Предыдущий модуль — mod/untitled-aim.js из Untitled-1_mod_v4.js (теперь в recovery/retired-untitled).
+В предыдущем выпуске 8 ноября 2026 года контракты Message15 заменялись сверкой Untitled v4:
 32 сценария, точные состояния/пакеты, нативные направления и движение,
 очереди/смерть и служебные пакеты в Chromium/Firefox. Параметры и частота
 оригинала сохраняются; новый ключ настроек DevastUntitledV4:aim:v1.

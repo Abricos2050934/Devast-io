@@ -50,16 +50,16 @@ function __installDevastMod(B) {
     }
   }
   const MOD = new HackCon();
-  Object.assign(MOD, {zoomFactor:1, showFunctionList:true},__untitledAimDefaults());
-  const aimKeys=Object.keys(__untitledAimDefaults());
-  const AIM_SAVE='DevastUntitledV4:aim:v1';
+  Object.assign(MOD, {zoomFactor:1, showFunctionList:true},__ilmAimDefaults());
+  const aimKeys=Object.keys(__ilmAimDefaults());
+  const AIM_SAVE='DevastILMOriginal:aim:v1';
   const aimDefaults=Object.fromEntries(aimKeys.map(key=>[key,MOD[key]]));
   const defaults = JSON.parse(JSON.stringify(MOD));
   const SAVE = 'DevastILM:settings:v3', LEGACY_SAVE = 'BestModMenuConfig';
   const transient = new Set(['Token', 'token', 'tokenId', 'userId']);
-  const keySettings = ['AimbotKey','AntiAimbotKey','StrafeWSKey','StrafeADKey','SpinKey','JitterKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey'];
-  const limits = {zoomFactor:[.33,2],Xraytransparency:[.05,1],...__untitledAimConstraints().limits};
-  const choices = __untitledAimConstraints().choices;
+  const keySettings = ['AimbotKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey'];
+  const limits = {zoomFactor:[.33,2],Xraytransparency:[.05,1],...__ilmAimConstraints().limits};
+  const choices = __ilmAimConstraints().choices;
   function validateSetting(key,value) {
     if (!Object.prototype.hasOwnProperty.call(defaults,key) || typeof value !== typeof defaults[key]) throw new Error('Invalid setting: '+key);
     if (typeof value === 'number' && !Number.isFinite(value)) throw new Error('Invalid numeric setting');
@@ -78,7 +78,7 @@ function __installDevastMod(B) {
     }
   } catch (_) {}
   Object.assign(MOD,aimDefaults);
-  try{const saved=JSON.parse(localStorage.getItem(AIM_SAVE)||localStorage.getItem('AimbotCfg_v7')||'{}');for(const key of aimKeys)if(Object.hasOwn(saved,key)){try{MOD[key]=validateSetting(key,saved[key]);}catch(_){}}}catch(_){}
+  try{const saved=JSON.parse(localStorage.getItem(AIM_SAVE)||'{}');for(const key of aimKeys)if(Object.hasOwn(saved,key)){try{MOD[key]=validateSetting(key,saved[key]);}catch(_){}}}catch(_){}
   const usedKeys = new Set();
   for (const key of keySettings) {
     if(MOD[key]==='NoKey')continue;
@@ -752,19 +752,11 @@ function __installDevastMod(B) {
   refreshLootFilter();
   let aimCycleDepth=0,aimCycleWritable=false;
   const aimTransport={cycles:0,blockedCycles:0,nativeYields:0};
-  const aimModule=__createUntitledAim(MOD,{
-    window,document,persist:()=>persist(),
-    running:()=>playing()&&!reconnect.sessionEnded,
-    sync:(aim,targets)=>{aim.selfId=B.world.ᅠᏧ‍?.id||-1;},
-    heldItem:()=>B.heldItem?.()||window.__heldItemDef,
-    isTeammate:id=>{const own=teamId(B.world.ᅠᏧ‍?.id);return own!==-1&&teamId(id)===own;},
+  const aimModule=__createIlmAdapter(MOD,{
+    window,selfId:()=>B.world.ᅠᏧ‍?.id||0,teamId,
     beginCycle:()=>{if(aimCycleDepth++===0){aimCycleWritable=playing()&&!reconnect.sessionEnded&&automationReady('aim');if(aimCycleWritable)aimTransport.cycles++;else aimTransport.blockedCycles++;}},
     endCycle:()=>{if(--aimCycleDepth===0)aimCycleWritable=false;},
-    send:packet=>{
-      if(!playing()||reconnect.sessionEnded||Aimbot.dead||connectionSocket&&connectionSocket.readyState!==1)return false;
-      if(aimCycleDepth?!aimCycleWritable:!automationReady('aim'))return false;
-      return __send(packet,true);
-    }
+    send:packet=>{if(!aimCycleWritable||!playing()||reconnect.sessionEnded||connectionSocket&&connectionSocket.readyState!==1)return false;return __send(packet,true);}
   });
   const GetAllTargets=aimModule.targets,Aimbot=aimModule.aim;
   const _players_list = [];
@@ -810,7 +802,7 @@ function __installDevastMod(B) {
     const health = B.health?.();
     connectionEvents.push({type,at:Math.round(now),state:B.network.state,
       integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,
-      aim:MOD.AimBotEnabled,autoFire:MOD.autoFire,jitter:MOD.jitterActive,
+      aim:MOD.AimBotEnabled,autoFire:MOD.autoFire,
       autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled,
       socketState:connectionSocket?.readyState??null,socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
       transport:socketTraffic(now),pageHidden:!!document.hidden,
@@ -874,9 +866,6 @@ function __installDevastMod(B) {
   const functionLabels = [
     ['SAutoLootEnabled', 'SAutoLoot'],
     ['AimBotEnabled', 'AimBot'],
-    ['jitterActive', 'Jitter'],
-    ['spinActive','Spin'],
-    ['AntiAimbot','Anti-Aim'],
     ['AutoBuiledEnabled', 'AutoBuild'],
     ['AntiKickEnabled', 'AntiKick'],
     ['FAutoLootEnabled', 'FAutoLoot'],
@@ -892,7 +881,7 @@ function __installDevastMod(B) {
     return !stopped && B.network.state === 1 && B.world.ᅠᏧ‍ && B.world.ᅠᏧ‍.id > 0;
   }
   let lastSentAngle = null,lastSentPlayer = 0;
-  const appliedToggles={AimBotEnabled:MOD.AimBotEnabled,jitterActive:MOD.jitterActive,spinActive:MOD.spinActive,AntiAimbot:MOD.AntiAimbot};
+  const appliedToggles={AimBotEnabled:MOD.AimBotEnabled};
   function __send(value, forceAngle = false) {
     if (!playing()) return false;
     const packet = typeof value === 'string' ? JSON.parse(value) : value;
@@ -916,8 +905,7 @@ function __installDevastMod(B) {
     diagnostics.commandsByOpcode[packet[0]]=(diagnostics.commandsByOpcode[packet[0]]||0)+1;
     return true;
   }
-  // The uploaded engine aligns in its native after-fire callback, as in the
-  // reference. Its own tick/packetAngle logic owns prediction and shot timing.
+  // ILM manual fire uses the last direction sent by its original timer.
   function beforeFire() {if(!playing()||reconnect.sessionEnded)return;aimModule.sync();}
   function persist() {
     refreshLootFilter();
@@ -946,6 +934,7 @@ function __installDevastMod(B) {
       if (conflict) MOD[conflict] = MOD[key];
     }
     MOD[key] = value;
+    if(key==='visualizeResolvingColor')GetAllTargets.lines[0].color=value;
     if (key === 'NicknameColor') {
       for (let id=1;id<B.world.ᴎ︃ᄉ.length;id++) {
         const meta=playerMeta(id);
@@ -977,14 +966,10 @@ function __installDevastMod(B) {
   function trackPacket(type, playerId, uid, x, y, active) {
     const kind=type===B.categories.player?'players':type===13?'ghouls':null;
     const id=kind==='players'?playerId:uid;
-    if(!kind){if(Number.isFinite(x)&&Number.isFinite(y)){if(active)aimModule.obstacles.set(type,playerId,uid,x,y);else aimModule.obstacles.del(type,playerId,uid);}return;}
-    if(!Number.isInteger(id)||id<1||id>65535)return;
-    const target=kind==='players'?GetAllTargets.getPlayerById(id):GetAllTargets.getGhoulByUid(id);
-    if(!active){target.setInactive();if(kind==='players'&&id===B.world.ᅠᏧ‍?.id)Aimbot.onDeath();return;}
-    if(Number.isFinite(x)&&Number.isFinite(y)){
-      aimModule.sync();target.update(x,y);
-      if(kind==='players'&&id===Aimbot.selfId){GetAllTargets.selfPosition={x,y};GetAllTargets.selfFromPacket=Date.now();Aimbot.dead=false;}
-    }
+    if(!kind||!Number.isInteger(id)||id<0||id>65535)return;
+    const group=GetAllTargets[kind];while(group.length<=id)group.push(new aimModule.Target(group.length));aimModule.ensure(id);
+    if(!active){group[id].setInactive();return;}
+    if(Number.isFinite(x)&&Number.isFinite(y))group[id].update(x,y);
   }
 
   function playerMeta(id) {
@@ -1516,8 +1501,8 @@ function __installDevastMod(B) {
       modCommandsByOpcode:{...diagnostics.commandsByOpcode},
       automationSettings:{autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled},
       automationTransport:{deferred:{...automationDeferrals},aimHighWaterBytes:AIM_BUFFER_HIGH_WATER},
-      aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',sourceTickRateMs:MOD.aimTickRate,turboAim:MOD.turboAim,deduplicatedDirections:diagnostics.deduplicatedAngles},
-      aimSettings:{enabled:MOD.AimBotEnabled,source:'untitled-v4',autoFire:MOD.autoFire,jitter:MOD.jitterActive,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
+      aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',sourceTickRateMs:50,deduplicatedDirections:diagnostics.deduplicatedAngles},
+      aimSettings:{enabled:MOD.AimBotEnabled,source:'ilm-original',autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}}))};
   }
@@ -1936,8 +1921,8 @@ function __installDevastMod(B) {
     }
     const t = e.target;
     if (e.repeat || t && (t.isContentEditable || (/^(INPUT|TEXTAREA|SELECT)$/).test(t.tagName)) || B.chatActive && B.chatActive()) return;
-    if([MOD.AimbotKey,MOD.AntiAimbotKey,MOD.StrafeWSKey,MOD.StrafeADKey,MOD.JitterKey,MOD.SpinKey,MOD.ModMenuKey].includes(e.code))return;
     const bindings = {
+      AimbotKey:'AimBotEnabled',
       AutoBuiledKey: 'AutoBuiledEnabled',
       SAutoLootKey: 'SAutoLootEnabled',
       FAutoLootKey: 'FAutoLootEnabled',
@@ -2052,7 +2037,7 @@ function __installDevastMod(B) {
     const filter = automation.addFolder('Loot filter');
     for (const [name, item] of Object.entries(LootData)) filter.add(item, 'acquire').name(name).onChange(persist);
     const keys = menu.addFolder('Keyboard');
-    for (const key of ['AimbotKey', 'JitterKey', 'AutoBuiledKey', 'SAutoLootKey', 'FAutoLootKey', 'AutoTakeKey', 'XrayKey', 'PlayersListKey', 'ModMenuKey']) {
+    for (const key of ['AimbotKey', 'AutoBuiledKey', 'SAutoLootKey', 'FAutoLootKey', 'AutoTakeKey', 'XrayKey', 'PlayersListKey', 'ModMenuKey']) {
       const c = keys.add(MOD, key), input = c.domElement.querySelector('input');
       input.readOnly = true;
       listen(input, "click", () => {
@@ -2164,7 +2149,6 @@ function __installDevastMod(B) {
   return {
     settings: MOD,
     beforeFire,
-    nativePacketAngle:angle=>{if(!playing()||reconnect.sessionEnded||Aimbot.dead)return angle;aimModule.sync();return Aimbot.packetAngle(angle);},
     afterFire:()=>aimModule.afterFire(),
     afterRelease:()=>aimModule.afterRelease(),
     onMove:move=>aimModule.onMove(move),
@@ -2172,7 +2156,7 @@ function __installDevastMod(B) {
     onSessionStart:()=>{lastSentAngle=null;Aimbot.onDeath();},
     get controlsAimDirection() {
       const controls=playing() && !reconnect.sessionEnded &&
-        (!Aimbot.dead&&(MOD.AimBotEnabled||MOD.AntiAimbot||MOD.hidePlayerAngle));
+        (!Aimbot.dead&&MOD.AimBotEnabled);
       // Both native direction handlers query this immediately before sending.
       // Once mouse input can change the server angle, our cache no longer proves
       // its value. Reacquisition must reassert even the same predicted angle.
@@ -2240,7 +2224,7 @@ function __installDevastMod(B) {
     },
     dispose() {
       aimModule.dispose();
-      MOD.jitterActive=false;MOD.spinActive=false;MOD.AntiAimbot=false;
+
       MOD.zoomFactor = 1;
       MOD.AimBotEnabled = false;
       MOD.XrayBuildings = false;

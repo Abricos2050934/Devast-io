@@ -29,7 +29,7 @@ function assemble(baseline, profile, symbols, payload, bootstrap, gui, aim = '')
 function build() {
   const read = file => fs.readFileSync(path.join(root,file),'utf8');
   const reference=require('./updater/references.cjs').loadReference(root,'');
-  const result=require('./auto_port.cjs').port(reference.source,reference.source,reference.profile,reference.bindings,read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/untitled-aim.js'),read('vendor/dat.gui.recovered.js'));
+  const result=require('./auto_port.cjs').port(reference.source,reference.source,reference.profile,reference.bindings,read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/ilm-aim.js'),read('vendor/dat.gui.recovered.js'));
   const source=result.output,profile=result.profile;
   const status = {status:'static_checks_passed',source_url:profile.source_url,
     baseline_sha256:profile.baseline_sha256,output_sha256:hash(source),output_bytes:Buffer.byteLength(source),

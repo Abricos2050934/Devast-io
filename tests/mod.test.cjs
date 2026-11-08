@@ -37,12 +37,12 @@ test('disabled aim and disconnected state send no aim packets', () => {
 });
 
 test('hotkeys ignore text input and toggle outside text fields', () => {
- const f=fixture();try{const dispatch=event=>{for(const cb of f.listeners.get('keydown'))cb(event);};f.document.activeElement={tagName:'INPUT'};dispatch({code:'KeyZ',target:f.document.activeElement});assert.equal(f.mod.settings.AimBotEnabled,false);f.document.activeElement={tagName:'CANVAS'};dispatch({code:'KeyZ',target:f.document.activeElement});assert.equal(f.mod.settings.AimBotEnabled,true);}finally{f.mod.dispose();}
+ const f=fixture();try{const dispatch=event=>{for(const cb of f.listeners.get('keydown'))cb(event);};f.document.activeElement={tagName:'INPUT'};dispatch({code:'Space',target:f.document.activeElement});assert.equal(f.mod.settings.AimBotEnabled,false);f.document.activeElement={tagName:'CANVAS'};dispatch({code:'Space',target:f.document.activeElement});assert.equal(f.mod.settings.AimBotEnabled,true);}finally{f.mod.dispose();}
 });
 
 test('dispose removes timers, frame callbacks and registered event handlers', () => {
   const f = fixture();
-  assert.equal(f.timers.size, 2);
+  assert.equal(f.timers.size, 1);
   assert.equal(f.frames.size, 1);
   f.mod.dispose();
   assert.equal(f.timers.size, 0);
@@ -79,10 +79,10 @@ test('fast loot menu filter applies immediately to every drop, independently of 
 
 test('zoom persists across reload; invalid ranges and choices are rejected; conflicting key bindings swap',()=>{
  const f=fixture();f.mod.setSetting('zoomFactor',.5);f.mod.setSetting('AimbotKey','KeyH');
- assert.equal(f.mod.settings.ModMenuKey,'KeyZ');
+ assert.equal(f.mod.settings.ModMenuKey,'Space');
  assert.throws(()=>f.mod.setSetting('distanceCoefficient',0));assert.equal(f.mod.settings.distanceCoefficient,300);
  assert.throws(()=>f.mod.setSetting('target','unknown'));assert.throws(()=>f.mod.setSetting('lockId',1.5));
- const g=fixture({saved:Object.fromEntries(f.storage)});assert.equal(g.mod.settings.zoomFactor,.5);assert.equal(g.mod.settings.AimbotKey,'KeyH');assert.equal(g.mod.settings.ModMenuKey,'KeyZ');
+ const g=fixture({saved:Object.fromEntries(f.storage)});assert.equal(g.mod.settings.zoomFactor,.5);assert.equal(g.mod.settings.AimbotKey,'KeyH');assert.equal(g.mod.settings.ModMenuKey,'Space');
  f.mod.dispose();g.mod.dispose();
 });
 
@@ -98,7 +98,7 @@ test('map names, ID 120, clan/name colors, gauges, hitboxes and real-angle displ
  f.world['ᴘρࡀ']={'ᴇ༤ᚆ':{value:75},'ոߎᚉ':{value:60},'օᴑ̸':{value:40},'ᴏ︀ރ':{value:20}};
  const self=player(1);self.angle=Math.PI/2;scene(f,1,[self,player(120,100,0)]);
  f.mod.setSetting('NicknameColor','#123456');f.mod.setSetting('EnemyClanColor','#654321');
- f.mod.setSetting('selfPredictLine',false);f.mod.aim.refresh();f.mod.setSetting('ShowPlayerHitbox',true);f.mod.setSetting('ShowRealAngles','always');f.mod.setSetting('PlayersListEnabled',true);f.mod.step(0);
+ f.mod.aim.refresh();f.mod.setSetting('ShowPlayerHitbox',true);f.mod.setSetting('ShowRealAngles','always');f.mod.setSetting('PlayersListEnabled',true);f.mod.step(0);
  assert.ok(f.dom.calls.some(c=>c.name==='fillText'&&c.args[0]==='#120'&&c.fill==='#123456'));
  assert.ok(f.dom.calls.some(c=>c.name==='fillText'&&c.args[0]==='[CLAN]'&&c.fill==='#654321'));
  assert.ok(!f.dom.calls.some(c=>c.name==='fillText'&&/HP:|Food:|Water:|Warmth:|Stamina:/.test(String(c.args[0]))));
@@ -226,14 +226,11 @@ test('legacy settings migrate separately from account storage and preserve custo
  assert.equal(g.storage.get('token'),'original');assert.equal(g.storage.get('tokenId'),'17');assert.equal(g.storage.get('userId'),'2');f.mod.dispose();g.mod.dispose();
 });
 
-test('uploaded aim re-aims in a microtask after target reception and aligns in its native fire callback',async()=>{
+test('ILM updates on its timer and native fire preserves the last transmitted direction',()=>{
  const f=fixture({fireKey:'nativeFire'});try{
-  for(const[k,v]of Object.entries({selfPredictEnabled:false,smoothLine:false,resolverType:'none',mouseFovEnable:false,lockId:2}))f.mod.setSetting(k,v);
-  f.mod.trackPacket(1,1,0,1000,1000,true);f.mod.trackPacket(1,2,0,1500,1000,true);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();f.packets.length=0;
-  f.mod.trackPacket(1,2,0,1500,1500,true);await Promise.resolve();assert.deepEqual(f.packets,[[6,45]]);
-  f.mod.beforeFire();f.network.nativeFire();f.mod.afterFire();assert.deepEqual(f.packets,[[6,45],[4],[6,45]]);assert.equal(f.mod.aim.mouseDown,true);
-  f.mod.afterRelease();assert.equal(f.mod.aim.mouseDown,false);
-  f.mod.setSetting('AimBotEnabled',false);f.packets.length=0;f.network.nativeFire();assert.deepEqual(f.packets,[[4]]);
+  f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('lockId',2);f.mod.trackPacket(1,1,1,1000,1000,true);f.mod.trackPacket(1,2,1,1500,1000,true);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();f.packets.length=0;
+  f.mod.trackPacket(1,2,1,1500,1500,true);assert.equal(f.packets.length,0);assert.equal(f.mod.aim.lastAngle,0);f.mod.beforeFire();f.network.nativeFire();f.mod.afterFire();assert.deepEqual(f.packets,[[4]]);assert.equal(f.mod.aim.mouseDown,true);
+  f.mod.aim.refresh();assert.equal(f.packets.at(-1)[0],6);assert.notEqual(f.packets.at(-1)[1],0);f.mod.afterRelease();assert.equal(f.mod.aim.mouseDown,false);
  }finally{f.mod.dispose();}
 });
 

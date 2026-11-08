@@ -36,11 +36,11 @@ assert.equal(bindings.length, 1);
 assert.equal(bindings[0].init.callee.name, '__installDevastMod');
 console.log('AST OK: full client, one installer, one bootstrap; extracted payload matches');
 
-require('./audit_untitled_aim.cjs').audit();
-const aimSource=fs.readFileSync('mod/untitled-aim.js','utf8');
+require('./audit_ilm_port.cjs').audit();
+const aimSource=fs.readFileSync('mod/ilm-aim.js','utf8');
 for(const declaration of parse(aimSource,options).body.filter(n=>n.type==='FunctionDeclaration'&&!['__ilmPatchPlayerMetadata','__ilmPatchNativeDirection','__jitterPatchNativeFire'].includes(n.id.name))) {
   const installed=body.filter(n=>n.type==='FunctionDeclaration'&&n.id.name===declaration.id.name);
   assert.equal(installed.length,1);
   assert.equal(client.slice(installed[0].start,installed[0].end),aimSource.slice(declaration.start,declaration.end));
 }
-console.log('Untitled v4 AST OK: original computation blocks and source defaults; retired aim engines absent');
+console.log('ILM AST OK: four original classes, tick, menu and line renderer; retired engines absent');

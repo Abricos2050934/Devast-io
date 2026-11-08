@@ -1,11 +1,11 @@
 {
   "schema": 1,
-  "name": "Devast-io Untitled v4 imported aim",
+  "name": "Devast-io original ILM 1.0",
   "modules": [
     "mod/responsive.js",
     "mod/bootstrap.js",
     "vendor/dat.gui.recovered.js",
-    "mod/untitled-aim.js"
+    "mod/ilm-aim.js"
   ],
   "features": [
     "prediction-and-auto-fire",
@@ -23,7 +23,6 @@
     "hotkeys-and-settings",
     "mines-and-building-opacity",
     "function-indicators",
-    "jitter-with-shot-priority",
     "cursor-autobuild-native-preview",
     "native-shared-canvas",
     "native-integrity-signature-compatibility",
@@ -37,8 +36,8 @@
     "aim-cycle-socket-backpressure",
     "immediate-aim-numeric-settings",
     "native-aim-transport-preserves-idle",
-    "verbatim-untitled-v4-aim",
-    "untitled-native-lifecycle"
+    "verbatim-original-ilm-aim",
+    "ilm-native-lifecycle"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -54,7 +53,7 @@
     "tests/door-click.test.cjs",
     "tests/automation-transport.test.cjs",
     "tests/native-aim-transport.test.cjs",
-    "tests/untitled-aim.test.cjs"
+    "tests/ilm-current.test.cjs"
   ],
   "required_browsers": [
     "chromium",

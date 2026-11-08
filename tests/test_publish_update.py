@@ -114,10 +114,10 @@ class PublicationTests(unittest.TestCase):
  def test_original_ilm_mechanics_require_both_native_browsers(self):
   self.contract['features']=['verbatim-original-ilm-aim']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
-  for report in self.validation['browsers'].values():report['native']={'original_ilm_mechanics':True}
+  for report in self.validation['browsers'].values():report['native']={'ilm_aim':{'status':'passed','comparison_points':2400,'native_direction_ownership':True,'whole_auto_fire_cycle':True,'server_death_sends_no_commands':True}}
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   for state in [False,None]:
-   self.validation['browsers']['firefox']['native']['original_ilm_mechanics']=state;self.save()
+   self.validation['browsers']['firefox']['native']['ilm_aim']['status']=state;self.save()
    with self.assertRaisesRegex(ValueError,'Original ILM.*firefox'):p.artifacts(self.root,self.out)
 
  def test_coalesced_directions_require_native_idle_ping_verification(self):
@@ -180,6 +180,14 @@ class PublicationTests(unittest.TestCase):
   self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['untitled_aim']['comparison_points']=100;self.save()
   with self.assertRaisesRegex(ValueError,'Untitled aim source comparison.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_original_ilm_requires_full_source_and_native_lifecycle_in_each_browser(self):
+  self.contract['features']=['verbatim-original-ilm-aim']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'ilm_aim':{'status':'passed','comparison_points':2400,'native_direction_ownership':True,'whole_auto_fire_cycle':True,'server_death_sends_no_commands':True}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['native']['ilm_aim']['comparison_points']=50;self.save()
+  with self.assertRaisesRegex(ValueError,'Original ILM source comparison.*firefox'):p.artifacts(self.root,self.out)
 
  def test_aim_ownership_resync_requires_both_native_browsers(self):
   self.contract['features']=['aim-pointer-ownership-resync']

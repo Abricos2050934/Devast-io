@@ -1,0 +1,162 @@
+{
+  "release": "a08f7355547df7f119c978032f91bf22ca8bc7ff0d7e47b0ba9b886356537604",
+  "output_sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+  "raw_sha256": "74720aca77141a313015167051e60c2dfc566310202a5b41d4445258e4937f2e",
+  "source_url": "https://devast.io/js/qYOh6D5MhvXhWnq.js",
+  "inputs_sha256": "a8f1222a012ee02232cb3734edea751f4cc9f1797fad5d4173fe79baa1bf113d",
+  "schema": 1,
+  "date_moscow": "2026-11-08",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 153,
+    "python_tests": 55
+  },
+  "candidate_tests": {
+    "status": "passed",
+    "tests": 98
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "browser_version": "154.0.8037.57",
+      "output_sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+      "ilm_aim": {
+        "status": "passed",
+        "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+        "scenes": 48,
+        "comparison_points": 2400,
+        "exact_states": true,
+        "exact_normalized_packets": true,
+        "original_timer_ms": 50,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "native_direction_ownership": true,
+        "server_death_sends_no_commands": true
+      },
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "physical_numeric": {
+        "status": "passed",
+        "engine": "ilm-original",
+        "physical_text_entry": true,
+        "slider_drag": true,
+        "native_angle_changes": true,
+        "saved_after_reload": {
+          "distanceCoefficient": 970,
+          "offsetCoefficient": 3,
+          "bulletSpeedCoefficient": 15,
+          "mouseFov": 1,
+          "lockId": 120
+        }
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "browser_version": "153.0",
+      "output_sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+      "ilm_aim": {
+        "status": "passed",
+        "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+        "scenes": 48,
+        "comparison_points": 2400,
+        "exact_states": true,
+        "exact_normalized_packets": true,
+        "original_timer_ms": 50,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "native_direction_ownership": true,
+        "server_death_sends_no_commands": true
+      },
+      "native_aim_transport": {
+        "status": "passed",
+        "idle_period_ms": 60000,
+        "sustained_duration_ms": 121000,
+        "directions": 2420,
+        "heartbeats": 2,
+        "real_input_updates_activity": true,
+        "wire_cases": [
+          {
+            "seed": [
+              0,
+              0
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              0,
+              1
+            ],
+            "bytes": 10,
+            "equal": true
+          },
+          {
+            "seed": [
+              18,
+              52
+            ],
+            "bytes": 10,
+            "equal": true
+          }
+        ]
+      },
+      "physical_numeric": {
+        "status": "passed",
+        "engine": "ilm-original",
+        "physical_text_entry": true,
+        "slider_drag": true,
+        "native_angle_changes": true,
+        "saved_after_reload": {
+          "distanceCoefficient": 970,
+          "offsetCoefficient": 3,
+          "bulletSpeedCoefficient": 15,
+          "mouseFov": 1,
+          "lockId": 120
+        }
+      },
+      "integrity": {
+        "status": "passed",
+        "predicates": 3
+      }
+    }
+  },
+  "live_server": "not_tested"
+}

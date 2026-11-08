@@ -49,6 +49,6 @@ function message15Operations(a,operations,symbols,roles,protocol={moveOpcode:2},
  }else throw Error('Native session start contract changed');
  owner(start);
  add('message15-session-start',start,after);roles.messageSessionStart=start.id.name;
- return require('./untitled-contracts.cjs').untitledDirectionOperations(ops,a);
+ return ops;
 }
 module.exports={message15Operations};
