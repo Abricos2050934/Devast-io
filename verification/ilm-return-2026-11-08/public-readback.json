@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "checked_at_moscow": "2026-11-08T14:47:20.468466+03:00",
+  "release": "a08f7355547df7f119c978032f91bf22ca8bc7ff0d7e47b0ba9b886356537604",
+  "published_commit": "2f4b1711e9bb0e19b37f08f7ec8d226ef4488a6f",
+  "expected_sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+  "files": {
+    "autoupdate_script": {
+      "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/game.modded.js",
+      "http_status": 200,
+      "bytes": 4438395,
+      "sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+      "engine": "ilm-original",
+      "other_aim_engines": false
+    },
+    "current": {
+      "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/refs/heads/updates/current.json",
+      "http_status": 200,
+      "bytes": 937,
+      "sha256": "c33343cd1421e696cbd34db28d1adb905f09c971c902de5790dd98b9977ca098",
+      "release": "a08f7355547df7f119c978032f91bf22ca8bc7ff0d7e47b0ba9b886356537604"
+    },
+    "verification": {
+      "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/refs/heads/updates/verification.json",
+      "http_status": 200,
+      "bytes": 31053,
+      "sha256": "3e15f287680b2a5a5e5841243f492d2aaa78853f48e031f368de6ba2a61b1ad1",
+      "browsers": {
+        "chromium": {
+          "status": "passed",
+          "comparison_points": 2400,
+          "idle_heartbeats": 2
+        },
+        "firefox": {
+          "status": "passed",
+          "comparison_points": 2400,
+          "idle_heartbeats": 2
+        }
+      }
+    },
+    "immutable_script": {
+      "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/2f4b1711e9bb0e19b37f08f7ec8d226ef4488a6f/game.modded.js",
+      "http_status": 200,
+      "bytes": 4438395,
+      "sha256": "9f8404205ee43ccb48cc79818a2226c9557817bce5b077cb88970ffb38d71ab8",
+      "engine": "ilm-original",
+      "other_aim_engines": false
+    }
+  },
+  "live_server": "not_tested"
+}
