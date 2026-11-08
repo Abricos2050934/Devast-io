@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "checked_at_moscow": "2026-11-08T13:31:19.182948+03:00",
+  "release": "cf1ce5e63cbf27815fdafa8ff19075e856e715dadf33d8d3d7007c8f597f74bc",
+  "published_commit": "34ff734f703b7de2a23b3c31ce4fec62aa6a2d63",
+  "files": {
+    "game.modded.js": {
+      "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/game.modded.js",
+      "status": 200,
+      "bytes": 4476302,
+      "sha256": "825c2fca0316a7428303963ce8ce57d7ddf34d2b19debb6d8962f0b7c251c783"
+    },
+    "current.json": {
+      "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/refs/heads/updates/current.json",
+      "status": 200,
+      "bytes": 937,
+      "sha256": "97ecd3ef8b24f900c5c5da4572a97199ebf9e689543928cd72af788d20a7f059"
+    },
+    "verification.json": {
+      "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/refs/heads/updates/verification.json",
+      "status": 200,
+      "bytes": 36979,
+      "sha256": "490b7255e7bbe83af2852a0aa14710333203d07201ac5f76f0ac980200b089c7"
+    }
+  },
+  "cache_note": "The short current.json branch URL briefly served the previous cached manifest; canonical refs/heads URL and immutable published commit were verified. The exact permanent JS URL returned the new verified bytes."
+}
