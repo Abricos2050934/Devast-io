@@ -89,14 +89,12 @@ function __createIlmAdapter(MOD,environment){
   const engine=__createIlmAim(MOD,world,packet=>environment.send(packet));
   const originalResolve=engine.aim.resolve;
   engine.aim.resolve=function(...args){return snapshot(()=>originalResolve.apply(this,args));};
-  engine.aim.dead=false;engine.aim.mouseDown=false;engine.targets.lines[0].color=MOD.visualizeResolvingColor;
+  engine.aim.dead=false;engine.aim.mouseDown=false;
   function tick(){if(stopped)return;environment.beginCycle();try{return snapshot(()=>engine.tick());}finally{environment.endCycle();}}
   engine.aim.refresh=tick;engine.aim.onDeath=()=>{engine.aim.dead=true;engine.aim.mouseDown=false;};
   return {...engine,tick,ensure,snapshot,
     start(){if(interval!==null||stopped)return;interval=environment.window.setInterval(tick,50);},
-    installMenu(root){const folder=__installIlmAimMenu(root,MOD);const controls=[...folder.__controllers];
-      const extra=root.addFolder('ILM controls');for(const[k,label,range]of [['AimBotEnabled','Enabled',[]],['autoFire','AutoFire',[]],['mouseFovEnable','Mouse FOV',[]],['mouseFov','FOV',[1,20000]],['lockId','Lock ID',[-1,65535,1]],['visualizeResolving','Prediction line',[]]])controls.push(extra.add(MOD,k,...range).name(label));
-      controls.push(extra.addColor(MOD,'visualizeResolvingColor').name('Line color'));return {controllers:controls};},
+    installMenu(root){const folder=__installIlmAimMenu(root,MOD);return {controllers:[...folder.__controllers]};},
     sync(){return snapshot(()=>{});},
     afterFire(){engine.aim.mouseDown=true;},afterRelease(){engine.aim.mouseDown=false;},
     onMove(mask){engine.targets.myLastMoveDirection=mask;return true;},

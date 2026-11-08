@@ -158,6 +158,17 @@ class PublicationTests(unittest.TestCase):
   self.validation['browsers']['firefox']['native']['coalesced_aim_directions_and_native_idle']=False;self.save()
   with self.assertRaisesRegex(ValueError,'Coalesced.*firefox'):p.artifacts(self.root,self.out)
 
+ def test_original_ilm_menu_requires_matching_controls_and_source_line_in_both_browsers(self):
+  self.contract['features']=['ilm-original-menu-layout']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  keys=['exact_order_labels_ranges_steps_options','no_extra_aim_controls','source_line_color']
+  for report in self.validation['browsers'].values():report['native']={'ilm_menu':dict(status='passed',**dict.fromkeys(keys,True))}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for key in keys:
+   self.validation['browsers']['firefox']['native']['ilm_menu'][key]=False;self.save()
+   with self.assertRaisesRegex(ValueError,'menu layout.*firefox'):p.artifacts(self.root,self.out)
+   self.validation['browsers']['firefox']['native']['ilm_menu'][key]=True
+
  def test_message15_source_and_numeric_proofs_are_required_in_both_browsers(self):
   self.contract['features']=['verbatim-message15-aim','message15-native-lifecycle','immediate-aim-numeric-settings']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

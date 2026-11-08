@@ -1,0 +1,236 @@
+{
+  "release": {
+    "schema": 1,
+    "release": "28a52161bb219d7ecde25a3620c2896eae2632f229b7d5a960cf07e8b6695b33",
+    "raw_sha256": "1a3807a85d8b36df3e97c51b4311c8a6c51a04b3ad65687d7e2366f1e1502c9b",
+    "inputs_sha256": "9b0c7573442a5a571dd9c050e53f25e57cc28d532855b1e58c9abb4db08d0123",
+    "output_sha256": "37c33fd8f5ae7004b4c692d43942da394c60a3b6fe700b6150ceb1de1de364fc",
+    "script": "versions/28a52161bb219d7ecde25a3620c2896eae2632f229b7d5a960cf07e8b6695b33/game.modded.js",
+    "source_url": "https://devast.io/js/oBgZbNI48tDRbPbHHSZh.js",
+    "activated_at": "2026-11-08T17:39:12.448362+00:00",
+    "previous_release": "e439ccaccd14f47dddc01a1172d9ca9b01a323d32b3a573b4230f1bf23bb4344",
+    "validation": "passed",
+    "live_server": "not_tested",
+    "publication": "local_only"
+  },
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 185,
+    "python_tests": 59
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "ilm_menu": {
+        "status": "passed",
+        "controls": [
+          {
+            "property": "ShowRealAngles",
+            "label": "ShowRealAngles",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": [
+              {
+                "label": "always",
+                "value": "always"
+              },
+              {
+                "label": "withAim",
+                "value": "withAim"
+              }
+            ]
+          },
+          {
+            "property": "target",
+            "label": "Target",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": [
+              {
+                "label": "players",
+                "value": "players"
+              },
+              {
+                "label": "ghouls",
+                "value": "ghouls"
+              },
+              {
+                "label": "all",
+                "value": "all"
+              }
+            ]
+          },
+          {
+            "property": "distanceCoefficient",
+            "label": "DistanceCoefficient",
+            "min": 10,
+            "max": 1000,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "bulletSpeedCoefficient",
+            "label": "BulletSpeedCoefficient",
+            "min": 1,
+            "max": 15,
+            "step": 0.25,
+            "options": []
+          },
+          {
+            "property": "offsetCoefficient",
+            "label": "OffsetCoefficient",
+            "min": 0,
+            "max": 3,
+            "step": 0.1,
+            "options": []
+          }
+        ],
+        "exact_order_labels_ranges_steps_options": true,
+        "no_extra_aim_controls": true,
+        "source_line_color": true
+      },
+      "ilm_aim": {
+        "status": "passed",
+        "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+        "scenes": 48,
+        "comparison_points": 2400,
+        "exact_states": true,
+        "exact_normalized_admitted_packets": true,
+        "valid_target_admission": true,
+        "session_target_reset": true,
+        "original_timer_ms": 50,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "native_direction_ownership": true,
+        "source_pointer_ownership_on_target_loss": true,
+        "server_death_sends_no_commands": true
+      },
+      "ilm_mouse": {
+        "status": "passed",
+        "cases": 18,
+        "source_camera_coordinates": true,
+        "exact_target_and_sent_angle": true,
+        "disabled_fov_retains_coordinates": true
+      },
+      "ilm_server_angle": {
+        "status": "passed",
+        "cases": 72,
+        "frames": 288,
+        "native_player_lerp": 0.15,
+        "zero_position_sentinels_ignored": true,
+        "actual_server_packet_angle": true,
+        "source_wrap_and_interpolation": true,
+        "manual_fire_keeps_source_direction": true
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "ilm_menu": {
+        "status": "passed",
+        "controls": [
+          {
+            "property": "ShowRealAngles",
+            "label": "ShowRealAngles",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": [
+              {
+                "label": "always",
+                "value": "always"
+              },
+              {
+                "label": "withAim",
+                "value": "withAim"
+              }
+            ]
+          },
+          {
+            "property": "target",
+            "label": "Target",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": [
+              {
+                "label": "players",
+                "value": "players"
+              },
+              {
+                "label": "ghouls",
+                "value": "ghouls"
+              },
+              {
+                "label": "all",
+                "value": "all"
+              }
+            ]
+          },
+          {
+            "property": "distanceCoefficient",
+            "label": "DistanceCoefficient",
+            "min": 10,
+            "max": 1000,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "bulletSpeedCoefficient",
+            "label": "BulletSpeedCoefficient",
+            "min": 1,
+            "max": 15,
+            "step": 0.25,
+            "options": []
+          },
+          {
+            "property": "offsetCoefficient",
+            "label": "OffsetCoefficient",
+            "min": 0,
+            "max": 3,
+            "step": 0.1,
+            "options": []
+          }
+        ],
+        "exact_order_labels_ranges_steps_options": true,
+        "no_extra_aim_controls": true,
+        "source_line_color": true
+      },
+      "ilm_aim": {
+        "status": "passed",
+        "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+        "scenes": 48,
+        "comparison_points": 2400,
+        "exact_states": true,
+        "exact_normalized_admitted_packets": true,
+        "valid_target_admission": true,
+        "session_target_reset": true,
+        "original_timer_ms": 50,
+        "whole_auto_fire_cycle": true,
+        "small_queue_admission": true,
+        "native_direction_ownership": true,
+        "source_pointer_ownership_on_target_loss": true,
+        "server_death_sends_no_commands": true
+      },
+      "ilm_mouse": {
+        "status": "passed",
+        "cases": 18,
+        "source_camera_coordinates": true,
+        "exact_target_and_sent_angle": true,
+        "disabled_fov_retains_coordinates": true
+      },
+      "ilm_server_angle": {
+        "status": "passed",
+        "cases": 72,
+        "frames": 288,
+        "native_player_lerp": 0.15,
+        "zero_position_sentinels_ignored": true,
+        "actual_server_packet_angle": true,
+        "source_wrap_and_interpolation": true,
+        "manual_fire_keeps_source_direction": true
+      }
+    }
+  }
+}

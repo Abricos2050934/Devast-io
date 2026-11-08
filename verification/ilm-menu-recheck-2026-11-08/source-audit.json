@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "compared_defaults": 14,
+  "defaults": {
+    "AimbotKey": "Space",
+    "ShowRealAngles": "withAim",
+    "target": "players",
+    "AimBotEnabled": false,
+    "mouseFovEnable": true,
+    "distanceCoefficient": 300,
+    "bulletSpeedCoefficient": 4,
+    "offsetCoefficient": 0.1,
+    "visualizeResolving": true,
+    "visualizeResolvingColor": "#EEEEEE",
+    "autoFire": false,
+    "lockId": -1,
+    "mouseFov": 12345,
+    "resolverType": "linear"
+  },
+  "source_sha256": "2c0087f65d907a82a109f529fb226539326e79503e531357b35077ae7c683693",
+  "core": {
+    "status": "passed",
+    "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
+    "classes": 4,
+    "methods_including_constructors": 13,
+    "exact_declarations": 5,
+    "menu_controls": 5,
+    "source_parity": "verbatim",
+    "additional_predictors": 0,
+    "core_sha256": "1034c81974c2a11cbced96a850fdf09e6eac75c002ae7384457069e34030c8d7"
+  }
+}

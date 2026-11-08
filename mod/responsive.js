@@ -985,7 +985,6 @@ function __installDevastMod(B) {
       if (conflict) MOD[conflict] = MOD[key];
     }
     MOD[key] = value;
-    if(key==='visualizeResolvingColor')GetAllTargets.lines[0].color=value;
     if (key === 'NicknameColor') {
       for (let id=1;id<B.world.ᴎ︃ᄉ.length;id++) {
         const meta=playerMeta(id);

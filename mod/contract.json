@@ -44,7 +44,8 @@
     "bounded-auto-build",
     "aim-session-history-reset",
     "ilm-native-mouse-and-server-angle-parity",
-    "ilm-pointer-ownership-between-ticks"
+    "ilm-pointer-ownership-between-ticks",
+    "ilm-original-menu-layout"
   ],
   "removed_overlays": [
     "bottom-gauge-text",

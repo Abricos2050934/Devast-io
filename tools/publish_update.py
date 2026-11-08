@@ -102,6 +102,10 @@ def artifacts(root, output):
                     or angle.get('zero_position_sentinels_ignored') is not True
                     or angle.get('manual_fire_keeps_source_direction') is not True):
                 raise ValueError('Original ILM mouse and native server-angle pipeline was not verified in browser: ' + browser)
+        if 'ilm-original-menu-layout' in contract.get('features', []):
+            menu = report.get('native', {}).get('ilm_menu', {})
+            if menu.get('status') != 'passed' or not all(menu.get(key) is True for key in ('exact_order_labels_ranges_steps_options', 'no_extra_aim_controls', 'source_line_color')):
+                raise ValueError('Original ILM menu layout was not verified in browser: ' + browser)
         if 'ilm-pointer-ownership-between-ticks' in contract.get('features', []) and report.get('native', {}).get('ilm_aim', {}).get('source_pointer_ownership_on_target_loss') is not True:
             raise ValueError('Original ILM pointer ownership during target loss was not verified in browser: ' + browser)
         if 'native-aim-transport-preserves-idle' in contract.get('features', []) and report.get('native', {}).get('native_aim_transport', {}).get('status') != 'passed':
@@ -124,7 +128,8 @@ def artifacts(root, output):
 Обновление: проверка сайта, расшифровка, перенос текущих модулей и браузерные тесты.
 Новая версия публикуется только после проверок; неизвестные изменения блокируют замену.
 Аимбот полностью перенесён из 25INVITES-ILM1.0.json: Space — аимбот, H — меню.
-Исходные настройки — в Aim Bot; включение, FOV и автоогонь — в ILM controls.
+Пять исходных настроек — в Aim Bot, в порядке ILM; включение — Space.
+Остальные исходные поля сохраняются в конфигурации, как в оригинальном ILM.
 Нижние дополнительные показатели и надпись AIM BOT удалены. Адаптер наведения оптимизирован.
 Ники #ID, остальные функции и исправление повторного входа сохранены.
 
