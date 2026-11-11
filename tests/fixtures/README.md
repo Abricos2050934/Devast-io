@@ -27,3 +27,11 @@ matched implementation and startup arguments. It also exposes a collision
 between a native tile field and an unrelated object-literal property. The
 adapter field must use unique member-access evidence. This fixture remains
 unregistered and is ported from the same reviewed November 6 baseline.
+
+`rotation-2026-11-11.js.gz` is the unmodified public client from
+`https://devast.io/js/hym7DtRA3RCGo21.js` (2026-11-11), SHA256
+`35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362`.
+It reuses a sixteen-symbol alphabet with a different byte cipher, contains
+larger protected blocks, and adds an exported native animation reset to the
+player rejoin handler. The regression requires that reset to survive porting.
+This input also remains unregistered, without a version-specific patch profile.

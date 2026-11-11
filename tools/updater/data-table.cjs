@@ -81,6 +81,9 @@ function decodeDataTable(analysis,nodes,group){
   case 'SequenceExpression':{let v;for(const x of n.expressions)v=expr(x,e);return v;}
   case 'AssignmentExpression':{const value=expr(n.right,e);if(n.operator==='=')return assign(n.left,value,e);const ref=reference(n.left,e);return ref.set(check(binary(n.operator.slice(0,-1),ref.get(),value)));}
   case 'UpdateExpression':{const ref=reference(n.argument,e),old=ref.get(),next=old+(n.operator==='++'?1:-1);ref.set(next);return n.prefix?next:old;}
+  case 'NewExpression':
+   if(n.callee.type!=='Identifier'||n.callee.name!=='Array'||binding(n.callee))throw Error('Unsupported string-table constructor');
+   // Only the bounded, locally implemented Array allocator above is allowed.
   case 'CallExpression':{const fn=expr(n.callee,e),args=n.arguments.map(n=>expr(n,e));
    if(typeof fn==='function'&&safe.has(fn))return check(fn(...args));
    if(!fn||!functions.has(fn)||++depth>40)throw Error('Unsupported string-table call');

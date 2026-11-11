@@ -8,7 +8,9 @@ class Env{
  set(k,v){if(this.values.has(k)||!this.parent)this.values.set(k,v);else this.parent.set(k,v);return v;}
 }
 function interpret(block,analysis){
- let steps=0,depth=0,captured=[];const limit=40000000,env=new Env(),safe=new WeakSet();
+ // Larger protected blocks need more data-decoding work after a rotation.
+ // Scale the instruction budget by input size, retaining a hard upper bound.
+ let steps=0,depth=0,captured=[];const limit=Math.min(80000000,Math.max(40000000,(block.end-block.start)*128)),env=new Env(),safe=new WeakSet();
  const allow=fn=>(safe.add(fn),fn);
  const string=Object.assign(Object.create(null),{fromCharCode:allow((...v)=>String.fromCharCode(...v))});
  const win=Object.assign(Object.create(null),{String:string,parseInt:allow((v,b)=>parseInt(v,b)),atob:allow(v=>Buffer.from(v,'base64').toString('latin1')),btoa:allow(v=>Buffer.from(v,'latin1').toString('base64')),escape:allow(escape),unescape:allow(unescape),decodeURIComponent:allow(decodeURIComponent),encodeURIComponent:allow(encodeURIComponent)});

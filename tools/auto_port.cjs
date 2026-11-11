@@ -155,6 +155,14 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
    return {old:n,current,local,callbackGuard:true};
   }
   if(fn&&fn!==old.tree.body[0]?.expression?.callee){
+   if(!pairs.has(fn)&&id==='ilm-native-player-nickname-id'){
+    const match=require('./updater/player-rejoin.cjs').playerRejoin(old,cur,fn);
+    pairs.set(fn,match.current);curCanon.set(match.current,match.nc);
+   }
+   if(!pairs.has(fn)&&id==='ilm-native-initial-nickname-id'){
+    const match=require('./updater/player-rejoin.cjs').playerConstructor(old,cur,fn);
+    pairs.set(fn,match.current);curCanon.set(match.current,match.nc);
+   }
    const matched=pairs.get(fn);
    if(!matched&&id==='native-play-preparation-recovery'&&n===fn){
     const match=require('./updater/play-preparation.cjs').playPreparation(old,cur,fn,{oldNamespace:bindings.symbols['о̃༩'],oldLogin:bindings.symbols['ᅠϲ᠍'],namespace:provisional[bindings.symbols['о̃༩']],login:provisional[bindings.symbols['ᅠϲ᠍']]});
