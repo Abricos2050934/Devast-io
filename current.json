@@ -9,8 +9,8 @@
   "source_candidates": [
     "https://devast.io/js/hym7DtRA3RCGo21.js"
   ],
-  "activated_at": "2026-11-12T17:40:26.432037+00:00",
-  "previous_release": null,
+  "activated_at": "2026-11-12T17:47:45.403617+00:00",
+  "previous_release": "08dc4d242e9aeed58fc9703d3f6ec5f35d7ea63aa9d7439b93d2dc02e478ee9a",
   "validation": "passed",
   "live_server": "not_tested",
   "publication": "github",
