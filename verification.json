@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "8dbc124d0f462608eed3ebf86766754c9473c0e9cee43eabd9f1f326ad267260",
+  "output_sha256": "6957260a1dabc0ce9252fc3d6ab488f47dda8823bf6bec00690317b1870cad5a",
   "static_ast": "passed",
   "aim_core": "active uploaded __BBY declarations and lifecycle",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -50,11 +50,12 @@
       "aim-session-history-reset",
       "verbatim-message27-aim",
       "message27-native-pipeline",
-      "message27-original-menu-layout",
       "aim-line-native-projection",
       "live-aim-setting-effects",
       "versioned-aim-settings-preserved",
-      "jitter-shot-priority"
+      "jitter-shot-priority",
+      "restored-original-jitter",
+      "safe-shot-direction-ownership"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -85,28 +86,17 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "5de55fcca4c017fa93843efe8240ae52f2b2989fbdb9e38bdd234d463bd5d414",
+    "mod/responsive.js": "8fcc9aa30855d2232562a7d6e2889c4cac12cafb10db32838861b5da9fbc852c",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
-    "mod/ilm-aim.js": "e916c8878e0e4bc370e21a61b9363b8ffb5051e39941f42f4db0e6fcb35419f7"
+    "mod/ilm-aim.js": "d177aca0a4a71715c19efd514abe25f5b2bf47517d2d05a132643d061faf3556"
   },
-  "mod_bundle_sha256": "9f2ef29a6e5c513f5fc3f55f078fa7cabc9d530c5fc4435b56016bda02af9fdc",
+  "mod_bundle_sha256": "81873bfa857924b52b7deca85798390b88a2a0c2ccf0c4583d4c40c42767e0fb",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
-  "console_errors": [
-    "Access to XMLHttpRequest at 'https://frankfurt2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://sydney3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://losangeles1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://atlanta1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://osaka1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED"
-  ],
+  "browser_version": "154.0.8037.57",
+  "console_errors": [],
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -139,18 +129,25 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "67f603b5358ebf89160587bad7e9216d063b4097e0a28510a7a292e24288c75c",
+    "fingerprint": "1d59e1fd2a3deb80e39d961a00fd7f1ed8ac9fa6e2a95dd3a5ed69711515d9d3",
     "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
   },
   "native": {
     "jitter": {
       "status": "passed",
+      "original_rotation": true,
+      "configurable_speed": true,
+      "imported_jitter_removed": true,
       "manual_angle_before_attack": true,
       "automatic_angle_before_attack": true,
       "held_fire_tracks_target": true,
       "cursor_cannot_overwrite": true,
+      "non_jitter_cursor_cannot_overwrite": true,
+      "repeated_bursts_aligned": true,
       "resumes_on_release": true,
-      "standing_and_stop_option": true,
+      "standing_rotation": true,
+      "targetless_manual_alignment": true,
+      "blocked_attack_rejected": true,
       "local_rotation": true,
       "death_stops_packets": true
     },
@@ -395,56 +392,11 @@
             "options": []
           },
           {
-            "property": "antiAimMode",
-            "label": "AntiAimMode",
-            "min": null,
-            "max": null,
-            "step": null,
-            "options": [
-              {
-                "label": "At target",
-                "value": "At target"
-              },
-              {
-                "label": "Round",
-                "value": "Round"
-              },
-              {
-                "label": "Round2",
-                "value": "Round2"
-              }
-            ]
-          },
-          {
             "property": "antiAimCoefficient",
             "label": "AntiAimCoefficient",
             "min": 10,
             "max": 500,
             "step": 10,
-            "options": []
-          },
-          {
-            "property": "jitterActive",
-            "label": "JitterActive",
-            "min": null,
-            "max": null,
-            "step": null,
-            "options": []
-          },
-          {
-            "property": "jitterOffset",
-            "label": "JitterOffset",
-            "min": 0,
-            "max": 360,
-            "step": 1,
-            "options": []
-          },
-          {
-            "property": "stopJittersOnStop",
-            "label": "StopJittersOnStop",
-            "min": null,
-            "max": null,
-            "step": null,
             "options": []
           }
         ],
@@ -515,19 +467,20 @@
         "hide": "KeyH"
       },
       "exact_order_labels_ranges_steps_options": true,
-      "controls": 32
+      "original_jitter_controls": true,
+      "controls": 28
     },
     "message27_aim": {
       "status": "passed",
       "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
       "active_override": "__BBY",
       "scenes": 32,
-      "comparison_points": 2149,
+      "comparison_points": 2059,
       "exact_states": true,
-      "exact_raw_packets": true,
+      "corrected_attack_order": true,
       "source_timing": true,
       "spear": true,
-      "jitter": true,
+      "uploaded_jitter_removed": true,
       "strafe": true,
       "native_angles": true,
       "mouse_cases": 18,
@@ -539,7 +492,7 @@
     "message27_settings": {
       "status": "passed",
       "gui_controls_live": true,
-      "checked": 17,
+      "checked": 16,
       "results": [
         {
           "key": "distanceCoefficient",
@@ -874,19 +827,6 @@
               }
             }
           ]
-        },
-        {
-          "key": "jitterOffset",
-          "samples": [
-            {
-              "value": 0,
-              "result": 180
-            },
-            {
-              "value": 85,
-              "result": 265
-            }
-          ]
         }
       ],
       "conditional_settings": {
@@ -1146,21 +1086,28 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-12T18:45:24.913Z",
+  "finished_at": "2026-11-12T19:33:41.244Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "8dbc124d0f462608eed3ebf86766754c9473c0e9cee43eabd9f1f326ad267260",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "6957260a1dabc0ce9252fc3d6ab488f47dda8823bf6bec00690317b1870cad5a",
+      "browser_version": "154.0.8037.57",
       "native": {
         "jitter": {
           "status": "passed",
+          "original_rotation": true,
+          "configurable_speed": true,
+          "imported_jitter_removed": true,
           "manual_angle_before_attack": true,
           "automatic_angle_before_attack": true,
           "held_fire_tracks_target": true,
           "cursor_cannot_overwrite": true,
+          "non_jitter_cursor_cannot_overwrite": true,
+          "repeated_bursts_aligned": true,
           "resumes_on_release": true,
-          "standing_and_stop_option": true,
+          "standing_rotation": true,
+          "targetless_manual_alignment": true,
+          "blocked_attack_rejected": true,
           "local_rotation": true,
           "death_stops_packets": true
         },
@@ -1405,56 +1352,11 @@
                 "options": []
               },
               {
-                "property": "antiAimMode",
-                "label": "AntiAimMode",
-                "min": null,
-                "max": null,
-                "step": null,
-                "options": [
-                  {
-                    "label": "At target",
-                    "value": "At target"
-                  },
-                  {
-                    "label": "Round",
-                    "value": "Round"
-                  },
-                  {
-                    "label": "Round2",
-                    "value": "Round2"
-                  }
-                ]
-              },
-              {
                 "property": "antiAimCoefficient",
                 "label": "AntiAimCoefficient",
                 "min": 10,
                 "max": 500,
                 "step": 10,
-                "options": []
-              },
-              {
-                "property": "jitterActive",
-                "label": "JitterActive",
-                "min": null,
-                "max": null,
-                "step": null,
-                "options": []
-              },
-              {
-                "property": "jitterOffset",
-                "label": "JitterOffset",
-                "min": 0,
-                "max": 360,
-                "step": 1,
-                "options": []
-              },
-              {
-                "property": "stopJittersOnStop",
-                "label": "StopJittersOnStop",
-                "min": null,
-                "max": null,
-                "step": null,
                 "options": []
               }
             ],
@@ -1525,19 +1427,20 @@
             "hide": "KeyH"
           },
           "exact_order_labels_ranges_steps_options": true,
-          "controls": 32
+          "original_jitter_controls": true,
+          "controls": 28
         },
         "message27_aim": {
           "status": "passed",
           "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
           "active_override": "__BBY",
           "scenes": 32,
-          "comparison_points": 2149,
+          "comparison_points": 2059,
           "exact_states": true,
-          "exact_raw_packets": true,
+          "corrected_attack_order": true,
           "source_timing": true,
           "spear": true,
-          "jitter": true,
+          "uploaded_jitter_removed": true,
           "strafe": true,
           "native_angles": true,
           "mouse_cases": 18,
@@ -1549,7 +1452,7 @@
         "message27_settings": {
           "status": "passed",
           "gui_controls_live": true,
-          "checked": 17,
+          "checked": 16,
           "results": [
             {
               "key": "distanceCoefficient",
@@ -1882,19 +1785,6 @@
                       1290.3366947824184
                     ]
                   }
-                }
-              ]
-            },
-            {
-              "key": "jitterOffset",
-              "samples": [
-                {
-                  "value": 0,
-                  "result": 180
-                },
-                {
-                  "value": 85,
-                  "result": 265
                 }
               ]
             }
@@ -2186,17 +2076,24 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "8dbc124d0f462608eed3ebf86766754c9473c0e9cee43eabd9f1f326ad267260",
+      "output_sha256": "6957260a1dabc0ce9252fc3d6ab488f47dda8823bf6bec00690317b1870cad5a",
       "browser_version": "153.0",
       "native": {
         "jitter": {
           "status": "passed",
+          "original_rotation": true,
+          "configurable_speed": true,
+          "imported_jitter_removed": true,
           "manual_angle_before_attack": true,
           "automatic_angle_before_attack": true,
           "held_fire_tracks_target": true,
           "cursor_cannot_overwrite": true,
+          "non_jitter_cursor_cannot_overwrite": true,
+          "repeated_bursts_aligned": true,
           "resumes_on_release": true,
-          "standing_and_stop_option": true,
+          "standing_rotation": true,
+          "targetless_manual_alignment": true,
+          "blocked_attack_rejected": true,
           "local_rotation": true,
           "death_stops_packets": true
         },
@@ -2441,56 +2338,11 @@
                 "options": []
               },
               {
-                "property": "antiAimMode",
-                "label": "AntiAimMode",
-                "min": null,
-                "max": null,
-                "step": null,
-                "options": [
-                  {
-                    "label": "At target",
-                    "value": "At target"
-                  },
-                  {
-                    "label": "Round",
-                    "value": "Round"
-                  },
-                  {
-                    "label": "Round2",
-                    "value": "Round2"
-                  }
-                ]
-              },
-              {
                 "property": "antiAimCoefficient",
                 "label": "AntiAimCoefficient",
                 "min": 10,
                 "max": 500,
                 "step": 10,
-                "options": []
-              },
-              {
-                "property": "jitterActive",
-                "label": "JitterActive",
-                "min": null,
-                "max": null,
-                "step": null,
-                "options": []
-              },
-              {
-                "property": "jitterOffset",
-                "label": "JitterOffset",
-                "min": 0,
-                "max": 360,
-                "step": 1,
-                "options": []
-              },
-              {
-                "property": "stopJittersOnStop",
-                "label": "StopJittersOnStop",
-                "min": null,
-                "max": null,
-                "step": null,
                 "options": []
               }
             ],
@@ -2561,19 +2413,20 @@
             "hide": "KeyH"
           },
           "exact_order_labels_ranges_steps_options": true,
-          "controls": 32
+          "original_jitter_controls": true,
+          "controls": 28
         },
         "message27_aim": {
           "status": "passed",
           "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
           "active_override": "__BBY",
           "scenes": 32,
-          "comparison_points": 2149,
+          "comparison_points": 2059,
           "exact_states": true,
-          "exact_raw_packets": true,
+          "corrected_attack_order": true,
           "source_timing": true,
           "spear": true,
-          "jitter": true,
+          "uploaded_jitter_removed": true,
           "strafe": true,
           "native_angles": true,
           "mouse_cases": 18,
@@ -2585,7 +2438,7 @@
         "message27_settings": {
           "status": "passed",
           "gui_controls_live": true,
-          "checked": 17,
+          "checked": 16,
           "results": [
             {
               "key": "distanceCoefficient",
@@ -2918,19 +2771,6 @@
                       1290.3366947824184
                     ]
                   }
-                }
-              ]
-            },
-            {
-              "key": "jitterOffset",
-              "samples": [
-                {
-                  "value": 0,
-                  "result": 180
-                },
-                {
-                  "value": 85,
-                  "result": 265
                 }
               ]
             }
@@ -3247,6 +3087,6 @@
     "status": "passed",
     "command": "npm test",
     "node_tests": 195,
-    "python_tests": 67
+    "python_tests": 68
   }
 }
