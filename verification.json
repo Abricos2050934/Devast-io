@@ -1,13 +1,13 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "50cd3cf17436e01a966b96614dbabcfd3157373b26d5d41cb7846aeae93cd0b5",
+  "output_sha256": "4facdb72f2a0bc6bd112670bb1d674dbe02a4c45e2e094f9856268738fc559fd",
   "static_ast": "passed",
-  "ilm_core": "four original classes and original tick",
+  "aim_core": "active uploaded __BBY declarations and lifecycle",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
   "mod_contract": {
     "schema": 1,
-    "name": "Devast-io original ILM 1.0",
+    "name": "Devast-io message27 BBY aim",
     "modules": [
       "mod/responsive.js",
       "mod/bootstrap.js",
@@ -43,16 +43,14 @@
       "aim-cycle-socket-backpressure",
       "immediate-aim-numeric-settings",
       "native-aim-transport-preserves-idle",
-      "verbatim-original-ilm-aim",
-      "ilm-native-lifecycle",
       "bounded-fast-loot",
       "session-mod-traffic-history",
       "valid-live-aim-targets",
       "bounded-auto-build",
       "aim-session-history-reset",
-      "ilm-native-mouse-and-server-angle-parity",
-      "ilm-pointer-ownership-between-ticks",
-      "ilm-original-menu-layout"
+      "verbatim-message27-aim",
+      "message27-native-pipeline",
+      "message27-original-menu-layout"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -79,16 +77,17 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "3e082083a0a84664dfffd720bf74850fd80f623a0849406726cc7137e4eb0b14",
+    "mod/responsive.js": "3ea0c1e7da35a2750a78c6b86d079aaf06962d9a87636b6538b94cd20af98dba",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
-    "mod/ilm-aim.js": "1f32c26e4f463fa74bc2f6401eb82b7f6944a0c088a2570359911792a8f8a17f"
+    "mod/ilm-aim.js": "28a2d6ffd9d1b8bcb4dbbfd8992f53dc434973f257677bfa81d5245ac73817c5"
   },
-  "mod_bundle_sha256": "e2e984bac9f04e62c4150d65224288bf4052249dfff324a82bd5c41693861711",
+  "mod_bundle_sha256": "882aa65e0f859f4fa6a07ca38433c5cfb9e052fa7432e63e1972649da08fa15c",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "156.0.8078.0",
+  "browser_version": "154.0.8037.57",
+  "console_errors": [],
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -121,118 +120,396 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "e4f29685ec0ccfbcf2c8d2e61d44b0977e5c3f30ebb384c212163f71af840809",
+    "fingerprint": "5443f2936d1dfecd0284b59515872b8ea03a59986bd6c805ac18aa079ba4f887",
     "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
   },
   "native": {
-    "ilm_menu": {
+    "message27_menu": {
       "status": "passed",
-      "controls": [
+      "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+      "folders": {
+        "👑 Aim Bot 👑": [
+          {
+            "property": "AimBotEnabled",
+            "label": "AimBotEnabled",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "target",
+            "label": "Target",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": [
+              {
+                "label": "players",
+                "value": "players"
+              },
+              {
+                "label": "ghouls",
+                "value": "ghouls"
+              },
+              {
+                "label": "all",
+                "value": "all"
+              }
+            ]
+          },
+          {
+            "property": "resolverType",
+            "label": "ResolverType",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": [
+              {
+                "label": "linear",
+                "value": "linear"
+              }
+            ]
+          },
+          {
+            "property": "TargetTeammate",
+            "label": "TargetTeammate",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "hideAimbotAngle",
+            "label": "HideAimbotAngle",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "hidePlayerAngle",
+            "label": "HidePlayerAngle",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "ShowRealAngles",
+            "label": "ShowRealAngles",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": [
+              {
+                "label": "never",
+                "value": "never"
+              },
+              {
+                "label": "always",
+                "value": "always"
+              },
+              {
+                "label": "withAim",
+                "value": "withAim"
+              }
+            ]
+          },
+          {
+            "property": "mouseFovEnable",
+            "label": "MouseFovEnable",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "mouseFov",
+            "label": "MouseFov",
+            "min": 0,
+            "max": 12345,
+            "step": 100,
+            "options": []
+          },
+          {
+            "property": "distanceCoefficient",
+            "label": "DistanceCoefficient",
+            "min": 10,
+            "max": 1000,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "offsetCoefficient",
+            "label": "OffsetCoefficient",
+            "min": 0,
+            "max": 3,
+            "step": 0.1,
+            "options": []
+          },
+          {
+            "property": "aimStick",
+            "label": "AimStick",
+            "min": 0,
+            "max": 800,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "aimHoldMs",
+            "label": "AimHoldMs",
+            "min": 0,
+            "max": 600,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "leadCap",
+            "label": "LeadCap",
+            "min": 40,
+            "max": 500,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "aimSmooth",
+            "label": "AimSmooth",
+            "min": 0.05,
+            "max": 1,
+            "step": 0.01,
+            "options": []
+          },
+          {
+            "property": "autoFire",
+            "label": "AutoFire",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "lockId",
+            "label": "LockId",
+            "min": -1,
+            "max": 120,
+            "step": 1,
+            "options": []
+          }
+        ],
+        "🗡 Aimbot Spear 🗡": [
+          {
+            "property": "AimbotSpearEnabled",
+            "label": "AimbotSpearEnabled",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "spearSpeed",
+            "label": "SpearSpeed",
+            "min": 20,
+            "max": 60,
+            "step": 0.5,
+            "options": []
+          },
+          {
+            "property": "spearMaxRange",
+            "label": "MaxRange",
+            "min": 200,
+            "max": 600,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "spearHandFwd",
+            "label": "HandFwd",
+            "min": -60,
+            "max": 60,
+            "step": 1,
+            "options": []
+          },
+          {
+            "property": "spearHandSide",
+            "label": "HandSide",
+            "min": -60,
+            "max": 60,
+            "step": 1,
+            "options": []
+          },
+          {
+            "property": "spearStabDeg",
+            "label": "Stability",
+            "min": 0.5,
+            "max": 10,
+            "step": 0.5,
+            "options": []
+          },
+          {
+            "property": "autoFire",
+            "label": "AutoThrow",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          }
+        ],
+        "Anti-Aim / Strafe": [
+          {
+            "property": "AntiAimbot",
+            "label": "StrafeEnable",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "antiAimMode",
+            "label": "AntiAimMode",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": [
+              {
+                "label": "At target",
+                "value": "At target"
+              },
+              {
+                "label": "Round",
+                "value": "Round"
+              },
+              {
+                "label": "Round2",
+                "value": "Round2"
+              }
+            ]
+          },
+          {
+            "property": "antiAimCoefficient",
+            "label": "AntiAimCoefficient",
+            "min": 10,
+            "max": 500,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "jitterActive",
+            "label": "JitterActive",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "jitterOffset",
+            "label": "JitterOffset",
+            "min": 0,
+            "max": 360,
+            "step": 1,
+            "options": []
+          },
+          {
+            "property": "stopJittersOnStop",
+            "label": "StopJittersOnStop",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          }
+        ],
+        "Aim Line": [
+          {
+            "property": "visualizeResolving",
+            "label": "ShowAimLine",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "visualizeResolvingColor",
+            "label": "AimLineColor",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          }
+        ]
+      },
+      "keyboard": true,
+      "key_controls": [
         {
-          "property": "ShowRealAngles",
-          "label": "ShowRealAngles",
+          "property": "AimbotKey",
+          "label": "AimbotKey",
           "min": null,
           "max": null,
           "step": null,
-          "options": [
-            {
-              "label": "always",
-              "value": "always"
-            },
-            {
-              "label": "withAim",
-              "value": "withAim"
-            }
-          ]
+          "options": []
         },
         {
-          "property": "target",
-          "label": "Target",
+          "property": "AntiAimbotKey",
+          "label": "AntiAimbotKey",
           "min": null,
           "max": null,
           "step": null,
-          "options": [
-            {
-              "label": "players",
-              "value": "players"
-            },
-            {
-              "label": "ghouls",
-              "value": "ghouls"
-            },
-            {
-              "label": "all",
-              "value": "all"
-            }
-          ]
-        },
-        {
-          "property": "distanceCoefficient",
-          "label": "DistanceCoefficient",
-          "min": 10,
-          "max": 1000,
-          "step": 10,
           "options": []
         },
         {
-          "property": "bulletSpeedCoefficient",
-          "label": "BulletSpeedCoefficient",
-          "min": 1,
-          "max": 15,
-          "step": 0.25,
+          "property": "JitterKey",
+          "label": "JitterKey",
+          "min": null,
+          "max": null,
+          "step": null,
           "options": []
         },
         {
-          "property": "offsetCoefficient",
-          "label": "OffsetCoefficient",
-          "min": 0,
-          "max": 3,
-          "step": 0.1,
+          "property": "HideAngleKey",
+          "label": "HideAngleKey",
+          "min": null,
+          "max": null,
+          "step": null,
+          "options": []
+        },
+        {
+          "property": "ModMenuKey",
+          "label": "ModMenuKey",
+          "min": null,
+          "max": null,
+          "step": null,
           "options": []
         }
       ],
+      "default_bindings": {
+        "menu": "KeyM",
+        "hide": "KeyH"
+      },
       "exact_order_labels_ranges_steps_options": true,
-      "no_extra_aim_controls": true,
-      "source_line_color": true
+      "controls": 32
     },
-    "ilm_aim": {
+    "message27_aim": {
       "status": "passed",
-      "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
-      "scenes": 48,
-      "comparison_points": 2400,
+      "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+      "active_override": "__BBY",
+      "scenes": 32,
+      "comparison_points": 2149,
       "exact_states": true,
-      "exact_normalized_admitted_packets": true,
+      "exact_raw_packets": true,
+      "source_timing": true,
+      "spear": true,
+      "jitter": true,
+      "strafe": true,
+      "native_angles": true,
+      "mouse_cases": 18,
       "valid_target_admission": true,
       "session_target_reset": true,
-      "original_timer_ms": 50,
-      "whole_auto_fire_cycle": true,
-      "small_queue_admission": true,
-      "native_direction_ownership": true,
-      "source_pointer_ownership_on_target_loss": true,
       "server_death_sends_no_commands": true
-    },
-    "ilm_mouse": {
-      "status": "passed",
-      "cases": 18,
-      "source_camera_coordinates": true,
-      "exact_target_and_sent_angle": true,
-      "disabled_fov_retains_coordinates": true
-    },
-    "ilm_server_angle": {
-      "status": "passed",
-      "cases": 72,
-      "frames": 288,
-      "native_player_lerp": 0.15,
-      "zero_position_sentinels_ignored": true,
-      "actual_server_packet_angle": true,
-      "source_wrap_and_interpolation": true,
-      "manual_fire_keeps_source_direction": true
     },
     "native_aim_transport": {
       "status": "passed",
       "idle_period_ms": 60000,
       "sustained_duration_ms": 121000,
-      "directions": 2420,
+      "directions": 4840,
       "heartbeats": 2,
       "real_input_updates_activity": true,
       "wire_cases": [
@@ -297,7 +574,7 @@
   },
   "physical_numeric": {
     "status": "passed",
-    "engine": "ilm-original",
+    "engine": "message27-bby",
     "physical_text_entry": true,
     "enter_and_tab_commit": true,
     "slider_drag": true,
@@ -305,39 +582,25 @@
     "saved_after_reload": {
       "distanceCoefficient": 970,
       "offsetCoefficient": 3,
-      "bulletSpeedCoefficient": 15,
-      "mouseFov": 1,
-      "lockId": 120
+      "aimSmooth": 1,
+      "leadCap": 500,
+      "aimHoldMs": 200,
+      "mouseFov": 600,
+      "lockId": 2
     },
     "samples": [
-      {
-        "label": "initial",
-        "key": "distanceCoefficient",
-        "input": "300",
-        "value": 300,
-        "type": "number",
-        "mode": "linear",
-        "angle": 23.988865727774513,
-        "line": {
-          "x": 2000,
-          "y": 1444.995854037363
-        },
-        "native_angle": 24,
-        "saved": 300
-      },
       {
         "label": "typed 10 uncommitted",
         "key": "distanceCoefficient",
         "input": "10",
         "value": 10,
         "type": "number",
-        "mode": "linear",
-        "angle": 84.37868855812071,
+        "angle": 28.25833096594324,
         "line": {
           "x": 2000,
-          "y": 11159.87562112089
+          "y": 1580
         },
-        "native_angle": 84,
+        "native_angle": 28.25833096594324,
         "saved": 10
       },
       {
@@ -346,13 +609,12 @@
         "input": "10",
         "value": 10,
         "type": "number",
-        "mode": "linear",
-        "angle": 84.37868855812071,
+        "angle": 28.25833096594324,
         "line": {
           "x": 2000,
-          "y": 11159.87562112089
+          "y": 1580
         },
-        "native_angle": 84,
+        "native_angle": 28.25833096594324,
         "saved": 10
       },
       {
@@ -361,13 +623,12 @@
         "input": "1000",
         "value": 1000,
         "type": "number",
-        "mode": "linear",
-        "angle": 11.887145998987389,
+        "angle": 17.425141720360244,
         "line": {
           "x": 2000,
-          "y": 1210.498756211209
+          "y": 1350.8688811647917
         },
-        "native_angle": 12,
+        "native_angle": 17.425141720360244,
         "saved": 1000
       },
       {
@@ -376,13 +637,12 @@
         "input": "0",
         "value": 0,
         "type": "number",
-        "mode": "linear",
-        "angle": 11.337407361581445,
+        "angle": 14.819138452267063,
         "line": {
           "x": 2000,
-          "y": 1200.498756211209
+          "y": 1300
         },
-        "native_angle": 11,
+        "native_angle": 14.819138452267063,
         "saved": 0
       },
       {
@@ -391,44 +651,69 @@
         "input": "3",
         "value": 3,
         "type": "number",
-        "mode": "linear",
-        "angle": 26.587907916615507,
+        "angle": 24.63789821761128,
         "line": {
           "x": 2000,
-          "y": 1500.498756211209
+          "y": 1501.3553388832443
         },
-        "native_angle": 27,
+        "native_angle": 24.63789821761128,
         "saved": 3
       },
       {
-        "label": "typed 1 Enter",
-        "key": "bulletSpeedCoefficient",
+        "label": "typed 0.05 Enter",
+        "key": "aimSmooth",
+        "input": "0.05",
+        "value": 0.05,
+        "type": "number",
+        "angle": 3.074752662636797,
+        "line": {
+          "x": 2000,
+          "y": 1501.3553388832443
+        },
+        "native_angle": 3.074752662636797,
+        "saved": 0.05
+      },
+      {
+        "label": "typed 1 Tab",
+        "key": "aimSmooth",
         "input": "1",
         "value": 1,
         "type": "number",
-        "mode": "linear",
-        "angle": 26.587907916615507,
+        "angle": 26.627141649562304,
         "line": {
           "x": 2000,
-          "y": 1500.498756211209
+          "y": 1501.3553388832443
         },
-        "native_angle": 27,
+        "native_angle": 26.627141649562304,
         "saved": 1
       },
       {
-        "label": "typed 15 Tab",
-        "key": "bulletSpeedCoefficient",
-        "input": "15",
-        "value": 15,
+        "label": "typed 40 Enter",
+        "key": "leadCap",
+        "input": "40",
+        "value": 40,
         "type": "number",
-        "mode": "linear",
-        "angle": 26.587907916615507,
+        "angle": 18.778033222445515,
         "line": {
           "x": 2000,
-          "y": 1500.498756211209
+          "y": 1340
         },
-        "native_angle": 27,
-        "saved": 15
+        "native_angle": 18.778033222445515,
+        "saved": 40
+      },
+      {
+        "label": "typed 500 Tab",
+        "key": "leadCap",
+        "input": "500",
+        "value": 500,
+        "type": "number",
+        "angle": 26.627141649562304,
+        "line": {
+          "x": 2000,
+          "y": 1501.3553388832443
+        },
+        "native_angle": 26.627141649562304,
+        "saved": 500
       },
       {
         "label": "slider 0.02",
@@ -436,13 +721,12 @@
         "input": "20",
         "value": 20,
         "type": "number",
-        "mode": "linear",
-        "angle": 79.55568743102805,
+        "angle": 38.65980825409008,
         "line": {
           "x": 2000,
-          "y": 6424.937810560445
+          "y": 1800
         },
-        "native_angle": 80,
+        "native_angle": 38.65980825409008,
         "saved": 20
       },
       {
@@ -451,13 +735,12 @@
         "input": "970",
         "value": 970,
         "type": "number",
-        "mode": "linear",
-        "angle": 26.73014363113013,
+        "angle": 26.937448920602264,
         "line": {
           "x": 2000,
-          "y": 1503.6069651661946
+          "y": 1508.151062405622
         },
-        "native_angle": 27,
+        "native_angle": 26.937448920602264,
         "saved": 970
       }
     ]
@@ -470,121 +753,399 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-11T17:17:27.653Z",
+  "finished_at": "2026-11-12T17:36:21.433Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "50cd3cf17436e01a966b96614dbabcfd3157373b26d5d41cb7846aeae93cd0b5",
-      "browser_version": "156.0.8078.0",
+      "output_sha256": "4facdb72f2a0bc6bd112670bb1d674dbe02a4c45e2e094f9856268738fc559fd",
+      "browser_version": "154.0.8037.57",
       "native": {
-        "ilm_menu": {
+        "message27_menu": {
           "status": "passed",
-          "controls": [
+          "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+          "folders": {
+            "👑 Aim Bot 👑": [
+              {
+                "property": "AimBotEnabled",
+                "label": "AimBotEnabled",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "target",
+                "label": "Target",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "players",
+                    "value": "players"
+                  },
+                  {
+                    "label": "ghouls",
+                    "value": "ghouls"
+                  },
+                  {
+                    "label": "all",
+                    "value": "all"
+                  }
+                ]
+              },
+              {
+                "property": "resolverType",
+                "label": "ResolverType",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "linear",
+                    "value": "linear"
+                  }
+                ]
+              },
+              {
+                "property": "TargetTeammate",
+                "label": "TargetTeammate",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "hideAimbotAngle",
+                "label": "HideAimbotAngle",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "hidePlayerAngle",
+                "label": "HidePlayerAngle",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "ShowRealAngles",
+                "label": "ShowRealAngles",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "never",
+                    "value": "never"
+                  },
+                  {
+                    "label": "always",
+                    "value": "always"
+                  },
+                  {
+                    "label": "withAim",
+                    "value": "withAim"
+                  }
+                ]
+              },
+              {
+                "property": "mouseFovEnable",
+                "label": "MouseFovEnable",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "mouseFov",
+                "label": "MouseFov",
+                "min": 0,
+                "max": 12345,
+                "step": 100,
+                "options": []
+              },
+              {
+                "property": "distanceCoefficient",
+                "label": "DistanceCoefficient",
+                "min": 10,
+                "max": 1000,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "offsetCoefficient",
+                "label": "OffsetCoefficient",
+                "min": 0,
+                "max": 3,
+                "step": 0.1,
+                "options": []
+              },
+              {
+                "property": "aimStick",
+                "label": "AimStick",
+                "min": 0,
+                "max": 800,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "aimHoldMs",
+                "label": "AimHoldMs",
+                "min": 0,
+                "max": 600,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "leadCap",
+                "label": "LeadCap",
+                "min": 40,
+                "max": 500,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "aimSmooth",
+                "label": "AimSmooth",
+                "min": 0.05,
+                "max": 1,
+                "step": 0.01,
+                "options": []
+              },
+              {
+                "property": "autoFire",
+                "label": "AutoFire",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "lockId",
+                "label": "LockId",
+                "min": -1,
+                "max": 120,
+                "step": 1,
+                "options": []
+              }
+            ],
+            "🗡 Aimbot Spear 🗡": [
+              {
+                "property": "AimbotSpearEnabled",
+                "label": "AimbotSpearEnabled",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "spearSpeed",
+                "label": "SpearSpeed",
+                "min": 20,
+                "max": 60,
+                "step": 0.5,
+                "options": []
+              },
+              {
+                "property": "spearMaxRange",
+                "label": "MaxRange",
+                "min": 200,
+                "max": 600,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "spearHandFwd",
+                "label": "HandFwd",
+                "min": -60,
+                "max": 60,
+                "step": 1,
+                "options": []
+              },
+              {
+                "property": "spearHandSide",
+                "label": "HandSide",
+                "min": -60,
+                "max": 60,
+                "step": 1,
+                "options": []
+              },
+              {
+                "property": "spearStabDeg",
+                "label": "Stability",
+                "min": 0.5,
+                "max": 10,
+                "step": 0.5,
+                "options": []
+              },
+              {
+                "property": "autoFire",
+                "label": "AutoThrow",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              }
+            ],
+            "Anti-Aim / Strafe": [
+              {
+                "property": "AntiAimbot",
+                "label": "StrafeEnable",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "antiAimMode",
+                "label": "AntiAimMode",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "At target",
+                    "value": "At target"
+                  },
+                  {
+                    "label": "Round",
+                    "value": "Round"
+                  },
+                  {
+                    "label": "Round2",
+                    "value": "Round2"
+                  }
+                ]
+              },
+              {
+                "property": "antiAimCoefficient",
+                "label": "AntiAimCoefficient",
+                "min": 10,
+                "max": 500,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "jitterActive",
+                "label": "JitterActive",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "jitterOffset",
+                "label": "JitterOffset",
+                "min": 0,
+                "max": 360,
+                "step": 1,
+                "options": []
+              },
+              {
+                "property": "stopJittersOnStop",
+                "label": "StopJittersOnStop",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              }
+            ],
+            "Aim Line": [
+              {
+                "property": "visualizeResolving",
+                "label": "ShowAimLine",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "visualizeResolvingColor",
+                "label": "AimLineColor",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              }
+            ]
+          },
+          "keyboard": true,
+          "key_controls": [
             {
-              "property": "ShowRealAngles",
-              "label": "ShowRealAngles",
+              "property": "AimbotKey",
+              "label": "AimbotKey",
               "min": null,
               "max": null,
               "step": null,
-              "options": [
-                {
-                  "label": "always",
-                  "value": "always"
-                },
-                {
-                  "label": "withAim",
-                  "value": "withAim"
-                }
-              ]
+              "options": []
             },
             {
-              "property": "target",
-              "label": "Target",
+              "property": "AntiAimbotKey",
+              "label": "AntiAimbotKey",
               "min": null,
               "max": null,
               "step": null,
-              "options": [
-                {
-                  "label": "players",
-                  "value": "players"
-                },
-                {
-                  "label": "ghouls",
-                  "value": "ghouls"
-                },
-                {
-                  "label": "all",
-                  "value": "all"
-                }
-              ]
-            },
-            {
-              "property": "distanceCoefficient",
-              "label": "DistanceCoefficient",
-              "min": 10,
-              "max": 1000,
-              "step": 10,
               "options": []
             },
             {
-              "property": "bulletSpeedCoefficient",
-              "label": "BulletSpeedCoefficient",
-              "min": 1,
-              "max": 15,
-              "step": 0.25,
+              "property": "JitterKey",
+              "label": "JitterKey",
+              "min": null,
+              "max": null,
+              "step": null,
               "options": []
             },
             {
-              "property": "offsetCoefficient",
-              "label": "OffsetCoefficient",
-              "min": 0,
-              "max": 3,
-              "step": 0.1,
+              "property": "HideAngleKey",
+              "label": "HideAngleKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            },
+            {
+              "property": "ModMenuKey",
+              "label": "ModMenuKey",
+              "min": null,
+              "max": null,
+              "step": null,
               "options": []
             }
           ],
+          "default_bindings": {
+            "menu": "KeyM",
+            "hide": "KeyH"
+          },
           "exact_order_labels_ranges_steps_options": true,
-          "no_extra_aim_controls": true,
-          "source_line_color": true
+          "controls": 32
         },
-        "ilm_aim": {
+        "message27_aim": {
           "status": "passed",
-          "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
-          "scenes": 48,
-          "comparison_points": 2400,
+          "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+          "active_override": "__BBY",
+          "scenes": 32,
+          "comparison_points": 2149,
           "exact_states": true,
-          "exact_normalized_admitted_packets": true,
+          "exact_raw_packets": true,
+          "source_timing": true,
+          "spear": true,
+          "jitter": true,
+          "strafe": true,
+          "native_angles": true,
+          "mouse_cases": 18,
           "valid_target_admission": true,
           "session_target_reset": true,
-          "original_timer_ms": 50,
-          "whole_auto_fire_cycle": true,
-          "small_queue_admission": true,
-          "native_direction_ownership": true,
-          "source_pointer_ownership_on_target_loss": true,
           "server_death_sends_no_commands": true
-        },
-        "ilm_mouse": {
-          "status": "passed",
-          "cases": 18,
-          "source_camera_coordinates": true,
-          "exact_target_and_sent_angle": true,
-          "disabled_fov_retains_coordinates": true
-        },
-        "ilm_server_angle": {
-          "status": "passed",
-          "cases": 72,
-          "frames": 288,
-          "native_player_lerp": 0.15,
-          "zero_position_sentinels_ignored": true,
-          "actual_server_packet_angle": true,
-          "source_wrap_and_interpolation": true,
-          "manual_fire_keeps_source_direction": true
         },
         "native_aim_transport": {
           "status": "passed",
           "idle_period_ms": 60000,
           "sustained_duration_ms": 121000,
-          "directions": 2420,
+          "directions": 4840,
           "heartbeats": 2,
           "real_input_updates_activity": true,
           "wire_cases": [
@@ -684,7 +1245,7 @@
       },
       "physical_numeric": {
         "status": "passed",
-        "engine": "ilm-original",
+        "engine": "message27-bby",
         "physical_text_entry": true,
         "enter_and_tab_commit": true,
         "slider_drag": true,
@@ -692,39 +1253,25 @@
         "saved_after_reload": {
           "distanceCoefficient": 970,
           "offsetCoefficient": 3,
-          "bulletSpeedCoefficient": 15,
-          "mouseFov": 1,
-          "lockId": 120
+          "aimSmooth": 1,
+          "leadCap": 500,
+          "aimHoldMs": 200,
+          "mouseFov": 600,
+          "lockId": 2
         },
         "samples": [
-          {
-            "label": "initial",
-            "key": "distanceCoefficient",
-            "input": "300",
-            "value": 300,
-            "type": "number",
-            "mode": "linear",
-            "angle": 23.988865727774513,
-            "line": {
-              "x": 2000,
-              "y": 1444.995854037363
-            },
-            "native_angle": 24,
-            "saved": 300
-          },
           {
             "label": "typed 10 uncommitted",
             "key": "distanceCoefficient",
             "input": "10",
             "value": 10,
             "type": "number",
-            "mode": "linear",
-            "angle": 84.37868855812071,
+            "angle": 28.25833096594324,
             "line": {
               "x": 2000,
-              "y": 11159.87562112089
+              "y": 1580
             },
-            "native_angle": 84,
+            "native_angle": 28.25833096594324,
             "saved": 10
           },
           {
@@ -733,13 +1280,12 @@
             "input": "10",
             "value": 10,
             "type": "number",
-            "mode": "linear",
-            "angle": 84.37868855812071,
+            "angle": 28.25833096594324,
             "line": {
               "x": 2000,
-              "y": 11159.87562112089
+              "y": 1580
             },
-            "native_angle": 84,
+            "native_angle": 28.25833096594324,
             "saved": 10
           },
           {
@@ -748,13 +1294,12 @@
             "input": "1000",
             "value": 1000,
             "type": "number",
-            "mode": "linear",
-            "angle": 11.887145998987389,
+            "angle": 17.425141720360244,
             "line": {
               "x": 2000,
-              "y": 1210.498756211209
+              "y": 1350.8688811647917
             },
-            "native_angle": 12,
+            "native_angle": 17.425141720360244,
             "saved": 1000
           },
           {
@@ -763,13 +1308,12 @@
             "input": "0",
             "value": 0,
             "type": "number",
-            "mode": "linear",
-            "angle": 11.337407361581445,
+            "angle": 14.819138452267063,
             "line": {
               "x": 2000,
-              "y": 1200.498756211209
+              "y": 1300
             },
-            "native_angle": 11,
+            "native_angle": 14.819138452267063,
             "saved": 0
           },
           {
@@ -778,44 +1322,69 @@
             "input": "3",
             "value": 3,
             "type": "number",
-            "mode": "linear",
-            "angle": 26.587907916615507,
+            "angle": 24.63789821761128,
             "line": {
               "x": 2000,
-              "y": 1500.498756211209
+              "y": 1501.3553388832443
             },
-            "native_angle": 27,
+            "native_angle": 24.63789821761128,
             "saved": 3
           },
           {
-            "label": "typed 1 Enter",
-            "key": "bulletSpeedCoefficient",
+            "label": "typed 0.05 Enter",
+            "key": "aimSmooth",
+            "input": "0.05",
+            "value": 0.05,
+            "type": "number",
+            "angle": 3.074752662636797,
+            "line": {
+              "x": 2000,
+              "y": 1501.3553388832443
+            },
+            "native_angle": 3.074752662636797,
+            "saved": 0.05
+          },
+          {
+            "label": "typed 1 Tab",
+            "key": "aimSmooth",
             "input": "1",
             "value": 1,
             "type": "number",
-            "mode": "linear",
-            "angle": 26.587907916615507,
+            "angle": 26.627141649562304,
             "line": {
               "x": 2000,
-              "y": 1500.498756211209
+              "y": 1501.3553388832443
             },
-            "native_angle": 27,
+            "native_angle": 26.627141649562304,
             "saved": 1
           },
           {
-            "label": "typed 15 Tab",
-            "key": "bulletSpeedCoefficient",
-            "input": "15",
-            "value": 15,
+            "label": "typed 40 Enter",
+            "key": "leadCap",
+            "input": "40",
+            "value": 40,
             "type": "number",
-            "mode": "linear",
-            "angle": 26.587907916615507,
+            "angle": 18.778033222445515,
             "line": {
               "x": 2000,
-              "y": 1500.498756211209
+              "y": 1340
             },
-            "native_angle": 27,
-            "saved": 15
+            "native_angle": 18.778033222445515,
+            "saved": 40
+          },
+          {
+            "label": "typed 500 Tab",
+            "key": "leadCap",
+            "input": "500",
+            "value": 500,
+            "type": "number",
+            "angle": 26.627141649562304,
+            "line": {
+              "x": 2000,
+              "y": 1501.3553388832443
+            },
+            "native_angle": 26.627141649562304,
+            "saved": 500
           },
           {
             "label": "slider 0.02",
@@ -823,13 +1392,12 @@
             "input": "20",
             "value": 20,
             "type": "number",
-            "mode": "linear",
-            "angle": 79.55568743102805,
+            "angle": 38.65980825409008,
             "line": {
               "x": 2000,
-              "y": 6424.937810560445
+              "y": 1800
             },
-            "native_angle": 80,
+            "native_angle": 38.65980825409008,
             "saved": 20
           },
           {
@@ -838,13 +1406,12 @@
             "input": "970",
             "value": 970,
             "type": "number",
-            "mode": "linear",
-            "angle": 26.73014363113013,
+            "angle": 26.937448920602264,
             "line": {
               "x": 2000,
-              "y": 1503.6069651661946
+              "y": 1508.151062405622
             },
-            "native_angle": 27,
+            "native_angle": 26.937448920602264,
             "saved": 970
           }
         ]
@@ -852,117 +1419,395 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "50cd3cf17436e01a966b96614dbabcfd3157373b26d5d41cb7846aeae93cd0b5",
+      "output_sha256": "4facdb72f2a0bc6bd112670bb1d674dbe02a4c45e2e094f9856268738fc559fd",
       "browser_version": "153.0",
       "native": {
-        "ilm_menu": {
+        "message27_menu": {
           "status": "passed",
-          "controls": [
+          "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+          "folders": {
+            "👑 Aim Bot 👑": [
+              {
+                "property": "AimBotEnabled",
+                "label": "AimBotEnabled",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "target",
+                "label": "Target",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "players",
+                    "value": "players"
+                  },
+                  {
+                    "label": "ghouls",
+                    "value": "ghouls"
+                  },
+                  {
+                    "label": "all",
+                    "value": "all"
+                  }
+                ]
+              },
+              {
+                "property": "resolverType",
+                "label": "ResolverType",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "linear",
+                    "value": "linear"
+                  }
+                ]
+              },
+              {
+                "property": "TargetTeammate",
+                "label": "TargetTeammate",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "hideAimbotAngle",
+                "label": "HideAimbotAngle",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "hidePlayerAngle",
+                "label": "HidePlayerAngle",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "ShowRealAngles",
+                "label": "ShowRealAngles",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "never",
+                    "value": "never"
+                  },
+                  {
+                    "label": "always",
+                    "value": "always"
+                  },
+                  {
+                    "label": "withAim",
+                    "value": "withAim"
+                  }
+                ]
+              },
+              {
+                "property": "mouseFovEnable",
+                "label": "MouseFovEnable",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "mouseFov",
+                "label": "MouseFov",
+                "min": 0,
+                "max": 12345,
+                "step": 100,
+                "options": []
+              },
+              {
+                "property": "distanceCoefficient",
+                "label": "DistanceCoefficient",
+                "min": 10,
+                "max": 1000,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "offsetCoefficient",
+                "label": "OffsetCoefficient",
+                "min": 0,
+                "max": 3,
+                "step": 0.1,
+                "options": []
+              },
+              {
+                "property": "aimStick",
+                "label": "AimStick",
+                "min": 0,
+                "max": 800,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "aimHoldMs",
+                "label": "AimHoldMs",
+                "min": 0,
+                "max": 600,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "leadCap",
+                "label": "LeadCap",
+                "min": 40,
+                "max": 500,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "aimSmooth",
+                "label": "AimSmooth",
+                "min": 0.05,
+                "max": 1,
+                "step": 0.01,
+                "options": []
+              },
+              {
+                "property": "autoFire",
+                "label": "AutoFire",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "lockId",
+                "label": "LockId",
+                "min": -1,
+                "max": 120,
+                "step": 1,
+                "options": []
+              }
+            ],
+            "🗡 Aimbot Spear 🗡": [
+              {
+                "property": "AimbotSpearEnabled",
+                "label": "AimbotSpearEnabled",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "spearSpeed",
+                "label": "SpearSpeed",
+                "min": 20,
+                "max": 60,
+                "step": 0.5,
+                "options": []
+              },
+              {
+                "property": "spearMaxRange",
+                "label": "MaxRange",
+                "min": 200,
+                "max": 600,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "spearHandFwd",
+                "label": "HandFwd",
+                "min": -60,
+                "max": 60,
+                "step": 1,
+                "options": []
+              },
+              {
+                "property": "spearHandSide",
+                "label": "HandSide",
+                "min": -60,
+                "max": 60,
+                "step": 1,
+                "options": []
+              },
+              {
+                "property": "spearStabDeg",
+                "label": "Stability",
+                "min": 0.5,
+                "max": 10,
+                "step": 0.5,
+                "options": []
+              },
+              {
+                "property": "autoFire",
+                "label": "AutoThrow",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              }
+            ],
+            "Anti-Aim / Strafe": [
+              {
+                "property": "AntiAimbot",
+                "label": "StrafeEnable",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "antiAimMode",
+                "label": "AntiAimMode",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "At target",
+                    "value": "At target"
+                  },
+                  {
+                    "label": "Round",
+                    "value": "Round"
+                  },
+                  {
+                    "label": "Round2",
+                    "value": "Round2"
+                  }
+                ]
+              },
+              {
+                "property": "antiAimCoefficient",
+                "label": "AntiAimCoefficient",
+                "min": 10,
+                "max": 500,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "jitterActive",
+                "label": "JitterActive",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "jitterOffset",
+                "label": "JitterOffset",
+                "min": 0,
+                "max": 360,
+                "step": 1,
+                "options": []
+              },
+              {
+                "property": "stopJittersOnStop",
+                "label": "StopJittersOnStop",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              }
+            ],
+            "Aim Line": [
+              {
+                "property": "visualizeResolving",
+                "label": "ShowAimLine",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "visualizeResolvingColor",
+                "label": "AimLineColor",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              }
+            ]
+          },
+          "keyboard": true,
+          "key_controls": [
             {
-              "property": "ShowRealAngles",
-              "label": "ShowRealAngles",
+              "property": "AimbotKey",
+              "label": "AimbotKey",
               "min": null,
               "max": null,
               "step": null,
-              "options": [
-                {
-                  "label": "always",
-                  "value": "always"
-                },
-                {
-                  "label": "withAim",
-                  "value": "withAim"
-                }
-              ]
+              "options": []
             },
             {
-              "property": "target",
-              "label": "Target",
+              "property": "AntiAimbotKey",
+              "label": "AntiAimbotKey",
               "min": null,
               "max": null,
               "step": null,
-              "options": [
-                {
-                  "label": "players",
-                  "value": "players"
-                },
-                {
-                  "label": "ghouls",
-                  "value": "ghouls"
-                },
-                {
-                  "label": "all",
-                  "value": "all"
-                }
-              ]
-            },
-            {
-              "property": "distanceCoefficient",
-              "label": "DistanceCoefficient",
-              "min": 10,
-              "max": 1000,
-              "step": 10,
               "options": []
             },
             {
-              "property": "bulletSpeedCoefficient",
-              "label": "BulletSpeedCoefficient",
-              "min": 1,
-              "max": 15,
-              "step": 0.25,
+              "property": "JitterKey",
+              "label": "JitterKey",
+              "min": null,
+              "max": null,
+              "step": null,
               "options": []
             },
             {
-              "property": "offsetCoefficient",
-              "label": "OffsetCoefficient",
-              "min": 0,
-              "max": 3,
-              "step": 0.1,
+              "property": "HideAngleKey",
+              "label": "HideAngleKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            },
+            {
+              "property": "ModMenuKey",
+              "label": "ModMenuKey",
+              "min": null,
+              "max": null,
+              "step": null,
               "options": []
             }
           ],
+          "default_bindings": {
+            "menu": "KeyM",
+            "hide": "KeyH"
+          },
           "exact_order_labels_ranges_steps_options": true,
-          "no_extra_aim_controls": true,
-          "source_line_color": true
+          "controls": 32
         },
-        "ilm_aim": {
+        "message27_aim": {
           "status": "passed",
-          "upload_sha256": "65ef72c81cd54b665e95cf6954ee080ebb098fee25b2db12773a93a94dd88315",
-          "scenes": 48,
-          "comparison_points": 2400,
+          "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+          "active_override": "__BBY",
+          "scenes": 32,
+          "comparison_points": 2149,
           "exact_states": true,
-          "exact_normalized_admitted_packets": true,
+          "exact_raw_packets": true,
+          "source_timing": true,
+          "spear": true,
+          "jitter": true,
+          "strafe": true,
+          "native_angles": true,
+          "mouse_cases": 18,
           "valid_target_admission": true,
           "session_target_reset": true,
-          "original_timer_ms": 50,
-          "whole_auto_fire_cycle": true,
-          "small_queue_admission": true,
-          "native_direction_ownership": true,
-          "source_pointer_ownership_on_target_loss": true,
           "server_death_sends_no_commands": true
-        },
-        "ilm_mouse": {
-          "status": "passed",
-          "cases": 18,
-          "source_camera_coordinates": true,
-          "exact_target_and_sent_angle": true,
-          "disabled_fov_retains_coordinates": true
-        },
-        "ilm_server_angle": {
-          "status": "passed",
-          "cases": 72,
-          "frames": 288,
-          "native_player_lerp": 0.15,
-          "zero_position_sentinels_ignored": true,
-          "actual_server_packet_angle": true,
-          "source_wrap_and_interpolation": true,
-          "manual_fire_keeps_source_direction": true
         },
         "native_aim_transport": {
           "status": "passed",
           "idle_period_ms": 60000,
           "sustained_duration_ms": 121000,
-          "directions": 2420,
+          "directions": 4840,
           "heartbeats": 2,
           "real_input_updates_activity": true,
           "wire_cases": [
@@ -1062,7 +1907,7 @@
       },
       "physical_numeric": {
         "status": "passed",
-        "engine": "ilm-original",
+        "engine": "message27-bby",
         "physical_text_entry": true,
         "enter_and_tab_commit": true,
         "slider_drag": true,
@@ -1070,39 +1915,25 @@
         "saved_after_reload": {
           "distanceCoefficient": 970,
           "offsetCoefficient": 3,
-          "bulletSpeedCoefficient": 15,
-          "mouseFov": 1,
-          "lockId": 120
+          "aimSmooth": 1,
+          "leadCap": 500,
+          "aimHoldMs": 200,
+          "mouseFov": 600,
+          "lockId": 2
         },
         "samples": [
-          {
-            "label": "initial",
-            "key": "distanceCoefficient",
-            "input": "300",
-            "value": 300,
-            "type": "number",
-            "mode": "linear",
-            "angle": 23.988865727774517,
-            "line": {
-              "x": 2000,
-              "y": 1444.995854037363
-            },
-            "native_angle": 24,
-            "saved": 300
-          },
           {
             "label": "typed 10 uncommitted",
             "key": "distanceCoefficient",
             "input": "10",
             "value": 10,
             "type": "number",
-            "mode": "linear",
-            "angle": 84.37868855812071,
+            "angle": 28.25833096594324,
             "line": {
               "x": 2000,
-              "y": 11159.87562112089
+              "y": 1580
             },
-            "native_angle": 84,
+            "native_angle": 28.25833096594324,
             "saved": 10
           },
           {
@@ -1111,13 +1942,12 @@
             "input": "10",
             "value": 10,
             "type": "number",
-            "mode": "linear",
-            "angle": 84.37868855812071,
+            "angle": 28.25833096594324,
             "line": {
               "x": 2000,
-              "y": 11159.87562112089
+              "y": 1580
             },
-            "native_angle": 84,
+            "native_angle": 28.25833096594324,
             "saved": 10
           },
           {
@@ -1126,13 +1956,12 @@
             "input": "1000",
             "value": 1000,
             "type": "number",
-            "mode": "linear",
-            "angle": 11.887145998987387,
+            "angle": 17.425141720360244,
             "line": {
               "x": 2000,
-              "y": 1210.498756211209
+              "y": 1350.8688811647917
             },
-            "native_angle": 12,
+            "native_angle": 17.425141720360244,
             "saved": 1000
           },
           {
@@ -1141,13 +1970,12 @@
             "input": "0",
             "value": 0,
             "type": "number",
-            "mode": "linear",
-            "angle": 11.337407361581445,
+            "angle": 14.819138452267063,
             "line": {
               "x": 2000,
-              "y": 1200.498756211209
+              "y": 1300
             },
-            "native_angle": 11,
+            "native_angle": 14.819138452267063,
             "saved": 0
           },
           {
@@ -1156,44 +1984,69 @@
             "input": "3",
             "value": 3,
             "type": "number",
-            "mode": "linear",
-            "angle": 26.587907916615507,
+            "angle": 24.63789821761128,
             "line": {
               "x": 2000,
-              "y": 1500.498756211209
+              "y": 1501.3553388832443
             },
-            "native_angle": 27,
+            "native_angle": 24.63789821761128,
             "saved": 3
           },
           {
-            "label": "typed 1 Enter",
-            "key": "bulletSpeedCoefficient",
+            "label": "typed 0.05 Enter",
+            "key": "aimSmooth",
+            "input": "0.05",
+            "value": 0.05,
+            "type": "number",
+            "angle": 3.074752662636797,
+            "line": {
+              "x": 2000,
+              "y": 1501.3553388832443
+            },
+            "native_angle": 3.074752662636797,
+            "saved": 0.05
+          },
+          {
+            "label": "typed 1 Tab",
+            "key": "aimSmooth",
             "input": "1",
             "value": 1,
             "type": "number",
-            "mode": "linear",
-            "angle": 26.587907916615507,
+            "angle": 26.627141649562304,
             "line": {
               "x": 2000,
-              "y": 1500.498756211209
+              "y": 1501.3553388832443
             },
-            "native_angle": 27,
+            "native_angle": 26.627141649562304,
             "saved": 1
           },
           {
-            "label": "typed 15 Tab",
-            "key": "bulletSpeedCoefficient",
-            "input": "15",
-            "value": 15,
+            "label": "typed 40 Enter",
+            "key": "leadCap",
+            "input": "40",
+            "value": 40,
             "type": "number",
-            "mode": "linear",
-            "angle": 26.587907916615507,
+            "angle": 18.778033222445515,
             "line": {
               "x": 2000,
-              "y": 1500.498756211209
+              "y": 1340
             },
-            "native_angle": 27,
-            "saved": 15
+            "native_angle": 18.778033222445515,
+            "saved": 40
+          },
+          {
+            "label": "typed 500 Tab",
+            "key": "leadCap",
+            "input": "500",
+            "value": 500,
+            "type": "number",
+            "angle": 26.627141649562304,
+            "line": {
+              "x": 2000,
+              "y": 1501.3553388832443
+            },
+            "native_angle": 26.627141649562304,
+            "saved": 500
           },
           {
             "label": "slider 0.02",
@@ -1201,13 +2054,12 @@
             "input": "20",
             "value": 20,
             "type": "number",
-            "mode": "linear",
-            "angle": 79.55568743102805,
+            "angle": 38.65980825409008,
             "line": {
               "x": 2000,
-              "y": 6424.937810560445
+              "y": 1800
             },
-            "native_angle": 80,
+            "native_angle": 38.65980825409008,
             "saved": 20
           },
           {
@@ -1216,13 +2068,12 @@
             "input": "970",
             "value": 970,
             "type": "number",
-            "mode": "linear",
-            "angle": 26.73014363113013,
+            "angle": 26.937448920602264,
             "line": {
               "x": 2000,
-              "y": 1503.6069651661946
+              "y": 1508.151062405622
             },
-            "native_angle": 27,
+            "native_angle": 26.937448920602264,
             "saved": 970
           }
         ]
@@ -1250,7 +2101,7 @@
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 190,
-    "python_tests": 64
+    "node_tests": 189,
+    "python_tests": 65
   }
 }
