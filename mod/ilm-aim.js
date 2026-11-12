@@ -1,11 +1,11 @@
 // Active __BBY aim from message (27).txt, SHA256 f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0.
 // Source blocks are byte-for-byte audited against the compressed reference.
 function __createMessage27Core(MOD,environment) {
- let stopped=false,started=false,depth=0,phase='aim';
+ let stopped=false,started=false,depth=0,phase='aim',jitterTimer=null,jitterShotUntil=0,preparingShot=false,lastRotationAt=-Infinity,lastRotationAngle=null;
  const timers=new Map(),removers=[];
  function cycle(fn,kind=phase){const previous=phase;phase=kind;if(depth++===0)environment.beginCycle(kind);try{return fn();}finally{if(--depth===0)environment.endCycle();phase=previous;}}
- function emit(packet){if(stopped)return false;return depth?environment.send(packet,{kind:phase}):cycle(()=>environment.send(packet,{kind:phase}));}
- function timer(method,fn,delay){let id;const interval=method==='setInterval';const wrapped=()=>{if(!interval)timers.delete(id);if(!stopped)cycle(fn,fn.name==='routineJitter'?'jitter':fn.name==='routineAntiAimbot'?'anti':'aim');};id=environment.window[method](wrapped,delay);timers.set(id,interval);return id;}
+ function emit(packet){if(stopped)return false;if(packet[0]===4&&MOD.jitterActive)prepareJitterShot();const result=depth?environment.send(packet,{kind:phase}):cycle(()=>environment.send(packet,{kind:phase}));if(result&&packet[0]===6&&phase==='jitter'){lastRotationAt=Date.now();lastRotationAngle=packet[1];}return result;}
+ function timer(method,fn,delay){let id;const interval=method==='setInterval',jitter=fn.name==='routineJitter';if(interval&&jitter&&jitterTimer!==null)clear(jitterTimer);const wrapped=()=>{if(!interval)timers.delete(id);if(!stopped&&!(jitter&&pauseJitter()))cycle(fn,jitter?'jitter':fn.name==='routineAntiAimbot'?'anti':'aim');};id=environment.window[method](wrapped,delay);timers.set(id,interval);if(interval&&jitter)jitterTimer=id;return id;}
  function clear(id){const interval=timers.get(id);if(interval===undefined)return;environment.window[interval?'clearInterval':'clearTimeout'](id);timers.delete(id);}
  const setInterval=(fn,delay)=>timer('setInterval',fn,delay),setTimeout=(fn,delay)=>timer('setTimeout',fn,delay),clearTimeout=clear,clearInterval=clear;
  const window={Math,JSON,setInterval,setTimeout,clearInterval,clearTimeout,addEventListener(type,fn,options){environment.window.addEventListener(type,fn,options);removers.push(()=>environment.window.removeEventListener(type,fn,options));}};
@@ -590,6 +590,21 @@ Aimbot.spearResolve = function() {
         GetAllTargets.lines[1].set(me.x, me.y, pt.x, pt.y, dist > (MOD.spearMaxRange || 560) ? 1 : 0);
     return this.lastAngle;
 };
+ // Host arbitration: keep the uploaded prediction maths, but never let an
+ // idle rotation overwrite an attack, or correct its angle after the attack.
+ function spearActive(){return !!MOD.AimbotSpearEnabled&&GetAllTargets.selfWeapon===SPEAR_IDX;}
+ function gunActive(){return !!MOD.AimBotEnabled||spearActive();}
+ function pauseJitter(){return !!(Aimbot.mouseDown||Date.now()<jitterShotUntil||(MOD.autoFire&&gunActive()&&__aimShotAllowed()));}
+ function prepareJitterShot(){
+  if(!MOD.jitterActive||preparingShot)return;
+  jitterShotUntil=Date.now()+150;
+  preparingShot=true;
+  try{const angle=gunActive()?(spearActive()?Aimbot.spearResolve():Aimbot.resolve()):null;if(gunActive()&&__aimShotAllowed()&&Number.isFinite(angle))emit([6,angle]);else{const manual=environment.manualAngle?.();if(Number.isFinite(manual))cycle(()=>emit([6,manual]),'jitter');}}finally{preparingShot=false;}
+ }
+ const resolveSource=Aimbot.resolve;
+ Aimbot.resolve=function(){const angle=resolveSource.call(this);if(MOD.jitterActive&&pauseJitter()&&!preparingShot&&phase!=='jitter'&&gunActive()&&__aimShotAllowed()&&Number.isFinite(angle))emit([6,angle]);return angle;};
+ function recentRotation(){const age=Date.now()-lastRotationAt;return age>=0&&age<150;}
+ function ownsJitterDirection(){return !!MOD.jitterActive&&(pauseJitter()?(gunActive()&&__aimShotAllowed()):recentRotation());}
  var __oTouchAim = function(event) {
     // changedTouches[0] = the finger that just moved/landed — the aim intent,
     // not a finger already parked on the joystick
@@ -830,9 +845,10 @@ AimbotMenuSetupKey(keyFolder, "ModMenuKey", "ModMenuKey");
  return {targets:GetAllTargets,aim:Aimbot,Target:GetAllTargets.players[1].constructor,Jitter,
    start,installMenu,render,tick:()=>cycle(aimbotTick),refreshTargets:()=>cycle(AimbotRefresh),
    position(kind,id,px,py,weapon,packed){return cycle(()=>{const target=GetAllTargets[kind][id];if(kind==='players'&&Number.isFinite(packed)){target.weaponIdx=(packed>>8)&255;if(id===World.PLAYER.id)GetAllTargets.selfWeapon=target.weaponIdx;}target.update(px,py,weapon);if(kind==='players'&&id===World.PLAYER.id){Aimbot.selfId=id;GetAllTargets.selfPosition={x:px,y:py};GetAllTargets.selfFromPacket=Date.now();Aimbot.dead=false;}});},
-   afterFire:()=>cycle(afterFire),afterRelease(){Aimbot.mouseDown=false;},onMove(mask){GetAllTargets.myLastMoveDirection=mask;return true;},
-   jitterTick:()=>cycle(routineJitter,'jitter'),antiTick:()=>cycle(routineAntiAimbot,'anti'),
-   onHandshake(){Aimbot.dead=false;},onOtherDie(id){GetAllTargets.players[id]?.setInactive();},sync(){},
+   beforeFire:()=>cycle(prepareJitterShot),afterFire:()=>cycle(()=>{if(MOD.jitterActive){Aimbot.mouseDown=true;Aimbot.scheduleRefresh();}else afterFire();}),afterRelease(){Aimbot.mouseDown=false;jitterShotUntil=Date.now()+50;},onMove(mask){GetAllTargets.myLastMoveDirection=mask;return true;},
+   ownsJitterDirection,jitterRenderAngle:()=>MOD.jitterActive&&!pauseJitter()&&recentRotation()?lastRotationAngle*Math.PI/180:null,
+   jitterTick:()=>!pauseJitter()&&cycle(routineJitter,'jitter'),antiTick:()=>cycle(routineAntiAimbot,'anti'),
+   onHandshake(){Aimbot.dead=false;jitterShotUntil=0;lastRotationAt=-Infinity;lastRotationAngle=null;},onOtherDie(id){GetAllTargets.players[id]?.setInactive();},sync(){},
    ensure(id){if(id>0){for(const group of [GetAllTargets.players,GetAllTargets.ghouls])if(!group[id])group[id]=new this.Target(id);}},
    dispose(){if(stopped)return;stopped=true;for(const id of [...timers.keys()])clear(id);for(const remove of removers)remove();Aimbot.mouseDown=false;}
  };

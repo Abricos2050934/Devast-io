@@ -136,6 +136,10 @@ def artifacts(root, output):
                 raise ValueError('Live aim setting effects were not verified in browser: ' + browser)
         if 'versioned-aim-settings-preserved' in contract.get('features', []) and report.get('physical_numeric', {}).get('explicit_saved_values') is not True:
             raise ValueError('Explicit saved aim values were not verified in browser: ' + browser)
+        if 'jitter-shot-priority' in contract.get('features', []):
+            jitter = report.get('native', {}).get('jitter', {})
+            if jitter.get('status') != 'passed' or not all(jitter.get(key) is True for key in ('manual_angle_before_attack', 'automatic_angle_before_attack', 'held_fire_tracks_target', 'cursor_cannot_overwrite', 'resumes_on_release', 'standing_and_stop_option', 'local_rotation', 'death_stops_packets')):
+                raise ValueError('Jitter shot priority was not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'

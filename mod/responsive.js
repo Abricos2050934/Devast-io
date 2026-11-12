@@ -753,7 +753,7 @@ function __installDevastMod(B) {
   let aimCycleDepth=0,aimCycleWritable=false;
   const aimTransport={cycles:0,blockedCycles:0,nativeYields:0,invalidCycles:0,lastInvalidReason:null};
   const aimModule=__createIlmAdapter(MOD,{
-    window,document,selfId:()=>B.world.ᅠᏧ‍?.id||0,selfPosition:()=>B.world.ᅠᏧ‍||{x:-1,y:-1},
+    window,document,selfId:()=>B.world.ᅠᏧ‍?.id||0,selfPosition:()=>B.world.ᅠᏧ‍||{x:-1,y:-1},manualAngle:()=>Number.isFinite(B.input?.angle)?B.input.angle*180/Math.PI:null,
     playerInfo:id=>({exists:!!playerMeta(id),team:playerMeta(id)?.а༤̘??-1,membership:playerMeta(id)?.ᴌ̗ⲟ}),
     clanInfo:id=>({exists:!!B.world.ﾠࡅ‍[id],membership:B.world.ﾠࡅ‍[id]?.ոᚄރ}),persist,setKey:(key,value)=>setSetting(key,value),
     beginCycle:()=>{if(aimCycleDepth++===0){aimCycleWritable=playing()&&!reconnect.sessionEnded&&automationReady('aim');if(aimCycleWritable)aimTransport.cycles++;else aimTransport.blockedCycles++;}},
@@ -959,8 +959,7 @@ function __installDevastMod(B) {
     recordCommand(packet[0]);
     return true;
   }
-  // Native fire uses the last source direction; afterFire owns its jitter case.
-  function beforeFire() {if(!playing()||reconnect.sessionEnded)return;aimModule.sync();}
+  function beforeFire() {if(!playing()||reconnect.sessionEnded)return;aimModule.sync();aimModule.beforeFire();}
   function persist() {
     refreshLootFilter();
     const saved = {};
@@ -2243,7 +2242,8 @@ function __installDevastMod(B) {
     // Compatibility property: the source replaces the primary angle argument
     // through packetAngle and retains native direction clocks and sends.
     get controlsAimDirection() { return false; },
-    get jitterAngle() { return null; },
+    get controlsJitterDirection() { return playing()&&!Aimbot.dead&&aimModule.ownsJitterDirection(); },
+    get jitterAngle() { return playing()&&!Aimbot.dead&&MOD.ShowRealAngles!=='never'?aimModule.jitterRenderAngle():null; },
     get aimRenderAngle() { return null; },
     targets: GetAllTargets,
     trackPacket,

@@ -1,0 +1,18 @@
+{
+  "description": "Selected offline gun profile for AK47 and laser SMG; enter these four settings in Aim Bot. Existing saved values are never overwritten automatically.",
+  "settings": {
+    "distanceCoefficient": 60,
+    "offsetCoefficient": 1,
+    "leadCap": 200,
+    "aimSmooth": 1
+  },
+  "training_profiles": 1308,
+  "holdout_mean_miss": 22.8964888432795,
+  "holdout_baseline_mean_miss": 45.21401184959672,
+  "limitations": [
+    "Synthetic trajectories, not measured server hits.",
+    "No obstacle collision, spread, muzzle offsets or unknown server timing.",
+    "No universally best profile across all weapons, ping and future target turns.",
+    "Selection, visuals, spear and Jitter controls are checked separately; they are not optimized by this gun-only score."
+  ]
+}

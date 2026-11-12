@@ -7,6 +7,17 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_jitter_shot_priority_requires_both_native_browsers(self):
+  self.contract['features']=['jitter-shot-priority']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  keys=['manual_angle_before_attack','automatic_angle_before_attack','held_fire_tracks_target','cursor_cannot_overwrite','resumes_on_release','standing_and_stop_option','local_rotation','death_stops_packets']
+  for report in self.validation['browsers'].values():report['native']={'jitter':dict(status='passed',**dict.fromkeys(keys,True))}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for key in keys:
+   self.validation['browsers']['firefox']['native']['jitter'][key]=False;self.save()
+   with self.assertRaisesRegex(ValueError,'Jitter.*firefox'):p.artifacts(self.root,self.out)
+   self.validation['browsers']['firefox']['native']['jitter'][key]=True
+
  def test_line_projection_live_settings_and_saved_values_require_both_browsers(self):
   self.contract['features']=['aim-line-native-projection','live-aim-setting-effects','versioned-aim-settings-preserved']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

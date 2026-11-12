@@ -42,7 +42,7 @@ test('hotkeys ignore text input and toggle outside text fields', () => {
 
 test('dispose removes timers, frame callbacks and registered event handlers', () => {
   const f = fixture();
-  assert.equal(f.timers.size, 4);
+  assert.equal(f.timers.size, 3);
   assert.equal(f.frames.size, 1);
   f.mod.dispose();
   assert.equal(f.timers.size, 0);
@@ -226,13 +226,13 @@ test('legacy settings migrate separately from account storage and preserve custo
  assert.equal(g.storage.get('token'),'original');assert.equal(g.storage.get('tokenId'),'17');assert.equal(g.storage.get('userId'),'2');f.mod.dispose();g.mod.dispose();
 });
 
-test('position refresh precedes native fire, and imported afterFire owns jitter shot priority',()=>{
+test('position refresh precedes native fire and Jitter aligns before the attack',()=>{
  const f=fixture({fireKey:'nativeFire'});try{
   f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('lockId',2);f.mod.setSetting('AimBotEnabled',true);
   f.mod.trackPacket(1,1,1,1000,1000,true);f.mod.trackPacket(1,2,1,1500,1000,true);f.packets.length=0;
   f.mod.trackPacket(1,2,1,1500,1500,true);assert.equal(f.packets.length,1);assert.notEqual(f.mod.aim.lastAngle,0);
   f.packets.length=0;f.mod.beforeFire();f.network.nativeFire();f.mod.afterFire();assert.deepEqual(f.packets,[[4]]);assert.equal(f.mod.aim.mouseDown,true);
-  f.mod.setSetting('jitterActive',true);f.packets.length=0;f.network.nativeFire();f.mod.afterFire();assert.equal(f.packets[0][0],4);assert.equal(f.packets[1][0],6);
+  f.mod.setSetting('jitterActive',true);f.packets.length=0;f.mod.beforeFire();f.network.nativeFire();f.mod.afterFire();assert.equal(f.packets[0][0],6);assert.equal(f.packets[1][0],4);
   f.mod.afterRelease();assert.equal(f.mod.aim.mouseDown,false);
  }finally{f.mod.dispose();}
 });

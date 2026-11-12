@@ -10,7 +10,7 @@ function fixture(options={}) {
     },
     removeEventListener(type, fn) { listeners.get(type)?.delete(fn); },
     setInterval(fn,delay) { const id = ++next; timers.set(id, fn); timerPeriods.set(id,delay); return id; },
-    clearInterval(id) { timers.delete(id); },
+    clearInterval(id) { timers.delete(id); timerPeriods.delete(id); },
     requestAnimationFrame(fn) { const id = ++next; frames.set(id, fn); return id; },
     cancelAnimationFrame(id) { frames.delete(id); },
   };

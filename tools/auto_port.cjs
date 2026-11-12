@@ -248,7 +248,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   if(!outputBindings.symbols['ⲟࠀᄀ']||!roles.messageKeyboard)throw Error('Missing Message15 lifecycle bindings');
   generated.operations=require('./updater/message15-contracts.cjs').message15Operations(cur,operations,outputBindings.symbols,roles,bindings.native_protocol,new Set(pairs.values()));
   if(aim.includes('function __createMessage27Core(')){
-   generated.operations=require('./updater/untitled-contracts.cjs').untitledDirectionOperations(generated.operations,cur,{primaryOnly:true});
+   generated.operations=require('./updater/untitled-contracts.cjs').untitledDirectionOperations(generated.operations,cur,{primaryOnly:true,jitterOwnership:true});
    const position=generated.operations.find(op=>op.id==='packet-position-history');
    const native=acorn.parse(position.before,{ecmaVersion:'latest'}).body[0].expression;
    if(native.type!=='CallExpression'||native.arguments.length!==13)throw Error('Uploaded aim native position metadata changed');

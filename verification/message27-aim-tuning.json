@@ -1,0 +1,218 @@
+{
+  "schema": 1,
+  "engine": "message27-bby",
+  "method": "actual installed engine; select on training cases, evaluate on separate distance/phase cases",
+  "profiles": 1308,
+  "scenes": 72,
+  "units": "world coordinates; time in milliseconds",
+  "nativeWeaponSpeeds": {
+    "ak47": 1.4,
+    "laserSubmachine": 1.45
+  },
+  "simulatedObservationAgeMs": [
+    0,
+    40,
+    80
+  ],
+  "simulatedHitRadius": 20,
+  "trajectoryKinds": [
+    "crossing",
+    "diagonal",
+    "turning",
+    "chase"
+  ],
+  "limitations": [
+    "Synthetic trajectories, not measured server hits.",
+    "No obstacle collision, spread, muzzle offsets or unknown server timing.",
+    "No universally best profile across all weapons, ping and future target turns.",
+    "Selection, visuals, spear and Jitter controls are checked separately; they are not optimized by this gun-only score."
+  ],
+  "baseline": {
+    "settings": {
+      "distanceCoefficient": 80,
+      "offsetCoefficient": 0.8,
+      "leadCap": 280,
+      "aimSmooth": 0.74
+    },
+    "training": {
+      "shots": 192,
+      "within20": 8,
+      "meanMiss": 44.66163342038586,
+      "p95Miss": 75.81417371903733
+    },
+    "holdout": {
+      "shots": 96,
+      "within20": 0,
+      "meanMiss": 45.21401184959672,
+      "p95Miss": 72.01662124679548
+    }
+  },
+  "winner": {
+    "settings": {
+      "distanceCoefficient": 60,
+      "offsetCoefficient": 1,
+      "leadCap": 200,
+      "aimSmooth": 1
+    },
+    "training": {
+      "shots": 192,
+      "within20": 109,
+      "meanMiss": 21.969208041261695,
+      "p95Miss": 48.418882492528304
+    },
+    "holdout": {
+      "shots": 96,
+      "within20": 44,
+      "meanMiss": 22.8964888432795,
+      "p95Miss": 48.41888249252795
+    }
+  },
+  "top10": [
+    {
+      "settings": {
+        "distanceCoefficient": 60,
+        "offsetCoefficient": 1,
+        "leadCap": 200,
+        "aimSmooth": 1
+      },
+      "training": {
+        "shots": 192,
+        "within20": 109,
+        "meanMiss": 21.969208041261695,
+        "p95Miss": 48.418882492528304
+      },
+      "holdout": {
+        "shots": 96,
+        "within20": 44,
+        "meanMiss": 22.8964888432795,
+        "p95Miss": 48.41888249252795
+      }
+    },
+    {
+      "settings": {
+        "distanceCoefficient": 70,
+        "offsetCoefficient": 1.2,
+        "leadCap": 200,
+        "aimSmooth": 1
+      },
+      "training": {
+        "shots": 192,
+        "within20": 109,
+        "meanMiss": 22.04172873796243,
+        "p95Miss": 49.453902315793734
+      }
+    },
+    {
+      "settings": {
+        "distanceCoefficient": 90,
+        "offsetCoefficient": 1.4,
+        "leadCap": 240,
+        "aimSmooth": 1
+      },
+      "training": {
+        "shots": 192,
+        "within20": 108,
+        "meanMiss": 21.807469074172605,
+        "p95Miss": 50.133429618956804
+      }
+    },
+    {
+      "settings": {
+        "distanceCoefficient": 90,
+        "offsetCoefficient": 1.4,
+        "leadCap": 280,
+        "aimSmooth": 1
+      },
+      "training": {
+        "shots": 192,
+        "within20": 108,
+        "meanMiss": 21.834523323364646,
+        "p95Miss": 50.133429618956804
+      }
+    },
+    {
+      "settings": {
+        "distanceCoefficient": 90,
+        "offsetCoefficient": 1.4,
+        "leadCap": 320,
+        "aimSmooth": 1
+      },
+      "training": {
+        "shots": 192,
+        "within20": 108,
+        "meanMiss": 21.834523323364646,
+        "p95Miss": 50.133429618956804
+      }
+    },
+    {
+      "settings": {
+        "distanceCoefficient": 90,
+        "offsetCoefficient": 1.4,
+        "leadCap": 400,
+        "aimSmooth": 1
+      },
+      "training": {
+        "shots": 192,
+        "within20": 108,
+        "meanMiss": 21.834523323364646,
+        "p95Miss": 50.133429618956804
+      }
+    },
+    {
+      "settings": {
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 1.3,
+        "leadCap": 200,
+        "aimSmooth": 1
+      },
+      "training": {
+        "shots": 192,
+        "within20": 108,
+        "meanMiss": 22.02253436403227,
+        "p95Miss": 49.06135352225443
+      }
+    },
+    {
+      "settings": {
+        "distanceCoefficient": 70,
+        "offsetCoefficient": 1.1,
+        "leadCap": 240,
+        "aimSmooth": 1
+      },
+      "training": {
+        "shots": 192,
+        "within20": 107,
+        "meanMiss": 21.80986255250755,
+        "p95Miss": 49.88824720133113
+      }
+    },
+    {
+      "settings": {
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 1.3,
+        "leadCap": 240,
+        "aimSmooth": 1
+      },
+      "training": {
+        "shots": 192,
+        "within20": 107,
+        "meanMiss": 21.997558073515222,
+        "p95Miss": 49.06135352225443
+      }
+    },
+    {
+      "settings": {
+        "distanceCoefficient": 90,
+        "offsetCoefficient": 1.4,
+        "leadCap": 240,
+        "aimSmooth": 0.95
+      },
+      "training": {
+        "shots": 192,
+        "within20": 106,
+        "meanMiss": 22.113345328587013,
+        "p95Miss": 50.812213550384506
+      }
+    }
+  ]
+}
