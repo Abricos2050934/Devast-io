@@ -1,7 +1,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 
 function fixture(options={}) {
-  const listeners = new Map(), timers = new Map(), timerPeriods = new Map(), frames = new Map(), storage = new Map(), packets = [];
+  const listeners = new Map(), docListeners = new Map(), timers = new Map(), timerPeriods = new Map(), frames = new Map(), storage = new Map(), packets = [];
   let next = 0;
   const window = {
     addEventListener(type, fn) {
@@ -30,7 +30,7 @@ function fixture(options={}) {
   window.Math=Math;window.JSON=JSON;window.dispatchEvent=e=>{for(const fn of listeners.get(e.type)||[])fn(e);};
   window.setTimeout=(fn,delay)=>{const id=++next;timers.set(id,fn);timerPeriods.set(id,delay);return id;};window.clearTimeout=id=>{timers.delete(id);timerPeriods.delete(id);};
   window.WebSocket=class {send(){}};window.CanvasRenderingContext2D=class {fillText(){}};window.KeyboardEvent=class {constructor(type,data){this.type=type;Object.assign(this,data);}};
-  document.addEventListener=window.addEventListener;document.removeEventListener=window.removeEventListener;
+  document.addEventListener=(type,fn)=>{if(!docListeners.has(type))docListeners.set(type,new Set());docListeners.get(type).add(fn);};document.removeEventListener=(type,fn)=>docListeners.get(type)?.delete(fn);
   const clipboard=[];
   const navigator={clipboard:{writeText:async text=>{clipboard.push(text);}}};
   const candidate=process.env.DEVAST_TEST_CANDIDATE?require('../tools/updater/candidate-fixture.cjs').candidateFixture(B,process.env.DEVAST_TEST_CANDIDATE):null;
@@ -40,12 +40,12 @@ function fixture(options={}) {
     console, performance: {now: () => clock},Date:class extends Date{static now(){return clock;}},navigator,alert(){},B:candidate?.B||B,
   });
   vm.runInContext((candidate?.source||(fs.readFileSync('mod/ilm-aim.js','utf8') + '\n' + fs.readFileSync('mod/responsive.js', 'utf8'))) + '\nglobalThis.mod = __installDevastMod(B);', context, {timeout: 1000});
-  return {mod: candidate?candidate.adaptMod(context.mod):context.mod, context, B,window,document,dom,navigator,clipboard,setClock:value=>{clock=value;},network, world, entities, storage, packets, listeners, timers, timerPeriods, frames, get nativeCalls(){return nativeCalls;}};
+  return {mod: candidate?candidate.adaptMod(context.mod):context.mod, context, B,window,document,dom,navigator,clipboard,setClock:value=>{clock=value;},network, world, entities, storage, packets, listeners, docListeners, timers, timerPeriods, frames, get nativeCalls(){return nativeCalls;}};
 }
 
 function scene(f,type,items){f.entities.border[type]={border:items.length,'ⲣᴑᴏ':items.map((_,i)=>i)};f.entities['ᴎ̂２'][type]=items;}
 function player(id,x=0,y=0){return {'ᴘ४１':id,x,y,angle:0,'е̝ހ':0,id:0};}
-function menu(f){for(const callback of f.listeners.get('DOMContentLoaded')||[])callback();return f.mod.menu;}
+function menu(f){for(const callback of [...(f.listeners.get('DOMContentLoaded')||[]),...(f.docListeners.get('DOMContentLoaded')||[])])callback();return f.mod.menu;}
 function control(folder,key){const c=folder.__controllers.find(c=>c.property===key);assert.ok(c,'Missing control '+key);return c;}
 
 module.exports={fixture,scene,player,menu,control};

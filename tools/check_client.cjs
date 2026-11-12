@@ -43,4 +43,4 @@ for(const declaration of parse(aimSource,options).body.filter(n=>n.type==='Funct
   assert.equal(installed.length,1);
   assert.equal(client.slice(installed[0].start,installed[0].end),aimSource.slice(declaration.start,declaration.end));
 }
-console.log('ILM AST OK: four original classes, tick, menu and line renderer; retired engines absent');
+console.log('Uploaded aim AST OK: active override, lifecycle, menu, source calculations; retired engines absent');

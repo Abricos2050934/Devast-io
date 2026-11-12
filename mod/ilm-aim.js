@@ -1,40 +1,862 @@
-// ILM 1.0 declarations from the supplied JSON; see recovery/ilm-aim-reference.json.gz.
-// Every stored declaration is copied verbatim; native adaptation lives outside the core.
-function __createIlmAim(settings, world, send) {
-const _0x2ea565=settings, _0x10898e=world, _0x4c996c=send;
-// All string lookups in the stored reference are already decoded. The original
-// aliases are retained verbatim; fail if a new live decoder dependency appears.
-const _0x225287=()=>{throw new Error('Unexpected live ILM string decoder');},_0x349c=_0x225287;
-// BEGIN ORIGINAL ILM CORE
-class _0x3e2cd1{constructor(){var _0x90eb58=_0x349c;this["players"]=Array["from"]({'length':0x79},(_0x38ba4d,_0x36bec7)=>new _0x218077(_0x36bec7)),this["ghouls"]=Array['from']({'length':0x3e7},(_0x58e32a,_0x3ea701)=>new _0x218077(_0x3ea701)),this['obstacles']=[],this["lines"]=[new _0x391c19(0.6,0x1,"#EEEEEE"),new _0x391c19(0.8,0x3,"#FF0000"),new _0x391c19(0.8,0x3,'#00FF00'),new _0x391c19(0.8,0x2,'#0000FF')],this['mousePosition']={'x':0x0,'y':0x0},this['mouseMapCords']={'x':0x0,'y':0x0},this["tappedForLast140mills"]=![],this["shifting"]=![],this['menuActive']=![],this["menuX"]=0x0,this["menuY"]=0x0,this["menuWidth"]=0x0,this['menuHeight']=0x0,this["lastId"]=0x0,this["myLastMoveDirection"]=0x0;}["getPlayerById"](_0x4a05d2){var _0x520482=_0x225287;return this["players"][_0x4a05d2];}["getGhoulByUid"](_0x232cd5){var _0x462efd=_0x225287;return this["ghouls"][_0x232cd5];}["resetLines"](){var _0x4cd25b=_0x225287;this["lines"]["forEach"](_0x177dce=>_0x177dce["reset"]());}}
-
-class _0x218077{constructor(_0x3f7d89){var _0x44040d=_0x225287;this['id']=_0x3f7d89,this['x']=-0x1,this['y']=-0x1,this["prevX"]=Array(0x3)["fill"](-0x1),this["prevY"]=Array(0x3)["fill"](-0x1),this["active"]=![],this["weapon"]=-0x1,this['gear']=-0x1;}["update"](_0x16c549,_0x39f961){var _0x1b8e5f=_0x225287;this["active"]=!![],this['prevX']=[this['x'],...this["prevX"]["slice"](0x0,0x2)],this["prevY"]=[this['y'],...this["prevY"]["slice"](0x0,0x2)],this['x']=_0x16c549,this['y']=_0x39f961;}["setInactive"](){var _0x124c64=_0x225287;this['x']=-0x1,this['y']=-0x1,this["prevX"]["fill"](-0x1),this["prevY"]["fill"](-0x1),this["active"]=![],_0x6cc5f2['resetLines']();}}
-
-class _0x4b5d6f{constructor(){var _0x3d596d=_0x225287;this["lastAngle"]=0x0,this["targetPlayer"]=null;}["wannaFire"](_0x51d67e=this["targetPlayer"]){var _0x2fdb94=_0x225287;if(!_0x51d67e)return![];const [_0x4c3eaf,_0x4d399f,_0x54230e]=_0x51d67e['prevX'],[_0x440651,_0x3f96,_0x2d4ab1]=_0x51d67e["prevY"];return _0x51d67e['x']-_0x4c3eaf>0x0!==_0x4c3eaf-_0x4d399f>0x0||_0x51d67e['y']-_0x440651>0x0!==_0x440651-_0x3f96>0x0;}['resolve'](){var _0x53e549=_0x225287;const _0x302a15=_0x6cc5f2['getPlayerById'](_0x10898e['PLAYER']['id']);let _0x32f84a;_0x2ea565["lockId"]>-0x1?_0x32f84a=_0x6cc5f2["getPlayerById"](_0x2ea565["lockId"]):_0x32f84a=_0x2ea565["mouseFovEnable"]?this["findNearestPlayerTo"](_0x6cc5f2["mouseMapCords"],_0x2ea565["mouseFov"]):this['findNearestPlayerTo'](_0x302a15,0x9c4);this["targetPlayer"]=_0x32f84a;if(!_0x32f84a)return this["lastAngle"];const _0x294d42=Math["hypot"](_0x302a15['x']-_0x32f84a['x'],_0x302a15['y']-_0x32f84a['y']),_0x545191=_0x294d42/_0x2ea565["distanceCoefficient"]+_0x2ea565['offsetCoefficient'],_0x116788=_0x32f84a["prevX"][0x0]===-0x1?_0x32f84a['x']:_0x32f84a['x']+_0x545191*(_0x32f84a['x']-_0x32f84a["prevX"][0x0]),_0x5af3a6=_0x32f84a['prevY'][0x0]===-0x1?_0x32f84a['y']:_0x32f84a['y']+_0x545191*(_0x32f84a['y']-_0x32f84a['prevY'][0x0]),_0x3f6465=Math["atan2"](_0x5af3a6-_0x302a15['y'],_0x116788-_0x302a15['x'])*(0xb4/Math['PI']);return this['lastAngle']=_0x3f6465,_0x2ea565["visualizeResolving"]&&_0x6cc5f2['lines'][0x0]["reset"](_0x302a15['x'],_0x302a15['y'],_0x116788,_0x5af3a6),Math['round'](_0x3f6465);}["findNearestPlayerTo"](_0x1b0ea4,_0x27daba){var _0x3912f1=_0x225287;let _0x54dddc=null,_0x3dfe2b=_0x27daba;const _0x44dc5a=_0x4d9bd2=>{var _0x1eea76=_0x349c;for(let _0x53f889 of _0x4d9bd2){if(_0x53f889['active']&&_0x53f889['id']!==_0x10898e['PLAYER']['id']&&(_0x10898e["players"][_0x53f889['id']]["team"]!==_0x10898e["PLAYER"]["team"]||_0x10898e["PLAYER"]["team"]===-0x1)){const _0xed1853=Math['hypot'](_0x1b0ea4['x']-_0x53f889['x'],_0x1b0ea4['y']-_0x53f889['y']);_0xed1853<_0x3dfe2b&&(_0x54dddc=_0x53f889,_0x3dfe2b=_0xed1853);}}};return(_0x2ea565["target"]==='players'||_0x2ea565["target"]==='all')&&_0x44dc5a(_0x6cc5f2["players"]),(_0x2ea565["target"]==="ghouls"||_0x2ea565["target"]==="all")&&_0x44dc5a(_0x6cc5f2["ghouls"]),_0x54dddc;}}
-
-class _0x391c19{constructor(_0x4c599e,_0x14ea80,_0x57b06a){var _0x27af89=_0x225287;this['x1']=-0xa,this['x2']=-0xa,this['y1']=-0xa,this['y2']=-0xa,this["alpha"]=_0x4c599e,this["width"]=_0x14ea80,this["color"]=_0x57b06a;}["reset"](_0x4a15e2,_0x2d9e21,_0x3151bb,_0x340401){this['x1']=_0x4a15e2,this['y1']=_0x2d9e21,this['x2']=_0x3151bb,this['y2']=_0x340401;}}
-
-function _0x4a7389(){var _0xd88efc=_0x225287;if(_0x10898e["PLAYER"]['id']===0x0){if(_0x6cc5f2["lastId"]!==0x0){_0x6cc5f2["lastId"]=0x0;for(let _0x2b8de3 of _0x6cc5f2["players"])_0x2b8de3["setInactive"]();}return;}_0x6cc5f2["lastId"]=_0x10898e["PLAYER"]['id'],_0x2ea565["AimBotEnabled"]&&(_0x4c996c([0x6,_0x41e779["resolve"]()]),_0x2ea565["autoFire"]&&_0x41e779["wannaFire"]()&&(_0x4c996c([0x4]),_0x4c996c([0x5])));}
-
-// END ORIGINAL ILM CORE
-const _0x6cc5f2=new _0x3e2cd1(), _0x41e779=new _0x4b5d6f();
-return {targets:_0x6cc5f2,aim:_0x41e779,tick:_0x4a7389,Target:_0x218077};
+// Active __BBY aim from message (27).txt, SHA256 f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0.
+// Source blocks are byte-for-byte audited against the compressed reference.
+function __createMessage27Core(MOD,environment) {
+ let stopped=false,started=false,depth=0,phase='aim';
+ const timers=new Map(),removers=[];
+ function cycle(fn,kind=phase){const previous=phase;phase=kind;if(depth++===0)environment.beginCycle(kind);try{return fn();}finally{if(--depth===0)environment.endCycle();phase=previous;}}
+ function emit(packet){if(stopped)return false;return depth?environment.send(packet,{kind:phase}):cycle(()=>environment.send(packet,{kind:phase}));}
+ function timer(method,fn,delay){let id;const interval=method==='setInterval';const wrapped=()=>{if(!interval)timers.delete(id);if(!stopped)cycle(fn,fn.name==='routineJitter'?'jitter':fn.name==='routineAntiAimbot'?'anti':'aim');};id=environment.window[method](wrapped,delay);timers.set(id,interval);return id;}
+ function clear(id){const interval=timers.get(id);if(interval===undefined)return;environment.window[interval?'clearInterval':'clearTimeout'](id);timers.delete(id);}
+ const setInterval=(fn,delay)=>timer('setInterval',fn,delay),setTimeout=(fn,delay)=>timer('setTimeout',fn,delay),clearTimeout=clear,clearInterval=clear;
+ const window={Math,JSON,setInterval,setTimeout,clearInterval,clearTimeout,addEventListener(type,fn,options){environment.window.addEventListener(type,fn,options);removers.push(()=>environment.window.removeEventListener(type,fn,options));}};
+ const document=new Proxy(environment.document,{get(target,key){if(key==='addEventListener')return (type,fn,options)=>{target.addEventListener(type,fn,options);removers.push(()=>target.removeEventListener(type,fn,options));};const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;}});
+ const օܓߋ=window;
+ const localStorage={getItem:()=>JSON.stringify(Object.fromEntries(Object.keys(__ilmAimDefaults()).map(key=>[key,MOD[key]]))),setItem(){environment.persist();}};
+ const globalThis={__autoPortAimbotPacketTransport:emit};
+ const __gk=value=>value; // Imported integration passes plain booleans/numbers.
+ const World=environment.world,օ̖̏='id',x='x',y='y';
+ const network={ε٣︀:value=>emit(JSON.parse(value)),ᴉࡃϲ:value=>emit(JSON.parse(value))},ո︀̜=network,аρ３=network;
+ const AIM_RAD=180/Math.PI,SPEAR_IDX=5;
+ function AimbotLoadConfig() {
+    try {
+        var saved = JSON.parse(localStorage.getItem("BestModMenuConfig"));
+        if (saved && typeof saved === "object") {
+            for (var field in MOD) {
+                if (field in saved && typeof saved[field] === typeof MOD[field]) {
+                    MOD[field] = saved[field];
+                }
+            }
+        }
+        MOD.mouseFovEnable = true;
+        MOD.resolverType = "linear";
+        if (!(+MOD.mouseFov > 0) || +MOD.mouseFov > 1600) MOD.mouseFov = 900;
+        if (+MOD.distanceCoefficient === 100) MOD.distanceCoefficient = 80;
+        if (+MOD.offsetCoefficient === 0.1 || +MOD.offsetCoefficient === 0.45) MOD.offsetCoefficient = 0.8;
+        if (!(+MOD.aimStick >= 0) || +MOD.aimStick === 140) MOD.aimStick = 240;
+        if (!(+MOD.aimSmooth > 0 && +MOD.aimSmooth <= 1) || +MOD.aimSmooth === 0.62) MOD.aimSmooth = 0.74;
+        if (!(+MOD.aimMaxRange > 0)) MOD.aimMaxRange = 2400;
+        if (!(+MOD.leadCap > 0) || +MOD.leadCap === 220) MOD.leadCap = 280;
+        if (!(+MOD.aimHoldMs >= 0)) MOD.aimHoldMs = 200;
+    } catch (e) {}
 }
+ AimbotLoadConfig();
+ var __BBY = (function () {
+  var BabaConfig = MOD;
+    function calculateDistance(point1, point2) {
+        return Math.floor(Math.sqrt(Math.pow(point1.x - point2.x, 2) + Math.pow(point1.y - point2.y, 2)));
+    }
+    class GetAllTargetsCon {
+        constructor() {
+            this.players = [];
+            this.ghouls = [];
+            for (let player = 1; player < 121; player++) {
+                this.players[player] = new GetTarget(player);
+            }
+            for (let ghoul = 1; ghoul < 999; ghoul++) {
+                this.ghouls[ghoul] = new GetTarget(ghoul);
+            }
+            this.obstacles = [];
+            this.lines = [];
+            this.lines.push(new LinesCon(0.6, 1, "#FFF200"));
+            this.lines.push(new LinesCon(0.8, 3, "#FF0000"));
+            this.lines.push(new LinesCon(0.8, 3, "#00FF00"));
+            this.lines.push(new LinesCon(0.8, 2, "#0000FF"));
+            this.mousePosition = { x: 0, y: 0 };
+            this.mouseMapCords = { x: 0, y: 0 };
+            this.shifting = false;
+            this.menuActive = false;
+            this.menuX = 0;
+            this.menuY = 0;
+            this.menuWidth = 0;
+            this.menuHeight = 0;
+            this.lastId = 0;
+            this.myLastMoveDirection = 0;
+        }
+        getPlayerById(pID) {
+            return this.players[pID];
+        }
+        getGhoulByUid(uID) {
+            return this.ghouls[uID];
+        }
+    }
+    class GetTarget {
+        constructor(ids) {
+            this.id = ids;
+            this.x = -1;
+            this.y = -1;
+            this.prevX = [];
+            this.prevY = [];
+            this.active = false;
+            this.weapon = -1;
+            this.gear = -1;
+            for (let lastpos = 0; lastpos < 3; lastpos++) {
+                this.prevX.push(-1);
+                this.prevY.push(-1);
+            }
+        }
+        update(ux, uy, xy) {
+            if (this.x !== ux || this.y !== uy) {
+                this.active = true;
+                this.prevMovedAt2 = this.prevMovedAt || 0;
+                this.prevMovedAt = this.movedAt || 0;
+                this.movedAt = Date.now();
+                this.prevX[2] = this.prevX[1];
+                this.prevX[1] = this.prevX[0];
+                this.prevX[0] = this.x;
+                this.x = ux;
+                this.prevY[2] = this.prevY[1];
+                this.prevY[1] = this.prevY[0];
+                this.prevY[0] = this.y;
+                this.y = uy;
+                this.weapon = xy;
+                AimbotRefresh();
+            }
+        }
+        setInactive() {
+            this.x = -1;
+            this.y = -1;
+            for (let lastposs = 0; lastposs < 3; lastposs++) {
+                this.prevX[lastposs] = -1;
+                this.prevY[lastposs] = -1;
+            }
+            this.active = false;
+            this.weapon = -1;
+            this.movedAt = 0;
+            this.prevMovedAt = 0;
+            this.prevMovedAt2 = 0;
+            AimbotRefresh();
+        }
+    }
+    class AimbotCon {
+        constructor() {
+            this.lastAngle = 0;
+            this.targetPlayer = null;
+        }
+        resolve() {
+            switch (MOD.resolverType) {
+                case 1:
+                    var myPlayerResolverType1 = GetAllTargets.getPlayerById(World.PLAYER[օ̖̏]);
+                    var targetResolverType1 = this.findNearestPlayerTo(myPlayerResolverType1, MOD.aimMaxRange || 2400);
+                    this.targetPlayer = targetResolverType1;
+                    if (targetResolverType1 == null) {
+                        return this.lastAngle;
+                    }
+                    var targetXResolverType1;
+                    var targetYResolverType1;
+                    var _pt1 = this.aimPoint(myPlayerResolverType1, targetResolverType1, MOD.distanceCoefficient);
+                    var targetXResolverType1 = _pt1.x;
+                    var targetYResolverType1 = _pt1.y;
+                    var _dx1 = targetXResolverType1 - myPlayerResolverType1.x;
+                    var _dy1 = targetYResolverType1 - myPlayerResolverType1.y;
+                    var angleResolverType1 = (_dx1 === 0 && _dy1 === 0) ? this.lastAngle : window.Math.atan2(_dy1, _dx1) * 180 / window.Math.PI;
+                    if (isFinite(angleResolverType1)) angleResolverType1 = ((angleResolverType1 % 360) + 360) % 360;
+                    angleResolverType1 = this.aimSmooth(angleResolverType1);
+                    if (MOD.hideAimbotAngle) {
+                        if (angleResolverType1 === null) {
+                            angleResolverType1 = angleResolverType1 * 180 / window.Math.PI;
+                        }
+                        ո︀̜.ε٣︀(window.JSON.stringify([6, angleResolverType1]));
+                    }
+                    this.lastAngle = angleResolverType1;
+                    return angleResolverType1;
+                case "linear":
+                default:
+                    var myPlayerResolverLinear = GetAllTargets.getPlayerById(World.PLAYER[օ̖̏]);
+                    var targetLinear;
+                    if (MOD.lockId > -1) {
+                        targetLinear = GetAllTargets.getPlayerById(MOD.lockId);
+                        if (!this.isPlayerCandidate(targetLinear)) targetLinear = null;
+                    } else if (MOD.mouseFovEnable) {
+                        var _mf = +MOD.mouseFov;
+                        if (!(_mf > 0) || _mf > 1600) _mf = 900;
+                        targetLinear = this.findNearestPlayerTo(GetAllTargets.mouseMapCords, _mf);
+                    } else {
+                        targetLinear = this.findNearestPlayerTo(myPlayerResolverLinear, MOD.aimMaxRange || 2400);
+                    }
+                    this.targetPlayer = targetLinear;
+                    if (targetLinear === null) {
+                        return this.lastAngle;
+                    }
+                    var _ptL = this.aimPoint(myPlayerResolverLinear, targetLinear, MOD.distanceCoefficient);
+                    var targetXResolverLinear = _ptL.x;
+                    var targetYResolverLinear = _ptL.y;
+                    var _dxL = targetXResolverLinear - myPlayerResolverLinear.x;
+                    var _dyL = targetYResolverLinear - myPlayerResolverLinear.y;
+                    var angleResolverLinear = (_dxL === 0 && _dyL === 0) ? this.lastAngle : window.Math.atan2(_dyL, _dxL) * 180 / window.Math.PI;
+                    if (isFinite(angleResolverLinear)) angleResolverLinear = ((angleResolverLinear % 360) + 360) % 360;
+                    angleResolverLinear = this.aimSmooth(angleResolverLinear);
+                    if (MOD.hideAimbotAngle) {
+                        if (angleResolverLinear === null) {
+                            angleResolverLinear = angleResolverLinear * 180 / window.Math.PI;
+                        }
+                        ո︀̜.ε٣︀(window.JSON.stringify([6, angleResolverLinear]));
+                    }
+                    this.lastAngle = angleResolverLinear;
+                    if (MOD.visualizeResolving) {
+                        GetAllTargets.lines[0].color = MOD.visualizeResolvingColor || "#FFF200";
+                        GetAllTargets.lines[0].reset(myPlayerResolverLinear.x, myPlayerResolverLinear.y, targetXResolverLinear, targetYResolverLinear);
+                    }
+                    return angleResolverLinear;
+            }
+        }
+        isPlayerCandidate(player) {
+            try {
+                if (!player || !player.active || player.id === World.PLAYER[օ̖̏]) return false;
+                if (!isFinite(+player.x) || !isFinite(+player.y) || +player.x < 0 || +player.y < 0) return false;
+                if (!World.players || !World.players[player.id]) return false;
+                var ps = World.players[player.id];
+                if (!MOD.TargetTeammate && World.PLAYER.εᴎ༩ !== -1 && ps.εᴎ༩ === World.PLAYER.εᴎ༩) {
+                    var clan = World.ⲣ８ߌ && World.ⲣ８ߌ[World.PLAYER.εᴎ༩];
+                    if (!clan || ps.і٥ࠂ === undefined || clan.ᴎ०︁ === undefined || ps.і٥ࠂ === clan.ᴎ०︁) return false;
+                }
+                return true;
+            } catch (e) { return false; }
+        }
+        findNearestPlayerTo(cords, Fov) {
+            let selected = null;
+            let bestScore = +Fov;
+            if (!cords || !isFinite(+cords.x) || !isFinite(+cords.y) || !(bestScore > 0)) return null;
+            var me = null;
+            try { me = GetAllTargets.getPlayerById(World.PLAYER[օ̖̏]); } catch (e) {}
+            var maxFromMe = +MOD.aimMaxRange || 2400;
+            var stick = +MOD.aimStick;
+            if (!(stick >= 0)) stick = 240;
+            var consider = (ent, ok) => {
+                if (!ok || !ent) return;
+                if (me && isFinite(+me.x) && +me.x >= 0) {
+                    var md = calculateDistance(me, ent);
+                    if (!isFinite(md) || md > maxFromMe) return;
+                }
+                var distance = calculateDistance(cords, ent);
+                if (!isFinite(distance)) return;
+                var score = distance;
+                if (this.targetPlayer === ent && distance < +Fov + stick) score -= stick;
+                if (score < bestScore) {
+                    selected = ent;
+                    bestScore = score;
+                }
+            };
+            if (MOD.target === "players" || MOD.target === "all") {
+                for (let id = 1; id < GetAllTargets.players.length; id++) {
+                    const player = GetAllTargets.getPlayerById(id);
+                    consider(player, this.isPlayerCandidate(player));
+                }
+            }
+            if (MOD.target === "ghouls" || MOD.target === "all") {
+                for (let uid = 1; uid < GetAllTargets.ghouls.length; uid++) {
+                    const ghoul = GetAllTargets.getGhoulByUid(uid);
+                    consider(ghoul, !!(ghoul && ghoul.active && isFinite(+ghoul.x) && +ghoul.x >= 0 && +ghoul.y >= 0));
+                }
+            }
+            var nowHold = Date.now();
+            var held = this._heldTarget;
+            var holdMs = +MOD.aimHoldMs;
+            if (!(holdMs >= 0)) holdMs = 200;
+            if (held && held !== selected && nowHold < (this._heldUntil || 0)) {
+                var heldOk = false;
+                try {
+                    if (GetAllTargets.players && GetAllTargets.players[held.id] === held) heldOk = this.isPlayerCandidate(held);
+                    else heldOk = !!(held.active && isFinite(+held.x) && +held.x >= 0 && isFinite(+held.y) && +held.y >= 0);
+                } catch (eHold) { heldOk = false; }
+                if (heldOk && me && isFinite(+me.x) && +me.x >= 0) {
+                    var hd = calculateDistance(me, held);
+                    if (isFinite(hd) && hd <= maxFromMe) selected = held;
+                }
+            }
+            if (selected !== this._heldTarget) {
+                this._heldTarget = selected || null;
+                this._heldUntil = selected ? nowHold + holdMs : 0;
+            }
+            return selected;
+        }
+        targetVelocity(target) {
+            if (!target || !(target.prevX && target.prevX[0] >= 0) || !(target.prevY && target.prevY[0] >= 0)) return { x: 0, y: 0 };
+            var dt = (+target.movedAt || 0) - (+target.prevMovedAt || 0);
+            if (!(dt >= 12) || dt > 320) return { x: 0, y: 0 };
+            if (Date.now() - (+target.movedAt || 0) > 220) return { x: 0, y: 0 };
+            var vx = (target.x - target.prevX[0]) / dt;
+            var vy = (target.y - target.prevY[0]) / dt;
+            if (target.prevX[1] >= 0 && target.prevY[1] >= 0) {
+                var dt2 = (+target.prevMovedAt || 0) - (+target.prevMovedAt2 || 0);
+                if (dt2 >= 12 && dt2 <= 320) {
+                    vx = vx * 0.7 + ((target.prevX[0] - target.prevX[1]) / dt2) * 0.3;
+                    vy = vy * 0.7 + ((target.prevY[0] - target.prevY[1]) / dt2) * 0.3;
+                }
+            }
+            var sp = Math.sqrt(vx * vx + vy * vy);
+            var capV = 1.2;
+            if (sp > capV) {
+                vx = vx * capV / sp;
+                vy = vy * capV / sp;
+            }
+            return { x: vx, y: vy };
+        }
+        aimPoint(me, target, distanceCoefficient) {
+            if (!target) return { x: 0, y: 0 };
+            if (!me || !isFinite(+me.x) || !isFinite(+me.y)) return { x: target.x, y: target.y };
+            var dx = +target.x - +me.x;
+            var dy = +target.y - +me.y;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            if (!(dist > 0)) return { x: +target.x, y: +target.y };
+            var vel = this.targetVelocity(target);
+            var off = +MOD.offsetCoefficient;
+            if (!(off >= 0)) off = 0.8;
+            var vx = vel.x * off;
+            var vy = vel.y * off;
+            var perTick = +distanceCoefficient;
+            if (!(perTick > 1)) perTick = +MOD.distanceCoefficient;
+            if (!(perTick > 1)) perTick = 80;
+            var bullet = perTick / 50;
+            var cap = +MOD.leadCap;
+            if (!(cap > 0)) cap = 280;
+            var t = dist / bullet;
+            var a = vx * vx + vy * vy - bullet * bullet;
+            var b = 2 * (dx * vx + dy * vy);
+            var c = dist * dist;
+            if (bullet > 0 && Math.abs(a) > 1e-9) {
+                var disc = b * b - 4 * a * c;
+                if (disc >= 0) {
+                    var root = Math.sqrt(disc);
+                    var t1 = (-b - root) / (2 * a);
+                    var t2 = (-b + root) / (2 * a);
+                    var best = -1;
+                    if (t1 > 16 && t1 < 1800) best = t1;
+                    if (t2 > 16 && t2 < 1800 && (best < 0 || t2 < best)) best = t2;
+                    if (best > 0) t = best;
+                }
+            }
+            if (!(t > 0) || t > 1800) t = Math.min(1800, dist / Math.max(bullet, 0.05));
+            var lx = vx * t;
+            var ly = vy * t;
+            var mag = Math.sqrt(lx * lx + ly * ly);
+            if (mag > cap && mag > 0) {
+                lx *= cap / mag;
+                ly *= cap / mag;
+            }
+            return { x: +target.x + lx, y: +target.y + ly };
+        }
+        aimSmooth(angle) {
+            if (!isFinite(+angle)) return isFinite(+this._smoothAngle) ? +this._smoothAngle : (+this.lastAngle || 0);
+            var k = +MOD.aimSmooth;
+            if (!(k > 0) || k > 1) k = 0.74;
+            var prev = +this._smoothAngle;
+            if (!isFinite(prev)) {
+                this._smoothAngle = +angle;
+                return +angle;
+            }
+            var delta = +angle - prev;
+            delta = ((delta + 540) % 360) - 180;
+            var next = prev + delta * k;
+            this._smoothAngle = next;
+            return next;
+        }
+    }
+    class LinesCon {
+        constructor(alpha, width, color) {
+            this.x1 = -10;
+            this.x2 = -10;
+            this.y1 = -10;
+            this.y2 = -10;
+            this.alpha = alpha;
+            this.width = width;
+            this.color = color;
+        }
+        reset(x1, y1, x2, y2) {
+            this.x1 = x1;
+            this.x2 = x2;
+            this.y1 = y1;
+            this.y2 = y2;
+        }
+        set(x1, y1, x2, y2) {
+            this.reset(x1, y1, x2, y2);
+        }
+    }
+    function AimbotRefresh() {
+        GetAllTargets.lines.forEach(line => line.reset(-1, -1, -1, -1));
+        if (World.PLAYER[օ̖̏] === 0 || World.PLAYER[x] === -1 || World.PLAYER[y] === -1) {
+            if (GetAllTargets.lastId !== 0) {
+                GetAllTargets.lastId = 0;
+                for (let allplayers = 1; allplayers < 121; allplayers++) {
+                    GetAllTargets.getPlayerById(allplayers).setInactive();
+                }
+                for (let allghouls = 1; allghouls < 999; allghouls++) {
+                    GetAllTargets.getGhoulByUid(allghouls).setInactive();
+                }
+            }
+            return;
+        }
+        GetAllTargets.lastId = World.PLAYER[օ̖̏];
+        if (MOD.AimBotEnabled) {
+            // While jitter is enabled, the dedicated jitter loop owns angle packets.
+            // This prevents normal target refreshes from instantly overwriting the side-to-side angle.
+            if (MOD.jitterActive) {
+                Aimbot.resolve();
+                return;
+            }
+            var __babaAimAngle = Aimbot.resolve();
+            // Do not force the previous angle after the real target disappeared.
+            if (Aimbot.targetPlayer !== null && isFinite(+__babaAimAngle)) {
+                ո︀̜.ε٣︀(window.JSON.stringify([6, __babaAimAngle]));
+            }
+        }
+    }
+    class JitterCon {
+        constructor() {
+            this.roflAngle = 0;
+            this.roflStep = 1;
+            this.jitterStep = false;
+        }
+        getJitterAngle() {
+            this.jitterStep = !this.jitterStep;
+            if (this.jitterStep) {
+                return this.getAntiAimAngle() + MOD.jitterOffset;
+            } else {
+                return this.getAntiAimAngle() - MOD.jitterOffset;
+            }
+        }
+        getAntiAimAngle() {
+            if (MOD.antiAimMode == "At target") {
+                return Aimbot.resolve() + 180;
+            }
+            Aimbot.resolve();
+            if (MOD.antiAimMode == "Round") {
+                this.roflStep++;
+                return this.roflAngle += 4 + Math.floor(Math.abs(this.roflStep % 600 - 300) / 12);
+            }
+            if (MOD.antiAimMode == "Round2") {
+                this.roflStep++;
+                return Math.floor(this.roflStep % 20 * 18);
+            }
+            return MOD.antiAimMode;
+        }
+    }
+    var GetAllTargets = new GetAllTargetsCon();
+    var Aimbot = new AimbotCon();
+    var Jitter = new JitterCon();
 
-// Keep the native zero sentinel for unused player slots. Decorate raw server names only.
+    // Jitter must actively send angle packets; merely toggling jitterActive changes no rotation.
+    // Use the same CODE36 angle packet as the aimbot and alternate around the anti-aim base angle.
+    var __jitterLastX = NaN, __jitterLastY = NaN, __jitterLastMoveAt = Date.now();
+    function routineJitter() {
+        try {
+            if (!MOD.jitterActive || !World || !World.PLAYER) return;
+            if (typeof ո︀̜ === "undefined" || typeof ո︀̜.ε٣︀ !== "function") return;
+
+            var px = +World.PLAYER[x], py = +World.PLAYER[y];
+            if (isFinite(px) && isFinite(py)) {
+                if (px !== __jitterLastX || py !== __jitterLastY) {
+                    __jitterLastX = px;
+                    __jitterLastY = py;
+                    __jitterLastMoveAt = Date.now();
+                }
+                if (MOD.stopJittersOnStop && Date.now() - __jitterLastMoveAt > 180) return;
+            }
+
+            var angle = Jitter.getJitterAngle();
+            if (!isFinite(+angle)) return;
+            angle = ((+angle % 360) + 360) % 360;
+            ո︀̜.ε٣︀(window.JSON.stringify([6, angle]));
+        } catch (e) {}
+    }
+    setInterval(routineJitter, 100);
+    window.Aimbot = Aimbot;
+    window.GetAllTargets = GetAllTargets;
+    window.AimbotRefresh = AimbotRefresh;
+    window.addEventListener("mousemove", function(event) {
+        GetAllTargets.mousePosition.x = event.clientX;
+        GetAllTargets.mousePosition.y = event.clientY;
+    });  return { G: GetAllTargets, A: Aimbot, J: Jitter, R: AimbotRefresh };
+})();
+ var GetAllTargets=__BBY.G,Aimbot=__BBY.A,Jitter=__BBY.J,AimbotRefresh=__BBY.R;
+ Aimbot.selfId = -1;
+Aimbot.dead = false;
+Aimbot.mouseDown = false;
+Aimbot.refreshing = false;
+Aimbot._refreshTimer = null;
+Aimbot.myId = function() {
+    try {
+        var __id = World.PLAYER[օ̖̏];
+        if (__id !== undefined && __id !== null && __id !== 0) this.selfId = __id;
+    } catch (e) {}
+    return this.selfId;
+};
+Aimbot.send = function(packet) {
+    try {
+        var __t = globalThis.__autoPortAimbotPacketTransport;
+        if (typeof __t === "function") __t(packet);
+    } catch (e) {}
+};
+Aimbot.isDead = function() {
+    if (this.dead || !World.PLAYER || this.myId() === 0)
+        return true;
+    return GetAllTargets.getPlayerById(this.myId()).active === false;
+};
+Aimbot.onDeath = function() {
+    this.dead = true;
+    this.targetPlayer = null;
+    this.currentTarget = null;
+    this._heldTarget = null;
+    this._heldUntil = 0;
+    this._smoothAngle = NaN;
+    this.lastAngle = 0;
+    this.mouseDown = false;
+    GetAllTargets.resetAll();
+};
+Aimbot.scheduleRefresh = function() {
+    if (this.isDead())
+        return;
+    var self = this;
+    this.refreshing = true;
+    clearTimeout(this._refreshTimer);
+    this._refreshTimer = setTimeout(function() { self.refreshing = false; }, 140);
+};
+Aimbot.refresh = function() { aimbotTick(); };
+Aimbot.packetAngle = function(fallback) {
+    if (__gk(MOD.AimBotEnabled) && this.targetPlayer)
+        return ((Math.floor(this.lastAngle) % 360) + 360) % 360;
+    if (MOD.hidePlayerAngle)
+        return (((Math.floor(fallback) + 180) % 360) + 360) % 360;
+    return fallback;
+};
+Aimbot.hasTarget = function() { return this.targetPlayer !== null; };
+Aimbot.getSelf = function() {
+    if (GetAllTargets.selfFromPacket && Date.now() - GetAllTargets.selfFromPacket < 2000)
+        return GetAllTargets.selfPosition;
+    var sid = this.myId();
+    if (sid > 0 && GetAllTargets.players[sid] && GetAllTargets.players[sid].active)
+        return GetAllTargets.players[sid];
+    if (GetAllTargets.cameraCenter && (GetAllTargets.cameraCenter.x !== 0 || GetAllTargets.cameraCenter.y !== 0))
+        return GetAllTargets.cameraCenter;
+    return GetAllTargets.selfPosition;
+};
+Aimbot.findTarget = function(from, maxDistance) {
+    return this.findNearestPlayerTo(from, maxDistance);
+};
+GetAllTargets.selfPosition = { x: 0, y: 0 };
+GetAllTargets.selfFromPacket = 0;
+GetAllTargets.selfWeapon = -1;
+GetAllTargets.cameraCenter = { x: 0, y: 0 };
+GetAllTargets.resetLines = function() {
+    this.lines.forEach(function(line) { line.reset(); });
+};
+GetAllTargets.resetAll = function() {
+    for (var i = 1; i < this.players.length; i++) {
+        var p = this.players[i];
+        if (p && p.active) p.setInactive();
+    }
+    for (var j = 1; j < this.ghouls.length; j++) {
+        var g = this.ghouls[j];
+        if (g && g.active) g.setInactive();
+    }
+    this.resetLines();
+    this.lastId = 0;
+};
+Aimbot.spearResolve = function() {
+    var me = this.getSelf();
+    if (!me) return this.lastAngle;
+    var target = this.targetPlayer || this.currentTarget;
+    var blocked = false;
+    try {
+        if (target && GetAllTargets.players && GetAllTargets.players[target.id] === target)
+            blocked = !this.isPlayerCandidate(target);
+    } catch (e) { blocked = true; }
+    if (!target || !target.active || blocked)
+        target = this.findTarget(me, Math.min(2500, MOD.spearMaxRange || 560));
+    try {
+        if (target && GetAllTargets.players && GetAllTargets.players[target.id] === target && !this.isPlayerCandidate(target))
+            target = null;
+    } catch (e2) { target = null; }
+    this.currentTarget = target || null;
+    this.targetPlayer = target || null;
+    if (!target) return this.lastAngle;
+    var pt = this.aimPoint(me, target, +MOD.spearSpeed || 46.5);
+    var fwd = MOD.spearHandFwd || 22;
+    var side = MOD.spearHandSide || -39;
+    var dx = pt.x - me.x, dy = pt.y - me.y;
+    var dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    var ux = dx / dist, uy = dy / dist;
+    var hx = me.x + ux * fwd + (-uy) * side;
+    var hy = me.y + uy * fwd + (ux) * side;
+    var stabDeg = MOD.spearStabDeg || 2.5;
+    var stab = stabDeg * Math.PI / 180;
+    var ax = pt.x - hx, ay = pt.y - hy;
+    var ang = Math.atan2(ay, ax) * AIM_RAD;
+    var angStab = Math.atan2(ay * Math.cos(stab) - ax * Math.sin(stab), ax * Math.cos(stab) + ay * Math.sin(stab)) * AIM_RAD;
+    var angle = Math.floor(angStab);
+    this.lastAngle = ((angle % 360) + 360) % 360;
+    if (GetAllTargets.lines[1])
+        GetAllTargets.lines[1].set(me.x, me.y, pt.x, pt.y, dist > (MOD.spearMaxRange || 560) ? 1 : 0);
+    return this.lastAngle;
+};
+ var __oTouchAim = function(event) {
+    // changedTouches[0] = the finger that just moved/landed — the aim intent,
+    // not a finger already parked on the joystick
+    var t = event.changedTouches && event.changedTouches.length ? event.changedTouches[0]
+        : (event.touches && event.touches.length ? event.touches[0] : null);
+    if (t) {
+        GetAllTargets.mousePosition.x = t.clientX;
+        GetAllTargets.mousePosition.y = t.clientY;
+    }
+};
+օܓߋ.addEventListener("touchstart", __oTouchAim, { passive: true });
+օܓߋ.addEventListener("touchmove", __oTouchAim, { passive: true });
+document.addEventListener("mousedown", function(event) {
+    if (event.button === 0)
+        Aimbot.mouseDown = true;
+});
+document.addEventListener("mouseup", function(event) {
+    if (event.button === 0)
+        Aimbot.mouseDown = false;
+});
+օܓߋ.addEventListener("blur", function() {
+    Aimbot.mouseDown = false;
+});
+ function __isMyAimbotPlayer(o, id) {
+    var my = World.PLAYER[օ̖̏];
+    if (o === null || o === undefined || my === undefined || my === null)
+        return false;
+    if (id !== undefined && id !== null)
+        return id === my;
+    var key = __isMyAimbotPlayer.key;
+    if (key !== undefined && o[key] !== undefined)
+        return o[key] === my;
+    for (var k in o) {
+        if (typeof o[k] === "number" && o[k] === my) {
+            __isMyAimbotPlayer.key = k;
+            return true;
+        }
+    }
+    return false;
+}
+ function __aimShotAllowed() {
+    var t = Aimbot && Aimbot.targetPlayer;
+    if (!t || !t.active) return false;
+    try {
+        if (GetAllTargets.players && GetAllTargets.players[t.id] === t)
+            return !!Aimbot.isPlayerCandidate(t);
+    } catch (e) { return false; }
+    return true;
+}
+ function aimbotTick() {
+    if (Aimbot.dead)
+        return;
+    var _spearOn = __gk(MOD.AimbotSpearEnabled) && GetAllTargets.selfWeapon === SPEAR_IDX && SPEAR_IDX >= 0;
+    if (_spearOn) {
+        var sAngle = Aimbot.spearResolve();
+        if (sAngle !== null && isFinite(+sAngle))
+            Aimbot.send([6, __gk(sAngle)]);
+        if (MOD.autoFire && __aimShotAllowed()) {
+            Aimbot.send([4]);
+            Aimbot.send([5]);
+        }
+    } else if (__gk(MOD.AimBotEnabled) && MOD.autoFire && __aimShotAllowed()) {
+        Aimbot.send([4]);
+        Aimbot.send([5]);
+    }
+}
+ var __antiMoveStep = 0;
+var __antiMovePattern = [1, 2, 4, 8, 1, 2, 4, 8, 5, 9, 10, 6];
+ function routineAntiAimbot() {
+    try {
+        if (!__gk(MOD.AntiAimbot)) return;
+        var coeff = Math.max(1, +MOD.antiAimCoefficient || 100);
+        __antiMoveStep += coeff;
+        var idx = Math.floor(__antiMoveStep / coeff) % __antiMovePattern.length;
+        ո︀̜.ε٣︀(window.JSON.stringify([2, __antiMovePattern[idx]]));
+    } catch (e) {}
+}
+ var __jitterLastX = NaN, __jitterLastY = NaN, __jitterLastMoveAt = Date.now();
+ function routineJitter() {
+        try {
+            if (!__gk(MOD.jitterActive) || !World || !World.PLAYER) return;
+            if (typeof аρ３ === "undefined" || typeof аρ３.ᴉࡃϲ !== "function") return;
+
+            var px = +World.PLAYER[x], py = +World.PLAYER[y];
+            if (isFinite(px) && isFinite(py)) {
+                if (px !== __jitterLastX || py !== __jitterLastY) {
+                    __jitterLastX = px;
+                    __jitterLastY = py;
+                    __jitterLastMoveAt = Date.now();
+                }
+                if (MOD.stopJittersOnStop && Date.now() - __jitterLastMoveAt > 180) return;
+            }
+
+            var angle = Jitter.getJitterAngle();
+            if (!isFinite(+angle)) return;
+            angle = ((+angle % 360) + 360) % 360;
+            аρ３.ᴉࡃϲ(window.JSON.stringify([6, angle]));
+        } catch (e) {}
+    }
+ function afterFire(){if (MOD.jitterActive && __gk(MOD.AimBotEnabled)) {
+      var _da = Aimbot.resolve();
+      if (_da !== null) Aimbot.send([6, _da]);
+      }
+Aimbot.mouseDown = true;
+Aimbot.scheduleRefresh();}
+ function start(){if(started||stopped)return;started=true;setInterval(routineJitter,100);setInterval(routineAntiAimbot, 50);
+(function aimbotLoop() {
+    try {
+        aimbotTick();
+    } catch (e) {}
+    setTimeout(aimbotLoop, MOD.AimBotEnabled || MOD.AntiAimbot || MOD.AimbotSpearEnabled ? 50 : 200);
+})();}
+ function render(ctx,view){const ᴏܘ๐=ctx,ㅤο９=view.x,ᴉᚉ̷=view.y,о༨ε=view.scale;function AimbotDraw() {
+      let aimAlpha = ᴏܘ๐.globalAlpha
+        , aimWidth = ᴏܘ๐.lineWidth;
+      for (var aimLine = 0; aimLine < GetAllTargets.lines.length; aimLine++) {
+        let pos = GetAllTargets.lines[aimLine];
+        ᴏܘ๐.lineWidth = pos.width;
+        ᴏܘ๐.globalAlpha = pos.alpha;
+        ᴏܘ๐.strokeStyle = pos.color;
+        ᴏܘ๐.beginPath();
+        ᴏܘ๐.moveTo((ㅤο９ + pos.x1) * о༨ε, (ᴉᚉ̷ + pos.y1) * о༨ε);
+        ᴏܘ๐.lineTo((ㅤο９ + pos.x2) * о༨ε, (ᴉᚉ̷ + pos.y2) * о༨ε);
+        ᴏܘ๐.stroke();
+      }
+      ᴏܘ๐.globalAlpha = aimAlpha;
+      ᴏܘ๐.lineWidth = aimWidth;
+      GetAllTargets.cameraCenter = {
+        x: ᴏܘ๐.canvas.width / 2 / о༨ε - ㅤο９,
+        y: ᴏܘ๐.canvas.height / 2 / о༨ε - ᴉᚉ̷
+      };
+      try {
+        if (GetAllTargets && GetAllTargets.mousePosition) {
+          GetAllTargets.mouseMapCords = {
+            x: GetAllTargets.mousePosition.x / о༨ε - ㅤο９,
+            y: GetAllTargets.mousePosition.y / о༨ε - ᴉᚉ̷
+          };
+        }
+      } catch (e) {}
+      if (MOD.mouseFovEnable) {
+        GetAllTargets.mouseMapCords = {
+          x: GetAllTargets.mousePosition.x / о༨ε - ㅤο９,
+          y: GetAllTargets.mousePosition.y / о༨ε - ᴉᚉ̷
+        };
+      }
+    }AimbotDraw();}
+ function AimbotSaveConfig() {
+    try {
+        localStorage.setItem("BestModMenuConfig", JSON.stringify(MOD));
+    } catch (e) {}
+}
+ function AimbotHookSave(gui) {
+    gui.__controllers.forEach(function(controller) {
+        var previous = controller.__onFinishChange;
+        controller.onFinishChange(function(value) {
+            if (previous)
+                previous.call(controller, value);
+            AimbotSaveConfig();
+        });
+    });
+    for (var name in gui.__folders) {
+        AimbotHookSave(gui.__folders[name]);
+    }
+}
+ function AimbotMenuSetupKey(folder, keyName, displayName) {
+    const input = folder.add(MOD, keyName).name(displayName);
+    const element = input.domElement.querySelector("input");
+    element.readOnly = true;
+    element.style.textAlign = "center";
+    element.style.cursor = "pointer";
+    element.addEventListener("click", () => {
+        element.blur();
+        MOD[keyName] = "...";
+        input.updateDisplay();
+        function KeyHandler(event) {
+            MOD[keyName] = event.code;
+            if (keyName === "ModMenuKey") {
+                MOD.ModMenuKeyCode = event.keyCode;
+            }
+            input.updateDisplay();
+            AimbotSaveConfig();
+            document.removeEventListener("keydown", KeyHandler);
+        }
+        document.addEventListener("keydown", KeyHandler);
+    }
+    );
+}
+ function installMenu(menu){const aimFolder = menu.addFolder("👑 Aim Bot 👑");
+aimFolder.add(MOD, "AimBotEnabled").name("AimBotEnabled");
+aimFolder.add(MOD, "target", ["players", "ghouls", "all"]).name("Target");
+aimFolder.add(MOD, "resolverType", ["linear"]).name("ResolverType");
+aimFolder.add(MOD, "TargetTeammate").name("TargetTeammate");
+aimFolder.add(MOD, "hideAimbotAngle").name("HideAimbotAngle");
+aimFolder.add(MOD, "hidePlayerAngle").name("HidePlayerAngle");
+aimFolder.add(MOD, "ShowRealAngles", ["never", "always", "withAim"]).name("ShowRealAngles");
+aimFolder.add(MOD, "mouseFovEnable").name("MouseFovEnable");
+aimFolder.add(MOD, "mouseFov", 0, 12345, 100).name("MouseFov");
+aimFolder.add(MOD, "distanceCoefficient", 10, 1000, 10).name("DistanceCoefficient");
+aimFolder.add(MOD, "offsetCoefficient", 0, 3, 0.1).name("OffsetCoefficient");
+aimFolder.add(MOD, "aimStick", 0, 800, 10).name("AimStick");
+aimFolder.add(MOD, "aimHoldMs", 0, 600, 10).name("AimHoldMs");
+aimFolder.add(MOD, "leadCap", 40, 500, 10).name("LeadCap");
+aimFolder.add(MOD, "aimSmooth", 0.05, 1, 0.01).name("AimSmooth");
+aimFolder.add(MOD, "autoFire").name("AutoFire");
+aimFolder.add(MOD, "lockId", -1, 120, 1).name("LockId");
+const spearFolder = menu.addFolder("\ud83d\udde1 Aimbot Spear \ud83d\udde1");
+spearFolder.add(MOD, "AimbotSpearEnabled").name("AimbotSpearEnabled");
+spearFolder.add(MOD, "spearSpeed", 20, 60, 0.5).name("SpearSpeed");
+spearFolder.add(MOD, "spearMaxRange", 200, 600, 10).name("MaxRange");
+spearFolder.add(MOD, "spearHandFwd", -60, 60, 1).name("HandFwd");
+spearFolder.add(MOD, "spearHandSide", -60, 60, 1).name("HandSide");
+spearFolder.add(MOD, "spearStabDeg", 0.5, 10, 0.5).name("Stability");
+spearFolder.add(MOD, "autoFire").name("AutoThrow");
+const antiFolder = menu.addFolder("Anti-Aim / Strafe");
+antiFolder.add(MOD, "AntiAimbot").name("StrafeEnable");
+antiFolder.add(MOD, "antiAimMode", ["At target", "Round", "Round2"]).name("AntiAimMode");
+antiFolder.add(MOD, "antiAimCoefficient", 10, 500, 10).name("AntiAimCoefficient");
+antiFolder.add(MOD, "jitterActive").name("JitterActive");
+antiFolder.add(MOD, "jitterOffset", 0, 360, 1).name("JitterOffset");
+antiFolder.add(MOD, "stopJittersOnStop").name("StopJittersOnStop");
+const lineFolder = menu.addFolder("Aim Line");
+lineFolder.add(MOD, "visualizeResolving").name("ShowAimLine");
+lineFolder.addColor(MOD, "visualizeResolvingColor").name("AimLineColor");
+ const keyFolder = menu.addFolder("Keyboard");
+AimbotMenuSetupKey(keyFolder, "AimbotKey", "AimbotKey");
+AimbotMenuSetupKey(keyFolder, "AntiAimbotKey", "AntiAimbotKey");
+AimbotMenuSetupKey(keyFolder, "JitterKey", "JitterKey");
+AimbotMenuSetupKey(keyFolder, "HideAngleKey", "HideAngleKey");
+AimbotMenuSetupKey(keyFolder, "ModMenuKey", "ModMenuKey");
+ aimFolder.open();
+ const folders=[aimFolder,spearFolder,antiFolder,lineFolder];for(const folder of [...folders,keyFolder])AimbotHookSave(folder);return {folders,controllers:folders.flatMap(folder=>folder.__controllers)};
+ }
+ return {targets:GetAllTargets,aim:Aimbot,Target:GetAllTargets.players[1].constructor,Jitter,
+   start,installMenu,render,tick:()=>cycle(aimbotTick),refreshTargets:()=>cycle(AimbotRefresh),
+   position(kind,id,px,py,weapon,packed){return cycle(()=>{const target=GetAllTargets[kind][id];if(kind==='players'&&Number.isFinite(packed)){target.weaponIdx=(packed>>8)&255;if(id===World.PLAYER.id)GetAllTargets.selfWeapon=target.weaponIdx;}target.update(px,py,weapon);if(kind==='players'&&id===World.PLAYER.id){Aimbot.selfId=id;GetAllTargets.selfPosition={x:px,y:py};GetAllTargets.selfFromPacket=Date.now();Aimbot.dead=false;}});},
+   afterFire:()=>cycle(afterFire),afterRelease(){Aimbot.mouseDown=false;},onMove(mask){GetAllTargets.myLastMoveDirection=mask;return true;},
+   jitterTick:()=>cycle(routineJitter,'jitter'),antiTick:()=>cycle(routineAntiAimbot,'anti'),
+   onHandshake(){Aimbot.dead=false;},onOtherDie(id){GetAllTargets.players[id]?.setInactive();},sync(){},
+   ensure(id){if(id>0){for(const group of [GetAllTargets.players,GetAllTargets.ghouls])if(!group[id])group[id]=new this.Target(id);}},
+   dispose(){if(stopped)return;stopped=true;for(const id of [...timers.keys()])clear(id);for(const remove of removers)remove();Aimbot.mouseDown=false;}
+ };
+}
+// Existing Resource Override installations recognize this entrypoint name.
+// It forwards to the uploaded engine and contains no previous aim mechanics.
+function __createIlmAim(settings,environment){return __createMessage27Core(settings,environment);}
+function __createIlmAdapter(settings,environment){
+ const pendingKeys=new Set();
+ const sourceSettings=new Proxy(settings,{get(target,key){return pendingKeys.has(key)?'...':target[key];},set(target,key,value){if(['AimbotKey','AntiAimbotKey','JitterKey','HideAngleKey','ModMenuKey'].includes(key)){if(value==='...'){pendingKeys.add(key);return true;}if(pendingKeys.has(key)){pendingKeys.delete(key);environment.setKey(key,value);return true;}}target[key]=value;return true;}});
+ const metadata=new Proxy([],{get(target,key){if(typeof key==='string'&&/^\d+$/.test(key)){const id=+key;if(!environment.playerInfo(id).exists)return undefined;if(!target[id])target[id]={get εᴎ༩(){return environment.playerInfo(id).team;},get і٥ࠂ(){return environment.playerInfo(id).membership;}};}return target[key];}});
+ const clans=new Proxy([],{get(target,key){if(typeof key==='string'&&/^\d+$/.test(key)){const id=+key;if(!environment.clanInfo(id).exists)return undefined;if(!target[id])target[id]={get ᴎ०︁(){return environment.clanInfo(id).membership;}};}return target[key];}});
+ const self={get id(){return environment.selfId();},get x(){return environment.selfPosition().x;},get y(){return environment.selfPosition().y;},get εᴎ༩(){return environment.playerInfo(environment.selfId()).team;}};
+ const core=__createIlmAim(sourceSettings,{...environment,world:{PLAYER:self,players:metadata,ⲣ８ߌ:clans}}),originalEnsure=core.ensure.bind(core);
+ Object.defineProperty(core,'waitingForKey',{get:()=>pendingKeys.size>0});
+ core.ensure=originalEnsure;
+ return core;
+}
+function __ilmAimDefaults(){return {"AimBotEnabled":false,"AimbotSpearEnabled":false,"spearSpeed":46.5,"spearMaxRange":560,"spearHandFwd":22,"spearHandSide":-39,"spearStabDeg":2.5,"hideAimbotAngle":false,"hidePlayerAngle":false,"target":"players","TargetTeammate":false,"resolverType":"linear","mouseFovEnable":true,"mouseFov":900,"distanceCoefficient":80,"offsetCoefficient":0.8,"aimStick":240,"aimSmooth":0.74,"aimMaxRange":2400,"aimHoldMs":200,"leadCap":280,"visualizeResolving":true,"visualizeResolvingColor":"#FFF200","autoFire":false,"lockId":-1,"AntiAimbot":false,"antiAimMode":"At target","antiAimCoefficient":100,"jitterActive":false,"jitterOffset":85,"stopJittersOnStop":false,"ShowRealAngles":"withAim","AimbotKey":"KeyZ","AntiAimbotKey":"NoKey","JitterKey":"KeyJ","HideAngleKey":"KeyH","ModMenuKey":"KeyM","ModMenuKeyCode":77};}
+function __ilmAimConstraints(){return {limits:{mouseFov:[0,12345],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],aimStick:[0,800],aimHoldMs:[0,600],leadCap:[40,500],aimSmooth:[.05,1],lockId:[-1,120],aimMaxRange:[1,20000],spearSpeed:[20,60],spearMaxRange:[200,600],spearHandFwd:[-60,60],spearHandSide:[-60,60],spearStabDeg:[.5,10],antiAimCoefficient:[10,500],jitterOffset:[0,360]},choices:{target:['players','ghouls','all'],resolverType:['linear'],ShowRealAngles:['never','always','withAim'],antiAimMode:['At target','Round','Round2']}};}
+function __ilmMouseToWorld(point,view){return {x:point.x/view.scale-view.x,y:point.y/view.scale-view.y};}
 function __ilmPlayerNickname(value,id) {
   return typeof value==='string' ? value+'#'+id : value;
 }
 
-// The current game's metadata constructor is in a native decoded block.
-// Match one reviewed assignment; preserve the native numeric empty-slot sentinel.
 function __ilmPatchPlayerMetadata(source) {
   const before='this.ο३︀ = ο३︀';
   if(source.split(before).length!==2) throw new Error('Unsupported native player metadata constructor');
   return source.replace(before,'this.ο३︀ = __ilmPlayerNickname(ο३︀,ᴘ५٢)');
 }
 
-// Patch only the reviewed direction functions inside the native decoded block.
 function __ilmPatchNativeDirection(source,index) {
   const rules=[["function օ︃２( ){ if( ( ᴉ̡̂-ѕܓ́)>εࡀߌ) {var ᴑɑࡂ=(( ( ((ㅤ๘މ[ѕ̋̃]-ⲅᚂߌ ) *0xb4)/Math[ո᠋а])%0x168)+0x168 )%0x168; if (ᴑɑࡂ>ᅠ̡๕ ) {ﾠࠂ̶=ᴉ̡̂ ; ѕܓ́ =ᴉ̡̂; ⲅᚂߌ=ㅤ๘މ[ ѕ̋̃ ] ;ᴑɑࡂ =Math[ᴇߌ̄ ](( ( ((ㅤ๘މ[ᴉᄇ︂]*0xb4 ) /Math[ո᠋а ]) %360)  + 360 ) %0550) ;ιܕ︅(еϲᄄ.ᴎ︅ހ([06 , ᴑɑࡂ ] ));}}}","function օ︃２( ){ if( ( ᴉ̡̂-ѕܓ́)>εࡀߌ) {var ᴑɑࡂ=(( ( ((ㅤ๘މ[ѕ̋̃]-ⲅᚂߌ ) *0xb4)/Math[ո᠋а])%0x168)+0x168 )%0x168; if (ᴑɑࡂ>ᅠ̡๕ ) {ﾠࠂ̶=ᴉ̡̂ ; ѕܓ́ =ᴉ̡̂; ⲅᚂߌ=ㅤ๘މ[ ѕ̋̃ ] ;ᴑɑࡂ =Math[ᴇߌ̄ ](( ( ((ㅤ๘މ[ᴉᄇ︂]*0xb4 ) /Math[ո᠋а ]) %360)  + 360 ) %0550) ;((!__responsiveMod||!__responsiveMod.controlsAimDirection)&&ιܕ︅(еϲᄄ.ᴎ︅ހ([06 , ᴑɑࡂ ] )));}}}"],["function ᴄ९ܐ( ){if ( (ᴉ̡̂ - ѕܓ́)>ᴎᄉࡁ){ var ᴑɑࡂ=( (( ( (ㅤ๘މ [ᴉᄇ︂]-ⲅᚂߌ)* 0Xb4) /Math [ⲥᄇօ] ) %360 )+0x168)%360;if(ᴑɑࡂ > 2 ) { ﾠࠂ̶ =ᴉ̡̂; ѕܓ́=ᴉ̡̂ ;ⲅᚂߌ = ㅤ๘މ[ѕ̋̃ ];ᴑɑࡂ =Math [ ᴇߌ̄]((((( ㅤ๘މ[еϲ̇]*0xB4 ) /Math[ɑ︀ܛ] ) %0550 )+0x168)%360) ; ιܕ︅(еϲᄄ.ᴎ︅ހ([6, ᴑɑࡂ]));}}}","function ᴄ९ܐ( ){if ( (ᴉ̡̂ - ѕܓ́)>ᴎᄉࡁ){ var ᴑɑࡂ=( (( ( (ㅤ๘މ [ᴉᄇ︂]-ⲅᚂߌ)* 0Xb4) /Math [ⲥᄇօ] ) %360 )+0x168)%360;if(ᴑɑࡂ > 2 ) { ﾠࠂ̶ =ᴉ̡̂; ѕܓ́=ᴉ̡̂ ;ⲅᚂߌ = ㅤ๘މ[ѕ̋̃ ];ᴑɑࡂ =Math [ ᴇߌ̄]((((( ㅤ๘މ[еϲ̇]*0xB4 ) /Math[ɑ︀ܛ] ) %0550 )+0x168)%360) ; ((!__responsiveMod||!__responsiveMod.controlsAimDirection)&&ιܕ︅(еϲᄄ.ᴎ︅ހ([6, ᴑɑࡂ])));}}}"]];
   const rule=rules[index];
@@ -42,65 +864,8 @@ function __ilmPatchNativeDirection(source,index) {
   return source.replace(rule[0],rule[1]);
 }
 
-// Align a shot before the native codec processes its attack command.
 function __jitterPatchNativeFire(source) {
   const before='function ᴎ༩༣( ) {ﾠࠂ̶=ᴉ̡̂;';
   if(source.split(before).length!==2) throw new Error('Unsupported native fire handler');
   return source.replace(before,before+'if(typeof __responsiveMod!=="undefined"&&__responsiveMod)__responsiveMod.beforeFire();');
-}
-
-// Original aim GUI only; the surrounding mod keeps its own folders and persistence.
-function __installIlmAimMenu(root,settings) {
-const _0x2a1bff=root,_0x2ea565=settings;
-// BEGIN ORIGINAL ILM AIM MENU
-const _0xaa24fd=_0x2a1bff["addFolder"]("Aim Bot");
-_0xaa24fd["add"](_0x2ea565,"ShowRealAngles",["always","withAim"])["name"]("ShowRealAngles"),_0xaa24fd['add'](_0x2ea565,"target",["players",'ghouls',"all"])['name']("Target"),_0xaa24fd["add"](_0x2ea565,'distanceCoefficient',0xa,0x3e8,0xa)["name"]("DistanceCoefficient"),_0xaa24fd['add'](_0x2ea565,"bulletSpeedCoefficient",0x1,0xf,0.25)["name"]("BulletSpeedCoefficient"),_0xaa24fd['add'](_0x2ea565,'offsetCoefficient',0x0,0x3,0.1)["name"]("OffsetCoefficient");
-// END ORIGINAL ILM AIM MENU
-return _0xaa24fd;
-}
-
-// Original prediction lines; the caller supplies the current native view/canvas.
-function __renderIlmAimLines(settings,targets,ctx,view) {
-const _0x2ea565=settings,_0x6cc5f2=targets,_0x3bfd3a=ctx,_0x555618=view.scale,_0x4212a3=view.x,_0x260b24=view.y;
-// BEGIN ORIGINAL ILM AIM LINES
-if(_0x2ea565["AimBotEnabled"]){let _0xb2b2ae=_0x3bfd3a["globalAlpha"],_0x2d0da4=_0x3bfd3a["lineWidth"];for(var _0x55bf6b=0x0;_0x55bf6b<_0x6cc5f2["lines"]["length"];_0x55bf6b++){let _0x47ac71=_0x6cc5f2["lines"][_0x55bf6b];var _0x4e7ab6={'x':_0x555618*(_0x47ac71['x1']+_0x4212a3),'y':_0x555618*(_0x47ac71['y1']+_0x260b24)},_0xfdef36={'x':_0x555618*(_0x47ac71['x2']+_0x4212a3),'y':_0x555618*(_0x47ac71['y2']+_0x260b24)};_0x3bfd3a["lineWidth"]=_0x47ac71["width"],_0x3bfd3a["globalAlpha"]=_0x47ac71['alpha'],_0x3bfd3a["strokeStyle"]=_0x47ac71['color'],_0x3bfd3a["beginPath"](),_0x3bfd3a["moveTo"](_0x4e7ab6['x'],_0x4e7ab6['y']),_0x3bfd3a["lineTo"](_0xfdef36['x'],_0xfdef36['y']),_0x3bfd3a['stroke']();}_0x3bfd3a["globalAlpha"]=_0xb2b2ae,_0x3bfd3a["lineWidth"]=_0x2d0da4;}
-// END ORIGINAL ILM AIM LINES
-}
-
-// Original ILM screen-to-world helper; the native adapter supplies canvas pixels.
-function __ilmMouseToWorld(point,view) {
-const _0x555618=view.scale,_0x4212a3=view.x,_0x260b24=view.y;
-// BEGIN ORIGINAL ILM MOUSE HELPER
-function _0x4b25f3(_0x22b996){return{'x':_0x22b996['x']/_0x555618-_0x4212a3,'y':_0x22b996['y']/_0x555618-_0x260b24};}
-// END ORIGINAL ILM MOUSE HELPER
-return _0x4b25f3(point);
-}
-
-function __ilmAimDefaults(){return {AimbotKey:'Space',ShowRealAngles:'withAim',target:'players',AimBotEnabled:false,mouseFovEnable:true,distanceCoefficient:300,bulletSpeedCoefficient:4,offsetCoefficient:.1,visualizeResolving:true,visualizeResolvingColor:'#EEEEEE',autoFire:false,lockId:-1,mouseFov:12345,resolverType:'linear'};}
-function __ilmAimConstraints(){return {limits:{mouseFov:[1,20000],lockId:[-1,65535],distanceCoefficient:[10,1000],bulletSpeedCoefficient:[1,15],offsetCoefficient:[0,3]},choices:{ShowRealAngles:['always','withAim'],target:['players','ghouls','all']}};}
-// Native lifecycle/transport only. The imported resolver, search and tick above
-// are delegated to without replacing their calculations or temporal behavior.
-function __createIlmAdapter(MOD,environment){
-  let stopped=false,interval=null,depth=0;const self={id:0,team:-1},players=[];
-  function ensure(id){while(players.length<=id){const index=players.length;players.push({get team(){return environment.teamId(index);}});}}
-  ensure(998);
-  function snapshot(callback){if(depth++===0){self.id=engine.aim.dead?0:environment.selfId();ensure(self.id);self.team=environment.teamId(self.id);}try{return callback();}finally{depth--;}}
-  const world={PLAYER:self,players};
-  const engine=__createIlmAim(MOD,world,packet=>environment.send(packet));
-  const originalResolve=engine.aim.resolve;
-  engine.aim.resolve=function(...args){return snapshot(()=>originalResolve.apply(this,args));};
-  engine.aim.dead=false;engine.aim.mouseDown=false;
-  function tick(){if(stopped)return;environment.beginCycle();try{return snapshot(()=>engine.tick());}finally{environment.endCycle();}}
-  engine.aim.refresh=tick;engine.aim.onDeath=()=>{engine.aim.dead=true;engine.aim.mouseDown=false;};
-  return {...engine,tick,ensure,snapshot,
-    start(){if(interval!==null||stopped)return;interval=environment.window.setInterval(tick,50);},
-    installMenu(root){const folder=__installIlmAimMenu(root,MOD);return {controllers:[...folder.__controllers]};},
-    sync(){return snapshot(()=>{});},
-    afterFire(){engine.aim.mouseDown=true;},afterRelease(){engine.aim.mouseDown=false;},
-    onMove(mask){engine.targets.myLastMoveDirection=mask;return true;},
-    onHandshake(){engine.aim.dead=false;},
-    onOtherDie(id){engine.targets.players[id]?.setInactive();engine.targets.ghouls[id]?.setInactive();},
-    render(ctx,view){__renderIlmAimLines(MOD,engine.targets,ctx,view);},
-    dispose(){if(stopped)return;stopped=true;if(interval!==null)environment.window.clearInterval(interval);engine.aim.mouseDown=false;}
-  };
 }

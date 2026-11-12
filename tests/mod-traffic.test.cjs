@@ -12,7 +12,7 @@ test('fast loot caps a dense high-FPS scene, rotates fairly, and never replays d
 test('session report retains earlier aim activity after the two-second combat window and redacts payloads',()=>{
  const f=fixture({saved:{token:'private-account-token'}});try{
   f.mod.trackPacket(1,1,1,1000,1000,true);f.mod.trackPacket(1,2,1,1500,1000,true);f.mod.setSetting('mouseFovEnable',false);
-  f.setClock(2000);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();f.setClock(3000);f.mod.setSetting('AimBotEnabled',false);
+  f.setClock(2000);f.mod.setSetting('AimBotEnabled',true);(f.mod.aimModule.refreshTargets(),f.mod.aim.refresh());f.setClock(3000);f.mod.setSetting('AimBotEnabled',false);
   f.setClock(1200000);f.mod.observeDeath(new Uint8Array([5,0,1]));const r=f.mod.connectionInfo();
   assert.equal(r.combatNow.angle,0);assert.ok(r.modTraffic.seconds.some(b=>b.byOpcode[6]));assert.ok(r.modTraffic.settingsChanges.some(e=>e.settings.AimBotEnabled));
   assert.equal(r.modTraffic.settingsChanges.at(-1).settings.AimBotEnabled,false);assert.ok(!JSON.stringify(r).includes('private-account-token'));

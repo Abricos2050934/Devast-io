@@ -239,7 +239,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  if(fireHelper&&fireRule) adaptedAim=adaptedAim.slice(0,fireHelper.start)+`function __jitterPatchNativeFire(source){const before=${JSON.stringify(fireRule.before)};if(source.split(before).length!==2)throw Error('Unsupported native fire handler');return source.replace(before,${JSON.stringify(fireRule.after)});}`+adaptedAim.slice(fireHelper.end);
  const requiredNative=['ι๔̶','ᴄ９̗','ⲅ︉️','ᴄߌ͏','ⲟ१̖','ᴎܕα','ᴎ༩༣','ԁ̶ϲ','І̎ܘ','еϲᄄ','ᴎ︅ހ','ѕ٨ᚄ','ᴑ٧ߓ','ᴎ٨ߍ','ࡀ︌٨','І︈༧','ᴉ̷Ꮷ','а̵̠','рܙ๕','ᅟ᠌５','ᴀᄁ︃','рոᴎ','ᅠ̘ܛ'];
  const roles={nativeIntegrityFlag:integrity.flag,nativeIntegritySigners:integrity.signers};for(const key of requiredNative){const next=map[bindings.roles?.[key]||key];if(!next)throw Error('Missing browser validation binding '+key);roles[key]=next;}
- if(aim.includes('function __createIlmAim(')){
+ if(aim.includes('function __createIlmAim(')||aim.includes('function __createMessage27Core(')){
   outputBindings.symbols['ⲟࠀᄀ']=map[bindings.symbols['ⲟࠀᄀ']];
   roles.messageKeyboard=map[bindings.roles?.messageKeyboard||'ⲣ๒༩'];
   roles.messageKeyboardDown=map[bindings.roles?.messageKeyboardDown||'ᴌЇ'];
@@ -247,6 +247,17 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   roles.messageMove=map[bindings.roles?.messageMovePoll];
   if(!outputBindings.symbols['ⲟࠀᄀ']||!roles.messageKeyboard)throw Error('Missing Message15 lifecycle bindings');
   generated.operations=require('./updater/message15-contracts.cjs').message15Operations(cur,operations,outputBindings.symbols,roles,bindings.native_protocol,new Set(pairs.values()));
+  if(aim.includes('function __createMessage27Core(')){
+   generated.operations=require('./updater/untitled-contracts.cjs').untitledDirectionOperations(generated.operations,cur,{primaryOnly:true});
+   const position=generated.operations.find(op=>op.id==='packet-position-history');
+   const native=acorn.parse(position.before,{ecmaVersion:'latest'}).body[0].expression;
+   if(native.type!=='CallExpression'||native.arguments.length!==13)throw Error('Uploaded aim native position metadata changed');
+   const extras=[native.arguments[7],native.arguments[9]].map(n=>position.before.slice(n.start,n.end));
+   const tree=acorn.parse(position.after,{ecmaVersion:'latest'}),pending=[tree],hits=[];
+   while(pending.length){const n=pending.pop();if(n.type==='CallExpression'&&n.callee.property?.name==='trackPacket')hits.push(n);for(const v of Object.values(n))if(Array.isArray(v))pending.push(...v.filter(x=>x?.type));else if(v?.type)pending.push(v);}
+   if(hits.length!==1||hits[0].arguments.length!==6)throw Error('Uploaded aim position hook changed');
+   const at=hits[0].end-1;position.after=position.after.slice(0,at)+','+extras.join(',')+position.after.slice(at);
+  }
   generated.operations.push(require('./updater/aim-transport.cjs').aimTransportOperation(cur,outputBindings.symbols,roles,new Set(pairs.values())));
   const helper=acorn.parse(adaptedAim,{ecmaVersion:'latest'}).body.find(n=>n.id?.name==='__jitterPatchNativeFire');
   const rule=generated.operations.find(op=>op.id==='jitter-native-fire-priority');

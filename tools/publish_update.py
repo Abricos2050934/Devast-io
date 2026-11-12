@@ -113,6 +113,21 @@ def artifacts(root, output):
             raise ValueError('Native aim transport and periodic idle packets were not verified in browser: ' + browser)
         if 'immediate-aim-numeric-settings' in contract.get('features', []) and report.get('physical_numeric', {}).get('status') != 'passed':
             raise ValueError('Physical aim numeric entry was not verified in browser: ' + browser)
+        if 'verbatim-message27-aim' in contract.get('features', []):
+            aim = report.get('native', {}).get('message27_aim', {})
+            if (aim.get('status') != 'passed' or aim.get('upload_sha256') != 'f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0'
+                    or aim.get('comparison_points', 0) < 2000 or not all(aim.get(key) is True for key in
+                    ('exact_states', 'exact_raw_packets', 'source_timing', 'spear', 'jitter', 'strafe', 'valid_target_admission', 'session_target_reset', 'server_death_sends_no_commands'))):
+                raise ValueError('Uploaded message27 source comparison was not verified in browser: ' + browser)
+        if 'message27-native-pipeline' in contract.get('features', []):
+            aim = report.get('native', {}).get('message27_aim', {})
+            if aim.get('native_angles') is not True or aim.get('mouse_cases', 0) < 18:
+                raise ValueError('Uploaded message27 native angles were not verified in browser: ' + browser)
+        if 'message27-original-menu-layout' in contract.get('features', []):
+            menu = report.get('native', {}).get('message27_menu', {})
+            if (menu.get('status') != 'passed' or menu.get('controls') != 32 or menu.get('exact_order_labels_ranges_steps_options') is not True
+                    or menu.get('keyboard') is not True or menu.get('default_bindings') != {'menu': 'KeyM', 'hide': 'KeyH'}):
+                raise ValueError('Uploaded message27 menu was not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'
@@ -128,9 +143,10 @@ def artifacts(root, output):
 
 Обновление: проверка сайта, расшифровка, перенос текущих модулей и браузерные тесты.
 Новая версия публикуется только после проверок; неизвестные изменения блокируют замену.
-Аимбот полностью перенесён из 25INVITES-ILM1.0.json: Space — аимбот, H — меню.
-Пять исходных настроек — в Aim Bot, в порядке ILM; включение — Space.
-Остальные исходные поля сохраняются в конфигурации, как в оригинальном ILM.
+Аимбот полностью перенесён из действующего блока __BBY файла message (27).txt.
+Z — аимбот, J — его Jitter, M — меню, H — скрытие угла.
+Исходные настройки — в Aim Bot, Aimbot Spear, Anti-Aim / Strafe и Aim Line.
+Упреждение, выбор и удержание цели, сглаживание, копьё и автострельба сохранены.
 Нижние дополнительные показатели и надпись AIM BOT удалены. Адаптер наведения оптимизирован.
 Ники #ID, остальные функции и исправление повторного входа сохранены.
 

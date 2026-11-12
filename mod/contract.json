@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "name": "Devast-io original ILM 1.0",
+  "name": "Devast-io message27 BBY aim",
   "modules": [
     "mod/responsive.js",
     "mod/bootstrap.js",
@@ -36,16 +36,14 @@
     "aim-cycle-socket-backpressure",
     "immediate-aim-numeric-settings",
     "native-aim-transport-preserves-idle",
-    "verbatim-original-ilm-aim",
-    "ilm-native-lifecycle",
     "bounded-fast-loot",
     "session-mod-traffic-history",
     "valid-live-aim-targets",
     "bounded-auto-build",
     "aim-session-history-reset",
-    "ilm-native-mouse-and-server-angle-parity",
-    "ilm-pointer-ownership-between-ticks",
-    "ilm-original-menu-layout"
+    "verbatim-message27-aim",
+    "message27-native-pipeline",
+    "message27-original-menu-layout"
   ],
   "removed_overlays": [
     "bottom-gauge-text",

@@ -52,12 +52,12 @@ function __installDevastMod(B) {
   const MOD = new HackCon();
   Object.assign(MOD, {zoomFactor:1, showFunctionList:true},__ilmAimDefaults());
   const aimKeys=Object.keys(__ilmAimDefaults());
-  const AIM_SAVE='DevastILMOriginal:aim:v1';
+  const AIM_SAVE='DevastMessage27:aim:v1';
   const aimDefaults=Object.fromEntries(aimKeys.map(key=>[key,MOD[key]]));
   const defaults = JSON.parse(JSON.stringify(MOD));
   const SAVE = 'DevastILM:settings:v3', LEGACY_SAVE = 'BestModMenuConfig';
   const transient = new Set(['Token', 'token', 'tokenId', 'userId']);
-  const keySettings = ['AimbotKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey'];
+  const keySettings = ['AimbotKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey','AntiAimbotKey','JitterKey','HideAngleKey'];
   const limits = {zoomFactor:[.33,2],Xraytransparency:[.05,1],...__ilmAimConstraints().limits};
   const choices = __ilmAimConstraints().choices;
   function validateSetting(key,value) {
@@ -753,15 +753,17 @@ function __installDevastMod(B) {
   let aimCycleDepth=0,aimCycleWritable=false;
   const aimTransport={cycles:0,blockedCycles:0,nativeYields:0,invalidCycles:0,lastInvalidReason:null};
   const aimModule=__createIlmAdapter(MOD,{
-    window,selfId:()=>B.world.ᅠᏧ‍?.id||0,teamId,
+    window,document,selfId:()=>B.world.ᅠᏧ‍?.id||0,selfPosition:()=>B.world.ᅠᏧ‍||{x:-1,y:-1},
+    playerInfo:id=>({exists:!!playerMeta(id),team:playerMeta(id)?.а༤̘??-1,membership:playerMeta(id)?.ᴌ̗ⲟ}),
+    clanInfo:id=>({exists:!!B.world.ﾠࡅ‍[id],membership:B.world.ﾠࡅ‍[id]?.ոᚄރ}),persist,setKey:(key,value)=>setSetting(key,value),
     beginCycle:()=>{if(aimCycleDepth++===0){aimCycleWritable=playing()&&!reconnect.sessionEnded&&automationReady('aim');if(aimCycleWritable)aimTransport.cycles++;else aimTransport.blockedCycles++;}},
     endCycle:()=>{if(--aimCycleDepth===0)aimCycleWritable=false;},
-    send:packet=>{
+    send:(packet,source)=>{
       if(!aimCycleWritable||!playing()||reconnect.sessionEnded||connectionSocket&&connectionSocket.readyState!==1)return false;
       // The source calculates first. Reject its whole automatic cycle when
       // that calculation used a missing player or a removed/own target.
-      if(packet[0]===6){const reason=invalidAimState();if(reason){aimCycleWritable=false;aimTransport.invalidCycles++;aimTransport.lastInvalidReason=reason;return false;}}
-      return __send(packet,true);
+      if([4,5,6].includes(packet[0])){const reason=source?.kind==='jitter'?invalidAimState(true):invalidAimState();if(reason){aimCycleWritable=false;aimTransport.invalidCycles++;aimTransport.lastInvalidReason=reason;return false;}}
+      return __send(packet,true,true);
     }
   });
   const GetAllTargets=aimModule.targets,Aimbot=aimModule.aim;
@@ -916,12 +918,13 @@ function __installDevastMod(B) {
   function playing() {
     return !stopped && B.network.state === 1 && B.world.ᅠᏧ‍ && B.world.ᅠᏧ‍.id > 0;
   }
-  function invalidAimState() {
+  function invalidAimState(rotationOnly=false) {
     if(!playing()||reconnect.sessionEnded||Aimbot.dead)return 'session-inactive';
     const id=B.world.ᅠᏧ‍.id,own=GetAllTargets.players[id],target=Aimbot.targetPlayer;
     if(!own?.active||!Number.isFinite(own.x)||!Number.isFinite(own.y))return 'self-position-missing';
+    if(rotationOnly)return null;
     if(!target?.active||!Number.isFinite(target.x)||!Number.isFinite(target.y))return 'target-missing';
-    if(target.id===id)return 'self-target';
+    if(GetAllTargets.players[target.id]===target&&target.id===id)return 'self-target';
     return null;
   }
   function resetAimForSession() {
@@ -930,17 +933,17 @@ function __installDevastMod(B) {
     Aimbot.targetPlayer=null;
     // A new handshake can finish before the source's next 50 ms id=0 tick.
     // Clear both entity histories before accepting positions from that session.
-    for(const group of [GetAllTargets.players,GetAllTargets.ghouls])for(const target of group)if(target.active)target.setInactive();
+    for(const group of [GetAllTargets.players,GetAllTargets.ghouls])for(const target of group)if(target?.active)target.setInactive();
   }
   let lastSentAngle = null,lastSentPlayer = 0;
   const appliedToggles={AimBotEnabled:MOD.AimBotEnabled};
-  function __send(value, forceAngle = false) {
+  function __send(value, forceAngle = false, sourceAngle = false) {
     if (!playing()) return false;
     const packet = typeof value === 'string' ? JSON.parse(value) : value;
     if (!Array.isArray(packet) || packet.length === 0 || packet.some(x => typeof x !== 'number' || !Number.isFinite(x))) return false;
     if (packet[0] === 6) {
       if (packet.length !== 2) return false;
-      packet[1] = (Math.round(packet[1]) % 360 + 360) % 360;
+      if(!sourceAngle)packet[1] = (Math.round(packet[1]) % 360 + 360) % 360;
       if (!forceAngle && packet[1] === lastSentAngle && lastSentPlayer === B.world.ᅠᏧ‍.id) {
         diagnostics.deduplicatedAngles++;
         return true;
@@ -956,7 +959,7 @@ function __installDevastMod(B) {
     recordCommand(packet[0]);
     return true;
   }
-  // ILM manual fire uses the last direction sent by its original timer.
+  // Native fire uses the last source direction; afterFire owns its jitter case.
   function beforeFire() {if(!playing()||reconnect.sessionEnded)return;aimModule.sync();}
   function persist() {
     refreshLootFilter();
@@ -1018,14 +1021,14 @@ function __installDevastMod(B) {
     }
   }
   // Decode the native protocol; prediction/history stay in the imported engine.
-  function trackPacket(type, playerId, uid, x, y, active) {
+  function trackPacket(type, playerId, uid, x, y, active, weapon, packed) {
     const kind=type===B.categories.player?'players':type===13?'ghouls':null;
     const id=kind==='players'?playerId:uid;
     if(!kind||!Number.isInteger(id)||id<0||id>65535)return;
-    if(active&&id===0)return; // Original ILM receiver skips zero position sentinels.
-    const group=GetAllTargets[kind];while(group.length<=id)group.push(new aimModule.Target(group.length));aimModule.ensure(id);
+    if(id===0)return;
+    aimModule.ensure(id);const group=GetAllTargets[kind];
     if(!active){group[id].setInactive();return;}
-    if(Number.isFinite(x)&&Number.isFinite(y))group[id].update(x,y);
+    if(Number.isFinite(x)&&Number.isFinite(y))aimModule.position(kind,id,x,y,weapon,packed);
   }
 
   function playerMeta(id) {
@@ -1132,8 +1135,8 @@ function __installDevastMod(B) {
   }
   function updateMouse() {
     if (!MOD.mouseFovEnable) return;
-    // ILM feeds clientX/clientY to its own camera helper. The canvas/DPI
-    // conversion used by doors and building previews changes its target search.
+    // The imported renderer uses client coordinates and the native camera.
+    // Doors and building previews retain their canvas/DPI conversion.
     const v = B.view();
     if (v.scale > 0) GetAllTargets.mouseMapCords = __ilmMouseToWorld(GetAllTargets.mousePosition,v);
   }
@@ -1494,7 +1497,7 @@ function __installDevastMod(B) {
           }
         }
       }
-      if(!invalidAimState())aimModule.render(ctx,v);
+      aimModule.render(ctx,B.view());
       ctx.globalAlpha = 1;
     } finally {ctx.restore();}
   }
@@ -1572,7 +1575,7 @@ function __installDevastMod(B) {
       modTraffic:trafficInfo(),
       connectionCallbacks:{...callbackTraffic},
       aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',sourceTickRateMs:50,deduplicatedDirections:diagnostics.deduplicatedAngles},
-      aimSettings:{enabled:MOD.AimBotEnabled,source:'ilm-original',autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
+      aimSettings:{enabled:MOD.AimBotEnabled,source:'message27-bby',autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}}))};
   }
@@ -1987,6 +1990,7 @@ function __installDevastMod(B) {
   // Native direction functions keep updating their timing/angle bookkeeping;
   // reviewed native patches suppress only their send, exactly as ILM does.
   function keyboard(e) {
+    if(aimModule.waitingForKey){e.preventDefault?.();return;}
     if (waitingKey) {
       e.preventDefault();
       e.stopImmediatePropagation();
@@ -2000,6 +2004,9 @@ function __installDevastMod(B) {
     if (e.repeat || t && (t.isContentEditable || (/^(INPUT|TEXTAREA|SELECT)$/).test(t.tagName)) || B.chatActive && B.chatActive()) return;
     const bindings = {
       AimbotKey:'AimBotEnabled',
+      AntiAimbotKey:'AntiAimbot',
+      JitterKey:'jitterActive',
+      HideAngleKey:'hideAimbotAngle',
       AutoBuiledKey: 'AutoBuiledEnabled',
       SAutoLootKey: 'SAutoLootEnabled',
       FAutoLootKey: 'FAutoLootEnabled',
@@ -2113,8 +2120,8 @@ function __installDevastMod(B) {
     add(automation,'AutoBuiledEnabled','AutoBuild').domElement.title = 'Ставит выбранный блок в допустимую клетку предпросмотра под курсором.';
     const filter = automation.addFolder('Loot filter');
     for (const [name, item] of Object.entries(LootData)) filter.add(item, 'acquire').name(name).onChange(persist);
-    const keys = menu.addFolder('Keyboard');
-    for (const key of ['AimbotKey', 'AutoBuiledKey', 'SAutoLootKey', 'FAutoLootKey', 'AutoTakeKey', 'XrayKey', 'PlayersListKey', 'ModMenuKey']) {
+    const keys = menu.__folders.Keyboard || menu.addFolder('Keyboard');
+    for (const key of ['AutoBuiledKey', 'SAutoLootKey', 'FAutoLootKey', 'AutoTakeKey', 'XrayKey', 'PlayersListKey']) {
       const c = keys.add(MOD, key), input = c.domElement.querySelector('input');
       input.readOnly = true;
       listen(input, "click", () => {
@@ -2231,18 +2238,10 @@ function __installDevastMod(B) {
     onMove:move=>aimModule.onMove(move),
     onHandshake:()=>{lastSentAngle=null;aimModule.onHandshake();},
     onSessionStart:resetAimForSession,
-    get controlsAimDirection() {
-      const controls=playing() && !reconnect.sessionEnded &&
-        MOD.AimBotEnabled&&!Aimbot.dead;
-      // Like ILM's native handlers, mouse direction yields for the entire
-      // enabled interval, including a short gap in the target's position data.
-      // Automatic commands still require valid self/target coordinates above.
-      // Both native direction handlers query this immediately before sending.
-      // Once mouse input can change the server angle, our cache no longer proves
-      // its value. Reacquisition must reassert even the same predicted angle.
-      if(!controls&&lastSentAngle!==null){lastSentAngle=null;lastSentPlayer=0;aimTransport.nativeYields++;}
-      return controls;
-    },
+    nativePacketAngle:angle=>playing()&&!Aimbot.dead?Aimbot.packetAngle(angle):angle,
+    // Compatibility property: the source replaces the primary angle argument
+    // through packetAngle and retains native direction clocks and sends.
+    get controlsAimDirection() { return false; },
     get jitterAngle() { return null; },
     get aimRenderAngle() { return null; },
     targets: GetAllTargets,

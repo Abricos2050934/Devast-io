@@ -7,6 +7,26 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_uploaded_message27_requires_source_menu_and_native_pipeline_in_both_browsers(self):
+  self.contract['features']=['verbatim-message27-aim','message27-native-pipeline','message27-original-menu-layout']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  aim={'status':'passed','upload_sha256':'f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0','comparison_points':2149,'mouse_cases':18}
+  for key in ['exact_states','exact_raw_packets','source_timing','spear','jitter','strafe','valid_target_admission','session_target_reset','server_death_sends_no_commands','native_angles']:aim[key]=True
+  menu={'status':'passed','controls':32,'exact_order_labels_ranges_steps_options':True,'keyboard':True,'default_bindings':{'menu':'KeyM','hide':'KeyH'}}
+  for report in self.validation['browsers'].values():report['native']={'message27_aim':dict(aim),'message27_menu':dict(menu)}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  native=self.validation['browsers']['firefox']['native']
+  for key in ['exact_states','exact_raw_packets','source_timing','spear','jitter','strafe','valid_target_admission','session_target_reset','server_death_sends_no_commands','native_angles']:
+   native['message27_aim'][key]=False;self.save()
+   with self.assertRaisesRegex(ValueError,'message27.*firefox'):p.artifacts(self.root,self.out)
+   native['message27_aim'][key]=True
+  for group,key,value in [('message27_aim','comparison_points',1999),('message27_aim','mouse_cases',17),('message27_aim','upload_sha256','wrong'),('message27_menu','controls',31),('message27_menu','exact_order_labels_ranges_steps_options',False),('message27_menu','keyboard',False),('message27_menu','default_bindings',{'menu':'KeyH','hide':'NoKey'})]:
+   previous=native[group][key];native[group][key]=value;self.save()
+   with self.assertRaisesRegex(ValueError,'message27.*firefox'):p.artifacts(self.root,self.out)
+   native[group][key]=previous
+  native.pop('message27_aim');self.save()
+  with self.assertRaisesRegex(ValueError,'message27.*firefox'):p.artifacts(self.root,self.out)
+
  def setUp(self):
   self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.out=self.root/'output';self.release='a'*64
   (self.root/'mod').mkdir();(self.root/'mod/test.js').write_text('current mod');self.d=self.out/'versions'/self.release;self.d.mkdir(parents=True);self.body=b'current bundled client';(self.d/'game.modded.js').write_bytes(self.body)

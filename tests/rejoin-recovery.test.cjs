@@ -158,7 +158,7 @@ test('the connection report contains presence flags, without exposing stored cre
 test('server death captures combat and health before the native handler resets the player',()=>{
  const f=fixture({saved:account});f.B.health=()=>255;
  f.mod.trackPacket(1,1,1,1000,1000,true);f.mod.trackPacket(1,2,1,1200,1100,true);
- f.mod.setSetting('AimBotEnabled',true);f.mod.setSetting('mouseFovEnable',false);f.mod.aim.refresh();
+ f.mod.setSetting('AimBotEnabled',true);f.mod.setSetting('mouseFovEnable',false);(f.mod.aimModule.refreshTargets(),f.mod.aim.refresh());
  f.mod.observeDeath();f.world['ᅠᏧ‍'].id=0;f.network.state=0;
  const event=f.mod.connectionInfo().events.at(-1);
  assert.equal(event.type,'server-death');assert.equal(event.state,1);assert.equal(event.health,255);
@@ -201,7 +201,7 @@ test('receive timing distinguishes a quiet socket from a client close without re
  assert.ok(!JSON.stringify(next).includes(account.token));f.mod.dispose();assert.equal(handlers.size,0);
 });
 test('combat snapshots expire idle commands and cannot be changed by the report consumer',()=>{
- const f=fixture();f.mod.trackPacket(1,1,1,0,0,true);f.mod.trackPacket(1,2,1,100,100,true);f.mod.setSetting('AimBotEnabled',true);f.mod.aim.refresh();
+ const f=fixture();f.mod.trackPacket(1,1,1,0,0,true);f.mod.trackPacket(1,2,1,100,100,true);f.mod.setSetting('AimBotEnabled',true);(f.mod.aimModule.refreshTargets(),f.mod.aim.refresh());
  f.mod.observeDeath();const report=f.mod.connectionInfo();report.events[0].commandsInLast2s.angle=999;
  assert.equal(f.mod.connectionInfo().events[0].commandsInLast2s.angle,1);
  f.setClock(4000);f.mod.observeDeath();assert.equal(f.mod.connectionInfo().events.at(-1).commandsInLast2s.angle,0);f.mod.dispose();

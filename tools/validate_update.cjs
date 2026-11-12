@@ -15,7 +15,7 @@ const nativeAnalysis=require('./updater/static.cjs').analyze(output),tree=native
 assert.equal(profile.operations.filter(op=>op.id.startsWith('native-integrity-signature-')).length,3,'All three native signature compatibility operations are required');
 assert.equal(roles.nativeIntegritySigners?.length,3,'Three reviewed native signers required');
 assert.ok(body,'Full native client IIFE required');
-for(const name of ['__installDevastMod','__createIlmAim'])assert.equal(body.filter(n=>n.id?.name===name).length,1);
+for(const name of ['__installDevastMod','__createMessage27Core'])assert.equal(body.filter(n=>n.id?.name===name).length,1);
 const installer=body.find(n=>n.id?.name==='__installDevastMod');
 fs.writeFileSync(path.join(dir,'installer.fixture.js'),output.slice(installer.start,installer.end));
 const installerSource=output.slice(installer.start,installer.end);
@@ -27,8 +27,8 @@ for(const file of ['mod/bootstrap.js','vendor/dat.gui.recovered.js']) {
 assert.equal(output.slice(installer.start,installer.end),translate(fs.readFileSync(path.join(root,'mod/responsive.js'),'utf8'),symbols).trim());
 function normalize(value){if(Array.isArray(value))return value.map(normalize);if(!value||typeof value!=='object')return value;return Object.fromEntries(Object.entries(value).filter(([key])=>!['start','end','raw'].includes(key)).map(([key,v])=>[key,normalize(v)]));}
 const reference=require('./audit_ilm_port.cjs').reference();
-const originalHooks=JSON.parse(z.gunzipSync(fs.readFileSync(path.join(root,'recovery/ilm-integration-reference.json.gz'))));
-const originalAngles=JSON.parse(z.gunzipSync(fs.readFileSync(path.join(root,'recovery/ilm-native-angle-reference.json.gz'))));
+const originalHooks=null;
+const originalAngles=null;
 require('./audit_ilm_port.cjs').audit(read('ilm-aim.js'),installerSource);
 for(const block of reference.blocks)assert.ok(output.includes(block.source),'Missing original ILM block: '+block.name);
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
@@ -87,15 +87,16 @@ edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,keybo
 edits.push({at:tree.body[0].expression.callee.body.end-1,text:`window.__updateIntegrityProbe={read:()=>${roles.nativeIntegrityFlag},set:value=>${roles.nativeIntegrityFlag}=value,signers:[${roles.nativeIntegritySigners.join(',')}]};`});
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
 (async()=>{
- const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',ilm_core:'four original classes and original tick',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
- let browser;
+ const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',aim_core:'active uploaded __BBY declarations and lifecycle',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
+ let browser,page;
  try{
   const engine=process.env.DEVAST_BROWSER||'chromium';assert.ok(['chromium','firefox'].includes(engine),'Unsupported browser');report.browser=engine;
   const executablePath=process.env.CHROMIUM_PATH||(fs.existsSync('/usr/bin/chromium')?'/usr/bin/chromium':chromium.executablePath());
   const proxy=process.env.HTTPS_PROXY?{server:process.env.HTTPS_PROXY}:undefined;
   browser=engine==='firefox'?await firefox.launch({headless:true,proxy,firefoxUserPrefs:{'security.enterprise_roots.enabled':true}}):await chromium.launch({executablePath,headless:true,env:{...process.env,HOME:process.env.DEVAST_BROWSER_HOME||'/tmp/devast-browser-home'},proxy,args:['--no-sandbox','--disable-dev-shm-usage']});
   report.browser_version=browser.version();
-  const page=await browser.newPage({viewport:{width:1280,height:800}});page.on('pageerror',e=>report.page_errors.push(e.message.slice(0,250)));
+  page=await browser.newPage({viewport:{width:1280,height:800}});page.on('pageerror',e=>report.page_errors.push(e.message.slice(0,250)));
+  report.console_errors=[];page.on('console',event=>{if(event.type()==='error'&&report.console_errors.length<20)report.console_errors.push(event.text().slice(0,300));});
   // These fixtures exercise native game logic, not third-party ads or audio.
   // Supply valid local dependencies so an asset outage cannot mask game errors.
   await page.route(url=>url.hostname==='webgames.io'&&url.pathname==='/js/widget.min.js',r=>r.fulfill({status:200,contentType:'text/javascript',body:'window.Widget={init(){},filter:value=>value,isBlocked:0,preroll(){},createAdPlayer(){}};'}));
@@ -112,10 +113,10 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   await page.route(source.page_url,r=>r.fulfill({status:200,contentType:'text/html',body:read('index.html')}));
   await page.route(source.script_url,r=>r.fulfill({status:200,contentType:'text/javascript',body:override.data[0].rules[0].file}));
   await page.route(url=>url.hostname==='raw.githubusercontent.com'&&url.pathname==='/Abricos2050934/Devast-io/updates/game.modded.js',r=>r.fulfill({status:200,contentType:'text/plain',headers:{'access-control-allow-origin':'*'},body:code}));
-  await page.addInitScript('window.__verifyIlmAim='+require('./verify_ilm_aim.cjs').verifyIlmAim.toString());
-  await page.addInitScript('window.__verifyIlmMenu='+require('./verify_ilm_menu.cjs').verifyIlmMenu.toString());
-  await page.addInitScript('window.__verifyIlmMouse='+require('./verify_ilm_native_pipeline.cjs').verifyIlmMouse.toString());
-  await page.addInitScript('window.__verifyIlmServerAngle='+require('./verify_ilm_native_pipeline.cjs').verifyIlmServerAngle.toString());
+  await page.addInitScript('window.__verifyMessage27Aim='+require('./verify_message27_aim.cjs').verifyMessage27Aim.toString());
+  await page.addInitScript('window.__verifyMessage27Menu='+require('./verify_message27_menu.cjs').verifyMessage27Menu.toString());
+
+
   await page.addInitScript('window.__verifyNativeAimTransport='+require('./verify_native_aim_transport.cjs').verifyNativeAimTransport.toString());
   await page.addInitScript(()=>{const raf=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=callback=>raf(time=>{if(!window.__numericPauseWorld)callback(time);});});
   await page.goto(source.page_url,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForFunction(()=>!!window.__updateProbe&&!!window.__devastMod?.menu,{timeout:25000});
@@ -123,7 +124,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   for(let attempt=0;attempt<3;attempt++){
    if(attempt)await page.reload({waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForFunction(key=>!!window.__devastMod?.menu&&typeof window.__updateProbe?.network[key]==='function',symbols['ᅠϲ᠍'],{timeout:25000});
-   const kept=await page.evaluate(()=>({token:localStorage.getItem('token')==='fixture-original-token',tokenId:localStorage.getItem('tokenId')==='123',userId:localStorage.getItem('userId')==='2',cookie:document.cookie.includes('devast_fixture_cookie=retained'),settings:window.__devastMod.settings.mouseFov===(localStorage.getItem('DevastILMOriginal:aim:v1')?JSON.parse(localStorage.getItem('DevastILMOriginal:aim:v1')).mouseFov:12345)&&window.__devastMod.settings.zoomFactor===.8,loot:!window.__devastMod.loot.steel.acquire}));
+   const kept=await page.evaluate(()=>({token:localStorage.getItem('token')==='fixture-original-token',tokenId:localStorage.getItem('tokenId')==='123',userId:localStorage.getItem('userId')==='2',cookie:document.cookie.includes('devast_fixture_cookie=retained'),settings:window.__devastMod.settings.mouseFov===(localStorage.getItem('DevastMessage27:aim:v1')?JSON.parse(localStorage.getItem('DevastMessage27:aim:v1')).mouseFov:900)&&window.__devastMod.settings.zoomFactor===.8,loot:!window.__devastMod.loot.steel.acquire}));
    assert.ok(Object.values(kept).every(Boolean),'Native startup changed the saved identity or migrated settings');report.reload_identity.push(kept);
    await page.evaluate(()=>window.__devastMod.setSetting('zoomFactor',.8));
   }
@@ -135,7 +136,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   report.native=await page.evaluate(async ({s,r,originalAim,originalHooks,originalAngles,originalMenu})=>{
    const n=window.__updateProbe,m=window.__devastMod,w=n.world,players=w[s['ᴎ︃ᄉ']],self=w[s['ᅠᏧ‍']];
    const check=(v,message)=>{if(!v)throw Error(message);};
-   m.ilmMenuVerification=window.__verifyIlmMenu(m,originalMenu);
+   m.message27MenuVerification=window.__verifyMessage27Menu(m,originalAim);
    w[r['ࡀ︌٨']]=121;const names=Array(121).fill(0);names[2]='Update#fixture';w[r['І︈༧']](names);
    check(players[2][s['ο̏︇']]==='Update#fixture#2','Constructor ID binding failed');check(players[3][s['ο̏︇']]===0,'Empty player sentinel changed');
    const text=n.labelFactory[r['ᴉ̷Ꮷ']],captured=[];n.labelFactory[r['ᴉ̷Ꮷ']]=function(...args){captured.push(args[0]);return text.apply(this,args);};
@@ -146,7 +147,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    check(m.targets.players[2].prevX[0]===1100&&m.targets.players[2].x===1120&&m.targets.ghouls[17].x===1200,'Current packet bindings failed');
    packet(13,0,17,0,0,false);packet(0,2,1,0,0,false);check(!m.targets.players[2].active&&!m.targets.ghouls[17].active,'Removal binding failed');
    self.id=1;const e=n.entities.get(1,0,1,0);e[s['ᴘ४１']]=1;e.id=0;e[r['ᴎ٨ߍ']]=.25;e[r['ᴑ٧ߓ']]=1;n.input.angle=2;
-   for(const [mode,on]of [['withAim',false],['withAim',true],['always',false]]){m.menu.__folders['Aim Bot'].__controllers.find(c=>c.property==='ShowRealAngles').setValue(mode);m.setSetting('AimBotEnabled',on);e.angle=0;n.update(e);check(Math.abs(e.angle-((mode==='always'||on)?0.5:2))<1e-8,'Self angle binding failed');}
+   for(const [mode,on]of [['withAim',false],['withAim',true],['always',false]]){m.menu.__folders['👑 Aim Bot 👑'].__controllers.find(c=>c.property==='ShowRealAngles').setValue(mode);m.setSetting('AimBotEnabled',on);e.angle=0;n.update(e);check(Math.abs(e.angle-((mode==='always'||on)?0.5:2))<1e-8,'Self angle binding failed');}
    n.spawn([0,1,123,'Self',0,0]);
    const clans=w[s['ﾠࡅ‍']];clans[0]={name:'ALLY',[s['ոᚄރ']]:7,[s['ᴌ५ᚂ']]:null};clans[1]={name:'ENEMY',[s['ոᚄރ']]:8,[s['ᴌ५ᚂ']]:null};
    Object.assign(players[1],{[s['а༤̘']]:0,[s['ᴌ̗ⲟ']]:7});Object.assign(players[2],{[s['а༤̘']]:1,[s['ᴌ̗ⲟ']]:8});Object.assign(players[120],{[s['а༤̘']]:0,[s['ᴌ̗ⲟ']]:7});
@@ -195,9 +196,9 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
 
    const transport=n.capturePackets();
    try{
-    m.ilmAimVerification=window.__verifyIlmAim(m,n,s,originalAim);
-    m.ilmMouseVerification=window.__verifyIlmMouse(m,n,s,originalAim,originalHooks);
-    m.ilmServerAngleVerification=window.__verifyIlmServerAngle(m,n,s,r,originalAngles);
+    m.message27AimVerification=window.__verifyMessage27Aim(m,n,s,originalAim);
+
+
     m.nativeAimTransportVerification=window.__verifyNativeAimTransport(m,n,s);
     m.setSetting('AimBotEnabled',false);m.aim.mouseDown=false;
     const blockedSocket={readyState:1,bufferedAmount:4096};transport.packets.length=0;
@@ -366,10 +367,10 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors: '+m.diagnostics.errors.join('; '));
-   return {ilm_menu:m.ilmMenuVerification,ilm_aim:m.ilmAimVerification,ilm_mouse:m.ilmMouseVerification,ilm_server_angle:m.ilmServerAngleVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,bounded_fast_loot:true,session_mod_traffic_history:true,native_autobuild_cursor_preview:true,bounded_auto_build:true,aim_session_history_reset:m.ilmAimVerification.session_target_reset===true,valid_live_aim_targets:m.ilmAimVerification.valid_target_admission===true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {message27_menu:m.message27MenuVerification,message27_aim:m.message27AimVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,bounded_fast_loot:true,session_mod_traffic_history:true,native_autobuild_cursor_preview:true,bounded_auto_build:true,aim_session_history_reset:m.message27AimVerification.session_target_reset===true,valid_live_aim_targets:m.message27AimVerification.valid_target_admission===true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:reference,originalHooks,originalAngles,originalMenu:JSON.parse(z.gunzipSync(fs.readFileSync(path.join(root,'recovery/ilm-aim-menu-reference.json.gz'))))});
   report.physical_numeric=await require('./verify_ilm_physical.cjs').verifyPhysical(page,symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
- }catch(error){report.error=error.message;process.exitCode=1;}
+ }catch(error){report.error=error.message;report.startup=await page?.evaluate(()=>({mod:!!window.__devastMod,menu:!!window.__devastMod?.menu,probe:!!window.__updateProbe,loader:window.__devastRemoteLoader?.state,ready:document.readyState,modErrors:window.__devastMod?.diagnostics?.errors})).catch(()=>null);process.exitCode=1;}
  finally{report.finished_at=new Date().toISOString();fs.writeFileSync(path.join(dir,'validation.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));if(browser)await browser.close();}
 })().catch(error=>{console.error(error.message);process.exitCode=1;});

@@ -12,7 +12,7 @@ function verifyNativeAimTransport(m,n,s){
   m.trackPacket(0,1,1,1000,1000,true);m.trackPacket(0,2,1,1500,1000,true);m.setSetting('AimBotEnabled',true);
   check(m.connectionInfo().aimTransport.nativeSenderAvailable,'Reviewed native aim transport is missing');
   capture=n.capturePackets();n.idleProbe.restore({now:0,activity:0});
-  for(clock=50;clock<=initialClock.limit*2+1000;clock+=50){n.idleProbe.setNow(clock);m.trackPacket(0,2,1,1000+500*Math.cos(clock/1000),1000+500*Math.sin(clock/1000),true);m.aim.refresh();n.idleProbe.ping();}
+  for(clock=50;clock<=initialClock.limit*2+1000;clock+=50){n.idleProbe.setNow(clock);m.trackPacket(0,2,1,1000+500*Math.cos(clock/1000),1000+500*Math.sin(clock/1000),true);m.aimModule.refreshTargets();m.aim.refresh();n.idleProbe.ping();}
   const directions=capture.packets.filter(p=>p[0]===6).length,heartbeats=capture.packets.filter(p=>p[0]===0).length;
   check(directions>100&&heartbeats>=2,'Sustained aim suppressed native idle packets: '+JSON.stringify({directions,heartbeats,clock:n.idleProbe.read()}));
   n.idleProbe.setNow(clock+1000);n.fire();check(n.idleProbe.read().activity===clock+1000,'Real native fire stopped updating the activity timer');
