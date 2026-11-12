@@ -6,7 +6,7 @@ async function verifyPhysical(page,symbols) {
   for(const[object,key,value]of [[self,'id',1],[n.network,'state',1]])Object.defineProperty(object,key,{configurable:true,enumerable:true,get:()=>value,set(){}});
   window.__numericTransport=n.capturePackets();m.reconnect.sessionEnded=false;m.observeSocket(null);
   n.world[s['ᴎ︃ᄉ']][1]={[s['а༤̘']]:-1};n.world[s['ᴎ︃ᄉ']][2]={[s['а༤̘']]:-1};
-  for(const[key,value]of Object.entries({AimBotEnabled:true,autoFire:false,jitterActive:false,AntiAimbot:false,AimbotSpearEnabled:false,mouseFovEnable:false,lockId:2,visualizeResolving:true}))m.setSetting(key,value);
+  for(const[key,value]of Object.entries({AimBotEnabled:true,autoFire:false,JitterEnabled:false,AntiAimbot:false,AimbotSpearEnabled:false,mouseFovEnable:false,lockId:2,visualizeResolving:true}))m.setSetting(key,value);
   m.menu.open();m.menu.domElement.style.display='';m.menu.domElement.style.zIndex='2147483647';
   function mark(folder){folder.open();for(const c of folder.__controllers){if(typeof m.settings[c.property]!=='number')continue;const input=c.domElement.querySelector('input');if(input)input.dataset.aimNumericTest=c.property;const slider=c.domElement.querySelector('.slider');if(slider)slider.dataset.aimSliderTest=c.property;}for(const child of Object.values(folder.__folders))mark(child);}mark(m.menu);
  },symbols);

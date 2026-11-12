@@ -30,7 +30,7 @@ const reference=require('./audit_ilm_port.cjs').reference();
 const originalHooks=null;
 const originalAngles=null;
 require('./audit_ilm_port.cjs').audit(read('ilm-aim.js'),installerSource);
-for(const block of reference.blocks)assert.ok(output.includes(block.source),'Missing original ILM block: '+block.name);
+// audit_ilm_port verifies retained gun blocks and deliberate Jitter removal.
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
 assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2','message15-native-afterRelease','message15-native-onMove','message15-handshake','message15-session-start','message15-native-aim-transport']),'Every reviewed native patch is required');
 const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ԁ̶ϲ':'release','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave','ᴀᄁ︃':'landmineRender','рոᴎ':'wireRender','ᅠ̘ܛ':'trapRender'};

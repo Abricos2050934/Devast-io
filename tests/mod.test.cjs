@@ -231,8 +231,8 @@ test('position refresh precedes native fire and Jitter aligns before the attack'
   f.mod.setSetting('mouseFovEnable',false);f.mod.setSetting('lockId',2);f.mod.setSetting('AimBotEnabled',true);
   f.mod.trackPacket(1,1,1,1000,1000,true);f.mod.trackPacket(1,2,1,1500,1000,true);f.packets.length=0;
   f.mod.trackPacket(1,2,1,1500,1500,true);assert.equal(f.packets.length,1);assert.notEqual(f.mod.aim.lastAngle,0);
-  f.packets.length=0;f.mod.beforeFire();f.network.nativeFire();f.mod.afterFire();assert.deepEqual(f.packets,[[4]]);assert.equal(f.mod.aim.mouseDown,true);
-  f.mod.setSetting('jitterActive',true);f.packets.length=0;f.mod.beforeFire();f.network.nativeFire();f.mod.afterFire();assert.equal(f.packets[0][0],6);assert.equal(f.packets[1][0],4);
+  f.packets.length=0;f.mod.beforeFire();f.network.nativeFire();f.mod.afterFire();assert.equal(f.packets.at(-1)[0],4);assert.equal(f.mod.aim.mouseDown,true);
+  f.mod.setSetting('JitterEnabled',true);f.packets.length=0;f.mod.beforeFire();f.network.nativeFire();f.mod.afterFire();assert.equal(f.packets[0][0],6);assert.equal(f.packets[1][0],4);
   f.mod.afterRelease();assert.equal(f.mod.aim.mouseDown,false);
  }finally{f.mod.dispose();}
 });

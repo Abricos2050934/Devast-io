@@ -18,11 +18,11 @@ original declaration remains in the source reference; prediction formulas
 are unchanged. Browser typing, dragging and reload checks include those exact
 values and the disabled mouse FOV state.
 
-An additional independent behavior check uses 17 actual GUI controllers and
+An additional independent behavior check uses 16 actual gun GUI controllers and
 observes the resulting angles, prediction points or target selections. It
 covers prediction coefficients, lead cap, smoothing, stickiness, target hold,
 mouse FOV and its switch, player lock, teammate targeting, target categories,
-spear parameters and Jitter offset. The same check runs in both browsers.
+spear parameters. Restored Jitter speed and switching have separate tests. The same check runs in both browsers.
 
 Conditional behavior from the source is retained: distance/offset change lead
 when a target has velocity; smoothing changes transitions rather than an

@@ -117,7 +117,7 @@ def artifacts(root, output):
             aim = report.get('native', {}).get('message27_aim', {})
             if (aim.get('status') != 'passed' or aim.get('upload_sha256') != 'f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0'
                     or aim.get('comparison_points', 0) < 2000 or not all(aim.get(key) is True for key in
-                    ('exact_states', 'exact_raw_packets', 'source_timing', 'spear', 'jitter', 'strafe', 'valid_target_admission', 'session_target_reset', 'server_death_sends_no_commands'))):
+                    (('exact_states', 'corrected_attack_order', 'source_timing', 'spear', 'uploaded_jitter_removed', 'strafe', 'valid_target_admission', 'session_target_reset', 'server_death_sends_no_commands') if 'restored-original-jitter' in contract.get('features', []) else ('exact_states', 'exact_raw_packets', 'source_timing', 'spear', 'jitter', 'strafe', 'valid_target_admission', 'session_target_reset', 'server_death_sends_no_commands')))):
                 raise ValueError('Uploaded message27 source comparison was not verified in browser: ' + browser)
         if 'message27-native-pipeline' in contract.get('features', []):
             aim = report.get('native', {}).get('message27_aim', {})
@@ -128,17 +128,21 @@ def artifacts(root, output):
             if (menu.get('status') != 'passed' or menu.get('controls') != 32 or menu.get('exact_order_labels_ranges_steps_options') is not True
                     or menu.get('keyboard') is not True or menu.get('default_bindings') != {'menu': 'KeyM', 'hide': 'KeyH'}):
                 raise ValueError('Uploaded message27 menu was not verified in browser: ' + browser)
+        if 'restored-original-jitter' in contract.get('features', []):
+            menu = report.get('native', {}).get('message27_menu', {})
+            if menu.get('status') != 'passed' or menu.get('controls') != 28 or menu.get('original_jitter_controls') is not True:
+                raise ValueError('Restored Jitter menu was not verified in browser: ' + browser)
         if 'aim-line-native-projection' in contract.get('features', []) and report.get('native', {}).get('message27_aim', {}).get('pixel_projection_cases', 0) < 18:
             raise ValueError('Native aim line projection was not verified in browser: ' + browser)
         if 'live-aim-setting-effects' in contract.get('features', []):
             settings = report.get('native', {}).get('message27_settings', {})
-            if settings.get('status') != 'passed' or settings.get('gui_controls_live') is not True or settings.get('checked', 0) < 17:
+            if settings.get('status') != 'passed' or settings.get('gui_controls_live') is not True or settings.get('checked', 0) < (16 if 'restored-original-jitter' in contract.get('features', []) else 17):
                 raise ValueError('Live aim setting effects were not verified in browser: ' + browser)
         if 'versioned-aim-settings-preserved' in contract.get('features', []) and report.get('physical_numeric', {}).get('explicit_saved_values') is not True:
             raise ValueError('Explicit saved aim values were not verified in browser: ' + browser)
         if 'jitter-shot-priority' in contract.get('features', []):
             jitter = report.get('native', {}).get('jitter', {})
-            if jitter.get('status') != 'passed' or not all(jitter.get(key) is True for key in ('manual_angle_before_attack', 'automatic_angle_before_attack', 'held_fire_tracks_target', 'cursor_cannot_overwrite', 'resumes_on_release', 'standing_and_stop_option', 'local_rotation', 'death_stops_packets')):
+            if jitter.get('status') != 'passed' or not all(jitter.get(key) is True for key in (('original_rotation', 'configurable_speed', 'imported_jitter_removed', 'manual_angle_before_attack', 'automatic_angle_before_attack', 'held_fire_tracks_target', 'cursor_cannot_overwrite', 'non_jitter_cursor_cannot_overwrite', 'repeated_bursts_aligned', 'resumes_on_release', 'standing_rotation', 'targetless_manual_alignment', 'blocked_attack_rejected', 'local_rotation', 'death_stops_packets') if 'restored-original-jitter' in contract.get('features', []) else ('manual_angle_before_attack', 'automatic_angle_before_attack', 'held_fire_tracks_target', 'cursor_cannot_overwrite', 'resumes_on_release', 'standing_and_stop_option', 'local_rotation', 'death_stops_packets'))):
                 raise ValueError('Jitter shot priority was not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
@@ -156,8 +160,9 @@ def artifacts(root, output):
 Обновление: проверка сайта, расшифровка, перенос текущих модулей и браузерные тесты.
 Новая версия публикуется только после проверок; неизвестные изменения блокируют замену.
 Аимбот полностью перенесён из действующего блока __BBY файла message (27).txt.
-Z — аимбот, J — его Jitter, M — меню, H — скрытие угла.
-Исходные настройки — в Aim Bot, Aimbot Spear, Anti-Aim / Strafe и Aim Line.
+Z — аимбот, J — наше вращение Jitter, M — меню, H — скрытие угла.
+Настройки — в Aim Bot, Aimbot Spear, Anti-Aim / Strafe и Aim Line.
+Jitter: Enabled и Speed (degrees/sec); Jitter исходника удалён.
 Упреждение, выбор и удержание цели, сглаживание, копьё и автострельба сохранены.
 Нижние дополнительные показатели и надпись AIM BOT удалены. Адаптер наведения оптимизирован.
 Ники #ID, остальные функции и исправление повторного входа сохранены.

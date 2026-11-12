@@ -2,11 +2,11 @@
 // declarations, not the installed factory or a reimplementation of its maths.
 function verifyMessage27Aim(m,n,s,reference){
  const check=(v,t)=>{if(!v)throw Error(t);},w=n.world,self=w[s['ᅠᏧ‍']],metadata=w[s['ᴎ︃ᄉ']],clans=w[s['ﾠࡅ‍']];
- const old={id:self.id,state:n.network.state,settings:{...m.settings},ended:m.reconnect.sessionEnded,meta:[1,2,3,120].map(id=>[id,metadata[id]]),clan:clans[0],now:Date.now};
+ const old={id:self.id,state:n.network.state,settings:{...m.settings},ended:m.reconnect.sessionEnded,meta:[1,2,3,120].map(id=>[id,metadata[id]]),clan:clans[0],now:Date.now,performance:performance.now};
  const capture=n.capturePackets(),expected=[],settings={...reference.defaults},source=name=>reference.blocks.find(b=>b.name===name).source;
  let clock=10000,ref,phase='aim',points=0,mouseCases=0,pixelCases=0;
  function valid(e,rotation=false){const own=e.targets.players[1],target=e.aim.targetPlayer;return own?.active&&[own.x,own.y].every(Number.isFinite)&&(rotation||target?.active&&[target.x,target.y].every(Number.isFinite)&&!(e.targets.players[target.id]===target&&target.id===1));}
- function receive(packet){if(packet[0]===2||ref&&valid(ref,phase==='jitter'))expected.push(packet.slice());}
+ function receive(packet){if(packet[0]===2||ref&&valid(ref)){if(packet[0]===4)expected.push([6,ref.aim.lastAngle]);expected.push(packet.slice());}}
  const metaView=[],clanView=[];
  const world={PLAYER:{id:1,x:1000,y:1000,εᴎ༩:-1},players:metaView,ⲣ８ߌ:clanView};
  const make=new Function('MOD','World','window','globalThis','Date','__gk','setTimeout','clearTimeout','setInterval',
@@ -26,7 +26,7 @@ function verifyMessage27Aim(m,n,s,reference){
   compare('packet '+type+'/'+id);
  }
  try{
-  Date.now=()=>clock;n.setClock?.(clock);n.network.state=1;self.id=1;m.reconnect.sessionEnded=false;m.observeSocket(null);
+  Date.now=()=>clock;performance.now=()=>clock;n.setClock?.(clock);n.network.state=1;self.id=1;m.reconnect.sessionEnded=false;m.observeSocket(null);
   for(let scene=0;scene<32;scene++){
    m.settings.AimBotEnabled=false;m.onSessionStart();m.onHandshake();
    Object.assign(settings,reference.defaults);ref=create();ref.aim.onDeath();ref.aim.dead=false;
@@ -67,27 +67,24 @@ function verifyMessage27Aim(m,n,s,reference){
   // Cover the alternate internal resolver branch, not exposed by its source GUI.
   m.settings.resolverType=settings.resolverType=1;m.aimModule.refreshTargets();ref.refresh();compare('resolver type 1');
   m.settings.resolverType=settings.resolverType='linear';
-  // Compare source Jitter and strafe calculations, including the independent
-  // source switch and pause-on-stop branch. No new spin implementation is used.
-  for(const mode of ['At target','Round','Round2'])for(const offset of [0,85,360]){
-   m.settings.antiAimMode=settings.antiAimMode=mode;m.settings.jitterOffset=settings.jitterOffset=offset;
-   for(let i=0;i<10;i++){const a=m.aimModule.Jitter.getJitterAngle(),b=ref.Jitter.getJitterAngle();check(Object.is(a,b),'Uploaded jitter angle differs');points++;}
-  }
+  // Imported Jitter is deliberately removed. Keep independent gun and Strafe
+  // comparisons; our original continuous rotation has its own transport tests.
   m.settings.AntiAimbot=settings.AntiAimbot=true;phase='anti';for(let i=0;i<24;i++){m.aimModule.antiTick();ref.anti();compare('strafe '+i);}phase='aim';
   if(n.directionProbes?.length){
    for(const enabled of [false,true])for(const hidden of [false,true])for(const target of [null,m.targets.players[2]])for(const angle of [-179.8,0,179.9,361.2]){
     m.settings.AimBotEnabled=enabled;m.settings.hidePlayerAngle=hidden;m.aim.targetPlayer=target;m.aim.lastAngle=angle;
     const expectedAngle=enabled&&target?((Math.floor(angle)%360)+360)%360:hidden?270:90;
-    capture.packets.length=0;n.directionProbes[0](Math.PI/2);check(JSON.stringify(capture.packets)===JSON.stringify([[6,expectedAngle]]),'Source primary native packet angle differs');
-    capture.packets.length=0;n.directionProbes[1](Math.PI/2);check(JSON.stringify(capture.packets)==='[[6,90]]','Secondary native angle was changed');points++;
+    const owns=m.controlsAimDirection;
+    capture.packets.length=0;n.directionProbes[0](Math.PI/2);check(JSON.stringify(capture.packets)===JSON.stringify(owns?[]:[[6,expectedAngle]]),'Primary native ownership or fallback differs');
+    capture.packets.length=0;n.directionProbes[1](Math.PI/2);check(JSON.stringify(capture.packets)===JSON.stringify(owns?[]:[[6,90]]),'Secondary native ownership or fallback differs');points++;
    }
   }
-  m.settings.AimBotEnabled=false;m.settings.autoFire=false;m.settings.AntiAimbot=false;m.settings.jitterActive=false;
+  m.settings.AimBotEnabled=false;m.settings.autoFire=false;m.settings.AntiAimbot=false;m.settings.JitterEnabled=false;
   m.onSessionStart();m.onHandshake();check(!m.targets.players.some(t=>t?.active)&&!m.targets.ghouls.some(t=>t?.active),'Previous session history survived');
   capture.packets.length=0;m.settings.AimBotEnabled=true;m.settings.autoFire=true;m.observeDeath([5,0,2]);m.aim.refresh();m.afterFire();check(capture.packets.length===0,'Server death emitted aim commands');
-  return {status:'passed',upload_sha256:reference.upload_sha256,active_override:'__BBY',scenes:32,comparison_points:points,exact_states:true,exact_raw_packets:true,source_timing:true,spear:true,jitter:true,strafe:true,native_angles:!!n.directionProbes?.length,mouse_cases:mouseCases,pixel_projection_cases:pixelCases,valid_target_admission:true,session_target_reset:true,server_death_sends_no_commands:true};
+  return {status:'passed',upload_sha256:reference.upload_sha256,active_override:'__BBY',scenes:32,comparison_points:points,exact_states:true,corrected_attack_order:true,source_timing:true,spear:true,uploaded_jitter_removed:true,strafe:true,native_angles:!!n.directionProbes?.length,mouse_cases:mouseCases,pixel_projection_cases:pixelCases,valid_target_admission:true,session_target_reset:true,server_death_sends_no_commands:true};
  }finally{
-  Date.now=old.now;capture.restore();m.observeSocket(null);m.settings.AimBotEnabled=false;m.settings.autoFire=false;m.onSessionStart();m.onHandshake();self.id=old.id;n.network.state=old.state;m.reconnect.sessionEnded=old.ended;
+  Date.now=old.now;performance.now=old.performance;capture.restore();m.observeSocket(null);m.settings.AimBotEnabled=false;m.settings.autoFire=false;m.onSessionStart();m.onHandshake();self.id=old.id;n.network.state=old.state;m.reconnect.sessionEnded=old.ended;
   for(const[id,value]of old.meta)metadata[id]=value;clans[0]=old.clan;Object.assign(m.settings,old.settings);
  }
 }

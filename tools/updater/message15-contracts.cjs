@@ -5,6 +5,8 @@ function message15Operations(a,operations,symbols,roles,protocol={moveOpcode:2},
  const fire=ops.find(op=>op.id==='jitter-native-fire-priority');
  if(!fire||!fire.after.endsWith('}'))throw Error('Native fire hook missing');
  fire.after=fire.after.slice(0,-1)+'if(__responsiveMod)__responsiveMod.afterFire();}';
+ // Skip the native attack when its controlled direction could not be sent.
+ fire.after=fire.after.replace('__responsiveMod.beforeFire();','if(__responsiveMod.beforeFire()===false)return;');
  const angle=ops.find(op=>op.id==='ilm-native-self-server-angle');
  const tree=parser.parse(angle.after,{ecmaVersion:'latest'}),pending=[tree],edits=[];
  while(pending.length){const n=pending.pop();

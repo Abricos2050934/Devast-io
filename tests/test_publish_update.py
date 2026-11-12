@@ -7,6 +7,17 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_restored_spin_requires_speed_and_non_jitter_burst_evidence(self):
+  self.contract['features']=['restored-original-jitter','jitter-shot-priority']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  keys=['original_rotation','configurable_speed','imported_jitter_removed','manual_angle_before_attack','automatic_angle_before_attack','held_fire_tracks_target','cursor_cannot_overwrite','non_jitter_cursor_cannot_overwrite','repeated_bursts_aligned','resumes_on_release','standing_rotation','targetless_manual_alignment','blocked_attack_rejected','local_rotation','death_stops_packets']
+  for report in self.validation['browsers'].values():report['native']={'jitter':dict(status='passed',**dict.fromkeys(keys,True)),'message27_menu':{'status':'passed','controls':28,'original_jitter_controls':True}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for key in keys:
+   self.validation['browsers']['firefox']['native']['jitter'][key]=False;self.save()
+   with self.assertRaisesRegex(ValueError,'Jitter.*firefox'):p.artifacts(self.root,self.out)
+   self.validation['browsers']['firefox']['native']['jitter'][key]=True
+
  def test_jitter_shot_priority_requires_both_native_browsers(self):
   self.contract['features']=['jitter-shot-priority']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

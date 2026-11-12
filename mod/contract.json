@@ -43,11 +43,12 @@
     "aim-session-history-reset",
     "verbatim-message27-aim",
     "message27-native-pipeline",
-    "message27-original-menu-layout",
     "aim-line-native-projection",
     "live-aim-setting-effects",
     "versioned-aim-settings-preserved",
-    "jitter-shot-priority"
+    "jitter-shot-priority",
+    "restored-original-jitter",
+    "safe-shot-direction-ownership"
   ],
   "removed_overlays": [
     "bottom-gauge-text",

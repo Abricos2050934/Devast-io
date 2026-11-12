@@ -1,21 +1,31 @@
-# Jitter repair and gun calibration
+# Original Jitter restored; shot direction ownership
 
-The original upload registers two independent 100 ms Jitter callbacks. The
-host now replaces the first registration with the second, leaving one active
-100 ms callback. The uploaded angle calculations and three modes are retained.
-Both native pointer direction send sites retain their bookkeeping but yield
-while Jitter owns rotation. Local rotation is displayed unless ShowRealAngles
-is never. J still toggles Jitter.
+The uploaded JitterCon, both routineJitter loops, offset and Round modes have
+been removed from the executable module. The original upload remains archived
+as a comparison reference. Our earlier time-based rotation from f978ade is
+restored: Jitter > Enabled and Speed (degrees/sec), 360 by default, 1–3600 range,
+J binding. It works standing and moving without writing native movement/input.
+RAF only draws rotation; a single 50 ms timer sends at most 20 directions/sec,
+with socket backpressure and session/death guards.
 
-A manual attack now prepares its target angle before the native attack send.
-Automatic attacks use the same preparation. Jitter pauses during held manual
-fire or automatic fire with a valid target; moving target updates continue to
-send aimed angles. It resumes after release. Without a valid aim target, the
-native pointer angle is restored before manual fire. StopJittersOnStop retains
-its standing pause, and disabling it permits standing rotation. Death/session
-and socket guards remain in force. A new browser publication gate exercises
-the real direction send sites, local renderer and native fire handler in both
-Firefox and Chromium. Isolated tests check a single timer and all modes.
+Both native cursor direction send sites now yield while a valid gun/spear aim
+or idle spin owns rotation. Previously the secondary cursor path could replace
+the aim angle between attacks. Before manual attacks the current predictor
+runs and its angle is sent before the native attack. Automatic attacks also
+reassert their already calculated direction before attack. Target loss and
+switching the mod off restore the real pointer before manual fire. Rotation
+pauses while firing and resumes after release. If the angle cannot be sent due
+to socket backlog, the native controlled attack is deferred by rejecting that
+attempt; a later writable attempt aligns again before firing.
+
+The gun predictor formulas, history, selection, smoothing and spear geometry
+are retained. The source audit checks the precise removal of the uploaded
+Jitter while comparing the remaining gun blocks. Raw attack ordering is
+intentionally corrected, rather than claimed byte-identical to the upload.
+Browser gates exercise repeated bursts while the cursor points backwards,
+with rotation enabled and disabled, targetless shooting, backpressure,
+release, configurable speed, native display and session death. Historical
+calibration results below concern the gun formulas, which are unchanged.
 
 The installed gun predictor was evaluated against 1,308 distinct parameter
 combinations, using the native AK47 and laser SMG projectile speeds (1.4 and

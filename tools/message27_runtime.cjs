@@ -1,15 +1,29 @@
 // Host bindings only. Imported calculations and source lifecycle blocks are
 // inserted without rewriting their statements or numeric constants.
+function gunBlock(name,source){
+ if(name==='aim-menu')return source.split('\n').filter(line=>!/antiFolder\.add\(MOD, "(?:antiAimMode|jitterActive|jitterOffset|stopJittersOnStop)"/.test(line)).join('\n');
+ if(name!=='active-core')return source;
+ const {parse}=require('./parser.cjs'),pending=[parse(source,{ecmaVersion:'latest'})],edits=[];
+ while(pending.length){const n=pending.pop();
+  if(n.type==='ClassDeclaration'&&n.id.name==='JitterCon'||n.type==='FunctionDeclaration'&&n.id.name==='routineJitter'||n.type==='VariableDeclaration'&&n.declarations.some(d=>d.id.name==='Jitter'||d.id.name?.startsWith('__jitter'))||n.type==='ExpressionStatement'&&n.expression.type==='CallExpression'&&n.expression.callee.name==='setInterval'&&n.expression.arguments[0]?.name==='routineJitter'||n.type==='IfStatement'&&n.test.type==='MemberExpression'&&n.test.object.name==='MOD'&&n.test.property.name==='jitterActive'){edits.push({start:n.start,end:n.end,text:''});continue;}
+  if(n.type==='ReturnStatement'&&n.argument?.type==='ObjectExpression'&&n.argument.properties.some(p=>p.key.name==='J')){edits.push({start:n.argument.start,end:n.argument.end,text:'{'+n.argument.properties.filter(p=>p.key.name!=='J').map(p=>source.slice(p.start,p.end)).join(',')+'}'});continue;}
+  for(const v of Object.values(n))if(Array.isArray(v))pending.push(...v.filter(x=>x?.type));else if(v?.type)pending.push(v);
+ }
+ if(edits.length!==7)throw Error('Imported Jitter removal anchors changed: '+edits.length);
+ for(const e of edits.sort((a,b)=>b.start-a.start))source=source.slice(0,e.start)+e.text+source.slice(e.end);
+ return source;
+}
+function gunDefaults(reference){return Object.fromEntries(Object.entries(reference.defaults).filter(([key])=>!['jitterActive','jitterOffset','stopJittersOnStop','antiAimMode'].includes(key)));}
 function generate(reference,nativeHelpers){
- const block=name=>reference.blocks.find(b=>b.name===name).source;
+ const block=name=>gunBlock(name,reference.blocks.find(b=>b.name===name).source);
  return `// Active __BBY aim from message (27).txt, SHA256 ${reference.upload_sha256}.
 // Source blocks are byte-for-byte audited against the compressed reference.
 function __createMessage27Core(MOD,environment) {
- let stopped=false,started=false,depth=0,phase='aim',jitterTimer=null,jitterShotUntil=0,preparingShot=false,lastRotationAt=-Infinity,lastRotationAngle=null;
+ let stopped=false,started=false,depth=0,phase='aim';
  const timers=new Map(),removers=[];
  function cycle(fn,kind=phase){const previous=phase;phase=kind;if(depth++===0)environment.beginCycle(kind);try{return fn();}finally{if(--depth===0)environment.endCycle();phase=previous;}}
- function emit(packet){if(stopped)return false;if(packet[0]===4&&MOD.jitterActive)prepareJitterShot();const result=depth?environment.send(packet,{kind:phase}):cycle(()=>environment.send(packet,{kind:phase}));if(result&&packet[0]===6&&phase==='jitter'){lastRotationAt=Date.now();lastRotationAngle=packet[1];}return result;}
- function timer(method,fn,delay){let id;const interval=method==='setInterval',jitter=fn.name==='routineJitter';if(interval&&jitter&&jitterTimer!==null)clear(jitterTimer);const wrapped=()=>{if(!interval)timers.delete(id);if(!stopped&&!(jitter&&pauseJitter()))cycle(fn,jitter?'jitter':fn.name==='routineAntiAimbot'?'anti':'aim');};id=environment.window[method](wrapped,delay);timers.set(id,interval);if(interval&&jitter)jitterTimer=id;return id;}
+ function emit(packet){if(stopped)return false;return depth?environment.send(packet,{kind:phase}):cycle(()=>environment.send(packet,{kind:phase}));}
+ function timer(method,fn,delay){let id;const interval=method==='setInterval';const wrapped=()=>{if(!interval)timers.delete(id);if(!stopped)cycle(fn,fn.name==='routineAntiAimbot'?'anti':'aim');};id=environment.window[method](wrapped,delay);timers.set(id,interval);return id;}
  function clear(id){const interval=timers.get(id);if(interval===undefined)return;environment.window[interval?'clearInterval':'clearTimeout'](id);timers.delete(id);}
  const setInterval=(fn,delay)=>timer('setInterval',fn,delay),setTimeout=(fn,delay)=>timer('setTimeout',fn,delay),clearTimeout=clear,clearInterval=clear;
  const window={Math,JSON,setInterval,setTimeout,clearInterval,clearTimeout,addEventListener(type,fn,options){environment.window.addEventListener(type,fn,options);removers.push(()=>environment.window.removeEventListener(type,fn,options));}};
@@ -26,33 +40,16 @@ function __createMessage27Core(MOD,environment) {
  // Running the old BestModMenuConfig migration here would replace deliberate
  // values such as 100/.1/.62/220 and re-enable a saved disabled mouse FOV.
  ${block('active-core')}
- var GetAllTargets=__BBY.G,Aimbot=__BBY.A,Jitter=__BBY.J,AimbotRefresh=__BBY.R;
+ var GetAllTargets=__BBY.G,Aimbot=__BBY.A,AimbotRefresh=__BBY.R;
  ${block('integration')}
- // Host arbitration: keep the uploaded prediction maths, but never let an
- // idle rotation overwrite an attack, or correct its angle after the attack.
- function spearActive(){return !!MOD.AimbotSpearEnabled&&GetAllTargets.selfWeapon===SPEAR_IDX;}
- function gunActive(){return !!MOD.AimBotEnabled||spearActive();}
- function pauseJitter(){return !!(Aimbot.mouseDown||Date.now()<jitterShotUntil||(MOD.autoFire&&gunActive()&&__aimShotAllowed()));}
- function prepareJitterShot(){
-  if(!MOD.jitterActive||preparingShot)return;
-  jitterShotUntil=Date.now()+150;
-  preparingShot=true;
-  try{const angle=gunActive()?(spearActive()?Aimbot.spearResolve():Aimbot.resolve()):null;if(gunActive()&&__aimShotAllowed()&&Number.isFinite(angle))emit([6,angle]);else{const manual=environment.manualAngle?.();if(Number.isFinite(manual))cycle(()=>emit([6,manual]),'jitter');}}finally{preparingShot=false;}
- }
- const resolveSource=Aimbot.resolve;
- Aimbot.resolve=function(){const angle=resolveSource.call(this);if(MOD.jitterActive&&pauseJitter()&&!preparingShot&&phase!=='jitter'&&gunActive()&&__aimShotAllowed()&&Number.isFinite(angle))emit([6,angle]);return angle;};
- function recentRotation(){const age=Date.now()-lastRotationAt;return age>=0&&age<150;}
- function ownsJitterDirection(){return !!MOD.jitterActive&&(pauseJitter()?(gunActive()&&__aimShotAllowed()):recentRotation());}
  ${block('aim-input')}
  ${block('self-player-helper')}
  ${block('__aimShotAllowed')}
  ${block('aimbotTick')}
  ${block('anti-move-state')}
  ${block('routineAntiAimbot')}
- ${block('external-jitter-state')}
- ${block('external-jitter')}
- function afterFire(){${block('native-fire-tail')}}
- function start(){if(started||stopped)return;started=true;setInterval(routineJitter,100);${block('source-loops')}}
+ function afterFire(){Aimbot.mouseDown=true;Aimbot.scheduleRefresh();}
+ function start(){if(started||stopped)return;started=true;setInterval(()=>environment.rotationTick(),50);${block('source-loops')}}
  function render(ctx,view,pixelScale=1){
   // The host resets the native canvas transform before overlays. Convert only
   // draw coordinates to backing pixels; source mouse/camera maths stay logical.
@@ -67,13 +64,12 @@ function __createMessage27Core(MOD,environment) {
  aimFolder.open();
  const folders=[aimFolder,spearFolder,antiFolder,lineFolder];for(const folder of [...folders,keyFolder])AimbotHookSave(folder);return {folders,controllers:folders.flatMap(folder=>folder.__controllers)};
  }
- return {targets:GetAllTargets,aim:Aimbot,Target:GetAllTargets.players[1].constructor,Jitter,
+ return {targets:GetAllTargets,aim:Aimbot,Target:GetAllTargets.players[1].constructor,
    start,installMenu,render,tick:()=>cycle(aimbotTick),refreshTargets:()=>cycle(AimbotRefresh),
    position(kind,id,px,py,weapon,packed){return cycle(()=>{const target=GetAllTargets[kind][id];if(kind==='players'&&Number.isFinite(packed)){target.weaponIdx=(packed>>8)&255;if(id===World.PLAYER.id)GetAllTargets.selfWeapon=target.weaponIdx;}target.update(px,py,weapon);if(kind==='players'&&id===World.PLAYER.id){Aimbot.selfId=id;GetAllTargets.selfPosition={x:px,y:py};GetAllTargets.selfFromPacket=Date.now();Aimbot.dead=false;}});},
-   beforeFire:()=>cycle(prepareJitterShot),afterFire:()=>cycle(()=>{if(MOD.jitterActive){Aimbot.mouseDown=true;Aimbot.scheduleRefresh();}else afterFire();}),afterRelease(){Aimbot.mouseDown=false;jitterShotUntil=Date.now()+50;},onMove(mask){GetAllTargets.myLastMoveDirection=mask;return true;},
-   ownsJitterDirection,jitterRenderAngle:()=>MOD.jitterActive&&!pauseJitter()&&recentRotation()?lastRotationAngle*Math.PI/180:null,
-   jitterTick:()=>!pauseJitter()&&cycle(routineJitter,'jitter'),antiTick:()=>cycle(routineAntiAimbot,'anti'),
-   onHandshake(){Aimbot.dead=false;jitterShotUntil=0;lastRotationAt=-Infinity;lastRotationAngle=null;},onOtherDie(id){GetAllTargets.players[id]?.setInactive();},sync(){},
+   afterFire:()=>cycle(afterFire),afterRelease(){Aimbot.mouseDown=false;},onMove(mask){GetAllTargets.myLastMoveDirection=mask;return true;},
+   antiTick:()=>cycle(routineAntiAimbot,'anti'),
+   onHandshake(){Aimbot.dead=false;},onOtherDie(id){GetAllTargets.players[id]?.setInactive();},sync(){},
    ensure(id){if(id>0){for(const group of [GetAllTargets.players,GetAllTargets.ghouls])if(!group[id])group[id]=new this.Target(id);}},
    dispose(){if(stopped)return;stopped=true;for(const id of [...timers.keys()])clear(id);for(const remove of removers)remove();Aimbot.mouseDown=false;}
  };
@@ -92,10 +88,10 @@ function __createIlmAdapter(settings,environment){
  core.ensure=originalEnsure;
  return core;
 }
-function __ilmAimDefaults(){return ${JSON.stringify(reference.defaults)};}
-function __ilmAimConstraints(){return {limits:{mouseFov:[0,12345],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],aimStick:[0,800],aimHoldMs:[0,600],leadCap:[40,500],aimSmooth:[.05,1],lockId:[-1,120],aimMaxRange:[1,20000],spearSpeed:[20,60],spearMaxRange:[200,600],spearHandFwd:[-60,60],spearHandSide:[-60,60],spearStabDeg:[.5,10],antiAimCoefficient:[10,500],jitterOffset:[0,360]},choices:{target:['players','ghouls','all'],resolverType:['linear'],ShowRealAngles:['never','always','withAim'],antiAimMode:['At target','Round','Round2']}};}
+function __ilmAimDefaults(){return ${JSON.stringify(gunDefaults(reference))};}
+function __ilmAimConstraints(){return {limits:{mouseFov:[0,12345],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],aimStick:[0,800],aimHoldMs:[0,600],leadCap:[40,500],aimSmooth:[.05,1],lockId:[-1,120],aimMaxRange:[1,20000],spearSpeed:[20,60],spearMaxRange:[200,600],spearHandFwd:[-60,60],spearHandSide:[-60,60],spearStabDeg:[.5,10],antiAimCoefficient:[10,500]},choices:{target:['players','ghouls','all'],resolverType:['linear'],ShowRealAngles:['never','always','withAim']}};}
 function __ilmMouseToWorld(point,view){return {x:point.x/view.scale-view.x,y:point.y/view.scale-view.y};}
 ${nativeHelpers.join('\n\n')}
 `;
 }
-module.exports={generate};
+module.exports={generate,gunBlock,gunDefaults};

@@ -9,8 +9,8 @@ function verifyMessage27Settings(m,n,s){
  function time(){n.setClock?.(clock);}
  function packet(id,x,y,packed=0){m.trackPacket(n.playerType??0,id,1,x,y,true,0,packed);}
  function setup(){
-  m.settings.AimBotEnabled=false;m.settings.AntiAimbot=false;m.settings.jitterActive=false;m.onSessionStart();m.onHandshake();clock+=1000;time();
-  Object.assign(m.settings,{AimBotEnabled:false,AimbotSpearEnabled:false,autoFire:false,mouseFovEnable:false,mouseFov:900,target:'players',TargetTeammate:false,lockId:-1,distanceCoefficient:100,offsetCoefficient:1,aimSmooth:1,leadCap:500,aimStick:0,aimHoldMs:0,aimMaxRange:2400,spearSpeed:46.5,spearMaxRange:560,spearHandFwd:22,spearHandSide:-39,spearStabDeg:2.5,antiAimMode:'At target',jitterOffset:85});
+  m.settings.AimBotEnabled=false;m.settings.AntiAimbot=false;m.settings.JitterEnabled=false;m.onSessionStart();m.onHandshake();clock+=1000;time();
+  Object.assign(m.settings,{AimBotEnabled:false,AimbotSpearEnabled:false,autoFire:false,mouseFovEnable:false,mouseFov:900,target:'players',TargetTeammate:false,lockId:-1,distanceCoefficient:100,offsetCoefficient:1,aimSmooth:1,leadCap:500,aimStick:0,aimHoldMs:0,aimMaxRange:2400,spearSpeed:46.5,spearMaxRange:560,spearHandFwd:22,spearHandSide:-39,spearStabDeg:2.5});
   for(const id of [1,2,3])metadata[id]={[s['а༤̘']]:-1,[s['ᴌ̗ⲟ']]:7};clans[0]={[s['ոᚄރ']]:7};packet(1,1000,1000);
  }
  function measurement(){const p=m.aim.targetPlayer;return {target:p?(m.targets.players[p.id]===p?'players:':'ghouls:')+p.id:null,angle:m.aim.lastAngle,point:[m.targets.lines[0].x2,m.targets.lines[0].y2]};}
@@ -28,8 +28,7 @@ function verifyMessage27Settings(m,n,s){
   compare('target',['players','ghouls'],()=>{packet(2,1400,1000);m.trackPacket(13,0,17,1200,1000,true);m.settings.AimBotEnabled=true;m.aimModule.refreshTargets();},()=>measurement().target);
   const spear=()=>{packet(1,1000,1000,5<<8);packet(2,1450,1000);for(let i=1;i<=3;i++){clock+=50;time();packet(2,1450,1000+20*i);}m.settings.AimbotSpearEnabled=true;m.aim.refresh();};
   for(const[key,values]of [['spearSpeed',[20,60]],['spearMaxRange',[200,600]],['spearHandFwd',[-60,60]],['spearHandSide',[-60,60]],['spearStabDeg',[.5,10]]])compare(key,values,spear,()=>({target:measurement().target,angle:m.aim.lastAngle,point:[m.targets.lines[1].x2,m.targets.lines[1].y2]}));
-  compare('jitterOffset',[0,85],()=>{packet(2,1400,1000);m.aimModule.Jitter.jitterStep=false;},()=>m.aimModule.Jitter.getJitterAngle());
   return {status:'passed',gui_controls_live:true,checked:results.length,results,conditional_settings:{mouseFov:'requires mouseFovEnable; source values above 1600 use 900',prediction:'distance/offset need target velocity to change lead',spear:'spear fields require spear mode and weapon 5'}};
- }finally{Date.now=old.now;m.settings.AimBotEnabled=false;m.settings.AntiAimbot=false;m.settings.jitterActive=false;m.onSessionStart();m.onHandshake();self.id=old.id;n.network.state=old.state;m.reconnect.sessionEnded=old.ended;for(const[id,value]of old.meta)metadata[id]=value;clans[0]=old.clan;Object.assign(m.settings,old.settings);m.setSetting('AimBotEnabled',old.settings.AimBotEnabled);}
+ }finally{Date.now=old.now;m.settings.AimBotEnabled=false;m.settings.AntiAimbot=false;m.settings.JitterEnabled=false;m.onSessionStart();m.onHandshake();self.id=old.id;n.network.state=old.state;m.reconnect.sessionEnded=old.ended;for(const[id,value]of old.meta)metadata[id]=value;clans[0]=old.clan;Object.assign(m.settings,old.settings);m.setSetting('AimBotEnabled',old.settings.AimBotEnabled);}
 }
 module.exports={verifyMessage27Settings};

@@ -1,5 +1,5 @@
 # Preserve literal imported source blocks, including CRLF.
 recovery/retired-untitled/untitled-aim.js -text whitespace=cr-at-eol,-blank-at-eol
 # Keep uploaded aim blocks byte-identical, including their CRLF line endings.
-mod/ilm-aim.js -text whitespace=cr-at-eol
-dist/game.modded.js -text whitespace=cr-at-eol
+mod/ilm-aim.js -text whitespace=cr-at-eol,-blank-at-eol
+dist/game.modded.js -text whitespace=cr-at-eol,-blank-at-eol

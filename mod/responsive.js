@@ -50,7 +50,7 @@ function __installDevastMod(B) {
     }
   }
   const MOD = new HackCon();
-  Object.assign(MOD, {zoomFactor:1, showFunctionList:true},__ilmAimDefaults());
+  Object.assign(MOD, {zoomFactor:1, showFunctionList:true,JitterEnabled:false,JitterSpeed:360},__ilmAimDefaults());
   const aimKeys=Object.keys(__ilmAimDefaults());
   const AIM_SAVE='DevastMessage27:aim:v1';
   const aimDefaults=Object.fromEntries(aimKeys.map(key=>[key,MOD[key]]));
@@ -58,7 +58,7 @@ function __installDevastMod(B) {
   const SAVE = 'DevastILM:settings:v3', LEGACY_SAVE = 'BestModMenuConfig';
   const transient = new Set(['Token', 'token', 'tokenId', 'userId']);
   const keySettings = ['AimbotKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey','AntiAimbotKey','JitterKey','HideAngleKey'];
-  const limits = {zoomFactor:[.33,2],Xraytransparency:[.05,1],...__ilmAimConstraints().limits};
+  const limits = {JitterSpeed:[1,3600],zoomFactor:[.33,2],Xraytransparency:[.05,1],...__ilmAimConstraints().limits};
   const choices = __ilmAimConstraints().choices;
   function validateSetting(key,value) {
     if (!Object.prototype.hasOwnProperty.call(defaults,key) || typeof value !== typeof defaults[key]) throw new Error('Invalid setting: '+key);
@@ -753,7 +753,7 @@ function __installDevastMod(B) {
   let aimCycleDepth=0,aimCycleWritable=false;
   const aimTransport={cycles:0,blockedCycles:0,nativeYields:0,invalidCycles:0,lastInvalidReason:null};
   const aimModule=__createIlmAdapter(MOD,{
-    window,document,selfId:()=>B.world.ᅠᏧ‍?.id||0,selfPosition:()=>B.world.ᅠᏧ‍||{x:-1,y:-1},manualAngle:()=>Number.isFinite(B.input?.angle)?B.input.angle*180/Math.PI:null,
+    window,document,selfId:()=>B.world.ᅠᏧ‍?.id||0,selfPosition:()=>B.world.ᅠᏧ‍||{x:-1,y:-1},rotationTick:()=>updateJitter(performance.now(),true),
     playerInfo:id=>({exists:!!playerMeta(id),team:playerMeta(id)?.а༤̘??-1,membership:playerMeta(id)?.ᴌ̗ⲟ}),
     clanInfo:id=>({exists:!!B.world.ﾠࡅ‍[id],membership:B.world.ﾠࡅ‍[id]?.ոᚄރ}),persist,setKey:(key,value)=>setSetting(key,value),
     beginCycle:()=>{if(aimCycleDepth++===0){aimCycleWritable=playing()&&!reconnect.sessionEnded&&automationReady('aim');if(aimCycleWritable)aimTransport.cycles++;else aimTransport.blockedCycles++;}},
@@ -762,7 +762,10 @@ function __installDevastMod(B) {
       if(!aimCycleWritable||!playing()||reconnect.sessionEnded||connectionSocket&&connectionSocket.readyState!==1)return false;
       // The source calculates first. Reject its whole automatic cycle when
       // that calculation used a missing player or a removed/own target.
-      if([4,5,6].includes(packet[0])){const reason=source?.kind==='jitter'?invalidAimState(true):invalidAimState();if(reason){aimCycleWritable=false;aimTransport.invalidCycles++;aimTransport.lastInvalidReason=reason;return false;}}
+      if([4,5,6].includes(packet[0])){const reason=invalidAimState();if(reason){aimCycleWritable=false;aimTransport.invalidCycles++;aimTransport.lastInvalidReason=reason;return false;}}
+      if(packet[0]===6&&MOD.JitterEnabled&&!jitterAiming())return false;
+      if(packet[0]===6)stopJitter();
+      if(packet[0]===4){stopJitter();jitter.fireUntil=performance.now()+150;if(!__send([6,Aimbot.lastAngle],true,true))return false;}
       return __send(packet,true,true);
     }
   });
@@ -928,15 +931,16 @@ function __installDevastMod(B) {
     return null;
   }
   function resetAimForSession() {
-    lastSentAngle=null;
+    lastSentAngle=null;automaticDirection=false;
+    stopJitter();jitter.fireUntil=-Infinity;
     Aimbot.onDeath();
     Aimbot.targetPlayer=null;
     // A new handshake can finish before the source's next 50 ms id=0 tick.
     // Clear both entity histories before accepting positions from that session.
     for(const group of [GetAllTargets.players,GetAllTargets.ghouls])for(const target of group)if(target?.active)target.setInactive();
   }
-  let lastSentAngle = null,lastSentPlayer = 0;
-  const appliedToggles={AimBotEnabled:MOD.AimBotEnabled};
+  let lastSentAngle = null,lastSentPlayer = 0,automaticDirection=false;
+  const appliedToggles={AimBotEnabled:MOD.AimBotEnabled,JitterEnabled:MOD.JitterEnabled};
   function __send(value, forceAngle = false, sourceAngle = false) {
     if (!playing()) return false;
     const packet = typeof value === 'string' ? JSON.parse(value) : value;
@@ -955,11 +959,35 @@ function __installDevastMod(B) {
       recentCombatCommands.push({at:performance.now(),op:packet[0]});
       if (recentCombatCommands.length > 180) recentCombatCommands.shift();
     }
-    if (packet[0] === 6) {lastSentAngle = packet[1];lastSentPlayer = B.world.ᅠᏧ‍.id;}
+    if (packet[0] === 6) {lastSentAngle = packet[1];lastSentPlayer = B.world.ᅠᏧ‍.id;automaticDirection=sourceAngle||jitter.spinning;}
     recordCommand(packet[0]);
     return true;
   }
-  function beforeFire() {if(!playing()||reconnect.sessionEnded)return;aimModule.sync();aimModule.beforeFire();}
+  // Restored from our earlier rotating Jitter (f978ade), independent of mouse
+  // and movement input. Only its 50 ms timer is allowed to send idle angles.
+  const jitter={angle:0,updatedAt:null,lastSentAt:-Infinity,fireUntil:-Infinity,spinning:false,deferredDirections:0};
+  function gunAimActive(){return MOD.AimBotEnabled||MOD.AimbotSpearEnabled&&GetAllTargets.selfWeapon===5;}
+  function jitterAiming(){return !!(Aimbot.mouseDown||performance.now()<jitter.fireUntil||MOD.autoFire&&gunAimActive()&&!invalidAimState());}
+  function stopJitter(){jitter.spinning=false;jitter.updatedAt=null;jitter.lastSentAt=-Infinity;}
+  function updateJitter(now,sendDirection=false){
+    if(!MOD.JitterEnabled||invalidAimState(true)||jitterAiming()||B.chatActive?.()){stopJitter();return;}
+    if(jitter.updatedAt===null){jitter.angle=((B.input?.angle||0)*180/Math.PI%360+360)%360;jitter.updatedAt=now;}
+    const visualNow=Math.max(now,jitter.updatedAt);
+    jitter.angle=(jitter.angle+(visualNow-jitter.updatedAt)*MOD.JitterSpeed/1000)%360;jitter.updatedAt=visualNow;jitter.spinning=true;
+    if(sendDirection&&now-jitter.lastSentAt>=50){if(!automationReady('aim')){jitter.deferredDirections++;return;}if(__send([6,jitter.angle]))jitter.lastSentAt=now;}
+  }
+  function beforeFire(){
+    if(!playing()||reconnect.sessionEnded||Aimbot.dead)return false;
+    if(!MOD.JitterEnabled&&!gunAimActive()&&!automaticDirection)return true;
+    jitter.fireUntil=performance.now()+150;stopJitter();
+    if(!automationReady('aim'))return false;
+    if(gunAimActive()){
+      const angle=MOD.AimbotSpearEnabled&&GetAllTargets.selfWeapon===5?Aimbot.spearResolve():Aimbot.resolve();
+      if(!invalidAimState())return __send([6,angle],true,true);
+    }
+    // Target loss must not shoot along the last idle rotation or hidden angle.
+    return Number.isFinite(B.input?.angle)?__send([6,B.input.angle*180/Math.PI],true):true;
+  }
   function persist() {
     refreshLootFilter();
     const saved = {};
@@ -987,6 +1015,7 @@ function __installDevastMod(B) {
       if (conflict) MOD[conflict] = MOD[key];
     }
     MOD[key] = value;
+    if(key==='JitterEnabled'&&!value)stopJitter();
     if (key === 'NicknameColor') {
       for (let id=1;id<B.world.ᴎ︃ᄉ.length;id++) {
         const meta=playerMeta(id);
@@ -1963,6 +1992,7 @@ function __installDevastMod(B) {
       updateTargets();
       updateMouse();
     }
+    updateJitter(now);
     automate(now);
     if (!B.synchronizedRender) draw();
   }
@@ -2005,7 +2035,7 @@ function __installDevastMod(B) {
     const bindings = {
       AimbotKey:'AimBotEnabled',
       AntiAimbotKey:'AntiAimbot',
-      JitterKey:'jitterActive',
+      JitterKey:'JitterEnabled',
       HideAngleKey:'hideAimbotAngle',
       AutoBuiledKey: 'AutoBuiledEnabled',
       SAutoLootKey: 'SAutoLootEnabled',
@@ -2095,6 +2125,9 @@ function __installDevastMod(B) {
     add(visual, 'Xraytransparency', 'Building opacity', .05, 1, .05);
     for (const [key,label] of [['TeamClanColor','Цвет своего клана'],['EnemyClanColor','Цвет чужого клана'],['NicknameColor','Цвет ника']]) visual.addColor(MOD, key).name(label).onChange(value=>setSetting(key,value));
     const aimControls=aimModule.installMenu(menu).controllers;
+    const jitterMenu=menu.addFolder('Jitter');
+    add(jitterMenu,'JitterEnabled','Enabled');
+    add(jitterMenu,'JitterSpeed','Speed (degrees/sec)',1,3600,1);
     for (const control of aimControls) control.onChange(value=>{const range=limits[control.property];if(typeof value==='number'&&range)value=Math.max(range[0],Math.min(range[1],value));setSetting(control.property,value);});
     for(const control of aimControls){
       if(typeof defaults[control.property]!=='number')continue;
@@ -2234,16 +2267,16 @@ function __installDevastMod(B) {
     settings: MOD,
     beforeFire,
     afterFire:()=>aimModule.afterFire(),
-    afterRelease:()=>aimModule.afterRelease(),
+    afterRelease:()=>{aimModule.afterRelease();jitter.fireUntil=performance.now()+150;},
     onMove:move=>aimModule.onMove(move),
-    onHandshake:()=>{lastSentAngle=null;aimModule.onHandshake();},
+    onHandshake:()=>{lastSentAngle=null;stopJitter();jitter.fireUntil=-Infinity;aimModule.onHandshake();},
     onSessionStart:resetAimForSession,
-    nativePacketAngle:angle=>playing()&&!Aimbot.dead?Aimbot.packetAngle(angle):angle,
+    nativePacketAngle:angle=>playing()&&!Aimbot.dead&&!(jitterAiming()&&invalidAimState())?Aimbot.packetAngle(angle):angle,
     // Compatibility property: the source replaces the primary angle argument
     // through packetAngle and retains native direction clocks and sends.
-    get controlsAimDirection() { return false; },
-    get controlsJitterDirection() { return playing()&&!Aimbot.dead&&aimModule.ownsJitterDirection(); },
-    get jitterAngle() { return playing()&&!Aimbot.dead&&MOD.ShowRealAngles!=='never'?aimModule.jitterRenderAngle():null; },
+    get controlsAimDirection() {return playing()&&!Aimbot.dead&&!reconnect.sessionEnded&&(MOD.JitterEnabled&&!jitterAiming()||gunAimActive()&&!invalidAimState());},
+    get jitterAngle() { return playing()&&!Aimbot.dead&&jitter.spinning&&MOD.ShowRealAngles!=='never'?jitter.angle*Math.PI/180:null; },
+    jitterTick:()=>updateJitter(performance.now(),true),
     get aimRenderAngle() { return null; },
     targets: GetAllTargets,
     trackPacket,

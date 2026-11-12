@@ -20,7 +20,7 @@ function calibrate(){
  const f=fixture(),m=f.mod,scenes=datasets(),profiles=[],defaults={...m.settings};
  const score=(profile,split)=>{
   const misses=[];for(const scene of scenes){if(scene.split!==split)continue;
-   m.settings.AimBotEnabled=false;m.onSessionStart();m.onHandshake();Object.assign(m.settings,defaults,profile,{AimBotEnabled:true,autoFire:false,jitterActive:false,AimbotSpearEnabled:false,mouseFovEnable:false,lockId:2,hideAimbotAngle:false});
+   m.settings.AimBotEnabled=false;m.onSessionStart();m.onHandshake();Object.assign(m.settings,defaults,profile,{AimBotEnabled:true,autoFire:false,JitterEnabled:false,AimbotSpearEnabled:false,mouseFovEnable:false,lockId:2,hideAimbotAngle:false});
    for(const frame of scene.frames){f.setClock(frame.at);m.trackPacket(1,1,1,frame.own.x,frame.own.y,true);m.trackPacket(1,2,1,frame.target.x,frame.target.y,true);
     if(frame.future){const a=m.aim.lastAngle*Math.PI/180,c=Math.cos(a),s=Math.sin(a);let best=Infinity;for(const[x,y,d]of frame.future)best=Math.min(best,Math.hypot(x-d*c,y-d*s));misses.push(best);}
    }

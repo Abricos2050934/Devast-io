@@ -1,11 +1,11 @@
 // Active __BBY aim from message (27).txt, SHA256 f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0.
 // Source blocks are byte-for-byte audited against the compressed reference.
 function __createMessage27Core(MOD,environment) {
- let stopped=false,started=false,depth=0,phase='aim',jitterTimer=null,jitterShotUntil=0,preparingShot=false,lastRotationAt=-Infinity,lastRotationAngle=null;
+ let stopped=false,started=false,depth=0,phase='aim';
  const timers=new Map(),removers=[];
  function cycle(fn,kind=phase){const previous=phase;phase=kind;if(depth++===0)environment.beginCycle(kind);try{return fn();}finally{if(--depth===0)environment.endCycle();phase=previous;}}
- function emit(packet){if(stopped)return false;if(packet[0]===4&&MOD.jitterActive)prepareJitterShot();const result=depth?environment.send(packet,{kind:phase}):cycle(()=>environment.send(packet,{kind:phase}));if(result&&packet[0]===6&&phase==='jitter'){lastRotationAt=Date.now();lastRotationAngle=packet[1];}return result;}
- function timer(method,fn,delay){let id;const interval=method==='setInterval',jitter=fn.name==='routineJitter';if(interval&&jitter&&jitterTimer!==null)clear(jitterTimer);const wrapped=()=>{if(!interval)timers.delete(id);if(!stopped&&!(jitter&&pauseJitter()))cycle(fn,jitter?'jitter':fn.name==='routineAntiAimbot'?'anti':'aim');};id=environment.window[method](wrapped,delay);timers.set(id,interval);if(interval&&jitter)jitterTimer=id;return id;}
+ function emit(packet){if(stopped)return false;return depth?environment.send(packet,{kind:phase}):cycle(()=>environment.send(packet,{kind:phase}));}
+ function timer(method,fn,delay){let id;const interval=method==='setInterval';const wrapped=()=>{if(!interval)timers.delete(id);if(!stopped)cycle(fn,fn.name==='routineAntiAimbot'?'anti':'aim');};id=environment.window[method](wrapped,delay);timers.set(id,interval);return id;}
  function clear(id){const interval=timers.get(id);if(interval===undefined)return;environment.window[interval?'clearInterval':'clearTimeout'](id);timers.delete(id);}
  const setInterval=(fn,delay)=>timer('setInterval',fn,delay),setTimeout=(fn,delay)=>timer('setTimeout',fn,delay),clearTimeout=clear,clearInterval=clear;
  const window={Math,JSON,setInterval,setTimeout,clearInterval,clearTimeout,addEventListener(type,fn,options){environment.window.addEventListener(type,fn,options);removers.push(()=>environment.window.removeEventListener(type,fn,options));}};
@@ -391,10 +391,7 @@ function __createMessage27Core(MOD,environment) {
         if (MOD.AimBotEnabled) {
             // While jitter is enabled, the dedicated jitter loop owns angle packets.
             // This prevents normal target refreshes from instantly overwriting the side-to-side angle.
-            if (MOD.jitterActive) {
-                Aimbot.resolve();
-                return;
-            }
+            
             var __babaAimAngle = Aimbot.resolve();
             // Do not force the previous angle after the real target disappeared.
             if (Aimbot.targetPlayer !== null && isFinite(+__babaAimAngle)) {
@@ -402,74 +399,25 @@ function __createMessage27Core(MOD,environment) {
             }
         }
     }
-    class JitterCon {
-        constructor() {
-            this.roflAngle = 0;
-            this.roflStep = 1;
-            this.jitterStep = false;
-        }
-        getJitterAngle() {
-            this.jitterStep = !this.jitterStep;
-            if (this.jitterStep) {
-                return this.getAntiAimAngle() + MOD.jitterOffset;
-            } else {
-                return this.getAntiAimAngle() - MOD.jitterOffset;
-            }
-        }
-        getAntiAimAngle() {
-            if (MOD.antiAimMode == "At target") {
-                return Aimbot.resolve() + 180;
-            }
-            Aimbot.resolve();
-            if (MOD.antiAimMode == "Round") {
-                this.roflStep++;
-                return this.roflAngle += 4 + Math.floor(Math.abs(this.roflStep % 600 - 300) / 12);
-            }
-            if (MOD.antiAimMode == "Round2") {
-                this.roflStep++;
-                return Math.floor(this.roflStep % 20 * 18);
-            }
-            return MOD.antiAimMode;
-        }
-    }
+    
     var GetAllTargets = new GetAllTargetsCon();
     var Aimbot = new AimbotCon();
-    var Jitter = new JitterCon();
+    
 
     // Jitter must actively send angle packets; merely toggling jitterActive changes no rotation.
     // Use the same CODE36 angle packet as the aimbot and alternate around the anti-aim base angle.
-    var __jitterLastX = NaN, __jitterLastY = NaN, __jitterLastMoveAt = Date.now();
-    function routineJitter() {
-        try {
-            if (!MOD.jitterActive || !World || !World.PLAYER) return;
-            if (typeof ո︀̜ === "undefined" || typeof ո︀̜.ε٣︀ !== "function") return;
-
-            var px = +World.PLAYER[x], py = +World.PLAYER[y];
-            if (isFinite(px) && isFinite(py)) {
-                if (px !== __jitterLastX || py !== __jitterLastY) {
-                    __jitterLastX = px;
-                    __jitterLastY = py;
-                    __jitterLastMoveAt = Date.now();
-                }
-                if (MOD.stopJittersOnStop && Date.now() - __jitterLastMoveAt > 180) return;
-            }
-
-            var angle = Jitter.getJitterAngle();
-            if (!isFinite(+angle)) return;
-            angle = ((+angle % 360) + 360) % 360;
-            ո︀̜.ε٣︀(window.JSON.stringify([6, angle]));
-        } catch (e) {}
-    }
-    setInterval(routineJitter, 100);
+    
+    
+    
     window.Aimbot = Aimbot;
     window.GetAllTargets = GetAllTargets;
     window.AimbotRefresh = AimbotRefresh;
     window.addEventListener("mousemove", function(event) {
         GetAllTargets.mousePosition.x = event.clientX;
         GetAllTargets.mousePosition.y = event.clientY;
-    });  return { G: GetAllTargets, A: Aimbot, J: Jitter, R: AimbotRefresh };
+    });  return {G: GetAllTargets,A: Aimbot,R: AimbotRefresh};
 })();
- var GetAllTargets=__BBY.G,Aimbot=__BBY.A,Jitter=__BBY.J,AimbotRefresh=__BBY.R;
+ var GetAllTargets=__BBY.G,Aimbot=__BBY.A,AimbotRefresh=__BBY.R;
  Aimbot.selfId = -1;
 Aimbot.dead = false;
 Aimbot.mouseDown = false;
@@ -590,21 +538,6 @@ Aimbot.spearResolve = function() {
         GetAllTargets.lines[1].set(me.x, me.y, pt.x, pt.y, dist > (MOD.spearMaxRange || 560) ? 1 : 0);
     return this.lastAngle;
 };
- // Host arbitration: keep the uploaded prediction maths, but never let an
- // idle rotation overwrite an attack, or correct its angle after the attack.
- function spearActive(){return !!MOD.AimbotSpearEnabled&&GetAllTargets.selfWeapon===SPEAR_IDX;}
- function gunActive(){return !!MOD.AimBotEnabled||spearActive();}
- function pauseJitter(){return !!(Aimbot.mouseDown||Date.now()<jitterShotUntil||(MOD.autoFire&&gunActive()&&__aimShotAllowed()));}
- function prepareJitterShot(){
-  if(!MOD.jitterActive||preparingShot)return;
-  jitterShotUntil=Date.now()+150;
-  preparingShot=true;
-  try{const angle=gunActive()?(spearActive()?Aimbot.spearResolve():Aimbot.resolve()):null;if(gunActive()&&__aimShotAllowed()&&Number.isFinite(angle))emit([6,angle]);else{const manual=environment.manualAngle?.();if(Number.isFinite(manual))cycle(()=>emit([6,manual]),'jitter');}}finally{preparingShot=false;}
- }
- const resolveSource=Aimbot.resolve;
- Aimbot.resolve=function(){const angle=resolveSource.call(this);if(MOD.jitterActive&&pauseJitter()&&!preparingShot&&phase!=='jitter'&&gunActive()&&__aimShotAllowed()&&Number.isFinite(angle))emit([6,angle]);return angle;};
- function recentRotation(){const age=Date.now()-lastRotationAt;return age>=0&&age<150;}
- function ownsJitterDirection(){return !!MOD.jitterActive&&(pauseJitter()?(gunActive()&&__aimShotAllowed()):recentRotation());}
  var __oTouchAim = function(event) {
     // changedTouches[0] = the finger that just moved/landed — the aim intent,
     // not a finger already parked on the joystick
@@ -682,35 +615,8 @@ var __antiMovePattern = [1, 2, 4, 8, 1, 2, 4, 8, 5, 9, 10, 6];
         ո︀̜.ε٣︀(window.JSON.stringify([2, __antiMovePattern[idx]]));
     } catch (e) {}
 }
- var __jitterLastX = NaN, __jitterLastY = NaN, __jitterLastMoveAt = Date.now();
- function routineJitter() {
-        try {
-            if (!__gk(MOD.jitterActive) || !World || !World.PLAYER) return;
-            if (typeof аρ３ === "undefined" || typeof аρ３.ᴉࡃϲ !== "function") return;
-
-            var px = +World.PLAYER[x], py = +World.PLAYER[y];
-            if (isFinite(px) && isFinite(py)) {
-                if (px !== __jitterLastX || py !== __jitterLastY) {
-                    __jitterLastX = px;
-                    __jitterLastY = py;
-                    __jitterLastMoveAt = Date.now();
-                }
-                if (MOD.stopJittersOnStop && Date.now() - __jitterLastMoveAt > 180) return;
-            }
-
-            var angle = Jitter.getJitterAngle();
-            if (!isFinite(+angle)) return;
-            angle = ((+angle % 360) + 360) % 360;
-            аρ３.ᴉࡃϲ(window.JSON.stringify([6, angle]));
-        } catch (e) {}
-    }
- function afterFire(){if (MOD.jitterActive && __gk(MOD.AimBotEnabled)) {
-      var _da = Aimbot.resolve();
-      if (_da !== null) Aimbot.send([6, _da]);
-      }
-Aimbot.mouseDown = true;
-Aimbot.scheduleRefresh();}
- function start(){if(started||stopped)return;started=true;setInterval(routineJitter,100);setInterval(routineAntiAimbot, 50);
+ function afterFire(){Aimbot.mouseDown=true;Aimbot.scheduleRefresh();}
+ function start(){if(started||stopped)return;started=true;setInterval(()=>environment.rotationTick(),50);setInterval(routineAntiAimbot, 50);
 (function aimbotLoop() {
     try {
         aimbotTick();
@@ -825,11 +731,7 @@ spearFolder.add(MOD, "spearStabDeg", 0.5, 10, 0.5).name("Stability");
 spearFolder.add(MOD, "autoFire").name("AutoThrow");
 const antiFolder = menu.addFolder("Anti-Aim / Strafe");
 antiFolder.add(MOD, "AntiAimbot").name("StrafeEnable");
-antiFolder.add(MOD, "antiAimMode", ["At target", "Round", "Round2"]).name("AntiAimMode");
 antiFolder.add(MOD, "antiAimCoefficient", 10, 500, 10).name("AntiAimCoefficient");
-antiFolder.add(MOD, "jitterActive").name("JitterActive");
-antiFolder.add(MOD, "jitterOffset", 0, 360, 1).name("JitterOffset");
-antiFolder.add(MOD, "stopJittersOnStop").name("StopJittersOnStop");
 const lineFolder = menu.addFolder("Aim Line");
 lineFolder.add(MOD, "visualizeResolving").name("ShowAimLine");
 lineFolder.addColor(MOD, "visualizeResolvingColor").name("AimLineColor");
@@ -842,13 +744,12 @@ AimbotMenuSetupKey(keyFolder, "ModMenuKey", "ModMenuKey");
  aimFolder.open();
  const folders=[aimFolder,spearFolder,antiFolder,lineFolder];for(const folder of [...folders,keyFolder])AimbotHookSave(folder);return {folders,controllers:folders.flatMap(folder=>folder.__controllers)};
  }
- return {targets:GetAllTargets,aim:Aimbot,Target:GetAllTargets.players[1].constructor,Jitter,
+ return {targets:GetAllTargets,aim:Aimbot,Target:GetAllTargets.players[1].constructor,
    start,installMenu,render,tick:()=>cycle(aimbotTick),refreshTargets:()=>cycle(AimbotRefresh),
    position(kind,id,px,py,weapon,packed){return cycle(()=>{const target=GetAllTargets[kind][id];if(kind==='players'&&Number.isFinite(packed)){target.weaponIdx=(packed>>8)&255;if(id===World.PLAYER.id)GetAllTargets.selfWeapon=target.weaponIdx;}target.update(px,py,weapon);if(kind==='players'&&id===World.PLAYER.id){Aimbot.selfId=id;GetAllTargets.selfPosition={x:px,y:py};GetAllTargets.selfFromPacket=Date.now();Aimbot.dead=false;}});},
-   beforeFire:()=>cycle(prepareJitterShot),afterFire:()=>cycle(()=>{if(MOD.jitterActive){Aimbot.mouseDown=true;Aimbot.scheduleRefresh();}else afterFire();}),afterRelease(){Aimbot.mouseDown=false;jitterShotUntil=Date.now()+50;},onMove(mask){GetAllTargets.myLastMoveDirection=mask;return true;},
-   ownsJitterDirection,jitterRenderAngle:()=>MOD.jitterActive&&!pauseJitter()&&recentRotation()?lastRotationAngle*Math.PI/180:null,
-   jitterTick:()=>!pauseJitter()&&cycle(routineJitter,'jitter'),antiTick:()=>cycle(routineAntiAimbot,'anti'),
-   onHandshake(){Aimbot.dead=false;jitterShotUntil=0;lastRotationAt=-Infinity;lastRotationAngle=null;},onOtherDie(id){GetAllTargets.players[id]?.setInactive();},sync(){},
+   afterFire:()=>cycle(afterFire),afterRelease(){Aimbot.mouseDown=false;},onMove(mask){GetAllTargets.myLastMoveDirection=mask;return true;},
+   antiTick:()=>cycle(routineAntiAimbot,'anti'),
+   onHandshake(){Aimbot.dead=false;},onOtherDie(id){GetAllTargets.players[id]?.setInactive();},sync(){},
    ensure(id){if(id>0){for(const group of [GetAllTargets.players,GetAllTargets.ghouls])if(!group[id])group[id]=new this.Target(id);}},
    dispose(){if(stopped)return;stopped=true;for(const id of [...timers.keys()])clear(id);for(const remove of removers)remove();Aimbot.mouseDown=false;}
  };
@@ -867,8 +768,8 @@ function __createIlmAdapter(settings,environment){
  core.ensure=originalEnsure;
  return core;
 }
-function __ilmAimDefaults(){return {"AimBotEnabled":false,"AimbotSpearEnabled":false,"spearSpeed":46.5,"spearMaxRange":560,"spearHandFwd":22,"spearHandSide":-39,"spearStabDeg":2.5,"hideAimbotAngle":false,"hidePlayerAngle":false,"target":"players","TargetTeammate":false,"resolverType":"linear","mouseFovEnable":true,"mouseFov":900,"distanceCoefficient":80,"offsetCoefficient":0.8,"aimStick":240,"aimSmooth":0.74,"aimMaxRange":2400,"aimHoldMs":200,"leadCap":280,"visualizeResolving":true,"visualizeResolvingColor":"#FFF200","autoFire":false,"lockId":-1,"AntiAimbot":false,"antiAimMode":"At target","antiAimCoefficient":100,"jitterActive":false,"jitterOffset":85,"stopJittersOnStop":false,"ShowRealAngles":"withAim","AimbotKey":"KeyZ","AntiAimbotKey":"NoKey","JitterKey":"KeyJ","HideAngleKey":"KeyH","ModMenuKey":"KeyM","ModMenuKeyCode":77};}
-function __ilmAimConstraints(){return {limits:{mouseFov:[0,12345],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],aimStick:[0,800],aimHoldMs:[0,600],leadCap:[40,500],aimSmooth:[.05,1],lockId:[-1,120],aimMaxRange:[1,20000],spearSpeed:[20,60],spearMaxRange:[200,600],spearHandFwd:[-60,60],spearHandSide:[-60,60],spearStabDeg:[.5,10],antiAimCoefficient:[10,500],jitterOffset:[0,360]},choices:{target:['players','ghouls','all'],resolverType:['linear'],ShowRealAngles:['never','always','withAim'],antiAimMode:['At target','Round','Round2']}};}
+function __ilmAimDefaults(){return {"AimBotEnabled":false,"AimbotSpearEnabled":false,"spearSpeed":46.5,"spearMaxRange":560,"spearHandFwd":22,"spearHandSide":-39,"spearStabDeg":2.5,"hideAimbotAngle":false,"hidePlayerAngle":false,"target":"players","TargetTeammate":false,"resolverType":"linear","mouseFovEnable":true,"mouseFov":900,"distanceCoefficient":80,"offsetCoefficient":0.8,"aimStick":240,"aimSmooth":0.74,"aimMaxRange":2400,"aimHoldMs":200,"leadCap":280,"visualizeResolving":true,"visualizeResolvingColor":"#FFF200","autoFire":false,"lockId":-1,"AntiAimbot":false,"antiAimCoefficient":100,"ShowRealAngles":"withAim","AimbotKey":"KeyZ","AntiAimbotKey":"NoKey","JitterKey":"KeyJ","HideAngleKey":"KeyH","ModMenuKey":"KeyM","ModMenuKeyCode":77};}
+function __ilmAimConstraints(){return {limits:{mouseFov:[0,12345],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],aimStick:[0,800],aimHoldMs:[0,600],leadCap:[40,500],aimSmooth:[.05,1],lockId:[-1,120],aimMaxRange:[1,20000],spearSpeed:[20,60],spearMaxRange:[200,600],spearHandFwd:[-60,60],spearHandSide:[-60,60],spearStabDeg:[.5,10],antiAimCoefficient:[10,500]},choices:{target:['players','ghouls','all'],resolverType:['linear'],ShowRealAngles:['never','always','withAim']}};}
 function __ilmMouseToWorld(point,view){return {x:point.x/view.scale-view.x,y:point.y/view.scale-view.y};}
 function __ilmPlayerNickname(value,id) {
   return typeof value==='string' ? value+'#'+id : value;
