@@ -28,11 +28,11 @@ async function verifyPhysical(page,symbols) {
  const slider=page.locator('[data-aim-slider-test="distanceCoefficient"]');await slider.scrollIntoViewIfNeeded();const bounds=await slider.boundingBox();assert.ok(bounds);
  for(const fraction of [.02,.98]){await page.mouse.move(bounds.x+bounds.width*.5,bounds.y+bounds.height*.5);await page.mouse.down();await page.mouse.move(bounds.x+bounds.width*fraction,bounds.y+bounds.height*.5,{steps:5});await page.mouse.up();await sample('slider '+fraction,'distanceCoefficient');}
  assert.notEqual(results.at(-2).value,results.at(-1).value);assert.notEqual(results.at(-2).angle,results.at(-1).angle);
- const keys=['distanceCoefficient','offsetCoefficient','aimSmooth','leadCap','aimHoldMs','mouseFov','lockId'];
- await page.evaluate(()=>{window.__numericTransport.restore();window.__devastMod.setSetting('AimBotEnabled',false);window.__devastMod.setSetting('mouseFov',600);});
+ const keys=['distanceCoefficient','offsetCoefficient','aimStick','aimSmooth','leadCap','aimHoldMs','mouseFov','mouseFovEnable','lockId'];
+ await page.evaluate(()=>{window.__numericTransport.restore();const m=window.__devastMod;for(const[key,value]of Object.entries({AimBotEnabled:false,distanceCoefficient:100,offsetCoefficient:.1,aimStick:140,aimSmooth:.62,leadCap:220,mouseFov:600,mouseFovEnable:false}))m.setSetting(key,value);});
  const saved=await page.evaluate(keys=>Object.fromEntries(keys.map(k=>[k,window.__devastMod.settings[k]])),keys);
  await page.reload({waitUntil:'domcontentloaded'});await page.waitForFunction(()=>!!window.__devastMod?.menu);
  const restored=await page.evaluate(keys=>Object.fromEntries(keys.map(k=>[k,window.__devastMod.settings[k]])),keys);assert.deepEqual(restored,saved);
- return {status:'passed',engine:'message27-bby',physical_text_entry:true,enter_and_tab_commit:true,slider_drag:true,native_angle_changes:true,saved_after_reload:restored,samples:results};
+ return {status:'passed',engine:'message27-bby',physical_text_entry:true,enter_and_tab_commit:true,slider_drag:true,native_angle_changes:true,explicit_saved_values:true,saved_after_reload:restored,samples:results};
 }
 module.exports={verifyPhysical};

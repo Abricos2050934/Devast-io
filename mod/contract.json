@@ -43,7 +43,10 @@
     "aim-session-history-reset",
     "verbatim-message27-aim",
     "message27-native-pipeline",
-    "message27-original-menu-layout"
+    "message27-original-menu-layout",
+    "aim-line-native-projection",
+    "live-aim-setting-effects",
+    "versioned-aim-settings-preserved"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -62,7 +65,10 @@
     "tests/ilm-current.test.cjs",
     "tests/mod-traffic.test.cjs",
     "tests/aim-validity.test.cjs",
-    "tests/ilm-native-pipeline.test.cjs"
+    "tests/ilm-native-pipeline.test.cjs",
+    "tests/aim-line-projection.test.cjs",
+    "tests/aim-settings-persistence.test.cjs",
+    "tests/aim-settings-effects.test.cjs"
   ],
   "required_browsers": [
     "chromium",

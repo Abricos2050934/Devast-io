@@ -128,6 +128,14 @@ def artifacts(root, output):
             if (menu.get('status') != 'passed' or menu.get('controls') != 32 or menu.get('exact_order_labels_ranges_steps_options') is not True
                     or menu.get('keyboard') is not True or menu.get('default_bindings') != {'menu': 'KeyM', 'hide': 'KeyH'}):
                 raise ValueError('Uploaded message27 menu was not verified in browser: ' + browser)
+        if 'aim-line-native-projection' in contract.get('features', []) and report.get('native', {}).get('message27_aim', {}).get('pixel_projection_cases', 0) < 18:
+            raise ValueError('Native aim line projection was not verified in browser: ' + browser)
+        if 'live-aim-setting-effects' in contract.get('features', []):
+            settings = report.get('native', {}).get('message27_settings', {})
+            if settings.get('status') != 'passed' or settings.get('gui_controls_live') is not True or settings.get('checked', 0) < 17:
+                raise ValueError('Live aim setting effects were not verified in browser: ' + browser)
+        if 'versioned-aim-settings-preserved' in contract.get('features', []) and report.get('physical_numeric', {}).get('explicit_saved_values') is not True:
+            raise ValueError('Explicit saved aim values were not verified in browser: ' + browser)
     modules = {file: digest((root / file).read_bytes()) for file in contract['modules']}
     if modules != validation['module_sha256']: raise ValueError('Verified release belongs to another mod revision')
     override_name='Devast-io-GitHub-Resource-Override.json'

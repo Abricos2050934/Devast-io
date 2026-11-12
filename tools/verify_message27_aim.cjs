@@ -4,7 +4,7 @@ function verifyMessage27Aim(m,n,s,reference){
  const check=(v,t)=>{if(!v)throw Error(t);},w=n.world,self=w[s['ᅠᏧ‍']],metadata=w[s['ᴎ︃ᄉ']],clans=w[s['ﾠࡅ‍']];
  const old={id:self.id,state:n.network.state,settings:{...m.settings},ended:m.reconnect.sessionEnded,meta:[1,2,3,120].map(id=>[id,metadata[id]]),clan:clans[0],now:Date.now};
  const capture=n.capturePackets(),expected=[],settings={...reference.defaults},source=name=>reference.blocks.find(b=>b.name===name).source;
- let clock=10000,ref,phase='aim',points=0,mouseCases=0;
+ let clock=10000,ref,phase='aim',points=0,mouseCases=0,pixelCases=0;
  function valid(e,rotation=false){const own=e.targets.players[1],target=e.aim.targetPlayer;return own?.active&&[own.x,own.y].every(Number.isFinite)&&(rotation||target?.active&&[target.x,target.y].every(Number.isFinite)&&!(e.targets.players[target.id]===target&&target.id===1));}
  function receive(packet){if(packet[0]===2||ref&&valid(ref,phase==='jitter'))expected.push(packet.slice());}
  const metaView=[],clanView=[];
@@ -46,18 +46,23 @@ function verifyMessage27Aim(m,n,s,reference){
    }
   }
   if(typeof n.view==='object'&&n.ctx&&n.graphics){
-   const previousView=n.view,options=n.graphics.options,ratioKey=s['еߎ༢'],previousRatio=options[ratioKey];
+   const previousView=n.view,options=n.graphics.options,ratioKey=s['еߎ༢'],previousRatio=options[ratioKey],moveTo=n.ctx.moveTo,lineTo=n.ctx.lineTo;
+   const moves=[],ends=[];n.ctx.moveTo=function(x,y){moves.push([x,y]);return moveTo.call(this,x,y);};n.ctx.lineTo=function(x,y){ends.push([x,y]);return lineTo.call(this,x,y);};
    const draw=new Function('MOD','GetAllTargets','ctx','view','const ᴏܘ๐=ctx,ㅤο９=view.x,ᴉᚉ̷=view.y,о༨ε=view.scale;'+source('render')+';AimbotDraw();');
    try{
     for(const ratio of [1,2])for(const scale of [.5,1,2])for(const point of [{x:0,y:0},{x:123,y:234},{x:620,y:450}]){
      const view={x:-500,y:-700,scale,ctx:n.ctx};n.view=view;options[ratioKey]=ratio;
+     for(const targets of [m.targets,ref.targets])targets.lines[0].reset(1000,1000,1400,1200);
+     moves.length=ends.length=0;
      window.dispatchEvent(new MouseEvent('mousemove',{clientX:point.x,clientY:point.y}));m.render();
+     check(JSON.stringify(moves[0])===JSON.stringify([(1000+view.x)*scale*ratio,(1000+view.y)*scale*ratio]),'Aim line detached from native player pixels');
+     check(JSON.stringify(ends[0])===JSON.stringify([(1400+view.x)*scale*ratio,(1200+view.y)*scale*ratio]),'Aim endpoint uses a different graphics scale');pixelCases++;
      ref.targets.mousePosition={...point};const ctx={canvas:n.ctx.canvas,globalAlpha:1,lineWidth:1,beginPath(){},moveTo(){},lineTo(){},stroke(){}};draw(settings,ref.targets,ctx,view);
      check(JSON.stringify(m.targets.mouseMapCords)===JSON.stringify(ref.targets.mouseMapCords),'Uploaded screen-to-world coordinates differ');
      check(JSON.stringify(m.targets.cameraCenter)===JSON.stringify(ref.targets.cameraCenter),'Uploaded camera center differs');
      m.aimModule.refreshTargets();ref.refresh();compare('native mouse '+ratio+'/'+scale);mouseCases++;
     }
-   }finally{n.view=previousView;options[ratioKey]=previousRatio;}
+   }finally{n.ctx.moveTo=moveTo;n.ctx.lineTo=lineTo;n.view=previousView;options[ratioKey]=previousRatio;}
   }
   // Cover the alternate internal resolver branch, not exposed by its source GUI.
   m.settings.resolverType=settings.resolverType=1;m.aimModule.refreshTargets();ref.refresh();compare('resolver type 1');
@@ -80,7 +85,7 @@ function verifyMessage27Aim(m,n,s,reference){
   m.settings.AimBotEnabled=false;m.settings.autoFire=false;m.settings.AntiAimbot=false;m.settings.jitterActive=false;
   m.onSessionStart();m.onHandshake();check(!m.targets.players.some(t=>t?.active)&&!m.targets.ghouls.some(t=>t?.active),'Previous session history survived');
   capture.packets.length=0;m.settings.AimBotEnabled=true;m.settings.autoFire=true;m.observeDeath([5,0,2]);m.aim.refresh();m.afterFire();check(capture.packets.length===0,'Server death emitted aim commands');
-  return {status:'passed',upload_sha256:reference.upload_sha256,active_override:'__BBY',scenes:32,comparison_points:points,exact_states:true,exact_raw_packets:true,source_timing:true,spear:true,jitter:true,strafe:true,native_angles:!!n.directionProbes?.length,mouse_cases:mouseCases,valid_target_admission:true,session_target_reset:true,server_death_sends_no_commands:true};
+  return {status:'passed',upload_sha256:reference.upload_sha256,active_override:'__BBY',scenes:32,comparison_points:points,exact_states:true,exact_raw_packets:true,source_timing:true,spear:true,jitter:true,strafe:true,native_angles:!!n.directionProbes?.length,mouse_cases:mouseCases,pixel_projection_cases:pixelCases,valid_target_admission:true,session_target_reset:true,server_death_sends_no_commands:true};
  }finally{
   Date.now=old.now;capture.restore();m.observeSocket(null);m.settings.AimBotEnabled=false;m.settings.autoFire=false;m.onSessionStart();m.onHandshake();self.id=old.id;n.network.state=old.state;m.reconnect.sessionEnded=old.ended;
   for(const[id,value]of old.meta)metadata[id]=value;clans[0]=old.clan;Object.assign(m.settings,old.settings);

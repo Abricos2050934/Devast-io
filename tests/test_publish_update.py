@@ -7,6 +7,19 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_line_projection_live_settings_and_saved_values_require_both_browsers(self):
+  self.contract['features']=['aim-line-native-projection','live-aim-setting-effects','versioned-aim-settings-preserved']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():
+   report['native']={'message27_aim':{'pixel_projection_cases':18},'message27_settings':{'status':'passed','gui_controls_live':True,'checked':17}}
+   report['physical_numeric']={'status':'passed','explicit_saved_values':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  report=self.validation['browsers']['firefox']
+  for group,key,value in [(report['native']['message27_aim'],'pixel_projection_cases',17),(report['native']['message27_settings'],'checked',16),(report['native']['message27_settings'],'gui_controls_live',False),(report['physical_numeric'],'explicit_saved_values',False)]:
+   previous=group[key];group[key]=value;self.save()
+   with self.assertRaisesRegex(ValueError,'not verified.*firefox'):p.artifacts(self.root,self.out)
+   group[key]=previous
+
  def test_uploaded_message27_requires_source_menu_and_native_pipeline_in_both_browsers(self):
   self.contract['features']=['verbatim-message27-aim','message27-native-pipeline','message27-original-menu-layout']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

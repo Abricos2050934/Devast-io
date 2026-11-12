@@ -39,7 +39,9 @@ function __createMessage27Core(MOD,environment) {
         if (!(+MOD.aimHoldMs >= 0)) MOD.aimHoldMs = 200;
     } catch (e) {}
 }
- AimbotLoadConfig();
+ // The host has already loaded and validated its versioned aim namespace.
+ // Running the old BestModMenuConfig migration here would replace deliberate
+ // values such as 100/.1/.62/220 and re-enable a saved disabled mouse FOV.
  var __BBY = (function () {
   var BabaConfig = MOD;
     function calculateDistance(point1, point2) {
@@ -700,7 +702,12 @@ Aimbot.scheduleRefresh();}
     } catch (e) {}
     setTimeout(aimbotLoop, MOD.AimBotEnabled || MOD.AntiAimbot || MOD.AimbotSpearEnabled ? 50 : 200);
 })();}
- function render(ctx,view){const ᴏܘ๐=ctx,ㅤο９=view.x,ᴉᚉ̷=view.y,о༨ε=view.scale;function AimbotDraw() {
+ function render(ctx,view,pixelScale=1){
+  // The host resets the native canvas transform before overlays. Convert only
+  // draw coordinates to backing pixels; source mouse/camera maths stay logical.
+  if(!(pixelScale>0)||!Number.isFinite(pixelScale))pixelScale=1;
+  const surface=pixelScale===1?ctx:new Proxy(ctx,{get(target,key){if(key==='moveTo'||key==='lineTo')return (px,py)=>target[key](px*pixelScale,py*pixelScale);if(key==='lineWidth')return target.lineWidth/pixelScale;const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;},set(target,key,value){return Reflect.set(target,key,key==='lineWidth'?value*pixelScale:value,target);}});
+  const ᴏܘ๐=surface,ㅤο９=view.x,ᴉᚉ̷=view.y,о༨ε=view.scale;function AimbotDraw() {
       let aimAlpha = ᴏܘ๐.globalAlpha
         , aimWidth = ᴏܘ๐.lineWidth;
       for (var aimLine = 0; aimLine < GetAllTargets.lines.length; aimLine++) {

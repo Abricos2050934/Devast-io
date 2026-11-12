@@ -1497,7 +1497,8 @@ function __installDevastMod(B) {
           }
         }
       }
-      aimModule.render(ctx,B.view());
+      const aimView=B.view();
+      aimModule.render(ctx,aimView,v.scale/aimView.scale);
       ctx.globalAlpha = 1;
     } finally {ctx.restore();}
   }

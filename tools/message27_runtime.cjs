@@ -22,7 +22,9 @@ function __createMessage27Core(MOD,environment) {
  const network={ε٣︀:value=>emit(JSON.parse(value)),ᴉࡃϲ:value=>emit(JSON.parse(value))},ո︀̜=network,аρ３=network;
  const AIM_RAD=180/Math.PI,SPEAR_IDX=5;
  ${block('AimbotLoadConfig')}
- AimbotLoadConfig();
+ // The host has already loaded and validated its versioned aim namespace.
+ // Running the old BestModMenuConfig migration here would replace deliberate
+ // values such as 100/.1/.62/220 and re-enable a saved disabled mouse FOV.
  ${block('active-core')}
  var GetAllTargets=__BBY.G,Aimbot=__BBY.A,Jitter=__BBY.J,AimbotRefresh=__BBY.R;
  ${block('integration')}
@@ -36,7 +38,12 @@ function __createMessage27Core(MOD,environment) {
  ${block('external-jitter')}
  function afterFire(){${block('native-fire-tail')}}
  function start(){if(started||stopped)return;started=true;setInterval(routineJitter,100);${block('source-loops')}}
- function render(ctx,view){const ᴏܘ๐=ctx,ㅤο９=view.x,ᴉᚉ̷=view.y,о༨ε=view.scale;${block('render')}AimbotDraw();}
+ function render(ctx,view,pixelScale=1){
+  // The host resets the native canvas transform before overlays. Convert only
+  // draw coordinates to backing pixels; source mouse/camera maths stay logical.
+  if(!(pixelScale>0)||!Number.isFinite(pixelScale))pixelScale=1;
+  const surface=pixelScale===1?ctx:new Proxy(ctx,{get(target,key){if(key==='moveTo'||key==='lineTo')return (px,py)=>target[key](px*pixelScale,py*pixelScale);if(key==='lineWidth')return target.lineWidth/pixelScale;const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;},set(target,key,value){return Reflect.set(target,key,key==='lineWidth'?value*pixelScale:value,target);}});
+  const ᴏܘ๐=surface,ㅤο９=view.x,ᴉᚉ̷=view.y,о༨ε=view.scale;${block('render')}AimbotDraw();}
  ${block('AimbotSaveConfig')}
  ${block('AimbotHookSave')}
  ${block('AimbotMenuSetupKey')}
