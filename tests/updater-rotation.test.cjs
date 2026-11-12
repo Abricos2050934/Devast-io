@@ -24,7 +24,10 @@ for(const [fixture,sha]of [['rotation-2026-11-06.js.gz','74720aca77141a313015167
   assert.ok(result.report.decoder_blocks.some(block=>block.steps>40000000),'Large protected blocks must remain decodable within a bounded budget');
   assert.ok(result.output.includes('Ꮷ༨᠌.ᴎеᄀ( Іᴀߏ[Іᚅ̉]);'),'Preserve the new native player rejoin animation reset');
  }
- for(const block of require('../tools/audit_ilm_port.cjs').reference().blocks)assert.ok(result.output.includes(block.source),'ILM source block '+block.name);
+ const aimAudit=require('../tools/audit_ilm_port.cjs').audit(result.aim,read('mod/responsive.js'));
+ assert.equal(aimAudit.uploaded_jitter_removed,true,'Auto update must not restore the uploaded Jitter');
+ assert.equal(aimAudit.classes,4,'Gun classes survive, imported JitterCon does not');
+ for(const op of result.profile.operations.filter(op=>op.id.startsWith('ilm-native-angle-bookkeeping-')))assert.ok(op.after.includes('controlsAimDirection'),'Both native cursor paths yield to automatic direction');
  assert.equal(result.roles.nativeIntegritySigners.length,3);
  const preparation=result.profile.operations.find(op=>op.id==='native-play-preparation-recovery');
  const fn=require('../tools/parser.cjs').parse(preparation.before,{ecmaVersion:'latest'}).body[0],callback=fn.body.body.at(-1).expression.arguments[0];
