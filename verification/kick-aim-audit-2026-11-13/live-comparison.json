@@ -1781,5 +1781,6 @@
     "Advertisements delayed entry for roughly 30 seconds. Earlier shorter attempts ended before a meaningful connection; a cached HTTP 304 was initially misclassified, then handled correctly.",
     "TLS verification enabled after importing environment CA roots into isolated Firefox profiles.",
     "Socket counters contain no frame contents, credentials, URLs with query parameters or close reason text."
-  ]
+  ],
+  "latest_user_screen": "Game Over; the user reports character termination rather than an explicit block message."
 }

@@ -36,7 +36,9 @@ are not asserted to cause the user's kick or subsequent IP restriction. No
 packet-rate or anti-cheat threshold is inferred from these tests.
 
 The latest user clarification is that the kick also occurs with automation
-disabled from entry. Two short anonymous Firefox observations were made through
+disabled from entry; the user later identified the screen as Game Over. The
+three-byte death payload is stored/rendered as a statistic, without branching
+on it as a server enforcement reason. Two short anonymous Firefox observations were made through
 the cloud proxy. The modified client entered Frankfurt with no mod-generated
 commands and remained connected for approximately 24 seconds of observation.
 The clean client also entered, then its connection closed after about 2.3 seconds.
