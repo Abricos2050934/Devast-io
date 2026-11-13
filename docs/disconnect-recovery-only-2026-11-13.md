@@ -1,8 +1,10 @@
 # Connection-only investigation
 
-Aim behavior is fixed to the version preceding the disconnect investigation:
-929f542. The complete aim factory, ballistic model, generation recipe and native
-aim transport/control patches match that version byte for byte. An additional
+Aim behavior is based on the version preceding the disconnect investigation:
+929f542, with the narrow motion-history fixes recorded in
+`recovery/aim-approved-fixes-2026-11-13.json`. The preservation test reverses
+those exact hunks before comparing the aim factory, ballistic model, generation
+recipe and native aim transport/control patches byte for byte. An additional
 reference checks the host's aim adapter, resolver overrides, shot handling,
 settings validation, keyboard/menu, drawing and public hooks. It deliberately
 preserves that version's background angle scheduling and Jitter behavior.
@@ -22,5 +24,8 @@ server's reason for disconnecting this user. No server ban threshold is inferred
 No claim of resolving the reported IP restriction is made.
 
 `recovery/aim-pre-disconnect-reference.json` and the preservation test pin the
-unchanged aim components. Existing native ballistic, aim source and browser
+preserved aim components and the exact motion-history exceptions. These include
+post-turn continuity, same-timestamp teleport handling, independent circular-fit
+confirmation, and accumulation during a continuous dense packet stream.
+Existing native ballistic, aim source and browser
 checks remain required, together with the new connection-only candidate tests.

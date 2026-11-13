@@ -33,11 +33,13 @@ function __createBallisticAim(settings, clock) {
     if(last && (Math.hypot(x-last.x,y-last.y)>200 || at-last.at>=8&&Math.hypot(x-last.x,y-last.y)/(at-last.at)*1000>maxSpeed)){t.samples=[];last=null;t.curve=null;}
     if(meta.weapon!==undefined)t.weapon=meta.weapon;
     if(meta.generation!==undefined)t.generation=meta.generation;
-    if(last&&at-last.at<8)t.samples[t.samples.length-1]={x,y,at};
-    else t.samples.push({x,y,at});
+    const newObservation=!last||at-t.observationAt>=8;
+    if(!newObservation)t.samples[t.samples.length-1]={x,y,at};
+    else {t.samples.push({x,y,at});t.observationAt=at;}
     while(t.samples.length>8||t.samples.length>2&&at-t.samples[0].at>400+1e-6)t.samples.shift();
     const curve=circle(t.samples),before=t.curve;
-    if(curve){curve.streak=before&&before.omega*curve.omega>0&&Math.abs(before.radius-curve.radius)<.15*curve.radius&&Math.hypot(before.cx-curve.cx,before.cy-curve.cy)<Math.max(8,.15*curve.radius)?before.streak+1:1;}
+    // Coalesced packets refine one observation; they cannot confirm a new window.
+    if(curve){curve.streak=before&&before.omega*curve.omega>0&&Math.abs(before.radius-curve.radius)<.15*curve.radius&&Math.hypot(before.cx-curve.cx,before.cy-curve.cy)<Math.max(8,.15*curve.radius)?before.streak+(newObservation?1:0):1;}
     t.curve=curve;
   }
   function motion(key,at=clock()) {

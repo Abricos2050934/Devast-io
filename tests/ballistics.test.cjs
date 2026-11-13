@@ -42,8 +42,27 @@ test('a stable circular path predicts the curved interception rather than its ol
  const r=m.aim.resolve('self','target');assert.ok(r.valid);assert.equal(r.motionModel,'circle');
  close(r.x,600+160*(Math.cos(.4+r.flight)-1),1e-5);close(r.y,160*Math.sin(.4+r.flight),1e-5);
 });
+for(const duplicateGap of [0,1,7])test('coalesced packets cannot confirm a circular path at '+duplicateGap+'ms',()=>{
+ const m=model(),position=t=>[600+160*(Math.cos(t/1000)-1),160*Math.sin(t/1000)];
+ for(let t=0;t<=300;t+=50){m.at(t);m.aim.track('self',0,0,true);m.aim.track('target',...position(t),true);}
+ assert.equal(m.aim.resolve('self','target').motionModel,'linear');
+ for(let i=0;i<12;i++){
+  m.at(300+duplicateGap);m.aim.track('target',...position(300+duplicateGap),true);
+  assert.equal(m.aim.resolve('self','target').motionModel,'linear','Duplicate observations are not independent windows');
+ }
+ m.at(350);m.aim.track('self',0,0,true);m.aim.track('target',...position(350),true);
+ assert.equal(m.aim.resolve('self','target').motionModel,'circle');
+});
 test('zero-time duplicate packets do not manufacture an infinite velocity',()=>{
  const m=model();m.aim.track('a',0,0,true);m.aim.track('a',100,50,true);const v=m.aim.motion('a');close(v.vx,0);close(v.vy,0);assert.equal(v.samples,1);
+});
+test('a continuous dense packet stream still accumulates timed motion observations',()=>{
+ const m=model();
+ for(let t=0;t<=200;t++){
+  m.at(t);m.aim.track('self',0,0,true);m.aim.track('target',600,t*.2,true);
+ }
+ const v=m.aim.motion('target');assert.ok(v.samples>=4);close(v.vy,200);
+ const r=m.aim.resolve('self','target');assert.ok(r.valid);close(r.targetVelocity.y,200);
 });
 test('a stop and a reversal discard the obsolete motion direction immediately',()=>{
  const m=model();samples(m);m.at(250);m.aim.track('target',600,40,true);close(m.aim.motion('target').vy,0);

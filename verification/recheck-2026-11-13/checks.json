@@ -1,0 +1,1622 @@
+{
+  "status": "passed",
+  "base_commit": "8a118645f6ded25cd2deb53bbfebaaa6b4271542",
+  "verified_at": "2026-11-13T13:25:55.258627+00:00",
+  "release": "1747d528506e78fbd944bb28bfa4476dbd8785ac5842cbcc1d43b70fa96c6176",
+  "inputs_sha256": "0189008512f428db2337cc3b3eb9a4e3b4f970e7527db6be5ff46ace425cc3ab",
+  "output_sha256": "e8c98c421072950ceea7cc512ae2d37868e3eb301ab64b02a1e2c48af8b0d837",
+  "source_check": {
+    "checked_at": "2026-11-13T13:25:55.192760+00:00",
+    "page_sha256": "8c0e4e36d9798a2dad6c77531605cc8d7d05e06a30dbf9f0c5cfe9a7112c4097",
+    "source_url": "https://devast.io/js/hym7DtRA3RCGo21.js",
+    "raw_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362"
+  },
+  "fixes": [
+    "Duplicate/coalesced observations do not confirm a second circular fit.",
+    "An anchored 8ms grouping interval allows continuous dense streams to accumulate motion history."
+  ],
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 240,
+    "python_tests": 69
+  },
+  "candidate_tests": {
+    "status": "passed",
+    "node_tests": 164
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "154.0.8037.57",
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "native": {
+        "adaptive_aim": {
+          "status": "passed",
+          "native_weapon_speed_and_range": true,
+          "native_projectile_speed": true,
+          "native_speed_equality": true,
+          "packet_server_positions": true,
+          "shooter_and_target_velocity": true,
+          "fresh_angle_before_native_attack": true,
+          "jitter_priority": true,
+          "line_matches_shot": true,
+          "stale_target_releases_input": true
+        },
+        "jitter": {
+          "status": "passed",
+          "original_rotation": true,
+          "configurable_speed": true,
+          "imported_jitter_removed": true,
+          "manual_angle_before_attack": true,
+          "automatic_angle_before_attack": true,
+          "held_fire_tracks_target": true,
+          "cursor_cannot_overwrite": true,
+          "non_jitter_cursor_cannot_overwrite": true,
+          "repeated_bursts_aligned": true,
+          "resumes_on_release": true,
+          "standing_rotation": true,
+          "targetless_manual_alignment": true,
+          "blocked_attack_rejected": true,
+          "local_rotation": true,
+          "death_stops_packets": true
+        },
+        "message27_menu": {
+          "status": "passed",
+          "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+          "folders": {
+            "👑 Aim Bot 👑": [
+              {
+                "property": "AimBotEnabled",
+                "label": "AimBotEnabled",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "target",
+                "label": "Target",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "players",
+                    "value": "players"
+                  },
+                  {
+                    "label": "ghouls",
+                    "value": "ghouls"
+                  },
+                  {
+                    "label": "all",
+                    "value": "all"
+                  }
+                ]
+              },
+              {
+                "property": "resolverType",
+                "label": "ResolverType",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "linear",
+                    "value": "linear"
+                  }
+                ]
+              },
+              {
+                "property": "TargetTeammate",
+                "label": "TargetTeammate",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "hideAimbotAngle",
+                "label": "HideAimbotAngle",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "hidePlayerAngle",
+                "label": "HidePlayerAngle",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "ShowRealAngles",
+                "label": "ShowRealAngles",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "never",
+                    "value": "never"
+                  },
+                  {
+                    "label": "always",
+                    "value": "always"
+                  },
+                  {
+                    "label": "withAim",
+                    "value": "withAim"
+                  }
+                ]
+              },
+              {
+                "property": "mouseFovEnable",
+                "label": "MouseFovEnable",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "mouseFov",
+                "label": "MouseFov",
+                "min": 0,
+                "max": 12345,
+                "step": 100,
+                "options": []
+              },
+              {
+                "property": "distanceCoefficient",
+                "label": "DistanceCoefficient",
+                "min": 10,
+                "max": 1000,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "offsetCoefficient",
+                "label": "OffsetCoefficient",
+                "min": 0,
+                "max": 3,
+                "step": 0.1,
+                "options": []
+              },
+              {
+                "property": "aimStick",
+                "label": "AimStick",
+                "min": 0,
+                "max": 800,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "aimHoldMs",
+                "label": "AimHoldMs",
+                "min": 0,
+                "max": 600,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "leadCap",
+                "label": "LeadCap",
+                "min": 40,
+                "max": 500,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "aimSmooth",
+                "label": "AimSmooth",
+                "min": 0.05,
+                "max": 1,
+                "step": 0.01,
+                "options": []
+              },
+              {
+                "property": "autoFire",
+                "label": "AutoFire",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "lockId",
+                "label": "LockId",
+                "min": -1,
+                "max": 120,
+                "step": 1,
+                "options": []
+              }
+            ],
+            "🗡 Aimbot Spear 🗡": [
+              {
+                "property": "AimbotSpearEnabled",
+                "label": "AimbotSpearEnabled",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "spearSpeed",
+                "label": "SpearSpeed",
+                "min": 20,
+                "max": 60,
+                "step": 0.5,
+                "options": []
+              },
+              {
+                "property": "spearMaxRange",
+                "label": "MaxRange",
+                "min": 200,
+                "max": 600,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "spearHandFwd",
+                "label": "HandFwd",
+                "min": -60,
+                "max": 60,
+                "step": 1,
+                "options": []
+              },
+              {
+                "property": "spearHandSide",
+                "label": "HandSide",
+                "min": -60,
+                "max": 60,
+                "step": 1,
+                "options": []
+              },
+              {
+                "property": "spearStabDeg",
+                "label": "Stability",
+                "min": 0.5,
+                "max": 10,
+                "step": 0.5,
+                "options": []
+              },
+              {
+                "property": "autoFire",
+                "label": "AutoThrow",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              }
+            ],
+            "Anti-Aim / Strafe": [
+              {
+                "property": "AntiAimbot",
+                "label": "StrafeEnable",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "antiAimCoefficient",
+                "label": "AntiAimCoefficient",
+                "min": 10,
+                "max": 500,
+                "step": 10,
+                "options": []
+              }
+            ],
+            "Aim Line": [
+              {
+                "property": "visualizeResolving",
+                "label": "ShowAimLine",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "visualizeResolvingColor",
+                "label": "AimLineColor",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              }
+            ]
+          },
+          "keyboard": true,
+          "key_controls": [
+            {
+              "property": "AimbotKey",
+              "label": "AimbotKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            },
+            {
+              "property": "AntiAimbotKey",
+              "label": "AntiAimbotKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            },
+            {
+              "property": "JitterKey",
+              "label": "JitterKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            },
+            {
+              "property": "HideAngleKey",
+              "label": "HideAngleKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            },
+            {
+              "property": "ModMenuKey",
+              "label": "ModMenuKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            }
+          ],
+          "default_bindings": {
+            "menu": "KeyM",
+            "hide": "KeyH"
+          },
+          "exact_order_labels_ranges_steps_options": true,
+          "original_jitter_controls": true,
+          "controls": 28
+        },
+        "message27_aim": {
+          "status": "passed",
+          "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+          "active_override": "__BBY",
+          "scenes": 32,
+          "comparison_points": 2059,
+          "exact_states": true,
+          "corrected_attack_order": true,
+          "source_timing": true,
+          "spear": true,
+          "uploaded_jitter_removed": true,
+          "strafe": true,
+          "native_angles": true,
+          "mouse_cases": 18,
+          "pixel_projection_cases": 18,
+          "valid_target_admission": true,
+          "session_target_reset": true,
+          "server_death_sends_no_commands": true
+        },
+        "message27_settings": {
+          "status": "passed",
+          "gui_controls_live": true,
+          "checked": 16,
+          "results": [
+            {
+              "key": "distanceCoefficient",
+              "samples": [
+                {
+                  "value": 10,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 55.86405992208779,
+                    "point": [
+                      1400,
+                      1590
+                    ]
+                  }
+                },
+                {
+                  "value": 1000,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 14.35757265016764,
+                    "point": [
+                      1400,
+                      1102.3868787694778
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "offsetCoefficient",
+              "samples": [
+                {
+                  "value": 0,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 12.680383491819839,
+                    "point": [
+                      1400,
+                      1090
+                    ]
+                  }
+                },
+                {
+                  "value": 3,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 55.86405992208779,
+                    "point": [
+                      1400,
+                      1590
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "leadCap",
+              "samples": [
+                {
+                  "value": 40,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 18.004161605913396,
+                    "point": [
+                      1400,
+                      1130
+                    ]
+                  }
+                },
+                {
+                  "value": 500,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 29.69903089537479,
+                    "point": [
+                      1400,
+                      1228.147005168655
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "aimSmooth",
+              "samples": [
+                {
+                  "value": 0.05,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 3.688980453154909,
+                    "point": [
+                      1400,
+                      1228.147005168655
+                    ]
+                  }
+                },
+                {
+                  "value": 1,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 29.69903089537479,
+                    "point": [
+                      1400,
+                      1228.147005168655
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "aimStick",
+              "samples": [
+                {
+                  "value": 0,
+                  "result": "players:3"
+                },
+                {
+                  "value": 800,
+                  "result": "players:2"
+                }
+              ]
+            },
+            {
+              "key": "aimHoldMs",
+              "samples": [
+                {
+                  "value": 0,
+                  "result": "players:3"
+                },
+                {
+                  "value": 600,
+                  "result": "players:2"
+                }
+              ]
+            },
+            {
+              "key": "mouseFov",
+              "samples": [
+                {
+                  "value": 100,
+                  "result": null
+                },
+                {
+                  "value": 900,
+                  "result": "players:2"
+                }
+              ]
+            },
+            {
+              "key": "mouseFovEnable",
+              "samples": [
+                {
+                  "value": false,
+                  "result": "players:2"
+                },
+                {
+                  "value": true,
+                  "result": null
+                }
+              ]
+            },
+            {
+              "key": "lockId",
+              "samples": [
+                {
+                  "value": -1,
+                  "result": "players:3"
+                },
+                {
+                  "value": 2,
+                  "result": "players:2"
+                }
+              ]
+            },
+            {
+              "key": "TargetTeammate",
+              "samples": [
+                {
+                  "value": false,
+                  "result": "players:3"
+                },
+                {
+                  "value": true,
+                  "result": "players:2"
+                }
+              ]
+            },
+            {
+              "key": "target",
+              "samples": [
+                {
+                  "value": "players",
+                  "result": "players:2"
+                },
+                {
+                  "value": "ghouls",
+                  "result": "ghouls:17"
+                }
+              ]
+            },
+            {
+              "key": "spearSpeed",
+              "samples": [
+                {
+                  "value": 20,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 49,
+                    "point": [
+                      1450,
+                      1513.9823785126466
+                    ]
+                  }
+                },
+                {
+                  "value": 60,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 29,
+                    "point": [
+                      1450,
+                      1228.1821396422142
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "spearMaxRange",
+              "samples": [
+                {
+                  "value": 200,
+                  "result": {
+                    "target": null,
+                    "angle": 0,
+                    "point": [
+                      -1,
+                      -1
+                    ]
+                  }
+                },
+                {
+                  "value": 600,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 34,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "spearHandFwd",
+              "samples": [
+                {
+                  "value": -60,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 34,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                },
+                {
+                  "value": 60,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 35,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "spearHandSide",
+              "samples": [
+                {
+                  "value": -60,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 36,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                },
+                {
+                  "value": 60,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 23,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "spearStabDeg",
+              "samples": [
+                {
+                  "value": 0.5,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 36,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                },
+                {
+                  "value": 10,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 27,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "conditional_settings": {
+            "mouseFov": "requires mouseFovEnable; source values above 1600 use 900",
+            "prediction": "distance/offset need target velocity to change lead",
+            "spear": "spear fields require spear mode and weapon 5"
+          }
+        },
+        "native_aim_transport": {
+          "status": "passed",
+          "idle_period_ms": 60000,
+          "sustained_duration_ms": 121000,
+          "directions": 4840,
+          "heartbeats": 2,
+          "real_input_updates_activity": true,
+          "wire_cases": [
+            {
+              "seed": [
+                0,
+                0
+              ],
+              "bytes": 10,
+              "equal": true
+            },
+            {
+              "seed": [
+                0,
+                1
+              ],
+              "bytes": 10,
+              "equal": true
+            },
+            {
+              "seed": [
+                18,
+                52
+              ],
+              "bytes": 10,
+              "equal": true
+            }
+          ]
+        },
+        "head_and_leaderboard_labels": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "aim_session_history_reset": true,
+        "server_death_sends_no_commands": true,
+        "mod_errors": []
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "page_errors": [],
+      "reload_identity": [
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        },
+        {
+          "token": true,
+          "tokenId": true,
+          "userId": true,
+          "cookie": true,
+          "settings": true,
+          "loot": true
+        }
+      ],
+      "integrity_compatibility": {
+        "status": "passed",
+        "predicates": 3
+      },
+      "native": {
+        "adaptive_aim": {
+          "status": "passed",
+          "native_weapon_speed_and_range": true,
+          "native_projectile_speed": true,
+          "native_speed_equality": true,
+          "packet_server_positions": true,
+          "shooter_and_target_velocity": true,
+          "fresh_angle_before_native_attack": true,
+          "jitter_priority": true,
+          "line_matches_shot": true,
+          "stale_target_releases_input": true
+        },
+        "jitter": {
+          "status": "passed",
+          "original_rotation": true,
+          "configurable_speed": true,
+          "imported_jitter_removed": true,
+          "manual_angle_before_attack": true,
+          "automatic_angle_before_attack": true,
+          "held_fire_tracks_target": true,
+          "cursor_cannot_overwrite": true,
+          "non_jitter_cursor_cannot_overwrite": true,
+          "repeated_bursts_aligned": true,
+          "resumes_on_release": true,
+          "standing_rotation": true,
+          "targetless_manual_alignment": true,
+          "blocked_attack_rejected": true,
+          "local_rotation": true,
+          "death_stops_packets": true
+        },
+        "message27_menu": {
+          "status": "passed",
+          "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+          "folders": {
+            "👑 Aim Bot 👑": [
+              {
+                "property": "AimBotEnabled",
+                "label": "AimBotEnabled",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "target",
+                "label": "Target",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "players",
+                    "value": "players"
+                  },
+                  {
+                    "label": "ghouls",
+                    "value": "ghouls"
+                  },
+                  {
+                    "label": "all",
+                    "value": "all"
+                  }
+                ]
+              },
+              {
+                "property": "resolverType",
+                "label": "ResolverType",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "linear",
+                    "value": "linear"
+                  }
+                ]
+              },
+              {
+                "property": "TargetTeammate",
+                "label": "TargetTeammate",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "hideAimbotAngle",
+                "label": "HideAimbotAngle",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "hidePlayerAngle",
+                "label": "HidePlayerAngle",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "ShowRealAngles",
+                "label": "ShowRealAngles",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": [
+                  {
+                    "label": "never",
+                    "value": "never"
+                  },
+                  {
+                    "label": "always",
+                    "value": "always"
+                  },
+                  {
+                    "label": "withAim",
+                    "value": "withAim"
+                  }
+                ]
+              },
+              {
+                "property": "mouseFovEnable",
+                "label": "MouseFovEnable",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "mouseFov",
+                "label": "MouseFov",
+                "min": 0,
+                "max": 12345,
+                "step": 100,
+                "options": []
+              },
+              {
+                "property": "distanceCoefficient",
+                "label": "DistanceCoefficient",
+                "min": 10,
+                "max": 1000,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "offsetCoefficient",
+                "label": "OffsetCoefficient",
+                "min": 0,
+                "max": 3,
+                "step": 0.1,
+                "options": []
+              },
+              {
+                "property": "aimStick",
+                "label": "AimStick",
+                "min": 0,
+                "max": 800,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "aimHoldMs",
+                "label": "AimHoldMs",
+                "min": 0,
+                "max": 600,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "leadCap",
+                "label": "LeadCap",
+                "min": 40,
+                "max": 500,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "aimSmooth",
+                "label": "AimSmooth",
+                "min": 0.05,
+                "max": 1,
+                "step": 0.01,
+                "options": []
+              },
+              {
+                "property": "autoFire",
+                "label": "AutoFire",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "lockId",
+                "label": "LockId",
+                "min": -1,
+                "max": 120,
+                "step": 1,
+                "options": []
+              }
+            ],
+            "🗡 Aimbot Spear 🗡": [
+              {
+                "property": "AimbotSpearEnabled",
+                "label": "AimbotSpearEnabled",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "spearSpeed",
+                "label": "SpearSpeed",
+                "min": 20,
+                "max": 60,
+                "step": 0.5,
+                "options": []
+              },
+              {
+                "property": "spearMaxRange",
+                "label": "MaxRange",
+                "min": 200,
+                "max": 600,
+                "step": 10,
+                "options": []
+              },
+              {
+                "property": "spearHandFwd",
+                "label": "HandFwd",
+                "min": -60,
+                "max": 60,
+                "step": 1,
+                "options": []
+              },
+              {
+                "property": "spearHandSide",
+                "label": "HandSide",
+                "min": -60,
+                "max": 60,
+                "step": 1,
+                "options": []
+              },
+              {
+                "property": "spearStabDeg",
+                "label": "Stability",
+                "min": 0.5,
+                "max": 10,
+                "step": 0.5,
+                "options": []
+              },
+              {
+                "property": "autoFire",
+                "label": "AutoThrow",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              }
+            ],
+            "Anti-Aim / Strafe": [
+              {
+                "property": "AntiAimbot",
+                "label": "StrafeEnable",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "antiAimCoefficient",
+                "label": "AntiAimCoefficient",
+                "min": 10,
+                "max": 500,
+                "step": 10,
+                "options": []
+              }
+            ],
+            "Aim Line": [
+              {
+                "property": "visualizeResolving",
+                "label": "ShowAimLine",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              },
+              {
+                "property": "visualizeResolvingColor",
+                "label": "AimLineColor",
+                "min": null,
+                "max": null,
+                "step": null,
+                "options": []
+              }
+            ]
+          },
+          "keyboard": true,
+          "key_controls": [
+            {
+              "property": "AimbotKey",
+              "label": "AimbotKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            },
+            {
+              "property": "AntiAimbotKey",
+              "label": "AntiAimbotKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            },
+            {
+              "property": "JitterKey",
+              "label": "JitterKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            },
+            {
+              "property": "HideAngleKey",
+              "label": "HideAngleKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            },
+            {
+              "property": "ModMenuKey",
+              "label": "ModMenuKey",
+              "min": null,
+              "max": null,
+              "step": null,
+              "options": []
+            }
+          ],
+          "default_bindings": {
+            "menu": "KeyM",
+            "hide": "KeyH"
+          },
+          "exact_order_labels_ranges_steps_options": true,
+          "original_jitter_controls": true,
+          "controls": 28
+        },
+        "message27_aim": {
+          "status": "passed",
+          "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+          "active_override": "__BBY",
+          "scenes": 32,
+          "comparison_points": 2059,
+          "exact_states": true,
+          "corrected_attack_order": true,
+          "source_timing": true,
+          "spear": true,
+          "uploaded_jitter_removed": true,
+          "strafe": true,
+          "native_angles": true,
+          "mouse_cases": 18,
+          "pixel_projection_cases": 18,
+          "valid_target_admission": true,
+          "session_target_reset": true,
+          "server_death_sends_no_commands": true
+        },
+        "message27_settings": {
+          "status": "passed",
+          "gui_controls_live": true,
+          "checked": 16,
+          "results": [
+            {
+              "key": "distanceCoefficient",
+              "samples": [
+                {
+                  "value": 10,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 55.86405992208779,
+                    "point": [
+                      1400,
+                      1590
+                    ]
+                  }
+                },
+                {
+                  "value": 1000,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 14.35757265016764,
+                    "point": [
+                      1400,
+                      1102.3868787694778
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "offsetCoefficient",
+              "samples": [
+                {
+                  "value": 0,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 12.680383491819839,
+                    "point": [
+                      1400,
+                      1090
+                    ]
+                  }
+                },
+                {
+                  "value": 3,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 55.86405992208779,
+                    "point": [
+                      1400,
+                      1590
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "leadCap",
+              "samples": [
+                {
+                  "value": 40,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 18.004161605913396,
+                    "point": [
+                      1400,
+                      1130
+                    ]
+                  }
+                },
+                {
+                  "value": 500,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 29.69903089537479,
+                    "point": [
+                      1400,
+                      1228.147005168655
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "aimSmooth",
+              "samples": [
+                {
+                  "value": 0.05,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 3.688980453154909,
+                    "point": [
+                      1400,
+                      1228.147005168655
+                    ]
+                  }
+                },
+                {
+                  "value": 1,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 29.69903089537479,
+                    "point": [
+                      1400,
+                      1228.147005168655
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "aimStick",
+              "samples": [
+                {
+                  "value": 0,
+                  "result": "players:3"
+                },
+                {
+                  "value": 800,
+                  "result": "players:2"
+                }
+              ]
+            },
+            {
+              "key": "aimHoldMs",
+              "samples": [
+                {
+                  "value": 0,
+                  "result": "players:3"
+                },
+                {
+                  "value": 600,
+                  "result": "players:2"
+                }
+              ]
+            },
+            {
+              "key": "mouseFov",
+              "samples": [
+                {
+                  "value": 100,
+                  "result": null
+                },
+                {
+                  "value": 900,
+                  "result": "players:2"
+                }
+              ]
+            },
+            {
+              "key": "mouseFovEnable",
+              "samples": [
+                {
+                  "value": false,
+                  "result": "players:2"
+                },
+                {
+                  "value": true,
+                  "result": null
+                }
+              ]
+            },
+            {
+              "key": "lockId",
+              "samples": [
+                {
+                  "value": -1,
+                  "result": "players:3"
+                },
+                {
+                  "value": 2,
+                  "result": "players:2"
+                }
+              ]
+            },
+            {
+              "key": "TargetTeammate",
+              "samples": [
+                {
+                  "value": false,
+                  "result": "players:3"
+                },
+                {
+                  "value": true,
+                  "result": "players:2"
+                }
+              ]
+            },
+            {
+              "key": "target",
+              "samples": [
+                {
+                  "value": "players",
+                  "result": "players:2"
+                },
+                {
+                  "value": "ghouls",
+                  "result": "ghouls:17"
+                }
+              ]
+            },
+            {
+              "key": "spearSpeed",
+              "samples": [
+                {
+                  "value": 20,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 49,
+                    "point": [
+                      1450,
+                      1513.9823785126466
+                    ]
+                  }
+                },
+                {
+                  "value": 60,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 29,
+                    "point": [
+                      1450,
+                      1228.1821396422142
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "spearMaxRange",
+              "samples": [
+                {
+                  "value": 200,
+                  "result": {
+                    "target": null,
+                    "angle": 0,
+                    "point": [
+                      -1,
+                      -1
+                    ]
+                  }
+                },
+                {
+                  "value": 600,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 34,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "spearHandFwd",
+              "samples": [
+                {
+                  "value": -60,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 34,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                },
+                {
+                  "value": 60,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 35,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "spearHandSide",
+              "samples": [
+                {
+                  "value": -60,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 36,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                },
+                {
+                  "value": 60,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 23,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "key": "spearStabDeg",
+              "samples": [
+                {
+                  "value": 0.5,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 36,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                },
+                {
+                  "value": 10,
+                  "result": {
+                    "target": "players:2",
+                    "angle": 27,
+                    "point": [
+                      1450,
+                      1290.3366947824184
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "conditional_settings": {
+            "mouseFov": "requires mouseFovEnable; source values above 1600 use 900",
+            "prediction": "distance/offset need target velocity to change lead",
+            "spear": "spear fields require spear mode and weapon 5"
+          }
+        },
+        "native_aim_transport": {
+          "status": "passed",
+          "idle_period_ms": 60000,
+          "sustained_duration_ms": 121000,
+          "directions": 4840,
+          "heartbeats": 2,
+          "real_input_updates_activity": true,
+          "wire_cases": [
+            {
+              "seed": [
+                0,
+                0
+              ],
+              "bytes": 10,
+              "equal": true
+            },
+            {
+              "seed": [
+                0,
+                1
+              ],
+              "bytes": 10,
+              "equal": true
+            },
+            {
+              "seed": [
+                18,
+                52
+              ],
+              "bytes": 10,
+              "equal": true
+            }
+          ]
+        },
+        "head_and_leaderboard_labels": true,
+        "native_clan_colors_and_cache": true,
+        "native_nickname_color_and_cache": true,
+        "full_player_list_and_native_lifecycle": true,
+        "native_fast_loot_cadence": true,
+        "native_autobuild_cursor_preview": true,
+        "native_rejoin_identity": true,
+        "aim_session_history_reset": true,
+        "server_death_sends_no_commands": true,
+        "mod_errors": []
+      }
+    }
+  },
+  "live_server": "not_tested",
+  "limitations": "Browser checks exercise the native client with controlled fixtures; no live hit rate or absence of server disconnects is claimed."
+}
