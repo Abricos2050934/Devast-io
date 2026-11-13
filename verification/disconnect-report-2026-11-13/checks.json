@@ -1,0 +1,53 @@
+{
+  "release": "c50b9e9281026c12fc37d3fb2d7cec00c01b8b62c6dadb4998ceace078924222",
+  "output_sha256": "26dec5091e8f91f2409c2c216af6d260951740aeade4f2c2a160f237d39a57c8",
+  "raw_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 252,
+    "python_tests": 71
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/native-aim-transport.test.cjs",
+      "tests/ilm-current.test.cjs",
+      "tests/mod-traffic.test.cjs",
+      "tests/aim-validity.test.cjs",
+      "tests/ilm-native-pipeline.test.cjs",
+      "tests/aim-line-projection.test.cjs",
+      "tests/aim-settings-persistence.test.cjs",
+      "tests/aim-settings-effects.test.cjs",
+      "tests/jitter-arbitration.test.cjs",
+      "tests/ballistics.test.cjs",
+      "tests/aim-preserved-before-disconnect.test.cjs",
+      "tests/connection-recovery-only.test.cjs",
+      "tests/aim-motion-continuity.test.cjs",
+      "tests/projectile-accuracy.test.cjs",
+      "tests/death-diagnostics.test.cjs"
+    ]
+  },
+  "native_death_opcode": 27,
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "154.0.8037.57",
+      "death_opcode": 27
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "death_opcode": 27
+    }
+  },
+  "limitation": "Fixes missing diagnostic capture; does not establish or eliminate the reported server enforcement cause."
+}

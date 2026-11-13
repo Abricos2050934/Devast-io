@@ -1,0 +1,96 @@
+{
+  "input_sha256": "415f98540acc8c64c1544745072e757c6bbdc26ca52ba096948b829ec6b17ed2",
+  "scope": "Derived nonsensitive diagnostics only; uploaded report, credentials and arbitrary packet bodies are not copied.",
+  "build_matches_published_client": true,
+  "build": {
+    "fingerprint": "e0a14417d302e5c47a3333325b9215403e77cc3ea0fe031f65a6f839d9183616",
+    "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+  },
+  "integrity_compatibility": true,
+  "sessions": [
+    {
+      "socket": 3,
+      "open_ms": 200391,
+      "client_health_snapshot": 75,
+      "aim": true,
+      "jitter": false,
+      "fast_loot": true,
+      "mod_commands_for_socket": {
+        "6": 449,
+        "12": 104
+      },
+      "known_client_integrity_flag": 0,
+      "buffered_bytes": 0,
+      "last_receive_gap_ms": 0,
+      "frame_gap_ms": 6,
+      "prefix_in_report": false
+    },
+    {
+      "socket": 4,
+      "open_ms": 80032,
+      "client_health_snapshot": 0.00200000000434733,
+      "aim": false,
+      "jitter": false,
+      "fast_loot": false,
+      "mod_commands_for_socket": {
+        "12": 11
+      },
+      "known_client_integrity_flag": 0,
+      "buffered_bytes": 0,
+      "last_receive_gap_ms": 0,
+      "frame_gap_ms": 9,
+      "prefix_in_report": false
+    },
+    {
+      "socket": 5,
+      "open_ms": 63219,
+      "client_health_snapshot": 25.16420000000242,
+      "aim": false,
+      "jitter": false,
+      "fast_loot": false,
+      "mod_commands_for_socket": {},
+      "known_client_integrity_flag": 0,
+      "buffered_bytes": 0,
+      "last_receive_gap_ms": 0,
+      "frame_gap_ms": 6,
+      "prefix_in_report": false
+    },
+    {
+      "socket": 6,
+      "open_ms": 20403,
+      "client_health_snapshot": 255,
+      "aim": true,
+      "jitter": false,
+      "fast_loot": false,
+      "mod_commands_for_socket": {},
+      "known_client_integrity_flag": 0,
+      "buffered_bytes": 0,
+      "last_receive_gap_ms": 0,
+      "frame_gap_ms": 3,
+      "prefix_in_report": false
+    }
+  ],
+  "mod_traffic_ledger_matches_all_recorded_commands": true,
+  "native_manual_commands_are_not_counted": true,
+  "total_mod_commands_by_opcode": {
+    "6": 779,
+    "12": 163
+  },
+  "peak_one_second_mod_commands": 35,
+  "mod_errors": 0,
+  "native_failure_code": 128,
+  "socket_close_codes": [
+    1005
+  ],
+  "diagnostic_defect": {
+    "expected_historical_opcode": 5,
+    "actual_mapped_native_death_opcode": 27,
+    "missing_payload_can_be_recovered": false
+  },
+  "conclusions": {
+    "server_character_termination_observed": true,
+    "last_session_generated_mod_commands": false,
+    "specific_anti_cheat_reason_proven": false,
+    "reported_ip_restriction_explained": false
+  }
+}

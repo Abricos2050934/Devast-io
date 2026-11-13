@@ -70,6 +70,10 @@ def artifacts(root, output):
             raise ValueError('Live aim targets and server death send behavior were not verified in browser: ' + browser)
         if 'connection-close-origin-diagnostics' in contract.get('features', []) and report.get('native', {}).get('connection_close_origin_diagnostics') is not True:
             raise ValueError('Connection close origin diagnostics not verified in browser: ' + browser)
+        if 'native-death-opcode-diagnostics' in contract.get('features', []):
+            opcode = report.get('native', {}).get('native_death_opcode')
+            if type(opcode) is not int or not 0 <= opcode <= 255:
+                raise ValueError('Native death opcode diagnostics not verified in browser: ' + browser)
         if 'coalesced-aim-directions' in contract.get('features', []) and report.get('native', {}).get('coalesced_aim_directions_and_native_idle') is not True:
             raise ValueError('Coalesced aim directions and native idle ping were not verified in browser: ' + browser)
         if 'curved-target-and-chaser-interception' in contract.get('features', []) and report.get('native', {}).get('curved_target_and_chaser_interception') is not True:

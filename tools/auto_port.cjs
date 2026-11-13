@@ -275,6 +275,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
   const rule=generated.operations.find(op=>op.id==='jitter-native-fire-priority');
   adaptedAim=adaptedAim.slice(0,helper.start)+`function __jitterPatchNativeFire(source){const before=${JSON.stringify(rule.before)};if(source.split(before).length!==2)throw Error('Unsupported native fire handler');return source.replace(before,${JSON.stringify(rule.after)});}`+adaptedAim.slice(helper.end);
  }
+ generated.operations=require('./updater/death-diagnostics.cjs').deathDiagnosticOperations(cur,generated.operations,roles);
  for(const op of generated.operations){try{acorn.parse(op.after,{ecmaVersion:'latest'});}catch(error){throw Error('Invalid emitted patch '+op.id+': '+error.message+' near '+op.after.slice(Math.max(0,error.pos-70),error.pos+70));}}
  const output=assemble(Buffer.from(cur.source),generated,outputBindings.symbols,payload,bootstrap,gui,adaptedAim);
  return {source:cur.source,output,profile:generated,bindings:outputBindings,aim:adaptedAim,roles,

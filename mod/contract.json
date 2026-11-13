@@ -54,7 +54,8 @@
     "aim-preserved-before-disconnect",
     "bounded-connection-recovery",
     "continuous-post-turn-motion",
-    "packet-rate-aware-curved-prediction"
+    "packet-rate-aware-curved-prediction",
+    "native-death-opcode-diagnostics"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -82,7 +83,8 @@
     "tests/aim-preserved-before-disconnect.test.cjs",
     "tests/connection-recovery-only.test.cjs",
     "tests/aim-motion-continuity.test.cjs",
-    "tests/projectile-accuracy.test.cjs"
+    "tests/projectile-accuracy.test.cjs",
+    "tests/death-diagnostics.test.cjs"
   ],
   "required_browsers": [
     "chromium",

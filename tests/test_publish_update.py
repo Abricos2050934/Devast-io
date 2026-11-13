@@ -7,6 +7,15 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_death_opcode_diagnostics_require_a_mapped_byte_in_both_browsers(self):
+  self.contract['features']=['native-death-opcode-diagnostics']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'native_death_opcode':27}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for opcode in [None,True,-1,256,'27']:
+   self.validation['browsers']['firefox']['native']['native_death_opcode']=opcode;self.save()
+   with self.assertRaisesRegex(ValueError,'Native death opcode.*firefox'):p.artifacts(self.root,self.out)
+
  def test_cadence_prediction_requires_both_native_browsers(self):
   self.contract['features']=['packet-rate-aware-curved-prediction']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

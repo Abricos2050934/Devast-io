@@ -886,13 +886,13 @@ function __installDevastMod(B) {
       health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details});
     if (connectionEvents.length > 12) connectionEvents.shift();
   }
-  function observeDeath(packet) {
+  function observeDeath(packet, opcode=5) {
     if (stopped) return;
     const details = {};
     // Only the reviewed three-byte death prefix is safe to include. Never log
     // arbitrary server packets, login payloads or an unbounded response body.
-    if (ArrayBuffer.isView(packet) && packet.BYTES_PER_ELEMENT === 1 && packet.length >= 3 && packet[0] === 5) {
-      details.deathOpcode = 5;
+    if (Number.isInteger(opcode) && opcode>=0 && opcode<=255 && ArrayBuffer.isView(packet) && packet.BYTES_PER_ELEMENT === 1 && packet.length >= 3 && packet[0] === opcode) {
+      details.deathOpcode = opcode;
       details.deathPacketLength = packet.byteLength;
       details.deathPrefixHex = Array.from(packet.subarray(0,3),value=>value.toString(16).padStart(2,'0')).join(' ');
     }
