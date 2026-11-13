@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "54cb6ead2ceb5b5c632b08837b2875f6b4a4ce33434c306d3b63707178d4b635",
+  "output_sha256": "0bf4041c7c8ee1068a7cb6407e5c47bc146b7d1e95bd9ba017669875db3d1fc1",
   "static_ast": "passed",
   "aim_core": "active uploaded __BBY declarations and lifecycle",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -57,7 +57,8 @@
       "jitter-shot-priority",
       "restored-original-jitter",
       "safe-shot-direction-ownership",
-      "native-weapon-ballistic-interception"
+      "native-weapon-ballistic-interception",
+      "exact-angle-direction-dedup"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -81,7 +82,8 @@
       "tests/aim-settings-persistence.test.cjs",
       "tests/aim-settings-effects.test.cjs",
       "tests/jitter-arbitration.test.cjs",
-      "tests/ballistics.test.cjs"
+      "tests/ballistics.test.cjs",
+      "tests/aim-dedup.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -89,33 +91,18 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "538ac9114d6d2831ede46d765b6cc90e57bd7ec03a393966c8ab108f0e0ea5fb",
+    "mod/responsive.js": "26885f4becf0b5a821d796e1309544d19fc9ca02c2a3a1768aeb06a79d79bc89",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
     "mod/ilm-aim.js": "849626bf806e4c47362a53ed93b5a5979adc3d2b0bca506d544b3f5174be3c98",
     "mod/ballistic-model.js": "3f7c3f80a1c286164777bd015c5a8268eabe3fb8233979e2d1deb0de6ded0b03"
   },
-  "mod_bundle_sha256": "79b64f9f637ce760e837c0ef14209a309d85f290047d164e81f84321b7b0f86b",
+  "mod_bundle_sha256": "663b178bdcbcb5c63934d11ba82ec11c8109d5ae9db24878b10aae895c0da821",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "157.0.8103.0",
-  "console_errors": [
-    "Access to XMLHttpRequest at 'https://atlanta4.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://losangeles2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://frankfurt2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://atlanta2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://osaka3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://losangeles1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://sydney3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED"
-  ],
+  "browser_version": "154.0.8037.57",
+  "console_errors": [],
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -148,10 +135,61 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "ce4d65eac4b54254baabade8c0055cda2f544046162d77352674f3edde663502",
+    "fingerprint": "86164c6aeced9229e7a9dee6540a5a5276a40fb5606efa2dcc5cdd62cc6644ac",
     "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
   },
   "native": {
+    "aim_direction_dedup": {
+      "status": "passed",
+      "predictors": 2,
+      "dense_cases": 6,
+      "results": [
+        {
+          "adaptive": false,
+          "players": 1,
+          "directions": 40,
+          "seconds": 2,
+          "identicalRemoved": 0
+        },
+        {
+          "adaptive": false,
+          "players": 12,
+          "directions": 40,
+          "seconds": 2,
+          "identicalRemoved": 440
+        },
+        {
+          "adaptive": false,
+          "players": 24,
+          "directions": 40,
+          "seconds": 2,
+          "identicalRemoved": 920
+        },
+        {
+          "adaptive": true,
+          "players": 1,
+          "directions": 40,
+          "seconds": 2,
+          "identicalRemoved": 0
+        },
+        {
+          "adaptive": true,
+          "players": 12,
+          "directions": 40,
+          "seconds": 2,
+          "identicalRemoved": 0
+        },
+        {
+          "adaptive": true,
+          "players": 24,
+          "directions": 40,
+          "seconds": 2,
+          "identicalRemoved": 0
+        }
+      ],
+      "shot_alignment_forced": true,
+      "reacquisition_invalidates_cache": true
+    },
     "adaptive_aim": {
       "status": "passed",
       "native_weapon_speed_and_range": true,
@@ -870,7 +908,7 @@
       "status": "passed",
       "idle_period_ms": 60000,
       "sustained_duration_ms": 121000,
-      "directions": 4840,
+      "directions": 4839,
       "heartbeats": 2,
       "real_input_updates_activity": true,
       "wire_cases": [
@@ -1117,13 +1155,64 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-13T05:39:16.302Z",
+  "finished_at": "2026-11-13T09:50:28.263Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "54cb6ead2ceb5b5c632b08837b2875f6b4a4ce33434c306d3b63707178d4b635",
-      "browser_version": "157.0.8103.0",
+      "output_sha256": "0bf4041c7c8ee1068a7cb6407e5c47bc146b7d1e95bd9ba017669875db3d1fc1",
+      "browser_version": "154.0.8037.57",
       "native": {
+        "aim_direction_dedup": {
+          "status": "passed",
+          "predictors": 2,
+          "dense_cases": 6,
+          "results": [
+            {
+              "adaptive": false,
+              "players": 1,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 0
+            },
+            {
+              "adaptive": false,
+              "players": 12,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 440
+            },
+            {
+              "adaptive": false,
+              "players": 24,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 920
+            },
+            {
+              "adaptive": true,
+              "players": 1,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 0
+            },
+            {
+              "adaptive": true,
+              "players": 12,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 0
+            },
+            {
+              "adaptive": true,
+              "players": 24,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 0
+            }
+          ],
+          "shot_alignment_forced": true,
+          "reacquisition_invalidates_cache": true
+        },
         "adaptive_aim": {
           "status": "passed",
           "native_weapon_speed_and_range": true,
@@ -1842,7 +1931,7 @@
           "status": "passed",
           "idle_period_ms": 60000,
           "sustained_duration_ms": 121000,
-          "directions": 4840,
+          "directions": 4839,
           "heartbeats": 2,
           "real_input_updates_activity": true,
           "wire_cases": [
@@ -2119,9 +2208,60 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "54cb6ead2ceb5b5c632b08837b2875f6b4a4ce33434c306d3b63707178d4b635",
+      "output_sha256": "0bf4041c7c8ee1068a7cb6407e5c47bc146b7d1e95bd9ba017669875db3d1fc1",
       "browser_version": "153.0",
       "native": {
+        "aim_direction_dedup": {
+          "status": "passed",
+          "predictors": 2,
+          "dense_cases": 6,
+          "results": [
+            {
+              "adaptive": false,
+              "players": 1,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 0
+            },
+            {
+              "adaptive": false,
+              "players": 12,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 440
+            },
+            {
+              "adaptive": false,
+              "players": 24,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 920
+            },
+            {
+              "adaptive": true,
+              "players": 1,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 0
+            },
+            {
+              "adaptive": true,
+              "players": 12,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 0
+            },
+            {
+              "adaptive": true,
+              "players": 24,
+              "directions": 40,
+              "seconds": 2,
+              "identicalRemoved": 0
+            }
+          ],
+          "shot_alignment_forced": true,
+          "reacquisition_invalidates_cache": true
+        },
         "adaptive_aim": {
           "status": "passed",
           "native_weapon_speed_and_range": true,
@@ -2840,7 +2980,7 @@
           "status": "passed",
           "idle_period_ms": 60000,
           "sustained_duration_ms": 121000,
-          "directions": 4840,
+          "directions": 4839,
           "heartbeats": 2,
           "real_input_updates_activity": true,
           "wire_cases": [
@@ -3136,13 +3276,14 @@
       "tests/aim-settings-persistence.test.cjs",
       "tests/aim-settings-effects.test.cjs",
       "tests/jitter-arbitration.test.cjs",
-      "tests/ballistics.test.cjs"
+      "tests/ballistics.test.cjs",
+      "tests/aim-dedup.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 223,
-    "python_tests": 69
+    "node_tests": 225,
+    "python_tests": 70
   }
 }
