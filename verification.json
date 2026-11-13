@@ -109,8 +109,19 @@
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "154.0.8037.57",
-  "console_errors": [],
+  "browser_version": "157.0.8103.0",
+  "console_errors": [
+    "Access to XMLHttpRequest at 'https://losangeles3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://frankfurt3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://atlanta1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://osaka2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://sydney1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED"
+  ],
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -1116,12 +1127,12 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-13T20:41:13.380Z",
+  "finished_at": "2026-11-13T20:49:36.325Z",
   "browsers": {
     "chromium": {
       "status": "passed",
       "output_sha256": "26dec5091e8f91f2409c2c216af6d260951740aeade4f2c2a160f237d39a57c8",
-      "browser_version": "154.0.8037.57",
+      "browser_version": "157.0.8103.0",
       "native": {
         "adaptive_aim": {
           "status": "passed",
