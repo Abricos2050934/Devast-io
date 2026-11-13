@@ -1,0 +1,59 @@
+{
+  "release": "c50b9e9281026c12fc37d3fb2d7cec00c01b8b62c6dadb4998ceace078924222",
+  "scope": "Extracted actual native control handlers, real current mod hooks, offline browsers; logical codec inputs only, not live encrypted server traffic",
+  "browsers": {
+    "chromium": {
+      "version": "154.0.8037.57",
+      "rows": [
+        {
+          "buffer": 0,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "mod_generated_commands": 0
+        },
+        {
+          "buffer": 64,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "mod_generated_commands": 0
+        },
+        {
+          "buffer": 4096,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "mod_generated_commands": 0
+        }
+      ]
+    },
+    "firefox": {
+      "version": "153.0",
+      "rows": [
+        {
+          "buffer": 0,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "mod_generated_commands": 0
+        },
+        {
+          "buffer": 64,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "mod_generated_commands": 0
+        },
+        {
+          "buffer": 4096,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "mod_generated_commands": 0
+        }
+      ]
+    }
+  },
+  "raw_sender_unchanged": true
+}

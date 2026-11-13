@@ -827,7 +827,23 @@ function __installDevastMod(B) {
     return {samples:gaps.length,meanGapMs:Math.round(mean*100)/100,p95GapMs:gaps.length?Math.round(gaps[Math.floor((gaps.length-1)*.95)]*100)/100:null,fpsEstimate:mean>0?Math.round(1000/mean):null,hidden:!!document.hidden};
   }
   const recentCombatCommands = [], connectionEvents = [];
-  const trafficKeys=['AimBotEnabled','AdaptiveAimEnabled','JitterEnabled','AntiAimbot','autoFire','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','SpamChatEnabled','AntiKickEnabled'];
+  const wireSeconds=[],wireTotals={packets:0,bytes:0};
+  let wirePeak=null,firstServerDeath=null;
+  function trimWire(now){while(wireSeconds.length&&(wireSeconds.length>240||now-wireSeconds[0].at>=120000))wireSeconds.shift();}
+  function observeWireSend(bytes){
+    if(stopped||!Number.isSafeInteger(bytes)||bytes<0||bytes>2147483647)return;
+    const now=performance.now(),at=Math.floor(now/1000)*1000,socket=socketTrace?.id??null;
+    let bucket=wireSeconds.at(-1);
+    if(!bucket||bucket.at!==at||bucket.socket!==socket){bucket={at,socket,packets:0,bytes:0};wireSeconds.push(bucket);}
+    bucket.packets++;bucket.bytes+=bytes;wireTotals.packets++;wireTotals.bytes+=bytes;
+    if(!wirePeak||bucket.packets>wirePeak.packets||bucket.packets===wirePeak.packets&&bucket.bytes>wirePeak.bytes)wirePeak={...bucket};
+    if(socketTrace){socketTrace.sentMessages++;socketTrace.sentBytes+=bytes;socketTrace.lastSendAt=now;}
+    trimWire(now);
+  }
+  function wireTrafficInfo(now=performance.now()){
+    trimWire(now);return {scope:'successful sends through the native sender after mod installation; encrypted payloads are not recorded',totals:{...wireTotals},recentSeconds:wireSeconds.map(bucket=>({...bucket})),peakSecond:wirePeak?{...wirePeak}:null};
+  }
+  const trafficKeys=['AimBotEnabled','AimbotSpearEnabled','AdaptiveAimEnabled','JitterEnabled','AntiAimbot','autoFire','hidePlayerAngle','hideAimbotAngle','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','SpamChatEnabled','AntiKickEnabled'];
   const trafficSettings=Object.fromEntries(trafficKeys.map(key=>[key,MOD[key]]));
   const trafficChanges=[{at:Math.round(performance.now()),settings:{...trafficSettings}}],trafficSeconds=[];
   let trafficPeak=null,trafficDiscardedChanges=0;
@@ -876,14 +892,17 @@ function __installDevastMod(B) {
   function connectionEvent(type, details = {}) {
     const now=performance.now();
     const health = B.health?.();
-    connectionEvents.push({type,at:Math.round(now),state:B.network.state,
+    const event={type,at:Math.round(now),state:B.network.state,
       integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,
       aim:MOD.AimBotEnabled,adaptiveAim:MOD.AdaptiveAimEnabled,jitter:MOD.JitterEnabled,strafe:MOD.AntiAimbot,autoFire:MOD.autoFire,
+      spear:MOD.AimbotSpearEnabled,hidePlayerAngle:MOD.hidePlayerAngle,hideAimbotAngle:MOD.hideAimbotAngle,
       autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled,
       socketState:connectionSocket?.readyState??null,socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
       transport:socketTraffic(now),pageHidden:!!document.hidden,
       frameGapMs:previousAnimationFrame===null?null:Math.max(0,Math.round(now-previousAnimationFrame)),
-      health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details});
+      health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details};
+    connectionEvents.push(event);
+    if(type==='server-death'&&firstServerDeath===null)firstServerDeath=event;
     if (connectionEvents.length > 12) connectionEvents.shift();
   }
   function observeDeath(packet, opcode=5) {
@@ -1603,6 +1622,7 @@ function __installDevastMod(B) {
     if(!socketTrace)return null;
     return {id:socketTrace.id,openForMs:socketTrace.openedAt===null?null:Math.max(0,Math.round(now-socketTrace.openedAt)),
       receiveGapMs:socketTrace.lastReceiveAt===null?null:Math.max(0,Math.round(now-socketTrace.lastReceiveAt)),
+      sentMessages:socketTrace.sentMessages,sentBytes:socketTrace.sentBytes,sendGapMs:socketTrace.lastSendAt===null?null:Math.max(0,Math.round(now-socketTrace.lastSendAt)),
       receivedMessages:socketTrace.receivedMessages,localCloseSource:socketTrace.localCloseSource};
   }
   function observeCloseRequest(source) {
@@ -1616,7 +1636,7 @@ function __installDevastMod(B) {
     if(socket!==connectionSocket){lastSentAngle=null;}
     removeSocketObservers();
     connectionSocket = socket;
-    socketTrace=socket?{id:++socketSerial,openedAt:socket.readyState===1?performance.now():null,lastReceiveAt:null,receivedMessages:0,localCloseSource:null}:null;
+    socketTrace=socket?{id:++socketSerial,openedAt:socket.readyState===1?performance.now():null,lastReceiveAt:null,receivedMessages:0,lastSendAt:null,sentMessages:0,sentBytes:0,localCloseSource:null}:null;
     const observedTrace=socketTrace;
     if (typeof socket?.addEventListener !== 'function') return;
     const handlers = {
@@ -1632,6 +1652,7 @@ function __installDevastMod(B) {
     };
   }
   function connectionInfo() {
+    const copyEvent=event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}});
     const stored = {};
     for (const key of ['token','tokenId','userId','accountToken']) {
       try { stored[key] = !!localStorage.getItem(key); } catch (_) { stored[key] = null; }
@@ -1645,6 +1666,7 @@ function __installDevastMod(B) {
       adWaiting:!!B.adWaiting?.(),socketState:connectionSocket?.readyState ?? null,
       socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
       transport:socketTraffic(),
+      nativeWireTraffic:wireTrafficInfo(),
       combatNow:combatCommands(),
       animationTiming:animationTiming(),
       modCommandsByOpcode:{...diagnostics.commandsByOpcode},
@@ -1654,9 +1676,9 @@ function __installDevastMod(B) {
       modTraffic:trafficInfo(),
       connectionCallbacks:{...callbackTraffic},
       aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',sourceTickRateMs:50,deduplicatedDirections:diagnostics.deduplicatedAngles},
-      aimSettings:{enabled:MOD.AimBotEnabled,source:'message27-bby',adaptive:MOD.AdaptiveAimEnabled,jitter:MOD.JitterEnabled,jitterSpeed:MOD.JitterSpeed,strafe:MOD.AntiAimbot,autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
+      aimSettings:{enabled:MOD.AimBotEnabled,spear:MOD.AimbotSpearEnabled,hidePlayerAngle:MOD.hidePlayerAngle,hideAimbotAngle:MOD.hideAimbotAngle,source:'message27-bby',adaptive:MOD.AdaptiveAimEnabled,jitter:MOD.JitterEnabled,jitterSpeed:MOD.JitterSpeed,strafe:MOD.AntiAimbot,autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,serverListRefreshFailures:reconnect.refreshFailures,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
-      stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}}))};
+      stored,modErrorCount:diagnostics.errors.length,firstServerDeath:firstServerDeath?copyEvent(firstServerDeath):null,events:connectionEvents.map(copyEvent)};
   }
   function releaseNativePending() {
     if (B.pendingKey) B.network[B.pendingKey] = false;
@@ -2325,6 +2347,7 @@ function __installDevastMod(B) {
   nextFrame = window.requestAnimationFrame(tick);
   return {
     settings: MOD,
+    observeWireSend,
     beforeFire,
     afterFire:()=>aimModule.afterFire(),
     afterRelease:()=>{aimModule.afterRelease();jitter.fireUntil=performance.now()+150;},

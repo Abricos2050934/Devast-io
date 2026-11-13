@@ -1,0 +1,55 @@
+{
+  "release": "6258d1c6fa318453768ace12830745f9a32341a82ec60df1236eded32a9f40f0",
+  "output_sha256": "f5cdf027a30bb70558fe55c8012592749b1bbb616b4d53a2f0a18cd50d3dcba6",
+  "raw_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 258,
+    "python_tests": 73
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/native-aim-transport.test.cjs",
+      "tests/ilm-current.test.cjs",
+      "tests/mod-traffic.test.cjs",
+      "tests/aim-validity.test.cjs",
+      "tests/ilm-native-pipeline.test.cjs",
+      "tests/aim-line-projection.test.cjs",
+      "tests/aim-settings-persistence.test.cjs",
+      "tests/aim-settings-effects.test.cjs",
+      "tests/jitter-arbitration.test.cjs",
+      "tests/ballistics.test.cjs",
+      "tests/aim-preserved-before-disconnect.test.cjs",
+      "tests/connection-recovery-only.test.cjs",
+      "tests/aim-motion-continuity.test.cjs",
+      "tests/projectile-accuracy.test.cjs",
+      "tests/death-diagnostics.test.cjs",
+      "tests/wire-diagnostics.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "native_wire_metadata": true,
+      "first_server_death_preserved": true,
+      "native_death_opcode": 27
+    },
+    "firefox": {
+      "status": "passed",
+      "native_wire_metadata": true,
+      "first_server_death_preserved": true,
+      "native_death_opcode": 27
+    }
+  },
+  "scope": "Diagnostic omissions only; no demonstrated kick fix, no altered aim or Jitter mechanics, no retained outgoing payload contents"
+}

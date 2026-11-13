@@ -7,6 +7,24 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_first_server_death_requires_both_browsers(self):
+  self.contract['features']=['first-server-death-preserved']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'first_server_death_preserved':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for value in [None,False,1,'true']:
+   self.validation['browsers']['firefox']['native']['first_server_death_preserved']=value;self.save()
+   with self.assertRaisesRegex(ValueError,'First server death.*firefox'):p.artifacts(self.root,self.out)
+
+ def test_native_wire_diagnostics_require_both_browsers(self):
+  self.contract['features']=['native-wire-traffic-diagnostics']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'native_aim_transport':{'native_wire_metadata':True}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for value in [None,False,1,'true']:
+   self.validation['browsers']['firefox']['native']['native_aim_transport']['native_wire_metadata']=value;self.save()
+   with self.assertRaisesRegex(ValueError,'Native wire traffic.*firefox'):p.artifacts(self.root,self.out)
+
  def test_death_opcode_diagnostics_require_a_mapped_byte_in_both_browsers(self):
   self.contract['features']=['native-death-opcode-diagnostics']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

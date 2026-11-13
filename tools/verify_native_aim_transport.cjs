@@ -19,10 +19,11 @@ function verifyNativeAimTransport(m,n,s){
   capture.restore();capture=null;
   const wireCases=[];
   for(const seed of [[0,0],[0,1],[18,52]]){
+   const wireBefore=m.connectionInfo().nativeWireTraffic.totals;
    const frame=seed.concat([6,42,5,0,11,200,77,18]),wire=n.captureWire(frame);
-   try{wire.normal([6,42]);wire.aim([6,42]);check(JSON.stringify(wire.inputs)==='[[6,42],[6,42]]','Aim bridge changed codec arguments');check(wire.bytes.length===2&&JSON.stringify(wire.bytes[0])===JSON.stringify(wire.bytes[1]),'Aim bridge changed native binary/encryption output');wireCases.push({seed,bytes:wire.bytes[0].length,equal:true});}finally{wire.restore();}
+   try{wire.normal([6,42]);wire.aim([6,42]);check(JSON.stringify(wire.inputs)==='[[6,42],[6,42]]','Aim bridge changed codec arguments');check(wire.bytes.length===2&&JSON.stringify(wire.bytes[0])===JSON.stringify(wire.bytes[1]),'Aim bridge changed native binary/encryption output');const after=m.connectionInfo().nativeWireTraffic.totals;check(after.packets-wireBefore.packets===2&&after.bytes-wireBefore.bytes===frame.length*2,'Native successful sends were not counted without retaining payloads');wireCases.push({seed,bytes:wire.bytes[0].length,equal:true});}finally{wire.restore();}
   }
-  return {status:'passed',idle_period_ms:initialClock.limit,sustained_duration_ms:initialClock.limit*2+1000,directions,heartbeats,real_input_updates_activity:true,wire_cases:wireCases};
+  return {status:'passed',idle_period_ms:initialClock.limit,sustained_duration_ms:initialClock.limit*2+1000,directions,heartbeats,real_input_updates_activity:true,native_wire_metadata:true,wire_cases:wireCases};
  }finally{
   capture?.restore();performance.now=oldPerformance;n.idleProbe.restore(initialClock);m.observeSocket(null);m.setSetting('AimBotEnabled',false);m.onSessionStart();m.onHandshake();self.id=oldId;n.network.state=oldState;m.reconnect.sessionEnded=oldEnded;
   // This fixture rewinds performance.now; discard smoothing timestamps from

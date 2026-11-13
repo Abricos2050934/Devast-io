@@ -1,0 +1,103 @@
+{
+  "release": "6258d1c6fa318453768ace12830745f9a32341a82ec60df1236eded32a9f40f0",
+  "scope": "Extracted actual native control handlers, real current mod hooks, offline browsers; logical codec inputs only, not live encrypted server traffic",
+  "browsers": {
+    "chromium": {
+      "version": "154.0.8037.57",
+      "rows": [
+        {
+          "buffer": 0,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "commands_by_handler": {
+            "move": 119,
+            "primary": 1,
+            "secondary": 118,
+            "fire": 40,
+            "release": 40
+          },
+          "mod_generated_commands": 0
+        },
+        {
+          "buffer": 64,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "commands_by_handler": {
+            "move": 119,
+            "primary": 1,
+            "secondary": 118,
+            "fire": 40,
+            "release": 40
+          },
+          "mod_generated_commands": 0
+        },
+        {
+          "buffer": 4096,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "commands_by_handler": {
+            "move": 119,
+            "primary": 1,
+            "secondary": 118,
+            "fire": 40,
+            "release": 40
+          },
+          "mod_generated_commands": 0
+        }
+      ]
+    },
+    "firefox": {
+      "version": "153.0",
+      "rows": [
+        {
+          "buffer": 0,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "commands_by_handler": {
+            "move": 119,
+            "primary": 1,
+            "secondary": 118,
+            "fire": 40,
+            "release": 40
+          },
+          "mod_generated_commands": 0
+        },
+        {
+          "buffer": 64,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "commands_by_handler": {
+            "move": 119,
+            "primary": 1,
+            "secondary": 118,
+            "fire": 40,
+            "release": 40
+          },
+          "mod_generated_commands": 0
+        },
+        {
+          "buffer": 4096,
+          "scenes": 120,
+          "commands": 318,
+          "equal": true,
+          "commands_by_handler": {
+            "move": 119,
+            "primary": 1,
+            "secondary": 118,
+            "fire": 40,
+            "release": 40
+          },
+          "mod_generated_commands": 0
+        }
+      ]
+    }
+  },
+  "raw_sender_unchanged": false,
+  "raw_sender_payload_logic_unchanged": true,
+  "mod_source_sha256": "038fbeea4fb45d6676fb4201b138eb802e54e515f608a6e4c6e5605f2562bd03"
+}

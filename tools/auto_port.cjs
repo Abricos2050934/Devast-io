@@ -261,6 +261,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
    const at=hits[0].end-1;position.after=position.after.slice(0,at)+','+extras.join(',')+position.after.slice(at);
   }
   generated.operations.push(require('./updater/aim-transport.cjs').aimTransportOperation(cur,outputBindings.symbols,roles,new Set(pairs.values())));
+  generated.operations.push(require('./updater/wire-diagnostics.cjs').wireDiagnosticOperation(cur,generated.operations,roles));
   // The adaptive model must use the same packed speed as the native projectile
   // constructor. A changed shift, divisor or entity binding blocks publication.
   const projectileSpeeds=cur.nodes.filter(n=>{

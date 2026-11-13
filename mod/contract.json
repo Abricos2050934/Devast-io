@@ -55,7 +55,9 @@
     "bounded-connection-recovery",
     "continuous-post-turn-motion",
     "packet-rate-aware-curved-prediction",
-    "native-death-opcode-diagnostics"
+    "native-death-opcode-diagnostics",
+    "native-wire-traffic-diagnostics",
+    "first-server-death-preserved"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -84,7 +86,8 @@
     "tests/connection-recovery-only.test.cjs",
     "tests/aim-motion-continuity.test.cjs",
     "tests/projectile-accuracy.test.cjs",
-    "tests/death-diagnostics.test.cjs"
+    "tests/death-diagnostics.test.cjs",
+    "tests/wire-diagnostics.test.cjs"
   ],
   "required_browsers": [
     "chromium",

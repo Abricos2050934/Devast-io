@@ -74,6 +74,10 @@ def artifacts(root, output):
             opcode = report.get('native', {}).get('native_death_opcode')
             if type(opcode) is not int or not 0 <= opcode <= 255:
                 raise ValueError('Native death opcode diagnostics not verified in browser: ' + browser)
+        if 'native-wire-traffic-diagnostics' in contract.get('features', []) and report.get('native', {}).get('native_aim_transport', {}).get('native_wire_metadata') is not True:
+            raise ValueError('Native wire traffic diagnostics not verified in browser: ' + browser)
+        if 'first-server-death-preserved' in contract.get('features', []) and report.get('native', {}).get('first_server_death_preserved') is not True:
+            raise ValueError('First server death retention not verified in browser: ' + browser)
         if 'coalesced-aim-directions' in contract.get('features', []) and report.get('native', {}).get('coalesced_aim_directions_and_native_idle') is not True:
             raise ValueError('Coalesced aim directions and native idle ping were not verified in browser: ' + browser)
         if 'curved-target-and-chaser-interception' in contract.get('features', []) and report.get('native', {}).get('curved_target_and_chaser_interception') is not True:

@@ -1,0 +1,250 @@
+{
+  "scope": "Isolated native DOM and source URL checks, offline; no live game server or kick test",
+  "release": "c50b9e9281026c12fc37d3fb2d7cec00c01b8b62c6dadb4998ceace078924222",
+  "native_sha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9",
+  "checker": {
+    "name": "іܓᏧ",
+    "start": 2158488,
+    "end": 2188228,
+    "source_sha256": "3ef629af5c557e6d6d65516f11803705b8eb8311c4eb833b2d6f843e144bebd5"
+  },
+  "listed_ids": [
+    "dvx-sidebar",
+    "dvx-style",
+    "kb-xray",
+    "tab-keybinds",
+    "predlinetog",
+    "xraysl-val",
+    "grok-key-input",
+    "omrx-drag",
+    "dvx-main",
+    "spinsl-val",
+    "omrx-content",
+    "tab-combat",
+    "targetpick",
+    "tab-aimbot",
+    "grok-key-err",
+    "spinsl",
+    "tab-visuals",
+    "dvx-panel",
+    "autoloottog",
+    "xraysl",
+    "kb-panel",
+    "kb-autobuild",
+    "grok-playerlist",
+    "dvx-drag",
+    "esptog",
+    "grok-fps-counter",
+    "antikicktog",
+    "baba-for-new-gui-theme",
+    "ghoultog",
+    "linepick",
+    "tab-token",
+    "fovsl",
+    "hudtog",
+    "kb-aim",
+    "omrx-panel",
+    "spintog",
+    "dvx-np",
+    "grok-function-status-left",
+    "fovsl-val",
+    "xraytog",
+    "dvx-pl",
+    "aimonshoottog",
+    "predsl",
+    "angels-hud",
+    "omrx-sidebar",
+    "tab-config",
+    "dvx-content",
+    "grok-key-lock",
+    "kb-autoloot",
+    "autobuildtog",
+    "grok-key-btn",
+    "omrx-main",
+    "enemypick",
+    "predsl-val",
+    "fovtog",
+    "aimtog",
+    "kb-spin",
+    "tab-automation",
+    "tgl-xray"
+  ],
+  "prefix_selectors": [
+    "[id^=\"baba-\"]",
+    "[id^=\"grok-\"]",
+    "[id^=\"omrx-\"]",
+    "[id^=\"dvx-\"]"
+  ],
+  "source_guard": {
+    "start": 1521255,
+    "end": 1521402
+  },
+  "current_literal_menu_ids": [
+    "devast-mod-layer",
+    "devast-mod-overlay",
+    "devast-mod-functions",
+    "devast-player-list"
+  ],
+  "static_intersection": [],
+  "browsers": {
+    "chromium": {
+      "version": "154.0.8037.57",
+      "cases": [
+        {
+          "case": "empty",
+          "flag": 0
+        },
+        {
+          "case": "unrelated_element",
+          "flag": 0
+        },
+        {
+          "case": "current_literal_menu_ids",
+          "flag": 0
+        },
+        {
+          "case": "actual_vendor_menu",
+          "flag": 0
+        },
+        {
+          "case": "listed_menu_marker",
+          "flag": 1
+        },
+        {
+          "case": "prefix_marker_0",
+          "flag": 1
+        },
+        {
+          "case": "prefix_marker_1",
+          "flag": 1
+        },
+        {
+          "case": "prefix_marker_2",
+          "flag": 1
+        },
+        {
+          "case": "prefix_marker_3",
+          "flag": 1
+        }
+      ],
+      "source_url_cases": [
+        {
+          "case": "expected_script_url",
+          "flag": 0
+        },
+        {
+          "case": "different_script_url",
+          "flag": 1
+        },
+        {
+          "case": "inline_script",
+          "flag": 1
+        }
+      ],
+      "resource_override_cases": [
+        {
+          "case": "loader_expected_script_url",
+          "flag": 0,
+          "loader_state": "loaded"
+        },
+        {
+          "case": "loader_different_script_url",
+          "flag": 1,
+          "loader_state": "loaded"
+        }
+      ]
+    },
+    "firefox": {
+      "version": "153.0",
+      "cases": [
+        {
+          "case": "empty",
+          "flag": 0
+        },
+        {
+          "case": "unrelated_element",
+          "flag": 0
+        },
+        {
+          "case": "current_literal_menu_ids",
+          "flag": 0
+        },
+        {
+          "case": "actual_vendor_menu",
+          "flag": 0
+        },
+        {
+          "case": "listed_menu_marker",
+          "flag": 1
+        },
+        {
+          "case": "prefix_marker_0",
+          "flag": 1
+        },
+        {
+          "case": "prefix_marker_1",
+          "flag": 1
+        },
+        {
+          "case": "prefix_marker_2",
+          "flag": 1
+        },
+        {
+          "case": "prefix_marker_3",
+          "flag": 1
+        }
+      ],
+      "source_url_cases": [
+        {
+          "case": "expected_script_url",
+          "flag": 0
+        },
+        {
+          "case": "different_script_url",
+          "flag": 1
+        },
+        {
+          "case": "inline_script",
+          "flag": 1
+        }
+      ],
+      "resource_override_cases": [
+        {
+          "case": "loader_expected_script_url",
+          "flag": 0,
+          "loader_state": "loaded"
+        },
+        {
+          "case": "loader_different_script_url",
+          "flag": 1,
+          "loader_state": "loaded"
+        }
+      ]
+    }
+  },
+  "source_check": {
+    "checked_at": "2026-11-13T22:17:45.878290+00:00",
+    "page_sha256": "8c0e4e36d9798a2dad6c77531605cc8d7d05e06a30dbf9f0c5cfe9a7112c4097",
+    "source_url": "https://devast.io/js/hym7DtRA3RCGo21.js",
+    "raw_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362"
+  },
+  "browser_case_count": 28,
+  "static_signer_flag_read_counts": {
+    "native": [
+      1,
+      1,
+      1
+    ],
+    "current_generated": [
+      0,
+      0,
+      0
+    ]
+  },
+  "limitations": [
+    "The fixtures do not reproduce the user browser or a live server death.",
+    "The existing Resource Override loader was tested with a minimal diagnostic payload, not a complete live login.",
+    "Static property resolution does not prove that every dynamic check or server-side rule was found.",
+    "No production detection checks, menu identifiers, combat logic or outgoing packets were changed."
+  ]
+}

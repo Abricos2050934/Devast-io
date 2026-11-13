@@ -34,7 +34,7 @@ const physicalSource=fs.readFileSync(path.join(root,'mod/ballistic-model.js'),'u
 assert.equal(output.split(physicalSource).length,2,'Exact adaptive predictor must survive automatic porting');
 // audit_ilm_port verifies retained gun blocks and deliberate Jitter removal.
 assert.equal(hash(read('native.js')),profile.baseline_sha256);
-assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2','message15-native-afterRelease','message15-native-onMove','message15-handshake','message15-session-start','message15-native-aim-transport']),'Every reviewed native patch is required');
+assert.deepEqual(profile.operations.map(p=>p.id),JSON.parse(fs.readFileSync(path.join(root,'patches/recovered-current.json'))).operations.map(p=>p.id).concat(['native-integrity-signature-0','native-integrity-signature-1','native-integrity-signature-2','message15-native-afterRelease','message15-native-onMove','message15-handshake','message15-session-start','message15-native-aim-transport','native-wire-send-diagnostics']),'Every reviewed native patch is required');
 const functions={'ι๔̶':'spawn','ᴄ９̗':'headLabel','ⲅ︉️':'leaderLabel','ᴄߌ͏':'update','ⲟ१̖':'packet','ᴎܕα':'nameTag','ᴎ༩༣':'fire','ԁ̶ϲ':'release','ѕ٨ᚄ':'joinPayload','рܙ๕':'death','ᅟ᠌５':'leave','ᴀᄁ︃':'landmineRender','рոᴎ':'wireRender','ᅠ̘ܛ':'trapRender'};
 const closeOperation=profile.operations.find(p=>p.id==='native-disconnect-without-socket');
 const closeName=acorn.parse(closeOperation.after,{ecmaVersion:'latest'}).body[0].id.name;
@@ -272,6 +272,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    const deathCapture=n.capturePackets(),deathSettings=Object.fromEntries(['AimBotEnabled','autoFire'].map(k=>[k,m.settings[k]]));
    try{
     n.network.state=1;self.id=1;m.setSetting('AimBotEnabled',true);m.setSetting('autoFire',true);
+    const earliestBefore=JSON.stringify(m.connectionInfo().firstServerDeath);
     check(Number.isInteger(r.nativeDeathOpcode),'Mapped native death opcode missing');
     n.network[deathKey]=code=>{check(code===128,'Native death error code changed');deathCalls++;};n.death(new Uint8Array([r.nativeDeathOpcode,0,2]));
     const event=m.connectionInfo().events.at(-1);
@@ -279,6 +280,11 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(event.deathOpcode===r.nativeDeathOpcode&&event.deathPacketLength===3&&event.deathPrefixHex===r.nativeDeathOpcode.toString(16).padStart(2,'0')+' 00 02','Native death packet was not captured');
     check(deathCalls===1,'Death observation changed native handling');
     check(deathCapture.packets.length===0,'Handling server death sent a command');
+    const earliestAfter=JSON.stringify(m.connectionInfo().firstServerDeath);
+    check(m.connectionInfo().firstServerDeath?.type==='server-death'&&(earliestBefore==='null'||earliestBefore===earliestAfter),'First death metadata was lost or overwritten');
+    for(let i=0;i<20;i++)m.observeDeath(new Uint8Array([r.nativeDeathOpcode,0,i]),r.nativeDeathOpcode);
+    check(JSON.stringify(m.connectionInfo().firstServerDeath)===earliestAfter,'Repeated termination events overwrote the initial death');
+    m.firstDeathVerification=true;
     for(let i=0;i<50;i++){m.aim.refresh();m.beforeFire();}
     check(deathCapture.packets.length===0&&!m.controlsAimDirection,'Terminated session kept sending combat packets');
     check(m.connectionInfo().sessionEnded&&m.connectionInfo().awaitingPlay,'Death did not terminate session restoration');
@@ -379,7 +385,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors: '+m.diagnostics.errors.join('; '));
-   return {adaptive_aim:m.ballisticVerification,jitter:m.jitterVerification,message27_menu:m.message27MenuVerification,message27_aim:m.message27AimVerification,message27_settings:m.message27SettingsVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,bounded_fast_loot:true,session_mod_traffic_history:true,native_autobuild_cursor_preview:true,bounded_auto_build:true,aim_session_history_reset:m.message27AimVerification.session_target_reset===true,valid_live_aim_targets:m.message27AimVerification.valid_target_admission===true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,native_death_opcode:r.nativeDeathOpcode,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {adaptive_aim:m.ballisticVerification,jitter:m.jitterVerification,message27_menu:m.message27MenuVerification,message27_aim:m.message27AimVerification,message27_settings:m.message27SettingsVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,bounded_fast_loot:true,session_mod_traffic_history:true,native_autobuild_cursor_preview:true,bounded_auto_build:true,aim_session_history_reset:m.message27AimVerification.session_target_reset===true,valid_live_aim_targets:m.message27AimVerification.valid_target_admission===true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,native_death_opcode:r.nativeDeathOpcode,first_server_death_preserved:m.firstDeathVerification===true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:reference,originalHooks,originalAngles,originalMenu:JSON.parse(z.gunzipSync(fs.readFileSync(path.join(root,'recovery/ilm-aim-menu-reference.json.gz'))))});
   report.physical_numeric=await require('./verify_ilm_physical.cjs').verifyPhysical(page,symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
