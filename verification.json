@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "26dec5091e8f91f2409c2c216af6d260951740aeade4f2c2a160f237d39a57c8",
+  "output_sha256": "f5cdf027a30bb70558fe55c8012592749b1bbb616b4d53a2f0a18cd50d3dcba6",
   "static_ast": "passed",
   "aim_core": "active uploaded __BBY declarations and lifecycle",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -62,7 +62,9 @@
       "bounded-connection-recovery",
       "continuous-post-turn-motion",
       "packet-rate-aware-curved-prediction",
-      "native-death-opcode-diagnostics"
+      "native-death-opcode-diagnostics",
+      "native-wire-traffic-diagnostics",
+      "first-server-death-preserved"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -91,7 +93,8 @@
       "tests/connection-recovery-only.test.cjs",
       "tests/aim-motion-continuity.test.cjs",
       "tests/projectile-accuracy.test.cjs",
-      "tests/death-diagnostics.test.cjs"
+      "tests/death-diagnostics.test.cjs",
+      "tests/wire-diagnostics.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -99,29 +102,18 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "572e26d10af2d2b76648bffdf3b3af75c2dd72caf3e3d3883041c115267b53fa",
+    "mod/responsive.js": "038fbeea4fb45d6676fb4201b138eb802e54e515f608a6e4c6e5605f2562bd03",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
     "mod/ilm-aim.js": "0e05f192c7cd4c4d95f6b07f2219e7d977e06a46875b14d3d635c99cfa041a46",
     "mod/ballistic-model.js": "d3b5c075b1db229e12a86d5db7731d0138a961eaa51d4116142eba2b478a9e7c"
   },
-  "mod_bundle_sha256": "adfccdb5c2ccf9e1bc7e39b41180ad24f2ed9e430b1a3cd3f9756e59bac5dc2c",
+  "mod_bundle_sha256": "1581420970da5266eef8604bf373af28523c7233cbfa700c286ef8b77bdc4133",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "157.0.8103.0",
-  "console_errors": [
-    "Access to XMLHttpRequest at 'https://losangeles3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://frankfurt3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://atlanta1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://osaka2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://sydney1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED"
-  ],
+  "browser_version": "154.0.8037.57",
+  "console_errors": [],
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -154,7 +146,7 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "7f3c8bdcbf1fc47924dc9ee411c6cc9f4444539edab12eaee403c3449ff75b0f",
+    "fingerprint": "21c6d6e87a6da977fe69bf518e29badd45350eacbdd738640c4e5647ae456330",
     "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
   },
   "native": {
@@ -882,6 +874,7 @@
       "directions": 4840,
       "heartbeats": 2,
       "real_input_updates_activity": true,
+      "native_wire_metadata": true,
       "wire_cases": [
         {
           "seed": [
@@ -940,6 +933,7 @@
     "native_ad_failure_recovery": true,
     "native_death_observation": true,
     "native_death_opcode": 27,
+    "first_server_death_preserved": true,
     "death_stops_restore_retries": true,
     "mod_errors": []
   },
@@ -1127,12 +1121,12 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-13T20:49:36.325Z",
+  "finished_at": "2026-11-13T22:56:44.073Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "26dec5091e8f91f2409c2c216af6d260951740aeade4f2c2a160f237d39a57c8",
-      "browser_version": "157.0.8103.0",
+      "output_sha256": "f5cdf027a30bb70558fe55c8012592749b1bbb616b4d53a2f0a18cd50d3dcba6",
+      "browser_version": "154.0.8037.57",
       "native": {
         "adaptive_aim": {
           "status": "passed",
@@ -1858,6 +1852,7 @@
           "directions": 4840,
           "heartbeats": 2,
           "real_input_updates_activity": true,
+          "native_wire_metadata": true,
           "wire_cases": [
             {
               "seed": [
@@ -1916,6 +1911,7 @@
         "native_ad_failure_recovery": true,
         "native_death_observation": true,
         "native_death_opcode": 27,
+        "first_server_death_preserved": true,
         "death_stops_restore_retries": true,
         "mod_errors": []
       },
@@ -2133,7 +2129,7 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "26dec5091e8f91f2409c2c216af6d260951740aeade4f2c2a160f237d39a57c8",
+      "output_sha256": "f5cdf027a30bb70558fe55c8012592749b1bbb616b4d53a2f0a18cd50d3dcba6",
       "browser_version": "153.0",
       "native": {
         "adaptive_aim": {
@@ -2860,6 +2856,7 @@
           "directions": 4840,
           "heartbeats": 2,
           "real_input_updates_activity": true,
+          "native_wire_metadata": true,
           "wire_cases": [
             {
               "seed": [
@@ -2918,6 +2915,7 @@
         "native_ad_failure_recovery": true,
         "native_death_observation": true,
         "native_death_opcode": 27,
+        "first_server_death_preserved": true,
         "death_stops_restore_retries": true,
         "mod_errors": []
       },
@@ -3159,13 +3157,14 @@
       "tests/connection-recovery-only.test.cjs",
       "tests/aim-motion-continuity.test.cjs",
       "tests/projectile-accuracy.test.cjs",
-      "tests/death-diagnostics.test.cjs"
+      "tests/death-diagnostics.test.cjs",
+      "tests/wire-diagnostics.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 252,
-    "python_tests": 71
+    "node_tests": 258,
+    "python_tests": 73
   }
 }
