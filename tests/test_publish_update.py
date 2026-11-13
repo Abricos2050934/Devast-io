@@ -7,6 +7,17 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_duplicate_direction_fix_requires_both_predictors_and_browsers(self):
+  self.contract['features']=['exact-angle-direction-dedup']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'aim_direction_dedup':{'status':'passed','predictors':2,'dense_cases':6,'results':[{'directions':40} for _ in range(6)],'shot_alignment_forced':True,'reacquisition_invalidates_cache':True}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  result=self.validation['browsers']['firefox']['native']['aim_direction_dedup']
+  for key,value in [('predictors',1),('dense_cases',5),('shot_alignment_forced',False),('reacquisition_invalidates_cache',False),('results',[{'directions':41} for _ in range(6)])]:
+   original=result[key];result[key]=value;self.save()
+   with self.assertRaisesRegex(ValueError,'duplicate direction.*firefox'):p.artifacts(self.root,self.out)
+   result[key]=original
+
  def test_adaptive_aim_requires_native_packet_speed_and_shot_evidence_in_both_browsers(self):
   self.contract['features']=['native-weapon-ballistic-interception']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

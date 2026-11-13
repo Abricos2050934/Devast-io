@@ -118,6 +118,13 @@ def artifacts(root, output):
             raise ValueError('Original ILM pointer ownership during target loss was not verified in browser: ' + browser)
         if 'native-aim-transport-preserves-idle' in contract.get('features', []) and report.get('native', {}).get('native_aim_transport', {}).get('status') != 'passed':
             raise ValueError('Native aim transport and periodic idle packets were not verified in browser: ' + browser)
+        if 'exact-angle-direction-dedup' in contract.get('features', []):
+            direction = report.get('native', {}).get('aim_direction_dedup', {})
+            results = direction.get('results', [])
+            if (direction.get('status') != 'passed' or direction.get('dense_cases') != 6 or direction.get('predictors') != 2
+                    or direction.get('shot_alignment_forced') is not True or direction.get('reacquisition_invalidates_cache') is not True
+                    or len(results) != 6 or any(row.get('directions') != 40 for row in results)):
+                raise ValueError('Aim duplicate direction handling was not verified in browser: ' + browser)
         if 'immediate-aim-numeric-settings' in contract.get('features', []) and report.get('physical_numeric', {}).get('status') != 'passed':
             raise ValueError('Physical aim numeric entry was not verified in browser: ' + browser)
         if 'verbatim-message27-aim' in contract.get('features', []):

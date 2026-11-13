@@ -50,7 +50,8 @@
     "jitter-shot-priority",
     "restored-original-jitter",
     "safe-shot-direction-ownership",
-    "native-weapon-ballistic-interception"
+    "native-weapon-ballistic-interception",
+    "exact-angle-direction-dedup"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -74,7 +75,8 @@
     "tests/aim-settings-persistence.test.cjs",
     "tests/aim-settings-effects.test.cjs",
     "tests/jitter-arbitration.test.cjs",
-    "tests/ballistics.test.cjs"
+    "tests/ballistics.test.cjs",
+    "tests/aim-dedup.test.cjs"
   ],
   "required_browsers": [
     "chromium",

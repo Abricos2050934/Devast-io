@@ -779,7 +779,9 @@ function __installDevastMod(B) {
       }
       if(packet[0]===6)stopJitter();
       if(packet[0]===4){stopJitter();jitter.fireUntil=performance.now()+150;if(!__send([6,Aimbot.lastAngle],true,true))return false;}
-      return __send(packet,!MOD.AdaptiveAimEnabled,true);
+      // Suppress unchanged background directions in both predictors. Required
+      // shot alignment above and in beforeFire deliberately remains forced.
+      return __send(packet,packet[0]!==6,true);
     }
   });
   const GetAllTargets=aimModule.targets,Aimbot=aimModule.aim;
@@ -827,7 +829,7 @@ function __installDevastMod(B) {
     return {samples:gaps.length,meanGapMs:Math.round(mean*100)/100,p95GapMs:gaps.length?Math.round(gaps[Math.floor((gaps.length-1)*.95)]*100)/100:null,fpsEstimate:mean>0?Math.round(1000/mean):null,hidden:!!document.hidden};
   }
   const recentCombatCommands = [], connectionEvents = [];
-  const trafficKeys=['AimBotEnabled','autoFire','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','SpamChatEnabled','AntiKickEnabled'];
+  const trafficKeys=['AimBotEnabled','AdaptiveAimEnabled','JitterEnabled','AntiAimbot','autoFire','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','SpamChatEnabled','AntiKickEnabled'];
   const trafficSettings=Object.fromEntries(trafficKeys.map(key=>[key,MOD[key]]));
   const trafficChanges=[{at:Math.round(performance.now()),settings:{...trafficSettings}}],trafficSeconds=[];
   let trafficPeak=null,trafficDiscardedChanges=0;
@@ -878,7 +880,7 @@ function __installDevastMod(B) {
     const health = B.health?.();
     connectionEvents.push({type,at:Math.round(now),state:B.network.state,
       integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,
-      aim:MOD.AimBotEnabled,autoFire:MOD.autoFire,
+      aim:MOD.AimBotEnabled,adaptiveAim:MOD.AdaptiveAimEnabled,jitter:MOD.JitterEnabled,strafe:MOD.AntiAimbot,autoFire:MOD.autoFire,
       autoBuild:MOD.AutoBuiledEnabled,fastLoot:MOD.FAutoLootEnabled,slowLoot:MOD.SAutoLootEnabled,autoTake:MOD.AutoTakeEnabled,spamChat:MOD.SpamChatEnabled,
       socketState:connectionSocket?.readyState??null,socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
       transport:socketTraffic(now),pageHidden:!!document.hidden,
@@ -1652,7 +1654,7 @@ function __installDevastMod(B) {
       modTraffic:trafficInfo(),
       connectionCallbacks:{...callbackTraffic},
       aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',sourceTickRateMs:50,deduplicatedDirections:diagnostics.deduplicatedAngles},
-      aimSettings:{enabled:MOD.AimBotEnabled,source:'message27-bby',autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
+      aimSettings:{enabled:MOD.AimBotEnabled,source:'message27-bby',adaptive:MOD.AdaptiveAimEnabled,jitter:MOD.JitterEnabled,jitterSpeed:MOD.JitterSpeed,strafe:MOD.AntiAimbot,autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}}))};
   }
@@ -2327,7 +2329,13 @@ function __installDevastMod(B) {
     nativePacketAngle:angle=>playing()&&!Aimbot.dead&&!(jitterAiming()&&invalidAimState())?Aimbot.packetAngle(angle):angle,
     // Compatibility property: the source replaces the primary angle argument
     // through packetAngle and retains native direction clocks and sends.
-    get controlsAimDirection() {return playing()&&!Aimbot.dead&&!reconnect.sessionEnded&&(MOD.JitterEnabled&&!jitterAiming()||gunAimActive()&&!invalidAimState());},
+    get controlsAimDirection() {
+      const owns=playing()&&!Aimbot.dead&&!reconnect.sessionEnded&&(MOD.JitterEnabled&&!jitterAiming()||gunAimActive()&&!invalidAimState());
+      // This getter runs at the native send sites. Once native input can
+      // change the server angle, our cached direction is no longer evidence.
+      if(!owns&&lastSentAngle!==null){lastSentAngle=null;lastSentPlayer=0;lastAdaptiveDirection=-Infinity;lastAdaptiveTarget=null;aimTransport.nativeYields++;}
+      return owns;
+    },
     get jitterAngle() { return playing()&&!Aimbot.dead&&jitter.spinning&&MOD.ShowRealAngles!=='never'?jitter.angle*Math.PI/180:null; },
     jitterTick:()=>updateJitter(performance.now(),true),
     get aimRenderAngle() { return null; },
