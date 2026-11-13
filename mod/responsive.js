@@ -756,16 +756,17 @@ function __installDevastMod(B) {
   refreshLootFilter();
   const ballistic=__createBallisticAim(MOD,()=>performance.now());
   let ballisticPrediction={valid:false,status:'no-target'},lastAdaptiveDirection=-Infinity,lastAdaptiveTarget=null;
-  let aimCycleDepth=0,aimCycleWritable=false;
-  const aimTransport={cycles:0,blockedCycles:0,nativeYields:0,invalidCycles:0,lastInvalidReason:null};
+  let aimCycleDepth=0,aimCycleWritable=false,lastStrafeMask=null;
+  const aimTransport={cycles:0,blockedCycles:0,nativeYields:0,invalidCycles:0,lastInvalidReason:null,restoredMoves:0};
   const aimModule=__createIlmAdapter(MOD,{
-    window,document,selfId:()=>B.world.ᅠᏧ‍?.id||0,selfPosition:()=>B.world.ᅠᏧ‍||{x:-1,y:-1},rotationTick:()=>{if(adaptiveGunActive()&&playing()&&!Aimbot.dead)aimModule.refreshTargets();updateJitter(performance.now(),true);},
+    window,document,selfId:()=>B.world.ᅠᏧ‍?.id||0,selfPosition:()=>B.world.ᅠᏧ‍||{x:-1,y:-1},rotationTick:()=>{if(!MOD.AntiAimbot)restoreStrafeMovement();if(adaptiveGunActive()&&playing()&&!Aimbot.dead)aimModule.refreshTargets();updateJitter(performance.now(),true);},
     playerInfo:id=>({exists:!!playerMeta(id),team:playerMeta(id)?.а༤̘??-1,membership:playerMeta(id)?.ᴌ̗ⲟ}),
     clanInfo:id=>({exists:!!B.world.ﾠࡅ‍[id],membership:B.world.ﾠࡅ‍[id]?.ոᚄރ}),persist,setKey:(key,value)=>setSetting(key,value),
     beginCycle:()=>{if(aimCycleDepth++===0){aimCycleWritable=playing()&&!reconnect.sessionEnded&&automationReady('aim');if(aimCycleWritable)aimTransport.cycles++;else aimTransport.blockedCycles++;}},
     endCycle:()=>{if(--aimCycleDepth===0)aimCycleWritable=false;},
     send:(packet,source)=>{
       if(!aimCycleWritable||!playing()||reconnect.sessionEnded||connectionSocket&&connectionSocket.readyState!==1)return false;
+      if(packet[0]===2&&source?.kind==='anti'&&invalidAimState(true))return false;
       // The source calculates first. Reject its whole automatic cycle when
       // that calculation used a missing player or a removed/own target.
       if(adaptiveGunActive()&&packet[0]===4)Aimbot.resolve();
@@ -773,7 +774,9 @@ function __installDevastMod(B) {
       if(packet[0]===6&&MOD.JitterEnabled&&!jitterAiming())return false;
       if(packet[0]===6&&MOD.AdaptiveAimEnabled){
         const now=performance.now();
-        if(lastAdaptiveTarget===Aimbot.targetPlayer&&now-lastAdaptiveDirection<50)return false;
+        // Target switches must not bypass the background direction budget.
+        // beforeFire and the automatic attack path still align immediately.
+        if(now-lastAdaptiveDirection<50)return false;
         if(!__send(packet,false,true))return false;
         lastAdaptiveDirection=now;lastAdaptiveTarget=Aimbot.targetPlayer;stopJitter();return true;
       }
@@ -781,7 +784,9 @@ function __installDevastMod(B) {
       if(packet[0]===4){stopJitter();jitter.fireUntil=performance.now()+150;if(!__send([6,Aimbot.lastAngle],true,true))return false;}
       // Suppress unchanged background directions in both predictors. Required
       // shot alignment above and in beforeFire deliberately remains forced.
-      return __send(packet,packet[0]!==6,true);
+      const sent=__send(packet,packet[0]!==6,true);
+      if(sent&&packet[0]===2&&source?.kind==='anti')lastStrafeMask=packet[1];
+      return sent;
     }
   });
   const GetAllTargets=aimModule.targets,Aimbot=aimModule.aim;
@@ -972,7 +977,9 @@ function __installDevastMod(B) {
     return null;
   }
   function resetAimForSession() {
+    if(stopped)return;
     lastSentAngle=null;automaticDirection=false;
+    lastStrafeMask=null;GetAllTargets.myLastMoveDirection=0;
     stopJitter();jitter.fireUntil=-Infinity;
     Aimbot.onDeath();
     Aimbot.targetPlayer=null;
@@ -1007,6 +1014,14 @@ function __installDevastMod(B) {
   // Restored from our earlier rotating Jitter (f978ade), independent of mouse
   // and movement input. Only its 50 ms timer is allowed to send idle angles.
   const jitter={angle:0,updatedAt:null,lastSentAt:-Infinity,fireUntil:-Infinity,spinning:false,deferredDirections:0};
+  function restoreStrafeMovement(priority=false){
+    if(lastStrafeMask===null)return true;
+    if(invalidAimState(true)||connectionSocket&&connectionSocket.readyState!==1){lastStrafeMask=null;return true;}
+    if(!priority&&!automationReady('aim'))return false;
+    const mask=Number.isInteger(GetAllTargets.myLastMoveDirection)?GetAllTargets.myLastMoveDirection:0;
+    if(!__send([2,mask]))return false;
+    lastStrafeMask=null;aimTransport.restoredMoves++;return true;
+  }
   function gunAimActive(){return MOD.AimBotEnabled||MOD.AimbotSpearEnabled&&GetAllTargets.selfWeapon===5;}
   function jitterAiming(){return !!(Aimbot.mouseDown||performance.now()<jitter.fireUntil||MOD.autoFire&&gunAimActive()&&!invalidAimState());}
   function stopJitter(){jitter.spinning=false;jitter.updatedAt=null;jitter.lastSentAt=-Infinity;}
@@ -1018,6 +1033,7 @@ function __installDevastMod(B) {
     if(sendDirection&&now-jitter.lastSentAt>=50){if(!automationReady('aim')){jitter.deferredDirections++;return;}if(__send([6,jitter.angle]))jitter.lastSentAt=now;}
   }
   function beforeFire(){
+    if(stopped)return true;
     if(!playing()||reconnect.sessionEnded||Aimbot.dead)return false;
     if(!MOD.JitterEnabled&&!gunAimActive()&&!automaticDirection)return true;
     jitter.fireUntil=performance.now()+150;stopJitter();
@@ -1058,6 +1074,7 @@ function __installDevastMod(B) {
     MOD[key] = value;
     if(key==='AdaptiveAimEnabled'){lastAdaptiveDirection=-Infinity;lastAdaptiveTarget=null;}
     if(key==='JitterEnabled'&&!value)stopJitter();
+    if(key==='AntiAimbot'&&!value)restoreStrafeMovement();
     if (key === 'NicknameColor') {
       for (let id=1;id<B.world.ᴎ︃ᄉ.length;id++) {
         const meta=playerMeta(id);
@@ -1583,6 +1600,7 @@ function __installDevastMod(B) {
   const reconnect = {
     status: 'Ready',
     attempts: 0,
+    refreshFailures:0,
     armed: false,
     next: 0,
     pending: false,
@@ -1655,11 +1673,16 @@ function __installDevastMod(B) {
       connectionCallbacks:{...callbackTraffic},
       aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',sourceTickRateMs:50,deduplicatedDirections:diagnostics.deduplicatedAngles},
       aimSettings:{enabled:MOD.AimBotEnabled,source:'message27-bby',adaptive:MOD.AdaptiveAimEnabled,jitter:MOD.JitterEnabled,jitterSpeed:MOD.JitterSpeed,strafe:MOD.AntiAimbot,autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
-      lastFailureCode:reconnect.lastFailureCode,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
+      lastFailureCode:reconnect.lastFailureCode,serverListRefreshFailures:reconnect.refreshFailures,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
       stored,modErrorCount:diagnostics.errors.length,events:connectionEvents.map(event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}}))};
   }
   function releaseNativePending() {
     if (B.pendingKey) B.network[B.pendingKey] = false;
+  }
+  function failedServerRefresh(status){
+    reconnect.pending=false;reconnect.phase='idle';reconnect.next=0;
+    reconnect.refreshFailures++;reconnect.status=status;
+    if(reconnect.refreshFailures>=3)finishStalledEntry('server-list');
   }
   function finishStalledEntry(stage) {
     // Releasing the busy flag alone leaves the native connecting screen active.
@@ -1697,6 +1720,7 @@ function __installDevastMod(B) {
     // Play can lock its native busy flag before the network login is called.
     // Recover this earlier stage too; persistent account data is never touched.
     reconnect.generation++;
+    reconnect.refreshFailures=0;
     releaseNativePending();
     reconnect.pending=true;
     reconnect.phase='preparing';
@@ -1819,11 +1843,7 @@ function __installDevastMod(B) {
       originals[key] = original;
       const wrapper = kind === 'preflight' ? function (...args) {
         if (!nativeLoginDepth || typeof args[1] !== 'function') return original.apply(this,args);
-        const generation = reconnect.generation, callback = args[1];
-        args[1] = function (...result) {
-          if (!stopped && generation !== reconnect.generation) return;
-          return callback.apply(this,result);
-        };
+        args[1] = guardHandshakeCallback(args[0],args[1]);
         return original.apply(this,args);
       } : kind === 'error' ? function (...args) {
         if (!stopped) {
@@ -1847,6 +1867,7 @@ function __installDevastMod(B) {
           reconnect.generation++;
           reconnect.pending = false;
           reconnect.attempts = 0;
+          reconnect.refreshFailures=0;
           reconnect.next = 0;
           reconnect.autoBlocked = false;
           reconnect.freshUsed = false;
@@ -1894,6 +1915,7 @@ function __installDevastMod(B) {
       reconnect.awaitingPlay=false;
       reconnect.status = 'Connected';
       reconnect.attempts = 0;
+      reconnect.refreshFailures=0;
       reconnect.armed = true;
       reconnect.pending = false;
       reconnect.next = 0;
@@ -1951,7 +1973,7 @@ function __installDevastMod(B) {
       reconnect.pending = false;
       reconnect.phase = 'idle';
       reconnect.generation++;
-      reconnect.status = 'Refresh timed out';
+      failedServerRefresh('Refresh timed out');
       return;
     }
     if (reconnect.attempts >= 3 && (reconnect.sessionEnded || !reconnect.freshRequired)) {
@@ -1988,9 +2010,10 @@ function __installDevastMod(B) {
         }
         const row = n.ոߒ४?.find(r => r[0] === lobby && r[4] === region && r[6] === mode);
         if (!row) {
-          reconnect.status = 'Selected server unavailable';
+          failedServerRefresh('Selected server unavailable');
           return;
         }
+        reconnect.refreshFailures=0;
         n.ԁᴄࡃ = row;
         reconnect.status = 'Connecting / retry ' + reconnect.attempts;
         try {
@@ -2007,8 +2030,7 @@ function __installDevastMod(B) {
         }
       });
     } catch (_) {
-      reconnect.pending = false;
-      reconnect.status = 'Server refresh failed';
+      failedServerRefresh('Server refresh failed');
     }
   }
   watchConnectionHandlers();
@@ -2042,6 +2064,7 @@ function __installDevastMod(B) {
       updateTargets();
       updateMouse();
     }
+    if(!MOD.AntiAimbot)restoreStrafeMovement();
     updateJitter(now);
     automate(now);
     if (!B.synchronizedRender) draw();
@@ -2321,10 +2344,10 @@ function __installDevastMod(B) {
   return {
     settings: MOD,
     beforeFire,
-    afterFire:()=>aimModule.afterFire(),
-    afterRelease:()=>{aimModule.afterRelease();jitter.fireUntil=performance.now()+150;},
-    onMove:move=>aimModule.onMove(move),
-    onHandshake:()=>{lastSentAngle=null;stopJitter();jitter.fireUntil=-Infinity;aimModule.onHandshake();},
+    afterFire:()=>{if(!stopped)aimModule.afterFire();},
+    afterRelease:()=>{if(!stopped){aimModule.afterRelease();jitter.fireUntil=performance.now()+150;}},
+    onMove:move=>{if(stopped)return true;if(!MOD.AntiAimbot)lastStrafeMask=null;return aimModule.onMove(move);},
+    onHandshake:()=>{if(stopped)return;lastSentAngle=null;stopJitter();jitter.fireUntil=-Infinity;aimModule.onHandshake();},
     onSessionStart:resetAimForSession,
     nativePacketAngle:angle=>playing()&&!Aimbot.dead&&!(jitterAiming()&&invalidAimState())?Aimbot.packetAngle(angle):angle,
     // Compatibility property: the source replaces the primary angle argument
@@ -2397,6 +2420,10 @@ function __installDevastMod(B) {
       return functionList;
     },
     dispose() {
+      MOD.AntiAimbot=false;
+      restoreStrafeMovement(true);
+      stopJitter();
+      if(automaticDirection&&!invalidAimState(true)&&(!connectionSocket||connectionSocket.readyState===1)&&Number.isFinite(B.input?.angle))__send([6,B.input.angle*180/Math.PI],true);
       aimModule.dispose();
 
       MOD.zoomFactor = 1;

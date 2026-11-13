@@ -51,7 +51,9 @@
     "restored-original-jitter",
     "safe-shot-direction-ownership",
     "native-weapon-ballistic-interception",
-    "exact-angle-direction-dedup"
+    "exact-angle-direction-dedup",
+    "connection-control-lifecycle",
+    "disposed-hooks-yield-native"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -76,7 +78,8 @@
     "tests/aim-settings-effects.test.cjs",
     "tests/jitter-arbitration.test.cjs",
     "tests/ballistics.test.cjs",
-    "tests/aim-dedup.test.cjs"
+    "tests/aim-dedup.test.cjs",
+    "tests/connection-control-audit.test.cjs"
   ],
   "required_browsers": [
     "chromium",

@@ -7,6 +7,28 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_disposed_native_hooks_require_fire_release_and_timer_evidence_in_both_browsers(self):
+  self.contract['features']=['disposed-hooks-yield-native']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  keys=['pointer_restored','native_fire','native_release','native_directions','mod_timers_not_restarted']
+  for report in self.validation['browsers'].values():report['native_after_dispose']=dict(status='passed',**dict.fromkeys(keys,True))
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for key in keys:
+   self.validation['browsers']['firefox']['native_after_dispose'][key]=False;self.save()
+   with self.assertRaisesRegex(ValueError,'Disposed native hooks.*firefox'):p.artifacts(self.root,self.out)
+   self.validation['browsers']['firefox']['native_after_dispose'][key]=True
+
+ def test_control_lifecycle_requires_both_browser_results(self):
+  self.contract['features']=['connection-control-lifecycle']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'control_lifecycle':{'status':'passed','adaptive_global_interval_ms':50,'target_switches':414,'background_directions':31,'shot_alignment_immediate':True,'strafe_restores':[0,5],'pending_restore_once':True}}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  result=self.validation['browsers']['firefox']['native']['control_lifecycle']
+  for key,value in [('adaptive_global_interval_ms',0),('target_switches',0),('background_directions',41),('shot_alignment_immediate',False),('strafe_restores',[2,2]),('pending_restore_once',False)]:
+   old=result[key];result[key]=value;self.save()
+   with self.assertRaisesRegex(ValueError,'control lifecycle.*firefox'):p.artifacts(self.root,self.out)
+   result[key]=old
+
  def test_duplicate_direction_fix_requires_both_predictors_and_browsers(self):
   self.contract['features']=['exact-angle-direction-dedup']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
