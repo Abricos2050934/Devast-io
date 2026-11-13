@@ -1,0 +1,36 @@
+{
+  "baseline": "929f542",
+  "purpose": "Preserve aim, ballistic prediction, GUI, Jitter, native control hooks and packet submission exactly as before disconnect investigation.",
+  "files": {
+    "mod/ilm-aim.js": "849626bf806e4c47362a53ed93b5a5979adc3d2b0bca506d544b3f5174be3c98",
+    "mod/ballistic-model.js": "3f7c3f80a1c286164777bd015c5a8268eabe3fb8233979e2d1deb0de6ded0b03",
+    "tools/message27_runtime.cjs": "9d299cbd4ab51656f7c1f95883d2c50e6c02394f79b0015ad9bdfe1725017035",
+    "tools/updater/aim-transport.cjs": "a73aee5134107baab67723a2daea59553343d5f0cbfcb4f124e8ccb96011120b",
+    "tools/updater/message15-contracts.cjs": "921b3db82c0da15d53e172c5ff85d4f447257aef63acac868ba8179a5542b112",
+    "tools/updater/untitled-contracts.cjs": "bf168cbe3d83510bf717ff0dbf2aabd417b57553a3ef9fba8e29112c9e8609b2"
+  },
+  "host_nodes": {
+    "function:adaptiveGunActive": "72aae338559269315e764362865b1e67a86d4bd6f69253257e457b4ed86554ca",
+    "function:ballisticWeaponProfile": "f156d88ffde243237e343109b11f621ab25926c934947b7f2356f331c60323c6",
+    "function:invalidAimState": "de0dc3ac1c90a3884d2f849725f63e56f47d950aea2eea82b8976c2c08b434d0",
+    "function:resetAimForSession": "090e6d015c56689b2a04942dfb3bc106b742a761e8e8a54b9628b52971af06e1",
+    "function:__send": "a1e2d8861e5dccf1a07c2e4cf4ad0958d45662b553e6851ac36bba9bd8855860",
+    "function:gunAimActive": "e701f176ac30060081cf24aa81fe006a93924b653fc039ee0b18d1d0d57fcc9f",
+    "function:jitterAiming": "fcd9ab60107c59765b16f284979d66ee14b69a0a32fbbf794c53039c631cb633",
+    "function:stopJitter": "245e268287067343000edd514105b21b68d04cfeb7873c85de838a83bd626ef4",
+    "function:updateJitter": "64e1bba3f447951e201becbd457237b9b5f3a8cbc5cbcf58d2900f604c61313d",
+    "function:beforeFire": "c26e66d5b21b3fab89483cf397cb591c9fd1900fbf89b2825adfb13ee404ee7d",
+    "function:trackPacket": "8fbed9323c570e17ec173543101a62c7d9989cdd7957e129586021502e3df482",
+    "function:setSetting": "f9c6d2325b5dee716bf56be3f544e9ab947da1af3d29f9335d9bf86eead61b1c",
+    "function:updateMouse": "61d18ccbacb73e1b498a54d9d16f7e6e207e682a5fa533b39f6bc18b478d9630",
+    "function:keyboard": "e8b20b28bb20f4e0ef2d4202b845c82ca3b635e149831bdcc1557f7d915268cd",
+    "function:createMenu": "71216f82728d881fec3b5284d81438545fd8836e54bee74b9459275d991f166a",
+    "function:draw": "da49ed8d8662512020f945c87368f24f51c225bea359c7857aa8830299c4c07c",
+    "variable:aimModule": "8a7480893bed0192f25f7a3542746b91991817158ef982ca7e739bb73664f417",
+    "assignment:Aimbot.resolve": "e91783bc667dcb02aea385c46c37fced4da1ea7c7f25016c7b23f8ac5f5a8c3e",
+    "assignment:Aimbot.refresh": "0845e260707eb8f038b956457db2651ed3b6c66dca1d72a4882c7f5c64f1b59a",
+    "assignment:Aimbot.onDeath": "f50057f9d19729641f195b5fc513409579112fe02320c09c4c3f3b91bfaf5210",
+    "public-api": "9a36dd3d98b5ae75c21c9502c821e13ff6400d811bbc55c01c4d4b3f5575bbc3"
+  },
+  "non_connection_body_sha256": "570f03f21fb9b947df76019aa1cf585b91730baf8b82cb07c15ba57b4569d699"
+}

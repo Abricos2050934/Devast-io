@@ -119,8 +119,6 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   await page.addInitScript('window.__verifyMessage27Menu='+require('./verify_message27_menu.cjs').verifyMessage27Menu.toString());
   await page.addInitScript('window.__verifyMessage27Settings='+require('./verify_message27_settings.cjs').verifyMessage27Settings.toString());
   await page.addInitScript('window.__verifyJitter='+require('./verify_jitter.cjs').verifyJitter.toString());
-  await page.addInitScript('window.__verifyAimDedup='+require('./verify_aim_dedup.cjs').verifyAimDedup.toString());
-  await page.addInitScript('window.__verifyControlLifecycle='+require('./verify_control_lifecycle.cjs').verifyControlLifecycle.toString());
   await page.addInitScript('window.__verifyBallistics='+require('./verify_ballistics.cjs').verifyBallistics.toString());
 
 
@@ -209,8 +207,6 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     m.message27AimVerification=window.__verifyMessage27Aim(m,n,s,originalAim);
     m.message27SettingsVerification=window.__verifyMessage27Settings(m,n,s);
     m.jitterVerification=window.__verifyJitter(m,n,s);
-    m.aimDedupVerification=window.__verifyAimDedup(m,n,s);
-    m.controlLifecycleVerification=window.__verifyControlLifecycle(m,n,s);
     m.ballisticVerification=window.__verifyBallistics(m,{...n,projectileSpeedKey:r.ballisticProjectileSpeed},s);
 
 
@@ -382,10 +378,9 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
     check(m.connectionInfo().build.fingerprint.length===64,'Connection report omitted build identity');
    }finally{Object.assign(n.network,diagnosticNetwork);}
    check(!m.diagnostics.errors.length,'Mod reported errors: '+m.diagnostics.errors.join('; '));
-   return {control_lifecycle:m.controlLifecycleVerification,aim_direction_dedup:m.aimDedupVerification,adaptive_aim:m.ballisticVerification,jitter:m.jitterVerification,message27_menu:m.message27MenuVerification,message27_aim:m.message27AimVerification,message27_settings:m.message27SettingsVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,bounded_fast_loot:true,session_mod_traffic_history:true,native_autobuild_cursor_preview:true,bounded_auto_build:true,aim_session_history_reset:m.message27AimVerification.session_target_reset===true,valid_live_aim_targets:m.message27AimVerification.valid_target_admission===true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
+   return {adaptive_aim:m.ballisticVerification,jitter:m.jitterVerification,message27_menu:m.message27MenuVerification,message27_aim:m.message27AimVerification,message27_settings:m.message27SettingsVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,bounded_fast_loot:true,session_mod_traffic_history:true,native_autobuild_cursor_preview:true,bounded_auto_build:true,aim_session_history_reset:m.message27AimVerification.session_target_reset===true,valid_live_aim_targets:m.message27AimVerification.valid_target_admission===true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:reference,originalHooks,originalAngles,originalMenu:JSON.parse(z.gunzipSync(fs.readFileSync(path.join(root,'recovery/ilm-aim-menu-reference.json.gz'))))});
   report.physical_numeric=await require('./verify_ilm_physical.cjs').verifyPhysical(page,symbols);
-  report.native_after_dispose=await require('./verify_disposed_native.cjs').verifyDisposedNative(page,symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;report.startup=await page?.evaluate(()=>({mod:!!window.__devastMod,menu:!!window.__devastMod?.menu,probe:!!window.__updateProbe,loader:window.__devastRemoteLoader?.state,ready:document.readyState,modErrors:window.__devastMod?.diagnostics?.errors})).catch(()=>null);process.exitCode=1;}
  finally{report.finished_at=new Date().toISOString();fs.writeFileSync(path.join(dir,'validation.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));if(browser)await browser.close();}

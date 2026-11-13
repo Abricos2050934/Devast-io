@@ -118,24 +118,6 @@ def artifacts(root, output):
             raise ValueError('Original ILM pointer ownership during target loss was not verified in browser: ' + browser)
         if 'native-aim-transport-preserves-idle' in contract.get('features', []) and report.get('native', {}).get('native_aim_transport', {}).get('status') != 'passed':
             raise ValueError('Native aim transport and periodic idle packets were not verified in browser: ' + browser)
-        if 'exact-angle-direction-dedup' in contract.get('features', []):
-            direction = report.get('native', {}).get('aim_direction_dedup', {})
-            results = direction.get('results', [])
-            if (direction.get('status') != 'passed' or direction.get('dense_cases') != 6 or direction.get('predictors') != 2
-                    or direction.get('shot_alignment_forced') is not True or direction.get('reacquisition_invalidates_cache') is not True
-                    or len(results) != 6 or any(row.get('directions') != 40 for row in results)):
-                raise ValueError('Aim duplicate direction handling was not verified in browser: ' + browser)
-        if 'connection-control-lifecycle' in contract.get('features', []):
-            control = report.get('native', {}).get('control_lifecycle', {})
-            if (control.get('status') != 'passed' or control.get('adaptive_global_interval_ms') != 50
-                    or control.get('target_switches', 0) < 100 or not 0 < control.get('background_directions', 0) <= 40
-                    or control.get('shot_alignment_immediate') is not True or control.get('strafe_restores') != [0, 5]
-                    or control.get('pending_restore_once') is not True):
-                raise ValueError('Connection control lifecycle was not verified in browser: ' + browser)
-        if 'disposed-hooks-yield-native' in contract.get('features', []):
-            disposed = report.get('native_after_dispose', {})
-            if disposed.get('status') != 'passed' or not all(disposed.get(key) is True for key in ('pointer_restored', 'native_fire', 'native_release', 'native_directions', 'mod_timers_not_restarted')):
-                raise ValueError('Disposed native hooks were not verified in browser: ' + browser)
         if 'immediate-aim-numeric-settings' in contract.get('features', []) and report.get('physical_numeric', {}).get('status') != 'passed':
             raise ValueError('Physical aim numeric entry was not verified in browser: ' + browser)
         if 'verbatim-message27-aim' in contract.get('features', []):

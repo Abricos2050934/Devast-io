@@ -4,9 +4,9 @@ function verifyMessage27Aim(m,n,s,reference){
  const check=(v,t)=>{if(!v)throw Error(t);},w=n.world,self=w[s['ᅠᏧ‍']],metadata=w[s['ᴎ︃ᄉ']],clans=w[s['ﾠࡅ‍']];
  const old={id:self.id,state:n.network.state,settings:{...m.settings},ended:m.reconnect.sessionEnded,meta:[1,2,3,120].map(id=>[id,metadata[id]]),clan:clans[0],now:Date.now,performance:performance.now};
  const capture=n.capturePackets(),expected=[],settings={...reference.defaults},source=name=>reference.blocks.find(b=>b.name===name).source;
- let clock=10000,ref,phase='aim',points=0,mouseCases=0,pixelCases=0,lastRefAngle=null;
+ let clock=10000,ref,phase='aim',points=0,mouseCases=0,pixelCases=0;
  function valid(e,rotation=false){const own=e.targets.players[1],target=e.aim.targetPlayer;return own?.active&&[own.x,own.y].every(Number.isFinite)&&(rotation||target?.active&&[target.x,target.y].every(Number.isFinite)&&!(e.targets.players[target.id]===target&&target.id===1));}
- function receive(packet){if(packet[0]===2||ref&&valid(ref)){if(packet[0]===4){expected.push([6,ref.aim.lastAngle]);lastRefAngle=ref.aim.lastAngle;}if(packet[0]===6){if(packet[1]===lastRefAngle)return;lastRefAngle=packet[1];}expected.push(packet.slice());}}
+ function receive(packet){if(packet[0]===2||ref&&valid(ref)){if(packet[0]===4)expected.push([6,ref.aim.lastAngle]);expected.push(packet.slice());}}
  const metaView=[],clanView=[];
  const world={PLAYER:{id:1,x:1000,y:1000,εᴎ༩:-1},players:metaView,ⲣ８ߌ:clanView};
  const make=new Function('MOD','World','window','globalThis','Date','__gk','setTimeout','clearTimeout','setInterval',
@@ -29,7 +29,7 @@ function verifyMessage27Aim(m,n,s,reference){
   Date.now=()=>clock;performance.now=()=>clock;n.setClock?.(clock);n.network.state=1;self.id=1;m.reconnect.sessionEnded=false;m.observeSocket(null);
   for(let scene=0;scene<32;scene++){
    m.settings.AimBotEnabled=false;m.onSessionStart();m.onHandshake();
-   Object.assign(settings,reference.defaults);lastRefAngle=null;ref=create();ref.aim.onDeath();ref.aim.dead=false;
+   Object.assign(settings,reference.defaults);ref=create();ref.aim.onDeath();ref.aim.dead=false;
    ref.targets.lines.forEach((line,i)=>{line.color=m.targets.lines[i].color;});
    const ownTeam=scene%4===0?0:-1;world.PLAYER.εᴎ༩=ownTeam;clans[0]={[s['ոᚄރ']]:7};clanView[0]={ᴎ०︁:7};
    for(const id of [1,2,3,120]){const team=id===1?ownTeam:(id===2&&scene%4===0?0:-1),membership=scene%8===0&&id===2?8:7;metadata[id]={[s['а༤̘']]:team,[s['ᴌ̗ⲟ']]:membership};metaView[id]={εᴎ༩:team,і٥ࠂ:membership};}
