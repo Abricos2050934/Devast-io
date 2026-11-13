@@ -1,0 +1,63 @@
+{
+  "release": "573b713761f0e0e3a6c596d57a33b1a3446f54f721ee3e175b919eebe71b102c",
+  "output_sha256": "787490409a045ef33c6982984eeb6939b2c32f4ba578c91edb69eb8922d48149",
+  "source_url": "https://devast.io/js/hym7DtRA3RCGo21.js",
+  "raw_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 236,
+    "python_tests": 69
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/native-aim-transport.test.cjs",
+      "tests/ilm-current.test.cjs",
+      "tests/mod-traffic.test.cjs",
+      "tests/aim-validity.test.cjs",
+      "tests/ilm-native-pipeline.test.cjs",
+      "tests/aim-line-projection.test.cjs",
+      "tests/aim-settings-persistence.test.cjs",
+      "tests/aim-settings-effects.test.cjs",
+      "tests/jitter-arbitration.test.cjs",
+      "tests/ballistics.test.cjs",
+      "tests/aim-preserved-before-disconnect.test.cjs",
+      "tests/connection-recovery-only.test.cjs",
+      "tests/aim-motion-continuity.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "browser_version": "154.0.8037.57",
+      "adaptive_aim": "passed",
+      "message27_aim": "passed"
+    },
+    "firefox": {
+      "status": "passed",
+      "browser_version": "153.0",
+      "adaptive_aim": "passed",
+      "message27_aim": "passed"
+    }
+  },
+  "kick_cause": "unconfirmed",
+  "prediction_regressions": {
+    "before": {
+      "tests": 4,
+      "passed": 0
+    },
+    "after": {
+      "tests": 4,
+      "passed": 4
+    }
+  }
+}

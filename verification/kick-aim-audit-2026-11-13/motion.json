@@ -1,0 +1,278 @@
+{
+  "scope": "synthetic trajectories with known post-turn velocity; no live hit claims",
+  "rows": [
+    {
+      "kind": "turn",
+      "before": [
+        {
+          "sample": 1,
+          "velocity": {
+            "x": 30,
+            "y": 10,
+            "vx": 0,
+            "vy": 199.99999999999997,
+            "age": 0,
+            "weapon": -1,
+            "samples": 5,
+            "curve": null
+          },
+          "miss": 5.329070518200751e-15
+        },
+        {
+          "sample": 2,
+          "velocity": {
+            "x": 30,
+            "y": 20,
+            "vx": 59.99999999999998,
+            "vy": 139.99999999999994,
+            "age": 0,
+            "weapon": -1,
+            "samples": 6,
+            "curve": null
+          },
+          "miss": 26.1995253022042
+        },
+        {
+          "sample": 3,
+          "velocity": {
+            "x": 30,
+            "y": 30,
+            "vx": 0,
+            "vy": 199.99999999999994,
+            "age": 0,
+            "weapon": -1,
+            "samples": 7,
+            "curve": null
+          },
+          "miss": 1.4210854715202004e-14
+        }
+      ],
+      "after": [
+        {
+          "sample": 1,
+          "velocity": {
+            "x": 30,
+            "y": 10,
+            "vx": 0,
+            "vy": 199.99999999999997,
+            "age": 0,
+            "weapon": -1,
+            "samples": 5,
+            "curve": null
+          },
+          "miss": 5.329070518200751e-15
+        },
+        {
+          "sample": 2,
+          "velocity": {
+            "x": 30,
+            "y": 20,
+            "vx": 1.1842378929335004e-13,
+            "vy": 200.00000000000006,
+            "age": 0,
+            "weapon": -1,
+            "samples": 6,
+            "curve": null
+          },
+          "miss": 3.907985046680551e-14
+        },
+        {
+          "sample": 3,
+          "velocity": {
+            "x": 30,
+            "y": 30,
+            "vx": 0,
+            "vy": 199.99999999999994,
+            "age": 0,
+            "weapon": -1,
+            "samples": 7,
+            "curve": null
+          },
+          "miss": 1.4210854715202004e-14
+        }
+      ]
+    },
+    {
+      "kind": "reverse",
+      "before": [
+        {
+          "sample": 1,
+          "velocity": {
+            "x": 20,
+            "y": 0,
+            "vx": -199.99999999999997,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 5,
+            "curve": null
+          },
+          "miss": 0
+        },
+        {
+          "sample": 2,
+          "velocity": {
+            "x": 10,
+            "y": 0,
+            "vx": -79.99999999999997,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 6,
+            "curve": null
+          },
+          "miss": 0
+        },
+        {
+          "sample": 3,
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "vx": -199.99999999999994,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 7,
+            "curve": null
+          },
+          "miss": 0
+        }
+      ],
+      "after": [
+        {
+          "sample": 1,
+          "velocity": {
+            "x": 20,
+            "y": 0,
+            "vx": -199.99999999999997,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 5,
+            "curve": null
+          },
+          "miss": 0
+        },
+        {
+          "sample": 2,
+          "velocity": {
+            "x": 10,
+            "y": 0,
+            "vx": -199.9999999999999,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 6,
+            "curve": null
+          },
+          "miss": 0
+        },
+        {
+          "sample": 3,
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "vx": -199.99999999999994,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 7,
+            "curve": null
+          },
+          "miss": 0
+        }
+      ]
+    },
+    {
+      "kind": "restart",
+      "before": [
+        {
+          "sample": 1,
+          "velocity": {
+            "x": 40,
+            "y": 0,
+            "vx": 199.99999999999997,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 6,
+            "curve": null
+          },
+          "miss": 0
+        },
+        {
+          "sample": 2,
+          "velocity": {
+            "x": 50,
+            "y": 0,
+            "vx": 139.99999999999994,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 7,
+            "curve": null
+          },
+          "miss": 0
+        },
+        {
+          "sample": 3,
+          "velocity": {
+            "x": 60,
+            "y": 0,
+            "vx": 199.99999999999994,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 8,
+            "curve": null
+          },
+          "miss": 0
+        }
+      ],
+      "after": [
+        {
+          "sample": 1,
+          "velocity": {
+            "x": 40,
+            "y": 0,
+            "vx": 199.99999999999997,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 6,
+            "curve": null
+          },
+          "miss": 0
+        },
+        {
+          "sample": 2,
+          "velocity": {
+            "x": 50,
+            "y": 0,
+            "vx": 200.00000000000026,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 7,
+            "curve": null
+          },
+          "miss": 0
+        },
+        {
+          "sample": 3,
+          "velocity": {
+            "x": 60,
+            "y": 0,
+            "vx": 199.99999999999994,
+            "vy": 0,
+            "age": 0,
+            "weapon": -1,
+            "samples": 8,
+            "curve": null
+          },
+          "miss": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,13 @@
 const test=require('node:test'),assert=require('node:assert/strict'),{fixture}=require('./mod-fixture.cjs');
+test('an entry timeout retains its close event but a replaced socket cannot contaminate the report',()=>{
+ const f=fixture(),handlers=new Map();try{
+  f.setClock(0);const socket={readyState:0,addEventListener:(key,fn)=>handlers.set(key,fn),removeEventListener:(key)=>handlers.delete(key),close(){this.readyState=3;handlers.get('close')({code:1006,wasClean:false});}};
+  f.mod.observeSocket(socket);f.network.state=2;f.mod.step(0);f.setClock(12001);f.mod.step(12001);
+  const events=f.mod.connectionInfo().events;assert.ok(events.some(e=>e.type==='connection-timeout'));
+  assert.equal(events.at(-1).type,'socket-close');assert.equal(events.at(-1).code,1006);assert.equal(events.at(-1).localCloseObserved,true);assert.equal(events.at(-1).transport.localCloseSource,'mod-entry-timeout');
+  const oldClose=handlers.get('close');f.mod.observeSocket({...socket,readyState:1});const count=f.mod.connectionInfo().events.length;oldClose({code:1011});assert.equal(f.mod.connectionInfo().events.length,count);
+ }finally{f.mod.dispose();}
+});
 function preflight(){const f=fixture({saved:{token:'kept-token'}}),replies=[];f.setClock(0);f.network.state=0;f.B.loginKey='login';f.B.preflightKey='preflight';f.network.preflight=(_,cb)=>replies.push(cb);f.mod.step(0);return {f,replies};}
 test('disposed native preflight cannot start an old connection',()=>{const {f,replies}=preflight();let accepted=0;f.network.login=function(){this.preflight('/fixture',()=>accepted++);};f.mod.step(0);f.network.login();f.mod.dispose();replies[0]();assert.equal(accepted,0);assert.equal(f.storage.get('token'),'kept-token');});
 test('nested native preflights keep ownership and reject a stale second stage',()=>{const {f,replies}=preflight();let completed=0;f.network.login=function(){this.preflight('/first',()=>this.preflight('/second',()=>completed++));};f.mod.step(0);f.network.login();replies[0]();f.setClock(12001);f.mod.step(12001);replies[1]();assert.equal(completed,0);f.network.login();replies[2]();replies[3]();assert.equal(completed,1);assert.equal(f.storage.get('token'),'kept-token');f.mod.dispose();});

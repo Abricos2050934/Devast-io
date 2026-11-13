@@ -52,7 +52,8 @@
     "safe-shot-direction-ownership",
     "native-weapon-ballistic-interception",
     "aim-preserved-before-disconnect",
-    "bounded-connection-recovery"
+    "bounded-connection-recovery",
+    "continuous-post-turn-motion"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -78,7 +79,8 @@
     "tests/jitter-arbitration.test.cjs",
     "tests/ballistics.test.cjs",
     "tests/aim-preserved-before-disconnect.test.cjs",
-    "tests/connection-recovery-only.test.cjs"
+    "tests/connection-recovery-only.test.cjs",
+    "tests/aim-motion-continuity.test.cjs"
   ],
   "required_browsers": [
     "chromium",

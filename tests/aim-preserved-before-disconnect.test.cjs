@@ -1,8 +1,10 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),crypto=require('node:crypto'),{parse}=require('../tools/parser.cjs');
-test('aim modules, calculations, settings, controls and transport match the pre-investigation version',()=>{
+test('aim matches the restored baseline except for explicitly reviewed motion fixes',()=>{
  const ref=JSON.parse(fs.readFileSync('recovery/aim-pre-disconnect-reference.json','utf8')),hash=s=>crypto.createHash('sha256').update(s).digest('hex');
- for(const[file,digest]of Object.entries(ref.files))assert.equal(hash(fs.readFileSync(file)),digest,file);
- const source=fs.readFileSync('mod/responsive.js','utf8'),root=parse(source,{ecmaVersion:'latest'}).body.find(n=>n.id?.name==='__installDevastMod');
+ const approved=JSON.parse(fs.readFileSync('recovery/aim-approved-fixes-2026-11-13.json','utf8'));
+ function restored(file){let source=fs.readFileSync(file,'utf8');for(const change of approved.changes.filter(c=>c.file===file)){assert.equal(source.split(change.after).length,2,'Approved fix missing or ambiguous: '+file);source=source.replace(change.after,change.before);}return source;}
+ for(const[file,digest]of Object.entries(ref.files))assert.equal(hash(restored(file)),digest,file);
+ const source=restored('mod/responsive.js'),root=parse(source,{ecmaVersion:'latest'}).body.find(n=>n.id?.name==='__installDevastMod');
  const functions=new Set(['connectionEvent','connectionInfo','failedServerRefresh','beginPlay','watchConnectionHandlers','updateReconnect']),variables=new Set(['reconnect','trafficKeys']);
  const rest=root.body.body.filter(n=>!(n.type==='FunctionDeclaration'&&functions.has(n.id.name))&&!(n.type==='VariableDeclaration'&&n.declarations.some(d=>variables.has(d.id.name)))).map(n=>source.slice(n.start,n.end)).join('\n');
  assert.equal(hash(rest),ref.non_connection_body_sha256,'Code outside connection recovery/diagnostics changed');

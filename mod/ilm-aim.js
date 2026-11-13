@@ -803,7 +803,7 @@ function __createBallisticAim(settings, clock) {
     if(!t || at<last.at || at-last.at>maxGap || meta.generation!==undefined&&t.generation!==undefined&&meta.generation!==t.generation){
       t={samples:[],weapon:-1,generation:meta.generation};tracks.set(key,t);last=null;
     }
-    if(last && at>last.at && (Math.hypot(x-last.x,y-last.y)>200 || at-last.at>=8&&Math.hypot(x-last.x,y-last.y)/(at-last.at)*1000>maxSpeed)){t.samples=[];last=null;t.curve=null;}
+    if(last && (Math.hypot(x-last.x,y-last.y)>200 || at-last.at>=8&&Math.hypot(x-last.x,y-last.y)/(at-last.at)*1000>maxSpeed)){t.samples=[];last=null;t.curve=null;}
     if(meta.weapon!==undefined)t.weapon=meta.weapon;
     if(meta.generation!==undefined)t.generation=meta.generation;
     if(last&&at-last.at<8)t.samples[t.samples.length-1]={x,y,at};
@@ -823,8 +823,11 @@ function __createBallisticAim(settings, clock) {
         const dx=last.x-p.x,dy=last.y-p.y;
         // A stop or turn should not drag an older velocity into the next shot.
         let first=Math.max(0,s.length-4);
-        if(s.length>2){const q=s.at(-3),px=p.x-q.x,py=p.y-q.y;
-          if(dx*px+dy*py<=0 || Math.abs(dx*py-dy*px)>.5*Math.hypot(dx,dy)*Math.hypot(px,py))first=s.length-2;
+        // Retain the latest uninterrupted leg. Checking only the newest pair
+        // let pre-turn samples back into the fit one packet after a turn.
+        for(let i=s.length-2;i>first;i--){
+          const a=s[i-1],b=s[i],c=s[i+1],ax=b.x-a.x,ay=b.y-a.y,bx=c.x-b.x,by=c.y-b.y;
+          if(ax*bx+ay*by<=0 || Math.abs(ax*by-ay*bx)>.5*Math.hypot(ax,ay)*Math.hypot(bx,by)){first=i;break;}
         }
         if(dx!==0||dy!==0){
           let st=0,sx=0,sy=0,stt=0,stx=0,sty=0,n=0;

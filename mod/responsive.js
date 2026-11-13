@@ -1617,11 +1617,12 @@ function __installDevastMod(B) {
     removeSocketObservers();
     connectionSocket = socket;
     socketTrace=socket?{id:++socketSerial,openedAt:socket.readyState===1?performance.now():null,lastReceiveAt:null,receivedMessages:0,localCloseSource:null}:null;
+    const observedTrace=socketTrace;
     if (typeof socket?.addEventListener !== 'function') return;
     const handlers = {
       open:() => {if(!stopped&&socket===connectionSocket)socketTrace.openedAt=performance.now();},
       message:() => {if(!stopped&&socket===connectionSocket){socketTrace.lastReceiveAt=performance.now();socketTrace.receivedMessages++;}},
-      close:event => { if (!stopped && socket === connectionSocket) connectionEvent('socket-close',
+      close:event => { if (!stopped && observedTrace === socketTrace) connectionEvent('socket-close',
         {code:Number.isInteger(event.code) ? event.code : null,clean:event.wasClean === true,localCloseObserved:socketTrace.localCloseSource!==null}); },
       error:() => { if (!stopped && socket === connectionSocket) connectionEvent('socket-error'); }
     };

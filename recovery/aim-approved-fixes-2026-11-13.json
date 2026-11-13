@@ -1,0 +1,36 @@
+{
+  "baseline": "0484824",
+  "scope": "Explicit fixes authorized after the exact aim restoration. Reverse these hunks to verify the preserved baseline.",
+  "changes": [
+    {
+      "file": "mod/ballistic-model.js",
+      "reason": "motion-history-boundary",
+      "before": "    if(!t || at<last.at || at-last.at>maxGap || meta.generation!==undefined&&t.generation!==undefined&&meta.generation!==t.generation){\n      t={samples:[],weapon:-1,generation:meta.generation};tracks.set(key,t);last=null;\n    }\n    if(last && at>last.at && (Math.hypot(x-last.x,y-last.y)>200 || at-last.at>=8&&Math.hypot(x-last.x,y-last.y)/(at-last.at)*1000>maxSpeed)){t.samples=[];last=null;t.curve=null;}\n    if(meta.weapon!==undefined)t.weapon=meta.weapon;\n    if(meta.generation!==undefined)t.generation=meta.generation;\n    if(last&&at-last.at<8)t.samples[t.samples.length-1]={x,y,at};\n",
+      "after": "    if(!t || at<last.at || at-last.at>maxGap || meta.generation!==undefined&&t.generation!==undefined&&meta.generation!==t.generation){\n      t={samples:[],weapon:-1,generation:meta.generation};tracks.set(key,t);last=null;\n    }\n    if(last && (Math.hypot(x-last.x,y-last.y)>200 || at-last.at>=8&&Math.hypot(x-last.x,y-last.y)/(at-last.at)*1000>maxSpeed)){t.samples=[];last=null;t.curve=null;}\n    if(meta.weapon!==undefined)t.weapon=meta.weapon;\n    if(meta.generation!==undefined)t.generation=meta.generation;\n    if(last&&at-last.at<8)t.samples[t.samples.length-1]={x,y,at};\n"
+    },
+    {
+      "file": "mod/ballistic-model.js",
+      "reason": "motion-history-boundary",
+      "before": "        const dx=last.x-p.x,dy=last.y-p.y;\n        // A stop or turn should not drag an older velocity into the next shot.\n        let first=Math.max(0,s.length-4);\n        if(s.length>2){const q=s.at(-3),px=p.x-q.x,py=p.y-q.y;\n          if(dx*px+dy*py<=0 || Math.abs(dx*py-dy*px)>.5*Math.hypot(dx,dy)*Math.hypot(px,py))first=s.length-2;\n        }\n        if(dx!==0||dy!==0){\n          let st=0,sx=0,sy=0,stt=0,stx=0,sty=0,n=0;\n",
+      "after": "        const dx=last.x-p.x,dy=last.y-p.y;\n        // A stop or turn should not drag an older velocity into the next shot.\n        let first=Math.max(0,s.length-4);\n        // Retain the latest uninterrupted leg. Checking only the newest pair\n        // let pre-turn samples back into the fit one packet after a turn.\n        for(let i=s.length-2;i>first;i--){\n          const a=s[i-1],b=s[i],c=s[i+1],ax=b.x-a.x,ay=b.y-a.y,bx=c.x-b.x,by=c.y-b.y;\n          if(ax*bx+ay*by<=0 || Math.abs(ax*by-ay*bx)>.5*Math.hypot(ax,ay)*Math.hypot(bx,by)){first=i;break;}\n        }\n        if(dx!==0||dy!==0){\n          let st=0,sx=0,sy=0,stt=0,stx=0,sty=0,n=0;\n"
+    },
+    {
+      "file": "mod/ilm-aim.js",
+      "reason": "motion-history-boundary",
+      "before": "    if(!t || at<last.at || at-last.at>maxGap || meta.generation!==undefined&&t.generation!==undefined&&meta.generation!==t.generation){\n      t={samples:[],weapon:-1,generation:meta.generation};tracks.set(key,t);last=null;\n    }\n    if(last && at>last.at && (Math.hypot(x-last.x,y-last.y)>200 || at-last.at>=8&&Math.hypot(x-last.x,y-last.y)/(at-last.at)*1000>maxSpeed)){t.samples=[];last=null;t.curve=null;}\n    if(meta.weapon!==undefined)t.weapon=meta.weapon;\n    if(meta.generation!==undefined)t.generation=meta.generation;\n    if(last&&at-last.at<8)t.samples[t.samples.length-1]={x,y,at};\n",
+      "after": "    if(!t || at<last.at || at-last.at>maxGap || meta.generation!==undefined&&t.generation!==undefined&&meta.generation!==t.generation){\n      t={samples:[],weapon:-1,generation:meta.generation};tracks.set(key,t);last=null;\n    }\n    if(last && (Math.hypot(x-last.x,y-last.y)>200 || at-last.at>=8&&Math.hypot(x-last.x,y-last.y)/(at-last.at)*1000>maxSpeed)){t.samples=[];last=null;t.curve=null;}\n    if(meta.weapon!==undefined)t.weapon=meta.weapon;\n    if(meta.generation!==undefined)t.generation=meta.generation;\n    if(last&&at-last.at<8)t.samples[t.samples.length-1]={x,y,at};\n"
+    },
+    {
+      "file": "mod/ilm-aim.js",
+      "reason": "motion-history-boundary",
+      "before": "        const dx=last.x-p.x,dy=last.y-p.y;\n        // A stop or turn should not drag an older velocity into the next shot.\n        let first=Math.max(0,s.length-4);\n        if(s.length>2){const q=s.at(-3),px=p.x-q.x,py=p.y-q.y;\n          if(dx*px+dy*py<=0 || Math.abs(dx*py-dy*px)>.5*Math.hypot(dx,dy)*Math.hypot(px,py))first=s.length-2;\n        }\n        if(dx!==0||dy!==0){\n          let st=0,sx=0,sy=0,stt=0,stx=0,sty=0,n=0;\n",
+      "after": "        const dx=last.x-p.x,dy=last.y-p.y;\n        // A stop or turn should not drag an older velocity into the next shot.\n        let first=Math.max(0,s.length-4);\n        // Retain the latest uninterrupted leg. Checking only the newest pair\n        // let pre-turn samples back into the fit one packet after a turn.\n        for(let i=s.length-2;i>first;i--){\n          const a=s[i-1],b=s[i],c=s[i+1],ax=b.x-a.x,ay=b.y-a.y,bx=c.x-b.x,by=c.y-b.y;\n          if(ax*bx+ay*by<=0 || Math.abs(ax*by-ay*bx)>.5*Math.hypot(ax,ay)*Math.hypot(bx,by)){first=i;break;}\n        }\n        if(dx!==0||dy!==0){\n          let st=0,sx=0,sy=0,stt=0,stx=0,sty=0,n=0;\n"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "retain-timeout-close-diagnostics",
+      "before": "    removeSocketObservers();\n    connectionSocket = socket;\n    socketTrace=socket?{id:++socketSerial,openedAt:socket.readyState===1?performance.now():null,lastReceiveAt:null,receivedMessages:0,localCloseSource:null}:null;\n    if (typeof socket?.addEventListener !== 'function') return;\n    const handlers = {\n      open:() => {if(!stopped&&socket===connectionSocket)socketTrace.openedAt=performance.now();},\n      message:() => {if(!stopped&&socket===connectionSocket){socketTrace.lastReceiveAt=performance.now();socketTrace.receivedMessages++;}},\n      close:event => { if (!stopped && socket === connectionSocket) connectionEvent('socket-close',\n        {code:Number.isInteger(event.code) ? event.code : null,clean:event.wasClean === true,localCloseObserved:socketTrace.localCloseSource!==null}); },\n      error:() => { if (!stopped && socket === connectionSocket) connectionEvent('socket-error'); }\n    };\n",
+      "after": "    removeSocketObservers();\n    connectionSocket = socket;\n    socketTrace=socket?{id:++socketSerial,openedAt:socket.readyState===1?performance.now():null,lastReceiveAt:null,receivedMessages:0,localCloseSource:null}:null;\n    const observedTrace=socketTrace;\n    if (typeof socket?.addEventListener !== 'function') return;\n    const handlers = {\n      open:() => {if(!stopped&&socket===connectionSocket)socketTrace.openedAt=performance.now();},\n      message:() => {if(!stopped&&socket===connectionSocket){socketTrace.lastReceiveAt=performance.now();socketTrace.receivedMessages++;}},\n      close:event => { if (!stopped && observedTrace === socketTrace) connectionEvent('socket-close',\n        {code:Number.isInteger(event.code) ? event.code : null,clean:event.wasClean === true,localCloseObserved:socketTrace.localCloseSource!==null}); },\n      error:() => { if (!stopped && socket === connectionSocket) connectionEvent('socket-error'); }\n    };\n"
+    }
+  ]
+}

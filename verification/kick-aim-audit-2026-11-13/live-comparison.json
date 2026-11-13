@@ -1,0 +1,1785 @@
+{
+  "scope": "Anonymous headless Firefox via cloud proxy; no live aim/fire or user-account reproduction",
+  "source_sha256": "787490409a045ef33c6982984eeb6939b2c32f4ba578c91edb69eb8922d48149",
+  "latest_user_observation": "The user reports a kick even with AimBot, Jitter, Strafe, loot and auto-build disabled from entry.",
+  "rows": [
+    {
+      "mode": "clean",
+      "sockets": [
+        {
+          "host": "frankfurt3.devast.io",
+          "sent": 2,
+          "received": 23,
+          "closed": true,
+          "opened_at": 1794568922135,
+          "duration_ms": 2327
+        }
+      ],
+      "page_errors": 0,
+      "main_replacements": 0,
+      "samples": [
+        {
+          "seconds": 5,
+          "home_visible": true,
+          "sockets": []
+        },
+        {
+          "seconds": 10,
+          "home_visible": true,
+          "sockets": []
+        },
+        {
+          "seconds": 15,
+          "home_visible": true,
+          "sockets": []
+        },
+        {
+          "seconds": 20,
+          "home_visible": true,
+          "sockets": []
+        },
+        {
+          "seconds": 25,
+          "home_visible": true,
+          "sockets": []
+        },
+        {
+          "seconds": 30,
+          "home_visible": true,
+          "sockets": []
+        },
+        {
+          "seconds": 35,
+          "home_visible": true,
+          "sockets": []
+        },
+        {
+          "seconds": 40,
+          "home_visible": false,
+          "sockets": [
+            {
+              "sent": 2,
+              "received": 23,
+              "closed": true
+            }
+          ]
+        }
+      ],
+      "network_failures": [],
+      "http_errors": [
+        {
+          "host": "atlanta3.devast.io",
+          "status": 404
+        },
+        {
+          "host": "losangeles2.devast.io",
+          "status": 404
+        },
+        {
+          "host": "frankfurt4.devast.io",
+          "status": 404
+        },
+        {
+          "host": "osaka3.devast.io",
+          "status": 404
+        },
+        {
+          "host": "sydney3.devast.io",
+          "status": 404
+        }
+      ],
+      "page_status": 304,
+      "server": "Frankfurt 1 - 21 players",
+      "play_clicked": true,
+      "status": "no-sustained-connection"
+    },
+    {
+      "mode": "modified",
+      "sockets": [
+        {
+          "host": "frankfurt1.devast.io",
+          "sent": 2,
+          "received": 133,
+          "closed": false,
+          "opened_at": 1794568824743
+        }
+      ],
+      "page_errors": 0,
+      "main_replacements": 1,
+      "samples": [
+        {
+          "seconds": 5,
+          "home_visible": true,
+          "sockets": [],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 0,
+            "state": 0,
+            "phase": "advertising",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": false,
+            "adWaiting": true,
+            "socketState": null,
+            "socketBufferedBytes": null,
+            "transport": null,
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 51.95,
+              "p95GapMs": 116.62,
+              "fpsEstimate": 19,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 0,
+              "accepted": 0,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 0,
+              "blockedCycles": 482,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": false,
+              "userId": false,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        },
+        {
+          "seconds": 10,
+          "home_visible": true,
+          "sockets": [],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 0,
+            "state": 0,
+            "phase": "advertising",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": false,
+            "adWaiting": true,
+            "socketState": null,
+            "socketBufferedBytes": null,
+            "transport": null,
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 33.61,
+              "p95GapMs": 50.46,
+              "fpsEstimate": 30,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 0,
+              "accepted": 0,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 0,
+              "blockedCycles": 649,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": false,
+              "userId": false,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        },
+        {
+          "seconds": 15,
+          "home_visible": true,
+          "sockets": [],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 0,
+            "state": 0,
+            "phase": "advertising",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": false,
+            "adWaiting": true,
+            "socketState": null,
+            "socketBufferedBytes": null,
+            "transport": null,
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 32.08,
+              "p95GapMs": 49.96,
+              "fpsEstimate": 31,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 0,
+              "accepted": 0,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 0,
+              "blockedCycles": 818,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": false,
+              "userId": false,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        },
+        {
+          "seconds": 20,
+          "home_visible": true,
+          "sockets": [],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 0,
+            "state": 0,
+            "phase": "advertising",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": false,
+            "adWaiting": true,
+            "socketState": null,
+            "socketBufferedBytes": null,
+            "transport": null,
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 29.44,
+              "p95GapMs": 49.36,
+              "fpsEstimate": 34,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 0,
+              "accepted": 0,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 0,
+              "blockedCycles": 993,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": false,
+              "userId": false,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        },
+        {
+          "seconds": 25,
+          "home_visible": true,
+          "sockets": [],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 0,
+            "state": 0,
+            "phase": "advertising",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": false,
+            "adWaiting": true,
+            "socketState": null,
+            "socketBufferedBytes": null,
+            "transport": null,
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 27.09,
+              "p95GapMs": 33.54,
+              "fpsEstimate": 37,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 0,
+              "accepted": 0,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 0,
+              "blockedCycles": 1182,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": false,
+              "userId": false,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        },
+        {
+          "seconds": 30,
+          "home_visible": true,
+          "sockets": [],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 0,
+            "state": 0,
+            "phase": "advertising",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": false,
+            "adWaiting": true,
+            "socketState": null,
+            "socketBufferedBytes": null,
+            "transport": null,
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 29.03,
+              "p95GapMs": 33.5,
+              "fpsEstimate": 34,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 0,
+              "accepted": 0,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 0,
+              "blockedCycles": 1367,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": false,
+              "userId": false,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        },
+        {
+          "seconds": 35,
+          "home_visible": true,
+          "sockets": [],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 1,
+            "state": 2,
+            "phase": "connecting",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": true,
+            "adWaiting": false,
+            "socketState": 0,
+            "socketBufferedBytes": 0,
+            "transport": {
+              "id": 1,
+              "openForMs": null,
+              "receiveGapMs": null,
+              "receivedMessages": 0,
+              "localCloseSource": null
+            },
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 46.53,
+              "p95GapMs": 83.74,
+              "fpsEstimate": 21,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 3,
+              "accepted": 3,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 0,
+              "blockedCycles": 1490,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": false,
+              "userId": false,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        },
+        {
+          "seconds": 40,
+          "home_visible": false,
+          "sockets": [
+            {
+              "sent": 2,
+              "received": 28,
+              "closed": false
+            }
+          ],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 1,
+            "state": 1,
+            "phase": "idle",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": false,
+            "adWaiting": false,
+            "socketState": 1,
+            "socketBufferedBytes": 0,
+            "transport": {
+              "id": 1,
+              "openForMs": 4370,
+              "receiveGapMs": 895,
+              "receivedMessages": 28,
+              "localCloseSource": null
+            },
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 16.8,
+              "p95GapMs": 17.14,
+              "fpsEstimate": 60,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 3,
+              "accepted": 3,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 201,
+              "blockedCycles": 1519,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": true,
+              "userId": true,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        },
+        {
+          "seconds": 45,
+          "home_visible": false,
+          "sockets": [
+            {
+              "sent": 2,
+              "received": 50,
+              "closed": false
+            }
+          ],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 1,
+            "state": 1,
+            "phase": "idle",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": false,
+            "adWaiting": false,
+            "socketState": 1,
+            "socketBufferedBytes": 0,
+            "transport": {
+              "id": 1,
+              "openForMs": 9397,
+              "receiveGapMs": 141,
+              "receivedMessages": 50,
+              "localCloseSource": null
+            },
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 16.95,
+              "p95GapMs": 17.16,
+              "fpsEstimate": 59,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 3,
+              "accepted": 3,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 432,
+              "blockedCycles": 1519,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": true,
+              "userId": true,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        },
+        {
+          "seconds": 50,
+          "home_visible": false,
+          "sockets": [
+            {
+              "sent": 2,
+              "received": 77,
+              "closed": false
+            }
+          ],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 1,
+            "state": 1,
+            "phase": "idle",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": false,
+            "adWaiting": false,
+            "socketState": 1,
+            "socketBufferedBytes": 0,
+            "transport": {
+              "id": 1,
+              "openForMs": 14431,
+              "receiveGapMs": 71,
+              "receivedMessages": 77,
+              "localCloseSource": null
+            },
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 16.67,
+              "p95GapMs": 17.18,
+              "fpsEstimate": 60,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 3,
+              "accepted": 3,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 672,
+              "blockedCycles": 1519,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": true,
+              "userId": true,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        },
+        {
+          "seconds": 55,
+          "home_visible": false,
+          "sockets": [
+            {
+              "sent": 2,
+              "received": 115,
+              "closed": false
+            }
+          ],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 1,
+            "state": 1,
+            "phase": "idle",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": false,
+            "adWaiting": false,
+            "socketState": 1,
+            "socketBufferedBytes": 0,
+            "transport": {
+              "id": 1,
+              "openForMs": 19461,
+              "receiveGapMs": 103,
+              "receivedMessages": 115,
+              "localCloseSource": null
+            },
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 16.81,
+              "p95GapMs": 17.2,
+              "fpsEstimate": 59,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 3,
+              "accepted": 3,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 933,
+              "blockedCycles": 1519,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": true,
+              "userId": true,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        },
+        {
+          "seconds": 60,
+          "home_visible": false,
+          "sockets": [
+            {
+              "sent": 2,
+              "received": 132,
+              "closed": false
+            }
+          ],
+          "connection": {
+            "schema": 3,
+            "recoveryVersion": 5,
+            "auditBuild": "integrity-autoupdate-v1",
+            "build": {
+              "fingerprint": "e7ff6e5ba64aa3aa2e46555f54f87d5c0cb9681bee1e0b02f0332d586f58001a",
+              "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+            },
+            "integrityCompatibility": true,
+            "integrityFlag": 1,
+            "state": 1,
+            "phase": "idle",
+            "sessionEnded": false,
+            "awaitingPlay": false,
+            "normalJoinRequired": false,
+            "nativeReady": true,
+            "nativePending": false,
+            "adWaiting": false,
+            "socketState": 1,
+            "socketBufferedBytes": 0,
+            "transport": {
+              "id": 1,
+              "openForMs": 24494,
+              "receiveGapMs": 269,
+              "receivedMessages": 132,
+              "localCloseSource": null
+            },
+            "combatNow": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            },
+            "animationTiming": {
+              "samples": 120,
+              "meanGapMs": 16.66,
+              "p95GapMs": 17.18,
+              "fpsEstimate": 60,
+              "hidden": false
+            },
+            "modCommandsByOpcode": {},
+            "automationSettings": {
+              "autoBuild": false,
+              "fastLoot": false,
+              "slowLoot": false,
+              "autoTake": false,
+              "spamChat": false
+            },
+            "automationTransport": {
+              "deferred": {
+                "aim": 0,
+                "loot": 0,
+                "build": 0,
+                "take": 0,
+                "chat": 0,
+                "keepAlive": 0
+              },
+              "aimHighWaterBytes": 4096
+            },
+            "automationLimits": {
+              "fastLootIntervalMs": 25,
+              "fastLootBurst": 8,
+              "autoBuildIntervalMs": 50
+            },
+            "modTraffic": {
+              "scope": "mod-generated-commands-only",
+              "retentionMs": 1800000,
+              "maxSeconds": 1800,
+              "seconds": [],
+              "lifetimePeak": null,
+              "settingsChanges": [
+                {
+                  "at": 693,
+                  "settings": {
+                    "AimBotEnabled": false,
+                    "AdaptiveAimEnabled": true,
+                    "JitterEnabled": false,
+                    "AntiAimbot": false,
+                    "autoFire": false,
+                    "FAutoLootEnabled": false,
+                    "SAutoLootEnabled": false,
+                    "AutoBuiledEnabled": false,
+                    "AutoTakeEnabled": false,
+                    "SpamChatEnabled": false,
+                    "AntiKickEnabled": false
+                  }
+                }
+              ],
+              "discardedSettingsChanges": 0
+            },
+            "connectionCallbacks": {
+              "wrapped": 3,
+              "accepted": 3,
+              "rejectedStale": 0,
+              "rejectedWhileConnected": 0,
+              "rejectedAfterDispose": 0
+            },
+            "aimTransport": {
+              "cycles": 1162,
+              "blockedCycles": 1519,
+              "nativeYields": 0,
+              "invalidCycles": 0,
+              "lastInvalidReason": null,
+              "nativeSenderAvailable": true,
+              "sourceTickRateMs": 50,
+              "deduplicatedDirections": 0
+            },
+            "aimSettings": {
+              "enabled": false,
+              "source": "message27-bby",
+              "adaptive": true,
+              "jitter": false,
+              "jitterSpeed": 360,
+              "strafe": false,
+              "autoFire": false,
+              "target": "players",
+              "lockId": -1,
+              "distanceCoefficient": 80,
+              "offsetCoefficient": 0.8
+            },
+            "lastFailureCode": 0,
+            "serverListRefreshFailures": 0,
+            "gatewayRecoveries": 0,
+            "initialHomeRecoveries": 0,
+            "stored": {
+              "token": true,
+              "tokenId": true,
+              "userId": true,
+              "accountToken": false
+            },
+            "modErrorCount": 0,
+            "events": []
+          }
+        }
+      ],
+      "network_failures": [],
+      "http_errors": [
+        {
+          "host": "atlanta1.devast.io",
+          "status": 404
+        },
+        {
+          "host": "losangeles2.devast.io",
+          "status": 404
+        },
+        {
+          "host": "frankfurt5.devast.io",
+          "status": 404
+        },
+        {
+          "host": "osaka3.devast.io",
+          "status": 404
+        },
+        {
+          "host": "sydney1.devast.io",
+          "status": 404
+        }
+      ],
+      "page_status": 200,
+      "server": "Frankfurt 1 - 19 players",
+      "play_clicked": true,
+      "status": "short-connection-observed"
+    }
+  ],
+  "limits": [
+    "Short observations; do not establish ban or anti-cheat behavior.",
+    "Clean and modified joins used different Frankfurt backend hosts.",
+    "Advertisements delayed entry for roughly 30 seconds. Earlier shorter attempts ended before a meaningful connection; a cached HTTP 304 was initially misclassified, then handled correctly.",
+    "TLS verification enabled after importing environment CA roots into isolated Firefox profiles.",
+    "Socket counters contain no frame contents, credentials, URLs with query parameters or close reason text."
+  ]
+}
