@@ -277,7 +277,7 @@
     "Authoritative hit radius, collision, spread and muzzle offsets",
     "Automatic RTT estimation and user live hit percentage"
   ],
-  "checked_output_sha256": "2785a5bb656f502b1a2d7d240504040ba86aea783068cc482a37958119a2dee7",
+  "checked_output_sha256": "535fbf9ac07be26cdcab99725da8d34eab75512240da95bb9fc65fc86f7f0cb4",
   "native_motion_assertions": {
     "status": "passed",
     "cases": 9,

@@ -1,11 +1,11 @@
 {
-  "release": "8bbfd5962e75782a03b909616658078dce2b83f3946c9cf795d4228725605c3f",
-  "output_sha256": "2785a5bb656f502b1a2d7d240504040ba86aea783068cc482a37958119a2dee7",
+  "release": "f933855a1de93201b926d9869c7c77b2f8088dbf12725b8860a566deabae5701",
+  "output_sha256": "535fbf9ac07be26cdcab99725da8d34eab75512240da95bb9fc65fc86f7f0cb4",
   "raw_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362",
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 243,
+    "node_tests": 247,
     "python_tests": 70
   },
   "candidate_function_tests": {
@@ -75,5 +75,6 @@
       }
     }
   },
-  "native_physics_reproduction": "passed; nine integration distances independently checked"
+  "native_physics_reproduction": "passed; nine integration distances independently checked",
+  "integration": "Preserves origin/main 72daa7c independent observation accumulation fix. All 4000 stored accuracy outcomes match the merged predictor."
 }

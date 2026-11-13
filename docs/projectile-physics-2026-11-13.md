@@ -102,6 +102,10 @@ The data, complete compressed case lists and native observations are in
 release is activated, run the isolated browser audit with
 `PLAYWRIGHT_BROWSERS_PATH=/workspace/.cache/ms-playwright DEVAST_BROWSER_HOME=/tmp/message27-browser-home node tools/audit_projectile_physics.cjs`.
 
-The final release passed 243 Node tests, 70 Python tests, 167 candidate checks,
+The final release passed 247 Node tests, 70 Python tests, 171 candidate checks,
 and Chromium/Firefox validation. The live game source matched again after the
 checks. Release metadata and browser evidence are in `release-checks.json`.
+
+Publication also integrates `72daa7c` from main: the coalescing interval is
+measured from the start of each observation group, retaining history during
+a continuous dense packet stream. All 4000 recorded outcomes remain identical.
