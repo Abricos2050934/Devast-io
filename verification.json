@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "6957260a1dabc0ce9252fc3d6ab488f47dda8823bf6bec00690317b1870cad5a",
+  "output_sha256": "54cb6ead2ceb5b5c632b08837b2875f6b4a4ce33434c306d3b63707178d4b635",
   "static_ast": "passed",
   "aim_core": "active uploaded __BBY declarations and lifecycle",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -12,7 +12,8 @@
       "mod/responsive.js",
       "mod/bootstrap.js",
       "vendor/dat.gui.recovered.js",
-      "mod/ilm-aim.js"
+      "mod/ilm-aim.js",
+      "mod/ballistic-model.js"
     ],
     "features": [
       "prediction-and-auto-fire",
@@ -55,7 +56,8 @@
       "versioned-aim-settings-preserved",
       "jitter-shot-priority",
       "restored-original-jitter",
-      "safe-shot-direction-ownership"
+      "safe-shot-direction-ownership",
+      "native-weapon-ballistic-interception"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -78,7 +80,8 @@
       "tests/aim-line-projection.test.cjs",
       "tests/aim-settings-persistence.test.cjs",
       "tests/aim-settings-effects.test.cjs",
-      "tests/jitter-arbitration.test.cjs"
+      "tests/jitter-arbitration.test.cjs",
+      "tests/ballistics.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -86,27 +89,38 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "8fcc9aa30855d2232562a7d6e2889c4cac12cafb10db32838861b5da9fbc852c",
+    "mod/responsive.js": "538ac9114d6d2831ede46d765b6cc90e57bd7ec03a393966c8ab108f0e0ea5fb",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
-    "mod/ilm-aim.js": "d177aca0a4a71715c19efd514abe25f5b2bf47517d2d05a132643d061faf3556"
+    "mod/ilm-aim.js": "849626bf806e4c47362a53ed93b5a5979adc3d2b0bca506d544b3f5174be3c98",
+    "mod/ballistic-model.js": "3f7c3f80a1c286164777bd015c5a8268eabe3fb8233979e2d1deb0de6ded0b03"
   },
-  "mod_bundle_sha256": "81873bfa857924b52b7deca85798390b88a2a0c2ccf0c4583d4c40c42767e0fb",
+  "mod_bundle_sha256": "79b64f9f637ce760e837c0ef14209a309d85f290047d164e81f84321b7b0f86b",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "157.0.8103.0",
+  "browser_version": "154.0.8037.57",
   "console_errors": [
-    "Access to XMLHttpRequest at 'https://frankfurt2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://losangeles3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://atlanta2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://sydney2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://osaka2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED"
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID",
+    "Failed to load resource: net::ERR_CERT_AUTHORITY_INVALID"
   ],
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
@@ -140,10 +154,22 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "1d59e1fd2a3deb80e39d961a00fd7f1ed8ac9fa6e2a95dd3a5ed69711515d9d3",
+    "fingerprint": "ce4d65eac4b54254baabade8c0055cda2f544046162d77352674f3edde663502",
     "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
   },
   "native": {
+    "adaptive_aim": {
+      "status": "passed",
+      "native_weapon_speed_and_range": true,
+      "native_projectile_speed": true,
+      "native_speed_equality": true,
+      "packet_server_positions": true,
+      "shooter_and_target_velocity": true,
+      "fresh_angle_before_native_attack": true,
+      "jitter_priority": true,
+      "line_matches_shot": true,
+      "stale_target_releases_input": true
+    },
     "jitter": {
       "status": "passed",
       "original_rotation": true,
@@ -1097,13 +1123,25 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-12T19:40:47.995Z",
+  "finished_at": "2026-11-13T05:29:22.790Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "6957260a1dabc0ce9252fc3d6ab488f47dda8823bf6bec00690317b1870cad5a",
-      "browser_version": "157.0.8103.0",
+      "output_sha256": "54cb6ead2ceb5b5c632b08837b2875f6b4a4ce33434c306d3b63707178d4b635",
+      "browser_version": "154.0.8037.57",
       "native": {
+        "adaptive_aim": {
+          "status": "passed",
+          "native_weapon_speed_and_range": true,
+          "native_projectile_speed": true,
+          "native_speed_equality": true,
+          "packet_server_positions": true,
+          "shooter_and_target_velocity": true,
+          "fresh_angle_before_native_attack": true,
+          "jitter_priority": true,
+          "line_matches_shot": true,
+          "stale_target_releases_input": true
+        },
         "jitter": {
           "status": "passed",
           "original_rotation": true,
@@ -2087,9 +2125,21 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "6957260a1dabc0ce9252fc3d6ab488f47dda8823bf6bec00690317b1870cad5a",
+      "output_sha256": "54cb6ead2ceb5b5c632b08837b2875f6b4a4ce33434c306d3b63707178d4b635",
       "browser_version": "153.0",
       "native": {
+        "adaptive_aim": {
+          "status": "passed",
+          "native_weapon_speed_and_range": true,
+          "native_projectile_speed": true,
+          "native_speed_equality": true,
+          "packet_server_positions": true,
+          "shooter_and_target_velocity": true,
+          "fresh_angle_before_native_attack": true,
+          "jitter_priority": true,
+          "line_matches_shot": true,
+          "stale_target_releases_input": true
+        },
         "jitter": {
           "status": "passed",
           "original_rotation": true,
@@ -3091,13 +3141,14 @@
       "tests/aim-line-projection.test.cjs",
       "tests/aim-settings-persistence.test.cjs",
       "tests/aim-settings-effects.test.cjs",
-      "tests/jitter-arbitration.test.cjs"
+      "tests/jitter-arbitration.test.cjs",
+      "tests/ballistics.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 195,
-    "python_tests": 68
+    "node_tests": 223,
+    "python_tests": 69
   }
 }
