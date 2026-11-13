@@ -79,7 +79,16 @@ function interpret(block,analysis){
  }}
  stmt(block,env);if(captured.length!==1)throw Error('Expected one captured decoded program');return {source:captured[0],steps};
 }
-function deobfuscate(source){
+function deobfuscate(source,options={}){
+ const fs=require('node:fs'),path=require('node:path'),hash=require('./static.cjs').hash;
+ const inputHash=hash(source),recipe=hash(fs.readdirSync(__dirname).filter(n=>n.endsWith('.cjs')).sort().map(n=>fs.readFileSync(path.join(__dirname,n))).concat(fs.readFileSync(path.join(__dirname,'../parser.cjs'))).join('\n'));
+ const cache=options.cacheDir&&path.join(options.cacheDir,inputHash);
+ if(cache){try{
+  const meta=JSON.parse(fs.readFileSync(cache+'.json','utf8'));
+  if(meta.recipe===recipe&&meta.input_sha256===inputHash&&Array.isArray(meta.evidence)&&fs.statSync(cache+'.js').size<=64*1024*1024){
+   const text=fs.readFileSync(cache+'.js','utf8');if(hash(text)===meta.output_sha256){analyze(text);return {source:text,evidence:meta.evidence};}
+  }
+ }catch(_) {}}
  const a=analyze(source),blocks=[];
  for(const n of a.nodes)if(n.type==='BlockStatement'&&n.body.at(-1)?.type==='ExpressionStatement'){
   const end=n.body.at(-1).expression;
@@ -88,6 +97,12 @@ function deobfuscate(source){
  const edits=[],evidence=[];
  for(const [index,block] of blocks.entries()){process.stderr.write('Decoding native block '+(index+1)+'/'+blocks.length+'\n');let decoded;try{decoded=interpret(block,a);}catch(error){throw Error("Decoder block "+block.start+" ("+(block.end-block.start)+" chars): "+error.message);}require('../parser.cjs').parse(decoded.source,{ecmaVersion:'latest'});edits.push({start:block.start,end:block.end,text:'{\n'+decoded.source+'\n}'});evidence.push({input_start:block.start,input_end:block.end,decoded_sha256:require('./static.cjs').hash(decoded.source),steps:decoded.steps});}
  for(const e of edits.sort((a,b)=>b.start-a.start))source=source.slice(0,e.start)+e.text+source.slice(e.end);
- analyze(source);return {source,evidence};
+ analyze(source);
+ if(cache){
+  fs.mkdirSync(options.cacheDir,{recursive:true});const temporary=cache+'.tmp-'+process.pid;
+  fs.writeFileSync(temporary+'.js',source);fs.renameSync(temporary+'.js',cache+'.js');
+  fs.writeFileSync(temporary+'.json',JSON.stringify({recipe,input_sha256:inputHash,output_sha256:hash(source),evidence}));fs.renameSync(temporary+'.json',cache+'.json');
+ }
+ return {source,evidence};
 }
 module.exports={interpret,deobfuscate};

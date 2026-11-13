@@ -40,6 +40,9 @@ function fixture(options={}) {
     console, performance: {now: () => clock},Date:class extends Date{static now(){return clock;}},navigator,alert(){},B:candidate?.B||B,
   });
   vm.runInContext((candidate?.source||(fs.readFileSync('mod/ilm-aim.js','utf8') + '\n' + fs.readFileSync('mod/responsive.js', 'utf8'))) + '\nglobalThis.mod = __installDevastMod(B);', context, {timeout: 1000});
+  // Historical feature/parity fixtures exercise the original uploaded gun
+  // engine explicitly. Adaptive fixtures test the new deployed default.
+  if(!options.adaptive)context.mod.setSetting('AdaptiveAimEnabled',false);
   return {mod: candidate?candidate.adaptMod(context.mod):context.mod, context, B,window,document,dom,navigator,clipboard,setClock:value=>{clock=value;},network, world, entities, storage, packets, listeners, docListeners, timers, timerPeriods, frames, get nativeCalls(){return nativeCalls;}};
 }
 

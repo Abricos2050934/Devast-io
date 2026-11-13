@@ -91,6 +91,7 @@ function __createIlmAdapter(settings,environment){
 function __ilmAimDefaults(){return ${JSON.stringify(gunDefaults(reference))};}
 function __ilmAimConstraints(){return {limits:{mouseFov:[0,12345],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],aimStick:[0,800],aimHoldMs:[0,600],leadCap:[40,500],aimSmooth:[.05,1],lockId:[-1,120],aimMaxRange:[1,20000],spearSpeed:[20,60],spearMaxRange:[200,600],spearHandFwd:[-60,60],spearHandSide:[-60,60],spearStabDeg:[.5,10],antiAimCoefficient:[10,500]},choices:{target:['players','ghouls','all'],resolverType:['linear'],ShowRealAngles:['never','always','withAim']}};}
 function __ilmMouseToWorld(point,view){return {x:point.x/view.scale-view.x,y:point.y/view.scale-view.y};}
+${require('node:fs').readFileSync(require('node:path').join(__dirname,'../mod/ballistic-model.js'),'utf8').trim()}
 ${nativeHelpers.join('\n\n')}
 `;
 }

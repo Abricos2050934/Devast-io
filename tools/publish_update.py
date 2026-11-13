@@ -55,6 +55,13 @@ def artifacts(root, output):
                 raise ValueError('Required traffic behavior was not verified: ' + feature + ' in ' + browser)
         if 'aim-cycle-socket-backpressure' in contract.get('features', []) and report.get('native', {}).get('aim_cycle_socket_backpressure') is not True:
             raise ValueError('Aim cycle socket backpressure was not verified in browser: ' + browser)
+        if 'native-weapon-ballistic-interception' in contract.get('features', []):
+            adaptive = report.get('native', {}).get('adaptive_aim', {})
+            keys = ('native_weapon_speed_and_range', 'native_projectile_speed', 'native_speed_equality',
+                    'packet_server_positions', 'shooter_and_target_velocity', 'fresh_angle_before_native_attack',
+                    'jitter_priority', 'line_matches_shot', 'stale_target_releases_input')
+            if adaptive.get('status') != 'passed' or not all(adaptive.get(key) is True for key in keys):
+                raise ValueError('Adaptive ballistic aim was not verified in browser: ' + browser)
         if 'valid-live-aim-targets' in contract.get('features', []) and not all(report.get('native', {}).get(key) is True for key in ('valid_live_aim_targets', 'server_death_sends_no_commands')):
             raise ValueError('Live aim targets and server death send behavior were not verified in browser: ' + browser)
         if 'connection-close-origin-diagnostics' in contract.get('features', []) and report.get('native', {}).get('connection_close_origin_diagnostics') is not True:

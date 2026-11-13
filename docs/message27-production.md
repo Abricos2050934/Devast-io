@@ -1,5 +1,10 @@
 # Aim import from message (27).txt
 
+The imported blocks remain the legacy engine. The current default additionally
+uses the separately audited physical adapter described in [Adaptive Aim](adaptive-aim.md).
+The source parity checks explicitly select the legacy engine; adaptive browser
+and simulation checks run separately. They are not claimed to be the same algorithm.
+
 Upload SHA256: `f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0`.
 
 The file declares a first predictor, then replaces its live instances and

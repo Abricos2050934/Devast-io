@@ -1,0 +1,112 @@
+{
+  "status": "passed",
+  "base_commit": "e9d93d9dea804cb30d02e7587d8ad464d6daf004",
+  "release": "a4056a38a209dbecef225bba840aeefecef3bc7f37a5875b7337b9ad317e2fec",
+  "output_sha256": "54cb6ead2ceb5b5c632b08837b2875f6b4a4ce33434c306d3b63707178d4b635",
+  "source_url": "https://devast.io/js/hym7DtRA3RCGo21.js",
+  "raw_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 223,
+    "python_tests": 69
+  },
+  "candidate_tests": {
+    "status": "passed",
+    "node_tests": 147
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "154.0.8037.57",
+      "adaptive_aim": {
+        "status": "passed",
+        "native_weapon_speed_and_range": true,
+        "native_projectile_speed": true,
+        "native_speed_equality": true,
+        "packet_server_positions": true,
+        "shooter_and_target_velocity": true,
+        "fresh_angle_before_native_attack": true,
+        "jitter_priority": true,
+        "line_matches_shot": true,
+        "stale_target_releases_input": true
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "adaptive_aim": {
+        "status": "passed",
+        "native_weapon_speed_and_range": true,
+        "native_projectile_speed": true,
+        "native_speed_equality": true,
+        "packet_server_positions": true,
+        "shooter_and_target_velocity": true,
+        "fresh_angle_before_native_attack": true,
+        "jitter_priority": true,
+        "line_matches_shot": true,
+        "stale_target_releases_input": true
+      }
+    }
+  },
+  "simulation": {
+    "scope": "deterministic simulation, not live server hits",
+    "overall": {
+      "original": {
+        "shots": 108,
+        "within20": 40,
+        "meanMiss": 40.72848624117232,
+        "maxMiss": 177.05950369883254
+      },
+      "tuned": {
+        "shots": 108,
+        "within20": 74,
+        "meanMiss": 38.836937533930715,
+        "maxMiss": 219.85494684483132
+      },
+      "adaptive": {
+        "shots": 108,
+        "within20": 81,
+        "meanMiss": 32.10830370536863,
+        "maxMiss": 209.27461297061052
+      }
+    },
+    "predictable": {
+      "original": {
+        "shots": 81,
+        "within20": 40,
+        "meanMiss": 21.615000720295093,
+        "maxMiss": 45.597138962707234
+      },
+      "tuned": {
+        "shots": 81,
+        "within20": 74,
+        "meanMiss": 9.480791459475753,
+        "maxMiss": 31.67254191089909
+      },
+      "adaptive": {
+        "shots": 81,
+        "within20": 81,
+        "meanMiss": 2.128665190473263,
+        "maxMiss": 6.078614935971839
+      }
+    },
+    "models": {
+      "linear": 81,
+      "circle": 27
+    }
+  },
+  "live_server": "not_tested",
+  "source_freshness": "rechecked by updater before activation",
+  "modules": {
+    "mod/responsive.js": "538ac9114d6d2831ede46d765b6cc90e57bd7ec03a393966c8ab108f0e0ea5fb",
+    "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
+    "mod/ilm-aim.js": "849626bf806e4c47362a53ed93b5a5979adc3d2b0bca506d544b3f5174be3c98",
+    "mod/ballistic-model.js": "3f7c3f80a1c286164777bd015c5a8268eabe3fb8233979e2d1deb0de6ded0b03"
+  },
+  "limitations": [
+    "Unknown future changes in target movement, unknown network delay, collision, spread and muzzle offsets can still cause misses.",
+    "No guarantee of live server hit rate or absence of server kicks."
+  ]
+}

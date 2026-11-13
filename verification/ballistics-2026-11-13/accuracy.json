@@ -1,0 +1,1432 @@
+{
+  "status": "passed",
+  "scope": "deterministic simulation, not live server hits",
+  "speed": 1400,
+  "range": 900,
+  "positionQuantization": 1,
+  "angleQuantization": 1,
+  "models": {
+    "linear": 81,
+    "circle": 27
+  },
+  "overall": {
+    "original": {
+      "shots": 108,
+      "within20": 40,
+      "meanMiss": 40.72848624117232,
+      "maxMiss": 177.05950369883254
+    },
+    "tuned": {
+      "shots": 108,
+      "within20": 74,
+      "meanMiss": 38.836937533930715,
+      "maxMiss": 219.85494684483132
+    },
+    "adaptive": {
+      "shots": 108,
+      "within20": 81,
+      "meanMiss": 32.10830370536863,
+      "maxMiss": 209.27461297061052
+    }
+  },
+  "predictable": {
+    "original": {
+      "shots": 81,
+      "within20": 40,
+      "meanMiss": 21.615000720295093,
+      "maxMiss": 45.597138962707234
+    },
+    "tuned": {
+      "shots": 81,
+      "within20": 74,
+      "meanMiss": 9.480791459475753,
+      "maxMiss": 31.67254191089909
+    },
+    "adaptive": {
+      "shots": 81,
+      "within20": 81,
+      "meanMiss": 2.128665190473263,
+      "maxMiss": 6.078614935971839
+    }
+  },
+  "byTrajectory": {
+    "crossing": {
+      "original": {
+        "shots": 27,
+        "within20": 7,
+        "meanMiss": 27.128736581610426,
+        "maxMiss": 45.597138962707234
+      },
+      "tuned": {
+        "shots": 27,
+        "within20": 26,
+        "meanMiss": 7.66054103331626,
+        "maxMiss": 20.63928416582705
+      },
+      "adaptive": {
+        "shots": 27,
+        "within20": 27,
+        "meanMiss": 2.12455772730712,
+        "maxMiss": 5.892254895460041
+      }
+    },
+    "diagonal": {
+      "original": {
+        "shots": 27,
+        "within20": 8,
+        "meanMiss": 24.958878327875798,
+        "maxMiss": 39.350248275737094
+      },
+      "tuned": {
+        "shots": 27,
+        "within20": 27,
+        "meanMiss": 7.009244335230255,
+        "maxMiss": 16.192130362626475
+      },
+      "adaptive": {
+        "shots": 27,
+        "within20": 27,
+        "meanMiss": 2.6035679025831318,
+        "maxMiss": 6.078614935971839
+      }
+    },
+    "circle": {
+      "original": {
+        "shots": 27,
+        "within20": 25,
+        "meanMiss": 12.757387251399027,
+        "maxMiss": 20.66368738235235
+      },
+      "tuned": {
+        "shots": 27,
+        "within20": 21,
+        "meanMiss": 13.772589009880752,
+        "maxMiss": 31.67254191089909
+      },
+      "adaptive": {
+        "shots": 27,
+        "within20": 27,
+        "meanMiss": 1.6578699415295366,
+        "maxMiss": 4.360835471951944
+      }
+    },
+    "unannounced-turn": {
+      "original": {
+        "shots": 27,
+        "within20": 0,
+        "meanMiss": 98.068942803804,
+        "maxMiss": 177.05950369883254
+      },
+      "tuned": {
+        "shots": 27,
+        "within20": 0,
+        "meanMiss": 126.9053757572956,
+        "maxMiss": 219.85494684483132
+      },
+      "adaptive": {
+        "shots": 27,
+        "within20": 0,
+        "meanMiss": 122.04721925005478,
+        "maxMiss": 209.27461297061052
+      }
+    }
+  },
+  "examples": [
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": -160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 13.697349230050719,
+        "tuned": 9.397209213045938,
+        "adaptive": 2.18110638938377
+      }
+    },
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": -160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 15.146079516433534,
+        "tuned": 6.543433075904286,
+        "adaptive": 0.7133741066160787
+      }
+    },
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": -160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 7.478036044474795,
+        "tuned": 12.224819305880377,
+        "adaptive": 2.351498448462061
+      }
+    },
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": -160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 60.97810514910408,
+        "tuned": 81.6149329764401,
+        "adaptive": 71.35481303238352
+      }
+    },
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": 0,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 14.53745094238445,
+        "tuned": 8.858213091429766,
+        "adaptive": 0.5575000736844055
+      }
+    },
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": 0,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 14.892307412860161,
+        "tuned": 9.142822353553564,
+        "adaptive": 2.961829909335242
+      }
+    },
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": 0,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 9.807670599732075,
+        "tuned": 5.873164036742987,
+        "adaptive": 1.9352101790280507
+      }
+    },
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": 0,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 41.3326156663388,
+        "tuned": 62.27573761963336,
+        "adaptive": 53.966048972461195
+      }
+    },
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": 160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 9.14734405682212,
+        "tuned": 5.344581315185394,
+        "adaptive": 1.6919154717174332
+      }
+    },
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": 160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 7.5901196601041265,
+        "tuned": 6.80851994602316,
+        "adaptive": 2.0223505289334285
+      }
+    },
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": 160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 7.298587480618693,
+        "tuned": 4.494525763050071,
+        "adaptive": 1.6151910527273285
+      }
+    },
+    {
+      "distance": 250,
+      "age": 0,
+      "walk": 160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 27.786576500510133,
+        "tuned": 40.72850665872784,
+        "adaptive": 37.51457849487386
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": -160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 18.99532555165935,
+        "tuned": 4.621953421256389,
+        "adaptive": 1.3917335109833504
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": -160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 18.883597655657084,
+        "tuned": 3.5462488032842234,
+        "adaptive": 3.5462488032842234
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": -160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 10.60324645083707,
+        "tuned": 9.205149966823253,
+        "adaptive": 0.7510978061319111
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": -160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 73.8505977270222,
+        "tuned": 94.514383629893,
+        "adaptive": 89.39714044284372
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": 0,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 20.815714053968822,
+        "tuned": 2.774703338499543,
+        "adaptive": 2.0277713926507075
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": 0,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 19.10498448095446,
+        "tuned": 5.394109854809299,
+        "adaptive": 0.8088702409359189
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": 0,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 14.338684869949171,
+        "tuned": 1.193538360173924,
+        "adaptive": 1.193538360173924
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": 0,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 51.22258677057331,
+        "tuned": 71.71015930986425,
+        "adaptive": 67.66146292850952
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": 160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 17.079781863083234,
+        "tuned": 2.9858983707363476,
+        "adaptive": 0.6595845984110306
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": 160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 12.534012765603698,
+        "tuned": 1.8608102109243858,
+        "adaptive": 1.8608102109243858
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": 160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 14.027054329450563,
+        "tuned": 2.936854356808042,
+        "adaptive": 0.5637557164686604
+      }
+    },
+    {
+      "distance": 250,
+      "age": 40,
+      "walk": 160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 33.77217911838153,
+        "tuned": 45.974531998034095,
+        "adaptive": 48.97906055821504
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": -160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 24.30920854801862,
+        "tuned": 0.32030656782138966,
+        "adaptive": 0.32030656782138966
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": -160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 22.633135187750966,
+        "tuned": 0.6396085385698743,
+        "adaptive": 0.6396085385698743
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": -160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 13.490783276916666,
+        "tuned": 6.402179802192257,
+        "adaptive": 1.4037993397869026
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": -160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 86.72418604719434,
+        "tuned": 107.41387313158549,
+        "adaptive": 107.41387313158549
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": 0,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 27.09501527029643,
+        "tuned": 3.437260025632058,
+        "adaptive": 1.4377977573221976
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": 0,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 23.306251351398544,
+        "tuned": 1.6496661972556805,
+        "adaptive": 1.6496661972556805
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": 0,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 18.69711083155515,
+        "tuned": 3.6322538090763237,
+        "adaptive": 0.5341703209307488
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": 0,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 61.11355838419042,
+        "tuned": 81.14465713830256,
+        "adaptive": 85.06654001732024
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": 160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 25.01528653496787,
+        "tuned": 11.164979493398315,
+        "adaptive": 0.6207357266077
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": 160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 17.45368242801758,
+        "tuned": 3.08695406942908,
+        "adaptive": 1.7870014766345406
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": 160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 20.66368738235235,
+        "tuned": 10.248286944983711,
+        "adaptive": 0.6481936799020352
+      }
+    },
+    {
+      "distance": 250,
+      "age": 80,
+      "walk": 160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 39.76087140261643,
+        "tuned": 51.21322921379566,
+        "adaptive": 59.613852720924946
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": -160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 21.198128720290978,
+        "tuned": 13.92188014302103,
+        "adaptive": 3.7158456482703976
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": -160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 20.63321164867733,
+        "tuned": 11.094587207442958,
+        "adaptive": 0.7530540441575257
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": -160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 9.20438153256632,
+        "tuned": 21.451529571407306,
+        "adaptive": 1.5730553882667282
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": -160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 106.46426668043149,
+        "tuned": 137.99877815649762,
+        "adaptive": 122.33153074707683
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": 0,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 19.160113718106928,
+        "tuned": 11.540705718397477,
+        "adaptive": 3.8356872350231743
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": 0,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 23.86334220258,
+        "tuned": 13.508821475884583,
+        "adaptive": 4.131925009531193
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": 0,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 9.33094251076574,
+        "tuned": 17.31310122311102,
+        "adaptive": 2.7030701745058403
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": 0,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 89.10935991776908,
+        "tuned": 116.65075682048631,
+        "adaptive": 109.8299955945789
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": 160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 19.353134427983214,
+        "tuned": 6.912126536663332,
+        "adaptive": 0.5298812500864486
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": 160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 19.032401878628498,
+        "tuned": 5.326066901581267,
+        "adaptive": 2.830737920567844
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": 160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 11.186358970376954,
+        "tuned": 11.43326197864975,
+        "adaptive": 0.14687508655425469
+      }
+    },
+    {
+      "distance": 425,
+      "age": 0,
+      "walk": 160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 69.78340794550844,
+        "tuned": 93.40268401622906,
+        "adaptive": 87.55175336428367
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": -160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 27.01788866658417,
+        "tuned": 8.601655084370146,
+        "adaptive": 0.3531108675973564
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": -160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 24.84825223148732,
+        "tuned": 7.574084750315725,
+        "adaptive": 3.264653465686002
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": -160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 11.659850492807898,
+        "tuned": 19.05679206387125,
+        "adaptive": 3.749350733976364
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": -160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 119.25728927908125,
+        "tuned": 150.87174456450748,
+        "adaptive": 143.05063969097716
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": 0,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 25.524618990454016,
+        "tuned": 5.24689084692407,
+        "adaptive": 2.585928955021332
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": 0,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 28.39716461673403,
+        "tuned": 9.429981016743893,
+        "adaptive": 0.34273113036308256
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": 0,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 12.854439992185391,
+        "tuned": 13.467734471886953,
+        "adaptive": 0.725097978669613
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": 0,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 99.39598119824355,
+        "tuned": 126.62762301621372,
+        "adaptive": 119.88850528331471
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": 160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 26.488393133126397,
+        "tuned": 0.7945071602476226,
+        "adaptive": 0.7945071602476226
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": 160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 23.907367017147873,
+        "tuned": 0.4579516706229683,
+        "adaptive": 0.4579516706229683
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": 160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 15.893986805607929,
+        "tuned": 5.993142325437823,
+        "adaptive": 0.6376740711214113
+      }
+    },
+    {
+      "distance": 425,
+      "age": 40,
+      "walk": 160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 77.3688198980984,
+        "tuned": 100.29185487638401,
+        "adaptive": 100.29185487638401
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": -160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 32.837366251017606,
+        "tuned": 3.354891522159928,
+        "adaptive": 3.354891522159928
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": -160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 29.0498002735492,
+        "tuned": 4.069005999015115,
+        "adaptive": 4.069005999015115
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": -160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 13.792285911067307,
+        "tuned": 16.940255542308027,
+        "adaptive": 1.659670550733709
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": -160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 132.05048581063446,
+        "tuned": 163.74557789870568,
+        "adaptive": 163.74557789870568
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": 0,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 31.888910582886684,
+        "tuned": 1.112842552398079,
+        "adaptive": 1.112842552398079
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": 0,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 32.92906995462726,
+        "tuned": 5.326547522371361,
+        "adaptive": 4.302749656487014
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": 0,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 16.12474498278374,
+        "tuned": 9.836150632735439,
+        "adaptive": 3.327235369330642
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": 0,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 109.68262271578968,
+        "tuned": 136.60138978647439,
+        "adaptive": 136.60138978647439
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": 160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 33.62413508783336,
+        "tuned": 8.140174732204308,
+        "adaptive": 1.7605284884756407
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": 160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 28.780791359557607,
+        "tuned": 4.532708514888805,
+        "adaptive": 3.664941703769446
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": 160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 20.43746249492081,
+        "tuned": 0.9806299423813438,
+        "adaptive": 0.9806299423813438
+      }
+    },
+    {
+      "distance": 425,
+      "age": 80,
+      "walk": 160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 84.9543305387109,
+        "tuned": 107.18221409809458,
+        "adaptive": 112.64041754718394
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": -160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 29.496677613954557,
+        "tuned": 17.719340142219107,
+        "adaptive": 5.892254895460041
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": -160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 25.69384614380487,
+        "tuned": 16.11415571393804,
+        "adaptive": 2.1695487164928458
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": -160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 9.896847372247768,
+        "tuned": 31.67254191089909,
+        "adaptive": 0.7234831729292831
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": -160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 151.59806083015633,
+        "tuned": 194.17481255760032,
+        "adaptive": 183.6386770758462
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": 0,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 32.81831990045295,
+        "tuned": 20.63928416582705,
+        "adaptive": 0.9016147079164972
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": 0,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 27.685297861500654,
+        "tuned": 10.398134737552887,
+        "adaptive": 2.3425216099139674
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": 0,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 6.146417275912823,
+        "tuned": 22.054378218951474,
+        "adaptive": 3.2596565681331535
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": 0,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 129.2202585457072,
+        "tuned": 177.4104146799963,
+        "adaptive": 158.325831290921
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": 160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 26.637179140055995,
+        "tuned": 11.679646853596681,
+        "adaptive": 2.0614029989916762
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": 160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 29.67687788254905,
+        "tuned": 16.192130362626475,
+        "adaptive": 4.6793210505643765
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": 160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 12.4142500057963,
+        "tuned": 21.15525452312967,
+        "adaptive": 4.360835471951944
+      }
+    },
+    {
+      "distance": 600,
+      "age": 0,
+      "walk": 160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 115.617562588181,
+        "tuned": 150.18545883441192,
+        "adaptive": 141.62658186551758
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": -160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 35.556600871928644,
+        "tuned": 12.148289830854823,
+        "adaptive": 0.39552815435231703
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": -160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 30.134975889537735,
+        "tuned": 12.36012398418081,
+        "adaptive": 1.8523270846760607
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": -160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 11.49132214828994,
+        "tuned": 30.085701880459276,
+        "adaptive": 1.1029864900790147
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": -160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 164.3297315017056,
+        "tuned": 207.0147419182101,
+        "adaptive": 196.45663813957464
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": 0,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 39.20868757487677,
+        "tuned": 14.30980646367263,
+        "adaptive": 3.5942110578404183
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": 0,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 32.32454986232678,
+        "tuned": 6.078614935971839,
+        "adaptive": 6.078614935971839
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": 0,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 8.709872480394171,
+        "tuned": 19.1884780256203,
+        "adaptive": 0.745813267311411
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": 0,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 139.7148253167616,
+        "tuned": 187.5472976992436,
+        "adaptive": 178.11474871335207
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": 160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 33.4633355979444,
+        "tuned": 4.447571307292767,
+        "adaptive": 4.447571307292767
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": 160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 34.51319711718328,
+        "tuned": 11.30627792214689,
+        "adaptive": 0.6183815908508955
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": 160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 15.917228785966767,
+        "tuned": 16.87380325117147,
+        "adaptive": 0.47098729065505385
+      }
+    },
+    {
+      "distance": 600,
+      "age": 40,
+      "walk": 160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 123.7081503218756,
+        "tuned": 157.59965537141133,
+        "adaptive": 157.59965537141133
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": -160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 41.61687441106664,
+        "tuned": 6.59279424216557,
+        "adaptive": 5.528861523511989
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": -160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 34.566384459064395,
+        "tuned": 8.616837309624813,
+        "adaptive": 5.844075240617752
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": -160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 12.716107510905777,
+        "tuned": 28.81037762186248,
+        "adaptive": 2.3945203569587727
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": -160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 177.05950369883254,
+        "tuned": 219.85494684483132,
+        "adaptive": 209.27461297061052
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": 0,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 45.597138962707234,
+        "tuned": 7.9771571997494215,
+        "adaptive": 2.8200002632947925
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": 0,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 36.95876571917363,
+        "tuned": 1.8029300241225565,
+        "adaptive": 1.8029300241225565
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": 0,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 11.035804319706921,
+        "tuned": 16.55333437449918,
+        "adaptive": 1.9492226069910497
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": 0,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 150.20646788188014,
+        "tuned": 197.6828828310409,
+        "adaptive": 188.32683943578203
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": 160,
+      "kind": "crossing",
+      "model": "linear",
+      "miss": {
+        "original": 40.295908000959365,
+        "tuned": 2.789938560769794,
+        "adaptive": 2.789938560769794
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": 160,
+      "kind": "diagonal",
+      "model": "linear",
+      "miss": {
+        "original": 39.350248275737094,
+        "tuned": 6.388463952432322,
+        "adaptive": 5.101102503844717
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": 160,
+      "kind": "circle",
+      "model": "circle",
+      "miss": {
+        "original": 19.232290929584654,
+        "tuned": 12.782663362667448,
+        "adaptive": 3.2558689971362913
+      }
+    },
+    {
+      "distance": 600,
+      "age": 80,
+      "walk": 160,
+      "kind": "unannounced-turn",
+      "model": "linear",
+      "miss": {
+        "original": 131.79905426741,
+        "tuned": 165.01229980036652,
+        "adaptive": 165.01229980036652
+      }
+    }
+  ]
+}

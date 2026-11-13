@@ -13,7 +13,9 @@ for(const [fixture,sha]of [['rotation-2026-11-06.js.gz','74720aca77141a313015167
  const result=port(ref.source,input,ref.profile,ref.bindings,read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/ilm-aim.js'),read('vendor/dat.gui.recovered.js'));
  assert.equal(result.report.reference_sha256,'f3d84ce3b601811fd834d8204d6334e5c50858824fedd1d567bbfa6ce75096d7');
  assert.equal(result.report.decoder_blocks.length,30);assert.equal(result.profile.operations.length,36);
- assert.equal(result.report.native_network_contracts.length,8);assert.equal(result.report.required_bindings,79);
+ assert.equal(result.report.native_network_contracts.length,8);assert.equal(result.report.required_bindings,82);
+ assert.equal(typeof result.bindings.symbols.curveWeapons,'string');assert.equal(typeof result.bindings.symbols.curveBulletSpeed,'string');
+ assert.equal(typeof result.roles.ballisticProjectileSpeed,'string','Native projectile speed contract must survive rotation');
  assert.equal(result.bindings.symbols.get,'get','Native get method must not borrow a renamed HTTP parameter');
  if(fixture==='rotation-2026-11-08b.js.gz'){
   assert.equal(result.bindings.symbols.nativeHomeEnter,'ⲣܓ̗','Use the native home entry after its export was renamed');

@@ -9,7 +9,8 @@ const {translate}=require('./translate_payload.cjs'),{assemble}=require('./build
 const root=path.resolve(__dirname,'..');
 function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  if(hash(reference)!==profile.baseline_sha256)throw Error('Reference baseline checksum mismatch');
- const decodedOld=deobfuscate(reference),decodedNew=reference===candidate?decodedOld:deobfuscate(candidate);
+ const decodeOptions={cacheDir:path.join(root,'.updater','native-decode-cache-v1')};
+ const decodedOld=deobfuscate(reference,decodeOptions),decodedNew=reference===candidate?decodedOld:deobfuscate(candidate,decodeOptions);
  const old=readonlyConstants(analyze(decodedOld.source)),cur=readonlyConstants(analyze(decodedNew.source)),oldCanon=new Map(),curCanon=new Map();
  const group=(a,cache)=>{const map=new Map();for(const n of a.functions){if(n.end-n.start>80000)continue;const c=canonical(a,n);cache.set(n,c);if(!map.has(c.hash))map.set(c.hash,[]);map.get(c.hash).push(n);}return map;};
  const og=group(old,oldCanon),ng=group(cur,curCanon),pairs=new Map(),votes=new Map(),propertyVotes=new Map();
@@ -252,13 +253,24 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
    const position=generated.operations.find(op=>op.id==='packet-position-history');
    const native=acorn.parse(position.before,{ecmaVersion:'latest'}).body[0].expression;
    if(native.type!=='CallExpression'||native.arguments.length!==13)throw Error('Uploaded aim native position metadata changed');
-   const extras=[native.arguments[7],native.arguments[9]].map(n=>position.before.slice(n.start,n.end));
+   const fragment=i=>position.before.slice(native.arguments[i].start,native.arguments[i].end);
+   const extras=[fragment(7),fragment(9),`{x:${fragment(5)},y:${fragment(6)},state:${fragment(11)},entityId:${fragment(3)}}`];
    const tree=acorn.parse(position.after,{ecmaVersion:'latest'}),pending=[tree],hits=[];
    while(pending.length){const n=pending.pop();if(n.type==='CallExpression'&&n.callee.property?.name==='trackPacket')hits.push(n);for(const v of Object.values(n))if(Array.isArray(v))pending.push(...v.filter(x=>x?.type));else if(v?.type)pending.push(v);}
    if(hits.length!==1||hits[0].arguments.length!==6)throw Error('Uploaded aim position hook changed');
    const at=hits[0].end-1;position.after=position.after.slice(0,at)+','+extras.join(',')+position.after.slice(at);
   }
   generated.operations.push(require('./updater/aim-transport.cjs').aimTransportOperation(cur,outputBindings.symbols,roles,new Set(pairs.values())));
+  // The adaptive model must use the same packed speed as the native projectile
+  // constructor. A changed shift, divisor or entity binding blocks publication.
+  const projectileSpeeds=cur.nodes.filter(n=>{
+   if(n.type!=='AssignmentExpression'||n.operator!=='='||n.left.type!=='MemberExpression'||n.left.object.type!=='Identifier')return false;
+   const value=n.right;
+   return value.type==='BinaryExpression'&&value.operator==='/'&&cur.constant(value.right)===100&&value.left.type==='BinaryExpression'&&value.left.operator==='>>'&&cur.constant(value.left.right)===8&&value.left.left.type==='MemberExpression'&&value.left.left.object.name===n.left.object.name&&prop(cur,value.left.left)==='state';
+  });
+  const speedFields=new Set(projectileSpeeds.map(n=>prop(cur,n.left)));
+  if(!projectileSpeeds.length||speedFields.size!==1)throw Error('Native packed projectile speed contract changed or ambiguous');
+  roles.ballisticProjectileSpeed=[...speedFields][0];
   const helper=acorn.parse(adaptedAim,{ecmaVersion:'latest'}).body.find(n=>n.id?.name==='__jitterPatchNativeFire');
   const rule=generated.operations.find(op=>op.id==='jitter-native-fire-priority');
   adaptedAim=adaptedAim.slice(0,helper.start)+`function __jitterPatchNativeFire(source){const before=${JSON.stringify(rule.before)};if(source.split(before).length!==2)throw Error('Unsupported native fire handler');return source.replace(before,${JSON.stringify(rule.after)});}`+adaptedAim.slice(helper.end);

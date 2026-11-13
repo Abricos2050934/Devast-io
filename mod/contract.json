@@ -5,7 +5,8 @@
     "mod/responsive.js",
     "mod/bootstrap.js",
     "vendor/dat.gui.recovered.js",
-    "mod/ilm-aim.js"
+    "mod/ilm-aim.js",
+    "mod/ballistic-model.js"
   ],
   "features": [
     "prediction-and-auto-fire",
@@ -48,7 +49,8 @@
     "versioned-aim-settings-preserved",
     "jitter-shot-priority",
     "restored-original-jitter",
-    "safe-shot-direction-ownership"
+    "safe-shot-direction-ownership",
+    "native-weapon-ballistic-interception"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -71,7 +73,8 @@
     "tests/aim-line-projection.test.cjs",
     "tests/aim-settings-persistence.test.cjs",
     "tests/aim-settings-effects.test.cjs",
-    "tests/jitter-arbitration.test.cjs"
+    "tests/jitter-arbitration.test.cjs",
+    "tests/ballistics.test.cjs"
   ],
   "required_browsers": [
     "chromium",
