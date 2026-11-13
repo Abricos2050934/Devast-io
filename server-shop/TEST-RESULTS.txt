@@ -1,0 +1,40 @@
+test_bad_json_and_routes (test_shop.HTTPTest.test_bad_json_and_routes) ... ok
+test_forwarded_header_cannot_bypass_source_allowlist (test_shop.HTTPTest.test_forwarded_header_cannot_bypass_source_allowlist) ... ok
+test_full_http_game_simulation_sell_earn_buy_and_inventory (test_shop.HTTPTest.test_full_http_game_simulation_sell_earn_buy_and_inventory) ... ok
+test_http_protocol_and_health (test_shop.HTTPTest.test_http_protocol_and_health) ... ok
+test_account_creation_password_hash_and_native_login_guard (test_shop.ShopTest.test_account_creation_password_hash_and_native_login_guard) ... ok
+test_ambiguous_cable_names_use_inventory_item_ids (test_shop.ShopTest.test_ambiguous_cable_names_use_inventory_item_ids) ... ok
+test_buy_reserves_then_charges_only_confirmed_delivery (test_shop.ShopTest.test_buy_reserves_then_charges_only_confirmed_delivery) ... ok
+test_changed_account_on_same_gid_cannot_confirm_old_order (test_shop.ShopTest.test_changed_account_on_same_gid_cannot_confirm_old_order) ... ok
+test_chat_is_not_lost_behind_many_non_chat_events (test_shop.ShopTest.test_chat_is_not_lost_behind_many_non_chat_events) ... ok
+test_command_injection_and_invalid_quantities (test_shop.ShopTest.test_command_injection_and_invalid_quantities) ... ok
+test_different_password_creates_empty_account_and_cannot_take_money (test_shop.ShopTest.test_different_password_creates_empty_account_and_cannot_take_money) ... ok
+test_display_aliases_for_resources_ammunition_medkit (test_shop.ShopTest.test_display_aliases_for_resources_ammunition_medkit) ... ok
+test_duplicate_events_and_parallel_retries_never_double_sell (test_shop.ShopTest.test_duplicate_events_and_parallel_retries_never_double_sell) ... ok
+test_every_catalog_item_can_be_bought_and_acknowledged (test_shop.ShopTest.test_every_catalog_item_can_be_bought_and_acknowledged) ... ok
+test_forged_item_name_amount_and_wrong_recipient_do_not_credit (test_shop.ShopTest.test_forged_item_name_amount_and_wrong_recipient_do_not_credit) ... ok
+test_help_catalog_and_russian_command_aliases (test_shop.ShopTest.test_help_catalog_and_russian_command_aliases) ... ok
+test_insufficient_money_resource_and_unknown_item (test_shop.ShopTest.test_insufficient_money_resource_and_unknown_item) ... ok
+test_login_switch_does_not_replay_previous_accounts_chat (test_shop.ShopTest.test_login_switch_does_not_replay_previous_accounts_chat) ... ok
+test_malformed_payload_has_no_side_effects (test_shop.ShopTest.test_malformed_payload_has_no_side_effects) ... ok
+test_old_or_same_snapshot_grant_does_not_confirm_new_buy (test_shop.ShopTest.test_old_or_same_snapshot_grant_does_not_confirm_new_buy) ... ok
+test_one_open_order_prevents_overspend_and_double_sale (test_shop.ShopTest.test_one_open_order_prevents_overspend_and_double_sale) ... ok
+test_online_reward_and_no_reward_for_offline_gap (test_shop.ShopTest.test_online_reward_and_no_reward_for_offline_gap) ... ok
+test_partial_buy_cancellation_releases_only_unconfirmed_hold (test_shop.ShopTest.test_partial_buy_cancellation_releases_only_unconfirmed_hold) ... ok
+test_pending_buy_ack_survives_process_restart (test_shop.ShopTest.test_pending_buy_ack_survives_process_restart) ... ok
+test_prices_cover_every_unique_official_item (test_shop.ShopTest.test_prices_cover_every_unique_official_item) ... ok
+test_repeated_buy_chat_returns_item_command_once (test_shop.ShopTest.test_repeated_buy_chat_returns_item_command_once) ... ok
+test_sale_requires_inventory_and_removal_confirmation (test_shop.ShopTest.test_sale_requires_inventory_and_removal_confirmation) ... ok
+test_same_password_returns_account_after_restart (test_shop.ShopTest.test_same_password_returns_account_after_restart) ... ok
+test_same_pid_cannot_confirm_other_gid_order (test_shop.ShopTest.test_same_pid_cannot_confirm_other_gid_order) ... ok
+test_split_removals_credit_only_actual_quantity (test_shop.ShopTest.test_split_removals_credit_only_actual_quantity) ... ok
+test_split_stack_events_accumulate_without_free_items (test_shop.ShopTest.test_split_stack_events_accumulate_without_free_items) ... ok
+test_transaction_rollback_restores_sessions_and_money (test_shop.ShopTest.test_transaction_rollback_restores_sessions_and_money) ... ok
+test_two_characters_on_one_account_do_not_earn_twice (test_shop.ShopTest.test_two_characters_on_one_account_do_not_earn_twice) ... ok
+test_uncertain_delivery_is_not_retried_or_auto_refunded (test_shop.ShopTest.test_uncertain_delivery_is_not_retried_or_auto_refunded) ... ok
+test_unrelated_late_grant_cannot_settle_expired_order (test_shop.ShopTest.test_unrelated_late_grant_cannot_settle_expired_order) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 3.826s
+
+OK
