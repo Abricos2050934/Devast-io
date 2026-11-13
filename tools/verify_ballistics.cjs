@@ -4,7 +4,8 @@ function verifyBallistics(m,n,s){
  const old={id:self.id,state:n.network.state,ended:m.reconnect.sessionEnded,now:Date.now,performance:performance.now,meta:meta[2],input:n.input?.angle};
  let clock=30000;const capture=n.capturePackets(),set=(key,value)=>m.setSetting(key,value),playerType=n.playerType??0;
  const fields=n.types[playerType][s.curveWeapons||'curveWeapons'];
- const weapon=Object.entries(fields).find(([,v])=>v?.[s.curveBulletSpeed||'curveBulletSpeed']===1.4&&v.path===900);
+ const hasSound=(v,sound)=>Object.values(v||{}).some(x=>Array.isArray(x)&&x.includes(sound));
+ const weapon=Object.entries(fields).find(([,v])=>hasSound(v,'audio/ak47-shot.mp3'))||(!n.packet&&Object.entries(fields).find(([,v])=>v?.[s.curveBulletSpeed||'curveBulletSpeed']===1.4&&v.path===900));
  check(weapon,'Native weapon speed/range metadata unavailable');const weaponId=Number(weapon[0]);
  function packet(type,id,generation,x,y,extra=0,state=1,entityId=0){
   if(!n.packet){m.trackPacket(type,id,generation,x,y,true,0,extra,{x,y,state,entityId});return;}
@@ -20,6 +21,13 @@ function verifyBallistics(m,n,s){
   check(prediction.valid&&prediction.source==='native-weapon'&&prediction.speed===1400,'Native weapon model is disconnected');
   check(Math.abs(prediction.selfVelocity.x-100)<1e-6&&Math.abs(prediction.targetVelocity.y-200)<1e-6,'Time-based self/target velocity is incorrect');
   check(prediction.ox===1035,'Interpolation destination was used instead of server position');
+  if(n.packet){
+   const laser=Object.entries(fields).find(([,v])=>hasSound(v,'audio/laser-submachine-shot.mp3'));
+   check(laser&&laser[1][s.curveBulletSpeed]===1.45&&laser[1].path===900,'Native laser profile changed');
+   packet(playerType,1,1,1035,1000,Number(laser[0])<<8);m.aim.refresh();
+   check(m.aim.prediction.valid&&m.aim.prediction.speed===1450&&m.aim.prediction.source==='native-weapon','Laser profile is disconnected from the predictor');
+   packet(playerType,1,1,1035,1000,weaponId<<8);
+  }
   packet(n.projectileType??2,1,1,1085,1000,4,(150<<8)|1,37);m.aim.refresh();prediction=m.aim.prediction;
   check(prediction.source==='server-projectiles'&&prediction.speed===1500,'Native projectile speed did not calibrate the equipped weapon');
   if(n.packet&&n.projectileSpeedKey){const bullet=n.entities.get(1,37,1,2);check(bullet[n.projectileSpeedKey]*1000===prediction.speed,'Predictor speed differs from the actual native projectile speed');}
@@ -30,9 +38,18 @@ function verifyBallistics(m,n,s){
    const line=m.targets.lines[0],angle=((Math.atan2(line.y2-line.y1,line.x2-line.x1)*180/Math.PI)%360+360)%360;check(Math.abs(angle-m.aim.lastAngle)<1e-7,'Prediction line differs from the shot');
    if(n.release)n.release();else m.afterRelease();
   }
-  set('JitterEnabled',false);clock+=500;n.setClock?.(clock);capture.packets.length=0;m.aim.refresh();check(!m.aim.targetPlayer&&!m.controlsAimDirection,'Stale physical target kept angle ownership');
+  set('JitterEnabled',false);
+  for(const shape of ['circle','straight']){
+   m.onSessionStart();m.onHandshake();
+   for(let i=0;i<12;i++){
+    clock+=100;n.setClock?.(clock);packet(playerType,1,1,1000,1000,weaponId<<8);
+    packet(playerType,2,1,shape==='circle'?Math.round(1500+90*Math.cos(i*.22)):1400+i*9,shape==='circle'?Math.round(1000+90*Math.sin(i*.22)):1050+i*8);
+   }
+   m.aim.refresh();check(m.aim.prediction.valid&&m.aim.prediction.motionModel===(shape==='circle'?'circle':'linear'),'Native slow-cadence '+shape+' prediction failed');
+  }
+  clock+=500;n.setClock?.(clock);capture.packets.length=0;m.aim.refresh();check(!m.aim.targetPlayer&&!m.controlsAimDirection,'Stale physical target kept angle ownership');
   check(!capture.packets.some(p=>p[0]===4),'Stale target emitted an automatic attack');
-  return {status:'passed',native_weapon_speed_and_range:true,native_projectile_speed:true,native_speed_equality:!!n.projectileSpeedKey,packet_server_positions:true,shooter_and_target_velocity:true,fresh_angle_before_native_attack:true,jitter_priority:true,line_matches_shot:true,stale_target_releases_input:true};
+  return {status:'passed',native_weapon_speed_and_range:true,native_projectile_speed:true,native_speed_equality:!!n.projectileSpeedKey,packet_server_positions:true,shooter_and_target_velocity:true,fresh_angle_before_native_attack:true,jitter_priority:true,line_matches_shot:true,stale_target_releases_input:true,cadence_aware_curved_prediction:true,straight_quantization_rejected:true,ak_and_laser_native_profiles:!!n.packet};
  }finally{capture.restore();Date.now=old.now;performance.now=old.performance;m.settings.AimBotEnabled=false;m.settings.autoFire=false;m.onSessionStart();m.onHandshake();self.id=old.id;n.network.state=old.state;m.reconnect.sessionEnded=old.ended;meta[2]=old.meta;if(n.input)n.input.angle=old.input;Object.assign(m.settings,saved);}
 }
 module.exports={verifyBallistics};

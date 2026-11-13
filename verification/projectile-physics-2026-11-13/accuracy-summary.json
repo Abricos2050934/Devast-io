@@ -1,0 +1,411 @@
+{
+  "scope": "Fixed seeded closest-approach simulation; all opportunities counted",
+  "requested_percent": 80,
+  "full_suite_met_requested_percent": false,
+  "live_hit_percentage_verified": false,
+  "tolerance_world_units": 20,
+  "specified_rtt_ms": [
+    0,
+    60,
+    120
+  ],
+  "packet_intervals_ms": [
+    40,
+    50,
+    80,
+    100
+  ],
+  "suite_code_sha256": "03707201126dbb8f2bf073b11e1eb1987df6e6c5282c738d979255002034ab7c",
+  "suites": [
+    {
+      "name": "development",
+      "seed": 334462,
+      "before": {
+        "opportunities": 800,
+        "solutions": 800,
+        "within20": 543,
+        "percent": 67.875,
+        "meanMissWithNoSolutionPenalty": 27.37390910621538
+      },
+      "after": {
+        "opportunities": 800,
+        "solutions": 800,
+        "within20": 620,
+        "percent": 77.5,
+        "meanMissWithNoSolutionPenalty": 22.227702583270062
+      },
+      "byTrajectory": {
+        "crossing": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 3.8218890141955084
+        },
+        "diagonal": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 4.697030014597769
+        },
+        "tight-circle": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 4.090151176640152
+        },
+        "wide-circle": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 97,
+          "percent": 97,
+          "meanMissWithNoSolutionPenalty": 5.073694051858006
+        },
+        "orbit": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 98,
+          "percent": 98,
+          "meanMissWithNoSolutionPenalty": 5.123404304399884
+        },
+        "observed-turn": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 5.104034996925907
+        },
+        "weave": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 23,
+          "percent": 23,
+          "meanMissWithNoSolutionPenalty": 42.0942692332423
+        },
+        "surprise-reversal": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 2,
+          "percent": 2,
+          "meanMissWithNoSolutionPenalty": 107.81714787430091
+        }
+      }
+    },
+    {
+      "name": "separate-seed-1",
+      "seed": 2635252651,
+      "before": {
+        "opportunities": 800,
+        "solutions": 800,
+        "within20": 547,
+        "percent": 68.375,
+        "meanMissWithNoSolutionPenalty": 27.413002894392594
+      },
+      "after": {
+        "opportunities": 800,
+        "solutions": 800,
+        "within20": 621,
+        "percent": 77.625,
+        "meanMissWithNoSolutionPenalty": 22.3780317157977
+      },
+      "byTrajectory": {
+        "crossing": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 3.7859946092731236
+        },
+        "diagonal": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 3.943389846201046
+        },
+        "tight-circle": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 4.247405299047978
+        },
+        "wide-circle": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 99,
+          "percent": 99,
+          "meanMissWithNoSolutionPenalty": 4.8648873165284385
+        },
+        "orbit": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 98,
+          "percent": 98,
+          "meanMissWithNoSolutionPenalty": 4.869280246494691
+        },
+        "observed-turn": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 5.198557345977417
+        },
+        "weave": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 23,
+          "percent": 23,
+          "meanMissWithNoSolutionPenalty": 43.43203973016162
+        },
+        "surprise-reversal": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 1,
+          "percent": 1,
+          "meanMissWithNoSolutionPenalty": 108.6826993326969
+        }
+      }
+    },
+    {
+      "name": "separate-seed-2",
+      "seed": 1803564311,
+      "before": {
+        "opportunities": 800,
+        "solutions": 800,
+        "within20": 540,
+        "percent": 67.5,
+        "meanMissWithNoSolutionPenalty": 25.97096875872863
+      },
+      "after": {
+        "opportunities": 800,
+        "solutions": 800,
+        "within20": 623,
+        "percent": 77.875,
+        "meanMissWithNoSolutionPenalty": 21.715977600296302
+      },
+      "byTrajectory": {
+        "crossing": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 4.390802024430427
+        },
+        "diagonal": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 4.83346849442978
+        },
+        "tight-circle": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 4.168594550983309
+        },
+        "wide-circle": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 97,
+          "percent": 97,
+          "meanMissWithNoSolutionPenalty": 5.013236551853529
+        },
+        "orbit": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 98,
+          "percent": 98,
+          "meanMissWithNoSolutionPenalty": 3.7810838458098472
+        },
+        "observed-turn": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 5.541266451509116
+        },
+        "weave": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 23,
+          "percent": 23,
+          "meanMissWithNoSolutionPenalty": 44.65214976213682
+        },
+        "surprise-reversal": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 5,
+          "percent": 5,
+          "meanMissWithNoSolutionPenalty": 101.34721912121775
+        }
+      }
+    },
+    {
+      "name": "fresh-validation-1",
+      "seed": 398731887,
+      "before": {
+        "opportunities": 800,
+        "solutions": 800,
+        "within20": 554,
+        "percent": 69.25,
+        "meanMissWithNoSolutionPenalty": 26.42880141485906
+      },
+      "after": {
+        "opportunities": 800,
+        "solutions": 800,
+        "within20": 620,
+        "percent": 77.5,
+        "meanMissWithNoSolutionPenalty": 22.281713549228048
+      },
+      "byTrajectory": {
+        "crossing": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 4.035711866474971
+        },
+        "diagonal": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 3.949024681788884
+        },
+        "tight-circle": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 3.9566001922217384
+        },
+        "wide-circle": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 97,
+          "percent": 97,
+          "meanMissWithNoSolutionPenalty": 5.353112839025267
+        },
+        "orbit": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 98,
+          "percent": 98,
+          "meanMissWithNoSolutionPenalty": 4.827274610366105
+        },
+        "observed-turn": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 5.3727510754372245
+        },
+        "weave": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 24,
+          "percent": 24,
+          "meanMissWithNoSolutionPenalty": 44.97961559990328
+        },
+        "surprise-reversal": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 1,
+          "percent": 1,
+          "meanMissWithNoSolutionPenalty": 105.77961752860686
+        }
+      }
+    },
+    {
+      "name": "fresh-validation-2",
+      "seed": 2211504661,
+      "before": {
+        "opportunities": 800,
+        "solutions": 800,
+        "within20": 548,
+        "percent": 68.5,
+        "meanMissWithNoSolutionPenalty": 26.049600418114434
+      },
+      "after": {
+        "opportunities": 800,
+        "solutions": 800,
+        "within20": 625,
+        "percent": 78.125,
+        "meanMissWithNoSolutionPenalty": 21.441213268373055
+      },
+      "byTrajectory": {
+        "crossing": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 4.022166401887862
+        },
+        "diagonal": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 4.12722708063881
+        },
+        "tight-circle": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 99,
+          "percent": 99,
+          "meanMissWithNoSolutionPenalty": 4.189324876185125
+        },
+        "wide-circle": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 98,
+          "percent": 98,
+          "meanMissWithNoSolutionPenalty": 5.006295288671892
+        },
+        "orbit": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 98,
+          "percent": 98,
+          "meanMissWithNoSolutionPenalty": 4.594162316398909
+        },
+        "observed-turn": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 100,
+          "percent": 100,
+          "meanMissWithNoSolutionPenalty": 5.307236794065145
+        },
+        "weave": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 26,
+          "percent": 26,
+          "meanMissWithNoSolutionPenalty": 42.40148648920889
+        },
+        "surprise-reversal": {
+          "opportunities": 100,
+          "solutions": 100,
+          "within20": 4,
+          "percent": 4,
+          "meanMissWithNoSolutionPenalty": 101.88180689992792
+        }
+      }
+    }
+  ],
+  "before": {
+    "within20": 2732,
+    "opportunities": 4000,
+    "percent": 68.3
+  },
+  "after": {
+    "within20": 3109,
+    "opportunities": 4000,
+    "percent": 77.725
+  }
+}

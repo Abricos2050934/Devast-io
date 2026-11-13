@@ -776,24 +776,34 @@ function __createBallisticAim(settings, clock) {
   const tracks=new Map(), speeds=new Map(), projectiles=new Map();
   const maxAge=350, maxGap=500, maxSpeed=1800;
   function circle(samples){
-    if(samples.length<7||samples.at(-1).at-samples[0].at<250-1e-6)return null;
+    for(let count=samples.length;count>=5;count--){const fit=fitCircle(samples.slice(-count));if(fit)return fit;}
+    return null;
+  }
+  function fitCircle(samples){
+    if(samples.length<5||samples.at(-1).at-samples[0].at<250-1e-6)return null;
     const last=samples.at(-1),points=samples.map(p=>({x:p.x-last.x,y:p.y-last.y,t:(p.at-last.at)/1000})),n=points.length;
     let mx=0,my=0,mz=0;for(const p of points){mx+=p.x/n;my+=p.y/n;mz+=(p.x*p.x+p.y*p.y)/n;}
     let xx=0,xy=0,yy=0,xz=0,yz=0;
     for(const p of points){const x=p.x-mx,y=p.y-my,z=p.x*p.x+p.y*p.y-mz;xx+=x*x;xy+=x*y;yy+=y*y;xz+=x*z;yz+=y*z;}
-    const det=xx*yy-xy*xy;if(det<1e-7*(xx+yy)**2)return null;
+    const det=xx*yy-xy*xy,orthogonalRms=Math.sqrt(Math.max(0,(xx+yy-Math.hypot(xx-yy,2*xy))/(2*n)));
+    if(det<1e-7*(xx+yy)**2||orthogonalRms<.55)return null;
     const cx=(xz*yy-yz*xy)/(2*det),cy=(yz*xx-xz*xy)/(2*det),radius=Math.sqrt(cx*cx+cy*cy+mz-2*cx*mx-2*cy*my);
-    if(!Number.isFinite(radius)||radius<50||radius>5000)return null;
-    let previous=null,angle=0,first=0,st=0,sa=0,stt=0,sta=0;const rates=[];
+    const residualTolerance=Math.min(3,Math.max(1.5,radius*.01));
+    if(!Number.isFinite(radius)||radius+residualTolerance<50||radius>5000)return null;
+    let previous=null,angle=0,first=0,st=0,sa=0,stt=0,sta=0;const rates=[],angles=[];
     for(let i=0;i<n;i++){
-      const p=points[i];if(Math.abs(Math.hypot(p.x-cx,p.y-cy)-radius)>Math.min(3,Math.max(1.5,radius*.01)))return null;
+      const p=points[i];if(Math.abs(Math.hypot(p.x-cx,p.y-cy)-radius)>residualTolerance)return null;
       const a=Math.atan2(p.y-cy,p.x-cx);
       if(previous===null)first=angle=a;
       else {const delta=Math.atan2(Math.sin(a-previous),Math.cos(a-previous)),dt=p.t-points[i-1].t;if(dt<=0)return null;angle+=delta;rates.push(delta/dt);}
-      previous=a;st+=p.t;sa+=angle;stt+=p.t*p.t;sta+=p.t*angle;
+      previous=a;angles.push(angle);st+=p.t;sa+=angle;stt+=p.t*p.t;sta+=p.t*angle;
     }
     const omega=(n*sta-st*sa)/(n*stt-st*st),speed=Math.abs(omega)*radius,sweep=Math.abs(angle-first);
-    if(speed<30||speed>1200||sweep<.08||sweep>1.2||rates.some(r=>r*omega<=0||Math.abs(r-omega)>.35*Math.abs(omega)))return null;
+    // Curvature must be larger than quantization noise. Nearly straight noisy
+    // samples otherwise fit a large circle and produce false curved leads.
+    const sagitta=radius*(1-Math.cos(sweep/2)),intercept=(sa-omega*st)/n;
+    const timingError=Math.sqrt(points.reduce((sum,p,i)=>sum+(radius*(angles[i]-intercept-omega*p.t))**2,0)/n);
+    if(speed<30||speed>1200||sweep<.08||sweep>Math.PI||sagitta<1.5||timingError>2.5||rates.some(r=>r*omega<=0))return null;
     return {cx:last.x+cx,cy:last.y+cy,radius,omega,angle,at:last.at};
   }
   function track(key,x,y,active,meta={}) {
@@ -806,11 +816,12 @@ function __createBallisticAim(settings, clock) {
     if(last && (Math.hypot(x-last.x,y-last.y)>200 || at-last.at>=8&&Math.hypot(x-last.x,y-last.y)/(at-last.at)*1000>maxSpeed)){t.samples=[];last=null;t.curve=null;}
     if(meta.weapon!==undefined)t.weapon=meta.weapon;
     if(meta.generation!==undefined)t.generation=meta.generation;
-    if(last&&at-last.at<8)t.samples[t.samples.length-1]={x,y,at};
+    const independent=!(last&&at-last.at<8);
+    if(!independent)t.samples[t.samples.length-1]={x,y,at};
     else t.samples.push({x,y,at});
-    while(t.samples.length>8||t.samples.length>2&&at-t.samples[0].at>400+1e-6)t.samples.shift();
+    while(t.samples.length>8||t.samples.length>2&&at-t.samples[0].at>600+1e-6)t.samples.shift();
     const curve=circle(t.samples),before=t.curve;
-    if(curve){curve.streak=before&&before.omega*curve.omega>0&&Math.abs(before.radius-curve.radius)<.15*curve.radius&&Math.hypot(before.cx-curve.cx,before.cy-curve.cy)<Math.max(8,.15*curve.radius)?before.streak+1:1;}
+    if(curve){curve.streak=before&&before.omega*curve.omega>0&&Math.abs(before.radius-curve.radius)<.15*curve.radius&&Math.hypot(before.cx-curve.cx,before.cy-curve.cy)<Math.max(8,.15*curve.radius)?before.streak+(independent?1:0):1;}
     t.curve=curve;
   }
   function motion(key,at=clock()) {

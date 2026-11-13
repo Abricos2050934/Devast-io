@@ -1,0 +1,6 @@
+{
+  "baseline": "8a11864",
+  "model_sha256": "99e6751949b18abacf438bfed5696bdf24c409afbe76aa052bec67608d7c5e5e",
+  "benchmark_sha256": "03707201126dbb8f2bf073b11e1eb1987df6e6c5282c738d979255002034ab7c",
+  "scope": "Frozen pre-audit physical model; pure functions, no game startup code. Seeded synthetic closest-approach comparison with all opportunities counted."
+}

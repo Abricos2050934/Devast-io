@@ -1,0 +1,286 @@
+{
+  "scope": "Isolated native browser fixtures; no live server hit validation",
+  "native_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362",
+  "catalog": [
+    {
+      "id": 5,
+      "sound": "audio/spear-shot.mp3",
+      "speed": 500,
+      "range": 600,
+      "reload": null
+    },
+    {
+      "id": 6,
+      "sound": "audio/bow-shot.mp3",
+      "speed": 750,
+      "range": 800,
+      "reload": null
+    },
+    {
+      "id": 7,
+      "sound": "audio/shotgun-shot.mp3",
+      "speed": 1100,
+      "range": 600,
+      "reload": 10
+    },
+    {
+      "id": 8,
+      "sound": "audio/9mm-shot.mp3",
+      "speed": 1200,
+      "range": 800,
+      "reload": 22
+    },
+    {
+      "id": 9,
+      "sound": "audio/desert-eagle-shot.mp3",
+      "speed": 1400,
+      "range": 900,
+      "reload": 22
+    },
+    {
+      "id": 10,
+      "sound": "audio/ak47-shot.mp3",
+      "speed": 1400,
+      "range": 900,
+      "reload": 25
+    },
+    {
+      "id": 11,
+      "sound": "audio/sniper-shot.mp3",
+      "speed": 1500,
+      "range": 1100,
+      "reload": 20
+    },
+    {
+      "id": 20,
+      "sound": "audio/mp5-shot.mp3",
+      "speed": 1200,
+      "range": 900,
+      "reload": 26
+    },
+    {
+      "id": 29,
+      "sound": "audio/crossbow-shot.mp3",
+      "speed": 950,
+      "range": 800,
+      "reload": 8
+    },
+    {
+      "id": 30,
+      "sound": "audio/nail-gun-shot.mp3",
+      "speed": 1000,
+      "range": 500,
+      "reload": 30
+    },
+    {
+      "id": 31,
+      "sound": "audio/shotgun-shot.mp3",
+      "speed": 1110,
+      "range": 400,
+      "reload": 10
+    },
+    {
+      "id": 34,
+      "sound": "audio/laser-pistol-shot.mp3",
+      "speed": 1450,
+      "range": 900,
+      "reload": 22
+    },
+    {
+      "id": 37,
+      "sound": "audio/laser-submachine-shot.mp3",
+      "speed": 1450,
+      "range": 900,
+      "reload": 25
+    },
+    {
+      "id": 38,
+      "sound": null,
+      "speed": 400,
+      "range": 380,
+      "reload": null
+    },
+    {
+      "id": 53,
+      "sound": "audio/laser-sniper-shot.mp3",
+      "speed": 1500,
+      "range": 1100,
+      "reload": 20
+    }
+  ],
+  "motion": [
+    {
+      "packedSpeed": 140,
+      "angle": 0,
+      "start": {
+        "x": 1000,
+        "y": 1000
+      },
+      "after": {
+        "x": 1140,
+        "y": 1000
+      },
+      "display": {
+        "x": 1103.29984,
+        "y": 1000
+      },
+      "distance": 140,
+      "runtimeSpeed": 1.4
+    },
+    {
+      "packedSpeed": 140,
+      "angle": 0.7853981633974483,
+      "start": {
+        "x": 1000,
+        "y": 1000
+      },
+      "after": {
+        "x": 1098.9949493661165,
+        "y": 1098.9949493661165
+      },
+      "display": {
+        "x": 1073.0440173594852,
+        "y": 1073.0440173594852
+      },
+      "distance": 139.99999999999986,
+      "runtimeSpeed": 1.4
+    },
+    {
+      "packedSpeed": 140,
+      "angle": 3.141592653589793,
+      "start": {
+        "x": 1000,
+        "y": 1000
+      },
+      "after": {
+        "x": 860,
+        "y": 1000
+      },
+      "display": {
+        "x": 896.7001600000001,
+        "y": 1000
+      },
+      "distance": 140,
+      "runtimeSpeed": 1.4
+    },
+    {
+      "packedSpeed": 145,
+      "angle": 0,
+      "start": {
+        "x": 1000,
+        "y": 1000
+      },
+      "after": {
+        "x": 1145,
+        "y": 1000
+      },
+      "display": {
+        "x": 1106.98912,
+        "y": 1000
+      },
+      "distance": 145,
+      "runtimeSpeed": 1.45
+    },
+    {
+      "packedSpeed": 145,
+      "angle": 0.7853981633974483,
+      "start": {
+        "x": 1000,
+        "y": 1000
+      },
+      "after": {
+        "x": 1102.5304832720494,
+        "y": 1102.5304832720494
+      },
+      "display": {
+        "x": 1075.6527322651814,
+        "y": 1075.6527322651814
+      },
+      "distance": 145.00000000000006,
+      "runtimeSpeed": 1.45
+    },
+    {
+      "packedSpeed": 145,
+      "angle": 3.141592653589793,
+      "start": {
+        "x": 1000,
+        "y": 1000
+      },
+      "after": {
+        "x": 855,
+        "y": 1000
+      },
+      "display": {
+        "x": 893.01088,
+        "y": 1000
+      },
+      "distance": 145,
+      "runtimeSpeed": 1.45
+    },
+    {
+      "packedSpeed": 180,
+      "angle": 0,
+      "start": {
+        "x": 1000,
+        "y": 1000
+      },
+      "after": {
+        "x": 1180,
+        "y": 1000
+      },
+      "display": {
+        "x": 1132.81408,
+        "y": 1000
+      },
+      "distance": 180,
+      "runtimeSpeed": 1.8
+    },
+    {
+      "packedSpeed": 180,
+      "angle": 0.7853981633974483,
+      "start": {
+        "x": 1000,
+        "y": 1000
+      },
+      "after": {
+        "x": 1127.2792206135787,
+        "y": 1127.2792206135784
+      },
+      "display": {
+        "x": 1093.9137366050527,
+        "y": 1093.9137366050525
+      },
+      "distance": 180,
+      "runtimeSpeed": 1.8
+    },
+    {
+      "packedSpeed": 180,
+      "angle": 3.141592653589793,
+      "start": {
+        "x": 1000,
+        "y": 1000
+      },
+      "after": {
+        "x": 820,
+        "y": 1000
+      },
+      "display": {
+        "x": 867.1859200000001,
+        "y": 1000
+      },
+      "distance": 180,
+      "runtimeSpeed": 1.8
+    }
+  ],
+  "fractional_angles": "The native client codec accepts fractional angle values. Server precision was not established; the simulation conservatively floors to whole degrees.",
+  "not_established": [
+    "Authoritative hit radius, collision, spread and muzzle offsets",
+    "Automatic RTT estimation and user live hit percentage"
+  ],
+  "checked_output_sha256": "2785a5bb656f502b1a2d7d240504040ba86aea783068cc482a37958119a2dee7",
+  "native_motion_assertions": {
+    "status": "passed",
+    "cases": 9,
+    "tolerance_world_units": 1e-06
+  }
+}

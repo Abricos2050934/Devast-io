@@ -7,6 +7,17 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_cadence_prediction_requires_both_native_browsers(self):
+  self.contract['features']=['packet-rate-aware-curved-prediction']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  keys=['cadence_aware_curved_prediction','straight_quantization_rejected','ak_and_laser_native_profiles']
+  for report in self.validation['browsers'].values():report['native']={'adaptive_aim':dict.fromkeys(keys,True)}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for key in keys:
+   self.validation['browsers']['firefox']['native']['adaptive_aim'][key]=False;self.save()
+   with self.assertRaisesRegex(ValueError,'Cadence-aware.*firefox'):p.artifacts(self.root,self.out)
+   self.validation['browsers']['firefox']['native']['adaptive_aim'][key]=True
+
  def test_adaptive_aim_requires_native_packet_speed_and_shot_evidence_in_both_browsers(self):
   self.contract['features']=['native-weapon-ballistic-interception']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

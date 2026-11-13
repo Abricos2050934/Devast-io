@@ -1,0 +1,79 @@
+{
+  "release": "8bbfd5962e75782a03b909616658078dce2b83f3946c9cf795d4228725605c3f",
+  "output_sha256": "2785a5bb656f502b1a2d7d240504040ba86aea783068cc482a37958119a2dee7",
+  "raw_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 243,
+    "python_tests": 70
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/native-aim-transport.test.cjs",
+      "tests/ilm-current.test.cjs",
+      "tests/mod-traffic.test.cjs",
+      "tests/aim-validity.test.cjs",
+      "tests/ilm-native-pipeline.test.cjs",
+      "tests/aim-line-projection.test.cjs",
+      "tests/aim-settings-persistence.test.cjs",
+      "tests/aim-settings-effects.test.cjs",
+      "tests/jitter-arbitration.test.cjs",
+      "tests/ballistics.test.cjs",
+      "tests/aim-preserved-before-disconnect.test.cjs",
+      "tests/connection-recovery-only.test.cjs",
+      "tests/aim-motion-continuity.test.cjs",
+      "tests/projectile-accuracy.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "154.0.8037.57",
+      "adaptive_aim": {
+        "status": "passed",
+        "native_weapon_speed_and_range": true,
+        "native_projectile_speed": true,
+        "native_speed_equality": true,
+        "packet_server_positions": true,
+        "shooter_and_target_velocity": true,
+        "fresh_angle_before_native_attack": true,
+        "jitter_priority": true,
+        "line_matches_shot": true,
+        "stale_target_releases_input": true,
+        "cadence_aware_curved_prediction": true,
+        "straight_quantization_rejected": true,
+        "ak_and_laser_native_profiles": true
+      }
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "adaptive_aim": {
+        "status": "passed",
+        "native_weapon_speed_and_range": true,
+        "native_projectile_speed": true,
+        "native_speed_equality": true,
+        "packet_server_positions": true,
+        "shooter_and_target_velocity": true,
+        "fresh_angle_before_native_attack": true,
+        "jitter_priority": true,
+        "line_matches_shot": true,
+        "stale_target_releases_input": true,
+        "cadence_aware_curved_prediction": true,
+        "straight_quantization_rejected": true,
+        "ak_and_laser_native_profiles": true
+      }
+    }
+  },
+  "native_physics_reproduction": "passed; nine integration distances independently checked"
+}

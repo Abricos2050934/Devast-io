@@ -62,6 +62,10 @@ def artifacts(root, output):
                     'jitter_priority', 'line_matches_shot', 'stale_target_releases_input')
             if adaptive.get('status') != 'passed' or not all(adaptive.get(key) is True for key in keys):
                 raise ValueError('Adaptive ballistic aim was not verified in browser: ' + browser)
+        if 'packet-rate-aware-curved-prediction' in contract.get('features', []):
+            adaptive = report.get('native', {}).get('adaptive_aim', {})
+            if not all(adaptive.get(key) is True for key in ('cadence_aware_curved_prediction', 'straight_quantization_rejected', 'ak_and_laser_native_profiles')):
+                raise ValueError('Cadence-aware projectile prediction was not verified in browser: ' + browser)
         if 'valid-live-aim-targets' in contract.get('features', []) and not all(report.get('native', {}).get(key) is True for key in ('valid_live_aim_targets', 'server_death_sends_no_commands')):
             raise ValueError('Live aim targets and server death send behavior were not verified in browser: ' + browser)
         if 'connection-close-origin-diagnostics' in contract.get('features', []) and report.get('native', {}).get('connection_close_origin_diagnostics') is not True:

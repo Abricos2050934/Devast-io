@@ -53,7 +53,8 @@
     "native-weapon-ballistic-interception",
     "aim-preserved-before-disconnect",
     "bounded-connection-recovery",
-    "continuous-post-turn-motion"
+    "continuous-post-turn-motion",
+    "packet-rate-aware-curved-prediction"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -80,7 +81,8 @@
     "tests/ballistics.test.cjs",
     "tests/aim-preserved-before-disconnect.test.cjs",
     "tests/connection-recovery-only.test.cjs",
-    "tests/aim-motion-continuity.test.cjs"
+    "tests/aim-motion-continuity.test.cjs",
+    "tests/projectile-accuracy.test.cjs"
   ],
   "required_browsers": [
     "chromium",
