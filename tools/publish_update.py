@@ -72,6 +72,12 @@ def artifacts(root, output):
             raise ValueError('Live aim targets and server death send behavior were not verified in browser: ' + browser)
         if 'connection-close-origin-diagnostics' in contract.get('features', []) and report.get('native', {}).get('connection_close_origin_diagnostics') is not True:
             raise ValueError('Connection close origin diagnostics not verified in browser: ' + browser)
+        if 'native-rejection-stops-auto-reconnect' in contract.get('features', []):
+            recovery = report.get('native', {}).get('rejection_recovery', {})
+            if (recovery.get('status') != 'passed' or type(recovery.get('automatic_retries')) is not int
+                    or recovery.get('automatic_retries') != 0 or recovery.get('manual_play_available') is not True
+                    or recovery.get('saved_identity_unchanged') is not True or recovery.get('native_close_restore_bit') is not True):
+                raise ValueError('Native rejection recovery was not verified in browser: ' + browser)
         if 'native-death-opcode-diagnostics' in contract.get('features', []):
             opcode = report.get('native', {}).get('native_death_opcode')
             if type(opcode) is not int or not 0 <= opcode <= 255:

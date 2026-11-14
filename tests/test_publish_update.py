@@ -7,6 +7,16 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_native_rejection_recovery_requires_no_retries_and_manual_play_in_both_browsers(self):
+  self.contract['features']=['native-rejection-stops-auto-reconnect']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  good={'status':'passed','automatic_retries':0,'manual_play_available':True,'saved_identity_unchanged':True,'native_close_restore_bit':True}
+  for report in self.validation['browsers'].values():report['native']={'rejection_recovery':dict(good)}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for field,value in [('automatic_retries',1),('automatic_retries',False),('manual_play_available',False),('saved_identity_unchanged',False),('native_close_restore_bit',False)]:
+   self.validation['browsers']['firefox']['native']['rejection_recovery']={**good,field:value};self.save()
+   with self.assertRaisesRegex(ValueError,'Native rejection recovery.*firefox'):p.artifacts(self.root,self.out)
+
  def test_fast_loot_mid_burst_backpressure_requires_both_browsers(self):
   self.contract['features']=['fast-loot-stops-on-new-backlog']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

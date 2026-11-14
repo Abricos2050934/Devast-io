@@ -1,0 +1,35 @@
+{
+  "release": "7d5efab2924666569c3acc1f91c606e398a407033d4b828a35def9bc28ae7be5",
+  "output_sha256": "78d6d449bb96a3211a9d2af2195feaf9b2c5a068f8a86d84a09c721589334da2",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 265,
+    "python_tests": 75
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "native_code": 1024,
+      "native_close_restore_bit": true,
+      "automatic_retries": 0,
+      "manual_play_available": true,
+      "saved_identity_unchanged": true
+    },
+    "firefox": {
+      "status": "passed",
+      "native_code": 1024,
+      "native_close_restore_bit": true,
+      "automatic_retries": 0,
+      "manual_play_available": true,
+      "saved_identity_unchanged": true
+    }
+  },
+  "before_fix_reproduction": {
+    "server_code": 1024,
+    "native_close_state": 64,
+    "automatic_refreshes": 1,
+    "automatic_joins": 1
+  },
+  "scope": "Stop automatic restoration after a native server rejection; user confirmed initial 1024 followed a new tab; later opcode-27 death cause remains unproven"
+}

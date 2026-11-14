@@ -20,7 +20,8 @@
       "12": 9
     },
     "client_health_snapshot": 154.55550000000008,
-    "integrity_flag": 0
+    "integrity_flag": 0,
+    "user_confirmation": "Opened a new tab; this event is excluded from unexplained-kick evidence"
   },
   "first_character_death": {
     "at": 1002593,
@@ -80,6 +81,7 @@
     "death_payload_statistic_is_not_an_identified_rule": true,
     "no_outbound_backlog_at_death": true,
     "spear_toggle_was_enabled_at_death": true,
-    "post_close_send_calls_are_not_proof_of_network_delivery": true
+    "post_close_send_calls_are_not_proof_of_network_delivery": true,
+    "first_network_end_user_explained": true
   }
 }

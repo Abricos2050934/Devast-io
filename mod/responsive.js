@@ -1666,7 +1666,7 @@ function __installDevastMod(B) {
     const build=typeof __devastClientBuild==='undefined'?null:{...__devastClientBuild};
     return {schema:3,recoveryVersion:5,auditBuild:'integrity-autoupdate-v1',build,integrityCompatibility:B.integrityPatched?.()===true,
       integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,state:B.network.state,phase:reconnect.phase,
-      sessionEnded:reconnect.sessionEnded,awaitingPlay:reconnect.awaitingPlay,normalJoinRequired:reconnect.freshRequired,
+      sessionEnded:reconnect.sessionEnded,awaitingPlay:reconnect.awaitingPlay,normalJoinRequired:reconnect.freshRequired,automaticRecoveryBlocked:reconnect.autoBlocked,
       nativeReady:typeof B.network[B.loginKey] === 'function',
       nativePending:B.pendingKey ? !!B.network[B.pendingKey] : false,
       adWaiting:!!B.adWaiting?.(),socketState:connectionSocket?.readyState ?? null,
@@ -1864,6 +1864,14 @@ function __installDevastMod(B) {
           reconnect.generation++;
           releaseNativePending();
           reconnect.status = reconnect.awaitingPlay?'Персонаж погиб; нажмите Play для нового входа с прежним токеном':'Игра не завершила вход; можно повторить без сброса cookies';
+          // The native close handler can replace this rejection with restore
+          // state 64. Keep the rejection latched until an explicit Play.
+          if((reconnect.lastFailureCode&(8|16|512|1024))!==0){
+            reconnect.armed=false;
+            reconnect.autoBlocked=true;
+            reconnect.next=0;
+            reconnect.status='Соединение завершено игрой; нажмите Play для входа';
+          }
         }
         return original.apply(this,args);
       } : kind === 'restoreFailure' ? function (...args) {

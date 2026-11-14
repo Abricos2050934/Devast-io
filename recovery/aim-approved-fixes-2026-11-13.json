@@ -4,6 +4,18 @@
   "changes": [
     {
       "file": "mod/responsive.js",
+      "reason": "respect-native-rejections-until-explicit-manual-play",
+      "before": "    return {schema:3,recoveryVersion:5,auditBuild:'integrity-autoupdate-v1',build,integrityCompatibility:B.integrityPatched?.()===true,\n      integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,state:B.network.state,phase:reconnect.phase,\n      sessionEnded:reconnect.sessionEnded,awaitingPlay:reconnect.awaitingPlay,normalJoinRequired:reconnect.freshRequired,\n      nativeReady:typeof B.network[B.loginKey] === 'function',\n      nativePending:B.pendingKey ? !!B.network[B.pendingKey] : false,\n",
+      "after": "    return {schema:3,recoveryVersion:5,auditBuild:'integrity-autoupdate-v1',build,integrityCompatibility:B.integrityPatched?.()===true,\n      integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,state:B.network.state,phase:reconnect.phase,\n      sessionEnded:reconnect.sessionEnded,awaitingPlay:reconnect.awaitingPlay,normalJoinRequired:reconnect.freshRequired,automaticRecoveryBlocked:reconnect.autoBlocked,\n      nativeReady:typeof B.network[B.loginKey] === 'function',\n      nativePending:B.pendingKey ? !!B.network[B.pendingKey] : false,\n"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "respect-native-rejections-until-explicit-manual-play",
+      "before": "          releaseNativePending();\n          reconnect.status = reconnect.awaitingPlay?'Персонаж погиб; нажмите Play для нового входа с прежним токеном':'Игра не завершила вход; можно повторить без сброса cookies';\n        }\n        return original.apply(this,args);\n",
+      "after": "          releaseNativePending();\n          reconnect.status = reconnect.awaitingPlay?'Персонаж погиб; нажмите Play для нового входа с прежним токеном':'Игра не завершила вход; можно повторить без сброса cookies';\n          // The native close handler can replace this rejection with restore\n          // state 64. Keep the rejection latched until an explicit Play.\n          if((reconnect.lastFailureCode&(8|16|512|1024))!==0){\n            reconnect.armed=false;\n            reconnect.autoBlocked=true;\n            reconnect.next=0;\n            reconnect.status='Соединение завершено игрой; нажмите Play для входа';\n          }\n        }\n        return original.apply(this,args);\n"
+    },
+    {
+      "file": "mod/responsive.js",
       "reason": "fast-loot-stops-on-new-backlog-and-earliest-connection-end-reporting",
       "before": "  const recentCombatCommands = [], connectionEvents = [];\n  const wireSeconds=[],wireTotals={packets:0,bytes:0};\n  let wirePeak=null,firstServerDeath=null;\n  function trimWire(now){while(wireSeconds.length&&(wireSeconds.length>240||now-wireSeconds[0].at>=120000))wireSeconds.shift();}\n  function observeWireSend(bytes){\n",
       "after": "  const recentCombatCommands = [], connectionEvents = [];\n  const wireSeconds=[],wireTotals={packets:0,bytes:0};\n  let wirePeak=null,firstServerDeath=null,firstConnectionEnd=null;\n  function trimWire(now){while(wireSeconds.length&&(wireSeconds.length>240||now-wireSeconds[0].at>=120000))wireSeconds.shift();}\n  function observeWireSend(bytes){\n"

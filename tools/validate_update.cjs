@@ -69,6 +69,21 @@ assert.equal(edits.length,Object.keys(functions).length,'Unique browser fixture 
 // obfuscated variable names. The probe exists only in this browser fixture.
 const networkDefinition=body.flatMap(n=>n.type==='VariableDeclaration'?n.declarations:[]).find(n=>n.id.name===symbols['о̃༩']);
 const networkBody=networkDefinition.init.callee.body.body,networkReturn=networkBody.find(n=>n.type==='ReturnStatement');
+// Exercise the real native state-1024 method, including its error callback.
+const keyOf=n=>n.computed?nativeAnalysis.constant(n.property??n.key):(n.property??n.key).name??(n.property??n.key).value;
+function enumCode(expr){
+ if(expr?.type!=='MemberExpression'||expr.object.type!=='Identifier')return;
+ const tables=nativeAnalysis.nodes.filter(n=>n.type==='AssignmentExpression'&&n.left.name===expr.object.name&&n.right.type==='ObjectExpression');
+ if(tables.length!==1)return;
+ const fields=tables[0].right.properties.filter(p=>keyOf(p)===keyOf(expr));
+ return fields.length===1?nativeAnalysis.constant(fields[0].value):undefined;
+}
+const rejections=networkBody.filter(fn=>{
+ const first=fn.body?.body?.[0]?.expression,last=fn.body?.body?.[1]?.expression;
+ return fn.type==='FunctionDeclaration'&&fn.params.length===0&&fn.body.body.length===2&&first?.type==='AssignmentExpression'&&first.left.type==='MemberExpression'&&first.left.object.name===symbols['о̃༩']&&keyOf(first.left)==='state'&&enumCode(first.right)===1024&&last?.type==='CallExpression';
+});
+assert.equal(rejections.length,1,'Unique native state-1024 rejection method required');
+edits.push({at:rejections[0].start,text:`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.serverRejected=${rejections[0].id.name};`});
 const senderEntry=networkReturn.argument.properties.find(p=>(p.key.name??p.key.value)===symbols['ᴎᚂρ']);
 const senderDefinition=networkBody.find(n=>n.type==='FunctionDeclaration'&&n.id.name===senderEntry.value.name);
 const assignment=senderDefinition.body.body[0].expression;
@@ -399,6 +414,27 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    return {adaptive_aim:m.ballisticVerification,jitter:m.jitterVerification,message27_menu:m.message27MenuVerification,message27_aim:m.message27AimVerification,message27_settings:m.message27SettingsVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,fast_loot_mid_burst_backpressure:m.lootMidBurstVerification===true,bounded_fast_loot:true,session_mod_traffic_history:true,native_autobuild_cursor_preview:true,bounded_auto_build:true,aim_session_history_reset:m.message27AimVerification.session_target_reset===true,valid_live_aim_targets:m.message27AimVerification.valid_target_admission===true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,native_death_opcode:r.nativeDeathOpcode,first_server_death_preserved:m.firstDeathVerification===true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:reference,originalHooks,originalAngles,originalMenu:JSON.parse(z.gunzipSync(fs.readFileSync(path.join(root,'recovery/ilm-aim-menu-reference.json.gz'))))});
   report.physical_numeric=await require('./verify_ilm_physical.cjs').verifyPhysical(page,symbols);
+  // A fresh fixture keeps the rejection test independent of previous death/UI
+  // scenes. All network refresh attempts are replaced by a local counter.
+  await page.reload({waitUntil:'domcontentloaded',timeout:45000});
+  await page.waitForFunction(()=>!!window.__updateProbe?.serverRejected&&!!window.__devastMod?.menu,{timeout:25000});
+  report.native.rejection_recovery=await page.evaluate(s=>{
+   const m=window.__devastMod,n=window.__updateProbe,check=(v,message)=>{if(!v)throw Error(message);};
+   const stored=['token','tokenId','userId','accountToken'].map(k=>localStorage.getItem(k));
+   for(const key of ['AimBotEnabled','AimbotSpearEnabled','JitterEnabled','AntiAimbot','autoFire','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','AntiKickEnabled','SpamChatEnabled'])m.setSetting(key,false);
+   n.world[s['ᅠᏧ‍']].id=1;n.network.state=1;m.reconnect.awaitingPlay=false;m.reconnect.sessionEnded=false;
+   n.network[s['ι︃２']]=()=>{};m.step(performance.now());
+   let refreshes=0;n.network[s['ⲅ︊ᄃ']]=()=>{refreshes++;};
+   n.serverRejected();const baseline=refreshes;
+   check(m.connectionInfo().lastFailureCode===1024,'Native rejection code was not observed');
+   check(m.reconnect.autoBlocked&&!m.reconnect.armed,'Native rejection still arms automatic recovery');
+   check(n.exerciseNativeClose(1)===1&&n.network.state===64,'Native close did not retain its restore-state behavior');
+   const now=performance.now();m.step(now);m.step(now+10000);m.step(now+30000);
+   check(refreshes===baseline&&m.reconnect.autoBlocked,'Old tab tried to reclaim the connection after native rejection');
+   check(m.beginPlay()&&!m.reconnect.autoBlocked,'Manual Play could not start a new login');
+   check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===stored[i]),'Rejection recovery changed saved identity');
+   return {status:'passed',native_code:1024,native_close_restore_bit:true,automatic_retries:refreshes-baseline,manual_play_available:true,saved_identity_unchanged:true};
+  },symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;report.startup=await page?.evaluate(()=>({mod:!!window.__devastMod,menu:!!window.__devastMod?.menu,probe:!!window.__updateProbe,loader:window.__devastRemoteLoader?.state,ready:document.readyState,modErrors:window.__devastMod?.diagnostics?.errors})).catch(()=>null);process.exitCode=1;}
  finally{report.finished_at=new Date().toISOString();fs.writeFileSync(path.join(dir,'validation.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));if(browser)await browser.close();}

@@ -58,7 +58,8 @@
     "native-death-opcode-diagnostics",
     "native-wire-traffic-diagnostics",
     "first-server-death-preserved",
-    "fast-loot-stops-on-new-backlog"
+    "fast-loot-stops-on-new-backlog",
+    "native-rejection-stops-auto-reconnect"
   ],
   "removed_overlays": [
     "bottom-gauge-text",

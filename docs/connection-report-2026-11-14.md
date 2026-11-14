@@ -13,8 +13,9 @@ entering the death observer. Static inspection of the matching decoded client
 binds this path to binary dispatch opcode 26: its handler calls a native
 method which sets state 1024 and invokes the error notification. The handler
 does not parse a reason field. The report does not retain that incoming
-packet's body, so no anti-cheat rule or reason is established. Whether this
-first termination was unsolicited is not established by client telemetry.
+packet's body, so no anti-cheat rule or reason is established. The user later
+confirmed that this event followed opening a new tab. It is excluded from
+the unexplained-kick evidence.
 
 This first socket recorded 261 native send calls and nine mod pickup commands.
 The later observed traffic peak cannot explain this earlier termination by
@@ -70,3 +71,38 @@ checks, Firefox and Chromium. Both browsers reproduced the mid-burst queue
 condition and verified that the unsent drop is retried after the queue drains.
 The release and check summary is retained in
 `verification/connection-report-2026-11-14/checks.json`.
+
+## Follow-up after the tab clarification
+
+The native state-1024 method invokes the native error notifier, which clears
+the rejection state to 0 before calling the application. The socket-close handler then
+sets state 64. The mod checked only the current state's rejection bits;
+after that native transition, it could automatically restore the old tab
+when its selected server was still available. A controlled reproduction
+produced one automatic refresh and one automatic join without Play. The
+report does not identify whether the user's second join was automatic or
+manual, and this behavior is not established as the cause of the later
+opcode-27 death.
+
+The recovery adapter now latches the existing non-retryable rejection mask
+(8, 16, 512, 1024), disarms automatic recovery and waits for explicit Play.
+Native error and close handling are preserved, as are stored identity and
+the existing bounded recovery for ordinary transport loss. This prevents
+an old tab from automatically reclaiming a connection after a native
+server-directed end; it does not suppress the server end message.
+
+The health diagnostic was also traced to its actual native implementation.
+The reported `value` is locally predicted between server gauge updates;
+the native gauge tick changes it using elapsed time and configured gain/loss
+rates. The HUD has a separate interpolated field. Both the prediction tick
+and server-health setter match the original client. A local value of 255
+therefore does not establish server-authoritative health at death. Static
+comparison evidence is in `health-code-review.json` beside the derived report.
+
+The rejection-recovery fix passed 265 Node tests, 75 Python tests and both
+browser gates. The isolated browser test uses the real native state-1024
+method, error notifier and close handler, with a no-op application UI callback
+and a local counter for server-list refreshes. It verifies zero automatic
+retries, an available manual Play and unchanged saved identity. Ordinary
+transport loss is covered separately. Evidence is in `rejection-recovery.json`;
+no live two-tab session or cause of the later death was reproduced.

@@ -1,4 +1,18 @@
 const test=require('node:test'),assert=require('node:assert/strict'),{fixture}=require('./mod-fixture.cjs');
+for(const code of [8,16,512,1024])test('server rejection '+code+' cannot turn into automatic restoration after native close',()=>{
+ const f=fixture({saved:{token:'kept-token',tokenId:'kept-id',userId:'1'}});let refreshes=0,automaticJoins=0,manualJoins=0;
+ try{
+  const row=['official',0,0,0,'region',0,'mode'];f.network['ԁᴄࡃ']=row;f.network['ոߒ४']=[row];f.network['ⲅ︊ᄃ']=(_,cb)=>{refreshes++;cb();};f.B.reconnect=()=>{automaticJoins++;f.network.state=1;};
+  f.B.errorKey='error';f.network.error=()=>{f.network.state=0;};f.B.loginKey='login';f.network.login=()=>{manualJoins++;f.network.state=2;};
+  f.setClock(0);f.mod.step(0);f.network.error(code);f.network.state=64;
+  for(let t=0;t<=30000;t+=1000){f.setClock(t);f.mod.step(t);}
+  assert.equal(refreshes,0);assert.equal(automaticJoins,0);assert.equal(f.mod.reconnect.autoBlocked,true);assert.equal(f.mod.reconnect.armed,false);
+  assert.equal(f.mod.beginPlay(),true);f.network.login();assert.equal(manualJoins,1);assert.equal(f.mod.reconnect.autoBlocked,false);assert.equal(f.storage.get('token'),'kept-token');assert.equal(f.storage.get('tokenId'),'kept-id');
+ }finally{f.mod.dispose();}
+});
+test('an ordinary transport loss still permits the existing bounded restoration',()=>{
+ const f=fixture();let joins=0;try{const row=['official',0,0,0,'region',0,'mode'];f.network['ԁᴄࡃ']=row;f.network['ոߒ४']=[row];f.network['ⲅ︊ᄃ']=(_,cb)=>cb();f.B.reconnect=()=>{joins++;f.network.state=1;};f.setClock(0);f.mod.step(0);f.network.state=64;f.mod.step(0);f.setClock(1000);f.mod.step(1000);assert.equal(joins,1);}finally{f.mod.dispose();}
+});
 test('an entry timeout retains its close event but a replaced socket cannot contaminate the report',()=>{
  const f=fixture(),handlers=new Map();try{
   f.setClock(0);const socket={readyState:0,addEventListener:(key,fn)=>handlers.set(key,fn),removeEventListener:(key)=>handlers.delete(key),close(){this.readyState=3;handlers.get('close')({code:1006,wasClean:false});}};
