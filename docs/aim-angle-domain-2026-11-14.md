@@ -60,3 +60,7 @@ assembled candidate, and the Chromium/Firefox gates. Both browsers verified
 out-of-domain angles and maximum oracle disagreement below 1e-8 degrees.
 The current native game source was rechecked at 2026-11-14 13:37:03 UTC and
 remained unchanged.
+
+Published to the existing GitHub updates link. A fresh public download of the
+script and verification report matched the validated release and SHA-256; both
+browsers retained the canonical-angle gate in the public report.
