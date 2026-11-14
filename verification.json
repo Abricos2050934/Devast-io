@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "ef88d21fb1fc8e204357cb87362d6eb119c7b2e0910672283e45f5055a1759ba",
+  "output_sha256": "78d6d449bb96a3211a9d2af2195feaf9b2c5a068f8a86d84a09c721589334da2",
   "static_ast": "passed",
   "aim_core": "active uploaded __BBY declarations and lifecycle",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -65,7 +65,8 @@
       "native-death-opcode-diagnostics",
       "native-wire-traffic-diagnostics",
       "first-server-death-preserved",
-      "fast-loot-stops-on-new-backlog"
+      "fast-loot-stops-on-new-backlog",
+      "native-rejection-stops-auto-reconnect"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -103,29 +104,18 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "2410396ee13ef03a26f81d72b735b2bc63608501196b85c4805805c8d375b598",
+    "mod/responsive.js": "b80ab1207d24b373595420cc10bb9ab4966bbe20d7c619f1da59a4d34979eda3",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
     "mod/ilm-aim.js": "0e05f192c7cd4c4d95f6b07f2219e7d977e06a46875b14d3d635c99cfa041a46",
     "mod/ballistic-model.js": "d3b5c075b1db229e12a86d5db7731d0138a961eaa51d4116142eba2b478a9e7c"
   },
-  "mod_bundle_sha256": "91882a1066d9ade881b8b47afa9b63f90c0d766798c2cdb13d07269f194b78fd",
+  "mod_bundle_sha256": "c9280c6e47cffad4b2495447d2ad5dbccf8ec790c9b6d2c11925cb35a2c91dd2",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "157.0.8103.0",
-  "console_errors": [
-    "Access to XMLHttpRequest at 'https://atlanta2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://losangeles1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://frankfurt5.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://osaka1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://sydney2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED"
-  ],
+  "browser_version": "154.0.8037.57",
+  "console_errors": [],
   "external_dependencies": {
     "advertising": "fixture; failures exercised explicitly below",
     "audio": "valid silent WAV fixture"
@@ -158,7 +148,7 @@
   ],
   "resource_override_loader": "passed",
   "client_build": {
-    "fingerprint": "4261169e4b74795fffaa7fdf82cff03f2a5cd93489a23facc4a4be89fc36a433",
+    "fingerprint": "c9f81413a3feb57c45a636b67b526d4bc2136b8b316e0a297d50763ade9f98de",
     "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
   },
   "native": {
@@ -948,7 +938,15 @@
     "native_death_opcode": 27,
     "first_server_death_preserved": true,
     "death_stops_restore_retries": true,
-    "mod_errors": []
+    "mod_errors": [],
+    "rejection_recovery": {
+      "status": "passed",
+      "native_code": 1024,
+      "native_close_restore_bit": true,
+      "automatic_retries": 0,
+      "manual_play_available": true,
+      "saved_identity_unchanged": true
+    }
   },
   "physical_numeric": {
     "status": "passed",
@@ -1134,12 +1132,12 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-14T09:55:16.992Z",
+  "finished_at": "2026-11-14T10:22:57.439Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "ef88d21fb1fc8e204357cb87362d6eb119c7b2e0910672283e45f5055a1759ba",
-      "browser_version": "157.0.8103.0",
+      "output_sha256": "78d6d449bb96a3211a9d2af2195feaf9b2c5a068f8a86d84a09c721589334da2",
+      "browser_version": "154.0.8037.57",
       "native": {
         "adaptive_aim": {
           "status": "passed",
@@ -1927,7 +1925,15 @@
         "native_death_opcode": 27,
         "first_server_death_preserved": true,
         "death_stops_restore_retries": true,
-        "mod_errors": []
+        "mod_errors": [],
+        "rejection_recovery": {
+          "status": "passed",
+          "native_code": 1024,
+          "native_close_restore_bit": true,
+          "automatic_retries": 0,
+          "manual_play_available": true,
+          "saved_identity_unchanged": true
+        }
       },
       "page_errors": [],
       "reload_identity": [
@@ -2143,7 +2149,7 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "ef88d21fb1fc8e204357cb87362d6eb119c7b2e0910672283e45f5055a1759ba",
+      "output_sha256": "78d6d449bb96a3211a9d2af2195feaf9b2c5a068f8a86d84a09c721589334da2",
       "browser_version": "153.0",
       "native": {
         "adaptive_aim": {
@@ -2932,7 +2938,15 @@
         "native_death_opcode": 27,
         "first_server_death_preserved": true,
         "death_stops_restore_retries": true,
-        "mod_errors": []
+        "mod_errors": [],
+        "rejection_recovery": {
+          "status": "passed",
+          "native_code": 1024,
+          "native_close_restore_bit": true,
+          "automatic_retries": 0,
+          "manual_play_available": true,
+          "saved_identity_unchanged": true
+        }
       },
       "page_errors": [],
       "reload_identity": [
@@ -3179,7 +3193,7 @@
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 260,
-    "python_tests": 74
+    "node_tests": 265,
+    "python_tests": 75
   }
 }
