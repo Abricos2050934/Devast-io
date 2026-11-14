@@ -79,6 +79,13 @@ def artifacts(root, output):
                     or audit.get('current_mod_flag') != 0 or audit.get('global_names_private') is not True
                     or audit.get('archive_preserved') is not True):
                 raise ValueError('Legacy settings retirement was not verified in browser: ' + browser)
+        if 'canonical-source-angle-domain' in contract.get('features', []):
+            domain = report.get('native', {}).get('canonical_aim', {})
+            aim = report.get('native', {}).get('message27_aim', {})
+            if (domain.get('status') != 'passed' or domain.get('steps', 0) < 6480
+                    or not all(domain.get(key) is True for key in ('both_directions', 'short_arc_oracle', 'all_angles_canonical', 'fractional_precision_retained', 'invalid_angles_rejected'))
+                    or not all(aim.get(key) is True for key in ('normalized_equivalent_states', 'exact_non_angle_states', 'canonical_outgoing_angles'))):
+                raise ValueError('Canonical aim angles were not verified in browser: ' + browser)
         if 'native-rejection-stops-auto-reconnect' in contract.get('features', []):
             recovery = report.get('native', {}).get('rejection_recovery', {})
             if (recovery.get('status') != 'passed' or type(recovery.get('automatic_retries')) is not int
@@ -149,9 +156,10 @@ def artifacts(root, output):
             raise ValueError('Physical aim numeric entry was not verified in browser: ' + browser)
         if 'verbatim-message27-aim' in contract.get('features', []):
             aim = report.get('native', {}).get('message27_aim', {})
+            state_proof = 'normalized_equivalent_states' if 'canonical-source-angle-domain' in contract.get('features', []) else 'exact_states'
             if (aim.get('status') != 'passed' or aim.get('upload_sha256') != 'f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0'
                     or aim.get('comparison_points', 0) < 2000 or not all(aim.get(key) is True for key in
-                    (('exact_states', 'corrected_attack_order', 'source_timing', 'spear', 'uploaded_jitter_removed', 'strafe', 'valid_target_admission', 'session_target_reset', 'server_death_sends_no_commands') if 'restored-original-jitter' in contract.get('features', []) else ('exact_states', 'exact_raw_packets', 'source_timing', 'spear', 'jitter', 'strafe', 'valid_target_admission', 'session_target_reset', 'server_death_sends_no_commands')))):
+                    ((state_proof, 'corrected_attack_order', 'source_timing', 'spear', 'uploaded_jitter_removed', 'strafe', 'valid_target_admission', 'session_target_reset', 'server_death_sends_no_commands') if 'restored-original-jitter' in contract.get('features', []) else (state_proof, 'exact_raw_packets', 'source_timing', 'spear', 'jitter', 'strafe', 'valid_target_admission', 'session_target_reset', 'server_death_sends_no_commands')))):
                 raise ValueError('Uploaded message27 source comparison was not verified in browser: ' + browser)
         if 'message27-native-pipeline' in contract.get('features', []):
             aim = report.get('native', {}).get('message27_aim', {})

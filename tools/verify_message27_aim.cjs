@@ -17,7 +17,21 @@ function verifyMessage27Aim(m,n,s,reference){
  function create(){return make(settings,world,win,{__autoPortAimbotPacketTransport:receive},clockDate,v=>v,()=>1,()=>{},()=>1);}
  const kind=(e,t)=>t?(e.targets.players[t.id]===t?'players:':'ghouls:')+t.id:null;
  function state(e){return JSON.stringify({angle:e.aim.lastAngle,smooth:Number.isFinite(e.aim._smoothAngle)?e.aim._smoothAngle:null,target:kind(e,e.aim.targetPlayer),held:kind(e,e.aim._heldTarget),until:e.aim._heldUntil||0,lines:e.targets.lines,players:e.targets.players.filter(t=>t?.active),ghouls:e.targets.ghouls.filter(t=>t?.active)});}
- function compare(label){const actual=state(m),wanted=state(ref);if(actual!==wanted){const a=JSON.parse(actual),b=JSON.parse(wanted),key=Object.keys(a).find(k=>JSON.stringify(a[k])!==JSON.stringify(b[k]));throw Error('Uploaded aim state differs '+label+' in '+key+': '+JSON.stringify({actual:a[key],expected:b[key]}));}check(JSON.stringify(capture.packets)===JSON.stringify(expected),'Uploaded aim packets differ '+label+': '+JSON.stringify({actual:capture.packets,expected}));capture.packets.length=expected.length=0;points++;}
+ // The reviewed host fix rebases angle state modulo 360. All other state
+ // and command ordering still match the separate uploaded declarations.
+ const sameAngle=(a,b)=>a===b||Number.isFinite(a)&&Number.isFinite(b)&&Math.abs(Math.atan2(Math.sin((a-b)*Math.PI/180),Math.cos((a-b)*Math.PI/180)))<1e-10;
+ function compare(label){
+  const a=JSON.parse(state(m)),b=JSON.parse(state(ref));
+  for(const key of ['angle','smooth']){check(sameAngle(a[key],b[key]),'Uploaded angular state differs '+label+' in '+key);delete a[key];delete b[key];}
+  if(JSON.stringify(a)!==JSON.stringify(b)){const key=Object.keys(a).find(k=>JSON.stringify(a[k])!==JSON.stringify(b[k]));throw Error('Uploaded aim state differs '+label+' in '+key+': '+JSON.stringify({actual:a[key],expected:b[key]}));}
+  check(capture.packets.length===expected.length,'Uploaded command count differs '+label);
+  for(let i=0;i<expected.length;i++){
+   const actual=capture.packets[i],wanted=expected[i];
+   if(actual[0]===6&&wanted[0]===6&&actual.length===2&&wanted.length===2)check(actual[1]>=0&&actual[1]<360&&sameAngle(actual[1],wanted[1]),'Uploaded direction differs '+label);
+   else check(JSON.stringify(actual)===JSON.stringify(wanted),'Uploaded command differs '+label);
+  }
+  capture.packets.length=expected.length=0;points++;
+ }
  function track(type,id,px,py,packed=0,active=true){
   m.trackPacket(type===13?13:n.playerType??0,type===13?0:id,type===13?id:1,px,py,active,17,packed);
   const target=(type===13?ref.targets.ghouls:ref.targets.players)[id];
@@ -82,7 +96,7 @@ function verifyMessage27Aim(m,n,s,reference){
   m.settings.AimBotEnabled=false;m.settings.autoFire=false;m.settings.AntiAimbot=false;m.settings.JitterEnabled=false;
   m.onSessionStart();m.onHandshake();check(!m.targets.players.some(t=>t?.active)&&!m.targets.ghouls.some(t=>t?.active),'Previous session history survived');
   capture.packets.length=0;m.settings.AimBotEnabled=true;m.settings.autoFire=true;m.observeDeath([5,0,2]);m.aim.refresh();m.afterFire();check(capture.packets.length===0,'Server death emitted aim commands');
-  return {status:'passed',upload_sha256:reference.upload_sha256,active_override:'__BBY',scenes:32,comparison_points:points,exact_states:true,corrected_attack_order:true,source_timing:true,spear:true,uploaded_jitter_removed:true,strafe:true,native_angles:!!n.directionProbes?.length,mouse_cases:mouseCases,pixel_projection_cases:pixelCases,valid_target_admission:true,session_target_reset:true,server_death_sends_no_commands:true};
+  return {status:'passed',upload_sha256:reference.upload_sha256,active_override:'__BBY',scenes:32,comparison_points:points,normalized_equivalent_states:true,exact_non_angle_states:true,canonical_outgoing_angles:true,corrected_attack_order:true,source_timing:true,spear:true,uploaded_jitter_removed:true,strafe:true,native_angles:!!n.directionProbes?.length,mouse_cases:mouseCases,pixel_projection_cases:pixelCases,valid_target_admission:true,session_target_reset:true,server_death_sends_no_commands:true};
  }finally{
   Date.now=old.now;performance.now=old.performance;capture.restore();m.observeSocket(null);m.settings.AimBotEnabled=false;m.settings.autoFire=false;m.onSessionStart();m.onHandshake();self.id=old.id;n.network.state=old.state;m.reconnect.sessionEnded=old.ended;
   for(const[id,value]of old.meta)metadata[id]=value;clans[0]=old.clan;Object.assign(m.settings,old.settings);

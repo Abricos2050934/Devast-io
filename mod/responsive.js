@@ -816,6 +816,18 @@ function __installDevastMod(B) {
   });
   const GetAllTargets=aimModule.targets,Aimbot=aimModule.aim;
   const originalGunResolve=Aimbot.resolve.bind(Aimbot),originalAimDeath=Aimbot.onDeath.bind(Aimbot),originalAimRefresh=Aimbot.refresh.bind(Aimbot);
+  function normalizeAimAngle(angle){return angle>=0&&angle<360?angle:((angle%360)+360)%360;}
+  const originalAimSmooth=Aimbot.aimSmooth.bind(Aimbot);
+  Aimbot.aimSmooth=function(angle){
+    // The imported smoother retains a continuous angle. Rebase its memory
+    // before the next step so JavaScript's negative remainder cannot turn
+    // a second 360-degree crossing into a long rotation in the wrong direction.
+    if(Number.isFinite(this._smoothAngle))this._smoothAngle=normalizeAimAngle(this._smoothAngle);
+    const resolved=originalAimSmooth(angle);
+    if(!Number.isFinite(resolved))return resolved;
+    this._smoothAngle=normalizeAimAngle(resolved);
+    return this._smoothAngle;
+  };
   function adaptiveGunActive(){return MOD.AdaptiveAimEnabled&&MOD.AimBotEnabled&&!(MOD.AimbotSpearEnabled&&GetAllTargets.selfWeapon===5);}
   Aimbot.refresh=function(){if(adaptiveGunActive()&&!this.dead)aimModule.refreshTargets();return originalAimRefresh();};
   function ballisticWeaponProfile(weapon){
@@ -1038,7 +1050,7 @@ function __installDevastMod(B) {
     if (!Array.isArray(packet) || packet.length === 0 || packet.some(x => typeof x !== 'number' || !Number.isFinite(x))) return false;
     if (packet[0] === 6) {
       if (packet.length !== 2) return false;
-      if(!sourceAngle)packet[1] = (Math.round(packet[1]) % 360 + 360) % 360;
+      packet[1] = normalizeAimAngle(sourceAngle?packet[1]:Math.round(packet[1]));
       if (!forceAngle && packet[1] === lastSentAngle && lastSentPlayer === B.world.ᅠᏧ‍.id) {
         diagnostics.deduplicatedAngles++;
         return true;

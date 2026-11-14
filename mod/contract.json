@@ -60,7 +60,8 @@
     "first-server-death-preserved",
     "fast-loot-stops-on-new-backlog",
     "native-rejection-stops-auto-reconnect",
-    "verified-legacy-settings-retirement"
+    "verified-legacy-settings-retirement",
+    "canonical-source-angle-domain"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -91,7 +92,8 @@
     "tests/projectile-accuracy.test.cjs",
     "tests/death-diagnostics.test.cjs",
     "tests/wire-diagnostics.test.cjs",
-    "tests/legacy-settings-migration.test.cjs"
+    "tests/legacy-settings-migration.test.cjs",
+    "tests/aim-angle-domain.test.cjs"
   ],
   "required_browsers": [
     "chromium",
