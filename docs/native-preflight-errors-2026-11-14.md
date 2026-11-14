@@ -60,3 +60,8 @@ assembled candidate, and the Chromium/Firefox gates. Each browser retained the
 active session with zero closes from the obsolete failure and executed exactly
 one close for the current failure. The current game source was rechecked at
 2026-11-14 14:20:10 UTC and had not changed.
+
+Published to the existing GitHub updates link. Fresh public downloads of the
+script, current pointer and verification report matched the validated release
+and SHA-256. Both public browser reports retain the stale-error and valid-error
+controls. Publication commit and checksum are in the evidence JSON.

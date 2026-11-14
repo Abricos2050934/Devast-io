@@ -142,5 +142,12 @@
       }
     },
     "publication_gate": "passed locally"
+  },
+  "public_verification": {
+    "status": "passed",
+    "release": "fb66981ffaac002d15fd51fdfb858c9e63ab598b142ee80e9c5113286e01dc01",
+    "output_sha256": "66705e1a022e15931959935829c1872aa7eebbdd7b6174ab80e682c3ec5f6478",
+    "script_bytes": 4431658,
+    "publication_commit": "25e0207f1feb8e85f159e7ef4034a7fc7e31b337"
   }
 }
