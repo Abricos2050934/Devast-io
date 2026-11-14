@@ -1,0 +1,10 @@
+// Temporary offline instrumentation: capture the native URL before the constructor.
+const fs=require('fs'),Module=require('module'),path=require('path'),root=path.resolve(__dirname,'../..'),out=__dirname;
+const m=JSON.parse(fs.readFileSync(root+'/dist/auto-update/current.json'));process.argv[2]=root+'/dist/auto-update/versions/'+m.release;
+let code=fs.readFileSync(root+'/tools/validate_update.cjs','utf8');
+const marker='let code=output;';
+code=code.replace(marker,`const auditBuilder=nativeAnalysis.functions.find(n=>n.id?.name==='ѕ༡ܓ');assert.ok(auditBuilder);assert.equal(hash(output.slice(auditBuilder.start,auditBuilder.end)),'0ba5ccf837dd7fa17dfa67e409c22e16205e00e9cd0aadd8885c6d06a7756a79','This audit targets the reviewed native connection builder');const auditReturn=auditBuilder.body.body.at(-1);assert.equal(auditReturn.type,'ReturnStatement');edits.push({at:auditReturn.start,text:'return {gate:ᴑ８︁,url:ԁ︇ܚ,query:ᴀ̷︆};'});edits.push({at:end,text:'window.__offlineNativeConnectionAudit=()=>{const n=ᴀιᄁ,previous=[n.ᴘ̎ܗ,n.ᴏߐ٢,n.α१̊];try{n.ᴘ̎ܗ=[67,0,0,1,"fixture",20,0,[443],0];n.ᴏߐ٢="left-fixture";n.α१̊="right-fixture";return ѕ༡ܓ();}finally{[n.ᴘ̎ܗ,n.ᴏߐ٢,n.α१̊]=previous;}};'});\n`+marker);
+const stop="  report.client_build=await page.evaluate(()=>window.__devastMod.connectionInfo().build);";
+code=code.replace(stop,`  report.full_context=await page.evaluate(()=>{const rows=[];for(const present of [false,true,false]){if(present)localStorage.setItem('BestModMenuConfig','{}');else localStorage.removeItem('BestModMenuConfig');rows.push({historical_key:present,...window.__offlineNativeConnectionAudit()});}return rows;});report.status='offline-audit-only';return;\n`+stop);
+code=code.replace("fs.writeFileSync(path.join(dir,'validation.json')", "fs.writeFileSync("+JSON.stringify(out+'/full-context-'+(process.env.DEVAST_BROWSER||'chromium')+'.json'));
+const mod=new Module(root+'/tools/validate_update.cjs',module);mod.filename=root+'/tools/validate_update.cjs';mod.paths=Module._nodeModulePaths(root+'/tools');mod._compile(code,mod.filename);

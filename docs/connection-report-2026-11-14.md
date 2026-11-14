@@ -106,3 +106,70 @@ and a local counter for server-list refreshes. It verifies zero automatic
 retries, an available manual Play and unchanged saved identity. Ordinary
 transport loss is covered separately. Evidence is in `rejection-recovery.json`;
 no live two-tab session or cause of the later death was reproduced.
+
+## Independent connection marker channel
+
+A deeper read-only scan found an additional connection check in the original
+native client, outside the shared integrity flag and the three existing signer
+patches. Function `ѕ༡ܓ` (decoded offsets 1602847–1655989 in this source version)
+contains an XOR-75 table naming five global objects/functions:
+`__autoPortAimbotPacketTransport`, `GROK_MOD`, `__isMyAimbotPlayer`, `BabaConfig`,
+and `GetAllTargets`. It also checks local storage keys `BestModMenuConfig` and
+`grok_dev`, and whether the browser's `document.getElementById` string contains
+`[native code]`.
+
+Controlled Chromium and Firefox runs of the unchanged native check prefix
+produced result 0 in an empty fixture and with an unrelated property, and 1
+with each named global or either historical storage key. The current settings
+key `DevastILM:settings:v3` produced 0. A second unchanged-prefix experiment,
+continued to the input of the native encoder, used fake connection strings:
+the clean result was `left-fixtureright-fixture`, whereas a historical marker
+produced `right-fixtureleft-fixture`. Static data flow continues through the
+native encoder into the URL passed to the WebSocket constructor. No game
+server was contacted by either experiment. See
+`connection-marker-mechanism.json` alongside the other derived evidence.
+
+This establishes an independent client mechanism for reporting these markers;
+a shared integrity flag of 0 does not exclude this separate channel. It does
+not establish the server's decision, an IP restriction, or the cause of the
+specific opcode-27 death in the uploaded report. That report did not retain
+whether this historical storage key existed. The named source aim objects
+are assigned to a private local `window` object in the current imported core,
+so the name list alone is not evidence of an active global leak.
+
+The host did leave `BestModMenuConfig` in physical local storage after reading
+it into its new namespace. Its historical migration fixture explicitly
+preserved that key across reloads. The migration now archives the exact three
+owned historical settings values, verifies the archive and any newly written
+current copies, and then retires the old keys before Play. Existing current
+values take precedence; malformed data or a storage-write failure leaves the
+original values available. Account tokens and cookies are outside this
+operation. The backup remains local under
+`DevastILM:settings:v3:legacy-backup:v1`; no values are added to diagnostics.
+Unrelated storage such as `grok_dev` is not removed.
+
+Each browser's publication fixture checks the actual initialized mod against
+the extracted original check: result 0, exact settings archive retained,
+no named aim objects in real browser globals, and result 1 when the historical
+key is deliberately reintroduced as a positive control. The control is removed
+and result 0 is checked again. The emitted native connection checker, encoder,
+WebSocket URL builder, aim calculations, Jitter, and incoming death handling
+are not changed by this fix. The report only adds a bounded migration status.
+
+A follow-up fixture also ran the connection builder inside the fully initialized
+client, retaining its actual native encoder and surrounding native state. It
+supplied a synthetic server record and the fake strings `left-fixture` and
+`right-fixture`. A fixture-only early return captured the computed URL immediately
+before the WebSocket constructor. In both browsers the legacy key changed the
+native encoded query, and removing it restored the exact previous query
+(A → B → A, gate 0 → 1 → 0), with zero page errors and no socket construction.
+This strengthens the client-side data-flow finding without establishing a live
+server enforcement rule. Bounded results are under `full_native_context` in the
+evidence JSON. The manual fixture is `full-context-audit.cjs` in the same directory;
+it pins the reviewed native function hash and does not modify production files.
+
+The final release passed 271 Node tests, 76 Python tests, 195 candidate-function
+tests and both browser gates, including the new publication gate. The native
+game source was fetched again on 2026-11-14 at 11:12:57 UTC and its bytes had
+not changed. Release identifiers and bounded browser evidence are retained in
+`connection-marker-mechanism.json`.

@@ -72,6 +72,13 @@ def artifacts(root, output):
             raise ValueError('Live aim targets and server death send behavior were not verified in browser: ' + browser)
         if 'connection-close-origin-diagnostics' in contract.get('features', []) and report.get('native', {}).get('connection_close_origin_diagnostics') is not True:
             raise ValueError('Connection close origin diagnostics not verified in browser: ' + browser)
+        if 'verified-legacy-settings-retirement' in contract.get('features', []):
+            audit = report.get('connection_marker_audit', {})
+            if (audit.get('status') != 'passed' or type(audit.get('historical_key_flag')) is not int
+                    or audit.get('historical_key_flag') != 1 or type(audit.get('current_mod_flag')) is not int
+                    or audit.get('current_mod_flag') != 0 or audit.get('global_names_private') is not True
+                    or audit.get('archive_preserved') is not True):
+                raise ValueError('Legacy settings retirement was not verified in browser: ' + browser)
         if 'native-rejection-stops-auto-reconnect' in contract.get('features', []):
             recovery = report.get('native', {}).get('rejection_recovery', {})
             if (recovery.get('status') != 'passed' or type(recovery.get('automatic_retries')) is not int

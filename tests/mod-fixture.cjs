@@ -36,7 +36,7 @@ function fixture(options={}) {
   const candidate=process.env.DEVAST_TEST_CANDIDATE?require('../tools/updater/candidate-fixture.cjs').candidateFixture(B,process.env.DEVAST_TEST_CANDIDATE):null;
   const context = vm.createContext({
     window, document,
-    localStorage: {getItem: k => storage.get(k) ?? null, setItem: (k,v) => storage.set(k,v)},
+    localStorage: {getItem: k => storage.get(k) ?? null, setItem: (k,v) => {if(options.storageWriteFailure?.(k))throw Error("fixture storage unavailable");storage.set(k,v);}, removeItem: k => {if(options.storageRemoveFailure?.(k))throw Error("fixture storage unavailable");storage.delete(k);}},
     console, performance: {now: () => clock},Date:class extends Date{static now(){return clock;}},navigator,alert(){},B:candidate?.B||B,
   });
   vm.runInContext((candidate?.source||(fs.readFileSync('mod/ilm-aim.js','utf8') + '\n' + fs.readFileSync('mod/responsive.js', 'utf8'))) + '\nglobalThis.mod = __installDevastMod(B);', context, {timeout: 1000});

@@ -7,6 +7,15 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_legacy_storage_retirement_requires_native_positive_control_and_clean_current_mod(self):
+  self.contract['features']=['verified-legacy-settings-retirement']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  good={'status':'passed','historical_key_flag':1,'current_mod_flag':0,'global_names_private':True,'archive_preserved':True}
+  for report in self.validation['browsers'].values():report['connection_marker_audit']=dict(good)
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for field,value in [('historical_key_flag',0),('historical_key_flag',True),('current_mod_flag',1),('current_mod_flag',False),('global_names_private',False),('archive_preserved',False)]:
+   self.validation['browsers']['firefox']['connection_marker_audit']={**good,field:value};self.save()
+   with self.assertRaisesRegex(ValueError,'Legacy settings retirement.*firefox'):p.artifacts(self.root,self.out)
  def test_native_rejection_recovery_requires_no_retries_and_manual_play_in_both_browsers(self):
   self.contract['features']=['native-rejection-stops-auto-reconnect']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

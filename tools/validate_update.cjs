@@ -150,6 +150,19 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
   }
   assert.equal(await page.evaluate(()=>window.__devastRemoteLoader?.state),'loaded','Resource Override loader failed');
   report.resource_override_loader='passed';
+  const markerProbe=require('./updater/connection-marker-audit.cjs').connectionMarkerProbe(require('./updater/semantic.cjs').readonlyConstants(require('./updater/static.cjs').analyze(read('native.js'))),symbols['о̃༩']);
+  report.connection_marker_audit=await page.evaluate(({code,evidence})=>{
+   const run=()=>new Function(code)();
+   const migration=window.__devastMod.connectionInfo().legacySettingsMigration;
+   const after=run(),archive=localStorage.getItem('DevastILM:settings:v3:legacy-backup:v1');
+   if(after!==0||!archive||localStorage.getItem('BestModMenuConfig')!==null)throw Error('Current mod retains a legacy connection marker');
+   localStorage.setItem('BestModMenuConfig','{}');let historical;
+   try{historical=run();}finally{localStorage.removeItem('BestModMenuConfig');}
+   if(historical!==1||run()!==0)throw Error('Native legacy-marker positive control failed');
+   const leaks=evidence.global_names.filter(key=>typeof window[key]!=='undefined');
+   if(leaks.length)throw Error('Private aim objects leaked to browser globals');
+   return {status:'passed',...evidence,historical_key_flag:historical,current_mod_flag:after,global_names_private:true,archive_preserved:true,migration};
+  },markerProbe);
   report.client_build=await page.evaluate(()=>window.__devastMod.connectionInfo().build);
   assert.match(report.client_build.fingerprint,/^[a-f0-9]{64}$/);assert.equal(report.client_build.nativeSha256,profile.baseline_sha256);
   await page.exposeFunction('__doorClickMouse',point=>page.mouse.click(point.x,point.y,{button:'right'}));

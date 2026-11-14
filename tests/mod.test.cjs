@@ -221,7 +221,9 @@ test('native decorated names copy raw names with internal hashes preserved and n
 test('legacy settings migrate separately from account storage and preserve customized aim and loot',()=>{
  const saved={token:'original',tokenId:'17',userId:'2',serverVersion:'old',BestModMenuConfig:JSON.stringify({mouseFov:777,EnemyClanColor:'#123456',token:'must-not-overwrite'}),'BestModMenuConfig:ilm2':'1','BestModMenuConfig:loot':JSON.stringify({steel:false})};
  const f=fixture({saved});assert.equal(f.mod.settings.mouseFov,900);assert.equal(f.mod.loot.steel.acquire,false);
- f.mod.setSetting('zoomFactor',.7);for(const [k,v]of Object.entries(saved))assert.equal(f.storage.get(k),v);
+ f.mod.setSetting('zoomFactor',.7);for(const [k,v]of Object.entries(saved))if(!k.startsWith('BestModMenuConfig'))assert.equal(f.storage.get(k),v);
+ const archive=JSON.parse(f.storage.get('DevastILM:settings:v3:legacy-backup:v1'));for(const [key,value]of Object.entries(saved).filter(([key])=>key.startsWith('BestModMenuConfig'))){assert.equal(f.storage.has(key),false);assert.ok(archive.some(row=>row.key===key&&row.value===value));}
+ assert.equal(f.mod.connectionInfo().legacySettingsMigration.status,'migrated');
  const g=fixture({saved:Object.fromEntries(f.storage)});assert.equal(g.mod.settings.mouseFov,900);assert.equal(g.mod.settings.zoomFactor,.7);assert.equal(g.mod.loot.steel.acquire,false);
  assert.equal(g.storage.get('token'),'original');assert.equal(g.storage.get('tokenId'),'17');assert.equal(g.storage.get('userId'),'2');f.mod.dispose();g.mod.dispose();
 });

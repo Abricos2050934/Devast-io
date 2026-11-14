@@ -748,6 +748,38 @@ function __installDevastMod(B) {
     const saved = JSON.parse(localStorage.getItem(SAVE + ':loot') || localStorage.getItem(LEGACY_SAVE + ':loot') || '{}');
     for (const key of Object.keys(LootData)) if (typeof saved[key] === 'boolean') LootData[key].acquire = saved[key];
   } catch (_) {}
+  // Complete the old settings migration before a native Play can connect.
+  // Archive exact old values first; account storage is outside this migration.
+  const legacySettingsMigration = (()=>{
+    let moved=0;
+    try {
+      const rows=['',':loot',':ilm2'].map(suffix=>({key:LEGACY_SAVE+suffix,target:SAVE+suffix,value:localStorage.getItem(LEGACY_SAVE+suffix)})).filter(row=>row.value!==null);
+      if(!rows.length)return {status:'not-needed',moved};
+      for(const row of rows)if(row.key!==LEGACY_SAVE+':ilm2'){
+        const value=JSON.parse(row.value);
+        if(!value||typeof value!=='object'||Array.isArray(value))throw Error('Invalid legacy settings');
+      }
+      const archiveKey=SAVE+':legacy-backup:v1';
+      const archive=JSON.parse(localStorage.getItem(archiveKey)||'[]');
+      if(!Array.isArray(archive))throw Error('Invalid settings archive');
+      for(const {key,value}of rows)if(!archive.some(row=>row?.key===key&&row.value===value))archive.push({key,value});
+      const archiveText=JSON.stringify(archive);
+      localStorage.setItem(archiveKey,archiveText);
+      if(localStorage.getItem(archiveKey)!==archiveText)throw Error('Settings archive was not saved');
+      // Existing current settings take precedence over historical values.
+      for(const row of rows)if(localStorage.getItem(row.target)===null){
+        localStorage.setItem(row.target,row.value);
+        if(localStorage.getItem(row.target)!==row.value)throw Error('Settings migration was not saved');
+      }
+      for(const row of rows){
+        if(localStorage.getItem(row.key)!==row.value)throw Error('Legacy settings changed during migration');
+        localStorage.removeItem(row.key);
+        if(localStorage.getItem(row.key)!==null)throw Error('Legacy settings were not retired');
+        moved++;
+      }
+      return {status:'migrated',moved};
+    }catch(_){return {status:'failed',moved};}
+  })();
   const allowedLootIds = new Set();
   function refreshLootFilter() {
     allowedLootIds.clear();
@@ -1665,6 +1697,7 @@ function __installDevastMod(B) {
     }
     const build=typeof __devastClientBuild==='undefined'?null:{...__devastClientBuild};
     return {schema:3,recoveryVersion:5,auditBuild:'integrity-autoupdate-v1',build,integrityCompatibility:B.integrityPatched?.()===true,
+      legacySettingsMigration:{...legacySettingsMigration},
       integrityFlag:typeof B.integrity?.()==='number'?B.integrity():null,state:B.network.state,phase:reconnect.phase,
       sessionEnded:reconnect.sessionEnded,awaitingPlay:reconnect.awaitingPlay,normalJoinRequired:reconnect.freshRequired,automaticRecoveryBlocked:reconnect.autoBlocked,
       nativeReady:typeof B.network[B.loginKey] === 'function',

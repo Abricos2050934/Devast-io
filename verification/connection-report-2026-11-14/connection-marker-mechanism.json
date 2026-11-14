@@ -1,0 +1,313 @@
+{
+  "scope": "Offline native connection-check investigation, not proof of a live server enforcement reason",
+  "native": {
+    "scope": "Unchanged connection-check prefix with resolved outer constants and synthetic server data; no socket construction",
+    "native_sha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9",
+    "function_sha256": "0ba5ccf837dd7fa17dfa67e409c22e16205e00e9cd0aadd8885c6d06a7756a79",
+    "prefix_sha256": "1c16c91a85ece5cacdd92b17696cae58628dbb0a437a53f1d9e02de9a86b74d6",
+    "function_start": 1602847,
+    "function_end": 1655989,
+    "global_names": [
+      "__autoPortAimbotPacketTransport",
+      "GROK_MOD",
+      "__isMyAimbotPlayer",
+      "BabaConfig",
+      "GetAllTargets"
+    ],
+    "xor_key": 75
+  },
+  "controlled_data_flow": {
+    "scope": "Unchanged native connection-builder prefix through encoder input; synthetic server record and connection strings; native DOM and local storage; no WebSocket",
+    "browsers": {
+      "chromium": {
+        "version": "154.0.8037.57",
+        "cases": [
+          {
+            "case": "empty",
+            "nativeOK": true,
+            "marker": 0,
+            "gate": 0,
+            "query": "left-fixtureright-fixture"
+          },
+          {
+            "case": "ordinaryAuditControl",
+            "nativeOK": true,
+            "marker": 0,
+            "gate": 0,
+            "query": "left-fixtureright-fixture"
+          },
+          {
+            "case": "__autoPortAimbotPacketTransport",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "GROK_MOD",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "__isMyAimbotPlayer",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "BabaConfig",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "GetAllTargets",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "storage:BestModMenuConfig",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "storage:grok_dev",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "storage:DevastILM:settings:v3",
+            "nativeOK": true,
+            "marker": 0,
+            "gate": 0,
+            "query": "left-fixtureright-fixture"
+          }
+        ]
+      },
+      "firefox": {
+        "version": "153.0",
+        "cases": [
+          {
+            "case": "empty",
+            "nativeOK": true,
+            "marker": 0,
+            "gate": 0,
+            "query": "left-fixtureright-fixture"
+          },
+          {
+            "case": "ordinaryAuditControl",
+            "nativeOK": true,
+            "marker": 0,
+            "gate": 0,
+            "query": "left-fixtureright-fixture"
+          },
+          {
+            "case": "__autoPortAimbotPacketTransport",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "GROK_MOD",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "__isMyAimbotPlayer",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "BabaConfig",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "GetAllTargets",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "storage:BestModMenuConfig",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "storage:grok_dev",
+            "nativeOK": true,
+            "marker": 1,
+            "gate": 1,
+            "query": "right-fixtureleft-fixture"
+          },
+          {
+            "case": "storage:DevastILM:settings:v3",
+            "nativeOK": true,
+            "marker": 0,
+            "gate": 0,
+            "query": "left-fixtureright-fixture"
+          }
+        ]
+      }
+    }
+  },
+  "findings": {
+    "separate_from_shared_integrity_flag": true,
+    "legacy_settings_key": "BestModMenuConfig",
+    "other_native_storage_key": "grok_dev",
+    "clean_fixture_query": "left-fixtureright-fixture",
+    "marked_fixture_query": "right-fixtureleft-fixture",
+    "query_destination": "native encoder then WebSocket URL query; no server connection in these tests",
+    "current_aim_exports": "window inside the imported aim core is a private local object; global-name controls do not establish a current leak",
+    "user_legacy_key_presence": "not retained in the uploaded report",
+    "specific_server_kick_reason": "unproven"
+  },
+  "fix": {
+    "description": "Complete migration of own three historical settings keys with exact verified local backup and verified current copies before retirement",
+    "account_keys_changed": false,
+    "aim_or_jitter_calculations_changed": false,
+    "native_connection_checker_changed": false,
+    "native_death_handling_changed": false
+  },
+  "full_native_context": {
+    "chromium": {
+      "browser_version": "154.0.8037.57",
+      "status": "passed",
+      "mode": "Initialized full modded client, unchanged native encoder and connection builder; synthetic connection fields; fixture-only return inserted immediately before WebSocket constructor",
+      "cases": [
+        {
+          "historical_key": false,
+          "gate": 0,
+          "url": "wss://fixtureundefined.devast.io/fixture67?a144789e5d7738864a4374986cec2c964b43869e68d0ff26aa25",
+          "query": "a144789e5d7738864a4374986cec2c964b43869e68d0ff26aa25"
+        },
+        {
+          "historical_key": true,
+          "gate": 1,
+          "url": "wss://fixtureundefined.devast.io/fixture67?a183771e69e81d9e3bc2b4175f0710a66b43869e68d0ff26aa25",
+          "query": "a183771e69e81d9e3bc2b4175f0710a66b43869e68d0ff26aa25"
+        },
+        {
+          "historical_key": false,
+          "gate": 0,
+          "url": "wss://fixtureundefined.devast.io/fixture67?a144789e5d7738864a4374986cec2c964b43869e68d0ff26aa25",
+          "query": "a144789e5d7738864a4374986cec2c964b43869e68d0ff26aa25"
+        }
+      ],
+      "stable_query_after_restoring_storage": true,
+      "page_errors": []
+    },
+    "firefox": {
+      "browser_version": "153.0",
+      "status": "passed",
+      "mode": "Initialized full modded client, unchanged native encoder and connection builder; synthetic connection fields; fixture-only return inserted immediately before WebSocket constructor",
+      "cases": [
+        {
+          "historical_key": false,
+          "gate": 0,
+          "url": "wss://fixtureundefined.devast.io/fixture67?a144789e5d7738864a4374986cec2c964b43869e68d0ff26aa25",
+          "query": "a144789e5d7738864a4374986cec2c964b43869e68d0ff26aa25"
+        },
+        {
+          "historical_key": true,
+          "gate": 1,
+          "url": "wss://fixtureundefined.devast.io/fixture67?a183771e69e81d9e3bc2b4175f0710a66b43869e68d0ff26aa25",
+          "query": "a183771e69e81d9e3bc2b4175f0710a66b43869e68d0ff26aa25"
+        },
+        {
+          "historical_key": false,
+          "gate": 0,
+          "url": "wss://fixtureundefined.devast.io/fixture67?a144789e5d7738864a4374986cec2c964b43869e68d0ff26aa25",
+          "query": "a144789e5d7738864a4374986cec2c964b43869e68d0ff26aa25"
+        }
+      ],
+      "stable_query_after_restoring_storage": true,
+      "page_errors": []
+    }
+  },
+  "release_validation": {
+    "release": "4fb8fc4e2efa98b80474e51b0c17b83e5fb58a56256926ee453306d4b446628c",
+    "output_sha256": "95a505345515689da52a65808b667e217bb1513d355edfba3f265d80d037ba94",
+    "source_url": "https://devast.io/js/hym7DtRA3RCGo21.js",
+    "regression": {
+      "status": "passed",
+      "command": "npm test",
+      "node_tests": 271,
+      "python_tests": 76
+    },
+    "candidate_tests": 195,
+    "browsers": {
+      "chromium": {
+        "status": "passed",
+        "scope": "Unchanged connection-check prefix with resolved outer constants and synthetic server data; no socket construction",
+        "native_sha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9",
+        "function_sha256": "0ba5ccf837dd7fa17dfa67e409c22e16205e00e9cd0aadd8885c6d06a7756a79",
+        "prefix_sha256": "1c16c91a85ece5cacdd92b17696cae58628dbb0a437a53f1d9e02de9a86b74d6",
+        "function_start": 1602847,
+        "function_end": 1655989,
+        "global_names": [
+          "__autoPortAimbotPacketTransport",
+          "GROK_MOD",
+          "__isMyAimbotPlayer",
+          "BabaConfig",
+          "GetAllTargets"
+        ],
+        "xor_key": 75,
+        "historical_key_flag": 1,
+        "current_mod_flag": 0,
+        "global_names_private": true,
+        "archive_preserved": true,
+        "migration": {
+          "status": "not-needed",
+          "moved": 0
+        }
+      },
+      "firefox": {
+        "status": "passed",
+        "scope": "Unchanged connection-check prefix with resolved outer constants and synthetic server data; no socket construction",
+        "native_sha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9",
+        "function_sha256": "0ba5ccf837dd7fa17dfa67e409c22e16205e00e9cd0aadd8885c6d06a7756a79",
+        "prefix_sha256": "1c16c91a85ece5cacdd92b17696cae58628dbb0a437a53f1d9e02de9a86b74d6",
+        "function_start": 1602847,
+        "function_end": 1655989,
+        "global_names": [
+          "__autoPortAimbotPacketTransport",
+          "GROK_MOD",
+          "__isMyAimbotPlayer",
+          "BabaConfig",
+          "GetAllTargets"
+        ],
+        "xor_key": 75,
+        "historical_key_flag": 1,
+        "current_mod_flag": 0,
+        "global_names_private": true,
+        "archive_preserved": true,
+        "migration": {
+          "status": "not-needed",
+          "moved": 0
+        }
+      }
+    },
+    "publication_gate": "passed locally"
+  }
+}
