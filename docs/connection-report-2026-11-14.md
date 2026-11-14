@@ -173,3 +173,8 @@ tests and both browser gates, including the new publication gate. The native
 game source was fetched again on 2026-11-14 at 11:12:57 UTC and its bytes had
 not changed. Release identifiers and bounded browser evidence are retained in
 `connection-marker-mechanism.json`.
+
+The fix was published to the existing `updates/game.modded.js` link. A fresh
+public download matched the validated SHA-256, and the public verification
+report retained the positive/negative marker controls for both browsers.
+Publication commit and checksums are in the evidence JSON.

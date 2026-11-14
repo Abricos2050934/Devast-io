@@ -309,5 +309,16 @@
       }
     },
     "publication_gate": "passed locally"
+  },
+  "public_verification": {
+    "status": "passed",
+    "release": "4fb8fc4e2efa98b80474e51b0c17b83e5fb58a56256926ee453306d4b446628c",
+    "output_sha256": "95a505345515689da52a65808b667e217bb1513d355edfba3f265d80d037ba94",
+    "public_script_bytes": 4430857,
+    "publication_commit": "b93f3f02059fa94206c1607286d9eacbbaa27373",
+    "browsers": [
+      "chromium",
+      "firefox"
+    ]
   }
 }
