@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "95a505345515689da52a65808b667e217bb1513d355edfba3f265d80d037ba94",
+  "output_sha256": "c07ea1222cb9d75bc0859494ee0d7f547be232dc44e4f337ddc8cd6a38c5bdb3",
   "static_ast": "passed",
   "aim_core": "active uploaded __BBY declarations and lifecycle",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -67,7 +67,8 @@
       "first-server-death-preserved",
       "fast-loot-stops-on-new-backlog",
       "native-rejection-stops-auto-reconnect",
-      "verified-legacy-settings-retirement"
+      "verified-legacy-settings-retirement",
+      "canonical-source-angle-domain"
     ],
     "removed_overlays": [
       "bottom-gauge-text",
@@ -98,7 +99,8 @@
       "tests/projectile-accuracy.test.cjs",
       "tests/death-diagnostics.test.cjs",
       "tests/wire-diagnostics.test.cjs",
-      "tests/legacy-settings-migration.test.cjs"
+      "tests/legacy-settings-migration.test.cjs",
+      "tests/aim-angle-domain.test.cjs"
     ],
     "required_browsers": [
       "chromium",
@@ -106,27 +108,27 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "3ef9470ee0a403835cb5f1ce74ccf9cf94a715305fa267c0c7a440842ac22495",
+    "mod/responsive.js": "e84ad514b3ececa2ca5717b95fea558b2d04c4dd29a5bff646cf612ad0ffa84c",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
     "mod/ilm-aim.js": "0e05f192c7cd4c4d95f6b07f2219e7d977e06a46875b14d3d635c99cfa041a46",
     "mod/ballistic-model.js": "d3b5c075b1db229e12a86d5db7731d0138a961eaa51d4116142eba2b478a9e7c"
   },
-  "mod_bundle_sha256": "d25704ac98ced154c329021dcdce998f1b3c07b066a0d8f225881ae946afc254",
+  "mod_bundle_sha256": "d6ec28239963ee427c6b8e3186e923d78615672dfc23395608b447dbe880925a",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
   "browser_version": "154.0.8037.57",
   "console_errors": [
-    "Access to XMLHttpRequest at 'https://losangeles3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
     "Access to XMLHttpRequest at 'https://atlanta3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://losangeles1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
     "Access to XMLHttpRequest at 'https://frankfurt5.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://osaka1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Access to XMLHttpRequest at 'https://osaka3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://sydney2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Access to XMLHttpRequest at 'https://sydney1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED"
   ],
   "external_dependencies": {
@@ -186,10 +188,28 @@
     }
   },
   "client_build": {
-    "fingerprint": "b8eb66a36c763b01074d9ce7cf50ca0692b9af1e089f7ec673d8c95629fec11f",
+    "fingerprint": "8955d566c2f36b680f8616405379b6091caf938f0211998c306e34b84ff2f6a0",
     "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
   },
   "native": {
+    "canonical_aim": {
+      "status": "passed",
+      "scope": "native codec-input capture; no live server enforcement test",
+      "steps": 6480,
+      "sustained_directions": 9720,
+      "rotations_per_scene": 3,
+      "smoothing_values": [
+        0.05,
+        0.74,
+        1
+      ],
+      "both_directions": true,
+      "short_arc_oracle": true,
+      "all_angles_canonical": true,
+      "fractional_precision_retained": true,
+      "invalid_angles_rejected": true,
+      "worst_oracle_error_degrees": 9.663381206337363e-13
+    },
     "adaptive_aim": {
       "status": "passed",
       "native_weapon_speed_and_range": true,
@@ -548,7 +568,9 @@
       "active_override": "__BBY",
       "scenes": 32,
       "comparison_points": 2059,
-      "exact_states": true,
+      "normalized_equivalent_states": true,
+      "exact_non_angle_states": true,
+      "canonical_outgoing_angles": true,
       "corrected_attack_order": true,
       "source_timing": true,
       "spear": true,
@@ -1170,13 +1192,31 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-14T11:09:35.692Z",
+  "finished_at": "2026-11-14T13:34:18.976Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "95a505345515689da52a65808b667e217bb1513d355edfba3f265d80d037ba94",
+      "output_sha256": "c07ea1222cb9d75bc0859494ee0d7f547be232dc44e4f337ddc8cd6a38c5bdb3",
       "browser_version": "154.0.8037.57",
       "native": {
+        "canonical_aim": {
+          "status": "passed",
+          "scope": "native codec-input capture; no live server enforcement test",
+          "steps": 6480,
+          "sustained_directions": 9720,
+          "rotations_per_scene": 3,
+          "smoothing_values": [
+            0.05,
+            0.74,
+            1
+          ],
+          "both_directions": true,
+          "short_arc_oracle": true,
+          "all_angles_canonical": true,
+          "fractional_precision_retained": true,
+          "invalid_angles_rejected": true,
+          "worst_oracle_error_degrees": 9.663381206337363e-13
+        },
         "adaptive_aim": {
           "status": "passed",
           "native_weapon_speed_and_range": true,
@@ -1535,7 +1575,9 @@
           "active_override": "__BBY",
           "scenes": 32,
           "comparison_points": 2059,
-          "exact_states": true,
+          "normalized_equivalent_states": true,
+          "exact_non_angle_states": true,
+          "canonical_outgoing_angles": true,
           "corrected_attack_order": true,
           "source_timing": true,
           "spear": true,
@@ -2212,9 +2254,27 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "95a505345515689da52a65808b667e217bb1513d355edfba3f265d80d037ba94",
+      "output_sha256": "c07ea1222cb9d75bc0859494ee0d7f547be232dc44e4f337ddc8cd6a38c5bdb3",
       "browser_version": "153.0",
       "native": {
+        "canonical_aim": {
+          "status": "passed",
+          "scope": "native codec-input capture; no live server enforcement test",
+          "steps": 6480,
+          "sustained_directions": 9720,
+          "rotations_per_scene": 3,
+          "smoothing_values": [
+            0.05,
+            0.74,
+            1
+          ],
+          "both_directions": true,
+          "short_arc_oracle": true,
+          "all_angles_canonical": true,
+          "fractional_precision_retained": true,
+          "invalid_angles_rejected": true,
+          "worst_oracle_error_degrees": 9.663381206337363e-13
+        },
         "adaptive_aim": {
           "status": "passed",
           "native_weapon_speed_and_range": true,
@@ -2573,7 +2633,9 @@
           "active_override": "__BBY",
           "scenes": 32,
           "comparison_points": 2059,
-          "exact_states": true,
+          "normalized_equivalent_states": true,
+          "exact_non_angle_states": true,
+          "canonical_outgoing_angles": true,
           "corrected_attack_order": true,
           "source_timing": true,
           "spear": true,
@@ -3276,13 +3338,14 @@
       "tests/projectile-accuracy.test.cjs",
       "tests/death-diagnostics.test.cjs",
       "tests/wire-diagnostics.test.cjs",
-      "tests/legacy-settings-migration.test.cjs"
+      "tests/legacy-settings-migration.test.cjs",
+      "tests/aim-angle-domain.test.cjs"
     ]
   },
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 271,
-    "python_tests": 76
+    "node_tests": 279,
+    "python_tests": 77
   }
 }
