@@ -33,3 +33,13 @@ test('reports record independent spear and hidden angle settings that can affect
 test('first server death survives repeated joins and returned reports cannot overwrite its metadata',()=>{
  const f=fixture();try{assert.equal(f.mod.connectionInfo().firstServerDeath,null);for(let i=1;i<=20;i++){f.setClock(i*1000);f.mod.observeSocket({readyState:1,bufferedAmount:0});f.mod.observeWireSend(i);f.mod.observeDeath(new Uint8Array([27,0,i]),27);}let r=f.mod.connectionInfo();assert.equal(r.events.length,12);assert.equal(r.firstServerDeath.at,1000);assert.equal(r.firstServerDeath.transport.sentBytes,1);assert.equal(r.firstServerDeath.deathPrefixHex,'1b 00 01');assert.ok(r.events.every(e=>e.at>1000));r.firstServerDeath.transport.sentBytes=999;r.firstServerDeath.commandsInLast2s.attack=999;r=f.mod.connectionInfo();assert.equal(r.firstServerDeath.transport.sentBytes,1);assert.equal(r.firstServerDeath.commandsInLast2s.attack,0);}finally{f.mod.dispose();}
 });
+test('an earlier native network rejection is retained separately from a later character death',()=>{
+ const f=fixture();try{
+  const listeners=new Map(),socket={readyState:1,bufferedAmount:0,addEventListener:(k,v)=>listeners.set(k,v),removeEventListener:k=>listeners.delete(k)};
+  f.B.errorKey='nativeError';f.network.nativeError=()=>{};f.mod.step(1000);f.mod.observeSocket(socket);listeners.get('message')();
+  f.network.nativeError(1024);assert.equal(f.mod.connectionInfo().firstConnectionEnd.failureCode,1024);
+  for(let i=0;i<20;i++)f.mod.observeDeath(new Uint8Array([27,0,3]),27);
+  const r=f.mod.connectionInfo();assert.equal(r.firstConnectionEnd.failureCode,1024);assert.equal(r.firstServerDeath.deathOpcode,27);assert.ok(!r.events.some(e=>e.failureCode===1024));
+  r.firstConnectionEnd.transport.receivedMessages=999;assert.equal(f.mod.connectionInfo().firstConnectionEnd.transport.receivedMessages,1);
+ }finally{f.mod.dispose();}
+});

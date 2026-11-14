@@ -828,7 +828,7 @@ function __installDevastMod(B) {
   }
   const recentCombatCommands = [], connectionEvents = [];
   const wireSeconds=[],wireTotals={packets:0,bytes:0};
-  let wirePeak=null,firstServerDeath=null;
+  let wirePeak=null,firstServerDeath=null,firstConnectionEnd=null;
   function trimWire(now){while(wireSeconds.length&&(wireSeconds.length>240||now-wireSeconds[0].at>=120000))wireSeconds.shift();}
   function observeWireSend(bytes){
     if(stopped||!Number.isSafeInteger(bytes)||bytes<0||bytes>2147483647)return;
@@ -841,7 +841,7 @@ function __installDevastMod(B) {
     trimWire(now);
   }
   function wireTrafficInfo(now=performance.now()){
-    trimWire(now);return {scope:'successful sends through the native sender after mod installation; encrypted payloads are not recorded',totals:{...wireTotals},recentSeconds:wireSeconds.map(bucket=>({...bucket})),peakSecond:wirePeak?{...wirePeak}:null};
+    trimWire(now);return {scope:'native send calls returned without throwing; delivery is not confirmed and payloads are not recorded',totals:{...wireTotals},recentSeconds:wireSeconds.map(bucket=>({...bucket})),peakSecond:wirePeak?{...wirePeak}:null};
   }
   const trafficKeys=['AimBotEnabled','AimbotSpearEnabled','AdaptiveAimEnabled','JitterEnabled','AntiAimbot','autoFire','hidePlayerAngle','hideAimbotAngle','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','SpamChatEnabled','AntiKickEnabled'];
   const trafficSettings=Object.fromEntries(trafficKeys.map(key=>[key,MOD[key]]));
@@ -903,6 +903,7 @@ function __installDevastMod(B) {
       health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details};
     connectionEvents.push(event);
     if(type==='server-death'&&firstServerDeath===null)firstServerDeath=event;
+    if(firstConnectionEnd===null&&event.transport?.receivedMessages>0&&(type==='server-death'||type==='socket-close'||type==='native-network-error'&&event.failureCode>0))firstConnectionEnd=event;
     if (connectionEvents.length > 12) connectionEvents.shift();
   }
   function observeDeath(packet, opcode=5) {
@@ -1322,7 +1323,12 @@ function __installDevastMod(B) {
       const e = group[border.ⲣᴑᴏ[i]];
       if (!e || e.е̝ހ !== 0 || !Number.isInteger(e.id) || !Number.isFinite(e.x) || !Number.isFinite(e.y)) continue;
       const distance = (e.x - me.x) ** 2 + (e.y - me.y) ** 2;
-      if (distance < 41000 && (!MOD.LootDataEnabled || allowedLootIds.has(e.Іࡈ５))&&__send([12,e.id]))sent++;
+      if (distance < 41000 && (!MOD.LootDataEnabled || allowedLootIds.has(e.Іࡈ５))) {
+        // The preceding request can fill the queue during this same burst.
+        // Resume at this unsent drop after the transport drains.
+        if(!automationReady('loot')){visited--;break;}
+        if(__send([12,e.id]))sent++;
+      }
     }
     fastLootCursor=(fastLootCursor+visited)%border.border;
     if(sent)lastFastLoot=now;
@@ -1678,7 +1684,7 @@ function __installDevastMod(B) {
       aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',sourceTickRateMs:50,deduplicatedDirections:diagnostics.deduplicatedAngles},
       aimSettings:{enabled:MOD.AimBotEnabled,spear:MOD.AimbotSpearEnabled,hidePlayerAngle:MOD.hidePlayerAngle,hideAimbotAngle:MOD.hideAimbotAngle,source:'message27-bby',adaptive:MOD.AdaptiveAimEnabled,jitter:MOD.JitterEnabled,jitterSpeed:MOD.JitterSpeed,strafe:MOD.AntiAimbot,autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,serverListRefreshFailures:reconnect.refreshFailures,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
-      stored,modErrorCount:diagnostics.errors.length,firstServerDeath:firstServerDeath?copyEvent(firstServerDeath):null,events:connectionEvents.map(copyEvent)};
+      stored,modErrorCount:diagnostics.errors.length,firstServerDeath:firstServerDeath?copyEvent(firstServerDeath):null,firstConnectionEnd:firstConnectionEnd?copyEvent(firstConnectionEnd):null,events:connectionEvents.map(copyEvent)};
   }
   function releaseNativePending() {
     if (B.pendingKey) B.network[B.pendingKey] = false;

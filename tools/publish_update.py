@@ -50,6 +50,8 @@ def artifacts(root, output):
             raise ValueError('Independent door control and state feedback were not verified in browser: ' + browser)
         if 'automation-socket-backpressure' in contract.get('features', []) and report.get('native', {}).get('automation_socket_backpressure') is not True:
             raise ValueError('Automation socket backpressure was not verified in browser: ' + browser)
+        if 'fast-loot-stops-on-new-backlog' in contract.get('features', []) and report.get('native', {}).get('fast_loot_mid_burst_backpressure') is not True:
+            raise ValueError('Mid-burst fast loot backpressure was not verified in browser: ' + browser)
         for feature, evidence in [('bounded-fast-loot', 'bounded_fast_loot'), ('session-mod-traffic-history', 'session_mod_traffic_history'), ('bounded-auto-build', 'bounded_auto_build'), ('aim-session-history-reset', 'aim_session_history_reset')]:
             if feature in contract.get('features', []) and report.get('native', {}).get(evidence) is not True:
                 raise ValueError('Required traffic behavior was not verified: ' + feature + ' in ' + browser)

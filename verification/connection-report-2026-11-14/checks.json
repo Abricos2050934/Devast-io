@@ -1,0 +1,56 @@
+{
+  "release": "5419dd7379b99a22e52e95d4290ac68cfd3d5704edd42395856e54e1dfb78438",
+  "output_sha256": "ef88d21fb1fc8e204357cb87362d6eb119c7b2e0910672283e45f5055a1759ba",
+  "regression": {
+    "status": "passed",
+    "command": "npm test",
+    "node_tests": 260,
+    "python_tests": 74
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/native-aim-transport.test.cjs",
+      "tests/ilm-current.test.cjs",
+      "tests/mod-traffic.test.cjs",
+      "tests/aim-validity.test.cjs",
+      "tests/ilm-native-pipeline.test.cjs",
+      "tests/aim-line-projection.test.cjs",
+      "tests/aim-settings-persistence.test.cjs",
+      "tests/aim-settings-effects.test.cjs",
+      "tests/jitter-arbitration.test.cjs",
+      "tests/ballistics.test.cjs",
+      "tests/aim-preserved-before-disconnect.test.cjs",
+      "tests/connection-recovery-only.test.cjs",
+      "tests/aim-motion-continuity.test.cjs",
+      "tests/projectile-accuracy.test.cjs",
+      "tests/death-diagnostics.test.cjs",
+      "tests/wire-diagnostics.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "fast_loot_mid_burst_backpressure": true
+    },
+    "firefox": {
+      "status": "passed",
+      "fast_loot_mid_burst_backpressure": true
+    }
+  },
+  "controlled_reproduction": {
+    "queued_bytes_per_send": 8,
+    "old_requests_before_yield": 8,
+    "new_requests_before_yield": 1,
+    "resumes_unsent_item_after_drain": true
+  },
+  "scope": "Reproduced transport backpressure defect fixed; specific live kick reason remains unproven; aim and Jitter unchanged"
+}

@@ -1,6 +1,17 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {fixture,scene}=require('./mod-fixture.cjs');
 
+test('fast loot stops when its own request fills the queue and resumes at the unsent drop',()=>{
+ const f=fixture();try{
+  f.B.synchronizedRender=true;scene(f,2,Array.from({length:8},(_,i)=>({id:10+i,x:10,y:0,'е̝ހ':0,'Іࡈ５':6})));
+  const socket={readyState:1,bufferedAmount:0};f.mod.observeSocket(socket);const push=f.packets.push;
+  f.packets.push=function(packet){socket.bufferedAmount+=8;return push.call(this,packet);};
+  f.mod.setSetting('FAutoLootEnabled',true);f.mod.render(1000);assert.deepEqual(f.packets.map(p=>p[1]),[10]);
+  f.mod.render(1025);assert.equal(f.packets.length,1);socket.bufferedAmount=0;f.mod.render(1050);assert.deepEqual(f.packets.map(p=>p[1]),[10,11]);
+  assert.equal(socket.bufferedAmount,8);assert.ok(f.mod.connectionInfo().automationTransport.deferred.loot>0);
+ }finally{f.mod.dispose();}
+});
+
 test('Uploaded aim still computes on position refresh while queued and non-open sockets suppress its sends',()=>{
  const f=fixture();try{
   f.mod.trackPacket(1,1,0,0,0,true);f.mod.trackPacket(1,2,0,100,100,true);

@@ -7,6 +7,15 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_fast_loot_mid_burst_backpressure_requires_both_browsers(self):
+  self.contract['features']=['fast-loot-stops-on-new-backlog']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  for report in self.validation['browsers'].values():report['native']={'fast_loot_mid_burst_backpressure':True}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for value in [None,False,1,'true']:
+   self.validation['browsers']['firefox']['native']['fast_loot_mid_burst_backpressure']=value;self.save()
+   with self.assertRaisesRegex(ValueError,'Mid-burst fast loot.*firefox'):p.artifacts(self.root,self.out)
+
  def test_first_server_death_requires_both_browsers(self):
   self.contract['features']=['first-server-death-preserved']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

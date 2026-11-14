@@ -57,7 +57,8 @@
     "packet-rate-aware-curved-prediction",
     "native-death-opcode-diagnostics",
     "native-wire-traffic-diagnostics",
-    "first-server-death-preserved"
+    "first-server-death-preserved",
+    "fast-loot-stops-on-new-backlog"
   ],
   "removed_overlays": [
     "bottom-gauge-text",

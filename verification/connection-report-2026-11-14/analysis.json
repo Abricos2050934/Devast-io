@@ -1,0 +1,85 @@
+{
+  "input_sha256": "2e0fe549e3bd89458aca3884949fb5ab2b0d3879539aab7d87e7a67fe7a873cf",
+  "scope": "Derived bounded metadata only; uploaded report and credential values are not copied",
+  "reported_release": "6258d1c6fa318453768ace12830745f9a32341a82ec60df1236eded32a9f40f0",
+  "build_matches_release": true,
+  "build": {
+    "fingerprint": "21c6d6e87a6da977fe69bf518e29badd45350eacbdd738640c4e5647ae456330",
+    "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
+  },
+  "first_network_end": {
+    "at": 69278,
+    "failure_code": 1024,
+    "static_native_dispatch_opcode": 26,
+    "socket": 1,
+    "open_ms": 41497,
+    "native_send_calls": 261,
+    "native_send_bytes": 1932,
+    "native_average_calls_per_second": 6.289611297202208,
+    "mod_commands_for_socket": {
+      "12": 9
+    },
+    "client_health_snapshot": 154.55550000000008,
+    "integrity_flag": 0
+  },
+  "first_character_death": {
+    "at": 1002593,
+    "deathOpcode": 27,
+    "deathPacketLength": 3,
+    "deathPrefixHex": "1b 00 03",
+    "health": 255,
+    "aim": false,
+    "jitter": false,
+    "spear": true,
+    "autoFire": false,
+    "hidePlayerAngle": false,
+    "hideAimbotAngle": false,
+    "integrityFlag": 0,
+    "socketBufferedBytes": 0,
+    "commandsInLast2s": {
+      "angle": 0,
+      "attack": 0,
+      "release": 0
+    },
+    "transport": {
+      "id": 2,
+      "openForMs": 928274,
+      "receiveGapMs": 1,
+      "sentMessages": 10808,
+      "sentBytes": 105017,
+      "sendGapMs": 12,
+      "receivedMessages": 14163,
+      "localCloseSource": null
+    }
+  },
+  "native_send_peak": {
+    "at": 296000,
+    "socket": 2,
+    "packets": 237,
+    "bytes": 2315
+  },
+  "mod_send_peak": {
+    "at": 296000,
+    "socket": 2,
+    "commands": 221,
+    "byOpcode": {
+      "12": 221
+    }
+  },
+  "last_mod_command_buckets": {
+    "12": 990000,
+    "6": 839000,
+    "15": 900000
+  },
+  "mod_ledger_matches_totals": true,
+  "discarded_setting_changes": 24,
+  "root_mod_errors": 0,
+  "interpretation": {
+    "specific_anti_cheat_rule_proven": false,
+    "initial_code_1024_precedes_later_high_rate_peak": true,
+    "death_payload_statistic_is_not_an_identified_rule": true,
+    "no_outbound_backlog_at_death": true,
+    "spear_toggle_was_enabled_at_death": true,
+    "post_close_send_calls_are_not_proof_of_network_delivery": true
+  }
+}
