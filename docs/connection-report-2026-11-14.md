@@ -178,3 +178,38 @@ The fix was published to the existing `updates/game.modded.js` link. A fresh
 public download matched the validated SHA-256, and the public verification
 report retained the positive/negative marker controls for both browsers.
 Publication commit and checksums are in the evidence JSON.
+
+## Follow-up: the two-byte death value is the kill counter
+
+The value in `1b 00 03` was traced beyond its generic numeric rendering.
+The native death handler stores `(packet[1] * 256) + packet[2]` in
+`о٠́.Іᴀߏ.ᅟᴄⲅ`. The join handler resets that field to zero. Its remaining reads
+render the number in two result panels. The actual public panel images,
+`img/scoreboardnew.png` and `img/scoreboard-br.png`, were fetched with the
+normal game-page Referer and visually inspected. In both panels the number's
+position is under **KILL**. Thus the observed payload means **3 kills**,
+not an identified anti-cheat rule number. The current source's only call to
+the native death-state method remains the incoming death handler.
+
+The report schema was inspected again: it contains no server rule, handshake
+marker result, or incoming damage history from which the missing reason could
+be reconstructed. Its positive client health snapshot is predicted state and
+cannot establish the server's health or enforcement decision.
+
+A broader static scan of 2616 numeric byte arrays also resolved the separate
+initial marker `_devastxInjected` in the same connection builder. Unchanged
+native-prefix fixtures in Chromium and Firefox detect this property only when
+its value is boolean `true`: absent, false, numeric 1 and an object all retain
+result 0. No literal assignment to this marker was found in the current mod,
+vendor or Resource Override sources, and the initialized current-mod fixture
+already returned 0 for the full native prefix. This identifies another checked
+name; it does not demonstrate an active fault in the current build. The scan
+is limited to constant byte arrays and XOR keys, not every possible dynamically
+constructed expression.
+
+The user confirmed that the latest published settings-migration fix had **not
+yet been tested**. There is therefore no observed post-fix recurrence to analyze.
+These findings narrow the evidence and are retained in
+`death-payload-followup.json`; they do not establish the server's hidden rule
+or justify claiming that the prior death's cause is now proven. This follow-up
+changes documentation/evidence only, with no additional client modification.

@@ -1,0 +1,267 @@
+{
+  "scope": "Read-only follow-up; no live game server session; no production behavior changed",
+  "native_sha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9",
+  "death_payload": {
+    "observed_prefix": "1b 00 03",
+    "opcode": 27,
+    "decoded_16bit_value": 3,
+    "native_field": "о٠́.Іᴀߏ.ᅟᴄⲅ",
+    "displayed_as": "kill count under KILL on normal and battle-royale result panels",
+    "a_server_enforcement_reason": false,
+    "field_references": [
+      {
+        "start": 366485,
+        "parent": "AssignmentExpression",
+        "function": "ᅟߍᄆ",
+        "functionStart": 366355,
+        "statement": "о٠́.Іᴀߏ.ᅟᴄⲅ = (ρ̷ߋ[ⲣօ٤]*0x100)+ρ̷ߋ[2];"
+      },
+      {
+        "start": 368678,
+        "parent": "AssignmentExpression",
+        "function": "ᴉ̊ࠄ",
+        "functionStart": 367202,
+        "statement": "о٠́.Іᴀߏ.ᅟᴄⲅ=00;"
+      },
+      {
+        "start": 1841540,
+        "parent": "BinaryExpression",
+        "function": "о︉̉",
+        "functionStart": 1840397,
+        "statement": "(  ( null===сᄅ̃)||(ⲥބ͏ !==о٠́.Іᴀߏ.ᅟᴄⲅ))&&(ⲥބ͏=о٠́.Іᴀߏ.ᅟᴄⲅ,сᄅ̃= ɑށ︈.ϲⲅι(ⲥބ͏ +\"\",\"\\47\\x56\\x69\\x67\\x61\\47\\54\\40\\x73\\141\\x6e\\x73-\\x73\\145\\162\\u0069\\146\",\"\\x23\\106F\\x46\\x46\\x46\\x46\", 0X26,400,undefined, 0x10 ,25,undefined,undefined,ⲥߐ๙,undefined,\"\\43\\60\\x30\\x30\\x30\\60\\60\",0xC),ᴇނއ.еᚂᴉ = сᄅ̃,ᴇނއ.еᚂᴉ.ᴇࡃ๒=ᴏ５️);"
+      },
+      {
+        "start": 1841560,
+        "parent": "AssignmentExpression",
+        "function": "о︉̉",
+        "functionStart": 1840397,
+        "statement": "(  ( null===сᄅ̃)||(ⲥބ͏ !==о٠́.Іᴀߏ.ᅟᴄⲅ))&&(ⲥބ͏=о٠́.Іᴀߏ.ᅟᴄⲅ,сᄅ̃= ɑށ︈.ϲⲅι(ⲥބ͏ +\"\",\"\\47\\x56\\x69\\x67\\x61\\47\\54\\40\\x73\\141\\x6e\\x73-\\x73\\145\\162\\u0069\\146\",\"\\x23\\106F\\x46\\x46\\x46\\x46\", 0X26,400,undefined, 0x10 ,25,undefined,undefined,ⲥߐ๙,undefined,\"\\43\\60\\x30\\x30\\x30\\60\\60\",0xC),ᴇނއ.еᚂᴉ = сᄅ̃,ᴇނއ.еᚂᴉ.ᴇࡃ๒=ᴏ５️);"
+      },
+      {
+        "start": 1897525,
+        "parent": "BinaryExpression",
+        "function": "о︉̉",
+        "functionStart": 1896495,
+        "statement": "( (null===сᄅ̃) || (ⲥބ͏ !==о٠́.Іᴀߏ.ᅟᴄⲅ)) && (ⲥބ͏=о٠́.Іᴀߏ.ᅟᴄⲅ,сᄅ̃=ɑށ︈.ϲⲅι(ⲥބ͏+\"\",\"\\x27\\126\\x69\\x67\\u0061\\47\\54\\u0020s\\141\\x6E\\x73\\55\\x73\\x65\\x72\\151\\146\",\"\\x23\\x46\\106\\x46\\x46\\u0046\\106\",38,0620,с７̝ , 0X10, 25,Іⲟޅ,undefined ,р८٦,undefined,\"\\43\\60\\x30\\x30\\x30\\x30\\x30\",ࡀᚇⲣ ),ᴇނއ.еᚂᴉ =сᄅ̃,ᴇނއ.еᚂᴉ.ᴇࡃ๒ =0X1) ;"
+      },
+      {
+        "start": 1897547,
+        "parent": "AssignmentExpression",
+        "function": "о︉̉",
+        "functionStart": 1896495,
+        "statement": "( (null===сᄅ̃) || (ⲥބ͏ !==о٠́.Іᴀߏ.ᅟᴄⲅ)) && (ⲥބ͏=о٠́.Іᴀߏ.ᅟᴄⲅ,сᄅ̃=ɑށ︈.ϲⲅι(ⲥބ͏+\"\",\"\\x27\\126\\x69\\x67\\u0061\\47\\54\\u0020s\\141\\x6E\\x73\\55\\x73\\x65\\x72\\151\\146\",\"\\x23\\x46\\106\\x46\\x46\\u0046\\106\",38,0620,с７̝ , 0X10, 25,Іⲟޅ,undefined ,р८٦,undefined,\"\\43\\60\\x30\\x30\\x30\\x30\\x30\",ࡀᚇⲣ ),ᴇނއ.еᚂᴉ =сᄅ̃,ᴇނއ.еᚂᴉ.ᴇࡃ๒ =0X1) ;"
+      }
+    ],
+    "native_death_method_references": [
+      {
+        "start": 366523,
+        "parent": "CallExpression",
+        "function": "ᅟߍᄆ",
+        "functionStart": 366355,
+        "statement": "ᴀιᄁ.іᴘܒ( ) ;"
+      }
+    ]
+  },
+  "ui_assets": [
+    {
+      "url": "https://devast.io/img/scoreboardnew.png",
+      "sha256": "ccf5d76560e355b9be4de59730a94f95bf45bd2db2f015582324205e44174473",
+      "width": 1082,
+      "height": 648,
+      "field_label_visually_verified": "KILL"
+    },
+    {
+      "url": "https://devast.io/img/scoreboard-br.png",
+      "sha256": "6bfe84801bf9d03fd11b37eb3362e5cc865291a1cf5b2ff2e194fe33be13ec1d",
+      "width": 828,
+      "height": 414,
+      "field_label_visually_verified": "KILL"
+    }
+  ],
+  "additional_marker": {
+    "name": "_devastxInjected",
+    "native_condition": "window[name] === true",
+    "browser_evidence": {
+      "chromium": {
+        "version": "154.0.8037.57",
+        "cases": [
+          {
+            "case": "absent",
+            "flag": 0
+          },
+          {
+            "case": "false",
+            "flag": 0
+          },
+          {
+            "case": "true",
+            "flag": 1
+          },
+          {
+            "case": "number-one",
+            "flag": 0
+          },
+          {
+            "case": "object",
+            "flag": 0
+          }
+        ]
+      },
+      "firefox": {
+        "version": "153.0",
+        "cases": [
+          {
+            "case": "absent",
+            "flag": 0
+          },
+          {
+            "case": "false",
+            "flag": 0
+          },
+          {
+            "case": "true",
+            "flag": 1
+          },
+          {
+            "case": "number-one",
+            "flag": 0
+          },
+          {
+            "case": "object",
+            "flag": 0
+          }
+        ]
+      }
+    },
+    "current_mod_literal_assignment_found": false,
+    "current_release_native_prefix_result": 0,
+    "a_proven_user_kick_cause": false
+  },
+  "additional_encoded_name_scan": {
+    "scope": "Static byte-array XOR scan of original native source only, not an exhaustive decoder of all possible dynamic expressions",
+    "native_sha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9",
+    "arrays_scanned": 2616,
+    "plaintext_matches": [
+      "https://token.devast.io/",
+      ".devast.io",
+      ".devast.io/",
+      "https://devast.io/",
+      "Devaster",
+      "img/devaster0out.png",
+      "img/devaster0in.png",
+      "img/devaster0click.png",
+      "https://www.reddit.com/r/devastio/",
+      "https://devast.io/private-server",
+      "img/devaster-target-button-out.png",
+      "img/devaster-target-button-in.png",
+      "img/devaster-target-button-click.png",
+      "Shoots heavy bullets at the ghouls, the devasters, or both.",
+      "img/day-plush-devaster.png",
+      "devaster",
+      "Kill my devaster",
+      "https://account.devast.io/v1/",
+      "Devastator",
+      "Devaster account",
+      "Every devaster account",
+      "Devaster since ",
+      "Too many devasters wear this nickname, pick another one.",
+      "No request. Clanless devasters ask to join from Find a clan.",
+      "The devaster was kicked.",
+      "This devaster isn't in your clan anymore.",
+      "This devaster doesn't exist anymore."
+    ],
+    "encoded_matches": [
+      {
+        "start": 1614976,
+        "xor": 75,
+        "value": "_devastxInjected",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      },
+      {
+        "start": 1614976,
+        "xor": 107,
+        "value": "DEVASTXiNJECTED",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      },
+      {
+        "start": 1618979,
+        "xor": 75,
+        "value": "__autoPortAimbotPacketTransport",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      },
+      {
+        "start": 1619128,
+        "xor": 75,
+        "value": "GROK_MOD",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      },
+      {
+        "start": 1619159,
+        "xor": 75,
+        "value": "__isMyAimbotPlayer",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      },
+      {
+        "start": 1619241,
+        "xor": 75,
+        "value": "BabaConfig",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      },
+      {
+        "start": 1619241,
+        "xor": 107,
+        "value": "bABAcONFIG",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      },
+      {
+        "start": 1619285,
+        "xor": 75,
+        "value": "GetAllTargets",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      },
+      {
+        "start": 1619285,
+        "xor": 107,
+        "value": "gETaLLtARGETS",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      },
+      {
+        "start": 1631442,
+        "xor": 75,
+        "value": "BestModMenuConfig",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      },
+      {
+        "start": 1631442,
+        "xor": 107,
+        "value": "bESTmODmENUcONFIG",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      },
+      {
+        "start": 1631527,
+        "xor": 75,
+        "value": "grok_dev",
+        "function": "ѕ༡ܓ",
+        "ownerStart": 1602847
+      }
+    ]
+  },
+  "limits": {
+    "uploaded_report_has_server_rule_or_reason": false,
+    "uploaded_report_has_handshake_check_result": false,
+    "uploaded_report_has_incoming_damage_history": false,
+    "user_has_tested_latest_fix": false,
+    "specific_server_enforcement_rule_proven": false
+  }
+}
