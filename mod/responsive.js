@@ -1897,8 +1897,8 @@ function __installDevastMod(B) {
       const original = n[key];
       originals[key] = original;
       const wrapper = kind === 'preflight' ? function (...args) {
-        if (!nativeLoginDepth || typeof args[1] !== 'function') return original.apply(this,args);
-        args[1] = guardHandshakeCallback(args[0],args[1]);
+        if (!nativeLoginDepth) return original.apply(this,args);
+        for(const index of [1,2])if(typeof args[index]==='function')args[index]=guardHandshakeCallback(args[0],args[index]);
         return original.apply(this,args);
       } : kind === 'error' ? function (...args) {
         if (!stopped) {

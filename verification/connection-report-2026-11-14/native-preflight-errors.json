@@ -1,0 +1,146 @@
+{
+  "scope": "Actual original native failure callback with held HTTP replies and a fixture socket; no live server session",
+  "confirmed_failure": "Late HTTP error from an expired login invokes the native global socket closer after a newer session is active",
+  "before": {
+    "chromium": {
+      "browser_version": "154.0.8037.57",
+      "result": {
+        "held_requests": 2,
+        "state_before": 1,
+        "state_after": 64,
+        "close_calls": 1,
+        "callback_traffic": {
+          "wrapped": 2,
+          "accepted": 0,
+          "rejectedStale": 0,
+          "rejectedWhileConnected": 0,
+          "rejectedAfterDispose": 0
+        },
+        "last_events": [
+          {
+            "type": "entry-timeout"
+          },
+          {
+            "type": "client-close-request",
+            "source": "native-network-close"
+          }
+        ],
+        "features": {
+          "aim": false,
+          "jitter": false,
+          "autoFire": false
+        }
+      },
+      "page_errors": []
+    },
+    "firefox": {
+      "browser_version": "153.0",
+      "result": {
+        "held_requests": 2,
+        "state_before": 1,
+        "state_after": 64,
+        "close_calls": 1,
+        "callback_traffic": {
+          "wrapped": 2,
+          "accepted": 0,
+          "rejectedStale": 0,
+          "rejectedWhileConnected": 0,
+          "rejectedAfterDispose": 0
+        },
+        "last_events": [
+          {
+            "type": "entry-timeout"
+          },
+          {
+            "type": "client-close-request",
+            "source": "native-network-close"
+          }
+        ],
+        "features": {
+          "aim": false,
+          "jitter": false,
+          "autoFire": false
+        }
+      },
+      "page_errors": []
+    }
+  },
+  "fix": {
+    "native_success_and_error_callbacks": "Both capture login generation before any HTTP terminal callback can run",
+    "profile_coverage": [
+      "patches/recovered-current.json",
+      "patches/native-2026-11-05.json",
+      "patches/native-2026-11-06.json"
+    ],
+    "updater_generation": "Native callbackGuard regeneration updated to preserve error ownership on every new client",
+    "current_errors": "Retained; positive control must close its socket once",
+    "persistent_identity": "Unchanged",
+    "aim_and_jitter": "Unchanged",
+    "incoming_server_death_handler": "Unchanged"
+  },
+  "reported_incident_limit": "The earlier report records opcode-27 server death before its close, without this client-close request. This reproduced transport-close bug is not established as the cause of that specific death.",
+  "release_validation": {
+    "release": "fb66981ffaac002d15fd51fdfb858c9e63ab598b142ee80e9c5113286e01dc01",
+    "output_sha256": "66705e1a022e15931959935829c1872aa7eebbdd7b6174ab80e682c3ec5f6478",
+    "regression": {
+      "status": "passed",
+      "command": "npm test",
+      "node_tests": 285,
+      "python_tests": 78
+    },
+    "candidate_tests": 209,
+    "browsers": {
+      "chromium": {
+        "status": "passed",
+        "scope": "actual native failure callback; held HTTP replies and fixture socket; no live server",
+        "native_stages": 3,
+        "late_failure_close_calls": 0,
+        "live_connection_preserved": true,
+        "current_failure_close_calls": 1,
+        "stale_error_rejected": true,
+        "saved_identity_unchanged": true,
+        "features_disabled": true,
+        "callbacks_before": {
+          "wrapped": 0,
+          "accepted": 0,
+          "rejectedStale": 0,
+          "rejectedWhileConnected": 0,
+          "rejectedAfterDispose": 0
+        },
+        "callbacks_after": {
+          "wrapped": 6,
+          "accepted": 1,
+          "rejectedStale": 1,
+          "rejectedWhileConnected": 1,
+          "rejectedAfterDispose": 0
+        }
+      },
+      "firefox": {
+        "status": "passed",
+        "scope": "actual native failure callback; held HTTP replies and fixture socket; no live server",
+        "native_stages": 3,
+        "late_failure_close_calls": 0,
+        "live_connection_preserved": true,
+        "current_failure_close_calls": 1,
+        "stale_error_rejected": true,
+        "saved_identity_unchanged": true,
+        "features_disabled": true,
+        "callbacks_before": {
+          "wrapped": 0,
+          "accepted": 0,
+          "rejectedStale": 0,
+          "rejectedWhileConnected": 0,
+          "rejectedAfterDispose": 0
+        },
+        "callbacks_after": {
+          "wrapped": 6,
+          "accepted": 1,
+          "rejectedStale": 1,
+          "rejectedWhileConnected": 1,
+          "rejectedAfterDispose": 0
+        }
+      }
+    },
+    "publication_gate": "passed locally"
+  }
+}

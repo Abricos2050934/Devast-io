@@ -7,6 +7,15 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_stale_native_errors_cannot_close_the_current_socket_but_current_errors_remain_enabled(self):
+  self.contract['features']=['stale-preflight-errors-preserve-current-connection']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  good={'status':'passed','late_failure_close_calls':0,'current_failure_close_calls':1,'live_connection_preserved':True,'stale_error_rejected':True,'saved_identity_unchanged':True,'features_disabled':True}
+  for report in self.validation['browsers'].values():report['native']={'preflight_error_ownership':dict(good)}
+  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  for key,value in [('late_failure_close_calls',1),('late_failure_close_calls',False),('current_failure_close_calls',0),('live_connection_preserved',False),('stale_error_rejected',False),('saved_identity_unchanged',False),('features_disabled',False)]:
+   self.validation['browsers']['firefox']['native']['preflight_error_ownership']={**good,key:value};self.save()
+   with self.assertRaisesRegex(ValueError,'Native preflight error ownership.*firefox'):p.artifacts(self.root,self.out)
  def test_canonical_angles_require_both_orbit_directions_and_explicit_normalized_reference_proof(self):
   self.contract['features']=['canonical-source-angle-domain']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))

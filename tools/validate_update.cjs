@@ -89,6 +89,19 @@ const senderDefinition=networkBody.find(n=>n.type==='FunctionDeclaration'&&n.id.
 const assignment=senderDefinition.body.body[0].expression;
 assert.ok(assignment?.type==='AssignmentExpression'&&assignment.left.type==='Identifier'&&assignment.right.type==='Identifier','Native send clock changed');
 edits.push({at:senderDefinition.start,text:`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.captureWire=frame=>{const codec=${roles['еϲᄄ']},key=${JSON.stringify(roles['ᴎ︅ހ'])},encode=codec[key],socket=${roles['І̎ܘ']},bytes=[],inputs=[];codec[key]=packet=>{inputs.push(packet.slice());return new Uint8Array(frame);};${roles['І̎ܘ']}={readyState:1,send(data){bytes.push(Array.from(data));}};return {bytes,inputs,normal:packet=>${senderDefinition.id.name}(JSON.stringify(packet)),aim:packet=>${senderDefinition.id.name}.__devastAimTransport(packet),restore(){codec[key]=encode;${roles['І̎ܘ']}=socket;}};};`});
+// Hold native requests only while the isolated error-ownership fixture is armed.
+const guardedPreflight=acorn.parse(profile.operations.find(op=>op.id==='native-guard-stale-preflight-response').after,{ecmaVersion:'latest'}).body[0];
+const nativePreflights=nativeAnalysis.functions.filter(fn=>fn.id?.name===guardedPreflight.id.name&&fn.params.length===3);
+assert.equal(nativePreflights.length,1,'Unique native preflight required');const nativePreflight=nativePreflights[0];
+const nativeCloser=nativeAnalysis.functions.find(fn=>fn.type==='FunctionDeclaration'&&fn.id?.name===closeName);
+const callsWithin=(fn,target)=>nativeAnalysis.nodes.some(n=>n.type==='CallExpression'&&n.callee.type==='Identifier'&&nativeAnalysis.binding(n.callee)?.node===target&&n.start>fn.start&&n.end<fn.end);
+const nativeFailureStages=nativeAnalysis.functions.filter(fn=>fn.type==='FunctionDeclaration'&&fn.params.length===2&&callsWithin(fn,nativePreflight)&&callsWithin(fn,nativeCloser)).sort((a,b)=>a.start-b.start);
+// Multiple native stages use this failure path. The positive control below
+// must execute a real native close for the selected stage.
+assert.ok(nativeFailureStages.length>0,'Native stage with a direct connection-close failure required');const failureStage=nativeFailureStages[0];
+assert.equal(nativePreflight.body.body[0].type,'IfStatement','Native callback ownership guard missing');
+edits.push({at:nativePreflight.body.body[1].start,text:`if(window.__holdNativePreflight){window.__updateHeldPreflights.push({success:${nativePreflight.params[1].name},failure:${nativePreflight.params[2].name}});return;}`});
+edits.push({at:failureStage.start,text:`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.nativePreflightStage=${failureStage.id.name};window.__updateFunctions.setNativePreflightSocket=socket=>{const previous=${roles['І̎ܘ']};${roles['І̎ܘ']}=socket;return ()=>{${roles['І̎ܘ']}=previous;};};`});
 const lastActivity=assignment.left.name,nativeNow=assignment.right.name,idleMatches=[];
 for(const fn of networkBody.filter(n=>n.type==='FunctionDeclaration')){
  const pending=[fn.body];while(pending.length){const n=pending.pop();if(!n||typeof n!=='object')continue;
@@ -103,6 +116,7 @@ const end=tree.body[0].expression.callee.body.end-1;
 edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,keyboard:${roles.messageKeyboard},world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},types:${symbols['εᚇ๓']},graphics:${symbols['ᴘᚉ٦']},items:${symbols['ιᄅᴄ']},get view(){return __responsiveView},set view(value){__responsiveView=value},get ctx(){return ${symbols['а०̅']}},nativePlacement:()=>${output.slice(placements[0].start,placements[0].end)},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
 edits.push({at:tree.body[0].expression.callee.body.end-1,text:`window.__updateIntegrityProbe={read:()=>${roles.nativeIntegrityFlag},set:value=>${roles.nativeIntegrityFlag}=value,signers:[${roles.nativeIntegritySigners.join(',')}]};`});
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
+acorn.parse(code,{ecmaVersion:'latest'});
 (async()=>{
  const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',aim_core:'active uploaded __BBY declarations and lifecycle',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
  let browser,page;
@@ -138,6 +152,7 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
 
 
   await page.addInitScript('window.__verifyNativeAimTransport='+require('./verify_native_aim_transport.cjs').verifyNativeAimTransport.toString());
+  await page.addInitScript('window.__verifyNativePreflightErrors='+require('./verify_native_preflight_errors.cjs').verifyNativePreflightErrors.toString());
   await page.addInitScript('window.__verifyAimAngleDomain='+require('./verify_aim_angle_domain.cjs').verifyAimAngleDomain.toString());
   await page.addInitScript(()=>{const raf=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=callback=>raf(time=>{if(!window.__numericPauseWorld)callback(time);});});
   await page.goto(source.page_url,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForFunction(()=>!!window.__updateProbe&&!!window.__devastMod?.menu,{timeout:25000});
@@ -450,6 +465,9 @@ let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.
    check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===stored[i]),'Rejection recovery changed saved identity');
    return {status:'passed',native_code:1024,native_close_restore_bit:true,automatic_retries:refreshes-baseline,manual_play_available:true,saved_identity_unchanged:true};
   },symbols);
+  await page.reload({waitUntil:'domcontentloaded',timeout:45000});
+  await page.waitForFunction(()=>!!window.__updateProbe?.nativePreflightStage&&!!window.__devastMod?.menu,{timeout:25000});
+  report.native.preflight_error_ownership=await page.evaluate(s=>window.__verifyNativePreflightErrors(window.__devastMod,window.__updateProbe,s),symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){report.error=error.message;report.startup=await page?.evaluate(()=>({mod:!!window.__devastMod,menu:!!window.__devastMod?.menu,probe:!!window.__updateProbe,loader:window.__devastRemoteLoader?.state,ready:document.readyState,modErrors:window.__devastMod?.diagnostics?.errors})).catch(()=>null);process.exitCode=1;}
  finally{report.finished_at=new Date().toISOString();fs.writeFileSync(path.join(dir,'validation.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));if(browser)await browser.close();}

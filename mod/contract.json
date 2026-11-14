@@ -61,7 +61,8 @@
     "fast-loot-stops-on-new-backlog",
     "native-rejection-stops-auto-reconnect",
     "verified-legacy-settings-retirement",
-    "canonical-source-angle-domain"
+    "canonical-source-angle-domain",
+    "stale-preflight-errors-preserve-current-connection"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -93,7 +94,8 @@
     "tests/death-diagnostics.test.cjs",
     "tests/wire-diagnostics.test.cjs",
     "tests/legacy-settings-migration.test.cjs",
-    "tests/aim-angle-domain.test.cjs"
+    "tests/aim-angle-domain.test.cjs",
+    "tests/native-preflight-errors.test.cjs"
   ],
   "required_browsers": [
     "chromium",

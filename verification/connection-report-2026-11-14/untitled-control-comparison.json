@@ -1,0 +1,333 @@
+{
+  "scope": "User-supplied historical control file, static and isolated browser comparison; no current live-server equivalence claimed",
+  "source_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+  "source_bytes": 8072407,
+  "matches_prior_archived_untitled_source": true,
+  "decoder": {
+    "source_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+    "recorded_table_sha256": "4921e60f70f743493db6b9feab204b618073c578e09ee25c8398fb098690232e",
+    "decoded_sha256": "0238d392b8cac9e98eb197f21779c627d214af78aa3516eb805f8c34b301592e",
+    "blocks": [
+      {
+        "start": 163868,
+        "end": 816495,
+        "decoded_sha256": "bb171a34effb93c857063e4ec6b63cf2024399f0ee906100e08607a1fe633217",
+        "steps": 23052963
+      },
+      {
+        "start": 924836,
+        "end": 1094497,
+        "decoded_sha256": "8cf4356a1f955daabaf75a40f3c5a743bb9270cea5fdc123a33c78391698cfeb",
+        "steps": 8244102
+      },
+      {
+        "start": 1119770,
+        "end": 1230636,
+        "decoded_sha256": "9de62aa940bc83a0c2a7236d885796388bb294fcdbd9ad481cbe6afe4a78c78a",
+        "steps": 4697810
+      },
+      {
+        "start": 1308341,
+        "end": 1312522,
+        "decoded_sha256": "cafa4faf56a48384770a948dd4a9d59f011f4d0e393a10eef96b405f1dd4402c",
+        "steps": 43015
+      },
+      {
+        "start": 2570598,
+        "end": 2719154,
+        "decoded_sha256": "d2d5fe02fe7e565d3478c0cd309220cf4901666d9e77fdc4ad848206aadeae11",
+        "steps": 5239463
+      },
+      {
+        "start": 2719452,
+        "end": 2729834,
+        "decoded_sha256": "2e6c31effcf6e181dd1a650d1cb00a1de2b2c062b783ca99ee9c50e7bea762eb",
+        "steps": 356701
+      },
+      {
+        "start": 2786206,
+        "end": 2806547,
+        "decoded_sha256": "534374779ad98cfb2e411d0c1767c612bbd68fdca09176456bac432ef4d434d9",
+        "steps": 704933
+      },
+      {
+        "start": 2887523,
+        "end": 3070701,
+        "decoded_sha256": "1d0bdacd4f213a6cb2b45355a057bc9c269a5ec52b209910c68383500e3069aa",
+        "steps": 9986517
+      },
+      {
+        "start": 3106091,
+        "end": 3569071,
+        "decoded_sha256": "a7d0f04e9d32fa0251ec5153b1d245f8cc905132fb2d1520f96f1cc849588db1",
+        "steps": 22170350
+      },
+      {
+        "start": 3583946,
+        "end": 3674508,
+        "decoded_sha256": "f082d8f1f678ce1c8b2f68fb16fbd62779628ad991ba3e1a559891ab8aecf608",
+        "steps": 3174303
+      },
+      {
+        "start": 3674586,
+        "end": 3692605,
+        "decoded_sha256": "e585fd89658b92c6340efe53e9af806da4c1fe48b467a8e79ba2d54a42e9eee8",
+        "steps": 643935
+      },
+      {
+        "start": 3719836,
+        "end": 3877244,
+        "decoded_sha256": "ba2d06f5898a20d16ac1fb08f81f6ec94881ba8735a0b446b8b8d3ea26c7622c",
+        "steps": 6318637
+      },
+      {
+        "start": 3960375,
+        "end": 4064996,
+        "decoded_sha256": "47d8a219fc902c7cc110b2488f7118254531f286bb6cee0cb9b9e05adbf12008",
+        "steps": 5939745
+      },
+      {
+        "start": 4082600,
+        "end": 4141795,
+        "decoded_sha256": "b6707608dab72bee95fe7a8ef0b1f63d7f6f4ada6dd693d935db52aa6f1f600d",
+        "steps": 3296958
+      },
+      {
+        "start": 4144221,
+        "end": 4183735,
+        "decoded_sha256": "acc6a10f9a9049315fd9106481020b41910f5f7434663e298025f22c503225e9",
+        "steps": 1783890
+      },
+      {
+        "start": 4193329,
+        "end": 4199182,
+        "decoded_sha256": "14fafadce116cf81c121331bc72f964fb8a49646596bfc0dc7132b6753e218f3",
+        "steps": 67563
+      },
+      {
+        "start": 4202061,
+        "end": 4251852,
+        "decoded_sha256": "f280b48da62d34f80b17dd87db157c09aad95195b32d03758bab4cd32a915805",
+        "steps": 2815464
+      },
+      {
+        "start": 4284745,
+        "end": 4425000,
+        "decoded_sha256": "bd264e72705dab1a7dbca818c07871ce31b634b7f7997940f60f8dbd0ab1b89b",
+        "steps": 7897966
+      },
+      {
+        "start": 4426980,
+        "end": 4431911,
+        "decoded_sha256": "3493f6bda937966a2c5fc5bbbd450088dacac389c0ce8dcdad517e4b5225793f",
+        "steps": 36183
+      },
+      {
+        "start": 4443835,
+        "end": 4791548,
+        "decoded_sha256": "e09cf51418d7d49e6b9f12bb66917d0beb5d2561d634b7b26cff705b8665b2f1",
+        "steps": 19071947
+      },
+      {
+        "start": 4835968,
+        "end": 4916728,
+        "decoded_sha256": "1046098bf95da00d40b990ae8ba4c72405148336a254228b6750c981a74aca53",
+        "steps": 3807168
+      },
+      {
+        "start": 4950735,
+        "end": 4982488,
+        "decoded_sha256": "f1e36616bd74e192775ada25b162c6ff2032c612d64eb6a0d44c361ddbef5817",
+        "steps": 1176376
+      },
+      {
+        "start": 5038622,
+        "end": 5044788,
+        "decoded_sha256": "e27d3a60b28dd4d00090eff6074d071f1aa957b82d556508dd2f705c8c87d9ac",
+        "steps": 147998
+      },
+      {
+        "start": 5255410,
+        "end": 5429885,
+        "decoded_sha256": "dc84b999d855d393ed94ec826d53f4f96042e2b00672ffef02afed2500a9098f",
+        "steps": 10117613
+      },
+      {
+        "start": 5490662,
+        "end": 5506921,
+        "decoded_sha256": "bf1e2b6df83abb26241fdf83d3d589701d57ad1d2659a04b34e1709e10b89566",
+        "steps": 523227
+      },
+      {
+        "start": 5574172,
+        "end": 5600801,
+        "decoded_sha256": "31bc9cba8db5327d89c7c7ed4a20c3b1a67425e57ae911a6ef6a4a0fb49e5c53",
+        "steps": 1204762
+      },
+      {
+        "start": 6263463,
+        "end": 6266330,
+        "decoded_sha256": "8141f1a64142f07c5edc36a34d5ed287f71f4ac2f1d6d1b0947701723e1a8460",
+        "steps": 10385
+      },
+      {
+        "start": 6431308,
+        "end": 6832402,
+        "decoded_sha256": "25011b8469b61b2f56a300be5e47b1a181edf14f5b9d022223204f4135c1645f",
+        "steps": 21287190
+      }
+    ]
+  },
+  "static_scan": {
+    "source_sha256": "40ad33f240b76b8770c7390bd5fc9c9ad79534c7b1a6585013f513c601ad3155",
+    "decoded_sha256": "0238d392b8cac9e98eb197f21779c627d214af78aa3516eb805f8c34b301592e",
+    "decoded_protected_blocks": 28,
+    "arrays_scanned": 2592,
+    "encoded_marker_matches": [
+      {
+        "value": "_devastxInjected",
+        "key": 75,
+        "start": 3863856
+      },
+      {
+        "value": "__autoPortAimbotPacketTransport",
+        "key": 75,
+        "start": 3871198
+      },
+      {
+        "value": "GROK_MOD",
+        "key": 75,
+        "start": 3871339
+      },
+      {
+        "value": "__isMyAimbotPlayer",
+        "key": 75,
+        "start": 3871374
+      },
+      {
+        "value": "BabaConfig",
+        "key": 75,
+        "start": 3871465
+      },
+      {
+        "value": "GetAllTargets",
+        "key": 75,
+        "start": 3871507
+      },
+      {
+        "value": "BestModMenuConfig",
+        "key": 75,
+        "start": 3885177
+      },
+      {
+        "value": "grok_dev",
+        "key": 75,
+        "start": 3885248
+      }
+    ],
+    "script_name_literals": [
+      "qYOh6D5MhvXhWnq.js"
+    ],
+    "literal_storage_getters": [
+      "LapaMauve",
+      "token",
+      "tokenId",
+      "userId",
+      "nickname",
+      "skin",
+      "serverVersion",
+      "lang",
+      "keyboardMap",
+      "isFx",
+      "isAudio",
+      "password",
+      "showLeaderboard",
+      "particles",
+      "inIframe",
+      "AimbotCfg_v7"
+    ],
+    "scope": "Bounded pure decoding and static inspection; absence from this scan is not proof against every dynamic expression"
+  },
+  "browser_checks": {
+    "scope": "Historical unchanged native check prefix; isolated browser with synthetic server-selection Proxy; no WebSocket",
+    "browsers": {
+      "chromium": {
+        "version": "154.0.8037.57",
+        "cases": [
+          {
+            "storage_key": null,
+            "flag": 0
+          },
+          {
+            "storage_key": "AimbotCfg_v7",
+            "flag": 0
+          },
+          {
+            "storage_key": "BestModMenuConfig",
+            "flag": 1
+          },
+          {
+            "storage_key": "grok_dev",
+            "flag": 1
+          },
+          {
+            "storage_key": "DevastILM:settings:v3",
+            "flag": 0
+          }
+        ]
+      },
+      "firefox": {
+        "version": "153.0",
+        "cases": [
+          {
+            "storage_key": null,
+            "flag": 0
+          },
+          {
+            "storage_key": "AimbotCfg_v7",
+            "flag": 0
+          },
+          {
+            "storage_key": "BestModMenuConfig",
+            "flag": 1
+          },
+          {
+            "storage_key": "grok_dev",
+            "flag": 1
+          },
+          {
+            "storage_key": "DevastILM:settings:v3",
+            "flag": 0
+          }
+        ]
+      }
+    }
+  },
+  "probe": {
+    "scope": "Unchanged connection-check prefix with resolved outer constants and synthetic server data; no socket construction; historical fixture substitutes a Proxy for dynamic selected-server property lookup",
+    "native_sha256": "0238d392b8cac9e98eb197f21779c627d214af78aa3516eb805f8c34b301592e",
+    "function_sha256": "0e521c94986c0b6400c4b80354336fb023aa6314fecf5ab9edd4458b30a3d525",
+    "prefix_sha256": "4bbb1a4cefe3772e5f13f5bebbd9f50e4f5547b0dff8c4d9071e870c4a22dcec",
+    "function_start": 3854219,
+    "function_end": 3922221,
+    "global_names": [
+      "__autoPortAimbotPacketTransport",
+      "GROK_MOD",
+      "__isMyAimbotPlayer",
+      "BabaConfig",
+      "GetAllTargets"
+    ],
+    "xor_key": 75
+  },
+  "comparison": {
+    "historical_expected_script_filename": "qYOh6D5MhvXhWnq.js",
+    "current_script_filename": "hym7DtRA3RCGo21.js",
+    "historical_aim_storage_key": "AimbotCfg_v7",
+    "historical_aim_storage_check": 0,
+    "known_historical_legacy_key": "BestModMenuConfig",
+    "known_historical_legacy_key_check": 1,
+    "current_settings_key": "DevastILM:settings:v3",
+    "current_settings_key_check": 0,
+    "interpretation": "Both versions contain the checked global names and historical storage keys. The control uses a storage namespace not flagged by that check; the current host now completes migration of its old flagged namespace. This comparison does not prove the server reason for an earlier death."
+  }
+}

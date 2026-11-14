@@ -86,6 +86,12 @@ def artifacts(root, output):
                     or not all(domain.get(key) is True for key in ('both_directions', 'short_arc_oracle', 'all_angles_canonical', 'fractional_precision_retained', 'invalid_angles_rejected'))
                     or not all(aim.get(key) is True for key in ('normalized_equivalent_states', 'exact_non_angle_states', 'canonical_outgoing_angles'))):
                 raise ValueError('Canonical aim angles were not verified in browser: ' + browser)
+        if 'stale-preflight-errors-preserve-current-connection' in contract.get('features', []):
+            ownership = report.get('native', {}).get('preflight_error_ownership', {})
+            if (ownership.get('status') != 'passed' or type(ownership.get('late_failure_close_calls')) is not int
+                    or ownership.get('late_failure_close_calls') != 0 or ownership.get('current_failure_close_calls') != 1
+                    or not all(ownership.get(key) is True for key in ('live_connection_preserved', 'stale_error_rejected', 'saved_identity_unchanged', 'features_disabled'))):
+                raise ValueError('Native preflight error ownership was not verified in browser: ' + browser)
         if 'native-rejection-stops-auto-reconnect' in contract.get('features', []):
             recovery = report.get('native', {}).get('rejection_recovery', {})
             if (recovery.get('status') != 'passed' or type(recovery.get('automatic_retries')) is not int

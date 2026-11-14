@@ -220,7 +220,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const operations=patchAnchors.map(({op,match})=>{
   const before=cur.source.slice(match.current.start,match.current.end);
   let after=match.callbackGuard?before:nativeFragment(op.after,match.local,require('./updater/project-fragment.cjs').preservedSpans(old,cur,match,op.after));
-  if(match.callbackGuard){const [url,ok]=match.current.params.map(p=>p.name),at=match.current.body.start+1-match.current.start;after=before.slice(0,at)+`if(__responsiveMod)${ok}=__responsiveMod.guardHandshakeCallback(${url},${ok});`+before.slice(at);}
+  if(match.callbackGuard){const [url,ok,fail]=match.current.params.map(p=>p.name),at=match.current.body.start+1-match.current.start;after=before.slice(0,at)+`if(__responsiveMod){${ok}=__responsiveMod.guardHandshakeCallback(${url},${ok});${fail}=__responsiveMod.guardHandshakeCallback(${url},${fail});}`+before.slice(at);}
   return {id:op.id,expected:1,before,after};
  }).concat(integrity.operations);
  const fn=cur.tree.body[0]?.expression?.callee;
