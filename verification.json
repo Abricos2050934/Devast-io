@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "66705e1a022e15931959935829c1872aa7eebbdd7b6174ab80e682c3ec5f6478",
+  "output_sha256": "3042c23e7f49245ef5cb99d64f2ed6242250c6c80bf115f8c3e4e34e04c793df",
   "static_ast": "passed",
   "aim_core": "active uploaded __BBY declarations and lifecycle",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -110,35 +110,29 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "4c36855bcdf048dcc3659dbe611296bebaf7be929a9f1310ff312443e78b1a9e",
+    "mod/responsive.js": "ef4656bc546912ff4531a2ac1e4b48f653761f11617fcbdb51afc839db0a68b6",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
     "mod/ilm-aim.js": "0e05f192c7cd4c4d95f6b07f2219e7d977e06a46875b14d3d635c99cfa041a46",
     "mod/ballistic-model.js": "d3b5c075b1db229e12a86d5db7731d0138a961eaa51d4116142eba2b478a9e7c"
   },
-  "mod_bundle_sha256": "719e0f24be2157663aefb1fc2d1e0abffcded07948ef7a0d92d52f7c264b9be5",
+  "mod_bundle_sha256": "bc185aec0f28b150d27ca70536534ff80dcbe634de353057200fedb49aa5edca",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
   "browser_version": "157.0.8103.0",
   "console_errors": [
-    "Access to XMLHttpRequest at 'https://losangeles3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://atlanta4.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://losangeles2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://frankfurt4.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://atlanta5.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://osaka2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
-    "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://sydney2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Access to XMLHttpRequest at 'https://atlanta3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
     "Access to XMLHttpRequest at 'https://atlanta2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://atlanta4.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Access to XMLHttpRequest at 'https://losangeles3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://sydney1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://frankfurt5.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://osaka3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED"
   ],
   "external_dependencies": {
@@ -198,7 +192,7 @@
     }
   },
   "client_build": {
-    "fingerprint": "f158f07e084d6a798689902ebb60bf72c80fb92040a8947aed7ef21e8cdd7694",
+    "fingerprint": "3cce0de7be9c2a2122b7bb05ac5dcc4f28ac137b3c93e13abbf203aad7d19f86",
     "nativeSha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9"
   },
   "native": {
@@ -1229,11 +1223,11 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-15T12:17:58.475Z",
+  "finished_at": "2026-11-15T21:14:36.239Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "66705e1a022e15931959935829c1872aa7eebbdd7b6174ab80e682c3ec5f6478",
+      "output_sha256": "3042c23e7f49245ef5cb99d64f2ed6242250c6c80bf115f8c3e4e34e04c793df",
       "browser_version": "157.0.8103.0",
       "native": {
         "canonical_aim": {
@@ -2318,7 +2312,7 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "66705e1a022e15931959935829c1872aa7eebbdd7b6174ab80e682c3ec5f6478",
+      "output_sha256": "3042c23e7f49245ef5cb99d64f2ed6242250c6c80bf115f8c3e4e34e04c793df",
       "browser_version": "153.0",
       "native": {
         "canonical_aim": {
@@ -3437,7 +3431,7 @@
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 285,
+    "node_tests": 288,
     "python_tests": 78
   }
 }
