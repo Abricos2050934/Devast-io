@@ -120,17 +120,25 @@
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
-  "browser_version": "154.0.8037.57",
+  "browser_version": "157.0.8103.0",
   "console_errors": [
-    "Access to XMLHttpRequest at 'https://atlanta3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Access to XMLHttpRequest at 'https://losangeles3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://atlanta4.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
     "Access to XMLHttpRequest at 'https://losangeles2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://frankfurt5.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Access to XMLHttpRequest at 'https://frankfurt4.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://atlanta5.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
     "Access to XMLHttpRequest at 'https://osaka2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://sydney1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Access to XMLHttpRequest at 'https://sydney2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://atlanta2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Access to XMLHttpRequest at 'https://atlanta4.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED"
   ],
   "external_dependencies": {
@@ -1041,6 +1049,8 @@
     "physical_text_entry": true,
     "enter_and_tab_commit": true,
     "slider_drag": true,
+    "slider_geometry_refreshed": true,
+    "slider_endpoints_verified": true,
     "native_angle_changes": true,
     "explicit_saved_values": true,
     "saved_after_reload": {
@@ -1219,12 +1229,12 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-14T14:17:24.997Z",
+  "finished_at": "2026-11-15T12:17:58.475Z",
   "browsers": {
     "chromium": {
       "status": "passed",
       "output_sha256": "66705e1a022e15931959935829c1872aa7eebbdd7b6174ab80e682c3ec5f6478",
-      "browser_version": "154.0.8037.57",
+      "browser_version": "157.0.8103.0",
       "native": {
         "canonical_aim": {
           "status": "passed",
@@ -2108,6 +2118,8 @@
         "physical_text_entry": true,
         "enter_and_tab_commit": true,
         "slider_drag": true,
+        "slider_geometry_refreshed": true,
+        "slider_endpoints_verified": true,
         "native_angle_changes": true,
         "explicit_saved_values": true,
         "saved_after_reload": {
@@ -3191,6 +3203,8 @@
         "physical_text_entry": true,
         "enter_and_tab_commit": true,
         "slider_drag": true,
+        "slider_geometry_refreshed": true,
+        "slider_endpoints_verified": true,
         "native_angle_changes": true,
         "explicit_saved_values": true,
         "saved_after_reload": {
