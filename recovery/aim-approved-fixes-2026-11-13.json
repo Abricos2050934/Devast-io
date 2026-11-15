@@ -4,6 +4,42 @@
   "changes": [
     {
       "file": "mod/responsive.js",
+      "reason": "bounded-pickup-request-evidence-with-frozen-end-snapshots",
+      "before": "    trimWire(now);return {scope:'native send calls returned without throwing; delivery is not confirmed and payloads are not recorded',totals:{...wireTotals},recentSeconds:wireSeconds.map(bucket=>({...bucket})),peakSecond:wirePeak?{...wirePeak}:null};\n  }\n  const trafficKeys=['AimBotEnabled','AimbotSpearEnabled','AdaptiveAimEnabled','JitterEnabled','AntiAimbot','autoFire','hidePlayerAngle','hideAimbotAngle','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','SpamChatEnabled','AntiKickEnabled'];\n  const trafficSettings=Object.fromEntries(trafficKeys.map(key=>[key,MOD[key]]));\n",
+      "after": "    trimWire(now);return {scope:'native send calls returned without throwing; delivery is not confirmed and payloads are not recorded',totals:{...wireTotals},recentSeconds:wireSeconds.map(bucket=>({...bucket})),peakSecond:wirePeak?{...wirePeak}:null};\n  }\n  const pickupRequests=[],pickupPrevious=new WeakMap();\n  function trimPickupRequests(now){while(pickupRequests.length&&(pickupRequests.length>128||now-pickupRequests[0].at>=120000))pickupRequests.shift();}\n  function recordPickupRequest(entity){\n    // Numeric gameplay metadata only. Do not copy chat, login or arbitrary packets.\n    try{\n    const now=performance.now(),socket=socketTrace?.id??null,me=B.world.ᅠᏧ‍;\n    const previous=pickupPrevious.get(entity),distance=Math.hypot(entity.x-me.x,entity.y-me.y);\n    const numeric=value=>Number.isFinite(value)?value:null;\n    const entry={at:Math.round(now),socket,id:numeric(entity.id),itemType:numeric(entity.Іࡈ５),\n      distance:Number.isFinite(distance)?Math.round(distance*100)/100:null,\n      nativeInteraction:numeric(me.І๔︊),nativeSelectedId:numeric(me.ιᄁ८),\n      repeatGapMs:previous&&previous.id===entity.id&&previous.socket===socket?Math.max(0,Math.round(now-previous.at)):null};\n    pickupPrevious.set(entity,{at:now,id:entity.id,socket});pickupRequests.push(entry);trimPickupRequests(now);\n    }catch(_){} // Recording must never interrupt native gameplay.\n  }\n  function pickupRequestInfo(){\n    trimPickupRequests(performance.now());\n    return {scope:'mod pickup calls accepted by the native sender; delivery and server acceptance are not confirmed',retentionMs:120000,maxEntries:128,requests:pickupRequests.map(entry=>({...entry}))};\n  }\n  const trafficKeys=['AimBotEnabled','AimbotSpearEnabled','AdaptiveAimEnabled','JitterEnabled','AntiAimbot','autoFire','hidePlayerAngle','hideAimbotAngle','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','SpamChatEnabled','AntiKickEnabled'];\n  const trafficSettings=Object.fromEntries(trafficKeys.map(key=>[key,MOD[key]]));\n"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "bounded-pickup-request-evidence-with-frozen-end-snapshots",
+      "before": "      frameGapMs:previousAnimationFrame===null?null:Math.max(0,Math.round(now-previousAnimationFrame)),\n      health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details};\n    connectionEvents.push(event);\n    if(type==='server-death'&&firstServerDeath===null)firstServerDeath=event;\n",
+      "after": "      frameGapMs:previousAnimationFrame===null?null:Math.max(0,Math.round(now-previousAnimationFrame)),\n      health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details};\n    if(['server-death','socket-close','native-network-error'].includes(type)){\n      const recent=pickupRequests.filter(entry=>entry.socket===event.transport?.id&&event.at-entry.at>=0&&event.at-entry.at<10000).slice(-32);\n      if(recent.length)event.pickupRequestsBeforeEnd=recent.map(entry=>({...entry}));\n    }\n    connectionEvents.push(event);\n    if(type==='server-death'&&firstServerDeath===null)firstServerDeath=event;\n"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "bounded-pickup-request-evidence-with-frozen-end-snapshots",
+      "before": "      const loot = records.filter(r => r.type === B.categories.loot && (r.e.x - me.x) ** 2 + (r.e.y - me.y) ** 2 < 50000 && lootAllowed(r.e));\n      loot.sort((a, b) => (a.e.x - me.x) ** 2 + (a.e.y - me.y) ** 2 - ((b.e.x - me.x) ** 2 + (b.e.y - me.y) ** 2));\n      for (const {e} of loot.slice(0, 1)) __send([12, e.id]);\n    }\n    if (MOD.AutoTakeEnabled && Aimbot.mouseDown && me.ᴉᄁ͏ === 1 && now - lastTake >= 200 && automationReady('take')) {\n",
+      "after": "      const loot = records.filter(r => r.type === B.categories.loot && (r.e.x - me.x) ** 2 + (r.e.y - me.y) ** 2 < 50000 && lootAllowed(r.e));\n      loot.sort((a, b) => (a.e.x - me.x) ** 2 + (a.e.y - me.y) ** 2 - ((b.e.x - me.x) ** 2 + (b.e.y - me.y) ** 2));\n      for (const {e} of loot.slice(0, 1)) if(__send([12,e.id]))recordPickupRequest(e);\n    }\n    if (MOD.AutoTakeEnabled && Aimbot.mouseDown && me.ᴉᄁ͏ === 1 && now - lastTake >= 200 && automationReady('take')) {\n"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "bounded-pickup-request-evidence-with-frozen-end-snapshots",
+      "before": "        // Resume at this unsent drop after the transport drains.\n        if(!automationReady('loot')){visited--;break;}\n        if(__send([12,e.id]))sent++;\n      }\n    }\n",
+      "after": "        // Resume at this unsent drop after the transport drains.\n        if(!automationReady('loot')){visited--;break;}\n        if(__send([12,e.id])){recordPickupRequest(e);sent++;}\n      }\n    }\n"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "bounded-pickup-request-evidence-with-frozen-end-snapshots",
+      "before": "  }\n  function connectionInfo() {\n    const copyEvent=event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}});\n    const stored = {};\n    for (const key of ['token','tokenId','userId','accountToken']) {\n",
+      "after": "  }\n  function connectionInfo() {\n    const copyEvent=event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s},...(event.pickupRequestsBeforeEnd?{pickupRequestsBeforeEnd:event.pickupRequestsBeforeEnd.map(entry=>({...entry}))}:{})});\n    const stored = {};\n    for (const key of ['token','tokenId','userId','accountToken']) {\n"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "bounded-pickup-request-evidence-with-frozen-end-snapshots",
+      "before": "      socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,\n      transport:socketTraffic(),\n      nativeWireTraffic:wireTrafficInfo(),\n      combatNow:combatCommands(),\n      animationTiming:animationTiming(),\n",
+      "after": "      socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,\n      transport:socketTraffic(),\n      nativeWireTraffic:wireTrafficInfo(),pickupRequests:pickupRequestInfo(),\n      combatNow:combatCommands(),\n      animationTiming:animationTiming(),\n"
+    },
+    {
+      "file": "mod/responsive.js",
       "reason": "guard-both-native-preflight-success-and-failure-by-login-generation",
       "before": "        if (!nativeLoginDepth || typeof args[1] !== 'function') return original.apply(this,args);\n        args[1] = guardHandshakeCallback(args[0],args[1]);\n        return original.apply(this,args);",
       "after": "        if (!nativeLoginDepth) return original.apply(this,args);\n        for(const index of [1,2])if(typeof args[index]==='function')args[index]=guardHandshakeCallback(args[0],args[index]);\n        return original.apply(this,args);"

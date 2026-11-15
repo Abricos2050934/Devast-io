@@ -36,3 +36,46 @@ test('automated chat contributes opcode counts without recording message content
   const r=f.mod.connectionInfo();assert.equal(r.modCommandsByOpcode[1],2);assert.equal(r.modTraffic.seconds.reduce((n,b)=>n+(b.byOpcode[1]||0),0),2);assert.ok(!JSON.stringify(r).includes(text));
  }finally{f.mod.dispose();}
 });
+
+test('pickup evidence identifies repeated drops without changing packet order or logging account data',()=>{
+ const f=fixture({saved:{token:'private-account-token'}});try{
+  f.B.synchronizedRender=true;const items=drops().slice(0,2);items[0].privateText='private-entity-text';scene(f,2,items);
+  Object.assign(f.world['ᅠᏧ‍'],{'І๔︊':0,'ιᄁ८':10});f.mod.observeSocket({readyState:1,bufferedAmount:0});f.mod.setSetting('FAutoLootEnabled',true);
+  for(const now of [0,25]){f.setClock(now);f.mod.render(now);}
+  assert.deepEqual(f.packets,[[12,10],[12,11],[12,10],[12,11]]);
+  let r=f.mod.connectionInfo(),requests=r.pickupRequests.requests;
+  assert.deepEqual(Array.from(requests,e=>e.repeatGapMs),[null,null,25,25]);
+  assert.equal(requests[0].distance,10);assert.equal(requests[0].nativeSelectedId,10);assert.equal(requests[0].nativeInteraction,0);
+  assert.equal(requests.length,r.modCommandsByOpcode[12]);
+  assert.ok(!JSON.stringify(r).includes('private-account-token'));assert.ok(!JSON.stringify(r).includes('private-entity-text'));
+  requests[0].id=999;assert.equal(f.mod.connectionInfo().pickupRequests.requests[0].id,10);
+ }finally{f.mod.dispose();}
+});
+
+test('death preserves pickup evidence after expiry and later sessions cannot overwrite the first snapshot',()=>{
+ const f=fixture();try{
+  f.B.synchronizedRender=true;scene(f,2,[drops()[0]]);f.mod.observeSocket({readyState:1,bufferedAmount:0});f.mod.setSetting('FAutoLootEnabled',true);
+  f.setClock(1000.6);f.mod.render(1000.6);f.mod.setSetting('FAutoLootEnabled',false);
+  f.setClock(1000.8);f.mod.observeDeath(new Uint8Array([27,0,1]),27);
+  assert.equal(f.mod.connectionInfo().firstServerDeath.pickupRequestsBeforeEnd[0].id,10);
+  f.setClock(200000);let r=f.mod.connectionInfo();assert.equal(r.pickupRequests.requests.length,0);assert.equal(r.firstServerDeath.pickupRequestsBeforeEnd.length,1);
+  r.firstServerDeath.pickupRequestsBeforeEnd[0].id=999;assert.equal(f.mod.connectionInfo().firstServerDeath.pickupRequestsBeforeEnd[0].id,10);
+  for(let i=0;i<20;i++){f.mod.observeSocket({readyState:1,bufferedAmount:0});f.mod.observeDeath(new Uint8Array([27,0,0]),27);}
+  r=f.mod.connectionInfo();assert.equal(r.events.length,12);assert.equal(r.firstServerDeath.pickupRequestsBeforeEnd[0].id,10);
+  assert.ok(r.events.every(e=>!e.pickupRequestsBeforeEnd),'Old pickup evidence leaked into another socket');
+ }finally{f.mod.dispose();}
+});
+
+test('pickup evidence stays bounded, separates reused IDs and sockets, and excludes blocked sends',()=>{
+ const f=fixture();try{
+  f.B.synchronizedRender=true;const item=drops()[0];scene(f,2,[item]);const socket={readyState:1,bufferedAmount:4096};
+  f.mod.observeSocket(socket);f.mod.setSetting('FAutoLootEnabled',true);f.setClock(0);f.mod.render(0);
+  assert.equal(f.mod.connectionInfo().pickupRequests.requests.length,0);assert.equal(f.packets.length,0);
+  socket.bufferedAmount=0;for(let i=0;i<150;i++){f.setClock(i*25);f.mod.render(i*25);}
+  let requests=f.mod.connectionInfo().pickupRequests.requests;assert.equal(requests.length,128);assert.equal(requests[0].at,550);assert.equal(f.packets.length,150);
+  item.id=11;f.setClock(4000);f.mod.render(4000);assert.equal(f.mod.connectionInfo().pickupRequests.requests.at(-1).repeatGapMs,null);
+  f.mod.observeSocket({readyState:1,bufferedAmount:0});f.setClock(4025);f.mod.render(4025);
+  requests=f.mod.connectionInfo().pickupRequests.requests;assert.equal(requests.at(-1).repeatGapMs,null);assert.notEqual(requests.at(-1).socket,requests.at(-2).socket);
+  f.mod.setSetting('FAutoLootEnabled',false);f.setClock(124025);assert.equal(f.mod.connectionInfo().pickupRequests.requests.length,0);
+ }finally{f.mod.dispose();}
+});

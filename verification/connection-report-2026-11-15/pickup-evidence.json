@@ -1,0 +1,303 @@
+{
+  "scope": "Read-only comparison of original native signature functions in local browser fixtures, plus bounded pickup diagnostics; not a proven kick fix",
+  "input_report_sha256": "0ab9b21371f7a3cf360e4f766dddfd5a042eba53e52db244073c6c080bb245e7",
+  "reported_native_sha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9",
+  "last_death": {
+    "at": 1808554,
+    "session_duration_ms": 1625341,
+    "local_hud_health": 255,
+    "prefix": "1b 00 06",
+    "receive_gap_ms": 1,
+    "buffered_bytes": 0
+  },
+  "original_signature_parity": {
+    "chromium": {
+      "status": "passed",
+      "browser_version": "151.0.7922.34",
+      "samples": [
+        {
+          "signer": 0,
+          "input": "integrity-fixture",
+          "match": true
+        },
+        {
+          "signer": 0,
+          "input": "",
+          "match": true
+        },
+        {
+          "signer": 0,
+          "input": "0",
+          "match": true
+        },
+        {
+          "signer": 0,
+          "input": "abc",
+          "match": true
+        },
+        {
+          "signer": 0,
+          "input": "тест",
+          "match": true
+        },
+        {
+          "signer": 1,
+          "input": "integrity-fixture",
+          "match": true
+        },
+        {
+          "signer": 1,
+          "input": "",
+          "match": true
+        },
+        {
+          "signer": 1,
+          "input": "0",
+          "match": true
+        },
+        {
+          "signer": 1,
+          "input": "abc",
+          "match": true
+        },
+        {
+          "signer": 1,
+          "input": "тест",
+          "match": true
+        },
+        {
+          "signer": 2,
+          "input": "integrity-fixture",
+          "match": true
+        },
+        {
+          "signer": 2,
+          "input": "",
+          "match": true
+        },
+        {
+          "signer": 2,
+          "input": "0",
+          "match": true
+        },
+        {
+          "signer": 2,
+          "input": "abc",
+          "match": true
+        },
+        {
+          "signer": 2,
+          "input": "тест",
+          "match": true
+        }
+      ],
+      "live_server": false
+    },
+    "firefox": {
+      "status": "passed",
+      "browser_version": "153.0",
+      "samples": [
+        {
+          "signer": 0,
+          "input": "integrity-fixture",
+          "match": true,
+          "control_error": null,
+          "changed_fields": [
+            "Ꮷ︁︃",
+            "ᴉޅα",
+            "ᴏ٣５"
+          ]
+        },
+        {
+          "signer": 0,
+          "input": "",
+          "match": true,
+          "control_error": {
+            "name": "TypeError",
+            "message": "can't access property \"split\", αނᄇ[ᴇᚃߎ][ㅤ٢ᄃ](...)[(new αނᄇ[ᴀᚅո](...))[ࡀ٢١](...)] is undefined"
+          },
+          "changed_fields": []
+        },
+        {
+          "signer": 0,
+          "input": "0",
+          "match": true,
+          "control_error": null,
+          "changed_fields": [
+            "Ꮷ︁︃",
+            "ᴉޅα",
+            "ᴏ٣５"
+          ]
+        },
+        {
+          "signer": 0,
+          "input": "abc",
+          "match": true,
+          "control_error": null,
+          "changed_fields": [
+            "Ꮷ︁︃",
+            "ᴉޅα",
+            "ᴏ٣５"
+          ]
+        },
+        {
+          "signer": 0,
+          "input": "тест",
+          "match": true,
+          "control_error": null,
+          "changed_fields": [
+            "Ꮷ︁︃",
+            "ᴉޅα",
+            "ᴏ٣５"
+          ]
+        },
+        {
+          "signer": 1,
+          "input": "integrity-fixture",
+          "match": true,
+          "control_error": null,
+          "changed_fields": [
+            "ⲣι٣",
+            "ᴑр̉",
+            "ᴏ٣５"
+          ]
+        },
+        {
+          "signer": 1,
+          "input": "",
+          "match": true,
+          "control_error": {
+            "name": "TypeError",
+            "message": "can't access property \"split\", (intermediate value)(...)[(intermediate value)()] is undefined"
+          },
+          "changed_fields": []
+        },
+        {
+          "signer": 1,
+          "input": "0",
+          "match": true,
+          "control_error": {
+            "name": "TypeError",
+            "message": "can't access property \"split\", (intermediate value)(...)[(intermediate value)()] is undefined"
+          },
+          "changed_fields": []
+        },
+        {
+          "signer": 1,
+          "input": "abc",
+          "match": true,
+          "control_error": null,
+          "changed_fields": [
+            "ⲣι٣",
+            "ᴑр̉",
+            "ᴏ٣５"
+          ]
+        },
+        {
+          "signer": 1,
+          "input": "тест",
+          "match": true,
+          "control_error": null,
+          "changed_fields": [
+            "ⲣι٣",
+            "ᴑр̉",
+            "ᴏ٣５"
+          ]
+        },
+        {
+          "signer": 2,
+          "input": "integrity-fixture",
+          "match": true,
+          "control_error": null,
+          "changed_fields": [
+            "ㅤ͢७",
+            "ﾠࡃ͏"
+          ]
+        },
+        {
+          "signer": 2,
+          "input": "",
+          "match": true,
+          "control_error": {
+            "name": "TypeError",
+            "message": "can't access property \"split\", (intermediate value)() is undefined"
+          },
+          "changed_fields": []
+        },
+        {
+          "signer": 2,
+          "input": "0",
+          "match": true,
+          "control_error": {
+            "name": "TypeError",
+            "message": "can't access property \"split\", (intermediate value)() is undefined"
+          },
+          "changed_fields": []
+        },
+        {
+          "signer": 2,
+          "input": "abc",
+          "match": true,
+          "control_error": null,
+          "changed_fields": [
+            "ㅤ͢७",
+            "ﾠࡃ͏"
+          ]
+        },
+        {
+          "signer": 2,
+          "input": "тест",
+          "match": true,
+          "control_error": null,
+          "changed_fields": [
+            "ㅤ͢७",
+            "ﾠࡃ͏"
+          ]
+        }
+      ],
+      "live_server": false
+    }
+  },
+  "pickup_repetition_fixture": {
+    "scope": "Current mod against one unchanged fixture drop; not a live-server test",
+    "duration_ms": 1000,
+    "requests": 40,
+    "unique_entity_ids": [
+      10
+    ],
+    "all_pickups": true,
+    "server_kick_reproduced": false,
+    "limit": "Uploaded reports do not retain pickup IDs or per-request acknowledgement; this does not prove repeated IDs occurred in the reported session"
+  },
+  "health_fixture": {
+    "scope": "Actual native HUD prediction and death functions with fixture state; no live server",
+    "before": 250,
+    "predicted": 255,
+    "afterDeath": 255,
+    "deathState": 128,
+    "errorCalls": 1,
+    "resultStatistic": 6,
+    "interpretation": "The reported health is a locally predicted HUD value; the death packet does not overwrite it or carry a health or enforcement reason"
+  },
+  "server_rule_identified": false,
+  "reported_kick_fixed": false,
+  "production_behavior_change": "Numeric diagnostic metadata only; pickup selection, cadence and packets preserved",
+  "diagnostic_release": {
+    "release": "929de39c5134e07dabbc620add3ac8a50c7311b8bc8423de0a4a34aa9a187be2",
+    "output_sha256": "3042c23e7f49245ef5cb99d64f2ed6242250c6c80bf115f8c3e4e34e04c793df",
+    "native_sha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9",
+    "regression": {
+      "status": "passed",
+      "command": "npm test",
+      "node_tests": 288,
+      "python_tests": 78
+    },
+    "candidate_tests": 212,
+    "browsers": {
+      "chromium": "passed",
+      "firefox": "passed"
+    },
+    "live_server": "not_tested",
+    "kick_fixed": false
+  }
+}

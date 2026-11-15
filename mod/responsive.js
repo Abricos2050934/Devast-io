@@ -887,6 +887,25 @@ function __installDevastMod(B) {
   function wireTrafficInfo(now=performance.now()){
     trimWire(now);return {scope:'native send calls returned without throwing; delivery is not confirmed and payloads are not recorded',totals:{...wireTotals},recentSeconds:wireSeconds.map(bucket=>({...bucket})),peakSecond:wirePeak?{...wirePeak}:null};
   }
+  const pickupRequests=[],pickupPrevious=new WeakMap();
+  function trimPickupRequests(now){while(pickupRequests.length&&(pickupRequests.length>128||now-pickupRequests[0].at>=120000))pickupRequests.shift();}
+  function recordPickupRequest(entity){
+    // Numeric gameplay metadata only. Do not copy chat, login or arbitrary packets.
+    try{
+    const now=performance.now(),socket=socketTrace?.id??null,me=B.world.ᅠᏧ‍;
+    const previous=pickupPrevious.get(entity),distance=Math.hypot(entity.x-me.x,entity.y-me.y);
+    const numeric=value=>Number.isFinite(value)?value:null;
+    const entry={at:Math.round(now),socket,id:numeric(entity.id),itemType:numeric(entity.Іࡈ５),
+      distance:Number.isFinite(distance)?Math.round(distance*100)/100:null,
+      nativeInteraction:numeric(me.І๔︊),nativeSelectedId:numeric(me.ιᄁ८),
+      repeatGapMs:previous&&previous.id===entity.id&&previous.socket===socket?Math.max(0,Math.round(now-previous.at)):null};
+    pickupPrevious.set(entity,{at:now,id:entity.id,socket});pickupRequests.push(entry);trimPickupRequests(now);
+    }catch(_){} // Recording must never interrupt native gameplay.
+  }
+  function pickupRequestInfo(){
+    trimPickupRequests(performance.now());
+    return {scope:'mod pickup calls accepted by the native sender; delivery and server acceptance are not confirmed',retentionMs:120000,maxEntries:128,requests:pickupRequests.map(entry=>({...entry}))};
+  }
   const trafficKeys=['AimBotEnabled','AimbotSpearEnabled','AdaptiveAimEnabled','JitterEnabled','AntiAimbot','autoFire','hidePlayerAngle','hideAimbotAngle','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','SpamChatEnabled','AntiKickEnabled'];
   const trafficSettings=Object.fromEntries(trafficKeys.map(key=>[key,MOD[key]]));
   const trafficChanges=[{at:Math.round(performance.now()),settings:{...trafficSettings}}],trafficSeconds=[];
@@ -945,6 +964,10 @@ function __installDevastMod(B) {
       transport:socketTraffic(now),pageHidden:!!document.hidden,
       frameGapMs:previousAnimationFrame===null?null:Math.max(0,Math.round(now-previousAnimationFrame)),
       health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details};
+    if(['server-death','socket-close','native-network-error'].includes(type)){
+      const recent=pickupRequests.filter(entry=>entry.socket===event.transport?.id&&event.at-entry.at>=0&&event.at-entry.at<10000).slice(-32);
+      if(recent.length)event.pickupRequestsBeforeEnd=recent.map(entry=>({...entry}));
+    }
     connectionEvents.push(event);
     if(type==='server-death'&&firstServerDeath===null)firstServerDeath=event;
     if(firstConnectionEnd===null&&event.transport?.receivedMessages>0&&(type==='server-death'||type==='socket-close'||type==='native-network-error'&&event.failureCode>0))firstConnectionEnd=event;
@@ -1287,7 +1310,7 @@ function __installDevastMod(B) {
       lastLoot = now;
       const loot = records.filter(r => r.type === B.categories.loot && (r.e.x - me.x) ** 2 + (r.e.y - me.y) ** 2 < 50000 && lootAllowed(r.e));
       loot.sort((a, b) => (a.e.x - me.x) ** 2 + (a.e.y - me.y) ** 2 - ((b.e.x - me.x) ** 2 + (b.e.y - me.y) ** 2));
-      for (const {e} of loot.slice(0, 1)) __send([12, e.id]);
+      for (const {e} of loot.slice(0, 1)) if(__send([12,e.id]))recordPickupRequest(e);
     }
     if (MOD.AutoTakeEnabled && Aimbot.mouseDown && me.ᴉᄁ͏ === 1 && now - lastTake >= 200 && automationReady('take')) {
       const slots = me.ᴘϲ๓, count = me.ᅠܓ̃;
@@ -1371,7 +1394,7 @@ function __installDevastMod(B) {
         // The preceding request can fill the queue during this same burst.
         // Resume at this unsent drop after the transport drains.
         if(!automationReady('loot')){visited--;break;}
-        if(__send([12,e.id]))sent++;
+        if(__send([12,e.id])){recordPickupRequest(e);sent++;}
       }
     }
     fastLootCursor=(fastLootCursor+visited)%border.border;
@@ -1702,7 +1725,7 @@ function __installDevastMod(B) {
     };
   }
   function connectionInfo() {
-    const copyEvent=event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s}});
+    const copyEvent=event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s},...(event.pickupRequestsBeforeEnd?{pickupRequestsBeforeEnd:event.pickupRequestsBeforeEnd.map(entry=>({...entry}))}:{})});
     const stored = {};
     for (const key of ['token','tokenId','userId','accountToken']) {
       try { stored[key] = !!localStorage.getItem(key); } catch (_) { stored[key] = null; }
@@ -1717,7 +1740,7 @@ function __installDevastMod(B) {
       adWaiting:!!B.adWaiting?.(),socketState:connectionSocket?.readyState ?? null,
       socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
       transport:socketTraffic(),
-      nativeWireTraffic:wireTrafficInfo(),
+      nativeWireTraffic:wireTrafficInfo(),pickupRequests:pickupRequestInfo(),
       combatNow:combatCommands(),
       animationTiming:animationTiming(),
       modCommandsByOpcode:{...diagnostics.commandsByOpcode},
