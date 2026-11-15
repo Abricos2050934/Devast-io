@@ -1,5 +1,5 @@
 async function verifyPhysical(page,symbols) {
- const assert=require('node:assert/strict'),results=[];
+ const assert=require('node:assert/strict'),results=[],dragTrace=[];
  await page.evaluate(s=>{
   window.__numericPauseWorld=true;window.__numericClock=10000;Date.now=()=>window.__numericClock;
   const m=window.__devastMod,n=window.__updateProbe,self=n.world[s['ᅠᏧ‍']];
@@ -20,19 +20,37 @@ async function verifyPhysical(page,symbols) {
   },{label,key});results.push(r);return r;
  }
  async function type(key,value,commit){const locator=page.locator('[data-aim-numeric-test="'+key+'"]');await locator.scrollIntoViewIfNeeded();await locator.click();await locator.press('ControlOrMeta+A');await locator.pressSequentially(String(value),{delay:20});if(commit)await locator.press(commit);return sample('typed '+value+' '+(commit||'uncommitted'),key);}
+ try{
  const uncommitted=await type('distanceCoefficient',10,null);assert.equal(uncommitted.value,10);assert.equal(uncommitted.saved,10);
  const entered=await type('distanceCoefficient',10,'Enter'),tabbed=await type('distanceCoefficient',1000,'Tab');assert.equal(tabbed.saved,1000);assert.notEqual(entered.angle,tabbed.angle);assert.notDeepEqual(entered.line,tabbed.line);assert.notEqual(entered.native_angle,tabbed.native_angle);
  const offset0=await type('offsetCoefficient',0,'Enter'),offset3=await type('offsetCoefficient',3,'Tab');assert.equal(offset3.value,3);assert.notEqual(offset0.angle,offset3.angle);
  const smooth0=await type('aimSmooth',.05,'Enter'),smooth1=await type('aimSmooth',1,'Tab');assert.notEqual(smooth0.angle,smooth1.angle);
  const cap40=await type('leadCap',40,'Enter'),cap500=await type('leadCap',500,'Tab');assert.notEqual(cap40.angle,cap500.angle);
- const slider=page.locator('[data-aim-slider-test="distanceCoefficient"]');await slider.scrollIntoViewIfNeeded();const bounds=await slider.boundingBox();assert.ok(bounds);
- for(const fraction of [.02,.98]){await page.mouse.move(bounds.x+bounds.width*.5,bounds.y+bounds.height*.5);await page.mouse.down();await page.mouse.move(bounds.x+bounds.width*fraction,bounds.y+bounds.height*.5,{steps:5});await page.mouse.up();await sample('slider '+fraction,'distanceCoefficient');}
- assert.notEqual(results.at(-2).value,results.at(-1).value);assert.notEqual(results.at(-2).angle,results.at(-1).angle);
+ const slider=page.locator('[data-aim-slider-test="distanceCoefficient"]');
+ // Tab can leave another input focused inside the shadow root. Blur that
+ // input before scrolling, and locate the slider again for every pointer step.
+ // A prior drag or focus change can move this scrollable panel on the runner.
+ await slider.evaluate(el=>el.getRootNode().activeElement?.blur());
+ for(const fraction of [.02,.98]){
+  await slider.scrollIntoViewIfNeeded();await slider.hover();
+  const start=await slider.boundingBox();assert.ok(start&&start.width>0&&start.height>0,'Slider has no visible geometry');
+  dragTrace.push({fraction,start});await page.mouse.down();
+  try{for(let step=1;step<=5;step++){
+   const bounds=await slider.boundingBox();assert.ok(bounds&&bounds.width>0&&bounds.height>0,'Slider disappeared during drag');
+   const at=.5+(fraction-.5)*step/5;
+   await page.mouse.move(bounds.x+bounds.width*at,bounds.y+bounds.height*.5);
+  }}finally{await page.mouse.up();}
+  await sample('slider '+fraction,'distanceCoefficient');
+ }
+ const low=results.at(-2),high=results.at(-1);
+ assert.ok(low.value<=100&&high.value>=900&&low.value<high.value,'Slider drag did not reach opposite ends: '+JSON.stringify({low,high,dragTrace}));
+ assert.notEqual(low.angle,high.angle);
  const keys=['distanceCoefficient','offsetCoefficient','aimStick','aimSmooth','leadCap','aimHoldMs','mouseFov','mouseFovEnable','lockId'];
  await page.evaluate(()=>{window.__numericTransport.restore();const m=window.__devastMod;for(const[key,value]of Object.entries({AimBotEnabled:false,distanceCoefficient:100,offsetCoefficient:.1,aimStick:140,aimSmooth:.62,leadCap:220,mouseFov:600,mouseFovEnable:false}))m.setSetting(key,value);});
  const saved=await page.evaluate(keys=>Object.fromEntries(keys.map(k=>[k,window.__devastMod.settings[k]])),keys);
  await page.reload({waitUntil:'domcontentloaded'});await page.waitForFunction(()=>!!window.__devastMod?.menu);
  const restored=await page.evaluate(keys=>Object.fromEntries(keys.map(k=>[k,window.__devastMod.settings[k]])),keys);assert.deepEqual(restored,saved);
- return {status:'passed',engine:'message27-bby',physical_text_entry:true,enter_and_tab_commit:true,slider_drag:true,native_angle_changes:true,explicit_saved_values:true,saved_after_reload:restored,samples:results};
+ return {status:'passed',engine:'message27-bby',physical_text_entry:true,enter_and_tab_commit:true,slider_drag:true,slider_geometry_refreshed:true,slider_endpoints_verified:true,native_angle_changes:true,explicit_saved_values:true,saved_after_reload:restored,samples:results};
+ }catch(error){error.physicalNumeric={samples:results.slice(-4),dragTrace};throw error;}
 }
 module.exports={verifyPhysical};

@@ -66,6 +66,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: devast-auto-update
-          path: dist/auto-update/
+          # Keep metadata and the latest failed candidate's diagnostics;
+          # uploading every cached historical version had grown past 400 MB.
+          path: |
+            dist/auto-update/current.json
+            dist/auto-update/status.json
+            .updater/failed-latest/*.json
+            .updater/failed-latest/*.log
+          include-hidden-files: true
           if-no-files-found: ignore
           retention-days: 14
