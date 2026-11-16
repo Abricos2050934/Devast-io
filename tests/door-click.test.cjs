@@ -90,3 +90,17 @@ test('a different door update cannot confirm the request; timeout is visible and
   assert.equal(f.mod.doorInteraction.message,'Нет подтверждения от двери');assert.deepEqual(f.packets,[[15,21,1]]);
  }finally{f.mod.dispose();}
 });
+
+test('direct door interaction rejects non-open sockets and a terminal session',()=>{
+ for(const terminal of ['connecting','closing','closed','death','awaiting-play']){
+  const {f,press}=setup();try{
+   const socket={readyState:1,bufferedAmount:0};f.mod.observeSocket(socket);
+   if(terminal==='death')f.mod.observeDeath(new Uint8Array([27,0,6]),27);
+   else if(terminal==='awaiting-play')f.mod.reconnect.awaitingPlay=true;
+   else socket.readyState={connecting:0,closing:2,closed:3}[terminal];
+   assert.deepEqual(press(),{prevented:false,stopped:false},terminal);
+   assert.deepEqual(f.packets,[],terminal);
+   assert.equal(f.mod.doorInteraction.pending,false,terminal);
+  }finally{f.mod.dispose();}
+ }
+});

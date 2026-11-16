@@ -936,6 +936,8 @@ function __installDevastMod(B) {
   const automationDeferrals={aim:0,loot:0,build:0,take:0,chat:0,keepAlive:0};
   const AIM_BUFFER_HIGH_WATER=4096;
   function automationReady(kind) {
+    // Chat uses its native sender rather than __send, so gate it here too.
+    if(reconnect.sessionEnded||reconnect.awaitingPlay){automationDeferrals[kind]++;return false;}
     if(!connectionSocket)return true;
     if(connectionSocket.readyState===1){
       const bytes=connectionSocket.bufferedAmount;
@@ -1068,7 +1070,9 @@ function __installDevastMod(B) {
   let lastSentAngle = null,lastSentPlayer = 0,automaticDirection=false;
   const appliedToggles={AimBotEnabled:MOD.AimBotEnabled,JitterEnabled:MOD.JitterEnabled};
   function __send(value, forceAngle = false, sourceAngle = false) {
-    if (!playing()) return false;
+    // Native state can lag a terminal session event or socket close.
+    // Check at the shared boundary, including direct cursor interactions.
+    if (!playing() || reconnect.sessionEnded || reconnect.awaitingPlay || connectionSocket && connectionSocket.readyState !== 1) return false;
     const packet = typeof value === 'string' ? JSON.parse(value) : value;
     if (!Array.isArray(packet) || packet.length === 0 || packet.some(x => typeof x !== 'number' || !Number.isFinite(x))) return false;
     if (packet[0] === 6) {

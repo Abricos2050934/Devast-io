@@ -53,3 +53,21 @@ test('slow loot, container take, chat and keepalive wait for writable transport 
   assert.deepEqual(f.packets,[[12,10],[27,0],[0]]);assert.deepEqual(messages,['test']);
  }finally{f.mod.dispose();}
 });
+
+test('terminal session blocks loot, build, container take, keepalive and native chat before native state catches up',()=>{
+ const f=fixture(),messages=[];try{
+  f.B.synchronizedRender=true;
+  scene(f,2,[{id:10,x:10,y:0,'е̝ހ':0,'Іࡈ５':6}]);
+  Object.assign(f.world['ᅠᏧ‍'],{'ε︁ᚂ':1,'օⲥᚁ':1,'α०ᚂ':3,'ρⲅ️':4,'ᴎ︆ࡉ':5,'ᴉᄁ͏':1,'ᴘϲ๓':[[6,1]],'ᅠܓ̃':1});
+  f.network['іߐ̸']=text=>{messages.push(text);return 0;};
+  f.mod.observeSocket({readyState:1,bufferedAmount:0});
+  for(const key of ['FAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','AntiKickEnabled','SpamChatEnabled'])f.mod.setSetting(key,true);
+  f.mod.setSetting('SpamChatText','test');
+  f.mod.render(1000);assert.ok(f.packets.some(p=>p[0]===12));assert.ok(f.packets.some(p=>p[0]===14));
+  f.packets.length=0;f.mod.observeDeath(new Uint8Array([27,0,6]),27);
+  assert.equal(f.network.state,1,'Exercise terminal flags before native state changes');
+  f.mod.aim.mouseDown=true;f.setClock(10000);f.mod.step(10000);f.mod.render(10000);
+  assert.deepEqual(f.packets,[]);assert.deepEqual(messages,[]);
+  assert.equal(f.mod.connectionInfo().awaitingPlay,true);
+ }finally{f.mod.dispose();}
+});
