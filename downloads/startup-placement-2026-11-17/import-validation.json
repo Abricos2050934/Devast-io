@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "upstream": "https://github.com/kylepaulsen/ResourceOverride/blob/master/src/ui/importExport.js",
+  "old_config": "rejected",
+  "corrected_config": "Load Succeeded!",
+  "embedded_js": "exact_match",
+  "rule_match": "exact_game_script_only"
+}

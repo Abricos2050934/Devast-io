@@ -35,5 +35,14 @@
     "status": "passed",
     "browser": "chromium",
     "page_errors": []
+  },
+  "resource_override_import": {
+    "status": "passed",
+    "upstream": "https://github.com/kylepaulsen/ResourceOverride/blob/master/src/ui/importExport.js",
+    "old_config": "rejected",
+    "corrected_config": "Load Succeeded!",
+    "embedded_js": "exact_match",
+    "rule_match": "exact_game_script_only",
+    "json_sha256": "f631a0c649cf5d923faf3c59953f20c6bfc2396e96cdad1c8b4d5d2e52af1565"
   }
 }
