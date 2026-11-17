@@ -1,0 +1,39 @@
+{
+  "status": "experimental_browser_fixtures_passed",
+  "placement": "after-native-startup",
+  "native_sha256": "4313a48afca657e3b3c467616921b10465558416e57e4bdca666c4c19d5f4fb9",
+  "control_sha256": "50cd3cf17436e01a966b96614dbabcfd3157373b26d5d41cb7846aeae93cd0b5",
+  "output_sha256": "a356ffd226ca19fd73ded7dfa2384758dcb75be351447576377348defd28aaff",
+  "live_server": "not_tested",
+  "publication": "not_published",
+  "raw_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362",
+  "source_url": "https://devast.io/js/hym7DtRA3RCGo21.js",
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "output_sha256": "a356ffd226ca19fd73ded7dfa2384758dcb75be351447576377348defd28aaff",
+      "version": "154.0.8037.57",
+      "finished_at": "2026-11-17T11:28:30.955Z"
+    },
+    "firefox": {
+      "status": "passed",
+      "output_sha256": "a356ffd226ca19fd73ded7dfa2384758dcb75be351447576377348defd28aaff",
+      "version": "153.0",
+      "finished_at": "2026-11-17T11:28:58.169Z"
+    }
+  },
+  "candidate_tests": {
+    "passed": 116,
+    "failed": 0
+  },
+  "initial_observations": "Initial Chromium runs in both control and experimental clients hit a null textContent error during page loading; the experimental retry passed. Firefox required execution outside the filesystem sandbox.",
+  "source_recheck": {
+    "status": "same_sha256",
+    "raw_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362"
+  },
+  "control_browser_retry": {
+    "status": "passed",
+    "browser": "chromium",
+    "page_errors": []
+  }
+}
