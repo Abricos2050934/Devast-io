@@ -1,19 +1,19 @@
 {
   "schema": 1,
-  "release": "929de39c5134e07dabbc620add3ac8a50c7311b8bc8423de0a4a34aa9a187be2",
+  "release": "2c4e23b03e4bed3f40bde4aa8d2b90d0d410ec1dac764ca945e73b6f7d95b760",
   "raw_sha256": "35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362",
-  "inputs_sha256": "63d282667d522f3f1f4e744091bc20ccdd4f610dd16d1367b686cb9b84570ff4",
-  "output_sha256": "3042c23e7f49245ef5cb99d64f2ed6242250c6c80bf115f8c3e4e34e04c793df",
-  "script": "versions/929de39c5134e07dabbc620add3ac8a50c7311b8bc8423de0a4a34aa9a187be2/game.modded.js",
+  "inputs_sha256": "c884e95cd76287d5241d6ba4ed23cc9b7d7a22ff162077f0c72ea11a2773fc9b",
+  "output_sha256": "21d3d431fd121958941457cfcf2142c49979e2e108948f3cd0964ef78e82773d",
+  "script": "versions/2c4e23b03e4bed3f40bde4aa8d2b90d0d410ec1dac764ca945e73b6f7d95b760/game.modded.js",
   "source_url": "https://devast.io/js/hym7DtRA3RCGo21.js",
   "source_candidates": [
     "https://devast.io/js/hym7DtRA3RCGo21.js"
   ],
-  "activated_at": "2026-11-15T21:17:46.895199+00:00",
-  "previous_release": "ac39c4c552bdc07c11e73d4efe0f67ff6e2f6caadf42deb8f12400637296a8b7",
+  "activated_at": "2026-11-17T16:51:49.580606+00:00",
+  "previous_release": "929de39c5134e07dabbc620add3ac8a50c7311b8bc8423de0a4a34aa9a187be2",
   "validation": "passed",
   "live_server": "not_tested",
   "publication": "github",
-  "mod_bundle_sha256": "bc185aec0f28b150d27ca70536534ff80dcbe634de353057200fedb49aa5edca",
+  "mod_bundle_sha256": "e96bc719cd0a4f93f1c7f99f11ae1bfaa4b90409d43b39330af5bdcaa6a1c72b",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6"
 }
