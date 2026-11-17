@@ -1,21 +1,23 @@
 {
   "status": "experimental_browser_fixtures_passed",
+  "placement": "beginning",
+  "activation": "after-native-init",
   "source": "updates/game.modded.js",
-  "source_release": "929de39c5134e07dabbc620add3ac8a50c7311b8bc8423de0a4a34aa9a187be2",
-  "source_sha256": "3042c23e7f49245ef5cb99d64f2ed6242250c6c80bf115f8c3e4e34e04c793df",
+  "source_release": "2c4e23b03e4bed3f40bde4aa8d2b90d0d410ec1dac764ca945e73b6f7d95b760",
+  "source_sha256": "21d3d431fd121958941457cfcf2142c49979e2e108948f3cd0964ef78e82773d",
   "source_is_still_current": true,
   "source_proof": {
     "status": "passed",
     "source": "published updates/game.modded.js",
-    "release": "929de39c5134e07dabbc620add3ac8a50c7311b8bc8423de0a4a34aa9a187be2",
+    "release": "2c4e23b03e4bed3f40bde4aa8d2b90d0d410ec1dac764ca945e73b6f7d95b760",
     "source_url": "https://devast.io/js/hym7DtRA3RCGo21.js",
-    "published_sha256": "3042c23e7f49245ef5cb99d64f2ed6242250c6c80bf115f8c3e4e34e04c793df",
+    "published_sha256": "21d3d431fd121958941457cfcf2142c49979e2e108948f3cd0964ef78e82773d",
     "control_matches_published_bytes": true,
-    "variant_sha256": "e047bb1571760388a7e51854457ebc02d6cab2248ec34f27cee4ba1a18f98c8b",
+    "variant_sha256": "ff90ce8aaa332defb83e0fbf845cf888b9eac79791767355ea1e41fefbbe0959",
     "unchanged_function_bodies": 16864,
-    "function_bodies_multiset_sha256": "a8388a5ae77af276ad48948c46c684f1aaf49a6fdd7f46f064dbad2d981002ac",
+    "function_bodies_multiset_sha256": "52a3aa6a9a67155b51bf8e1f200c416a0fdbcb6ad6f1deca657acb70adea9589",
     "module_sha256": {
-      "mod/responsive.js": "ef4656bc546912ff4531a2ac1e4b48f653761f11617fcbdb51afc839db0a68b6",
+      "mod/responsive.js": "85972a5ee8d3726a52ab816ff7f010c2bfdeb2a4846675471454f580ca787662",
       "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
       "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
       "mod/ilm-aim.js": "0e05f192c7cd4c4d95f6b07f2219e7d977e06a46875b14d3d635c99cfa041a46",
@@ -23,18 +25,18 @@
     },
     "contract": "Devast-io message27 BBY aim"
   },
-  "variant_sha256": "e047bb1571760388a7e51854457ebc02d6cab2248ec34f27cee4ba1a18f98c8b",
-  "json_sha256": "5c9b3b9d59e2ecb9fe1e74289de9b47c9fbf760fb7c9b6f386ddda8165b5438e",
-  "zip_sha256": "fac5c1c3e64b2d7caedee50d8842483cfcf93d329a0f6bb8ed33bca891578c9e",
+  "variant_sha256": "ff90ce8aaa332defb83e0fbf845cf888b9eac79791767355ea1e41fefbbe0959",
+  "json_sha256": "92bb6735aed12154d7349e39b24b16e2c1950c585a18121d037b092a0e103d7e",
+  "zip_sha256": "d8babedb3774fff1b6c7c70ba6b82829b1c143eee5a0e9f086a2231d11cf7871",
   "candidate_tests": {
-    "passed": 212,
+    "passed": 213,
     "failed": 0
   },
   "browsers": {
     "chromium": {
       "status": "passed",
       "version": "154.0.8037.57",
-      "finished_at": "2026-11-17T16:29:00.928Z",
+      "finished_at": "2026-11-17T17:14:40.615Z",
       "embedded_override": "passed",
       "page_errors": [],
       "native": {
@@ -883,7 +885,7 @@
     "firefox": {
       "status": "passed",
       "version": "153.0",
-      "finished_at": "2026-11-17T16:29:16.283Z",
+      "finished_at": "2026-11-17T17:15:16.516Z",
       "embedded_override": "passed",
       "page_errors": [],
       "native": {

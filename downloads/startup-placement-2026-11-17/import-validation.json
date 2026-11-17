@@ -6,6 +6,6 @@
   },
   "embedded_client_bytes": "unchanged raw JS occurs exactly once",
   "dom_ready_wrapper": true,
-  "json_sha256": "5c9b3b9d59e2ecb9fe1e74289de9b47c9fbf760fb7c9b6f386ddda8165b5438e",
+  "json_sha256": "92bb6735aed12154d7349e39b24b16e2c1950c585a18121d037b092a0e103d7e",
   "upstream_importer": "https://github.com/kylepaulsen/ResourceOverride/blob/master/src/ui/importExport.js"
 }
