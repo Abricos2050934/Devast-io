@@ -1,3 +1,5 @@
+Готовый архив для установки: **Devast-Resource-Override.zip**. Внутри только JSON для импорта и INSTALL.txt.
+
 # Эксперимент для Resource Override
 
 1. Скачайте Devast-Experiment-Resource-Override.json и импортируйте через Load Rules / Import в Resource Override.

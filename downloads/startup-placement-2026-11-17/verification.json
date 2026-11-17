@@ -41,8 +41,38 @@
     "upstream": "https://github.com/kylepaulsen/ResourceOverride/blob/master/src/ui/importExport.js",
     "old_config": "rejected",
     "corrected_config": "Load Succeeded!",
-    "embedded_js": "exact_match",
+    "embedded_js": "unchanged_client_occurs_once_inside_dom_ready_wrapper",
     "rule_match": "exact_game_script_only",
-    "json_sha256": "f631a0c649cf5d923faf3c59953f20c6bfc2396e96cdad1c8b4d5d2e52af1565"
+    "startup": "DOMContentLoaded when loading; immediate when interactive or complete",
+    "json_sha256": "696511c7b1a449f6d9a5659d9921275312c9c2078c6648743dcd076fceca5600"
+  },
+  "embedded_override_recheck": {
+    "chromium": {
+      "status": "passed",
+      "embedded_override": "passed",
+      "page_errors": [],
+      "version": "154.0.8037.57",
+      "finished_at": "2026-11-17T14:26:49.397Z"
+    },
+    "firefox": {
+      "status": "passed",
+      "embedded_override": "passed",
+      "page_errors": [],
+      "version": "153.0",
+      "finished_at": "2026-11-17T14:27:50.775Z"
+    }
+  },
+  "function_recheck": {
+    "passed": 116,
+    "failed": 0
+  },
+  "dom_ready_wrapper_tests": {
+    "passed": 2,
+    "failed": 0
+  },
+  "startup_fix": "Wait for DOMContentLoaded before starting the unchanged embedded client, preventing native settingsBindHint access during HTML parsing.",
+  "new_zip": {
+    "file": "Devast-Resource-Override.zip",
+    "sha256": "da4c819e952954e206aa91cfbded72da66599d4545bccaff5bd75a79b56e9e6e"
   }
 }

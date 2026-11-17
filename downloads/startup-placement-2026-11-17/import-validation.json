@@ -3,6 +3,8 @@
   "upstream": "https://github.com/kylepaulsen/ResourceOverride/blob/master/src/ui/importExport.js",
   "old_config": "rejected",
   "corrected_config": "Load Succeeded!",
-  "embedded_js": "exact_match",
-  "rule_match": "exact_game_script_only"
+  "embedded_js": "unchanged_client_occurs_once_inside_dom_ready_wrapper",
+  "rule_match": "exact_game_script_only",
+  "startup": "DOMContentLoaded when loading; immediate when interactive or complete",
+  "json_sha256": "696511c7b1a449f6d9a5659d9921275312c9c2078c6648743dcd076fceca5600"
 }
