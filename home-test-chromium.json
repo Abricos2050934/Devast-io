@@ -2,8 +2,8 @@
   "status": "passed",
   "mode": "standalone original port startup and comparisons; offline resources; observation probes; live timers and animation",
   "browser": "chromium",
-  "output_sha256": "afcf475f4bcfe3ef2f34e7b2491a1d8582f3ec5bf45f3c9c9bc6f32222a67f97",
-  "resource_override_sha256": "339251ac3c0c0da221c7b7ce1fd716fccbfaeaab0c3ff0d47a3a9f9fbf59928e",
+  "output_sha256": "c000e695949c7563958921535fea4992b59bd45cd51b24d818c68b8f7da95619",
+  "resource_override_sha256": "d15e070f74706607092a1b68c187b219a787177984e94d93d70d4d315014b5cc",
   "html_sha256": "9da8965c65f94ca17c5f7869c4944c5f48ffb40aef3d3c928ddfee6a20a041bb",
   "fixture_markup_added": [
     "playingPopup",
@@ -23,7 +23,7 @@
     "menu_visible": true,
     "original_menu": true,
     "checkbox_responds": true,
-    "frames": 158,
+    "frames": 178,
     "canvas": {
       "width": 1280,
       "height": 800
@@ -31,15 +31,15 @@
     "mod_errors": [],
     "missing_properties": [],
     "original_calls": {
-      "__bsWorldAutomation": 81,
-      "__bsOwner__0x4120d4": 81,
-      "__bsOwnerLabel": 162,
-      "__bsOwner__0x26f5e9": 81,
-      "_0x47d487": 81,
-      "__bsBackground": 81
+      "__bsWorldAutomation": 115,
+      "__bsOwner__0x4120d4": 115,
+      "__bsOwnerLabel": 230,
+      "__bsOwner__0x26f5e9": 115,
+      "_0x47d487": 115,
+      "__bsBackground": 115
     }
   },
-  "live_frames": 110,
+  "live_frames": 129,
   "scenarios": {
     "checks": [
       "home visible",
@@ -51,10 +51,10 @@
       "return to official servers",
       "home hides with native nickname on game entry",
       "home restores on native home return",
-      "panel fits 1280x800",
-      "panel fits 575x320",
-      "panel fits 575x280",
-      "panel fits 360x800",
+      "panel follows native geometry 1280x800",
+      "panel follows native geometry 575x320",
+      "panel follows native geometry 575x280",
+      "panel follows native geometry 360x800",
       "Enter invokes native play exactly once",
       "keepalive toggles use one timer and restart correctly",
       "latest shot cancels preceding 140 ms timer"
