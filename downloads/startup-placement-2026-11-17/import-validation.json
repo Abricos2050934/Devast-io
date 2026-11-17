@@ -1,10 +1,11 @@
 {
   "status": "passed",
-  "upstream": "https://github.com/kylepaulsen/ResourceOverride/blob/master/src/ui/importExport.js",
-  "old_config": "rejected",
-  "corrected_config": "Load Succeeded!",
-  "embedded_js": "unchanged_client_occurs_once_inside_dom_ready_wrapper",
-  "rule_match": "exact_game_script_only",
-  "startup": "DOMContentLoaded when loading; immediate when interactive or complete",
-  "json_sha256": "696511c7b1a449f6d9a5659d9921275312c9c2078c6648743dcd076fceca5600"
+  "ids": {
+    "group": "d1",
+    "file": "f1"
+  },
+  "embedded_client_bytes": "unchanged raw JS occurs exactly once",
+  "dom_ready_wrapper": true,
+  "json_sha256": "5c9b3b9d59e2ecb9fe1e74289de9b47c9fbf760fb7c9b6f386ddda8165b5438e",
+  "upstream_importer": "https://github.com/kylepaulsen/ResourceOverride/blob/master/src/ui/importExport.js"
 }
