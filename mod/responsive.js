@@ -1004,7 +1004,7 @@ function __installDevastMod(B) {
   let playerListPanel, playerListBody, playerListCount, playerListOrder = '';
   const playerListRows = new Map(), departedPlayers = new Map();
   let lastStep = -Infinity, lastLoot = -Infinity;
-  const FAST_LOOT_INTERVAL=25,FAST_LOOT_BURST=8,AUTO_BUILD_INTERVAL=50;
+  const FAST_LOOT_INTERVAL=25,FAST_LOOT_BURST=8,FAST_LOOT_SCAN_LIMIT=256,AUTO_BUILD_INTERVAL=50;
   let lastFastLoot=-Infinity,fastLootCursor=0;
   let lastAutoBuild=-Infinity;
   let lastTake = -Infinity, lastKeepAlive = -Infinity, lastChat = -Infinity, nextChatAt = -Infinity;
@@ -1116,6 +1116,7 @@ function __installDevastMod(B) {
   }
   function persist() {
     refreshLootFilter();
+    lastFastLoot=-Infinity;
     const saved = {};
     for (const key of Object.keys(defaults)) if (!transient.has(key)) saved[key] = MOD[key];
     try {
@@ -1380,12 +1381,13 @@ function __installDevastMod(B) {
     if (!playing() || !MOD.FAutoLootEnabled) return;
     if(now-lastFastLoot<FAST_LOOT_INTERVAL)return;
     if(!automationReady('loot'))return;
-    // Match the reference's 25 ms loot timer and bounded burst. Rotate the
-    // starting slot so a busy first group cannot starve the remaining drops.
+    // Bound unsuccessful scans as well as sends. Rotate the starting slot
+    // so large groups still get visited across successive 25 ms cycles.
     const me = B.world.ᅠᏧ‍, type = B.categories.loot, border = B.entities.border[type], group = B.entities.ᴎ̂２[type];
+    lastFastLoot=now;
     if(!border||!group||!border.border)return;
     let visited=0,sent=0;
-    while(visited<border.border&&sent<FAST_LOOT_BURST){
+    while(visited<Math.min(border.border,FAST_LOOT_SCAN_LIMIT)&&sent<FAST_LOOT_BURST){
       const i=(fastLootCursor+visited++)%border.border;
       const e = group[border.ⲣᴑᴏ[i]];
       if (!e || e.е̝ހ !== 0 || !Number.isInteger(e.id) || !Number.isFinite(e.x) || !Number.isFinite(e.y)) continue;
@@ -1398,7 +1400,7 @@ function __installDevastMod(B) {
       }
     }
     fastLootCursor=(fastLootCursor+visited)%border.border;
-    if(sent)lastFastLoot=now;
+    
   }
   function building(r) {
     if ([B.categories.player, B.categories.loot, 13].includes(r.type)) return null;
