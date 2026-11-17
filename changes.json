@@ -1,0 +1,61 @@
+{
+  "input_sha256": "0b7a7ccddf9c5701b04aae7849601f6924c8c51a3c9ecdbf4785df35a4b8766e",
+  "output_sha256": "9ad40cf128aa8be5316736cff9a1352b610715b8dd4aab966c2416fbd32e6657",
+  "changes": [
+    {
+      "before": "if(target===null||!['object','function'].includes(typeof target))return target;",
+      "after": "if(target===null||(typeof target!=='object'&&typeof target!=='function'))return target;",
+      "reason": "Avoid temporary arrays on every bridged property read"
+    },
+    {
+      "before": "!['x','y','src'].includes(key)",
+      "after": "key!=='x'&&key!=='y'&&key!=='src'",
+      "reason": "Avoid temporary arrays during native property lookup"
+    },
+    {
+      "before": "function _0x280726(_0x491da8){var _0x27bae7=_0x1ccce9;if(_0x14b520[\"fastDist\"](_0x603cec[\"PLAYER\"]['x'],_0x603cec[\"PLAYER\"]['y'],_0x491da8['x'],_0x491da8['y'])<0xc350&&_0x2434c5[\"FAutoLootEnabled\"]&&_0x18c2bd[\"state\"]===0x1){if(_0x2434c5[\"LootDataEnabled\"])for(let _0x3c6cb2 in _0x3389d6){if(_0x3389d6[\"hasOwnProperty\"](_0x3c6cb2)&&_0x3389d6[_0x3c6cb2][\"acquire\"]&&_0x491da8[\"extra\"]===_0x3389d6[_0x3c6cb2][\"extra\"]){_0x18c2bd[\"sendPacket\"](window[\"JSON\"][\"stringify\"]([0xc,_0x491da8['id']]));break;}}else _0x18c2bd[\"sendPacket\"](window[\"JSON\"][\"stringify\"]([0xc,_0x491da8['id']]));}}",
+      "after": "const __bsLootAttempts=new WeakMap(),__bsLootPending=new WeakSet(),__bsLootQueue=new Array(2048);let __bsLootHead=0,__bsLootCount=0,__bsLootWindow=-Infinity,__bsLootSent=0,__bsLootChecked=0;\nfunction _0x280726(drop){\n if(!_0x2434c5.FAutoLootEnabled||_0x18c2bd.state!==1||document.hidden){while(__bsLootCount){const entry=__bsLootQueue[__bsLootHead];__bsLootQueue[__bsLootHead]=undefined;__bsLootHead=(__bsLootHead+1)%2048;__bsLootCount--;__bsLootPending.delete(entry.drop);}return;}\n const now=performance.now();\n if(now-__bsLootWindow>=25){__bsLootWindow=now;__bsLootSent=0;__bsLootChecked=0;}\n if(!__bsLootPending.has(drop)&&__bsLootCount<2048&&now-(__bsLootAttempts.get(drop)??-Infinity)>=100){__bsLootQueue[(__bsLootHead+__bsLootCount++)%2048]={drop,at:now};__bsLootPending.add(drop);}\n while(__bsLootCount&&__bsLootSent<8&&__bsLootChecked<16){\n  const entry=__bsLootQueue[__bsLootHead];__bsLootQueue[__bsLootHead]=undefined;__bsLootHead=(__bsLootHead+1)%2048;__bsLootCount--;__bsLootChecked++;\n  const item=entry.drop;__bsLootPending.delete(item);\n  if(now-entry.at>1000||item.removed)continue;\n  __bsLootAttempts.set(item,now);\n  const me=_0x603cec.PLAYER,dx=me.x-item.x,dy=me.y-item.y;\n  if(dx*dx+dy*dy>=50000)continue;\n  if(_0x2434c5.LootDataEnabled){let allowed=false;for(const key in _0x3389d6){if(Object.hasOwn(_0x3389d6,key)&&_0x3389d6[key].acquire&&item.extra===_0x3389d6[key].extra){allowed=true;break;}}if(!allowed)continue;}\n  _0x18c2bd.sendPacket(window.JSON.stringify([12,item.id]));__bsLootSent++;\n }\n}",
+      "reason": "Skip disabled loot work; bound pickup requests and retries"
+    },
+    {
+      "before": "function __bsWorldAutomation(){",
+      "after": "let __bsLastAutomation=-Infinity;function __bsWorldAutomation(){if(document.hidden)return;const now=performance.now();if(now-__bsLastAutomation<50)return;__bsLastAutomation=now;",
+      "reason": "Bound build, door and container automation to 20 cycles per second"
+    },
+    {
+      "before": "function _0x2cae8f(){var _0x354acd=_0x41b1be;",
+      "after": "let __bsStatusUpdate=-Infinity;function _0x2cae8f(){_0x47d0da++;const now=performance.now();if(now-__bsStatusUpdate<250)return;__bsStatusUpdate=now;var _0x354acd=_0x41b1be;",
+      "reason": "Throttle status display updates without throttling game frames"
+    },
+    {
+      "before": "_0x47d0da++;const _0x2cedf2=performance[\"now\"]()",
+      "after": "const _0x2cedf2=performance[\"now\"]()",
+      "reason": "Count every RAF for FPS measurement"
+    },
+    {
+      "before": "_0x392616[\"textContent\"]=_0x2434c5[\"ShowFps\"]?\"FPS: \"+_0x5b8853:''",
+      "after": "(()=>{const value=_0x2434c5[\"ShowFps\"]?\"FPS: \"+_0x5b8853:'';if(_0x392616[\"textContent\"]!==value)_0x392616[\"textContent\"]=value;})()",
+      "reason": "Avoid unchanged status DOM writes: _0x392616"
+    },
+    {
+      "before": "_0x55c612[\"textContent\"]=_0x2434c5[\"ShowTime\"]?_0x17acbb:''",
+      "after": "(()=>{const value=_0x2434c5[\"ShowTime\"]?_0x17acbb:'';if(_0x55c612[\"textContent\"]!==value)_0x55c612[\"textContent\"]=value;})()",
+      "reason": "Avoid unchanged status DOM writes: _0x55c612"
+    },
+    {
+      "before": "_0x2c5532[\"style\"][\"display\"]=_0x2434c5[\"ShowFps\"]&&_0x2434c5[\"ShowTime\"]?\"block\":\"none\"",
+      "after": "(()=>{const value=_0x2434c5[\"ShowFps\"]&&_0x2434c5[\"ShowTime\"]?\"block\":\"none\";if(_0x2c5532[\"style\"][\"display\"]!==value)_0x2c5532[\"style\"][\"display\"]=value;})()",
+      "reason": "Avoid unchanged status DOM writes: _0x2c5532[\"style\"]"
+    },
+    {
+      "before": "  const virtualWindow=new Proxy(window,",
+      "after": "  const __bsBoundWindowMethods=new WeakMap();\n  const virtualWindow=new Proxy(window,",
+      "reason": "Cache bound browser methods"
+    },
+    {
+      "before": "?value.bind(t):value;},set(t,key,value)",
+      "after": "?(__bsBoundWindowMethods.has(value)?__bsBoundWindowMethods.get(value):(__bsBoundWindowMethods.set(value,value.bind(t)),__bsBoundWindowMethods.get(value))):value;},set(t,key,value)",
+      "reason": "Reuse RAF and timer bindings"
+    }
+  ]
+}

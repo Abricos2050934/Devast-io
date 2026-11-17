@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "mode": "standalone original port startup and comparisons; offline resources; observation probes; live timers and animation",
+  "browser": "firefox-esr",
+  "output_sha256": "9ad40cf128aa8be5316736cff9a1352b610715b8dd4aab966c2416fbd32e6657",
+  "resource_override_sha256": "e8a769b12e0d35019a9499ad2de86ac3954c612d75a9961e3b7966f1a537dcfc",
+  "html_sha256": "9da8965c65f94ca17c5f7869c4944c5f48ffb40aef3d3c928ddfee6a20a041bb",
+  "fixture_markup_added": [
+    "playingPopup",
+    "settingsPopup",
+    "settingsAuto",
+    "settingsBindHint",
+    "settingsKill",
+    "settingsKillHint",
+    "settingsPopup .dv-game-window"
+  ],
+  "extension_import": true,
+  "page_errors": [],
+  "browser_version": "153.7.0",
+  "state": {
+    "canvas": {
+      "height": 663,
+      "width": 1280
+    },
+    "checkbox_responds": true,
+    "frames": 213,
+    "menu_count": 1,
+    "menu_visible": true,
+    "missing_properties": [],
+    "mod_errors": [],
+    "original_calls": {
+      "_0x47d487": 44,
+      "__bsBackground": 44,
+      "__bsOwnerLabel": 88,
+      "__bsOwner__0x26f5e9": 44,
+      "__bsOwner__0x4120d4": 44,
+      "__bsWorldAutomation": 44
+    },
+    "original_menu": true,
+    "ready": "interactive"
+  },
+  "live_frames": 132,
+  "scenarios": {
+    "buildRequests": 36,
+    "dense": {
+      "milliseconds": 272,
+      "requests": 576,
+      "uniqueDrops": 100
+    },
+    "disabledPackets": 0,
+    "disabledReads": 0,
+    "farRequests": 0
+  }
+}
