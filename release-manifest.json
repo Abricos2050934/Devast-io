@@ -1,22 +1,37 @@
 {
-  "revision": "bestscript-native-art-home-v3",
-  "source_base_sha256": "aa211bcaf8dc98bfcf0cae3bd4e4fd52633518d01ac48533d520cadefde2f3af",
-  "output_sha256": "afcf475f4bcfe3ef2f34e7b2491a1d8582f3ec5bf45f3c9c9bc6f32222a67f97",
-  "reports": [
-    {
-      "file": "home-test-chromium.json",
-      "checks": 16
-    },
-    {
-      "file": "home-test-firefox-esr.json",
-      "checks": 13
-    }
-  ],
-  "artwork": "Original Devast.io homepage and button sprites, with static purple artwork treatment",
-  "native_art_dimensions": [
-    1235,
-    592
-  ],
-  "live_homepage_checked": true,
+  "revision": "bestscript-native-art-centered-v4",
+  "source_base_sha256": "afcf475f4bcfe3ef2f34e7b2491a1d8582f3ec5bf45f3c9c9bc6f32222a67f97",
+  "output_sha256": "ed58ca67e4b50013ea17567bc6ac4435ae3f4c597d414c2c1fadd2b06c3ffc2d",
+  "change": "Remove only the manual 9.5vw / -7vh menu offset; preserve viewport centering",
+  "validation": {
+    "live_homepage": true,
+    "browser": "chromium",
+    "layouts": [
+      {
+        "x": 211.203125,
+        "y": 194.453125,
+        "width": 857.59375,
+        "height": 411.078125,
+        "viewportWidth": 1280,
+        "viewportHeight": 800
+      },
+      {
+        "x": 94.875,
+        "y": 48.671875,
+        "width": 385.25,
+        "height": 184.65625,
+        "viewportWidth": 575,
+        "viewportHeight": 282
+      },
+      {
+        "x": 8,
+        "y": 317.546875,
+        "width": 344,
+        "height": 164.890625,
+        "viewportWidth": 360,
+        "viewportHeight": 800
+      }
+    ]
+  },
   "live_gameplay_tested": false
 }

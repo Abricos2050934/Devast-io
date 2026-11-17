@@ -374,7 +374,7 @@ function __installBestScriptHome(actions){
  if(!nickname||!servers)return;
  const style=document.createElement('style');style.id='bs-home-style';style.textContent=`
 #bs-home{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;pointer-events:none;contain:layout style;font-family:Arial,sans-serif}#bs-home[hidden]{display:none!important}#bs-home *{box-sizing:border-box}
-#bs-home .bs-panel{position:relative;width:min(67vw,160vh,960px);transform:translate(9.5vw,-7vh);aspect-ratio:1235/592;pointer-events:auto;container-type:inline-size}
+#bs-home .bs-panel{position:relative;width:min(67vw,160vh,960px);transform:none;aspect-ratio:1235/592;pointer-events:auto;container-type:inline-size}
 #bs-home .bs-servers-label{position:absolute;color:#e7dbef;text-shadow:1px 1px #110715;font-weight:900;font-size:2.2cqw;line-height:1;pointer-events:none}#bs-home .bs-filter-defs{position:absolute;width:0;height:0;pointer-events:none}#bs-home .bs-art{position:absolute;inset:0;width:100%;height:100%;filter:none;pointer-events:none;image-rendering:auto}
 #bs-home .bs-sprite,#bs-home .bs-discord{position:absolute;display:block;padding:0;margin:0;border:0;background:transparent;cursor:pointer;touch-action:manipulation}
 #bs-home .bs-sprite img,#bs-home .bs-discord img{width:100%;height:100%;display:block;pointer-events:none;user-select:none}
