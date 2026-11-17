@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "mode": "standalone original port startup and comparisons; offline resources; observation probes; live timers and animation",
+  "browser": "chromium",
+  "output_sha256": "aa211bcaf8dc98bfcf0cae3bd4e4fd52633518d01ac48533d520cadefde2f3af",
+  "resource_override_sha256": "5b640df1d27588f74024b51f9b421b7f211fdba160d23019d96fe3d014901fe2",
+  "html_sha256": "9da8965c65f94ca17c5f7869c4944c5f48ffb40aef3d3c928ddfee6a20a041bb",
+  "fixture_markup_added": [
+    "playingPopup",
+    "settingsPopup",
+    "settingsAuto",
+    "settingsBindHint",
+    "settingsKill",
+    "settingsKillHint",
+    "settingsPopup .dv-game-window"
+  ],
+  "extension_import": true,
+  "page_errors": [],
+  "browser_version": "155.0.8059.79",
+  "state": {
+    "ready": "complete",
+    "menu_count": 1,
+    "menu_visible": true,
+    "original_menu": true,
+    "checkbox_responds": true,
+    "frames": 167,
+    "canvas": {
+      "width": 1280,
+      "height": 800
+    },
+    "mod_errors": [],
+    "missing_properties": [],
+    "original_calls": {
+      "__bsWorldAutomation": 106,
+      "__bsOwner__0x4120d4": 106,
+      "__bsOwnerLabel": 212,
+      "__bsOwner__0x26f5e9": 106,
+      "_0x47d487": 106,
+      "__bsBackground": 106
+    }
+  },
+  "live_frames": 119,
+  "scenarios": {
+    "checks": [
+      "home visible",
+      "native controls retained once",
+      "typing nickname does not toggle fast loot",
+      "ghoul native mode",
+      "survival native mode",
+      "private server native selection",
+      "return to official servers",
+      "home hides with native nickname on game entry",
+      "home restores on native home return",
+      "panel fits 1280x800",
+      "panel fits 575x320",
+      "panel fits 575x280",
+      "panel fits 360x800",
+      "Enter invokes native play exactly once",
+      "keepalive toggles use one timer and restart correctly",
+      "latest shot cancels preceding 140 ms timer"
+    ],
+    "count": 16
+  }
+}

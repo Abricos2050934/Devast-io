@@ -1,17 +1,35 @@
 {
-  "input_sha256": "0b7a7ccddf9c5701b04aae7849601f6924c8c51a3c9ecdbf4785df35a4b8766e",
-  "output_sha256": "9ad40cf128aa8be5316736cff9a1352b610715b8dd4aab966c2416fbd32e6657",
-  "profile": "user supplied Native-Skins-Config-Fix; performance revision 1",
-  "native_url": "https://devast.io/js/hym7DtRA3RCGo21.js",
-  "browsers": [
-    "chromium",
-    "firefox-esr"
+  "revision": "bestscript-neon-home-v2",
+  "source_base_sha256": "9ad40cf128aa8be5316736cff9a1352b610715b8dd4aab966c2416fbd32e6657",
+  "output_sha256": "aa211bcaf8dc98bfcf0cae3bd4e4fd52633518d01ac48533d520cadefde2f3af",
+  "resource_override_sha256": "5b640df1d27588f74024b51f9b421b7f211fdba160d23019d96fe3d014901fe2",
+  "reports": [
+    {
+      "file": "home-test-chromium.json",
+      "status": "passed",
+      "checks": 16
+    },
+    {
+      "file": "home-test-firefox-esr.json",
+      "status": "passed",
+      "checks": 13
+    },
+    {
+      "file": "performance-chromium.json",
+      "status": "passed",
+      "checks": {
+        "disabledReads": 0,
+        "disabledPackets": 0,
+        "dense": {
+          "milliseconds": 194.5,
+          "requests": 576,
+          "uniqueDrops": 100
+        },
+        "farRequests": 0,
+        "buildRequests": 36
+      }
+    }
   ],
-  "dense_scene": {
-    "frames": 288,
-    "drops": 100,
-    "original_requests": 28800,
-    "patched_requests": 576
-  },
-  "live_gameplay_tested": false
+  "live_gameplay_tested": false,
+  "autoupdate_url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/bestscript-updates/game.bestscript.js"
 }
