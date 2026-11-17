@@ -1,7 +1,7 @@
-# BestScript 1.6 — neon home
+# BestScript 1.6 — native artwork home
 
-Import BestScript-1.6-Auto-Update-Resource-Override.json to fetch game.bestscript.js on page reload. Disable older duplicate Devast JS overrides first.
+The home menu uses the original 1235 × 592 Devast.io homepage artwork and its native button sprites. Purple artwork is prepared as static embedded PNGs; there are no live SVG filters, animation loops or added polling timers. Nickname and server select are the original DOM controls. Play, modes, Official, Community, private server hosting and the map editor reuse native actions.
 
-The new static CSS/SVG home panel reuses the native nickname field, server selector and mode/Play/editor actions. Native menu artwork is suppressed only while the custom panel is visible. No additional animation or polling loop is installed.
+Import BestScript-1.6-Auto-Update-Resource-Override.json to load game.bestscript.js on each page reload. Disable duplicate overrides. Existing loader addresses are unchanged.
 
-Fixes: duplicate keepalive timers, overlapping fire timers and nickname hotkeys. Previous bounded loot work and automation limits are retained. Chromium and Firefox reports are listed in release-manifest.json; live-server gameplay has not been tested.
+Chromium and Firefox UI reports are listed in release-manifest.json. The real homepage and server list were checked at 575 × 282. Live gameplay has not been tested.

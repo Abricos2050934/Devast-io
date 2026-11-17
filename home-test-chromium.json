@@ -2,8 +2,8 @@
   "status": "passed",
   "mode": "standalone original port startup and comparisons; offline resources; observation probes; live timers and animation",
   "browser": "chromium",
-  "output_sha256": "aa211bcaf8dc98bfcf0cae3bd4e4fd52633518d01ac48533d520cadefde2f3af",
-  "resource_override_sha256": "5b640df1d27588f74024b51f9b421b7f211fdba160d23019d96fe3d014901fe2",
+  "output_sha256": "afcf475f4bcfe3ef2f34e7b2491a1d8582f3ec5bf45f3c9c9bc6f32222a67f97",
+  "resource_override_sha256": "339251ac3c0c0da221c7b7ce1fd716fccbfaeaab0c3ff0d47a3a9f9fbf59928e",
   "html_sha256": "9da8965c65f94ca17c5f7869c4944c5f48ffb40aef3d3c928ddfee6a20a041bb",
   "fixture_markup_added": [
     "playingPopup",
@@ -23,7 +23,7 @@
     "menu_visible": true,
     "original_menu": true,
     "checkbox_responds": true,
-    "frames": 167,
+    "frames": 158,
     "canvas": {
       "width": 1280,
       "height": 800
@@ -31,15 +31,15 @@
     "mod_errors": [],
     "missing_properties": [],
     "original_calls": {
-      "__bsWorldAutomation": 106,
-      "__bsOwner__0x4120d4": 106,
-      "__bsOwnerLabel": 212,
-      "__bsOwner__0x26f5e9": 106,
-      "_0x47d487": 106,
-      "__bsBackground": 106
+      "__bsWorldAutomation": 81,
+      "__bsOwner__0x4120d4": 81,
+      "__bsOwnerLabel": 162,
+      "__bsOwner__0x26f5e9": 81,
+      "_0x47d487": 81,
+      "__bsBackground": 81
     }
   },
-  "live_frames": 119,
+  "live_frames": 110,
   "scenarios": {
     "checks": [
       "home visible",
@@ -47,7 +47,7 @@
       "typing nickname does not toggle fast loot",
       "ghoul native mode",
       "survival native mode",
-      "private server native selection",
+      "community server native selection",
       "return to official servers",
       "home hides with native nickname on game entry",
       "home restores on native home return",

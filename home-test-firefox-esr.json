@@ -2,8 +2,8 @@
   "status": "passed",
   "mode": "standalone original port startup and comparisons; offline resources; observation probes; live timers and animation",
   "browser": "firefox-esr",
-  "output_sha256": "aa211bcaf8dc98bfcf0cae3bd4e4fd52633518d01ac48533d520cadefde2f3af",
-  "resource_override_sha256": "5b640df1d27588f74024b51f9b421b7f211fdba160d23019d96fe3d014901fe2",
+  "output_sha256": "afcf475f4bcfe3ef2f34e7b2491a1d8582f3ec5bf45f3c9c9bc6f32222a67f97",
+  "resource_override_sha256": "339251ac3c0c0da221c7b7ce1fd716fccbfaeaab0c3ff0d47a3a9f9fbf59928e",
   "html_sha256": "9da8965c65f94ca17c5f7869c4944c5f48ffb40aef3d3c928ddfee6a20a041bb",
   "fixture_markup_added": [
     "playingPopup",
@@ -23,23 +23,23 @@
       "width": 1280
     },
     "checkbox_responds": true,
-    "frames": 134,
+    "frames": 195,
     "menu_count": 1,
     "menu_visible": true,
     "missing_properties": [],
     "mod_errors": [],
     "original_calls": {
-      "_0x47d487": 23,
-      "__bsBackground": 23,
-      "__bsOwnerLabel": 46,
-      "__bsOwner__0x26f5e9": 23,
-      "__bsOwner__0x4120d4": 23,
-      "__bsWorldAutomation": 23
+      "_0x47d487": 49,
+      "__bsBackground": 49,
+      "__bsOwnerLabel": 98,
+      "__bsOwner__0x26f5e9": 49,
+      "__bsOwner__0x4120d4": 49,
+      "__bsWorldAutomation": 49
     },
     "original_menu": true,
     "ready": "interactive"
   },
-  "live_frames": 68,
+  "live_frames": 106,
   "scenarios": {
     "checks": [
       "home visible",
@@ -47,7 +47,7 @@
       "typing nickname does not toggle fast loot",
       "ghoul native mode",
       "survival native mode",
-      "private server native selection",
+      "community server native selection",
       "return to official servers",
       "home hides with native nickname on game entry",
       "home restores on native home return",

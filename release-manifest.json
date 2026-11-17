@@ -1,35 +1,22 @@
 {
-  "revision": "bestscript-neon-home-v2",
-  "source_base_sha256": "9ad40cf128aa8be5316736cff9a1352b610715b8dd4aab966c2416fbd32e6657",
-  "output_sha256": "aa211bcaf8dc98bfcf0cae3bd4e4fd52633518d01ac48533d520cadefde2f3af",
-  "resource_override_sha256": "5b640df1d27588f74024b51f9b421b7f211fdba160d23019d96fe3d014901fe2",
+  "revision": "bestscript-native-art-home-v3",
+  "source_base_sha256": "aa211bcaf8dc98bfcf0cae3bd4e4fd52633518d01ac48533d520cadefde2f3af",
+  "output_sha256": "afcf475f4bcfe3ef2f34e7b2491a1d8582f3ec5bf45f3c9c9bc6f32222a67f97",
   "reports": [
     {
       "file": "home-test-chromium.json",
-      "status": "passed",
       "checks": 16
     },
     {
       "file": "home-test-firefox-esr.json",
-      "status": "passed",
       "checks": 13
-    },
-    {
-      "file": "performance-chromium.json",
-      "status": "passed",
-      "checks": {
-        "disabledReads": 0,
-        "disabledPackets": 0,
-        "dense": {
-          "milliseconds": 194.5,
-          "requests": 576,
-          "uniqueDrops": 100
-        },
-        "farRequests": 0,
-        "buildRequests": 36
-      }
     }
   ],
-  "live_gameplay_tested": false,
-  "autoupdate_url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/bestscript-updates/game.bestscript.js"
+  "artwork": "Original Devast.io homepage and button sprites, with static purple artwork treatment",
+  "native_art_dimensions": [
+    1235,
+    592
+  ],
+  "live_homepage_checked": true,
+  "live_gameplay_tested": false
 }
