@@ -27,12 +27,13 @@ function connectionMarkerProbe(a,networkName){
  assert.equal(windowNames.size,1);assert.equal(storageNames.size,1);
  const selected=fn.body.body[0].declarations[0].init;
  assert.equal(selected.type,'MemberExpression');
- const key=selected.computed?a.constant(selected.property):selected.property.name;
- assert.equal(typeof key,'string');
+ // The selected-server key can itself be computed by the native obfuscator.
+ // Supply the same fixture tuple for its reads and keep that expression intact.
+ const tuple='[67,0,0,1,"fixture",20,0,[443],0]';
  const setup=[...aliases].map(([k,v])=>'const '+k+'='+JSON.stringify(v)+';').join('')+
   [...windowNames].map(k=>'const '+k+'=window;').join('')+
   [...storageNames].map(k=>'const '+k+'=localStorage;').join('')+
-  'const '+networkName+'={'+JSON.stringify(key)+':[67,0,0,1,"fixture",20,0,[443],0]};';
+  'const '+networkName+'=new Proxy(Object.create(null),{get:()=>'+tuple+'});';
  const prefix=a.source.slice(fn.start,gate.end);
  return {code:setup+prefix+';return '+gate.id.name+';}return '+fn.id.name+'();',evidence:{scope:'Unchanged connection-check prefix with resolved outer constants and synthetic server data; no socket construction',native_sha256:hash(a.source),function_sha256:hash(a.source.slice(fn.start,fn.end)),prefix_sha256:hash(prefix),function_start:fn.start,function_end:fn.end,global_names:table.names,xor_key:table.key}};
 }

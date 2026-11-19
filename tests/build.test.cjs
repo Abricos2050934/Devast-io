@@ -9,7 +9,7 @@ test('translation changes own identifiers and binding strings, preserving commen
   assert.equal(result,'/* старое */ const currentField = obj.currentField; const key="currentField"; const text="other";');
 });
 
-for(const scenario of ['unknown-baseline','ambiguous-anchor'])test('build preserves previous JS and status on '+scenario,()=>{
+for(const scenario of ['unknown-baseline','unknown-snapshot','ambiguous-anchor'])test('build preserves previous JS and status on '+scenario,()=>{
   const root=fs.mkdtempSync(path.join(os.tmpdir(),'devast-build-'));
   try{
     for(const dir of ['tools','baselines','patches','mod','vendor'])fs.cpSync(dir,path.join(root,dir),{recursive:true});
@@ -19,12 +19,15 @@ for(const scenario of ['unknown-baseline','ambiguous-anchor'])test('build preser
     fs.writeFileSync(path.join(root,'dist/update-status.json'),'previous status');
     if(scenario==='unknown-baseline'){
       const file=path.join(root,selectReference('').baseline);const data=zlib.gunzipSync(fs.readFileSync(file));data[20]^=1;fs.writeFileSync(file,zlib.gzipSync(data));
+    }else if(scenario==='unknown-snapshot'){
+      const snapshot=JSON.parse(fs.readFileSync(path.join(root,'baselines/latest.json')));
+      const file=path.join(root,snapshot.baseline),data=zlib.gunzipSync(fs.readFileSync(file));data[20]^=1;fs.writeFileSync(file,zlib.gzipSync(data));
     }else{
       const file=path.join(root,selectReference('').profile);const data=JSON.parse(fs.readFileSync(file));data.operations[0].decoded_before='var ';fs.writeFileSync(file,JSON.stringify(data));
     }
     const result=spawnSync(process.execPath,['tools/build_client.cjs'],{cwd:root,encoding:'utf8'});
     assert.notEqual(result.status,0);
-    assert.match(result.stderr,scenario==='unknown-baseline'?/checksum mismatch/:/Reference anchor/);
+    assert.match(result.stderr,scenario==='unknown-baseline'||scenario==='unknown-snapshot'?/checksum mismatch/:/Reference anchor/);
     assert.equal(fs.readFileSync(path.join(root,'dist/game.modded.js'),'utf8'),'previous verified client');
     assert.equal(fs.readFileSync(path.join(root,'dist/update-status.json'),'utf8'),'previous status');
   }finally{fs.rmSync(root,{recursive:true,force:true});}
@@ -39,6 +42,34 @@ test('native disconnect before a WebSocket exists does not throw, and closes an 
  const sources=[];ctx.__responsiveMod={observeCloseRequest:s=>sources.push(s)};
  ctx['І̎ܘ'].readyState=1;vm.runInContext('ⲣ๔І();',ctx,{timeout:1000});assert.deepEqual(sources,['native-network-close']);
  ctx['І̎ܘ'].readyState=3;vm.runInContext('ⲣ๔І();',ctx,{timeout:1000});assert.equal(sources.length,1);assert.equal(closed,3);
+});
+
+test('a replaced socket cannot send a second login or change the current socket timer', () => {
+ const vm = require('node:vm');
+ const profile = JSON.parse(fs.readFileSync('patches/recovered-current.json'));
+ const patch = profile.operations.find(op => op.id === 'native-observe-connection-socket');
+ const older = {}, current = {}, sockets = [older, current], sent = [];
+ let nextTimer = 0;
+ const cleared = [];
+ const ctx = vm.createContext({
+  __responsiveMod: {observeSocket() {}},
+  'І̎ܘ': null, 'рܕρ': () => sockets.shift(), 'ε︎ᴌ': 0,
+  'ᴏᴘᚂ': 'binaryType', 'ϲ๗̘': 'onclose', 'Ꮷᄀ７': 'onerror', 'ρεᄁ': 'onmessage', 'ⲣߒ︃': 'onopen',
+  'ㅤމ๖': 0, 'ﾠࠂ̶': 0, 'ᴉ̡̂': 10, 'рߌᴇ': null, 'ϲܚ٦': 2000,
+  'ᴄ̡๒': () => cleared.push(ctx['рߌᴇ']), 'оᴌ︈': {'ѕމ༥': 'fixture-codec'},
+  'ιܕ︅': payload => sent.push({socket: ctx['І̎ܘ'], payload}),
+  'еϲᄄ': {'ᴎ︅ހ': value => value}, 'ѕ٨ᚄ': value => value, 'ɑ３̝': 'fixture-login',
+  setTimeout: () => ++nextTimer,
+ });
+ vm.runInContext(patch.after + '\nᴀ︃๕(); ᴀ︃๕();', ctx, {timeout: 1000});
+ current.onopen();
+ const currentTimer = ctx['рߌᴇ'];
+ assert.deepEqual(sent, [{socket: current, payload: 'fixture-login'}]);
+ assert.deepEqual(cleared, [2]);
+ older.onopen();
+ assert.equal(sent.length, 1);
+ assert.deepEqual(cleared, [2]);
+ assert.equal(ctx['рߌᴇ'], currentTimer);
 });
 
 test('build fingerprints identify different assembled inputs reproducibly',()=>{

@@ -36,6 +36,58 @@ class UpdaterTests(unittest.TestCase):
             (work / 'port-report.json').write_text(json.dumps(report))
             return {'status': 'passed', 'output_sha256': u.digest(js)}
         self.bot = u.Updater(self.root, self.config, fetch, build)
+    def test_source_check_detects_rotation_without_building_or_activating(self):
+        self.bot.once()
+        current = self.bot.current()
+        status = (self.bot.output / 'status.json').read_bytes()
+        url = 'https://devast.io/js/1LevO4fzYBFHOxo2mUvMkvn.js'
+        raw = b'function game(){return 2}'
+        self.responses['https://devast.io/'] = b'<script src="js/1LevO4fzYBFHOxo2mUvMkvn.js"></script>'
+        self.responses[url] = raw
+
+        report = self.bot.source()
+        self.assertEqual(report['current_raw_sha256'], current['raw_sha256'])
+        self.assertEqual(report['candidates'], [{'url': url, 'raw_sha256': u.digest(raw),
+                                                 'bytes': len(raw), 'matches_current': False}])
+        self.assertEqual(len(self.calls), 1)
+        self.assertEqual(self.bot.current(), current)
+        self.assertEqual((self.bot.output / 'status.json').read_bytes(), status)
+    def test_source_check_rejects_html_with_bom(self):
+        self.responses['https://devast.io/js/client.js?v=1'] = b'\xef\xbb\xbf\n<!doctype html>'
+        with self.assertRaisesRegex(u.UpdateError, 'Expected JavaScript'):
+            self.bot.source()
+        self.assertEqual(self.calls, [])
+        self.assertFalse(self.bot.output.exists())
+    def test_official_rotation_keeps_original_bytes_and_separate_pointer(self):
+        self.bot.once()
+        mod_current = self.bot.current()
+        initial = self.bot.official()
+        self.assertEqual(initial['state'], 'updated')
+        self.assertEqual(self.bot.official()['state'], 'unchanged')
+        raw = b'function game(){return 2}'
+        page = 'https://devast.io/'
+        url = page + 'js/new.js'
+        self.responses[page] = b'<script src="js/new.js"></script>'
+        self.responses[url] = raw
+        report = self.bot.official()
+        self.assertEqual(report['state'], 'updated')
+        self.assertEqual(report['source_url'], url)
+        directory = self.bot.output / 'official'
+        current = u.read_json(directory / 'current.json')
+        self.assertEqual((directory / current['script']).read_bytes(), raw)
+        self.assertTrue((directory / initial['script']).is_file())
+        self.assertEqual(self.bot.current(), mod_current)
+        self.assertEqual(len(self.calls), 1)
+    def test_invalid_official_candidate_preserves_active_snapshot(self):
+        self.bot.official()
+        pointer = self.bot.output / 'official/current.json'
+        initial = pointer.read_bytes()
+        self.responses['https://devast.io/js/client.js?v=1'] = b'function game('
+        with self.assertRaisesRegex(u.UpdateError, 'Command failed: node --check'):
+            self.bot.official()
+        self.assertEqual(pointer.read_bytes(), initial)
+        self.assertEqual(len(list(pointer.parent.glob('*.js'))), 1)
+        self.assertEqual(self.calls, [])
     def test_first_update_and_same_content_do_not_rebuild(self):
         self.assertEqual(self.bot.once()['state'], 'updated')
         first = self.bot.current()

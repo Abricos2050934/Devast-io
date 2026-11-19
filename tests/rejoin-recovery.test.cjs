@@ -122,6 +122,38 @@ test('an unacknowledged socket closes once and can retry without clearing identi
  assert.equal(closes,1);assert.equal(f.network.state,64);assert.equal(f.network.busy,false);
  f.mod.step(12002);assert.equal(closes,1);assert.deepEqual(identity(f),account);f.mod.dispose();
 });
+test('a socket opened after a slow preflight gets its own time to complete entry', () => {
+ const f = fixture({saved: account});
+ let finishPreflight;
+ let closes = 0;
+ const step = now => { f.setClock(now); f.mod.step(now); };
+ try {
+  f.network.state = 0;
+  f.B.loginKey = 'login';
+  f.network.login = () => {
+   finishPreflight = f.mod.guardHandshakeCallback('/native-token', () => {
+    f.network.state = 2;
+    f.mod.observeSocket({readyState: 1, close() { closes++; }});
+   });
+  };
+  step(0);
+  f.network.login();
+  step(11900);
+  finishPreflight();
+  step(11916);
+  step(12001);
+  assert.equal(closes, 0, 'the preflight deadline must not close the new socket');
+  assert.equal(f.network.state, 2);
+  step(23915);
+  assert.equal(closes, 0);
+  step(23932);
+  assert.equal(closes, 1, 'a stalled socket still times out');
+  assert.equal(f.network.state, 64);
+  assert.deepEqual(identity(f), account);
+ } finally {
+  f.mod.dispose();
+ }
+});
 test('the native error callback releases Play while retaining its original behavior',()=>{
  const f=fixture({saved:account});f.network.state=0;f.B.errorKey='onNativeError';f.B.pendingKey='busy';f.network.busy=true;
  const reasons=[];f.network.onNativeError=reason=>reasons.push(reason);f.mod.step(0);

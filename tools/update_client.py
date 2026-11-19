@@ -229,6 +229,54 @@ class Updater:
     def current(self):
         file = self.output / 'current.json'
         return read_json(file) if file.exists() else None
+    def read_source_script(self, url):
+        raw = self.fetch(url, self.config['max_script_bytes'])
+        text = raw.removeprefix(b'\xef\xbb\xbf').lstrip()
+        if not text or text.startswith(b'<'):
+            raise UpdateError('Expected JavaScript at ' + url)
+        return raw
+    def source(self):
+        with locked(self.state):
+            page_url = validate_url(self.config['page_url'], self.config)
+            html = self.fetch(page_url, self.config['max_html_bytes'])
+            current = self.current()
+            current_sha = current['raw_sha256'] if current else None
+            candidates = []
+            for url in discover(html, page_url, self.config):
+                raw = self.read_source_script(url)
+                raw_sha = digest(raw)
+                candidates.append({'url': url, 'raw_sha256': raw_sha, 'bytes': len(raw),
+                                   'matches_current': raw_sha == current_sha})
+            return {'schema': SCHEMA, 'checked_at': now(), 'state': 'source_checked',
+                    'page_url': page_url, 'page_sha256': digest(html),
+                    'current_raw_sha256': current_sha, 'candidates': candidates}
+    def official(self):
+        with locked(self.state):
+            page_url = validate_url(self.config['page_url'], self.config)
+            html = self.fetch(page_url, self.config['max_html_bytes'])
+            urls = discover(html, page_url, self.config)
+            if len(urls) != 1:
+                raise UpdateError('Expected one official game script; found ' + str(len(urls)))
+            url = urls[0]
+            raw = self.read_source_script(url)
+            raw_sha = digest(raw)
+            directory = self.output / 'official'
+            pointer = directory / 'current.json'
+            artifact = directory / (raw_sha + '.js')
+            release = {'schema': SCHEMA, 'kind': 'official', 'source_url': url, 'raw_sha256': raw_sha,
+                       'bytes': len(raw), 'script': artifact.name}
+            already_verified = (pointer.is_file() and read_json(pointer) == release and artifact.is_file()
+                                and digest(artifact.read_bytes()) == raw_sha)
+            if not already_verified:
+                with tempfile.TemporaryDirectory(prefix='official-', dir=self.state) as folder:
+                    candidate = Path(folder) / 'game.js'
+                    atomic(candidate, raw)
+                    run(['node', '--check', str(candidate)], self.root, Path(folder) / 'syntax.log', timeout=30)
+            source_check = check_source(self.config, url, raw_sha, self.fetch, urls)
+            if not already_verified:
+                atomic(artifact, raw)
+                atomic_json(pointer, release)
+            return {**release, 'state': 'unchanged' if already_verified else 'updated', 'source_check': source_check}
     def once(self):
         with locked(self.state):
             started = now()
@@ -387,7 +435,8 @@ def load_config(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=['once', 'watch', 'serve', 'status', 'rollback'])
+    parser.add_argument('command', choices=['once', 'watch', 'serve', 'status', 'rollback', 'source', 'watch-source',
+                                            'official', 'watch-official'])
     parser.add_argument('--config', type=Path, default=ROOT / 'auto-update.json')
     parser.add_argument('--port', type=int, default=8787)
     parser.add_argument('--release')
@@ -395,15 +444,18 @@ def main():
     config = load_config(args.config)
     updater = Updater(ROOT, config)
     if args.command == 'once': print(json.dumps(updater.once(), ensure_ascii=False))
+    elif args.command == 'source': print(json.dumps(updater.source(), ensure_ascii=False, indent=2))
+    elif args.command == 'official': print(json.dumps(updater.official(), ensure_ascii=False, indent=2))
     elif args.command == 'status': print(json.dumps({'current': updater.current(), 'last_attempt': read_json(updater.output / 'status.json') if (updater.output / 'status.json').exists() else None}, ensure_ascii=False, indent=2))
     elif args.command == 'rollback': print(json.dumps(updater.rollback(args.release), ensure_ascii=False))
     elif args.command == 'serve': server(updater.output, args.port).serve_forever()
     else:
+        check = {'watch': updater.once, 'watch-source': updater.source, 'watch-official': updater.official}[args.command]
         stop = threading.Event()
         signal.signal(signal.SIGTERM, lambda *_: stop.set())
         signal.signal(signal.SIGINT, lambda *_: stop.set())
         while not stop.is_set():
-            try: print(json.dumps(updater.once(), ensure_ascii=False), flush=True)
+            try: print(json.dumps(check(), ensure_ascii=False), flush=True)
             except Exception as error: print(json.dumps({'state': 'failed', 'error': str(error)[-5000:]}, ensure_ascii=False), file=sys.stderr, flush=True)
             stop.wait(config['poll_seconds'])
 

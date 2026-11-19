@@ -3,9 +3,9 @@ const fs=require('node:fs'),zlib=require('node:zlib'),path=require('node:path');
 const {port}=require('../tools/auto_port.cjs'),{loadReference,selectReference}=require('../tools/updater/references.cjs');
 const {hash}=require('../tools/updater/static.cjs');
 
-for(const [fixture,sha]of [['rotation-2026-11-06.js.gz','74720aca77141a313015167051e60c2dfc566310202a5b41d4445258e4937f2e'],['rotation-2026-11-08.js.gz','96dc71ca2e8db9da8e2530e2f2c494f18e63fa5dcbb505cf118f1d9602affa72'],['rotation-2026-11-08b.js.gz','1a3807a85d8b36df3e97c51b4311c8a6c51a04b3ad65687d7e2366f1e1502c9b'],['rotation-2026-11-11.js.gz','35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362']])test(fixture+' ports without registering a new baseline',{timeout:180000},()=>{
+for(const [fixture,sha,directory='fixtures']of [['rotation-2026-11-06.js.gz','74720aca77141a313015167051e60c2dfc566310202a5b41d4445258e4937f2e'],['rotation-2026-11-08.js.gz','96dc71ca2e8db9da8e2530e2f2c494f18e63fa5dcbb505cf118f1d9602affa72'],['rotation-2026-11-08b.js.gz','1a3807a85d8b36df3e97c51b4311c8a6c51a04b3ad65687d7e2366f1e1502c9b'],['rotation-2026-11-11.js.gz','35fe5bd5c60dbb0497c80d15af896c1f889911647131c75df03a9f6286a58362'],['native-2026-11-19.js.gz','2695749a07db47e2ed17793293d903daf6bca78a4084be830776dfc8b58c1f5d','../baselines']])test(fixture+' ports without registering a new baseline',{timeout:180000},()=>{
  const root=path.resolve(__dirname,'..'),read=file=>fs.readFileSync(path.join(root,file),'utf8');
- const input=zlib.gunzipSync(fs.readFileSync(path.join(__dirname,'fixtures',fixture))).toString();
+ const input=zlib.gunzipSync(fs.readFileSync(path.join(__dirname,directory,fixture))).toString();
  const referenceSource=zlib.gunzipSync(fs.readFileSync(path.join(root,'baselines/native-2026-11-06.js.gz'))).toString();
  const ref=loadReference(root,referenceSource),raw=hash(input);
  assert.equal(raw,sha);

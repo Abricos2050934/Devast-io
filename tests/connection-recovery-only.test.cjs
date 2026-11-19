@@ -22,6 +22,50 @@ test('an entry timeout retains its close event but a replaced socket cannot cont
   const oldClose=handlers.get('close');f.mod.observeSocket({...socket,readyState:1});const count=f.mod.connectionInfo().events.length;oldClose({code:1011});assert.equal(f.mod.connectionInfo().events.length,count);
  }finally{f.mod.dispose();}
 });
+test('a replacement socket gets a new entry deadline without an intervening state change', () => {
+ const f = fixture();
+ const closes = [];
+ const socket = name => ({readyState: 0, close() { closes.push(name); }});
+ const step = now => { f.setClock(now); f.mod.step(now); };
+ try {
+  f.network.state = 2;
+  f.mod.observeSocket(socket('old'));
+  step(0);
+  f.setClock(11900);
+  f.mod.observeSocket(socket('current'));
+  step(11900);
+  step(12001);
+  assert.deepEqual(closes, []);
+  assert.equal(f.network.state, 2);
+  step(23900);
+  assert.deepEqual(closes, ['current']);
+ } finally {
+  f.mod.dispose();
+ }
+});
+test('an earlier socket closing does not prevent a stalled login from unlocking Play', () => {
+ const f = fixture({saved: {token: 'kept-token'}});
+ let menus = 0;
+ const step = now => { f.setClock(now); f.mod.step(now); };
+ try {
+  f.B.loginKey = 'login';
+  f.B.pendingKey = 'busy';
+  f.B.returnToMenu = () => { menus++; };
+  f.network.login = () => { f.network.busy = true; };
+  f.mod.observeSocket({readyState: 3});
+  f.network.state = 64;
+  step(0);
+  f.network.login();
+  assert.equal(f.network.busy, true);
+  step(12001);
+  assert.equal(f.network.busy, false);
+  assert.equal(menus, 1);
+  assert.equal(f.network.state, 0);
+  assert.equal(f.storage.get('token'), 'kept-token');
+ } finally {
+  f.mod.dispose();
+ }
+});
 function preflight(){const f=fixture({saved:{token:'kept-token'}}),replies=[];f.setClock(0);f.network.state=0;f.B.loginKey='login';f.B.preflightKey='preflight';f.network.preflight=(_,cb)=>replies.push(cb);f.mod.step(0);return {f,replies};}
 test('disposed native preflight cannot start an old connection',()=>{const {f,replies}=preflight();let accepted=0;f.network.login=function(){this.preflight('/fixture',()=>accepted++);};f.mod.step(0);f.network.login();f.mod.dispose();replies[0]();assert.equal(accepted,0);assert.equal(f.storage.get('token'),'kept-token');});
 test('nested native preflights keep ownership and reject a stale second stage',()=>{const {f,replies}=preflight();let completed=0;f.network.login=function(){this.preflight('/first',()=>this.preflight('/second',()=>completed++));};f.mod.step(0);f.network.login();replies[0]();f.setClock(12001);f.mod.step(12001);replies[1]();assert.equal(completed,0);f.network.login();replies[2]();replies[3]();assert.equal(completed,1);assert.equal(f.storage.get('token'),'kept-token');f.mod.dispose();});

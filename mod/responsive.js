@@ -1706,7 +1706,10 @@ function __installDevastMod(B) {
   }
   const widgetWrappers = new Map();
   function observeSocket(socket) {
-    if(socket!==connectionSocket){lastSentAngle=null;}
+    if (socket !== connectionSocket) {
+      lastSentAngle = null;
+      if (socket && reconnect.phase === 'connecting') reconnect.deadline = performance.now() + 12000;
+    }
     removeSocketObservers();
     connectionSocket = socket;
     socketTrace=socket?{id:++socketSerial,openedAt:socket.readyState===1?performance.now():null,lastReceiveAt:null,receivedMessages:0,lastSendAt:null,sentMessages:0,sentBytes:0,localCloseSource:null}:null;
@@ -2015,7 +2018,7 @@ function __installDevastMod(B) {
     }
     if ((n.state & 2) !== 0) {
       reconnect.armed = true;
-      if (reconnect.phase !== 'connecting' && !reconnect.pending) reconnect.deadline = now + 12000;
+      if (reconnect.phase !== 'connecting') reconnect.deadline = now + 12000;
       reconnect.pending = true;
       reconnect.phase = 'connecting';
       if (now >= reconnect.deadline) {
@@ -2041,7 +2044,9 @@ function __installDevastMod(B) {
         finishStalledEntry('preparing');
       }
     }
-    if (reconnect.pending && reconnect.phase === 'joining' && (n.state === 0 || n.state === 64 && !connectionSocket && !reconnect.sessionEnded)) {
+    const restoringWithoutSocket = n.state === 64 && !reconnect.sessionEnded &&
+      (!connectionSocket || connectionSocket.readyState >= 2);
+    if (reconnect.pending && reconnect.phase === 'joining' && (n.state === 0 || restoringWithoutSocket)) {
       if (document.hidden) reconnect.deadline=now+12000;
       else if (now >= reconnect.deadline) finishStalledEntry('joining');
     }

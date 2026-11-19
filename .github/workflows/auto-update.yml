@@ -38,10 +38,24 @@ jobs:
           key: devast-playwright-${{ runner.os }}-ubuntu-24.04-${{ hashFiles('package-lock.json') }}
       - name: Install browser system dependencies
         timeout-minutes: 5
-        run: npx playwright-core install-deps chromium firefox
+        run: |
+          for attempt in 1 2 3; do
+            if npx playwright-core install-deps chromium firefox; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then sleep 10; fi
+          done
+          exit 1
       - name: Install Chromium and Firefox
         timeout-minutes: 5
-        run: npx playwright-core install chromium firefox
+        run: |
+          for attempt in 1 2 3; do
+            if npx playwright-core install chromium firefox; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then sleep 10; fi
+          done
+          exit 1
       - run: npm run build
       - name: Restore local updater history
         uses: actions/cache/restore@v4

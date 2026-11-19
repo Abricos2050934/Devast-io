@@ -4,6 +4,24 @@
   "changes": [
     {
       "file": "mod/responsive.js",
+      "reason": "Start a fresh entry deadline when the native client replaces its connecting socket",
+      "before": "    if(socket!==connectionSocket){lastSentAngle=null;}",
+      "after": "    if (socket !== connectionSocket) {\n      lastSentAngle = null;\n      if (socket && reconnect.phase === 'connecting') reconnect.deadline = performance.now() + 12000;\n    }"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "Recover stalled preflight while the closing or closed socket is retained for diagnostics",
+      "before": "    if (reconnect.pending && reconnect.phase === 'joining' && (n.state === 0 || n.state === 64 && !connectionSocket && !reconnect.sessionEnded)) {",
+      "after": "    const restoringWithoutSocket = n.state === 64 && !reconnect.sessionEnded &&\n      (!connectionSocket || connectionSocket.readyState >= 2);\n    if (reconnect.pending && reconnect.phase === 'joining' && (n.state === 0 || restoringWithoutSocket)) {"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "Give the socket entry phase a separate deadline from HTTP preflight",
+      "before": "      if (reconnect.phase !== 'connecting' && !reconnect.pending) reconnect.deadline = now + 12000;",
+      "after": "      if (reconnect.phase !== 'connecting') reconnect.deadline = now + 12000;"
+    },
+    {
+      "file": "mod/responsive.js",
       "reason": "bounded-pickup-request-evidence-with-frozen-end-snapshots",
       "before": "    trimWire(now);return {scope:'native send calls returned without throwing; delivery is not confirmed and payloads are not recorded',totals:{...wireTotals},recentSeconds:wireSeconds.map(bucket=>({...bucket})),peakSecond:wirePeak?{...wirePeak}:null};\n  }\n  const trafficKeys=['AimBotEnabled','AimbotSpearEnabled','AdaptiveAimEnabled','JitterEnabled','AntiAimbot','autoFire','hidePlayerAngle','hideAimbotAngle','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','SpamChatEnabled','AntiKickEnabled'];\n  const trafficSettings=Object.fromEntries(trafficKeys.map(key=>[key,MOD[key]]));\n",
       "after": "    trimWire(now);return {scope:'native send calls returned without throwing; delivery is not confirmed and payloads are not recorded',totals:{...wireTotals},recentSeconds:wireSeconds.map(bucket=>({...bucket})),peakSecond:wirePeak?{...wirePeak}:null};\n  }\n  const pickupRequests=[],pickupPrevious=new WeakMap();\n  function trimPickupRequests(now){while(pickupRequests.length&&(pickupRequests.length>128||now-pickupRequests[0].at>=120000))pickupRequests.shift();}\n  function recordPickupRequest(entity){\n    // Numeric gameplay metadata only. Do not copy chat, login or arbitrary packets.\n    try{\n    const now=performance.now(),socket=socketTrace?.id??null,me=B.world.ᅠᏧ‍;\n    const previous=pickupPrevious.get(entity),distance=Math.hypot(entity.x-me.x,entity.y-me.y);\n    const numeric=value=>Number.isFinite(value)?value:null;\n    const entry={at:Math.round(now),socket,id:numeric(entity.id),itemType:numeric(entity.Іࡈ５),\n      distance:Number.isFinite(distance)?Math.round(distance*100)/100:null,\n      nativeInteraction:numeric(me.І๔︊),nativeSelectedId:numeric(me.ιᄁ८),\n      repeatGapMs:previous&&previous.id===entity.id&&previous.socket===socket?Math.max(0,Math.round(now-previous.at)):null};\n    pickupPrevious.set(entity,{at:now,id:entity.id,socket});pickupRequests.push(entry);trimPickupRequests(now);\n    }catch(_){} // Recording must never interrupt native gameplay.\n  }\n  function pickupRequestInfo(){\n    trimPickupRequests(performance.now());\n    return {scope:'mod pickup calls accepted by the native sender; delivery and server acceptance are not confirmed',retentionMs:120000,maxEntries:128,requests:pickupRequests.map(entry=>({...entry}))};\n  }\n  const trafficKeys=['AimBotEnabled','AimbotSpearEnabled','AdaptiveAimEnabled','JitterEnabled','AntiAimbot','autoFire','hidePlayerAngle','hideAimbotAngle','FAutoLootEnabled','SAutoLootEnabled','AutoBuiledEnabled','AutoTakeEnabled','SpamChatEnabled','AntiKickEnabled'];\n  const trafficSettings=Object.fromEntries(trafficKeys.map(key=>[key,MOD[key]]));\n"

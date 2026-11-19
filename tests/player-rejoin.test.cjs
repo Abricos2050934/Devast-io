@@ -16,6 +16,15 @@ test('rejoin nickname mapping preserves the new native animation reset and every
 test('changed rejoin packets, animation behavior, table, owner and ambiguous handlers block the adaptation',()=>{
  for(const source of [after.replace('пакет[3]','пакет[4]'),after.replace('-420','-421'),after.replace('сцена.игроки[код]','сцена.другие[код]'),after.replace('цель.id','пакет.id'),after.replace('движок.время','другой.время'),after+'\n'+handler.replace('новый','дубликат')])assert.throws(()=>match(source),/rejoin contract changed or ambiguous/);
 });
+test('rejoin retains the native skin validation added in November 19 and rejects different packet semantics',()=>{
+ const old=readonlyConstants(analyze(before.replace('игрок.история=[];','игрок.скин=данные[4];игрок.история=[];')));
+ const source=after.replace('цель.путь=[];','цель.скин=каталог.проверить(пакет[4])===1?пакет[4]:0;цель.путь=[];');
+ const run=text=>playerRejoin(old,readonlyConstants(analyze(text)),old.functions[0]);
+ const result=run(source);
+ assert.equal(result.oc.hash,result.nc.hash);
+ assert.equal(result.current.body.body[3].expression.right.type,'ConditionalExpression');
+ for(const changed of [source.replace('===1','===2'),source.replace(':0;',':1;'),source.replace('проверить(пакет[4])','проверить(пакет[5])'),source.replace('?пакет[4]','?другой[4]')])assert.throws(()=>run(changed),/rejoin contract changed or ambiguous/);
+});
 test('constructor mapping retains six new scalar initializers and rejects changed existing fields',()=>{
  const original='function игрок(код,имя){this.имя=имя;this.id=код;this.путь=[];this.прочее=0;}',extra='this.а=0;this.б=0;this.в=0;this.г=0;this.д=0;this.е=-1;',next=original.replace('this.прочее=0;',extra+'this.прочее=0;');
  const old=readonlyConstants(analyze(original));

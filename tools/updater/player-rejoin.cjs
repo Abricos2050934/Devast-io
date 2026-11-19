@@ -6,6 +6,15 @@ const {readonlyConstants,semanticCanonical:canonical}=require('./semantic.cjs');
 const resetReference=readonlyConstants(analyze('function сброс(код){var игрок=мир.игроки[код];(игрок!==undefined&&игрок.движение!==0)&&(игрок.начало=движок.время-420,игрок.кадр=0);}'));
 const resetHash=canonical(resetReference,resetReference.functions[0]).hash;
 const prop=(a,n)=>n.computed?a.constant(n.property||n.key):(n.property||n.key)?.name;
+function nativeSkinValidation(a,node){
+ if(node?.type!=='ConditionalExpression'||a.constant(node.alternate)!==0)return node;
+ const test=node.test,call=test?.left?.type==='CallExpression'?test.left:test?.right;
+ const one=call===test?.left?test.right:test?.left;
+ if(test?.type!=='BinaryExpression'||test.operator!=='==='||a.constant(one)!==1||call?.type!=='CallExpression'||call.arguments.length!==1||call.callee.type!=='MemberExpression')return node;
+ const value=node.consequent,checked=call.arguments[0];
+ if(value.type!=='MemberExpression'||checked.type!=='MemberExpression'||a.constant(value.property)!==4||a.constant(checked.property)!==4||value.object.type!=='Identifier'||checked.object.type!=='Identifier'||a.binding(value.object)!==a.binding(checked.object))return node;
+ return value;
+}
 function playerRejoin(old,cur,fn){
  const oc=canonical(old,fn),matches=[];
  for(const next of cur.functions){
@@ -32,7 +41,13 @@ function playerRejoin(old,cur,fn){
    if(lookup.object.type!=='MemberExpression'||table.type!=='MemberExpression'||lookup.object.object.type!=='Identifier'||table.object.type!=='Identifier'||cur.binding(lookup.object.object)!==cur.binding(table.object)||prop(cur,lookup.object)!==prop(cur,table))continue;
    const clockReads=cur.nodes.filter(n=>n.start>=reset.start&&n.end<=reset.end&&n.type==='MemberExpression'&&n.object.type==='Identifier'&&cur.binding(n.object)===cur.binding(call.callee.object));
    if(clockReads.length!==1)continue;
-   const projected={...next,body:{...next.body,body:next.body.body.filter((_,i)=>i!==index)}};
+   const remaining=next.body.body.filter((_,i)=>i!==index).map(statement=>{
+    const expression=statement.expression;
+    if(expression?.type!=='AssignmentExpression')return statement;
+    const right=nativeSkinValidation(cur,expression.right);
+    return right===expression.right?statement:{...statement,expression:{...expression,right}};
+   });
+   const projected={...next,body:{...next.body,body:remaining}};
    const nc=canonical(cur,projected);
    if(nc.hash!==oc.hash)continue;
    nc.entries.set('',next);nc.entries.set('/body',next.body);

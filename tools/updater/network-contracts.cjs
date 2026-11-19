@@ -72,4 +72,21 @@ function namespaceByExports(a,body,functions){
  if(hits.length!==1)throw Error('Native network namespace is ambiguous or changed');
  return hits[0];
 }
-module.exports={directionDelay,exportNames,elapsedTimer,serverListSchema,namespaceByExports};
+// Login gained an account skin getter. Match the surrounding unchanged
+// preflight/nickname contract while preserving the candidate's entire body.
+function loginSkinArgument(a, fn) {
+ if(!fn || fn.params.length!==0 || fn.body.type!=='BlockStatement' || fn.body.body.length!==1)return null;
+ const request=fn.body.body[0]?.expression;
+ if(request?.type!=='CallExpression'||request.callee.type!=='MemberExpression'||request.arguments.length!==2)return null;
+ const callback=request.arguments[1];
+ if(callback?.type!=='FunctionExpression'||callback.params.length||callback.body.body.length!==1)return null;
+ const join=callback.body.body[0]?.expression;
+ if(join?.type!=='CallExpression'||join.callee.type!=='MemberExpression'||join.arguments.length!==2||join.callee.object.name!==request.callee.object.name)return null;
+ const nickname=join.arguments[0],lookup=nickname?.object;
+ if(nickname?.type!=='MemberExpression'||lookup?.type!=='CallExpression'||lookup.callee.type!=='MemberExpression'||lookup.callee.object.name!=='document'||lookup.arguments.length!==1||a.constant(lookup.arguments[0])!=='nicknameInput')return null;
+ const skin=join.arguments[1];
+ if(a.constant(skin)===0)return skin;
+ if(skin.type==='CallExpression'&&skin.arguments.length===0&&skin.callee.type==='MemberExpression'&&skin.callee.object.type==='Identifier')return skin;
+ return null;
+}
+module.exports={directionDelay,exportNames,elapsedTimer,serverListSchema,namespaceByExports,loginSkinArgument};

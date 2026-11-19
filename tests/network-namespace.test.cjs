@@ -1,5 +1,21 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {analyze}=require('../tools/updater/static.cjs'),{namespaceByExports}=require('../tools/updater/network-contracts.cjs');
+const {loginSkinArgument}=require('../tools/updater/network-contracts.cjs');
+test('login skin compatibility accepts the native nickname and preflight shape only',()=>{
+ for(const skin of ['0','account.selectedSkin()']){
+  const a=analyze('function login(){network.prepare(url, function(){network.join(document.getElementById("nicknameInput").value,'+skin+');});}');
+  const fn=a.functions.find(fn=>fn.id?.name==='login');
+  assert.ok(loginSkinArgument(a,fn));
+ }
+ for(const source of [
+  '()=>1',
+  'function login(){network.prepare(url, function(){network.join(document.getElementById("passwordInput").value,account.selectedSkin());});}',
+  'function login(){network.prepare(url, function(){network.join(document.getElementById("nicknameInput").value,account.selectedSkin(1));});}',
+ ]){
+  const a=analyze('('+source+');');
+  assert.equal(loginSkinArgument(a,a.functions[0]),null);
+ }
+});
 function fixture(source){const a=analyze('(()=>{'+source+'})();');return {a,body:a.tree.body[0].expression.callee.body.body};}
 test('native namespace discovery uses lexical export identities despite repeated local names',()=>{
  const {a,body}=fixture('var first=(function(){function init(){return 1}function send(){return 2}function close(){return 3}return {init,send,close};})();var second=(function(){function init(){return 1}function send(){return 2}function close(){return 3}return {init,send,close};})();');

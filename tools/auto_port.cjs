@@ -4,7 +4,7 @@ const {analyze,isFunction,obfuscated,hash}=require('./updater/static.cjs');
 const {readonlyConstants,semanticCanonical:canonical}=require('./updater/semantic.cjs');
 const {deobfuscate}=require('./updater/decoder.cjs');
 const {integrityOperations}=require('./updater/integrity.cjs');
-const {directionDelay,exportNames,serverListSchema,namespaceByExports}=require('./updater/network-contracts.cjs');
+const {directionDelay,exportNames,serverListSchema,namespaceByExports,loginSkinArgument}=require('./updater/network-contracts.cjs');
 const {translate}=require('./translate_payload.cjs'),{assemble}=require('./build_client.cjs');
 const root=path.resolve(__dirname,'..');
 function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
@@ -12,7 +12,23 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const decodeOptions={cacheDir:path.join(root,'.updater','native-decode-cache-v1')};
  const decodedOld=deobfuscate(reference,decodeOptions),decodedNew=reference===candidate?decodedOld:deobfuscate(candidate,decodeOptions);
  const old=readonlyConstants(analyze(decodedOld.source)),cur=readonlyConstants(analyze(decodedNew.source)),oldCanon=new Map(),curCanon=new Map();
- const group=(a,cache)=>{const map=new Map();for(const n of a.functions){if(n.end-n.start>80000)continue;const c=canonical(a,n);cache.set(n,c);if(!map.has(c.hash))map.set(c.hash,[]);map.get(c.hash).push(n);}return map;};
+ function functionContract(a,n){
+  const skin=loginSkinArgument(a,n);
+  if(!skin)return canonical(a,n);
+  function mask(node){
+   if(node===skin)return {type:'Literal',value:0,start:node.start,end:node.end};
+   const copy={...node};
+   for(const [key,value] of Object.entries(node)){
+    if(Array.isArray(value))copy[key]=value.map(child=>child?.type?mask(child):child);
+    else if(value?.type)copy[key]=mask(value);
+   }
+   return copy;
+  }
+  const result=canonical(a,mask(n)),originals=new Map(a.nodes.map(node=>[node.type+':'+node.start+':'+node.end,node]));
+  result.entries=new Map([...result.entries].map(([path,node])=>[path,originals.get(node.type+':'+node.start+':'+node.end)||node]));
+  return result;
+ }
+ const group=(a,cache)=>{const map=new Map();for(const n of a.functions){if(n.end-n.start>80000)continue;const c=functionContract(a,n);cache.set(n,c);if(!map.has(c.hash))map.set(c.hash,[]);map.get(c.hash).push(n);}return map;};
  const og=group(old,oldCanon),ng=group(cur,curCanon),pairs=new Map(),votes=new Map(),propertyVotes=new Map();
  const propose=(a,b)=>{if(!a||!b||!obfuscated(a)&&a!==b)return;if(!votes.has(a))votes.set(a,new Set());votes.get(a).add(b);};
  function prop(a,n){if(n.type==='MemberExpression')return n.computed?a.constant(n.property):n.property.name;if(n.type==='Property')return n.computed?a.constant(n.key):n.key.name??n.key.value;}

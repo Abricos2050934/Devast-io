@@ -9,6 +9,10 @@
     "test": "python3 -m unittest discover -s tests -v && npm run check && node --test tests/*.test.cjs",
     "update:once": "python3 tools/update_client.py once",
     "update:watch": "python3 tools/update_client.py watch",
+    "update:source": "python3 tools/update_client.py source",
+    "update:watch-source": "python3 tools/update_client.py watch-source",
+    "update:official": "python3 tools/update_client.py official",
+    "update:watch-official": "python3 tools/update_client.py watch-official",
     "update:status": "python3 tools/update_client.py status",
     "update:serve": "python3 tools/update_client.py serve",
     "update:rollback": "python3 tools/update_client.py rollback"
