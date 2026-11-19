@@ -13,7 +13,13 @@ function verifyNativePreflightErrors(m,n,s){
   m.step(clock);n.network[key]();const first=window.__updateHeldPreflights[0];check(typeof first?.failure==='function','Actual native failure callback was not captured');
   clock+=12001;m.step(clock);clock+=1000;check(m.beginPlay(),'New manual attempt unavailable after old preflight timeout');n.network[key]();check(window.__updateHeldPreflights.length===2,'Fixture did not create two real native preflight stages');
   const socket={readyState:1,bufferedAmount:0,close(){closes++;this.readyState=3;}};
-  restoreSocket=n.setNativePreflightSocket(socket);m.observeSocket(socket);n.world[s['ᅠᏧ‍']].id=1;n.network.state=1;m.step(++clock);
+  restoreSocket=n.setNativePreflightSocket(socket);m.observeSocket(socket);n.world[s['ᅠᏧ‍']].id=1;n.network.state=1;
+  const sameGeneration=window.__updateHeldPreflights[1];
+  const beforeFrame=m.connectionInfo().connectionCallbacks.rejectedWhileConnected;
+  sameGeneration.failure();
+  check(closes===0&&socket.readyState===1&&n.network.state===1,'Entry failure closed the socket before the next frame');
+  check(m.connectionInfo().connectionCallbacks.rejectedWhileConnected===beforeFrame+1,'Entry failure after native connection was accepted');
+  m.step(++clock);
   const rejected=m.connectionInfo().connectionCallbacks.rejectedWhileConnected;first.failure();
   check(closes===0&&socket.readyState===1&&n.network.state===1,'Late native error closed the newer active connection');
   check(m.connectionInfo().connectionCallbacks.rejectedWhileConnected===rejected+1,'Late failure was not rejected by its request generation');

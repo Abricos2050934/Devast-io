@@ -2,6 +2,19 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 function setup(errorOnly=false){const f=fixture({saved:{token:'kept-token',tokenId:'17',userId:'2'}}),requests=[];let closes=0;f.setClock(0);f.network.state=0;f.B.loginKey='login';f.B.preflightKey='preflight';f.B.pendingKey='busy';f.network.preflight=(url,ok,fail)=>requests.push({ok,fail});f.network.login=function(){this.busy=true;this.preflight('/native-fixture',errorOnly?null:()=>{},()=>{closes++;f.network.state=64;});};f.mod.step(0);return {f,requests,get closes(){return closes;}};}
 test('late failure of a timed-out login cannot close a newer active session',()=>{const x=setup(),{f}=x;try{f.network.login();const old=x.requests[0];f.setClock(12001);f.mod.step(12001);assert.equal(f.mod.beginPlay(),true);f.network.login();f.network.state=1;f.mod.step(12002);old.fail();assert.equal(x.closes,0);assert.equal(f.network.state,1);assert.ok(f.mod.connectionInfo().connectionCallbacks.rejectedWhileConnected>0);assert.equal(f.storage.get('token'),'kept-token');}finally{f.mod.dispose();}});
 test('failure of the current attempt still reaches its native error handler',()=>{const x=setup(),{f}=x;try{f.network.login();x.requests[0].fail();assert.equal(x.closes,1);assert.equal(f.network.state,64);assert.equal(f.mod.connectionInfo().connectionCallbacks.accepted,1);}finally{f.mod.dispose();}});
+test('a pending entry failure cannot close the socket between native entry and the next frame',()=>{
+ const x=setup(),{f}=x;
+ try{
+  f.network.login();
+  const generation=f.mod.reconnect.generation;
+  f.network.state=1;
+  x.requests[0].fail();
+  assert.equal(f.mod.reconnect.generation,generation,'run the callback before the next frame can invalidate its generation');
+  assert.equal(x.closes,0);
+  assert.equal(f.network.state,1);
+  assert.equal(f.mod.connectionInfo().connectionCallbacks.rejectedWhileConnected,1);
+ }finally{f.mod.dispose();}
+});
 test('an error callback remains owned when it starts another asynchronous stage',()=>{const x=setup(),{f}=x;try{f.network.login=function(){this.preflight('/first',()=>{},()=>this.preflight('/second',()=>{},()=>{f.network.state=64;}));};f.mod.step(0);f.network.login();x.requests[0].fail();assert.equal(x.requests.length,2);f.network.state=1;f.mod.step(1);x.requests[1].fail();assert.equal(f.network.state,1);assert.ok(f.mod.connectionInfo().connectionCallbacks.rejectedWhileConnected>0);}finally{f.mod.dispose();}});
 test('disposal rejects a pending error callback',()=>{const x=setup();x.f.network.login();x.f.mod.dispose();x.requests[0].fail();assert.equal(x.closes,0);});
 test('a failure-only request is guarded even without a success callback',()=>{const x=setup(true),{f}=x;try{f.network.login();assert.equal(x.requests[0].ok,null);f.network.state=1;f.mod.step(1);x.requests[0].fail();assert.equal(x.closes,0);}finally{f.mod.dispose();}});

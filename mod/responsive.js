@@ -1883,9 +1883,11 @@ function __installDevastMod(B) {
     // connection's cryptographic state, not only its final start callback.
     return function (...args) {
       if(stopped){callbackTraffic.rejectedAfterDispose++;return;}
-      if(generation!==reconnect.generation){
+      // Native entry can finish before the next frame retires this generation.
+      const connected = (B.network.state & 1) !== 0;
+      if(generation!==reconnect.generation || connected){
         callbackTraffic.rejectedStale++;
-        if(B.network.state===1)callbackTraffic.rejectedWhileConnected++;
+        if(connected)callbackTraffic.rejectedWhileConnected++;
         return;
       }
       callbackTraffic.accepted++;

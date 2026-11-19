@@ -4,6 +4,12 @@
   "changes": [
     {
       "file": "mod/responsive.js",
+      "reason": "Reject late login callbacks as soon as the native session connects",
+      "before": "      if(generation!==reconnect.generation){\n        callbackTraffic.rejectedStale++;\n        if(B.network.state===1)callbackTraffic.rejectedWhileConnected++;",
+      "after": "      // Native entry can finish before the next frame retires this generation.\n      const connected = (B.network.state & 1) !== 0;\n      if(generation!==reconnect.generation || connected){\n        callbackTraffic.rejectedStale++;\n        if(connected)callbackTraffic.rejectedWhileConnected++;"
+    },
+    {
+      "file": "mod/responsive.js",
       "reason": "Start a fresh entry deadline when the native client replaces its connecting socket",
       "before": "    if(socket!==connectionSocket){lastSentAngle=null;}",
       "after": "    if (socket !== connectionSocket) {\n      lastSentAngle = null;\n      if (socket && reconnect.phase === 'connecting') reconnect.deadline = performance.now() + 12000;\n    }"
