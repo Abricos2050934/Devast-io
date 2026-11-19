@@ -1,5 +1,21 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {fixture,scene,player,menu}=require('./mod-fixture.cjs');
+test('fast loot bounds unsuccessful scans and reaches later drops without scanning every frame',()=>{
+ const f=fixture();try{
+  f.B.synchronizedRender=true;
+  let reads=0;
+  const drops=Array.from({length:1024},(_,id)=>({get id(){reads++;return id;},x:10000,y:0,'е̝ހ':0,'Іࡈ５':6}));
+  drops[1000].x=10;
+  scene(f,2,drops);
+  f.mod.setSetting('FAutoLootEnabled',true);
+  f.mod.render(0);assert.equal(reads,256);assert.equal(f.packets.length,0);
+  for(let now=1;now<25;now++)f.mod.render(now);
+  assert.equal(reads,256,'unsuccessful scans must respect the interval');
+  for(const now of [25,50]){const before=reads;f.mod.render(now);assert.equal(reads-before,256);}
+  const before=reads;f.mod.render(75);assert.ok(reads-before<=260);
+  assert.ok(f.packets.some(packet=>packet[0]===12&&packet[1]===1000),'rotation must reach drops beyond the first scan');
+ }finally{f.mod.dispose();}
+});
 test('removed HUD text and AIM BOT label cannot return from old saved settings',()=>{
  const f=fixture({dom:true,saved:{BestModMenuConfig:JSON.stringify({ShowGauges:true}), 'BestModMenuConfig:ilm2':'1'}});
  scene(f,1,[player(1),player(2,100,100)]);f.mod.setSetting('AimBotEnabled',true);f.mod.step(0);
