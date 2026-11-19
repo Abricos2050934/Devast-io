@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "passed",
-  "output_sha256": "9725884c83496441283ba47b0daa8338adfa6079834aaf234f4e8c1662aba442",
+  "output_sha256": "94821e3f5d4895a57c3a6d6609411238f2cc82906173af3cc2a03595f4d52dcc",
   "static_ast": "passed",
   "aim_core": "active uploaded __BBY declarations and lifecycle",
   "resource_override_sha256": "cbfbcd3984d6f008004831de35e620506f70c1604d80ea5dac48bcd2e1f1e2c6",
@@ -110,13 +110,13 @@
     ]
   },
   "module_sha256": {
-    "mod/responsive.js": "ea81e3bfaefda5e0ba10b043cbf2cef3a3dc959787cecb958a1086a38cd4c3de",
+    "mod/responsive.js": "bc02210f553914be1e8f5370eac66730d9f89bd8c23b918d01c8cd54b0447e49",
     "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
     "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
     "mod/ilm-aim.js": "0e05f192c7cd4c4d95f6b07f2219e7d977e06a46875b14d3d635c99cfa041a46",
     "mod/ballistic-model.js": "d3b5c075b1db229e12a86d5db7731d0138a961eaa51d4116142eba2b478a9e7c"
   },
-  "mod_bundle_sha256": "dd1f66c79f2bfe387b7c7a37c88988f615bdd836c527ed15cad5e5b42d45e1be",
+  "mod_bundle_sha256": "e63e60fd5d21af14a7614860ae5789349c550f07d8c8cd93d28b11841b5b62dd",
   "mode": "native browser fixtures; no live game session",
   "page_errors": [],
   "browser": "chromium",
@@ -124,13 +124,13 @@
   "console_errors": [
     "Access to XMLHttpRequest at 'https://atlanta5.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://losangeles2.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Access to XMLHttpRequest at 'https://losangeles3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://frankfurt1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Access to XMLHttpRequest at 'https://frankfurt3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://sydney1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Access to XMLHttpRequest at 'https://osaka3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED",
-    "Access to XMLHttpRequest at 'https://osaka1.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Access to XMLHttpRequest at 'https://sydney3.devast.io/' from origin 'https://devast.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
     "Failed to load resource: net::ERR_FAILED"
   ],
   "external_dependencies": {
@@ -190,7 +190,7 @@
     }
   },
   "client_build": {
-    "fingerprint": "f10eff0523696a743d2b9d335d801cb1bdb1c780a5a20b0c17d65834a237b91b",
+    "fingerprint": "9c9bd9a236be18992dd95928a7c0d0a48a8c5c73cf8161b68b46cff0559f2545",
     "nativeSha256": "8a4e133616561e127254de7b50ddfa8fd53ce93e9774f09e38de778a45f0617b"
   },
   "native": {
@@ -1029,8 +1029,8 @@
       "callbacks_after": {
         "wrapped": 6,
         "accepted": 1,
-        "rejectedStale": 1,
-        "rejectedWhileConnected": 1,
+        "rejectedStale": 2,
+        "rejectedWhileConnected": 2,
         "rejectedAfterDispose": 0
       }
     }
@@ -1221,11 +1221,11 @@
     "status": "passed",
     "predicates": 3
   },
-  "finished_at": "2026-11-19T17:26:27.005Z",
+  "finished_at": "2026-11-19T18:18:36.828Z",
   "browsers": {
     "chromium": {
       "status": "passed",
-      "output_sha256": "9725884c83496441283ba47b0daa8338adfa6079834aaf234f4e8c1662aba442",
+      "output_sha256": "94821e3f5d4895a57c3a6d6609411238f2cc82906173af3cc2a03595f4d52dcc",
       "browser_version": "157.0.8103.0",
       "native": {
         "canonical_aim": {
@@ -2063,8 +2063,8 @@
           "callbacks_after": {
             "wrapped": 6,
             "accepted": 1,
-            "rejectedStale": 1,
-            "rejectedWhileConnected": 1,
+            "rejectedStale": 2,
+            "rejectedWhileConnected": 2,
             "rejectedAfterDispose": 0
           }
         }
@@ -2310,7 +2310,7 @@
     },
     "firefox": {
       "status": "passed",
-      "output_sha256": "9725884c83496441283ba47b0daa8338adfa6079834aaf234f4e8c1662aba442",
+      "output_sha256": "94821e3f5d4895a57c3a6d6609411238f2cc82906173af3cc2a03595f4d52dcc",
       "browser_version": "153.0",
       "native": {
         "canonical_aim": {
@@ -3148,8 +3148,8 @@
           "callbacks_after": {
             "wrapped": 6,
             "accepted": 1,
-            "rejectedStale": 1,
-            "rejectedWhileConnected": 1,
+            "rejectedStale": 2,
+            "rejectedWhileConnected": 2,
             "rejectedAfterDispose": 0
           }
         }
@@ -3429,7 +3429,7 @@
   "regression": {
     "status": "passed",
     "command": "npm test",
-    "node_tests": 298,
+    "node_tests": 299,
     "python_tests": 82
   }
 }
