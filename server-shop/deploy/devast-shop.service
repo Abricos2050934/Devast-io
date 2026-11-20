@@ -1,0 +1,26 @@
+[Unit]
+Description=Devast.io server 67 shop webhook
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=devast-shop
+Group=devast-shop
+WorkingDirectory=/opt/devast-shop
+EnvironmentFile=/etc/devast-shop.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=SHOP_DB=/var/lib/devast-shop/shop.sqlite3
+ExecStart=/usr/bin/python3 /opt/devast-shop/server.py
+Restart=on-failure
+RestartSec=3
+StateDirectory=devast-shop
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/devast-shop
+
+[Install]
+WantedBy=multi-user.target

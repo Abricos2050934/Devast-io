@@ -1,0 +1,148 @@
+﻿Код для ?buy и ?sell,Название в игре,Цена покупки за 1,Цена продажи за 1,IID текущего клиента
+headscarf,Headscarf,80,20,40
+gaz_mask,Radiation Mask,250,62,43
+gaz_protection,Min. Radiation Suit,450,112,44
+radiation_suit,Radiation Suit,1000,250,45
+armor_deminer,Protective Suit,3500,875,107
+chapka,Chapka,180,45,41
+armor_physic_1,Metal Helmet,650,162,101
+armor_physic_2,Welding Helmet,1500,375,102
+armor_physic_3,Gladiator Helmet,3000,750,103
+armor_tesla_1,Power Armor,5500,1375,108
+winter_coat,Winter Coat,500,125,42
+armor_fire_1,Leather Jacket,700,175,104
+armor_fire_2,Kevlar Suit,1700,425,105
+armor_fire_3,SWAT Suit,3300,825,106
+armor_tesla_2,Tesla Armor,8000,2000,109
+camouflage_gear,Camouflage Gear,2500,625,115
+hachet,Hatchet,80,20,14
+stone_pickaxe,Stone Pickaxe,120,30,15
+steel_pickaxe,Metal Pickaxe,350,87,16
+sulfur_pickaxe,Sulfur Pickaxe,650,162,58
+stone_axe,Metal Axe,300,75,17
+sulfur_axe,Sulfur Axe,600,150,95
+nail_gun,Nail Gun,900,225,81
+hammer,Hammer,500,125,62
+repair_hammer,Repair Hammer,450,112,64
+wood_spear,Wood Spear,120,30,19
+wood_bow,Wood Bow,180,45,20
+wood_crossbow,Wood Crossbow,400,100,79
+9mm,9MM,600,150,21
+desert_eagle,Desert Eagle,1200,300,22
+mp5,MP5,1800,450,39
+shotgun,Shotgun,2200,550,23
+ak47,AK47,3000,750,24
+sniper,Sniper,4500,1125,25
+sawed_off_shotgun,Sawed Off,1600,400,82
+laser_pistol,Laser Pistol,2500,625,92
+dynamite,Dynamite,1500,375,97
+landmine,Landmine,1800,450,96
+c4,C4,3500,875,98
+laser_submachine,Laser Submachine,6000,1500,111
+c4_trigger,C4 Trigger,250,62,99
+grenade,Grenade,1000,250,112
+super_hammer,Super Hammer,50000,12500,113
+bullet_9mm,Bullet,2,1,33
+bullet_sniper,Heavy Bullet,8,2,35
+bullet_shotgun,Cartridge,5,1,34
+wood_arrow,Wood Arrow,1,1,46
+wood_crossarrow,Crossbow Arrows,2,1,80
+energy_cells,Energy Cells,5,1,91
+orange,Orange,10,2,11
+rotten_orange,Rotten Orange,2,1,12
+tomato,Tomato,10,2,76
+rotten_tomato,Rotten Tomato,2,1,77
+soda,Soda,20,5,38
+raw_steak,Raw Steak,15,3,8
+cooked_steak,Cooked Steak,30,7,9
+rotten_steak,Rotten Steak,2,1,10
+rotten_crisps,Expired Crisps,2,1,87
+crisps,Crisps,15,3,86
+tomato_soup,Tomato Soup,30,7,71
+seed_tomato,Tomato Seed,30,7,75
+seed_orange,Orange Seed,30,7,13
+seed_ghoul,Ghoul Seed,100,25,129
+pumpkin,Pumpkin,15,3,127
+rotten_pumpkin,Rotten Pumpkin,2,1,128
+acorn,Acorn,5,1,134
+rotten_acorn,Rotten Acorn,1,1,135
+seed_tree,Tree Seed,40,10,133
+wood_smallwall,Wooden Low Wall,30,7,67
+wood_wall,Wooden Wall,50,12,26
+wood_door,Wooden Low Door,60,15,29
+wood_bigdoor,Wooden Door,90,22,49
+wood_floor,Wood floor,15,3,61
+stone_smallwall,Stone Low Wall,60,15,68
+stone_wall,Stone Wall,100,25,27
+stone_door,Stone Low Door,120,30,30
+stone_bigdoor,Stone Door,160,40,50
+woodlight_floor,Light Wood Floor,20,5,66
+steel_smallwall,Metal Low Wall,180,45,69
+steel_wall,Metal Wall,300,75,28
+steel_door,Metal Low Door,350,87,31
+steel_bigdoor,Metal Door,450,112,51
+tiling_floor,Tiling floor,25,6,84
+stone_floor,Stone floor,25,6,83
+red_floor,Red floor,50,12,154
+gold_floor,Golden Floor,100,25,153
+wood_spike,Wooden Spike,50,12,110
+stone_cave,Stone Cave,500,125,151
+bunker_wall,Bunker Wall,1000,250,152
+uranium_wall,Uranium Wall,1800,450,174
+uranium_bigdoor,Uranium Door,2200,550,175
+workbench,Workbench,100,25,18
+campfire,Campfire,40,10,32
+campfire_bbq,Firepit,80,20,47
+smelter,Smelter,180,45,48
+tesla,Tesla Bench,1500,375,93
+workbench2,Research Bench,700,175,54
+weaving,Weaving Machine,250,62,56
+sleeping_bag,Sleeping Bag,100,25,63
+string,String,6,1,5
+chest,Wood chest,100,25,59
+shaped_metal,Shaped Metal,40,10,7
+gasoline,Gasoline,40,10,57
+compost,Compost,15,3,100
+fridge,Fridge,300,75,60
+can,Can,15,3,78
+agitator,Agitator,900,225,116
+shaped_uranium,Shaped Uranium,180,45,53
+alloys,Alloys,220,55,94
+nails,Nails,2,1,65
+extractor,Extractor,1200,300,130
+welding_machine,Welding Machine,800,200,155
+wood,Wood,2,1,0
+stone,Stone,2,1,1
+steel,Iron,15,5,2
+animal_fat,Animal Fat,8,2,3
+animal_tendon,Animal Tendon,8,2,4
+junk,Junk,5,1,89
+sulfur,Sulfur,24,8,52
+uranium,Uranium,75,25,55
+electronics,Electronic Parts,30,10,88
+leather_boar,Leather,12,3,6
+wire,Big Wire,9,3,90
+small_wire,Small Wire,6,2,126
+bandage,Bandage,40,10,37
+medikit,Medkit,150,37,36
+radaway,RadAway,150,37,74
+syringe,Syringe,80,20,72
+chemical_component,Chemical Component,30,7,73
+lapadone,Lapadone,300,75,124
+ghoul_drug,Ghoul Drug,250,62,117
+antidote,Antidote,200,50,131
+cable0,Cable,10,2,139
+cable1,Cable,10,2,140
+cable2,Cable,10,2,141
+cable3,Cable,10,2,142
+cable4,Cable - Bridge,10,2,156
+cable_wall,Cable - Wall,60,15,148
+automatic_door,Automatic Door,250,62,149
+lamp,Lamp,80,20,147
+platform,Platform,120,30,150
+switch,Switch,80,20,143
+gate_or,Gate OR,100,25,144
+gate_not,Gate NOT,100,25,146
+gate_and,Gate AND,100,25,145
+gate_xor,Gate Xor,120,30,158
+gate_timer,Gate Timer,150,37,157

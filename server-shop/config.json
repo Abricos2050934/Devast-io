@@ -1,0 +1,1336 @@
+{
+  "server_id": 67,
+  "starting_balance": 0,
+  "reward_coins": 10,
+  "reward_seconds": 60,
+  "max_snapshot_gap_seconds": 10,
+  "confirmation_timeout_seconds": 90,
+  "max_commands_per_response": 40,
+  "max_new_authentications_per_tick": 8,
+  "catalog": {
+    "headscarf": {
+      "name": "Headscarf",
+      "buy": 80,
+      "sell": 20,
+      "aliases": [
+        "Headscarf"
+      ],
+      "iid": 40
+    },
+    "gaz_mask": {
+      "name": "Radiation Mask",
+      "buy": 250,
+      "sell": 62,
+      "aliases": [
+        "Radiation Mask"
+      ],
+      "iid": 43
+    },
+    "gaz_protection": {
+      "name": "Min. Radiation Suit",
+      "buy": 450,
+      "sell": 112,
+      "aliases": [
+        "Min. Radiation Suit"
+      ],
+      "iid": 44
+    },
+    "radiation_suit": {
+      "name": "Radiation Suit",
+      "buy": 1000,
+      "sell": 250,
+      "aliases": [
+        "Radiation Suit"
+      ],
+      "iid": 45
+    },
+    "armor_deminer": {
+      "name": "Protective Suit",
+      "buy": 3500,
+      "sell": 875,
+      "aliases": [
+        "Protective Suit"
+      ],
+      "iid": 107
+    },
+    "chapka": {
+      "name": "Chapka",
+      "buy": 180,
+      "sell": 45,
+      "aliases": [
+        "Chapka"
+      ],
+      "iid": 41
+    },
+    "armor_physic_1": {
+      "name": "Metal Helmet",
+      "buy": 650,
+      "sell": 162,
+      "aliases": [
+        "Metal Helmet"
+      ],
+      "iid": 101
+    },
+    "armor_physic_2": {
+      "name": "Welding Helmet",
+      "buy": 1500,
+      "sell": 375,
+      "aliases": [
+        "Welding Helmet"
+      ],
+      "iid": 102
+    },
+    "armor_physic_3": {
+      "name": "Gladiator Helmet",
+      "buy": 3000,
+      "sell": 750,
+      "aliases": [
+        "Gladiator Helmet"
+      ],
+      "iid": 103
+    },
+    "armor_tesla_1": {
+      "name": "Power Armor",
+      "buy": 5500,
+      "sell": 1375,
+      "aliases": [
+        "Power Armor"
+      ],
+      "iid": 108
+    },
+    "winter_coat": {
+      "name": "Winter Coat",
+      "buy": 500,
+      "sell": 125,
+      "aliases": [
+        "Winter Coat"
+      ],
+      "iid": 42
+    },
+    "armor_fire_1": {
+      "name": "Leather Jacket",
+      "buy": 700,
+      "sell": 175,
+      "aliases": [
+        "Leather Jacket"
+      ],
+      "iid": 104
+    },
+    "armor_fire_2": {
+      "name": "Kevlar Suit",
+      "buy": 1700,
+      "sell": 425,
+      "aliases": [
+        "Kevlar Suit"
+      ],
+      "iid": 105
+    },
+    "armor_fire_3": {
+      "name": "SWAT Suit",
+      "buy": 3300,
+      "sell": 825,
+      "aliases": [
+        "SWAT Suit"
+      ],
+      "iid": 106
+    },
+    "armor_tesla_2": {
+      "name": "Tesla Armor",
+      "buy": 8000,
+      "sell": 2000,
+      "aliases": [
+        "Tesla Armor"
+      ],
+      "iid": 109
+    },
+    "camouflage_gear": {
+      "name": "Camouflage Gear",
+      "buy": 2500,
+      "sell": 625,
+      "aliases": [
+        "Camouflage Gear"
+      ],
+      "iid": 115
+    },
+    "hachet": {
+      "name": "Hatchet",
+      "buy": 80,
+      "sell": 20,
+      "aliases": [
+        "Hatchet"
+      ],
+      "iid": 14
+    },
+    "stone_pickaxe": {
+      "name": "Stone Pickaxe",
+      "buy": 120,
+      "sell": 30,
+      "aliases": [
+        "Stone Pickaxe"
+      ],
+      "iid": 15
+    },
+    "steel_pickaxe": {
+      "name": "Metal Pickaxe",
+      "buy": 350,
+      "sell": 87,
+      "aliases": [
+        "Metal Pickaxe"
+      ],
+      "iid": 16
+    },
+    "sulfur_pickaxe": {
+      "name": "Sulfur Pickaxe",
+      "buy": 650,
+      "sell": 162,
+      "aliases": [
+        "Sulfur Pickaxe"
+      ],
+      "iid": 58
+    },
+    "stone_axe": {
+      "name": "Metal Axe",
+      "buy": 300,
+      "sell": 75,
+      "aliases": [
+        "Metal Axe"
+      ],
+      "iid": 17
+    },
+    "sulfur_axe": {
+      "name": "Sulfur Axe",
+      "buy": 600,
+      "sell": 150,
+      "aliases": [
+        "Sulfur Axe"
+      ],
+      "iid": 95
+    },
+    "nail_gun": {
+      "name": "Nail Gun",
+      "buy": 900,
+      "sell": 225,
+      "aliases": [
+        "Nail Gun"
+      ],
+      "iid": 81
+    },
+    "hammer": {
+      "name": "Hammer",
+      "buy": 500,
+      "sell": 125,
+      "aliases": [
+        "Hammer"
+      ],
+      "iid": 62
+    },
+    "repair_hammer": {
+      "name": "Repair Hammer",
+      "buy": 450,
+      "sell": 112,
+      "aliases": [
+        "Repair Hammer"
+      ],
+      "iid": 64
+    },
+    "wood_spear": {
+      "name": "Wood Spear",
+      "buy": 120,
+      "sell": 30,
+      "aliases": [
+        "Wood Spear"
+      ],
+      "iid": 19
+    },
+    "wood_bow": {
+      "name": "Wood Bow",
+      "buy": 180,
+      "sell": 45,
+      "aliases": [
+        "Wood Bow"
+      ],
+      "iid": 20
+    },
+    "wood_crossbow": {
+      "name": "Wood Crossbow",
+      "buy": 400,
+      "sell": 100,
+      "aliases": [
+        "Wood Crossbow"
+      ],
+      "iid": 79
+    },
+    "9mm": {
+      "name": "9MM",
+      "buy": 600,
+      "sell": 150,
+      "aliases": [
+        "9MM"
+      ],
+      "iid": 21
+    },
+    "desert_eagle": {
+      "name": "Desert Eagle",
+      "buy": 1200,
+      "sell": 300,
+      "aliases": [
+        "Desert Eagle"
+      ],
+      "iid": 22
+    },
+    "mp5": {
+      "name": "MP5",
+      "buy": 1800,
+      "sell": 450,
+      "aliases": [
+        "MP5"
+      ],
+      "iid": 39
+    },
+    "shotgun": {
+      "name": "Shotgun",
+      "buy": 2200,
+      "sell": 550,
+      "aliases": [
+        "Shotgun"
+      ],
+      "iid": 23
+    },
+    "ak47": {
+      "name": "AK47",
+      "buy": 3000,
+      "sell": 750,
+      "aliases": [
+        "AK47"
+      ],
+      "iid": 24
+    },
+    "sniper": {
+      "name": "Sniper",
+      "buy": 4500,
+      "sell": 1125,
+      "aliases": [
+        "Sniper"
+      ],
+      "iid": 25
+    },
+    "sawed_off_shotgun": {
+      "name": "Sawed Off",
+      "buy": 1600,
+      "sell": 400,
+      "aliases": [
+        "Sawed Off"
+      ],
+      "iid": 82
+    },
+    "laser_pistol": {
+      "name": "Laser Pistol",
+      "buy": 2500,
+      "sell": 625,
+      "aliases": [
+        "Laser Pistol"
+      ],
+      "iid": 92
+    },
+    "dynamite": {
+      "name": "Dynamite",
+      "buy": 1500,
+      "sell": 375,
+      "aliases": [
+        "Dynamite"
+      ],
+      "iid": 97
+    },
+    "landmine": {
+      "name": "Landmine",
+      "buy": 1800,
+      "sell": 450,
+      "aliases": [
+        "Landmine"
+      ],
+      "iid": 96
+    },
+    "c4": {
+      "name": "C4",
+      "buy": 3500,
+      "sell": 875,
+      "aliases": [
+        "C4"
+      ],
+      "iid": 98
+    },
+    "laser_submachine": {
+      "name": "Laser Submachine",
+      "buy": 6000,
+      "sell": 1500,
+      "aliases": [
+        "Laser Submachine"
+      ],
+      "iid": 111
+    },
+    "c4_trigger": {
+      "name": "C4 Trigger",
+      "buy": 250,
+      "sell": 62,
+      "aliases": [
+        "C4 Trigger"
+      ],
+      "iid": 99
+    },
+    "grenade": {
+      "name": "Grenade",
+      "buy": 1000,
+      "sell": 250,
+      "aliases": [
+        "Grenade"
+      ],
+      "iid": 112
+    },
+    "super_hammer": {
+      "name": "Super Hammer",
+      "buy": 50000,
+      "sell": 12500,
+      "aliases": [
+        "Super Hammer"
+      ],
+      "iid": 113
+    },
+    "bullet_9mm": {
+      "name": "Bullet",
+      "buy": 2,
+      "sell": 1,
+      "aliases": [
+        "Bullet"
+      ],
+      "iid": 33
+    },
+    "bullet_sniper": {
+      "name": "Heavy Bullet",
+      "buy": 8,
+      "sell": 2,
+      "aliases": [
+        "Heavy Bullet"
+      ],
+      "iid": 35
+    },
+    "bullet_shotgun": {
+      "name": "Cartridge",
+      "buy": 5,
+      "sell": 1,
+      "aliases": [
+        "Cartridge"
+      ],
+      "iid": 34
+    },
+    "wood_arrow": {
+      "name": "Wood Arrow",
+      "buy": 1,
+      "sell": 1,
+      "aliases": [
+        "Wood Arrow"
+      ],
+      "iid": 46
+    },
+    "wood_crossarrow": {
+      "name": "Crossbow Arrows",
+      "buy": 2,
+      "sell": 1,
+      "aliases": [
+        "Crossbow Arrows"
+      ],
+      "iid": 80
+    },
+    "energy_cells": {
+      "name": "Energy Cells",
+      "buy": 5,
+      "sell": 1,
+      "aliases": [
+        "Energy Cells"
+      ],
+      "iid": 91
+    },
+    "orange": {
+      "name": "Orange",
+      "buy": 10,
+      "sell": 2,
+      "aliases": [
+        "Orange"
+      ],
+      "iid": 11
+    },
+    "rotten_orange": {
+      "name": "Rotten Orange",
+      "buy": 2,
+      "sell": 1,
+      "aliases": [
+        "Rotten Orange"
+      ],
+      "iid": 12
+    },
+    "tomato": {
+      "name": "Tomato",
+      "buy": 10,
+      "sell": 2,
+      "aliases": [
+        "Tomato"
+      ],
+      "iid": 76
+    },
+    "rotten_tomato": {
+      "name": "Rotten Tomato",
+      "buy": 2,
+      "sell": 1,
+      "aliases": [
+        "Rotten Tomato"
+      ],
+      "iid": 77
+    },
+    "soda": {
+      "name": "Soda",
+      "buy": 20,
+      "sell": 5,
+      "aliases": [
+        "Soda"
+      ],
+      "iid": 38
+    },
+    "raw_steak": {
+      "name": "Raw Steak",
+      "buy": 15,
+      "sell": 3,
+      "aliases": [
+        "Raw Steak"
+      ],
+      "iid": 8
+    },
+    "cooked_steak": {
+      "name": "Cooked Steak",
+      "buy": 30,
+      "sell": 7,
+      "aliases": [
+        "Cooked Steak"
+      ],
+      "iid": 9
+    },
+    "rotten_steak": {
+      "name": "Rotten Steak",
+      "buy": 2,
+      "sell": 1,
+      "aliases": [
+        "Rotten Steak"
+      ],
+      "iid": 10
+    },
+    "rotten_crisps": {
+      "name": "Expired Crisps",
+      "buy": 2,
+      "sell": 1,
+      "aliases": [
+        "Expired Crisps"
+      ],
+      "iid": 87
+    },
+    "crisps": {
+      "name": "Crisps",
+      "buy": 15,
+      "sell": 3,
+      "aliases": [
+        "Crisps"
+      ],
+      "iid": 86
+    },
+    "tomato_soup": {
+      "name": "Tomato Soup",
+      "buy": 30,
+      "sell": 7,
+      "aliases": [
+        "Tomato Soup"
+      ],
+      "iid": 71
+    },
+    "seed_tomato": {
+      "name": "Tomato Seed",
+      "buy": 30,
+      "sell": 7,
+      "aliases": [
+        "Tomato Seed"
+      ],
+      "iid": 75
+    },
+    "seed_orange": {
+      "name": "Orange Seed",
+      "buy": 30,
+      "sell": 7,
+      "aliases": [
+        "Orange Seed"
+      ],
+      "iid": 13
+    },
+    "seed_ghoul": {
+      "name": "Ghoul Seed",
+      "buy": 100,
+      "sell": 25,
+      "aliases": [
+        "Ghoul Seed"
+      ],
+      "iid": 129
+    },
+    "pumpkin": {
+      "name": "Pumpkin",
+      "buy": 15,
+      "sell": 3,
+      "aliases": [
+        "Pumpkin"
+      ],
+      "iid": 127
+    },
+    "rotten_pumpkin": {
+      "name": "Rotten Pumpkin",
+      "buy": 2,
+      "sell": 1,
+      "aliases": [
+        "Rotten Pumpkin"
+      ],
+      "iid": 128
+    },
+    "acorn": {
+      "name": "Acorn",
+      "buy": 5,
+      "sell": 1,
+      "aliases": [
+        "Acorn"
+      ],
+      "iid": 134
+    },
+    "rotten_acorn": {
+      "name": "Rotten Acorn",
+      "buy": 1,
+      "sell": 1,
+      "aliases": [
+        "Rotten Acorn"
+      ],
+      "iid": 135
+    },
+    "seed_tree": {
+      "name": "Tree Seed",
+      "buy": 40,
+      "sell": 10,
+      "aliases": [
+        "Tree Seed"
+      ],
+      "iid": 133
+    },
+    "wood_smallwall": {
+      "name": "Wooden Low Wall",
+      "buy": 30,
+      "sell": 7,
+      "aliases": [
+        "Wooden Low Wall"
+      ],
+      "iid": 67
+    },
+    "wood_wall": {
+      "name": "Wooden Wall",
+      "buy": 50,
+      "sell": 12,
+      "aliases": [
+        "Wooden Wall"
+      ],
+      "iid": 26
+    },
+    "wood_door": {
+      "name": "Wooden Low Door",
+      "buy": 60,
+      "sell": 15,
+      "aliases": [
+        "Wooden Low Door"
+      ],
+      "iid": 29
+    },
+    "wood_bigdoor": {
+      "name": "Wooden Door",
+      "buy": 90,
+      "sell": 22,
+      "aliases": [
+        "Wooden Door"
+      ],
+      "iid": 49
+    },
+    "wood_floor": {
+      "name": "Wood floor",
+      "buy": 15,
+      "sell": 3,
+      "aliases": [
+        "Wood floor"
+      ],
+      "iid": 61
+    },
+    "stone_smallwall": {
+      "name": "Stone Low Wall",
+      "buy": 60,
+      "sell": 15,
+      "aliases": [
+        "Stone Low Wall"
+      ],
+      "iid": 68
+    },
+    "stone_wall": {
+      "name": "Stone Wall",
+      "buy": 100,
+      "sell": 25,
+      "aliases": [
+        "Stone Wall"
+      ],
+      "iid": 27
+    },
+    "stone_door": {
+      "name": "Stone Low Door",
+      "buy": 120,
+      "sell": 30,
+      "aliases": [
+        "Stone Low Door"
+      ],
+      "iid": 30
+    },
+    "stone_bigdoor": {
+      "name": "Stone Door",
+      "buy": 160,
+      "sell": 40,
+      "aliases": [
+        "Stone Door"
+      ],
+      "iid": 50
+    },
+    "woodlight_floor": {
+      "name": "Light Wood Floor",
+      "buy": 20,
+      "sell": 5,
+      "aliases": [
+        "Light Wood Floor"
+      ],
+      "iid": 66
+    },
+    "steel_smallwall": {
+      "name": "Metal Low Wall",
+      "buy": 180,
+      "sell": 45,
+      "aliases": [
+        "Metal Low Wall"
+      ],
+      "iid": 69
+    },
+    "steel_wall": {
+      "name": "Metal Wall",
+      "buy": 300,
+      "sell": 75,
+      "aliases": [
+        "Metal Wall"
+      ],
+      "iid": 28
+    },
+    "steel_door": {
+      "name": "Metal Low Door",
+      "buy": 350,
+      "sell": 87,
+      "aliases": [
+        "Metal Low Door"
+      ],
+      "iid": 31
+    },
+    "steel_bigdoor": {
+      "name": "Metal Door",
+      "buy": 450,
+      "sell": 112,
+      "aliases": [
+        "Metal Door"
+      ],
+      "iid": 51
+    },
+    "tiling_floor": {
+      "name": "Tiling floor",
+      "buy": 25,
+      "sell": 6,
+      "aliases": [
+        "Tiling floor"
+      ],
+      "iid": 84
+    },
+    "stone_floor": {
+      "name": "Stone floor",
+      "buy": 25,
+      "sell": 6,
+      "aliases": [
+        "Stone floor"
+      ],
+      "iid": 83
+    },
+    "red_floor": {
+      "name": "Red floor",
+      "buy": 50,
+      "sell": 12,
+      "aliases": [
+        "Red floor"
+      ],
+      "iid": 154
+    },
+    "gold_floor": {
+      "name": "Golden Floor",
+      "buy": 100,
+      "sell": 25,
+      "aliases": [
+        "Golden Floor"
+      ],
+      "iid": 153
+    },
+    "wood_spike": {
+      "name": "Wooden Spike",
+      "buy": 50,
+      "sell": 12,
+      "aliases": [
+        "Wooden Spike"
+      ],
+      "iid": 110
+    },
+    "stone_cave": {
+      "name": "Stone Cave",
+      "buy": 500,
+      "sell": 125,
+      "aliases": [
+        "Stone Cave"
+      ],
+      "iid": 151
+    },
+    "bunker_wall": {
+      "name": "Bunker Wall",
+      "buy": 1000,
+      "sell": 250,
+      "aliases": [
+        "Bunker Wall"
+      ],
+      "iid": 152
+    },
+    "uranium_wall": {
+      "name": "Uranium Wall",
+      "buy": 1800,
+      "sell": 450,
+      "aliases": [
+        "Uranium Wall"
+      ],
+      "iid": 174
+    },
+    "uranium_bigdoor": {
+      "name": "Uranium Door",
+      "buy": 2200,
+      "sell": 550,
+      "aliases": [
+        "Uranium Door"
+      ],
+      "iid": 175
+    },
+    "workbench": {
+      "name": "Workbench",
+      "buy": 100,
+      "sell": 25,
+      "aliases": [
+        "Workbench"
+      ],
+      "iid": 18
+    },
+    "campfire": {
+      "name": "Campfire",
+      "buy": 40,
+      "sell": 10,
+      "aliases": [
+        "Campfire"
+      ],
+      "iid": 32
+    },
+    "campfire_bbq": {
+      "name": "Firepit",
+      "buy": 80,
+      "sell": 20,
+      "aliases": [
+        "Firepit"
+      ],
+      "iid": 47
+    },
+    "smelter": {
+      "name": "Smelter",
+      "buy": 180,
+      "sell": 45,
+      "aliases": [
+        "Smelter"
+      ],
+      "iid": 48
+    },
+    "tesla": {
+      "name": "Tesla Bench",
+      "buy": 1500,
+      "sell": 375,
+      "aliases": [
+        "Tesla Bench"
+      ],
+      "iid": 93
+    },
+    "workbench2": {
+      "name": "Research Bench",
+      "buy": 700,
+      "sell": 175,
+      "aliases": [
+        "Research Bench"
+      ],
+      "iid": 54
+    },
+    "weaving": {
+      "name": "Weaving Machine",
+      "buy": 250,
+      "sell": 62,
+      "aliases": [
+        "Weaving Machine"
+      ],
+      "iid": 56
+    },
+    "sleeping_bag": {
+      "name": "Sleeping Bag",
+      "buy": 100,
+      "sell": 25,
+      "aliases": [
+        "Sleeping Bag"
+      ],
+      "iid": 63
+    },
+    "string": {
+      "name": "String",
+      "buy": 6,
+      "sell": 1,
+      "aliases": [
+        "String"
+      ],
+      "iid": 5
+    },
+    "chest": {
+      "name": "Wood chest",
+      "buy": 100,
+      "sell": 25,
+      "aliases": [
+        "Wood chest"
+      ],
+      "iid": 59
+    },
+    "shaped_metal": {
+      "name": "Shaped Metal",
+      "buy": 40,
+      "sell": 10,
+      "aliases": [
+        "Shaped Metal"
+      ],
+      "iid": 7
+    },
+    "gasoline": {
+      "name": "Gasoline",
+      "buy": 40,
+      "sell": 10,
+      "aliases": [
+        "Gasoline"
+      ],
+      "iid": 57
+    },
+    "compost": {
+      "name": "Compost",
+      "buy": 15,
+      "sell": 3,
+      "aliases": [
+        "Compost"
+      ],
+      "iid": 100
+    },
+    "fridge": {
+      "name": "Fridge",
+      "buy": 300,
+      "sell": 75,
+      "aliases": [
+        "Fridge"
+      ],
+      "iid": 60
+    },
+    "can": {
+      "name": "Can",
+      "buy": 15,
+      "sell": 3,
+      "aliases": [
+        "Can"
+      ],
+      "iid": 78
+    },
+    "agitator": {
+      "name": "Agitator",
+      "buy": 900,
+      "sell": 225,
+      "aliases": [
+        "Agitator"
+      ],
+      "iid": 116
+    },
+    "shaped_uranium": {
+      "name": "Shaped Uranium",
+      "buy": 180,
+      "sell": 45,
+      "aliases": [
+        "Shaped Uranium"
+      ],
+      "iid": 53
+    },
+    "alloys": {
+      "name": "Alloys",
+      "buy": 220,
+      "sell": 55,
+      "aliases": [
+        "Alloys"
+      ],
+      "iid": 94
+    },
+    "nails": {
+      "name": "Nails",
+      "buy": 2,
+      "sell": 1,
+      "aliases": [
+        "Nails"
+      ],
+      "iid": 65
+    },
+    "extractor": {
+      "name": "Extractor",
+      "buy": 1200,
+      "sell": 300,
+      "aliases": [
+        "Extractor"
+      ],
+      "iid": 130
+    },
+    "welding_machine": {
+      "name": "Welding Machine",
+      "buy": 800,
+      "sell": 200,
+      "aliases": [
+        "Welding Machine"
+      ],
+      "iid": 155
+    },
+    "wood": {
+      "name": "Wood",
+      "buy": 2,
+      "sell": 1,
+      "aliases": [
+        "Wood"
+      ],
+      "iid": 0
+    },
+    "stone": {
+      "name": "Stone",
+      "buy": 2,
+      "sell": 1,
+      "aliases": [
+        "Stone"
+      ],
+      "iid": 1
+    },
+    "steel": {
+      "name": "Iron",
+      "buy": 15,
+      "sell": 5,
+      "aliases": [
+        "Iron"
+      ],
+      "iid": 2
+    },
+    "animal_fat": {
+      "name": "Animal Fat",
+      "buy": 8,
+      "sell": 2,
+      "aliases": [
+        "Animal Fat"
+      ],
+      "iid": 3
+    },
+    "animal_tendon": {
+      "name": "Animal Tendon",
+      "buy": 8,
+      "sell": 2,
+      "aliases": [
+        "Animal Tendon"
+      ],
+      "iid": 4
+    },
+    "junk": {
+      "name": "Junk",
+      "buy": 5,
+      "sell": 1,
+      "aliases": [
+        "Junk"
+      ],
+      "iid": 89
+    },
+    "sulfur": {
+      "name": "Sulfur",
+      "buy": 24,
+      "sell": 8,
+      "aliases": [
+        "Sulfur"
+      ],
+      "iid": 52
+    },
+    "uranium": {
+      "name": "Uranium",
+      "buy": 75,
+      "sell": 25,
+      "aliases": [
+        "Uranium"
+      ],
+      "iid": 55
+    },
+    "electronics": {
+      "name": "Electronic Parts",
+      "buy": 30,
+      "sell": 10,
+      "aliases": [
+        "Electronic Parts"
+      ],
+      "iid": 88
+    },
+    "leather_boar": {
+      "name": "Leather",
+      "buy": 12,
+      "sell": 3,
+      "aliases": [
+        "Leather"
+      ],
+      "iid": 6
+    },
+    "wire": {
+      "name": "Big Wire",
+      "buy": 9,
+      "sell": 3,
+      "aliases": [
+        "Big Wire"
+      ],
+      "iid": 90
+    },
+    "small_wire": {
+      "name": "Small Wire",
+      "buy": 6,
+      "sell": 2,
+      "aliases": [
+        "Small Wire"
+      ],
+      "iid": 126
+    },
+    "bandage": {
+      "name": "Bandage",
+      "buy": 40,
+      "sell": 10,
+      "aliases": [
+        "Bandage"
+      ],
+      "iid": 37
+    },
+    "medikit": {
+      "name": "Medkit",
+      "buy": 150,
+      "sell": 37,
+      "aliases": [
+        "Medkit"
+      ],
+      "iid": 36
+    },
+    "radaway": {
+      "name": "RadAway",
+      "buy": 150,
+      "sell": 37,
+      "aliases": [
+        "RadAway"
+      ],
+      "iid": 74
+    },
+    "syringe": {
+      "name": "Syringe",
+      "buy": 80,
+      "sell": 20,
+      "aliases": [
+        "Syringe"
+      ],
+      "iid": 72
+    },
+    "chemical_component": {
+      "name": "Chemical Component",
+      "buy": 30,
+      "sell": 7,
+      "aliases": [
+        "Chemical Component"
+      ],
+      "iid": 73
+    },
+    "lapadone": {
+      "name": "Lapadone",
+      "buy": 300,
+      "sell": 75,
+      "aliases": [
+        "Lapadone"
+      ],
+      "iid": 124
+    },
+    "ghoul_drug": {
+      "name": "Ghoul Drug",
+      "buy": 250,
+      "sell": 62,
+      "aliases": [
+        "Ghoul Drug"
+      ],
+      "iid": 117
+    },
+    "antidote": {
+      "name": "Antidote",
+      "buy": 200,
+      "sell": 50,
+      "aliases": [
+        "Antidote"
+      ],
+      "iid": 131
+    },
+    "cable0": {
+      "name": "Cable",
+      "buy": 10,
+      "sell": 2,
+      "aliases": [
+        "Cable"
+      ],
+      "iid": 139
+    },
+    "cable1": {
+      "name": "Cable",
+      "buy": 10,
+      "sell": 2,
+      "aliases": [
+        "Cable"
+      ],
+      "iid": 140
+    },
+    "cable2": {
+      "name": "Cable",
+      "buy": 10,
+      "sell": 2,
+      "aliases": [
+        "Cable"
+      ],
+      "iid": 141
+    },
+    "cable3": {
+      "name": "Cable",
+      "buy": 10,
+      "sell": 2,
+      "aliases": [
+        "Cable"
+      ],
+      "iid": 142
+    },
+    "cable4": {
+      "name": "Cable - Bridge",
+      "buy": 10,
+      "sell": 2,
+      "aliases": [
+        "Cable - Bridge"
+      ],
+      "iid": 156
+    },
+    "cable_wall": {
+      "name": "Cable - Wall",
+      "buy": 60,
+      "sell": 15,
+      "aliases": [
+        "Cable - Wall"
+      ],
+      "iid": 148
+    },
+    "automatic_door": {
+      "name": "Automatic Door",
+      "buy": 250,
+      "sell": 62,
+      "aliases": [
+        "Automatic Door"
+      ],
+      "iid": 149
+    },
+    "lamp": {
+      "name": "Lamp",
+      "buy": 80,
+      "sell": 20,
+      "aliases": [
+        "Lamp"
+      ],
+      "iid": 147
+    },
+    "platform": {
+      "name": "Platform",
+      "buy": 120,
+      "sell": 30,
+      "aliases": [
+        "Platform"
+      ],
+      "iid": 150
+    },
+    "switch": {
+      "name": "Switch",
+      "buy": 80,
+      "sell": 20,
+      "aliases": [
+        "Switch"
+      ],
+      "iid": 143
+    },
+    "gate_or": {
+      "name": "Gate OR",
+      "buy": 100,
+      "sell": 25,
+      "aliases": [
+        "Gate OR"
+      ],
+      "iid": 144
+    },
+    "gate_not": {
+      "name": "Gate NOT",
+      "buy": 100,
+      "sell": 25,
+      "aliases": [
+        "Gate NOT"
+      ],
+      "iid": 146
+    },
+    "gate_and": {
+      "name": "Gate AND",
+      "buy": 100,
+      "sell": 25,
+      "aliases": [
+        "Gate AND"
+      ],
+      "iid": 145
+    },
+    "gate_xor": {
+      "name": "Gate Xor",
+      "buy": 120,
+      "sell": 30,
+      "aliases": [
+        "Gate Xor"
+      ],
+      "iid": 158
+    },
+    "gate_timer": {
+      "name": "Gate Timer",
+      "buy": 150,
+      "sell": 37,
+      "aliases": [
+        "Gate Timer"
+      ],
+      "iid": 157
+    }
+  },
+  "event_player_reference": "gid"
+}
