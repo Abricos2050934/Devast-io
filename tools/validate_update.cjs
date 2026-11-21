@@ -143,7 +143,7 @@ acorn.parse(code,{ecmaVersion:'latest'});
   });
   await page.route(source.page_url,r=>r.fulfill({status:200,contentType:'text/html',body:read('index.html')}));
   await page.route(source.script_url,r=>r.fulfill({status:200,contentType:'text/javascript',body:override.data[0].rules[0].file}));
-  await page.route(url=>url.hostname==='raw.githubusercontent.com'&&url.pathname==='/Abricos2050934/Devast-io/updates/game.modded.js',r=>r.fulfill({status:200,contentType:'text/plain',headers:{'access-control-allow-origin':'*'},body:code}));
+  await page.route(url=>url.hostname==='raw.githubusercontent.com'&&url.pathname==='/Abricos2050934/Devast-io/updates/client.js',r=>r.fulfill({status:200,contentType:'text/plain',headers:{'access-control-allow-origin':'*'},body:code}));
   await page.addInitScript('window.__verifyMessage27Aim='+require('./verify_message27_aim.cjs').verifyMessage27Aim.toString());
   await page.addInitScript('window.__verifyMessage27Menu='+require('./verify_message27_menu.cjs').verifyMessage27Menu.toString());
   await page.addInitScript('window.__verifyMessage27Settings='+require('./verify_message27_settings.cjs').verifyMessage27Settings.toString());

@@ -13,7 +13,7 @@ test('Resource Override v1 schema and embedded loader match the supplied format'
  const rule=group.rules[0];assert.deepEqual(Object.keys(rule).sort(),['file','fileId','match','on','type']);assert.equal(rule.type,'fileOverride');assert.equal(rule.match,'**://devast.io/js/*.js');assert.equal(rule.on,true);assert.equal(rule.file.replace(/\r\n/g,'\n'),loader);
 });
 test('loader fetches our current stable JS synchronously with cache busting, and starts it once',()=>{
- const f=fixture([{status:200,body:client(1)}]);f.run();assert.deepEqual(f.calls,[{method:'GET',url:'https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/game.modded.js?t=1234567',async:false}]);assert.equal(f.context.__devastMod.version,1);assert.equal(f.context.__devastRemoteLoader.state,'loaded');f.run();assert.equal(f.calls.length,1);
+ const f=fixture([{status:200,body:client(1)}]);f.run();assert.deepEqual(f.calls,[{method:'GET',url:'https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/client.js?t=1234567',async:false}]);assert.equal(f.context.__devastMod.version,1);assert.equal(f.context.__devastRemoteLoader.state,'loaded');f.run();assert.equal(f.calls.length,1);
 });
 test('same JSON loads a newly published client after a fresh page load',()=>{
  for(const version of [1,2]){const f=fixture([{status:200,body:client(version)}]);f.run();assert.equal(f.context.__devastMod.version,version);}

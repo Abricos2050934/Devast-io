@@ -15,7 +15,7 @@
 содержать весь закреплённый JS внутри себя и не получать обновления по ссылке.
 
 Загрузчик синхронно получает готовый клиент:
-https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/game.modded.js
+https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/client.js
 
 После получения он выполняет полный клиент вместо оригинального игрового скрипта.
 Параметр t=Date.now() обновляется при загрузке страницы. Двойное выполнение клиента

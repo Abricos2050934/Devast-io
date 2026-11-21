@@ -25,7 +25,7 @@ H — скрытие угла, как в присланном файле.
 
 После успешной проверки обновлятор публикует клиент в ветку `updates`:
 
-- [Готовый game.modded.js](https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/game.modded.js)
+- [Готовый client.js](https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/client.js)
 - [ZIP](https://github.com/Abricos2050934/Devast-io/raw/refs/heads/updates/Devast-io-client.zip)
 - [Версия и SHA256](https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/current.json)
 - [Автоматические запуски](https://github.com/Abricos2050934/Devast-io/actions/workflows/auto-update.yml)

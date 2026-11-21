@@ -12,6 +12,8 @@ import io
 import importlib.util
 
 ROOT = Path(__file__).resolve().parents[1]
+PUBLIC_CLIENT = 'client.js'
+RETIRED_ALIAS = 'game.modded.js'
 
 def digest(data): return hashlib.sha256(data).hexdigest()
 def read_json(path): return json.loads(Path(path).read_text())
@@ -201,7 +203,7 @@ def artifacts(root, output):
     encode = lambda value: (json.dumps(value, ensure_ascii=False, indent=2) + '\n').encode()
     text = '''# Devast-io: автоматически обновляемый клиент
 
-Файл game.modded.js — проверенная сборка нашего текущего мода.
+Файл client.js — проверенная сборка нашего текущего мода.
 Используйте URL этого файла для подмены основного JS до запуска игры.
 Полный клиент нельзя выполнять поверх уже работающего оригинала.
 
@@ -219,14 +221,14 @@ current.json содержит хеш готового файла и ссылку
 verification.json содержит проверенную ревизию мода и результаты тестов.
 Работа на живом сервере и отсутствие киков этими тестами не подтверждены.
 '''.encode()
-    entries = {'game.modded.js': body, 'current.json': encode(public), 'verification.json': encode(validation),
+    entries = {PUBLIC_CLIENT: body, 'current.json': encode(public), 'verification.json': encode(validation),
         'README.md': text, 'versions/' + release + '/game.modded.js': body}
     entries[override_name]=override_bytes
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
-        for name in ['game.modded.js', 'current.json', 'verification.json', 'README.md', override_name]:
+        for name in [RETIRED_ALIAS, 'current.json', 'verification.json', 'README.md', override_name]:
             info=zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0)); info.compress_type=zipfile.ZIP_DEFLATED; info.external_attr=0o100644 << 16
-            archive.writestr(info, entries[name])
+            archive.writestr(info, body if name == RETIRED_ALIAS else entries[name])
     entries['Devast-io-client.zip'] = buffer.getvalue()
     json_buffer=io.BytesIO()
     with zipfile.ZipFile(json_buffer, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
@@ -260,6 +262,8 @@ def publish(root, entries, branch='updates', remote='origin', before_push=None):
     env = dict(os.environ, GIT_INDEX_FILE=index)
     try:
         git('read-tree', parent, env=env) if parent else git('read-tree', '--empty', env=env)
+        if PUBLIC_CLIENT in entries:
+            git('update-index', '--force-remove', '--', RETIRED_ALIAS, env=env)
         for name, data in sorted(entries.items()):
             blob = git('hash-object', '-w', '--stdin', data=data)
             git('update-index', '--add', '--cacheinfo', '100644', blob, name, env=env)

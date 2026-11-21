@@ -1,5 +1,5 @@
 (function () {
-  var url = "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/game.modded.js";
+  var url = "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/client.js";
   var previous = window.__devastRemoteLoader;
   if (window.__devastClientLoaded || (previous && (previous.state === "loading" || previous.state === "loaded"))) return;
   var state = window.__devastRemoteLoader = { state: "loading", url: url };

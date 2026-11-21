@@ -7,7 +7,7 @@ const loader=config.data[0].rules[0].file;
  const report={mode:'Resource Override replacement and real cross-origin published JS; no game-server login',requests:[],page_errors:[]};const bodies=[];
  try{
   const page=await browser.newPage();page.on('pageerror',e=>report.page_errors.push(e.message));
-  page.on('response',response=>{if(response.url().startsWith('https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/game.modded.js?')){
+  page.on('response',response=>{if(response.url().startsWith('https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/client.js?')){
    const item={url:response.url(),http:response.status(),allow_origin:response.headers()['access-control-allow-origin']};report.requests.push(item);bodies.push(response.body().then(body=>{item.sha256=crypto.createHash('sha256').update(body).digest('hex');}).catch(e=>{item.body_error=e.message;}));
   }});
   await page.route(url=>url.hostname==='devast.io'&&url.pathname.startsWith('/js/')&&url.pathname.endsWith('.js'),route=>route.fulfill({status:200,contentType:'text/javascript; charset=utf-8',body:loader}));

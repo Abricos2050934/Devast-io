@@ -12,7 +12,7 @@ class PublicationTests(unittest.TestCase):
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   good={'status':'passed','late_failure_close_calls':0,'current_failure_close_calls':1,'live_connection_preserved':True,'stale_error_rejected':True,'saved_identity_unchanged':True,'features_disabled':True}
   for report in self.validation['browsers'].values():report['native']={'preflight_error_ownership':dict(good)}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for key,value in [('late_failure_close_calls',1),('late_failure_close_calls',False),('current_failure_close_calls',0),('live_connection_preserved',False),('stale_error_rejected',False),('saved_identity_unchanged',False),('features_disabled',False)]:
    self.validation['browsers']['firefox']['native']['preflight_error_ownership']={**good,key:value};self.save()
    with self.assertRaisesRegex(ValueError,'Native preflight error ownership.*firefox'):p.artifacts(self.root,self.out)
@@ -22,7 +22,7 @@ class PublicationTests(unittest.TestCase):
   domain={'status':'passed','steps':6480,'both_directions':True,'short_arc_oracle':True,'all_angles_canonical':True,'fractional_precision_retained':True,'invalid_angles_rejected':True}
   aim={'normalized_equivalent_states':True,'exact_non_angle_states':True,'canonical_outgoing_angles':True}
   for report in self.validation['browsers'].values():report['native']={'canonical_aim':dict(domain),'message27_aim':dict(aim)}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for group,key,value in [('canonical_aim','steps',6479),('canonical_aim','both_directions',False),('canonical_aim','short_arc_oracle',False),('canonical_aim','all_angles_canonical',False),('canonical_aim','fractional_precision_retained',False),('canonical_aim','invalid_angles_rejected',False),('message27_aim','normalized_equivalent_states',False),('message27_aim','exact_non_angle_states',False),('message27_aim','canonical_outgoing_angles',False)]:
    reports=self.validation['browsers']['firefox']['native'];previous=reports[group][key];reports[group][key]=value;self.save()
    with self.assertRaisesRegex(ValueError,'Canonical aim angles.*firefox'):p.artifacts(self.root,self.out)
@@ -32,7 +32,7 @@ class PublicationTests(unittest.TestCase):
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   good={'status':'passed','historical_key_flag':1,'current_mod_flag':0,'global_names_private':True,'archive_preserved':True}
   for report in self.validation['browsers'].values():report['connection_marker_audit']=dict(good)
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for field,value in [('historical_key_flag',0),('historical_key_flag',True),('current_mod_flag',1),('current_mod_flag',False),('global_names_private',False),('archive_preserved',False)]:
    self.validation['browsers']['firefox']['connection_marker_audit']={**good,field:value};self.save()
    with self.assertRaisesRegex(ValueError,'Legacy settings retirement.*firefox'):p.artifacts(self.root,self.out)
@@ -41,7 +41,7 @@ class PublicationTests(unittest.TestCase):
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   good={'status':'passed','automatic_retries':0,'manual_play_available':True,'saved_identity_unchanged':True,'native_close_restore_bit':True}
   for report in self.validation['browsers'].values():report['native']={'rejection_recovery':dict(good)}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for field,value in [('automatic_retries',1),('automatic_retries',False),('manual_play_available',False),('saved_identity_unchanged',False),('native_close_restore_bit',False)]:
    self.validation['browsers']['firefox']['native']['rejection_recovery']={**good,field:value};self.save()
    with self.assertRaisesRegex(ValueError,'Native rejection recovery.*firefox'):p.artifacts(self.root,self.out)
@@ -50,7 +50,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['fast-loot-stops-on-new-backlog']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'fast_loot_mid_burst_backpressure':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for value in [None,False,1,'true']:
    self.validation['browsers']['firefox']['native']['fast_loot_mid_burst_backpressure']=value;self.save()
    with self.assertRaisesRegex(ValueError,'Mid-burst fast loot.*firefox'):p.artifacts(self.root,self.out)
@@ -59,7 +59,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['first-server-death-preserved']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'first_server_death_preserved':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for value in [None,False,1,'true']:
    self.validation['browsers']['firefox']['native']['first_server_death_preserved']=value;self.save()
    with self.assertRaisesRegex(ValueError,'First server death.*firefox'):p.artifacts(self.root,self.out)
@@ -68,7 +68,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['native-wire-traffic-diagnostics']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'native_aim_transport':{'native_wire_metadata':True}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for value in [None,False,1,'true']:
    self.validation['browsers']['firefox']['native']['native_aim_transport']['native_wire_metadata']=value;self.save()
    with self.assertRaisesRegex(ValueError,'Native wire traffic.*firefox'):p.artifacts(self.root,self.out)
@@ -77,7 +77,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['native-death-opcode-diagnostics']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'native_death_opcode':27}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for opcode in [None,True,-1,256,'27']:
    self.validation['browsers']['firefox']['native']['native_death_opcode']=opcode;self.save()
    with self.assertRaisesRegex(ValueError,'Native death opcode.*firefox'):p.artifacts(self.root,self.out)
@@ -87,7 +87,7 @@ class PublicationTests(unittest.TestCase):
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   keys=['cadence_aware_curved_prediction','straight_quantization_rejected','ak_and_laser_native_profiles']
   for report in self.validation['browsers'].values():report['native']={'adaptive_aim':dict.fromkeys(keys,True)}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for key in keys:
    self.validation['browsers']['firefox']['native']['adaptive_aim'][key]=False;self.save()
    with self.assertRaisesRegex(ValueError,'Cadence-aware.*firefox'):p.artifacts(self.root,self.out)
@@ -98,7 +98,7 @@ class PublicationTests(unittest.TestCase):
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   keys=['native_weapon_speed_and_range','native_projectile_speed','native_speed_equality','packet_server_positions','shooter_and_target_velocity','fresh_angle_before_native_attack','jitter_priority','line_matches_shot','stale_target_releases_input']
   for report in self.validation['browsers'].values():report['native']={'adaptive_aim':dict(status='passed',**dict.fromkeys(keys,True))}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for key in keys:
    self.validation['browsers']['firefox']['native']['adaptive_aim'][key]=False;self.save()
    with self.assertRaisesRegex(ValueError,'Adaptive.*firefox'):p.artifacts(self.root,self.out)
@@ -109,7 +109,7 @@ class PublicationTests(unittest.TestCase):
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   keys=['original_rotation','configurable_speed','imported_jitter_removed','manual_angle_before_attack','automatic_angle_before_attack','held_fire_tracks_target','cursor_cannot_overwrite','non_jitter_cursor_cannot_overwrite','repeated_bursts_aligned','resumes_on_release','standing_rotation','targetless_manual_alignment','blocked_attack_rejected','local_rotation','death_stops_packets']
   for report in self.validation['browsers'].values():report['native']={'jitter':dict(status='passed',**dict.fromkeys(keys,True)),'message27_menu':{'status':'passed','controls':28,'original_jitter_controls':True}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for key in keys:
    self.validation['browsers']['firefox']['native']['jitter'][key]=False;self.save()
    with self.assertRaisesRegex(ValueError,'Jitter.*firefox'):p.artifacts(self.root,self.out)
@@ -120,7 +120,7 @@ class PublicationTests(unittest.TestCase):
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   keys=['manual_angle_before_attack','automatic_angle_before_attack','held_fire_tracks_target','cursor_cannot_overwrite','resumes_on_release','standing_and_stop_option','local_rotation','death_stops_packets']
   for report in self.validation['browsers'].values():report['native']={'jitter':dict(status='passed',**dict.fromkeys(keys,True))}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for key in keys:
    self.validation['browsers']['firefox']['native']['jitter'][key]=False;self.save()
    with self.assertRaisesRegex(ValueError,'Jitter.*firefox'):p.artifacts(self.root,self.out)
@@ -132,7 +132,7 @@ class PublicationTests(unittest.TestCase):
   for report in self.validation['browsers'].values():
    report['native']={'message27_aim':{'pixel_projection_cases':18},'message27_settings':{'status':'passed','gui_controls_live':True,'checked':17}}
    report['physical_numeric']={'status':'passed','explicit_saved_values':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   report=self.validation['browsers']['firefox']
   for group,key,value in [(report['native']['message27_aim'],'pixel_projection_cases',17),(report['native']['message27_settings'],'checked',16),(report['native']['message27_settings'],'gui_controls_live',False),(report['physical_numeric'],'explicit_saved_values',False)]:
    previous=group[key];group[key]=value;self.save()
@@ -146,7 +146,7 @@ class PublicationTests(unittest.TestCase):
   for key in ['exact_states','exact_raw_packets','source_timing','spear','jitter','strafe','valid_target_admission','session_target_reset','server_death_sends_no_commands','native_angles']:aim[key]=True
   menu={'status':'passed','controls':32,'exact_order_labels_ranges_steps_options':True,'keyboard':True,'default_bindings':{'menu':'KeyM','hide':'KeyH'}}
   for report in self.validation['browsers'].values():report['native']={'message27_aim':dict(aim),'message27_menu':dict(menu)}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   native=self.validation['browsers']['firefox']['native']
   for key in ['exact_states','exact_raw_packets','source_timing','spear','jitter','strafe','valid_target_admission','session_target_reset','server_death_sends_no_commands','native_angles']:
    native['message27_aim'][key]=False;self.save()
@@ -169,7 +169,7 @@ class PublicationTests(unittest.TestCase):
   (self.out/'current.json').write_text(json.dumps(self.meta));(self.d/'validation.json').write_text(json.dumps(self.validation))
  def test_builds_only_verified_current_mod_and_matching_zip(self):
   import io,zipfile
-  files=p.artifacts(self.root,self.out);self.assertEqual(files['game.modded.js'],self.body);self.assertEqual(files['Devast-io-client.zip'],p.artifacts(self.root,self.out)['Devast-io-client.zip'])
+  files=p.artifacts(self.root,self.out);self.assertEqual(files['client.js'],self.body);self.assertNotIn('game.modded.js',files);self.assertEqual(files['Devast-io-client.zip'],p.artifacts(self.root,self.out)['Devast-io-client.zip'])
   with zipfile.ZipFile(io.BytesIO(files['Devast-io-client.zip'])) as z:
    self.assertEqual(z.read('game.modded.js'),self.body)
    self.assertEqual(json.loads(z.read('Devast-io-GitHub-Resource-Override.json'))['v'],1)
@@ -180,7 +180,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['bounded-fast-loot','session-mod-traffic-history','bounded-auto-build','aim-session-history-reset']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'bounded_fast_loot':True,'session_mod_traffic_history':True,'bounded_auto_build':True,'aim_session_history_reset':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for key in ['bounded_fast_loot','session_mod_traffic_history','bounded_auto_build','aim_session_history_reset']:
    self.validation['browsers']['firefox']['native'][key]=False;self.save()
    with self.assertRaisesRegex(ValueError,'traffic behavior.*firefox'):p.artifacts(self.root,self.out)
@@ -199,18 +199,21 @@ class PublicationTests(unittest.TestCase):
   (self.d/'game.modded.js').write_bytes(b'broken')
   with self.assertRaisesRegex(ValueError,'checksum'):p.artifacts(self.root,self.out)
 
- def test_publication_keeps_immutable_versions_and_does_not_rewrite_unchanged_tree(self):
+ def test_publication_retires_old_link_and_preserves_immutable_versions(self):
   import subprocess
   remote=self.root/'remote.git'
   subprocess.run(['git','init','--quiet','--bare',str(remote)],check=True)
   subprocess.run(['git','init','--quiet',str(self.root)],check=True)
   subprocess.run(['git','remote','add','origin',str(remote)],cwd=self.root,check=True)
   first=p.publish(self.root,{'game.modded.js':b'first','versions/first/game.modded.js':b'first'})
-  second=p.publish(self.root,{'game.modded.js':b'second','versions/second/game.modded.js':b'second'})
+  second=p.publish(self.root,{'client.js':b'second','versions/second/game.modded.js':b'second'})
   self.assertNotEqual(first,second)
+  self.assertEqual(subprocess.check_output(['git','show',second+':client.js'],cwd=self.root),b'second')
+  published=subprocess.check_output(['git','ls-tree','--name-only',second],cwd=self.root,text=True).splitlines()
+  self.assertNotIn('game.modded.js',published)
   old=subprocess.check_output(['git','show',second+':versions/first/game.modded.js'],cwd=self.root)
   self.assertEqual(old,b'first')
-  self.assertEqual(p.publish(self.root,{'game.modded.js':b'second','versions/second/game.modded.js':b'second'}),second)
+  self.assertEqual(p.publish(self.root,{'client.js':b'second','versions/second/game.modded.js':b'second'}),second)
 
  def test_last_source_check_runs_before_remote_write_and_can_reject_an_unchanged_tree(self):
   import subprocess
@@ -218,13 +221,13 @@ class PublicationTests(unittest.TestCase):
   subprocess.run(['git','init','--quiet','--bare',str(remote)],check=True)
   subprocess.run(['git','init','--quiet',str(self.root)],check=True)
   subprocess.run(['git','remote','add','origin',str(remote)],cwd=self.root,check=True)
-  first=p.publish(self.root,{'game.modded.js':b'old'})
+  first=p.publish(self.root,{'client.js':b'old'})
   checks=[]
   def reject():
    checks.append(True)
    raise ValueError('source changed before push')
   for body in [b'new',b'old']:
-   with self.assertRaisesRegex(ValueError,'source changed'):p.publish(self.root,{'game.modded.js':body},before_push=reject)
+   with self.assertRaisesRegex(ValueError,'source changed'):p.publish(self.root,{'client.js':body},before_push=reject)
    self.assertEqual(subprocess.check_output(['git','rev-parse','refs/heads/updates'],cwd=remote).decode().strip(),first)
   self.assertEqual(len(checks),2)
 
@@ -251,7 +254,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['received-mines-and-wires-visibility']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['world_visibility']={'status':'passed','native_renderers':3}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['world_visibility']['native_renderers']=2;self.save()
   with self.assertRaisesRegex(ValueError,'world visibility.*firefox'):p.artifacts(self.root,self.out)
 
@@ -259,7 +262,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['right-click-hovered-door']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'right_click_hovered_door':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   del self.validation['browsers']['firefox']['native']['right_click_hovered_door'];self.save()
   with self.assertRaisesRegex(ValueError,'right-click door.*firefox'):p.artifacts(self.root,self.out)
 
@@ -267,7 +270,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['right-click-door-independent-of-native-prompt']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'right_click_without_native_prompt':True,'right_click_real_mouse':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for key in ['right_click_without_native_prompt','right_click_real_mouse']:
    self.validation['browsers']['firefox']['native'][key]=False;self.save()
    with self.assertRaisesRegex(ValueError,'E prompt.*firefox'):p.artifacts(self.root,self.out)
@@ -277,7 +280,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['independent-door-control-and-server-state-feedback']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'independent_door_control':True,'door_server_state_feedback':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['door_server_state_feedback']=False;self.save()
   with self.assertRaisesRegex(ValueError,'state feedback.*firefox'):p.artifacts(self.root,self.out)
 
@@ -285,7 +288,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['automation-socket-backpressure']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'automation_socket_backpressure':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['automation_socket_backpressure']=False;self.save()
   with self.assertRaisesRegex(ValueError,'backpressure.*firefox'):p.artifacts(self.root,self.out)
 
@@ -293,7 +296,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['verbatim-original-ilm-aim']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'ilm_aim':{'status':'passed','comparison_points':2400,'native_direction_ownership':True,'whole_auto_fire_cycle':True,'server_death_sends_no_commands':True}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for state in [False,None]:
    self.validation['browsers']['firefox']['native']['ilm_aim']['status']=state;self.save()
    with self.assertRaisesRegex(ValueError,'Original ILM.*firefox'):p.artifacts(self.root,self.out)
@@ -303,7 +306,7 @@ class PublicationTests(unittest.TestCase):
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():
    report['native']={'ilm_mouse':{'status':'passed','cases':18,'exact_target_and_sent_angle':True},'ilm_server_angle':{'status':'passed','cases':72,'actual_server_packet_angle':True,'zero_position_sentinels_ignored':True,'manual_fire_keeps_source_direction':True}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for name in ['ilm_mouse','ilm_server_angle']:
    report=self.validation['browsers']['firefox']['native'][name]
    report['status']='failed';self.save()
@@ -314,7 +317,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['ilm-pointer-ownership-between-ticks']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'ilm_aim':{'source_pointer_ownership_on_target_loss':True}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['ilm_aim']['source_pointer_ownership_on_target_loss']=False;self.save()
   with self.assertRaisesRegex(ValueError,'pointer ownership.*firefox'):p.artifacts(self.root,self.out)
 
@@ -322,7 +325,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['coalesced-aim-directions']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'coalesced_aim_directions_and_native_idle':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['coalesced_aim_directions_and_native_idle']=False;self.save()
   with self.assertRaisesRegex(ValueError,'Coalesced.*firefox'):p.artifacts(self.root,self.out)
 
@@ -331,7 +334,7 @@ class PublicationTests(unittest.TestCase):
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   keys=['exact_order_labels_ranges_steps_options','no_extra_aim_controls','source_line_color']
   for report in self.validation['browsers'].values():report['native']={'ilm_menu':dict(status='passed',**dict.fromkeys(keys,True))}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for key in keys:
    self.validation['browsers']['firefox']['native']['ilm_menu'][key]=False;self.save()
    with self.assertRaisesRegex(ValueError,'menu layout.*firefox'):p.artifacts(self.root,self.out)
@@ -343,7 +346,7 @@ class PublicationTests(unittest.TestCase):
   for report in self.validation['browsers'].values():
    report['native']={'message15_comparison':{'status':'passed','comparison_points':1496},'message15_extra':{'status':'passed','comparison_points':5856},'message15_transport':{'status':'passed'}}
    report['physical_numeric']={'status':'passed'}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   report=self.validation['browsers']['firefox']
   for owner in [report['native']['message15_comparison'],report['native']['message15_extra'],report['native']['message15_transport'],report['physical_numeric']]:
    owner['status']='failed';self.save()
@@ -354,7 +357,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['connection-close-origin-diagnostics']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'connection_close_origin_diagnostics':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['connection_close_origin_diagnostics']=False;self.save()
   with self.assertRaisesRegex(ValueError,'close origin.*firefox'):p.artifacts(self.root,self.out)
 
@@ -362,7 +365,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['aim-small-queue-admission']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'message15_transport':{'small_queue_admission':True}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['message15_transport']['small_queue_admission']=False;self.save()
   with self.assertRaisesRegex(ValueError,'small-queue admission.*firefox'):p.artifacts(self.root,self.out)
 
@@ -370,7 +373,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['immediate-message15-directions-and-bounded-auto-fire']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'message15_transport':{'immediate_directions':{'status':'passed'}}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['message15_transport']['immediate_directions']['status']='failed';self.save()
   with self.assertRaisesRegex(ValueError,'Immediate Message15.*firefox'):p.artifacts(self.root,self.out)
 
@@ -378,7 +381,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['equivalent-efficient-aim-target-search']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'efficient_aim_search':{'status':'passed'}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['efficient_aim_search']['status']='failed';self.save()
   with self.assertRaisesRegex(ValueError,'Efficient aim target search.*firefox'):p.artifacts(self.root,self.out)
 
@@ -386,7 +389,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['verbatim-untitled-v4-aim']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'untitled_aim':{'status':'passed','comparison_points':1984,'native_direction_transforms':True,'native_movement_hooks':True,'whole_auto_fire_cycle':True,'server_death_sends_no_commands':True}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['untitled_aim']['comparison_points']=100;self.save()
   with self.assertRaisesRegex(ValueError,'Untitled aim source comparison.*firefox'):p.artifacts(self.root,self.out)
 
@@ -394,7 +397,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['verbatim-original-ilm-aim']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'ilm_aim':{'status':'passed','comparison_points':2400,'native_direction_ownership':True,'whole_auto_fire_cycle':True,'server_death_sends_no_commands':True}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['ilm_aim']['comparison_points']=50;self.save()
   with self.assertRaisesRegex(ValueError,'Original ILM source comparison.*firefox'):p.artifacts(self.root,self.out)
 
@@ -402,7 +405,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['aim-pointer-ownership-resync']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'aim_ownership':{'status':'passed'}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['aim_ownership']['status']='failed';self.save()
   with self.assertRaisesRegex(ValueError,'ownership resync.*firefox'):p.artifacts(self.root,self.out)
 
@@ -410,7 +413,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['native-aim-transport-preserves-idle']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'native_aim_transport':{'status':'passed'}}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['native_aim_transport']['status']='failed';self.save()
   with self.assertRaisesRegex(ValueError,'periodic idle packets.*firefox'):p.artifacts(self.root,self.out)
 
@@ -418,7 +421,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['native-shot-direction-and-render-sync']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'native_shot_direction_and_render_sync':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['native_shot_direction_and_render_sync']=False;self.save()
   with self.assertRaisesRegex(ValueError,'shot direction.*firefox'):p.artifacts(self.root,self.out)
 
@@ -426,7 +429,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['curved-target-and-chaser-interception']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'curved_target_and_chaser_interception':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   self.validation['browsers']['firefox']['native']['curved_target_and_chaser_interception']=False;self.save()
   with self.assertRaisesRegex(ValueError,'Curved chasing.*firefox'):p.artifacts(self.root,self.out)
 
@@ -434,7 +437,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['aim-cycle-socket-backpressure']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'aim_cycle_socket_backpressure':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for state in [False,None]:
    self.validation['browsers']['firefox']['native']['aim_cycle_socket_backpressure']=state;self.save()
    with self.assertRaisesRegex(ValueError,'Aim cycle.*firefox'):p.artifacts(self.root,self.out)
@@ -443,7 +446,7 @@ class PublicationTests(unittest.TestCase):
   self.contract['features']=['valid-live-aim-targets']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
   for report in self.validation['browsers'].values():report['native']={'valid_live_aim_targets':True,'server_death_sends_no_commands':True}
-  self.save();self.assertIn('game.modded.js',p.artifacts(self.root,self.out))
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
   for key in ['valid_live_aim_targets','server_death_sends_no_commands']:
    self.validation['browsers']['firefox']['native'][key]=False;self.save()
    with self.assertRaisesRegex(ValueError,'Live aim.*firefox'):p.artifacts(self.root,self.out)
