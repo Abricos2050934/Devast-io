@@ -9,8 +9,8 @@
   "source_candidates": [
     "https://devast.io/js/YukAlFEf489QnSaQ.js"
   ],
-  "activated_at": "2026-11-21T13:37:34.050196+00:00",
-  "previous_release": null,
+  "activated_at": "2026-11-21T13:44:37.862290+00:00",
+  "previous_release": "d6384b94f3ae6d77a83132c1f879f85c2e24cdecea574e620f0d1f38a42c476a",
   "validation": "passed",
   "live_server": "not_tested",
   "publication": "github",
