@@ -132,14 +132,15 @@ acorn.parse(code,{ecmaVersion:'latest'});
   const proxy=process.env.HTTPS_PROXY?{server:process.env.HTTPS_PROXY}:undefined;
   browser=engine==='firefox'?await firefox.launch({headless:true,proxy,firefoxUserPrefs:{'security.enterprise_roots.enabled':true}}):await chromium.launch({executablePath,headless:true,env:{...process.env,HOME:process.env.DEVAST_BROWSER_HOME||'/tmp/devast-browser-home'},proxy,args:['--no-sandbox','--disable-dev-shm-usage']});
   report.browser_version=browser.version();
-  page=await browser.newPage({viewport:{width:1280,height:800}});page.on('pageerror',e=>report.page_errors.push(e.message.slice(0,250)));
+  page=await browser.newPage({viewport:{width:1280,height:800}});page.on('pageerror',e=>report.page_errors.push((e.stack||e.message).slice(0,1000)));
   report.console_errors=[];page.on('console',event=>{if(event.type()==='error'&&report.console_errors.length<20)report.console_errors.push(event.text().slice(0,300));});
   // These fixtures exercise native game logic, not third-party ads or audio.
   // Supply valid local dependencies so an asset outage cannot mask game errors.
   await page.route(url=>url.hostname==='webgames.io'&&url.pathname==='/js/widget.min.js',r=>r.fulfill({status:200,contentType:'text/javascript',body:'window.Widget={init(){},filter:value=>value,isBlocked:0,preroll(){},createAdPlayer(){}};'}));
+  await page.route(url=>['exapush.com','www.googletagmanager.com'].includes(url.hostname),r=>r.fulfill({status:200,contentType:'text/javascript',body:'/* isolated third-party fixture */'}));
   const silence=Buffer.alloc(204);silence.write('RIFF');silence.writeUInt32LE(196,4);silence.write('WAVEfmt ',8);silence.writeUInt32LE(16,16);silence.writeUInt16LE(1,20);silence.writeUInt16LE(1,22);silence.writeUInt32LE(8000,24);silence.writeUInt32LE(16000,28);silence.writeUInt16LE(2,32);silence.writeUInt16LE(16,34);silence.write('data',36);silence.writeUInt32LE(160,40);
   await page.route(url=>url.hostname==='devast.io'&&url.pathname.startsWith('/audio/')&&url.pathname.endsWith('.mp3'),r=>r.fulfill({status:200,contentType:'audio/wav',body:silence}));
-  report.external_dependencies={advertising:'fixture; failures exercised explicitly below',audio:'valid silent WAV fixture'};
+  report.external_dependencies={advertising:'fixture; failures exercised explicitly below',analytics:'isolated empty fixture',audio:'valid silent WAV fixture'};
   await page.context().addCookies([{name:'devast_fixture_cookie',value:'retained',domain:'devast.io',path:'/',secure:true}]);
   await page.addInitScript(()=>{
    if(!localStorage.getItem('fixture-seeded')){
