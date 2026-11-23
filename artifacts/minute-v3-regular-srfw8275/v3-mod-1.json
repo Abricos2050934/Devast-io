@@ -1,0 +1,786 @@
+{
+  "name": "v3-mod-1",
+  "requestedServer": "Atlanta 1",
+  "scriptHash": "8a068e8177a318465b2a1d2c1b8f94bdd1823e4f58bfefa58152c170109a9f1d",
+  "browserMode": {
+    "webdriver": false,
+    "visibility": "visible"
+  },
+  "loaded": true,
+  "joined": true,
+  "sockets": [
+    {
+      "host": "atlanta2.devast.io",
+      "openedAt": 45825,
+      "received": 207,
+      "sent": 2,
+      "closedAt": null,
+      "error": false,
+      "death": {
+        "at": 76238,
+        "prefix": "1b0000",
+        "length": 3
+      },
+      "receivedOpcodes": {
+        "20": 184,
+        "27": 1,
+        "29": 3,
+        "47": 1,
+        "52": 1,
+        "53": 10,
+        "62": 1,
+        "71": 1
+      },
+      "textMetadata": [
+        {
+          "bytes": 306,
+          "kind": "array",
+          "items": 121,
+          "opcode": 2
+        },
+        {
+          "bytes": 45,
+          "kind": "array",
+          "items": 19,
+          "opcode": 5
+        },
+        {
+          "bytes": 17,
+          "kind": "array",
+          "items": 7,
+          "opcode": 7
+        },
+        {
+          "bytes": 13,
+          "kind": "array",
+          "items": 4,
+          "opcode": 9
+        },
+        {
+          "bytes": 14,
+          "kind": "array",
+          "items": 5,
+          "opcode": 14
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "at": 10452,
+      "name": "Uncaught (in promise) AbortError",
+      "message": "The play() request was interrupted by a new load request. [URL]"
+    }
+  ],
+  "failedRequests": {
+    "fetch": 18,
+    "xhr": 5,
+    "image": 9,
+    "document": 3,
+    "ping": 1
+  },
+  "resourceErrors": 2,
+  "samples": [
+    {
+      "at": 47151,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "playerId": 10,
+      "ownActive": true,
+      "ended": false,
+      "integrityFlag": 1,
+      "modErrorCount": 0,
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 2,
+        "bytes": 102
+      },
+      "aimSettings": {
+        "enabled": false,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "players",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "self": {
+        "x": 7650,
+        "y": 8450
+      },
+      "events": []
+    },
+    {
+      "at": 53144,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "playerId": 10,
+      "ownActive": true,
+      "ended": false,
+      "integrityFlag": 1,
+      "modErrorCount": 0,
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 2,
+        "bytes": 102
+      },
+      "aimSettings": {
+        "enabled": false,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "players",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "self": {
+        "id": 10,
+        "x": 7650,
+        "y": 8450,
+        "prevX": [
+          -1,
+          -1,
+          -1
+        ],
+        "prevY": [
+          -1,
+          -1,
+          -1
+        ],
+        "active": true,
+        "weapon": 7650,
+        "gear": -1,
+        "weaponIdx": 0,
+        "prevMovedAt2": 0,
+        "prevMovedAt": 0,
+        "movedAt": 1795340705258
+      },
+      "events": []
+    },
+    {
+      "at": 58207,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "playerId": 10,
+      "ownActive": true,
+      "ended": false,
+      "integrityFlag": 1,
+      "modErrorCount": 0,
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 2,
+        "bytes": 102
+      },
+      "aimSettings": {
+        "enabled": false,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "players",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "self": {
+        "id": 10,
+        "x": 7650,
+        "y": 8450,
+        "prevX": [
+          -1,
+          -1,
+          -1
+        ],
+        "prevY": [
+          -1,
+          -1,
+          -1
+        ],
+        "active": true,
+        "weapon": 7650,
+        "gear": -1,
+        "weaponIdx": 0,
+        "prevMovedAt2": 0,
+        "prevMovedAt": 0,
+        "movedAt": 1795340705258
+      },
+      "events": []
+    },
+    {
+      "at": 63314,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "playerId": 10,
+      "ownActive": true,
+      "ended": false,
+      "integrityFlag": 1,
+      "modErrorCount": 0,
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 2,
+        "bytes": 102
+      },
+      "aimSettings": {
+        "enabled": false,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "players",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "self": {
+        "id": 10,
+        "x": 7650,
+        "y": 8450,
+        "prevX": [
+          -1,
+          -1,
+          -1
+        ],
+        "prevY": [
+          -1,
+          -1,
+          -1
+        ],
+        "active": true,
+        "weapon": 7650,
+        "gear": -1,
+        "weaponIdx": 0,
+        "prevMovedAt2": 0,
+        "prevMovedAt": 0,
+        "movedAt": 1795340705258
+      },
+      "events": []
+    },
+    {
+      "at": 68398,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "playerId": 10,
+      "ownActive": true,
+      "ended": false,
+      "integrityFlag": 1,
+      "modErrorCount": 0,
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 2,
+        "bytes": 102
+      },
+      "aimSettings": {
+        "enabled": false,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "players",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "self": {
+        "id": 10,
+        "x": 7650,
+        "y": 8450,
+        "prevX": [
+          -1,
+          -1,
+          -1
+        ],
+        "prevY": [
+          -1,
+          -1,
+          -1
+        ],
+        "active": true,
+        "weapon": 7650,
+        "gear": -1,
+        "weaponIdx": 0,
+        "prevMovedAt2": 0,
+        "prevMovedAt": 0,
+        "movedAt": 1795340705258
+      },
+      "events": []
+    },
+    {
+      "at": 73484,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "playerId": 10,
+      "ownActive": true,
+      "ended": false,
+      "integrityFlag": 1,
+      "modErrorCount": 0,
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 2,
+        "bytes": 102
+      },
+      "aimSettings": {
+        "enabled": false,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "players",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "self": {
+        "id": 10,
+        "x": 7650,
+        "y": 8450,
+        "prevX": [
+          -1,
+          -1,
+          -1
+        ],
+        "prevY": [
+          -1,
+          -1,
+          -1
+        ],
+        "active": true,
+        "weapon": 7650,
+        "gear": -1,
+        "weaponIdx": 0,
+        "prevMovedAt2": 0,
+        "prevMovedAt": 0,
+        "movedAt": 1795340705258
+      },
+      "events": []
+    },
+    {
+      "at": 76529,
+      "menu": false,
+      "state": 0,
+      "socketState": 2,
+      "playerAssigned": true,
+      "playerId": 10,
+      "ownActive": false,
+      "ended": true,
+      "integrityFlag": 1,
+      "modErrorCount": 0,
+      "failureCode": 128,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 2,
+        "bytes": 102
+      },
+      "aimSettings": {
+        "enabled": false,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "players",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "self": {
+        "x": 7650,
+        "y": 8450
+      },
+      "events": [
+        {
+          "type": "server-death",
+          "at": 76219,
+          "health": 255,
+          "state": 1,
+          "flag": 1,
+          "deathOpcode": 27,
+          "deathPrefix": "1b 00 00",
+          "deathLength": 3,
+          "localCloseSource": null,
+          "received": 207,
+          "sent": 2,
+          "commands": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          }
+        },
+        {
+          "type": "native-network-error",
+          "at": 76220,
+          "health": 255,
+          "state": 0,
+          "flag": 1,
+          "failureCode": 128,
+          "localCloseSource": null,
+          "received": 207,
+          "sent": 2,
+          "commands": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          }
+        }
+      ]
+    }
+  ],
+  "replacedUrl": "https://devast.io/js/YukAlFEf489QnSaQ.js",
+  "homeStatus": 200,
+  "failedRequestDetails": [
+    {
+      "host": "atlanta2.devast.io",
+      "path": "/",
+      "kind": "xhr",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "host": "losangeles3.devast.io",
+      "path": "/",
+      "kind": "xhr",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "host": "frankfurt2.devast.io",
+      "path": "/",
+      "kind": "xhr",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "host": "osaka2.devast.io",
+      "path": "/",
+      "kind": "xhr",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "host": "sydney2.devast.io",
+      "path": "/",
+      "kind": "xhr",
+      "error": "net::ERR_FAILED"
+    }
+  ],
+  "modProof": {
+    "clientLoaded": true,
+    "menu": true,
+    "menus": 1,
+    "build": {
+      "fingerprint": "482e08310b680dfea10a094a88a653c1504bc300b4e8860a5509a28a2a8206ed",
+      "nativeSha256": "7a2efe2e7dd21d3d3776a0f4538d5ad7038be3be26566a1ae06060e02e32063a"
+    },
+    "aimSettings": {
+      "enabled": false,
+      "spear": false,
+      "hidePlayerAngle": false,
+      "hideAimbotAngle": false,
+      "source": "message27-bby",
+      "adaptive": true,
+      "jitter": false,
+      "jitterSpeed": 360,
+      "strafe": false,
+      "autoFire": false,
+      "target": "players",
+      "lockId": -1,
+      "distanceCoefficient": 80,
+      "offsetCoefficient": 0.8
+    },
+    "keepAliveEnabled": false
+  },
+  "keepAliveEnabled": false,
+  "selected": "Atlanta 1 - 4 players",
+  "clickedAt": 7300,
+  "httpErrors": [
+    {
+      "host": "cs.admanmedia.com",
+      "path": "/2a71b804d03ac71dc568777df2b536e9.gif",
+      "status": 503
+    },
+    {
+      "host": "t.adx.opera.com",
+      "path": "/pub/sync",
+      "status": 424
+    }
+  ],
+  "final": {
+    "menu": false,
+    "state": 0,
+    "socketState": 2,
+    "playerAssigned": true,
+    "playerId": 10,
+    "ownActive": false,
+    "ended": true,
+    "integrityFlag": 1,
+    "modErrorCount": 0,
+    "failureCode": 128,
+    "automation": {
+      "autoBuild": false,
+      "fastLoot": false,
+      "slowLoot": false,
+      "autoTake": false,
+      "spamChat": false
+    },
+    "callbacks": {
+      "wrapped": 5,
+      "accepted": 3,
+      "rejectedStale": 0,
+      "rejectedWhileConnected": 0,
+      "rejectedAfterDispose": 0,
+      "rejectedDuplicate": 0
+    },
+    "combat": {
+      "angle": 0,
+      "attack": 0,
+      "release": 0
+    },
+    "wireTraffic": {
+      "packets": 2,
+      "bytes": 102
+    },
+    "aimSettings": {
+      "enabled": false,
+      "spear": false,
+      "hidePlayerAngle": false,
+      "hideAimbotAngle": false,
+      "source": "message27-bby",
+      "adaptive": true,
+      "jitter": false,
+      "jitterSpeed": 360,
+      "strafe": false,
+      "autoFire": false,
+      "target": "players",
+      "lockId": -1,
+      "distanceCoefficient": 80,
+      "offsetCoefficient": 0.8
+    },
+    "self": {
+      "x": 7650,
+      "y": 8450
+    },
+    "events": [
+      {
+        "type": "server-death",
+        "at": 76219,
+        "health": 255,
+        "state": 1,
+        "flag": 1,
+        "deathOpcode": 27,
+        "deathPrefix": "1b 00 00",
+        "deathLength": 3,
+        "localCloseSource": null,
+        "received": 207,
+        "sent": 2,
+        "commands": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        }
+      },
+      {
+        "type": "native-network-error",
+        "at": 76220,
+        "health": 255,
+        "state": 0,
+        "flag": 1,
+        "failureCode": 128,
+        "localCloseSource": null,
+        "received": 207,
+        "sent": 2,
+        "commands": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        }
+      }
+    ]
+  },
+  "secondsAfterJoin": 29.39,
+  "minutePassed": false,
+  "elapsedMs": 77153
+}

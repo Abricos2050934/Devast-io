@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "scope": "Regular Chrome controlled with browser input and passive network events; no Playwright helper injection or page evaluation before the session ends",
+  "artifact": "/workspace/Devast-io/artifacts/old-js-connection-control-2026-11-22/Old-JS-Control.json",
+  "sha256": "508cf61ff18d0261f7ff245d54a2c83e680601fc0c9838bb3a5f4b6ec913cac7",
+  "joined": false,
+  "minutePassed": false,
+  "sockets": [],
+  "replacements": 0,
+  "networkErrors": [
+    {
+      "host": "devast.io",
+      "path": "/",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/favicon.ico",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/favicon.ico",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/favicon.ico",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/favicon.ico",
+      "status": 503
+    }
+  ],
+  "navigationAttempts": 4,
+  "freshGuestContext": true,
+  "homeStatus": 503,
+  "error": "Game home HTTP 503",
+  "errorStack": "Error: Game home HTTP 503\n    at /workspace/Devast-io/artifacts/old-js-control-live-2026-11-22/check.cjs:58:35",
+  "failureState": {
+    "loaded": false
+  },
+  "elapsedMs": 61665
+}

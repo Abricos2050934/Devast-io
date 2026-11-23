@@ -1,0 +1,94 @@
+{
+  "source_file": "Screenrecorder-under-30MB.mp4",
+  "source_sha256": "bfe951dfa4f743cde92849d624455ef74a6f26a49b2f3b3b72cdd793114de04f",
+  "bytes": 25999172,
+  "duration_seconds": 108.346868,
+  "dimensions": [
+    1600,
+    720
+  ],
+  "review_method": "Visual review of timestamped overview frames, transition samples and three 0.25-second sequences. Not a frame-by-frame review of every original frame; no source code from the video was available.",
+  "timestamps_reference": "The uploaded recording, not the YouTube player time shown inside it.",
+  "devast_intervals_approximate": [
+    [
+      "00:02",
+      "00:14"
+    ],
+    [
+      "00:25",
+      "00:34"
+    ],
+    [
+      "00:45",
+      "00:54"
+    ],
+    [
+      "01:10",
+      "01:27"
+    ],
+    [
+      "01:40",
+      "01:48"
+    ]
+  ],
+  "observations": [
+    {
+      "time": "00:05",
+      "evidence": "Night combat with firearms. Overlay reads avgPing:129, deltaPing:12, delay:25.",
+      "frame": "detail/005.png"
+    },
+    {
+      "time": "00:25",
+      "evidence": "Two nearby players with spears. Overlay reads avgPing:117, deltaPing:-11, delay:41, lead:117.",
+      "frame": "detail/025.png"
+    },
+    {
+      "time": "00:30",
+      "evidence": "Overlay reads avgPing:115 and lead:115. Repeated samples in 24.50–28.00 also show lead matching avgPing.",
+      "frame": "detail/030.png"
+    },
+    {
+      "time": "01:12–01:15",
+      "evidence": "Visible targeting line continues to the player labelled [DRUGS] #12 while the two players move; spear-like projectiles and hit feedback are visible. This does not establish the exact selection algorithm or count confirmed hits.",
+      "frames": "sequences/turn-and-lead-sheet.jpg"
+    },
+    {
+      "time": "01:15.50",
+      "evidence": "Inventory hover explicitly reads Wood Spear, Don’t forget to pick it up, Damage:80.",
+      "frame": "sequences/turn-and-lead-075.50.jpg"
+    },
+    {
+      "time": "01:42–01:46",
+      "evidence": "Several players and a moving targeting line are visible. The nearest-target versus fixed-lock versus manual selection rule cannot be established from these frames.",
+      "frames": "sequences/multi-target-sheet.jpg"
+    }
+  ],
+  "interpretations": [
+    {
+      "claim": "Aim prediction probably accounts for network delay.",
+      "confidence": "plausible, not proven",
+      "basis": "avgPing and lead are displayed and repeatedly equal in one segment; displayed values alone do not prove how they enter the calculation."
+    },
+    {
+      "claim": "The observed behavior is consistent with a projectile interception model using recent target movement and a prediction horizon.",
+      "confidence": "plausible, not uniquely identifiable",
+      "basis": "Targeting follows moving opponents in projectile/spear combat; many different algorithms can produce the same visible motion."
+    },
+    {
+      "claim": "The video uses the same aimbot as the earlier debug-object screenshot.",
+      "confidence": "unconfirmed",
+      "basis": "Only generic latency terminology overlaps; aimsteps, pingSteps and the implementation are not visible."
+    }
+  ],
+  "not_established": [
+    "exact hit percentage",
+    "absence of misses",
+    "the precise latency formula or units of every custom field",
+    "whether full RTT or half RTT is used",
+    "the meaning of aimsteps and pingSteps",
+    "whether positions come from game state or image recognition",
+    "which outgoing game packets are used"
+  ],
+  "script_changes": "none",
+  "publication": "none"
+}

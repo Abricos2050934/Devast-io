@@ -1,0 +1,1746 @@
+TAP version 13
+# Subtest: legacy smoothing and sent directions follow the shortest arc for three full turns: -1/0.05
+ok 1 - legacy smoothing and sent directions follow the shortest arc for three full turns: -1/0.05
+  ---
+  duration_ms: 71.74301
+  type: 'test'
+  ...
+# Subtest: legacy smoothing and sent directions follow the shortest arc for three full turns: -1/0.74
+ok 2 - legacy smoothing and sent directions follow the shortest arc for three full turns: -1/0.74
+  ---
+  duration_ms: 54.390952
+  type: 'test'
+  ...
+# Subtest: legacy smoothing and sent directions follow the shortest arc for three full turns: -1/1
+ok 3 - legacy smoothing and sent directions follow the shortest arc for three full turns: -1/1
+  ---
+  duration_ms: 38.123786
+  type: 'test'
+  ...
+# Subtest: legacy smoothing and sent directions follow the shortest arc for three full turns: 1/0.05
+ok 4 - legacy smoothing and sent directions follow the shortest arc for three full turns: 1/0.05
+  ---
+  duration_ms: 36.465117
+  type: 'test'
+  ...
+# Subtest: legacy smoothing and sent directions follow the shortest arc for three full turns: 1/0.74
+ok 5 - legacy smoothing and sent directions follow the shortest arc for three full turns: 1/0.74
+  ---
+  duration_ms: 62.152435
+  type: 'test'
+  ...
+# Subtest: legacy smoothing and sent directions follow the shortest arc for three full turns: 1/1
+ok 6 - legacy smoothing and sent directions follow the shortest arc for three full turns: 1/1
+  ---
+  duration_ms: 41.440565
+  type: 'test'
+  ...
+# Subtest: every source angle is canonical at the wire boundary without quantizing valid fractional angles
+ok 7 - every source angle is canonical at the wire boundary without quantizing valid fractional angles
+  ---
+  duration_ms: 5.045883
+  type: 'test'
+  ...
+# Subtest: full browser oracle also verifies the installed source at the codec boundary
+ok 8 - full browser oracle also verifies the installed source at the codec boundary
+  ---
+  duration_ms: 254.275878
+  type: 'test'
+  ...
+# Subtest: aim line shares native player coordinates across graphics ratios, zoom and camera offsets
+ok 9 - aim line shares native player coordinates across graphics ratios, zoom and camera offsets
+  ---
+  duration_ms: 104.854163
+  type: 'test'
+  ...
+# Subtest: old movement does not return on later packets after turn
+ok 10 - old movement does not return on later packets after turn
+  ---
+  duration_ms: 13.983162
+  type: 'test'
+  ...
+# Subtest: old movement does not return on later packets after reversal
+ok 11 - old movement does not return on later packets after reversal
+  ---
+  duration_ms: 2.676994
+  type: 'test'
+  ...
+# Subtest: old movement does not return on later packets after restart
+ok 12 - old movement does not return on later packets after restart
+  ---
+  duration_ms: 6.48643
+  type: 'test'
+  ...
+# Subtest: a teleport received in the same event-loop timestamp cannot create a huge velocity
+ok 13 - a teleport received in the same event-loop timestamp cannot create a huge velocity
+  ---
+  duration_ms: 1.778241
+  type: 'test'
+  ...
+# Subtest: aim matches the restored baseline except for explicitly reviewed motion fixes
+not ok 14 - aim matches the restored baseline except for explicitly reviewed motion fixes
+  ---
+  duration_ms: 3.976183
+  type: 'test'
+  location: '/workspace/Devast-io/tests/aim-preserved-before-disconnect.test.cjs:2:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Approved fix missing or ambiguous: mod/ilm-aim.js
+    
+    1 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    restored (/workspace/Devast-io/tests/aim-preserved-before-disconnect.test.cjs:5:136)
+    TestContext.<anonymous> (/workspace/Devast-io/tests/aim-preserved-before-disconnect.test.cjs:6:71)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.start (node:internal/test_runner/test:1262:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: gun auto fire and spear auto throw are independent and persist separately
+ok 15 - gun auto fire and spear auto throw are independent and persist separately
+  ---
+  duration_ms: 35.041163
+  type: 'test'
+  ...
+# Subtest: old shared auto-fire preference migrates once and remains independently editable
+ok 16 - old shared auto-fire preference migrates once and remains independently editable
+  ---
+  duration_ms: 15.022888
+  type: 'test'
+  ...
+# Subtest: unknown or removed self ID is dead and cannot crash afterFire
+ok 17 - unknown or removed self ID is dead and cannot crash afterFire
+  ---
+  duration_ms: 6.802937
+  type: 'test'
+  ...
+# Subtest: line reset and character death retain finite hidden coordinates
+ok 18 - line reset and character death retain finite hidden coordinates
+  ---
+  duration_ms: 8.471783
+  type: 'test'
+  ...
+# Subtest: native fire before the first self position cannot crash the source resolver
+ok 19 - native fire before the first self position cannot crash the source resolver
+  ---
+  duration_ms: 9.28264
+  type: 'test'
+  ...
+# Subtest: repeated key selection uses one handler and Escape cancels without changing a binding
+ok 20 - repeated key selection uses one handler and Escape cancels without changing a binding
+  ---
+  duration_ms: 12.733807
+  type: 'test'
+  ...
+# Subtest: Strafe coefficient changes phase advance at the same timer cadence
+ok 21 - Strafe coefficient changes phase advance at the same timer cadence
+  ---
+  duration_ms: 29.009104
+  type: 'test'
+  ...
+# Subtest: adaptive packet bursts defer target searches to the existing refresh cycle
+ok 22 - adaptive packet bursts defer target searches to the existing refresh cycle
+  ---
+  duration_ms: 11.66613
+  type: 'test'
+  ...
+# Subtest: spear automatic attack responds only to its own toggle
+ok 23 - spear automatic attack responds only to its own toggle
+  ---
+  duration_ms: 10.041892
+  type: 'test'
+  ...
+# Subtest: line range flag is retained and clears on the next normal update
+ok 24 - line range flag is retained and clears on the next normal update
+  ---
+  duration_ms: 7.368193
+  type: 'test'
+  ...
+# Subtest: a second finger or menu touch cannot steal the active aiming finger
+ok 25 - a second finger or menu touch cannot steal the active aiming finger
+  ---
+  duration_ms: 10.392378
+  type: 'test'
+  ...
+# Subtest: invalid captured keys retain capture and a later valid key uses conflict swapping
+ok 26 - invalid captured keys retain capture and a later valid key uses conflict swapping
+  ---
+  duration_ms: 3.98112
+  type: 'test'
+  ...
+# Subtest: real aim GUI controls change the intended computations and modes
+ok 27 - real aim GUI controls change the intended computations and modes
+  ---
+  duration_ms: 33.2245
+  type: 'test'
+  ...
+# Subtest: explicit saved aim values are not reinterpreted as legacy defaults on reload
+ok 28 - explicit saved aim values are not reinterpreted as legacy defaults on reload
+  ---
+  duration_ms: 10.797582
+  type: 'test'
+  ...
+# Subtest: removed target stops auto attacks and returns the source native fallback
+ok 29 - removed target stops auto attacks and returns the source native fallback
+  ---
+  duration_ms: 34.477751
+  type: 'test'
+  ...
+# Subtest: missing self coordinates, self locks and server death emit no automated combat
+ok 30 - missing self coordinates, self locks and server death emit no automated combat
+  ---
+  duration_ms: 18.814998
+  type: 'test'
+  ...
+# Subtest: rapid reconnect clears histories and reused IDs start without previous positions
+ok 31 - rapid reconnect clears histories and reused IDs start without previous positions
+  ---
+  duration_ms: 7.31228
+  type: 'test'
+  ...
+# Subtest: a ghoul with self numeric UID remains a distinct target
+ok 32 - a ghoul with self numeric UID remains a distinct target
+  ---
+  duration_ms: 8.576958
+  type: 'test'
+  ...
+# Subtest: fast loot stops when its own request fills the queue and resumes at the unsent drop
+ok 33 - fast loot stops when its own request fills the queue and resumes at the unsent drop
+  ---
+  duration_ms: 19.019191
+  type: 'test'
+  ...
+# Subtest: Uploaded aim still computes on position refresh while queued and non-open sockets suppress its sends
+ok 34 - Uploaded aim still computes on position refresh while queued and non-open sockets suppress its sends
+  ---
+  duration_ms: 7.659273
+  type: 'test'
+  ...
+# Subtest: fast loot and native auto-build pause together and resume one current frame
+ok 35 - fast loot and native auto-build pause together and resume one current frame
+  ---
+  duration_ms: 9.338473
+  type: 'test'
+  ...
+# Subtest: slow loot, container take, chat and keepalive wait for writable transport without retry bursts
+ok 36 - slow loot, container take, chat and keepalive wait for writable transport without retry bursts
+  ---
+  duration_ms: 5.743453
+  type: 'test'
+  ...
+# Subtest: saving settings cannot bypass the existing fast-loot interval
+ok 37 - saving settings cannot bypass the existing fast-loot interval
+  ---
+  duration_ms: 12.264174
+  type: 'test'
+  ...
+# Subtest: confirmed death stops chat before the native handler clears the playing state
+ok 38 - confirmed death stops chat before the native handler clears the playing state
+  ---
+  duration_ms: 3.724011
+  type: 'test'
+  ...
+# Subtest: a stationary target is intercepted at distance divided by speed
+ok 39 - a stationary target is intercepted at distance divided by speed
+  ---
+  duration_ms: 6.594549
+  type: 'test'
+  ...
+# Subtest: transverse motion uses the actual interception time, rather than distance / speed alone
+ok 40 - transverse motion uses the actual interception time, rather than distance / speed alone
+  ---
+  duration_ms: 1.412366
+  type: 'test'
+  ...
+# Subtest: approaching and receding targets have different physical flight times
+ok 41 - approaching and receding targets have different physical flight times
+  ---
+  duration_ms: 2.665126
+  type: 'test'
+  ...
+# Subtest: movement of the shooter changes the launch origin during packet age and network delay
+ok 42 - movement of the shooter changes the launch origin during packet age and network delay
+  ---
+  duration_ms: 1.354361
+  type: 'test'
+  ...
+# Subtest: the same path sampled at different server rates gives the same angle
+ok 43 - the same path sampled at different server rates gives the same angle
+  ---
+  duration_ms: 4.948899
+  type: 'test'
+  ...
+# Subtest: a stable circular path predicts the curved interception rather than its old tangent
+ok 44 - a stable circular path predicts the curved interception rather than its old tangent
+  ---
+  duration_ms: 2.313837
+  type: 'test'
+  ...
+# Subtest: coalesced packets cannot confirm a circular path at 0ms
+ok 45 - coalesced packets cannot confirm a circular path at 0ms
+  ---
+  duration_ms: 2.97207
+  type: 'test'
+  ...
+# Subtest: coalesced packets cannot confirm a circular path at 1ms
+ok 46 - coalesced packets cannot confirm a circular path at 1ms
+  ---
+  duration_ms: 2.732716
+  type: 'test'
+  ...
+# Subtest: coalesced packets cannot confirm a circular path at 7ms
+ok 47 - coalesced packets cannot confirm a circular path at 7ms
+  ---
+  duration_ms: 3.673576
+  type: 'test'
+  ...
+# Subtest: zero-time duplicate packets do not manufacture an infinite velocity
+ok 48 - zero-time duplicate packets do not manufacture an infinite velocity
+  ---
+  duration_ms: 1.210237
+  type: 'test'
+  ...
+# Subtest: a continuous dense packet stream still accumulates timed motion observations
+ok 49 - a continuous dense packet stream still accumulates timed motion observations
+  ---
+  duration_ms: 2.468006
+  type: 'test'
+  ...
+# Subtest: a stop and a reversal discard the obsolete motion direction immediately
+ok 50 - a stop and a reversal discard the obsolete motion direction immediately
+  ---
+  duration_ms: 1.157129
+  type: 'test'
+  ...
+# Subtest: teleports, generation reuse and long gaps restart velocity estimation
+ok 51 - teleports, generation reuse and long gaps restart velocity estimation
+  ---
+  duration_ms: 1.068238
+  type: 'test'
+  ...
+# Subtest: stale, removed and reset targets are not reported as valid intercepts
+ok 52 - stale, removed and reset targets are not reported as valid intercepts
+  ---
+  duration_ms: 1.089099
+  type: 'test'
+  ...
+# Subtest: a target faster than the bullet and moving away is unreachable
+ok 53 - a target faster than the bullet and moving away is unreachable
+  ---
+  duration_ms: 1.232019
+  type: 'test'
+  ...
+# Subtest: quadratic degeneracy, tangency and negative intercept times remain finite
+ok 54 - quadratic degeneracy, tangency and negative intercept times remain finite
+  ---
+  duration_ms: 1.002441
+  type: 'test'
+  ...
+# Subtest: projectile speed averages distinct server projectiles and keeps weapons separate
+ok 55 - projectile speed averages distinct server projectiles and keeps weapons separate
+  ---
+  duration_ms: 1.106164
+  type: 'test'
+  ...
+# Subtest: old speed calibration expires and manual speed takes effect when automatic calibration is disabled
+ok 56 - old speed calibration expires and manual speed takes effect when automatic calibration is disabled
+  ---
+  duration_ms: 0.97504
+  type: 'test'
+  ...
+# Subtest: the installed adaptive default uses native weapon speed and range immediately
+ok 57 - the installed adaptive default uses native weapon speed and range immediately
+  ---
+  duration_ms: 19.777561
+  type: 'test'
+  ...
+# Subtest: actual GUI controls change speed, delay, automatic calibration and mode, and persist
+ok 58 - actual GUI controls change speed, delay, automatic calibration and mode, and persist
+  ---
+  duration_ms: 14.745137
+  type: 'test'
+  ...
+# Subtest: native packed projectile speed calibrates only our distinct projectiles, separately by equipped weapon
+ok 59 - native packed projectile speed calibrates only our distinct projectiles, separately by equipped weapon
+  ---
+  duration_ms: 13.462037
+  type: 'test'
+  ...
+# Subtest: adaptive position tracking uses server coordinates while preserving the source endpoint history
+ok 60 - adaptive position tracking uses server coordinates while preserving the source endpoint history
+  ---
+  duration_ms: 13.423906
+  type: 'test'
+  ...
+# Subtest: fresh physical direction precedes manual attack with Jitter=false
+ok 61 - fresh physical direction precedes manual attack with Jitter=false
+  ---
+  duration_ms: 15.886304
+  type: 'test'
+  ...
+# Subtest: fresh physical direction precedes manual attack with Jitter=true
+ok 62 - fresh physical direction precedes manual attack with Jitter=true
+  ---
+  duration_ms: 10.632504
+  type: 'test'
+  ...
+# Subtest: stale targets cannot emit automatic attacks or keep direction ownership
+ok 63 - stale targets cannot emit automatic attacks or keep direction ownership
+  ---
+  duration_ms: 7.661115
+  type: 'test'
+  ...
+# Subtest: physical aim keeps native backpressure and identity protections
+ok 64 - physical aim keeps native backpressure and identity protections
+  ---
+  duration_ms: 13.622479
+  type: 'test'
+  ...
+# Subtest: a dense packet batch cannot multiply adaptive idle aim traffic beyond 20 directions per second
+ok 65 - a dense packet batch cannot multiply adaptive idle aim traffic beyond 20 directions per second
+  ---
+  duration_ms: 61.126891
+  type: 'test'
+  ...
+# Subtest: portable native browser fixture also verifies the installed adapter
+ok 66 - portable native browser fixture also verifies the installed adapter
+  ---
+  duration_ms: 12.111377
+  type: 'test'
+  ...
+# Subtest: independent projectile simulation measures interception error across distance, walk speed and direction
+ok 67 - independent projectile simulation measures interception error across distance, walk speed and direction
+  ---
+  duration_ms: 30.565073
+  type: 'test'
+  ...
+# Subtest: quantized projectile simulation improves over both current BBY defaults and its tuned profile
+ok 68 - quantized projectile simulation improves over both current BBY defaults and its tuned profile
+  ---
+  duration_ms: 2585.383242
+  type: 'test'
+  ...
+# Subtest: server rejection 8 cannot turn into automatic restoration after native close
+ok 69 - server rejection 8 cannot turn into automatic restoration after native close
+  ---
+  duration_ms: 13.833251
+  type: 'test'
+  ...
+# Subtest: server rejection 16 cannot turn into automatic restoration after native close
+ok 70 - server rejection 16 cannot turn into automatic restoration after native close
+  ---
+  duration_ms: 4.166513
+  type: 'test'
+  ...
+# Subtest: server rejection 512 cannot turn into automatic restoration after native close
+ok 71 - server rejection 512 cannot turn into automatic restoration after native close
+  ---
+  duration_ms: 4.592412
+  type: 'test'
+  ...
+# Subtest: server rejection 1024 cannot turn into automatic restoration after native close
+ok 72 - server rejection 1024 cannot turn into automatic restoration after native close
+  ---
+  duration_ms: 3.102633
+  type: 'test'
+  ...
+# Subtest: an ordinary transport loss still permits the existing bounded restoration
+ok 73 - an ordinary transport loss still permits the existing bounded restoration
+  ---
+  duration_ms: 4.038144
+  type: 'test'
+  ...
+# Subtest: stale entry deadlines never close an already active playable socket
+ok 74 - stale entry deadlines never close an already active playable socket
+  ---
+  duration_ms: 24.41462
+  type: 'test'
+  ...
+# Subtest: an entry timeout retains its close event but a replaced socket cannot contaminate the report
+ok 75 - an entry timeout retains its close event but a replaced socket cannot contaminate the report
+  ---
+  duration_ms: 3.677391
+  type: 'test'
+  ...
+# Subtest: a replacement socket gets a new entry deadline without an intervening state change
+ok 76 - a replacement socket gets a new entry deadline without an intervening state change
+  ---
+  duration_ms: 4.140636
+  type: 'test'
+  ...
+# Subtest: an earlier socket closing does not prevent a stalled login from unlocking Play
+ok 77 - an earlier socket closing does not prevent a stalled login from unlocking Play
+  ---
+  duration_ms: 7.924895
+  type: 'test'
+  ...
+# Subtest: disposed native preflight cannot start an old connection
+ok 78 - disposed native preflight cannot start an old connection
+  ---
+  duration_ms: 9.319744
+  type: 'test'
+  ...
+# Subtest: nested native preflights keep ownership and reject a stale second stage
+ok 79 - nested native preflights keep ownership and reject a stale second stage
+  ---
+  duration_ms: 3.563593
+  type: 'test'
+  ...
+# Subtest: fresh recovery bounds server-list failure: missing-server
+ok 80 - fresh recovery bounds server-list failure: missing-server
+  ---
+  duration_ms: 6.311652
+  type: 'test'
+  ...
+# Subtest: fresh recovery bounds server-list failure: throw
+ok 81 - fresh recovery bounds server-list failure: throw
+  ---
+  duration_ms: 12.537166
+  type: 'test'
+  ...
+# Subtest: fresh recovery bounds server-list failure: timeout
+ok 82 - fresh recovery bounds server-list failure: timeout
+  ---
+  duration_ms: 3.106758
+  type: 'test'
+  ...
+# Subtest: normal join remains possible after earlier restore attempts
+ok 83 - normal join remains possible after earlier restore attempts
+  ---
+  duration_ms: 6.541311
+  type: 'test'
+  ...
+# Subtest: native network failure codes are recorded without account contents
+ok 84 - native network failure codes are recorded without account contents
+  ---
+  duration_ms: 5.61955
+  type: 'test'
+  ...
+# Subtest: a slow transport open gets a full application-handshake deadline
+ok 85 - a slow transport open gets a full application-handshake deadline
+  ---
+  duration_ms: 5.413506
+  type: 'test'
+  ...
+# Subtest: a duplicate transport open cannot keep extending the handshake deadline
+ok 86 - a duplicate transport open cannot keep extending the handshake deadline
+  ---
+  duration_ms: 8.824153
+  type: 'test'
+  ...
+# Subtest: an old transport open cannot postpone the current socket deadline
+ok 87 - an old transport open cannot postpone the current socket deadline
+  ---
+  duration_ms: 8.791464
+  type: 'test'
+  ...
+# Subtest: death diagnostics follow the actual incoming opcode 5
+ok 88 - death diagnostics follow the actual incoming opcode 5
+  ---
+  duration_ms: 19.909676
+  type: 'test'
+  ...
+# Subtest: death diagnostics follow the actual incoming opcode 27
+ok 89 - death diagnostics follow the actual incoming opcode 27
+  ---
+  duration_ms: 4.688574
+  type: 'test'
+  ...
+# Subtest: death diagnostics follow the actual incoming opcode 203
+ok 90 - death diagnostics follow the actual incoming opcode 203
+  ---
+  duration_ms: 3.949633
+  type: 'test'
+  ...
+# Subtest: dynamic, mismatched, missing and ambiguous death dispatches stop generation
+ok 91 - dynamic, mismatched, missing and ambiguous death dispatches stop generation
+  ---
+  duration_ms: 2.467213
+  type: 'test'
+  ...
+# Subtest: the mapped prefix excludes unrelated packet contents and invalid expected opcodes
+ok 92 - the mapped prefix excludes unrelated packet contents and invalid expected opcodes
+  ---
+  duration_ms: 5.51829
+  type: 'test'
+  ...
+# Subtest: right click opens the hovered door over a selected container, once, using click coordinates and zoom
+ok 93 - right click opens the hovered door over a selected container, once, using click coordinates and zoom
+  ---
+  duration_ms: 16.096543
+  type: 'test'
+  ...
+# Subtest: right click ignores UI, typing, disabled controls and other tiles
+ok 94 - right click ignores UI, typing, disabled controls and other tiles
+  ---
+  duration_ms: 4.7125
+  type: 'test'
+  ...
+# Subtest: door request is independent of E, nearest selection, client range and owner filtering
+ok 95 - door request is independent of E, nearest selection, client range and owner filtering
+  ---
+  duration_ms: 4.406008
+  type: 'test'
+  ...
+# Subtest: cursor picks the second adjacent door rather than the door with the E prompt
+ok 96 - cursor picks the second adjacent door rather than the door with the E prompt
+  ---
+  duration_ms: 3.871027
+  type: 'test'
+  ...
+# Subtest: door control defaults on independently of a disabled saved generic interaction setting
+ok 97 - door control defaults on independently of a disabled saved generic interaction setting
+  ---
+  duration_ms: 3.801374
+  type: 'test'
+  ...
+# Subtest: door feedback waits for the requested entity state instead of faking an open door
+ok 98 - door feedback waits for the requested entity state instead of faking an open door
+  ---
+  duration_ms: 5.241531
+  type: 'test'
+  ...
+# Subtest: a different door update cannot confirm the request; timeout is visible and sends nothing again
+ok 99 - a different door update cannot confirm the request; timeout is visible and sends nothing again
+  ---
+  duration_ms: 3.42561
+  type: 'test'
+  ...
+# Subtest: door clicks wait for the socket to be open, readyState=0
+ok 100 - door clicks wait for the socket to be open, readyState=0
+  ---
+  duration_ms: 4.668275
+  type: 'test'
+  ...
+# Subtest: door clicks wait for the socket to be open, readyState=2
+ok 101 - door clicks wait for the socket to be open, readyState=2
+  ---
+  duration_ms: 3.248538
+  type: 'test'
+  ...
+# Subtest: door clicks wait for the socket to be open, readyState=3
+ok 102 - door clicks wait for the socket to be open, readyState=3
+  ---
+  duration_ms: 3.391279
+  type: 'test'
+  ...
+# Subtest: a confirmed death blocks door requests while the native state is still being cleared
+ok 103 - a confirmed death blocks door requests while the native state is still being cleared
+  ---
+  duration_ms: 3.814594
+  type: 'test'
+  ...
+# Subtest: AutoBuild sends the latest native cursor cell and rotation independently of player position
+ok 104 - AutoBuild sends the latest native cursor cell and rotation independently of player position
+  ---
+  duration_ms: 11.941456
+  type: 'test'
+  ...
+# Subtest: high-FPS AutoBuild is bounded, uses current preview, and does not replay skipped frames
+ok 105 - high-FPS AutoBuild is bounded, uses current preview, and does not replay skipped frames
+  ---
+  duration_ms: 7.739831
+  type: 'test'
+  ...
+# Subtest: AutoBuild honors preview validity, selected building, session, and toggle across transitions
+ok 106 - AutoBuild honors preview validity, selected building, session, and toggle across transitions
+  ---
+  duration_ms: 3.900771
+  type: 'test'
+  ...
+# Subtest: AutoBuild GUI and KeyB binding change the next native frame
+ok 107 - AutoBuild GUI and KeyB binding change the next native frame
+  ---
+  duration_ms: 7.384226
+  type: 'test'
+  ...
+# Subtest: standalone fallback builds on its bounded step and never adds a sender in overlay render
+ok 108 - standalone fallback builds on its bounded step and never adds a sender in overlay render
+  ---
+  duration_ms: 3.265083
+  type: 'test'
+  ...
+# Subtest: AutoBuild rejects nonfinite preview data and stops outside a living session or after disposal
+ok 109 - AutoBuild rejects nonfinite preview data and stops outside a living session or after disposal
+  ---
+  duration_ms: 5.188023
+  type: 'test'
+  ...
+# Subtest: runtime generation reproduces the committed source blocks and host bindings exactly
+ok 110 - runtime generation reproduces the committed source blocks and host bindings exactly
+  ---
+  duration_ms: 58.424369
+  type: 'test'
+  ...
+# Subtest: active source calculations, lifecycle, spear, jitter and menu survive verbatim
+ok 111 - active source calculations, lifecycle, spear, jitter and menu survive verbatim
+  ---
+  duration_ms: 32.506781
+  type: 'test'
+  ...
+# Subtest: state and commands match the upload with canonical angle representation
+ok 112 - state and commands match the upload with canonical angle representation
+  ---
+  duration_ms: 367.737455
+  type: 'test'
+  ...
+# Subtest: changed positions refresh immediately; repeated coordinates do not manufacture velocity samples
+ok 113 - changed positions refresh immediately; repeated coordinates do not manufacture velocity samples
+  ---
+  duration_ms: 11.138561
+  type: 'test'
+  ...
+# Subtest: original rotation and aim loops retain 50ms cadence and all timers/listeners are disposed
+ok 114 - original rotation and aim loops retain 50ms cadence and all timers/listeners are disposed
+  ---
+  duration_ms: 8.710736
+  type: 'test'
+  ...
+# Subtest: previous engines cannot replace source defaults or overwrite identity
+ok 115 - previous engines cannot replace source defaults or overwrite identity
+  ---
+  duration_ms: 9.489836
+  type: 'test'
+  ...
+# Subtest: aim menu order, numeric ranges and options match the uploaded menu
+ok 116 - aim menu order, numeric ranges and options match the uploaded menu
+  ---
+  duration_ms: 12.481764
+  type: 'test'
+  ...
+# Subtest: source touch input uses the changed finger and native document mouse state
+ok 117 - source touch input uses the changed finger and native document mouse state
+  ---
+  duration_ms: 9.245816
+  type: 'test'
+  ...
+# Subtest: source key capture retains conflict swaps, persists bindings and cleans up an unfinished capture
+ok 118 - source key capture retains conflict swaps, persists bindings and cleans up an unfinished capture
+  ---
+  duration_ms: 11.514436
+  type: 'test'
+  ...
+# Subtest: native packetAngle uses the exact source floor and hidden fallback
+ok 119 - native packetAngle uses the exact source floor and hidden fallback
+  ---
+  duration_ms: 14.744968
+  type: 'test'
+  ...
+# Subtest: source receiver skips unused zero position and removal slots
+ok 120 - source receiver skips unused zero position and removal slots
+  ---
+  duration_ms: 5.347418
+  type: 'test'
+  ...
+# Subtest: native weapon metadata activates imported spear calculations
+ok 121 - native weapon metadata activates imported spear calculations
+  ---
+  duration_ms: 7.742844
+  type: 'test'
+  ...
+# Subtest: our original rotation has configurable speed and protects manual and automatic shots
+ok 122 - our original rotation has configurable speed and protects manual and automatic shots
+  ---
+  duration_ms: 31.519272
+  type: 'test'
+  ...
+# Subtest: our Jitter menu, saved speed, and J binding replace the imported modes
+ok 123 - our Jitter menu, saved speed, and J binding replace the imported modes
+  ---
+  duration_ms: 18.955946
+  type: 'test'
+  ...
+# Subtest: rotation leaves native movement and pointer untouched and sends at most 20Hz
+ok 124 - rotation leaves native movement and pointer untouched and sends at most 20Hz
+  ---
+  duration_ms: 10.152805
+  type: 'test'
+  ...
+# Subtest: legacy settings are retired only after verified current copies and an exact archive
+ok 125 - legacy settings are retired only after verified current copies and an exact archive
+  ---
+  duration_ms: 24.577258
+  type: 'test'
+  ...
+# Subtest: existing current settings win and old settings are archived unchanged
+ok 126 - existing current settings win and old settings are archived unchanged
+  ---
+  duration_ms: 4.620088
+  type: 'test'
+  ...
+# Subtest: migration keeps original data if writing DevastILM:settings:v3:legacy-backup:v1 fails
+ok 127 - migration keeps original data if writing DevastILM:settings:v3:legacy-backup:v1 fails
+  ---
+  duration_ms: 3.295437
+  type: 'test'
+  ...
+# Subtest: migration keeps original data if writing DevastILM:settings:v3 fails
+ok 128 - migration keeps original data if writing DevastILM:settings:v3 fails
+  ---
+  duration_ms: 5.345556
+  type: 'test'
+  ...
+# Subtest: migration keeps original data if writing DevastILM:settings:v3:loot fails
+ok 129 - migration keeps original data if writing DevastILM:settings:v3:loot fails
+  ---
+  duration_ms: 4.149239
+  type: 'test'
+  ...
+# Subtest: malformed historical settings are retained instead of replacing current data
+ok 130 - malformed historical settings are retained instead of replacing current data
+  ---
+  duration_ms: 6.020812
+  type: 'test'
+  ...
+# [Devast mod] Native drawing fixture failure
+# Subtest: fast loot bounds unsuccessful scans and reaches later drops without scanning every frame
+ok 131 - fast loot bounds unsuccessful scans and reaches later drops without scanning every frame
+  ---
+  duration_ms: 105.395592
+  type: 'test'
+  ...
+# Subtest: removed HUD text and AIM BOT label cannot return from old saved settings
+ok 132 - removed HUD text and AIM BOT label cannot return from old saved settings
+  ---
+  duration_ms: 15.109116
+  type: 'test'
+  ...
+# Subtest: building owner labels read cursor layout once per frame even with hundreds of buildings
+ok 133 - building owner labels read cursor layout once per frame even with hundreds of buildings
+  ---
+  duration_ms: 22.265796
+  type: 'test'
+  ...
+# Subtest: frame entity collection reuses records while preserving removal, replacement and pooled type changes
+ok 134 - frame entity collection reuses records while preserving removal, replacement and pooled type changes
+  ---
+  duration_ms: 10.538976
+  type: 'test'
+  ...
+# Subtest: movement report separates browser frame timing from automation traffic and ignores hidden-tab gaps
+ok 135 - movement report separates browser frame timing from automation traffic and ignores hidden-tab gaps
+  ---
+  duration_ms: 14.739749
+  type: 'test'
+  ...
+# Subtest: owner overlay resolves item metadata only for the hovered tile, while preserving the label
+ok 136 - owner overlay resolves item metadata only for the hovered tile, while preserving the label
+  ---
+  duration_ms: 8.182975
+  type: 'test'
+  ...
+# Subtest: status HUD avoids rewriting unchanged layout styles but responds to resizing
+ok 137 - status HUD avoids rewriting unchanged layout styles but responds to resizing
+  ---
+  duration_ms: 4.514788
+  type: 'test'
+  ...
+# Subtest: loot without building tile coordinates does not add owner-overlay layout reads
+ok 138 - loot without building tile coordinates does not add owner-overlay layout reads
+  ---
+  duration_ms: 3.71082
+  type: 'test'
+  ...
+# Subtest: native frame drawing uses the game canvas without a second full-screen canvas or clearing the game
+ok 139 - native frame drawing uses the game canvas without a second full-screen canvas or clearing the game
+  ---
+  duration_ms: 6.915834
+  type: 'test'
+  ...
+# Subtest: a failed native drawing call restores the host canvas state and standalone mode retains its separate surface
+ok 140 - a failed native drawing call restores the host canvas state and standalone mode retains its separate surface
+  ---
+  duration_ms: 9.890538
+  type: 'test'
+  ...
+# Subtest: fast loot caps a dense high-FPS scene, rotates fairly, and never replays delayed cycles
+ok 141 - fast loot caps a dense high-FPS scene, rotates fairly, and never replays delayed cycles
+  ---
+  duration_ms: 110.062531
+  type: 'test'
+  ...
+# Subtest: session report retains earlier aim activity after the two-second combat window and redacts payloads
+ok 142 - session report retains earlier aim activity after the two-second combat window and redacts payloads
+  ---
+  duration_ms: 16.421252
+  type: 'test'
+  ...
+# Subtest: traffic retention stays bounded over forty minutes and idle reads expire old buckets
+ok 143 - traffic retention stays bounded over forty minutes and idle reads expire old buckets
+  ---
+  duration_ms: 74.835157
+  type: 'test'
+  ...
+# Subtest: automated chat contributes opcode counts without recording message contents or rejected sends
+ok 144 - automated chat contributes opcode counts without recording message contents or rejected sends
+  ---
+  duration_ms: 9.575223
+  type: 'test'
+  ...
+# Subtest: pickup evidence identifies repeated drops without changing packet order or logging account data
+ok 145 - pickup evidence identifies repeated drops without changing packet order or logging account data
+  ---
+  duration_ms: 13.355024
+  type: 'test'
+  ...
+# Subtest: death preserves pickup evidence after expiry and later sessions cannot overwrite the first snapshot
+ok 146 - death preserves pickup evidence after expiry and later sessions cannot overwrite the first snapshot
+  ---
+  duration_ms: 8.01656
+  type: 'test'
+  ...
+# Subtest: pickup evidence stays bounded, separates reused IDs and sockets, and excludes blocked sends
+ok 147 - pickup evidence stays bounded, separates reused IDs and sockets, and excludes blocked sends
+  ---
+  duration_ms: 36.267114
+  type: 'test'
+  ...
+# Subtest: settings persist, transient account fields are excluded, loot modes exclude each other
+ok 148 - settings persist, transient account fields are excluded, loot modes exclude each other
+  ---
+  duration_ms: 14.065053
+  type: 'test'
+  ...
+# Subtest: disabled aim and disconnected state send no aim packets
+ok 149 - disabled aim and disconnected state send no aim packets
+  ---
+  duration_ms: 7.549209
+  type: 'test'
+  ...
+# Subtest: hotkeys ignore text input and toggle outside text fields
+ok 150 - hotkeys ignore text input and toggle outside text fields
+  ---
+  duration_ms: 20.870365
+  type: 'test'
+  ...
+# Subtest: dispose removes timers, frame callbacks and registered event handlers
+ok 151 - dispose removes timers, frame callbacks and registered event handlers
+  ---
+  duration_ms: 2.890169
+  type: 'test'
+  ...
+# Subtest: fast loot visits in-range drops on bounded cycles without the native selected-item restriction
+ok 152 - fast loot visits in-range drops on bounded cycles without the native selected-item restriction
+  ---
+  duration_ms: 5.74219
+  type: 'test'
+  ...
+# Subtest: fast loot applies filter changes on its next scheduled scan, independently of cursor interaction
+ok 153 - fast loot applies filter changes on its next scheduled scan, independently of cursor interaction
+  ---
+  duration_ms: 13.052037
+  type: 'test'
+  ...
+# Subtest: zoom persists across reload; invalid ranges and choices are rejected; conflicting key bindings swap
+ok 154 - zoom persists across reload; invalid ranges and choices are rejected; conflicting key bindings swap
+  ---
+  duration_ms: 11.130699
+  type: 'test'
+  ...
+# Subtest: mouse wheel updates the saved zoom setting through the same setter
+ok 155 - mouse wheel updates the saved zoom setting through the same setter
+  ---
+  duration_ms: 3.667127
+  type: 'test'
+  ...
+# Subtest: map names, ID 120, clan/name colors, gauges, hitboxes and real-angle display use real fixture data
+ok 156 - map names, ID 120, clan/name colors, gauges, hitboxes and real-angle display use real fixture data
+  ---
+  duration_ms: 9.200799
+  type: 'test'
+  ...
+# Subtest: Uploaded auto fire sends a complete clear-shot cycle on each explicit tick
+ok 157 - Uploaded auto fire sends a complete clear-shot cycle on each explicit tick
+  ---
+  duration_ms: 11.752768
+  type: 'test'
+  ...
+# Subtest: container take sends only when enabled, with native permission flags and nonempty slots
+ok 158 - container take sends only when enabled, with native permission flags and nonempty slots
+  ---
+  duration_ms: 10.613205
+  type: 'test'
+  ...
+# Subtest: cursor interaction uses camera coordinates and requires the native eligible target; never fakes a door state
+ok 159 - cursor interaction uses camera coordinates and requires the native eligible target; never fakes a door state
+  ---
+  duration_ms: 6.891819
+  type: 'test'
+  ...
+# Subtest: chat obeys native cooldown, stops when disabled, and pauses during typing
+ok 160 - chat obeys native cooldown, stops when disabled, and pauses during typing
+  ---
+  duration_ms: 8.838654
+  type: 'test'
+  ...
+# Subtest: nickname copy uses the requested ID and reports clipboard refusal or missing player
+ok 161 - nickname copy uses the requested ID and reports clipboard refusal or missing player
+  ---
+  duration_ms: 57.818594
+  type: 'test'
+  ...
+# Subtest: reconnect preserves a newly selected server and uses a fresh deadline after an asynchronous refresh
+ok 162 - reconnect preserves a newly selected server and uses a fresh deadline after an asynchronous refresh
+  ---
+  duration_ms: 11.210978
+  type: 'test'
+  ...
+# Subtest: all exposed action paths stop after dispose
+ok 163 - all exposed action paths stop after dispose
+  ---
+  duration_ms: 6.94717
+  type: 'test'
+  ...
+# Subtest: restore rejection falls back to a normal join once while cookies and stored identity remain unchanged
+ok 164 - restore rejection falls back to a normal join once while cookies and stored identity remain unchanged
+  ---
+  duration_ms: 6.461718
+  type: 'test'
+  ...
+# Subtest: manual Play calls are serialized before the native asynchronous handshake starts
+ok 165 - manual Play calls are serialized before the native asynchronous handshake starts
+  ---
+  duration_ms: 6.586318
+  type: 'test'
+  ...
+# Subtest: ordinary version or authorization rejections never trigger cookie clearing or automatic fresh joins
+ok 166 - ordinary version or authorization rejections never trigger cookie clearing or automatic fresh joins
+  ---
+  duration_ms: 43.25237
+  type: 'test'
+  ...
+# Subtest: changing the selected server cancels a delayed automatic retry until Play is pressed again
+ok 167 - changing the selected server cancels a delayed automatic retry until Play is pressed again
+  ---
+  duration_ms: 3.647728
+  type: 'test'
+  ...
+# Subtest: a stale native login preflight callback cannot start a second connection after a newer Play attempt
+ok 168 - a stale native login preflight callback cannot start a second connection after a newer Play attempt
+  ---
+  duration_ms: 5.114414
+  type: 'test'
+  ...
+# Subtest: native decorated names copy raw names with internal hashes preserved and never duplicate own overlay IDs
+ok 169 - native decorated names copy raw names with internal hashes preserved and never duplicate own overlay IDs
+  ---
+  duration_ms: 24.550089
+  type: 'test'
+  ...
+# Subtest: legacy settings migrate separately from account storage and preserve customized aim and loot
+ok 170 - legacy settings migrate separately from account storage and preserve customized aim and loot
+  ---
+  duration_ms: 51.558799
+  type: 'test'
+  ...
+# Subtest: position refresh precedes native fire and Jitter aligns before the attack
+ok 171 - position refresh precedes native fire and Jitter aligns before the attack
+  ---
+  duration_ms: 13.725391
+  type: 'test'
+  ...
+# Subtest: native synchronized fast loot respects its interval without a second RAF scan
+ok 172 - native synchronized fast loot respects its interval without a second RAF scan
+  ---
+  duration_ms: 13.625434
+  type: 'test'
+  ...
+# Subtest: late native callbacks after disposal leave no timers and permit ordinary native firing
+ok 173 - late native callbacks after disposal leave no timers and permit ordinary native firing
+  ---
+  duration_ms: 3.11456
+  type: 'test'
+  ...
+# Subtest: disabling strafe restores physical movement 0 exactly once
+ok 174 - disabling strafe restores physical movement 0 exactly once
+  ---
+  duration_ms: 28.299146
+  type: 'test'
+  ...
+# Subtest: disabling strafe restores physical movement 1 exactly once
+ok 175 - disabling strafe restores physical movement 1 exactly once
+  ---
+  duration_ms: 12.492861
+  type: 'test'
+  ...
+# Subtest: disabling strafe restores physical movement 5 exactly once
+ok 176 - disabling strafe restores physical movement 5 exactly once
+  ---
+  duration_ms: 6.455715
+  type: 'test'
+  ...
+# Subtest: disabling strafe restores physical movement 10 exactly once
+ok 177 - disabling strafe restores physical movement 10 exactly once
+  ---
+  duration_ms: 7.729806
+  type: 'test'
+  ...
+# Subtest: native movement supersedes strafe and needs no extra restoration packet
+ok 178 - native movement supersedes strafe and needs no extra restoration packet
+  ---
+  duration_ms: 33.92141
+  type: 'test'
+  ...
+# Subtest: direct setting reset restores movement on the next step without repeating it
+ok 179 - direct setting reset restores movement on the next step without repeating it
+  ---
+  duration_ms: 13.757418
+  type: 'test'
+  ...
+# Subtest: disposal releases owned movement while retaining ordinary native firing
+ok 180 - disposal releases owned movement while retaining ordinary native firing
+  ---
+  duration_ms: 6.662751
+  type: 'test'
+  ...
+# Subtest: disabling unused strafe produces no movement command
+ok 181 - disabling unused strafe produces no movement command
+  ---
+  duration_ms: 9.14677
+  type: 'test'
+  ...
+# Subtest: death and a replaced socket cannot restore an earlier session movement
+ok 182 - death and a replaced socket cannot restore an earlier session movement
+  ---
+  duration_ms: 8.006385
+  type: 'test'
+  ...
+# Subtest: restoration skips non-open socket 0
+ok 183 - restoration skips non-open socket 0
+  ---
+  duration_ms: 3.574028
+  type: 'test'
+  ...
+# Subtest: restoration skips non-open socket 2
+ok 184 - restoration skips non-open socket 2
+  ---
+  duration_ms: 6.038628
+  type: 'test'
+  ...
+# Subtest: restoration skips non-open socket 3
+ok 185 - restoration skips non-open socket 3
+  ---
+  duration_ms: 6.93292
+  type: 'test'
+  ...
+# Subtest: GUI toggle restores movement even though the controller already wrote false
+ok 186 - GUI toggle restores movement even though the controller already wrote false
+  ---
+  duration_ms: 8.035167
+  type: 'test'
+  ...
+# Subtest: reobserving the same socket retains owned movement until the toggle is disabled
+ok 187 - reobserving the same socket retains owned movement until the toggle is disabled
+  ---
+  duration_ms: 3.723309
+  type: 'test'
+  ...
+# Subtest: invalid physical masks restore a valid stationary command
+ok 188 - invalid physical masks restore a valid stationary command
+  ---
+  duration_ms: 40.173664
+  type: 'test'
+  ...
+# Subtest: reviewed combat bridge preserves codec/socket arguments while keeping native input activity separate
+ok 189 - reviewed combat bridge preserves codec/socket arguments while keeping native input activity separate
+  ---
+  duration_ms: 7.370056
+  type: 'test'
+  ...
+# Subtest: changed native transport contracts stop generation
+ok 190 - changed native transport contracts stop generation
+  ---
+  duration_ms: 2.658727
+  type: 'test'
+  ...
+# Subtest: installed aim uses the dedicated bridge; other features retain the ordinary sender
+ok 191 - installed aim uses the dedicated bridge; other features retain the ordinary sender
+  ---
+  duration_ms: 17.545364
+  type: 'test'
+  ...
+# Subtest: late failure of a timed-out login cannot close a newer active session
+ok 192 - late failure of a timed-out login cannot close a newer active session
+  ---
+  duration_ms: 31.513303
+  type: 'test'
+  ...
+# Subtest: failure of the current attempt still reaches its native error handler
+ok 193 - failure of the current attempt still reaches its native error handler
+  ---
+  duration_ms: 8.548536
+  type: 'test'
+  ...
+# Subtest: a pending entry failure cannot close the socket between native entry and the next frame
+ok 194 - a pending entry failure cannot close the socket between native entry and the next frame
+  ---
+  duration_ms: 4.789013
+  type: 'test'
+  ...
+# Subtest: an error callback remains owned when it starts another asynchronous stage
+ok 195 - an error callback remains owned when it starts another asynchronous stage
+  ---
+  duration_ms: 8.154974
+  type: 'test'
+  ...
+# Subtest: disposal rejects a pending error callback
+ok 196 - disposal rejects a pending error callback
+  ---
+  duration_ms: 7.314223
+  type: 'test'
+  ...
+# Subtest: a failure-only request is guarded even without a success callback
+ok 197 - a failure-only request is guarded even without a success callback
+  ---
+  duration_ms: 6.63555
+  type: 'test'
+  ...
+# Subtest: each ordering of repeated terminal HTTP callbacks accepts exactly one result
+ok 198 - each ordering of repeated terminal HTTP callbacks accepts exactly one result
+  ---
+  duration_ms: 308.940395
+  type: 'test'
+  ...
+# Subtest: late failure cannot close a socket while a successful request is still connecting
+ok 199 - late failure cannot close a socket while a successful request is still connecting
+  ---
+  duration_ms: 7.571632
+  type: 'test'
+  ...
+# Subtest: nested requests with the same URL keep independent terminal ownership
+ok 200 - nested requests with the same URL keep independent terminal ownership
+  ---
+  duration_ms: 7.159363
+  type: 'test'
+  ...
+# Subtest: throwing terminal callbacks stay settled and preserve the receiver and arguments
+ok 201 - throwing terminal callbacks stay settled and preserve the receiver and arguments
+  ---
+  duration_ms: 12.158378
+  type: 'test'
+  ...
+# Subtest: all reviewed native profiles guard both terminal callbacks before running the request body
+ok 202 - all reviewed native profiles guard both terminal callbacks before running the request body
+  ---
+  duration_ms: 100.764753
+  type: 'test'
+  ...
+# Subtest: a preflight scheduled after the login stack returns cannot close an active socket
+ok 203 - a preflight scheduled after the login stack returns cannot close an active socket
+  ---
+  duration_ms: 6.194439
+  type: 'test'
+  ...
+# Subtest: a deferred success from an old entry cannot overwrite the current connection state
+ok 204 - a deferred success from an old entry cannot overwrite the current connection state
+  ---
+  duration_ms: 20.966288
+  type: 'test'
+  ...
+# Subtest: a current deferred error still reaches its native handler exactly once
+ok 205 - a current deferred error still reaches its native handler exactly once
+  ---
+  duration_ms: 4.008811
+  type: 'test'
+  ...
+# Subtest: ordinary native HTTP callbacks remain usable outside an entry attempt
+ok 206 - ordinary native HTTP callbacks remain usable outside an entry attempt
+  ---
+  duration_ms: 3.344741
+  type: 'test'
+  ...
+# Subtest: player list uses the full metadata roster including distant players and empty nicknames with IDs
+ok 207 - player list uses the full metadata roster including distant players and empty nicknames with IDs
+  ---
+  duration_ms: 48.762945
+  type: 'test'
+  ...
+# Subtest: nickname and clan colors remain independent and change through real GUI callbacks
+ok 208 - nickname and clan colors remain independent and change through real GUI callbacks
+  ---
+  duration_ms: 20.068661
+  type: 'test'
+  ...
+# Subtest: nickname color invalidates both native name canvases and the leaderboard without rebuilding an unchanged color
+ok 209 - nickname color invalidates both native name canvases and the leaderboard without rebuilding an unchanged color
+  ---
+  duration_ms: 9.597956
+  type: 'test'
+  ...
+# Subtest: departed players disappear and reused or replaced metadata rejoins the roster
+ok 210 - departed players disappear and reused or replaced metadata rejoins the roster
+  ---
+  duration_ms: 13.978675
+  type: 'test'
+  ...
+# Subtest: native suffix is displayed as a separate ID and copying preserves hashes inside the actual nickname
+ok 211 - native suffix is displayed as a separate ID and copying preserves hashes inside the actual nickname
+  ---
+  duration_ms: 24.23248
+  type: 'test'
+  ...
+# Subtest: the player list preserves row nodes between frames and closes through L or its close button
+ok 212 - the player list preserves row nodes between frames and closes through L or its close button
+  ---
+  duration_ms: 46.842433
+  type: 'test'
+  ...
+# Subtest: player list clicks do not arm gameplay mouse input and stale clans are excluded
+ok 213 - player list clicks do not arm gameplay mouse input and stale clans are excluded
+  ---
+  duration_ms: 14.556504
+  type: 'test'
+  ...
+# Subtest: confirmed circular motion survives 80 ms packet intervals and quantization
+ok 214 - confirmed circular motion survives 80 ms packet intervals and quantization
+  ---
+  duration_ms: 6.726795
+  type: 'test'
+  ...
+# Subtest: confirmed circular motion survives 100 ms packet intervals and quantization
+ok 215 - confirmed circular motion survives 100 ms packet intervals and quantization
+  ---
+  duration_ms: 2.271695
+  type: 'test'
+  ...
+# Subtest: duplicate same-time observations cannot confirm an unconfirmed circle
+ok 216 - duplicate same-time observations cannot confirm an unconfirmed circle
+  ---
+  duration_ms: 1.319409
+  type: 'test'
+  ...
+# Subtest: tight fast circle radius 50 survives arc length and position rounding
+ok 217 - tight fast circle radius 50 survives arc length and position rounding
+  ---
+  duration_ms: 1.327361
+  type: 'test'
+  ...
+# Subtest: tight fast circle radius 60 survives arc length and position rounding
+ok 218 - tight fast circle radius 60 survives arc length and position rounding
+  ---
+  duration_ms: 1.366328
+  type: 'test'
+  ...
+# Subtest: rounding a straight diagonal path does not manufacture a curved target
+ok 219 - rounding a straight diagonal path does not manufacture a curved target
+  ---
+  duration_ms: 1.25975
+  type: 'test'
+  ...
+# Subtest: several off-axis strafes are intercepted through late and missing packets
+ok 220 - several off-axis strafes are intercepted through late and missing packets
+  ---
+  duration_ms: 13.855744
+  type: 'test'
+  ...
+# Subtest: forward travel and sideways reversals remain predictable through packet jitter and loss
+ok 221 - forward travel and sideways reversals remain predictable through packet jitter and loss
+  ---
+  duration_ms: 4.54993
+  type: 'test'
+  ...
+# Subtest: the slower projectile uses the first intersection with the curved path and respects range
+ok 222 - the slower projectile uses the first intersection with the curved path and respects range
+  ---
+  duration_ms: 3.368405
+  type: 'test'
+  ...
+# Subtest: a confirmed curve remains continuous across a gap until the position is stale
+ok 223 - a confirmed curve remains continuous across a gap until the position is stale
+  ---
+  duration_ms: 1.724086
+  type: 'test'
+  ...
+# Subtest: fixed independent suites improve overall and circular accuracy without dropping opportunities
+ok 224 - fixed independent suites improve overall and circular accuracy without dropping opportunities
+  ---
+  duration_ms: 1523.852186
+  type: 'test'
+  ...
+# Subtest: the actual native Play gateway hangs on an SDK failure with saved data, and recovers with the fix
+ok 225 - the actual native Play gateway hangs on an SDK failure with saved data, and recovers with the fix
+  ---
+  duration_ms: 49.364966
+  type: 'test'
+  ...
+# Subtest: rejected preroll cannot leave the native Play callback blocked with existing account data
+ok 226 - rejected preroll cannot leave the native Play callback blocked with existing account data
+  ---
+  duration_ms: 7.081541
+  type: 'test'
+  ...
+# Subtest: synchronous SDK failure completes the newly registered native callback once
+ok 227 - synchronous SDK failure completes the newly registered native callback once
+  ---
+  duration_ms: 3.947651
+  type: 'test'
+  ...
+# Subtest: a successful preroll waits for the SDK and does not start a second login
+ok 228 - a successful preroll waits for the SDK and does not start a second login
+  ---
+  duration_ms: 5.591699
+  type: 'test'
+  ...
+# Subtest: a missing ad completion callback recovers after a deadline, preserving storage
+ok 229 - a missing ad completion callback recovers after a deadline, preserving storage
+  ---
+  duration_ms: 6.211265
+  type: 'test'
+  ...
+# Subtest: hidden tabs and disposal do not force a pending ad callback
+ok 230 - hidden tabs and disposal do not force a pending ad callback
+  ---
+  duration_ms: 2.944188
+  type: 'test'
+  ...
+# Subtest: a stalled preflight releases the native busy flag and ignores its late result
+ok 231 - a stalled preflight releases the native busy flag and ignores its late result
+  ---
+  duration_ms: 22.368239
+  type: 'test'
+  ...
+# Subtest: a timed out Webgames preflight returns to native Play once and keeps saved identity
+ok 232 - a timed out Webgames preflight returns to native Play once and keeps saved identity
+  ---
+  duration_ms: 8.065524
+  type: 'test'
+  ...
+# Subtest: hidden tabs keep their pending preflight instead of returning to the menu
+ok 233 - hidden tabs keep their pending preflight instead of returning to the menu
+  ---
+  duration_ms: 3.394945
+  type: 'test'
+  ...
+# Subtest: a stalled initial service screen opens native Play once only after servers are available
+ok 234 - a stalled initial service screen opens native Play once only after servers are available
+  ---
+  duration_ms: 5.651497
+  type: 'test'
+  ...
+# Subtest: initial recovery leaves a visible menu and a hidden browser tab alone
+ok 235 - initial recovery leaves a visible menu and a hidden browser tab alone
+  ---
+  duration_ms: 9.971338
+  type: 'test'
+  ...
+# Subtest: an immediate native login exception does not leave Play locked
+ok 236 - an immediate native login exception does not leave Play locked
+  ---
+  duration_ms: 5.182715
+  type: 'test'
+  ...
+# Subtest: an unacknowledged socket closes once and can retry without clearing identity
+ok 237 - an unacknowledged socket closes once and can retry without clearing identity
+  ---
+  duration_ms: 3.428134
+  type: 'test'
+  ...
+# Subtest: a socket opened after a slow preflight gets its own time to complete entry
+ok 238 - a socket opened after a slow preflight gets its own time to complete entry
+  ---
+  duration_ms: 9.467395
+  type: 'test'
+  ...
+# Subtest: the native error callback releases Play while retaining its original behavior
+ok 239 - the native error callback releases Play while retaining its original behavior
+  ---
+  duration_ms: 5.17954
+  type: 'test'
+  ...
+# Subtest: late preflight responses cannot overwrite the newer connection key before starting a socket
+ok 240 - late preflight responses cannot overwrite the newer connection key before starting a socket
+  ---
+  duration_ms: 3.406391
+  type: 'test'
+  ...
+# Subtest: preflight ownership follows a second HTTP round created asynchronously by the first response
+ok 241 - preflight ownership follows a second HTTP round created asynchronously by the first response
+  ---
+  duration_ms: 2.986211
+  type: 'test'
+  ...
+# Subtest: the connection report contains presence flags, without exposing stored credentials
+ok 242 - the connection report contains presence flags, without exposing stored credentials
+  ---
+  duration_ms: 3.55453
+  type: 'test'
+  ...
+# Subtest: server death captures combat and health before the native handler resets the player
+ok 243 - server death captures combat and health before the native handler resets the player
+  ---
+  duration_ms: 6.117537
+  type: 'test'
+  ...
+# Subtest: socket observers preserve native callbacks and exclude close reasons and credentials
+ok 244 - socket observers preserve native callbacks and exclude close reasons and credentials
+  ---
+  duration_ms: 9.629573
+  type: 'test'
+  ...
+# Subtest: observing the same socket twice retains its connection timings and listeners
+ok 245 - observing the same socket twice retains its connection timings and listeners
+  ---
+  duration_ms: 28.63726
+  type: 'test'
+  ...
+# Subtest: a late socket observation after disposal cannot reinstall event handlers
+ok 246 - a late socket observation after disposal cannot reinstall event handlers
+  ---
+  duration_ms: 3.127219
+  type: 'test'
+  ...
+# Subtest: the report counts browser exceptions, failed resources and rejected promises separately
+ok 247 - the report counts browser exceptions, failed resources and rejected promises separately
+  ---
+  duration_ms: 3.049384
+  type: 'test'
+  ...
+# Subtest: receive timing distinguishes a quiet socket from a client close without retaining packet contents
+ok 248 - receive timing distinguishes a quiet socket from a client close without retaining packet contents
+  ---
+  duration_ms: 4.350577
+  type: 'test'
+  ...
+# Subtest: combat snapshots expire idle commands and cannot be changed by the report consumer
+ok 249 - combat snapshots expire idle commands and cannot be changed by the report consumer
+  ---
+  duration_ms: 3.64848
+  type: 'test'
+  ...
+# Subtest: the native death prefix is captured without logging arbitrary packet bodies
+ok 250 - the native death prefix is captured without logging arbitrary packet bodies
+  ---
+  duration_ms: 3.524756
+  type: 'test'
+  ...
+# Subtest: Play preparation timeout releases the pre-login busy flag and ignores stale resource callbacks
+ok 251 - Play preparation timeout releases the pre-login busy flag and ignores stale resource callbacks
+  ---
+  duration_ms: 2.697505
+  type: 'test'
+  ...
+# Subtest: native Play works without Widget and can retry a stalled resource load with the same saved identity
+ok 252 - native Play works without Widget and can retry a stalled resource load with the same saved identity
+  ---
+  duration_ms: 9.106
+  type: 'test'
+  ...
+# Subtest: partially loaded Widget cannot set an advertising wait with no usable completion method
+ok 253 - partially loaded Widget cannot set an advertising wait with no usable completion method
+  ---
+  duration_ms: 12.016549
+  type: 'test'
+  ...
+# Subtest: disposing recovery leaves native Play usable while canceling old preparation callbacks
+ok 254 - disposing recovery leaves native Play usable while canceling old preparation callbacks
+  ---
+  duration_ms: 2.883649
+  type: 'test'
+  ...
+# Subtest: reported 05 00 02 death stops restoration retries and Play keeps identity while starting a normal join
+ok 255 - reported 05 00 02 death stops restoration retries and Play keeps identity while starting a normal join
+  ---
+  duration_ms: 4.849263
+  type: 'test'
+  ...
+# Subtest: death invalidates a pending handshake callback without deleting stored login
+ok 256 - death invalidates a pending handshake callback without deleting stored login
+  ---
+  duration_ms: 3.66235
+  type: 'test'
+  ...
+# Subtest: failed normal joins after death stay normal, are bounded and keep the same account
+ok 257 - failed normal joins after death stay normal, are bounded and keep the same account
+  ---
+  duration_ms: 11.804357
+  type: 'test'
+  ...
+# Subtest: handshake diagnostics distinguish discarded replies during play without logging request URLs
+ok 258 - handshake diagnostics distinguish discarded replies during play without logging request URLs
+  ---
+  duration_ms: 3.653397
+  type: 'test'
+  ...
+# Subtest: screenshot defaults remain explicit configured values until genuine RTT samples exist
+ok 259 - screenshot defaults remain explicit configured values until genuine RTT samples exist
+  ---
+  duration_ms: 10.09406
+  type: 'test'
+  ...
+# Subtest: the RTT window keeps the latest 125 samples and reflects a changed window immediately
+ok 260 - the RTT window keeps the latest 125 samples and reflects a changed window immediately
+  ---
+  duration_ms: 2.148794
+  type: 'test'
+  ...
+# Subtest: invalid, stale and previous-clock RTT data cannot become measured lead
+ok 261 - invalid, stale and previous-clock RTT data cannot become measured lead
+  ---
+  duration_ms: 2.338194
+  type: 'test'
+  ...
+# Subtest: receipt age and user compensation are counted exactly once in the launch time
+ok 262 - receipt age and user compensation are counted exactly once in the launch time
+  ---
+  duration_ms: 2.822619
+  type: 'test'
+  ...
+# Subtest: video prediction intercepts independent motion at 500 units/s
+ok 263 - video prediction intercepts independent motion at 500 units/s
+  ---
+  duration_ms: 4.361501
+  type: 'test'
+  ...
+# Subtest: video prediction intercepts independent motion at 1400 units/s
+ok 264 - video prediction intercepts independent motion at 1400 units/s
+  ---
+  duration_ms: 1.003242
+  type: 'test'
+  ...
+# Subtest: video prediction intercepts independent motion at 1450 units/s
+ok 265 - video prediction intercepts independent motion at 1450 units/s
+  ---
+  duration_ms: 2.194562
+  type: 'test'
+  ...
+# Subtest: measured latency reduces the miss in a delayed crossing compared with uncompensated aim
+ok 266 - measured latency reduces the miss in a delayed crossing compared with uncompensated aim
+  ---
+  duration_ms: 4.657499
+  type: 'test'
+  ...
+# Subtest: step count controls actual refinement work; an insufficient approximation uses the exact fallback
+ok 267 - step count controls actual refinement work; an insufficient approximation uses the exact fallback
+  ---
+  duration_ms: 2.452282
+  type: 'test'
+  ...
+# Subtest: spear lateral launch geometry intersects the target along the actual projectile ray
+ok 268 - spear lateral launch geometry intersects the target along the actual projectile ray
+  ---
+  duration_ms: 2.794838
+  type: 'test'
+  ...
+# Subtest: unreachable, stale and invalid profiles never manufacture a shot
+ok 269 - unreachable, stale and invalid profiles never manufacture a shot
+  ---
+  duration_ms: 2.995255
+  type: 'test'
+  ...
+# Subtest: the installed spear path uses the video model and sends its corrected angle before native fire
+ok 270 - the installed spear path uses the video model and sends its corrected angle before native fire
+  ---
+  duration_ms: 27.349817
+  type: 'test'
+  ...
+# Subtest: video mode holds a valid target, obeys explicit lock and releases removed targets
+ok 271 - video mode holds a valid target, obeys explicit lock and releases removed targets
+  ---
+  duration_ms: 9.105891
+  type: 'test'
+  ...
+# Subtest: RTT ingestion adds no packets and resets on a new socket or session
+ok 272 - RTT ingestion adds no packets and resets on a new socket or session
+  ---
+  duration_ms: 11.891926
+  type: 'test'
+  ...
+# Subtest: video settings are editable through the menu, bounded and saved
+ok 273 - video settings are editable through the menu, bounded and saved
+  ---
+  duration_ms: 29.480599
+  type: 'test'
+  ...
+# Subtest: the portable browser verifier exercises the installed video mode
+ok 274 - the portable browser verifier exercises the installed video mode
+  ---
+  duration_ms: 23.518219
+  type: 'test'
+  ...
+# Subtest: wire observer runs after a successful send and never changes bytes or propagates diagnostic errors
+ok 275 - wire observer runs after a successful send and never changes bytes or propagates diagnostic errors
+  ---
+  duration_ms: 8.566604
+  type: 'test'
+  ...
+# Subtest: ambiguous or structurally changed native wire send contracts stop generation
+ok 276 - ambiguous or structurally changed native wire send contracts stop generation
+  ---
+  duration_ms: 3.075503
+  type: 'test'
+  ...
+# Subtest: wire reports include native traffic with automation off, split sockets, retain close snapshots and contain no payloads
+ok 277 - wire reports include native traffic with automation off, split sockets, retain close snapshots and contain no payloads
+  ---
+  duration_ms: 14.868892
+  type: 'test'
+  ...
+# Subtest: wire history remains bounded and expires while lifetime totals remain available
+ok 278 - wire history remains bounded and expires while lifetime totals remain available
+  ---
+  duration_ms: 5.594684
+  type: 'test'
+  ...
+# Subtest: reports record independent spear and hidden angle settings that can affect native control with gun aim disabled
+ok 279 - reports record independent spear and hidden angle settings that can affect native control with gun aim disabled
+  ---
+  duration_ms: 7.946417
+  type: 'test'
+  ...
+# Subtest: first server death survives repeated joins and returned reports cannot overwrite its metadata
+ok 280 - first server death survives repeated joins and returned reports cannot overwrite its metadata
+  ---
+  duration_ms: 29.162606
+  type: 'test'
+  ...
+# Subtest: an earlier native network rejection is retained separately from a later character death
+ok 281 - an earlier native network rejection is retained separately from a later character death
+  ---
+  duration_ms: 7.45388
+  type: 'test'
+  ...
+# Subtest: hover owner labels include walls, floors and sleeping bags without interaction opcodes
+ok 282 - hover owner labels include walls, floors and sleeping bags without interaction opcodes
+  ---
+  duration_ms: 15.356302
+  type: 'test'
+  ...
+# Subtest: mine markers use camera/zoom and preserve canvas state
+ok 283 - mine markers use camera/zoom and preserve canvas state
+  ---
+  duration_ms: 17.136052
+  type: 'test'
+  ...
+# Subtest: native landmine-visibility reveals distant received objects without changing entity state
+ok 284 - native landmine-visibility reveals distant received objects without changing entity state
+  ---
+  duration_ms: 2155.840522
+  type: 'test'
+  ...
+# Subtest: native wire-visibility reveals distant received objects without changing entity state
+ok 285 - native wire-visibility reveals distant received objects without changing entity state
+  ---
+  duration_ms: 26.896615
+  type: 'test'
+  ...
+# Subtest: native mine-visibility reveals distant received objects without changing entity state
+ok 286 - native mine-visibility reveals distant received objects without changing entity state
+  ---
+  duration_ms: 24.912567
+  type: 'test'
+  ...
+1..286
+# tests 286
+# suites 0
+# pass 285
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5777.184228

@@ -1,0 +1,191 @@
+[
+  {
+    "file": "bootstrap.ts",
+    "code": 2339,
+    "start": 1501,
+    "text": "__devastMod",
+    "message": "Property '__devastMod' does not exist on type 'Window & typeof globalThis'."
+  },
+  {
+    "file": "core.ts",
+    "code": 2339,
+    "start": 33146,
+    "text": "key",
+    "message": "Property 'key' does not exist on type '(this: any, o: any, id: any) => any'."
+  },
+  {
+    "file": "core.ts",
+    "code": 2339,
+    "start": 33346,
+    "text": "key",
+    "message": "Property 'key' does not exist on type '(this: any, o: any, id: any) => any'."
+  },
+  {
+    "file": "host.ts",
+    "code": 18046,
+    "start": 19128,
+    "text": "item",
+    "message": "'item' is of type 'unknown'."
+  },
+  {
+    "file": "host.ts",
+    "code": 18046,
+    "start": 19161,
+    "text": "item",
+    "message": "'item' is of type 'unknown'."
+  },
+  {
+    "file": "host.ts",
+    "code": 2339,
+    "start": 35876,
+    "text": "BYTES_PER_ELEMENT",
+    "message": "Property 'BYTES_PER_ELEMENT' does not exist on type 'ArrayBufferView<ArrayBufferLike>'."
+  },
+  {
+    "file": "host.ts",
+    "code": 2339,
+    "start": 35910,
+    "text": "length",
+    "message": "Property 'length' does not exist on type 'ArrayBufferView<ArrayBufferLike>'."
+  },
+  {
+    "file": "host.ts",
+    "code": 7053,
+    "start": 35925,
+    "text": "packet[0]",
+    "message": "Element implicitly has an 'any' type because expression of type '0' can't be used to index type 'ArrayBufferView<ArrayBufferLike>'.   Property '0' does not exist on type 'ArrayBufferView<ArrayBufferLike>'."
+  },
+  {
+    "file": "host.ts",
+    "code": 2339,
+    "start": 36087,
+    "text": "subarray",
+    "message": "Property 'subarray' does not exist on type 'ArrayBufferView<ArrayBufferLike>'."
+  },
+  {
+    "file": "host.ts",
+    "code": 2554,
+    "start": 71019,
+    "text": "listen",
+    "message": "Expected 4 arguments, but got 3."
+  },
+  {
+    "file": "host.ts",
+    "code": 2554,
+    "start": 71801,
+    "text": "listen",
+    "message": "Expected 4 arguments, but got 3."
+  },
+  {
+    "file": "host.ts",
+    "code": 2339,
+    "start": 89859,
+    "text": "Widget",
+    "message": "Property 'Widget' does not exist on type 'Window & typeof globalThis'."
+  },
+  {
+    "file": "host.ts",
+    "code": 2538,
+    "start": 107016,
+    "text": "setting",
+    "message": "Type 'unknown' cannot be used as an index type."
+  },
+  {
+    "file": "host.ts",
+    "code": 2554,
+    "start": 108327,
+    "text": "listen",
+    "message": "Expected 4 arguments, but got 3."
+  },
+  {
+    "file": "host.ts",
+    "code": 2554,
+    "start": 108499,
+    "text": "listen",
+    "message": "Expected 4 arguments, but got 3."
+  },
+  {
+    "file": "host.ts",
+    "code": 2551,
+    "start": 109402,
+    "text": "dat",
+    "message": "Property 'dat' does not exist on type 'Window & typeof globalThis'. Did you mean 'Date'?"
+  },
+  {
+    "file": "host.ts",
+    "code": 2551,
+    "start": 109417,
+    "text": "dat",
+    "message": "Property 'dat' does not exist on type 'Window & typeof globalThis'. Did you mean 'Date'?"
+  },
+  {
+    "file": "host.ts",
+    "code": 2551,
+    "start": 109489,
+    "text": "dat",
+    "message": "Property 'dat' does not exist on type 'Window & typeof globalThis'. Did you mean 'Date'?"
+  },
+  {
+    "file": "host.ts",
+    "code": 2551,
+    "start": 109573,
+    "text": "dat",
+    "message": "Property 'dat' does not exist on type 'Window & typeof globalThis'. Did you mean 'Date'?"
+  },
+  {
+    "file": "host.ts",
+    "code": 2554,
+    "start": 110336,
+    "text": "listen",
+    "message": "Expected 4 arguments, but got 3."
+  },
+  {
+    "file": "host.ts",
+    "code": 2555,
+    "start": 111050,
+    "text": "add",
+    "message": "Expected at least 3 arguments, but got 2."
+  },
+  {
+    "file": "host.ts",
+    "code": 2554,
+    "start": 112566,
+    "text": "listen",
+    "message": "Expected 4 arguments, but got 3."
+  },
+  {
+    "file": "host.ts",
+    "code": 2555,
+    "start": 113638,
+    "text": "add",
+    "message": "Expected at least 3 arguments, but got 2."
+  },
+  {
+    "file": "host.ts",
+    "code": 2554,
+    "start": 114354,
+    "text": "listen",
+    "message": "Expected 4 arguments, but got 3."
+  },
+  {
+    "file": "host.ts",
+    "code": 2554,
+    "start": 119035,
+    "text": "listen",
+    "message": "Expected 4 arguments, but got 3."
+  },
+  {
+    "file": "host.ts",
+    "code": 18046,
+    "start": 122393,
+    "text": "entry",
+    "message": "'entry' is of type 'unknown'."
+  },
+  {
+    "file": "host.ts",
+    "code": 18046,
+    "start": 122425,
+    "text": "entry",
+    "message": "'entry' is of type 'unknown'."
+  }
+]

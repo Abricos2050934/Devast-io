@@ -1,0 +1,18 @@
+{
+  "webdriver": false,
+  "contexts": [
+    {
+      "kind": "webgl",
+      "available": false,
+      "scissorType": "undefined",
+      "scissorNative": null
+    },
+    {
+      "kind": "webgl2",
+      "available": false,
+      "scissorType": "undefined",
+      "scissorNative": null
+    }
+  ],
+  "errors": []
+}

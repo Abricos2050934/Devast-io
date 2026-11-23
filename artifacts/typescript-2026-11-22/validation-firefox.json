@@ -1,0 +1,1272 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "output_sha256": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+  "static_ast": "passed",
+  "typescript": {
+    "status": "passed",
+    "typescript": "5.9.3",
+    "strict": true,
+    "files": [
+      "mod/ballistic-model.ts",
+      "mod/ilm-aim.ts",
+      "mod/responsive.ts",
+      "mod/bootstrap.ts",
+      "resource-override/loader.ts",
+      "mod/contracts.d.ts",
+      "tsconfig.mod.json"
+    ],
+    "source_sha256": {
+      "mod/ballistic-model.ts": "e894685f87fee4082ddf885f358774ec3287bd242a879617ba0456550ee9aca9",
+      "mod/ilm-aim.ts": "e44832a3317aa5183155900ac2cb4d496c378d2854a9ee662ad350e438af1fcb",
+      "mod/responsive.ts": "f99286ec27c3178fbe435e4b0817cf7c0b2dd0ab5e65dcca99d89925a7d72bc0",
+      "mod/bootstrap.ts": "d5eb4fcd879c874f43675752adde72ea9f25b19b4b08b932844a5cd74fc706b6",
+      "resource-override/loader.ts": "2c9ebf2f18de013baa702512d6caf705fc4aea30292154bd3808c43873c4326a",
+      "mod/contracts.d.ts": "32ebea60a88c3d0aef6c7ce6f66ee734530b65e4b8497c50b68b99f31d1f4f45",
+      "tsconfig.mod.json": "5bc68d78638d2ea4d2f1a3a97b583e530c3f3472ea4155d871af806d89e5011c"
+    },
+    "generated_sha256": {
+      "mod/ballistic-model.js": "242a6b17fb79ff92a13567534e8df254b84043e4e52b62d684aa5566760b008e",
+      "mod/ilm-aim.js": "e1b0a622f9a984522f1aaecd7e776140b3b7efd3cd7dec271a19cca9dcc11712",
+      "mod/responsive.js": "0b5bc455a79d1a5754490485b1f88779639e2b822369930954741ecf2539f700",
+      "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
+      "resource-override/loader.js": "345faf124ba5a8858e60c952ea7cc85d401314ede59109b7cb5782bd45db1b9a"
+    },
+    "emission": "type erasure, verified against the TypeScript compiler AST"
+  },
+  "aim_core": "active uploaded __BBY declarations and lifecycle",
+  "resource_override_sha256": "f015cf5b504b73d50fa7524dc6cf88fb0c34f98fa990ac02840a5ddd660d0b0a",
+  "mod_contract": {
+    "schema": 1,
+    "name": "Devast-io message27 BBY aim",
+    "modules": [
+      "mod/responsive.js",
+      "mod/bootstrap.js",
+      "vendor/dat.gui.recovered.js",
+      "mod/ilm-aim.js",
+      "mod/ballistic-model.js"
+    ],
+    "features": [
+      "prediction-and-auto-fire",
+      "player-ghoul-history",
+      "native-nickname-id",
+      "native-self-angle",
+      "zoom",
+      "loot-and-filter",
+      "auto-build",
+      "container-take",
+      "cursor-interaction",
+      "chat",
+      "nickname-copy",
+      "rejoin-without-cookie-reset",
+      "hotkeys-and-settings",
+      "mines-and-building-opacity",
+      "function-indicators",
+      "cursor-autobuild-native-preview",
+      "native-shared-canvas",
+      "native-integrity-signature-compatibility",
+      "hover-building-owners",
+      "received-mines-and-wires-visibility",
+      "right-click-hovered-door",
+      "right-click-door-independent-of-native-prompt",
+      "independent-door-control-and-server-state-feedback",
+      "automation-socket-backpressure",
+      "connection-close-origin-diagnostics",
+      "aim-cycle-socket-backpressure",
+      "immediate-aim-numeric-settings",
+      "native-aim-transport-preserves-idle",
+      "bounded-fast-loot",
+      "session-mod-traffic-history",
+      "valid-live-aim-targets",
+      "bounded-auto-build",
+      "aim-session-history-reset",
+      "verbatim-message27-aim",
+      "message27-native-pipeline",
+      "aim-line-native-projection",
+      "live-aim-setting-effects",
+      "versioned-aim-settings-preserved",
+      "jitter-shot-priority",
+      "restored-original-jitter",
+      "safe-shot-direction-ownership",
+      "native-weapon-ballistic-interception",
+      "aim-preserved-before-disconnect",
+      "bounded-connection-recovery",
+      "continuous-post-turn-motion",
+      "packet-rate-aware-curved-prediction",
+      "native-death-opcode-diagnostics",
+      "native-wire-traffic-diagnostics",
+      "first-server-death-preserved",
+      "fast-loot-stops-on-new-backlog",
+      "native-rejection-stops-auto-reconnect",
+      "verified-legacy-settings-retirement",
+      "canonical-source-angle-domain",
+      "stale-preflight-errors-preserve-current-connection",
+      "reviewed-aim-runtime-corrections",
+      "strafe-movement-ownership",
+      "typescript-owned-mod"
+    ],
+    "removed_overlays": [
+      "bottom-gauge-text",
+      "aim-bot-head-label"
+    ],
+    "candidate_tests": [
+      "tests/mod.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/native-aim-transport.test.cjs",
+      "tests/ilm-current.test.cjs",
+      "tests/mod-traffic.test.cjs",
+      "tests/aim-validity.test.cjs",
+      "tests/ilm-native-pipeline.test.cjs",
+      "tests/aim-line-projection.test.cjs",
+      "tests/aim-settings-persistence.test.cjs",
+      "tests/aim-settings-effects.test.cjs",
+      "tests/jitter-arbitration.test.cjs",
+      "tests/ballistics.test.cjs",
+      "tests/aim-preserved-before-disconnect.test.cjs",
+      "tests/connection-recovery-only.test.cjs",
+      "tests/aim-motion-continuity.test.cjs",
+      "tests/projectile-accuracy.test.cjs",
+      "tests/death-diagnostics.test.cjs",
+      "tests/wire-diagnostics.test.cjs",
+      "tests/legacy-settings-migration.test.cjs",
+      "tests/aim-angle-domain.test.cjs",
+      "tests/native-preflight-errors.test.cjs",
+      "tests/aim-review.test.cjs",
+      "tests/movement-ownership.test.cjs"
+    ],
+    "required_browsers": [
+      "chromium",
+      "firefox"
+    ],
+    "typescript_sources": [
+      "mod/responsive.ts",
+      "mod/ilm-aim.ts",
+      "mod/ballistic-model.ts",
+      "mod/bootstrap.ts",
+      "resource-override/loader.ts",
+      "mod/contracts.d.ts",
+      "tsconfig.mod.json"
+    ]
+  },
+  "module_sha256": {
+    "mod/responsive.js": "0b5bc455a79d1a5754490485b1f88779639e2b822369930954741ecf2539f700",
+    "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
+    "mod/ilm-aim.js": "e1b0a622f9a984522f1aaecd7e776140b3b7efd3cd7dec271a19cca9dcc11712",
+    "mod/ballistic-model.js": "242a6b17fb79ff92a13567534e8df254b84043e4e52b62d684aa5566760b008e"
+  },
+  "mod_bundle_sha256": "a73e7b091670126ef28b2fa788c3507e17ceaad849549c7c1c3a52f649dfcb31",
+  "mode": "native browser fixtures; no live game session",
+  "page_errors": [],
+  "browser": "firefox",
+  "browser_version": "153.0",
+  "console_errors": [],
+  "external_dependencies": {
+    "advertising": "fixture; failures exercised explicitly below",
+    "audio": "valid silent WAV fixture"
+  },
+  "reload_identity": [
+    {
+      "token": true,
+      "tokenId": true,
+      "userId": true,
+      "cookie": true,
+      "settings": true,
+      "loot": true
+    },
+    {
+      "token": true,
+      "tokenId": true,
+      "userId": true,
+      "cookie": true,
+      "settings": true,
+      "loot": true
+    },
+    {
+      "token": true,
+      "tokenId": true,
+      "userId": true,
+      "cookie": true,
+      "settings": true,
+      "loot": true
+    }
+  ],
+  "resource_override_loader": "passed",
+  "connection_marker_audit": {
+    "status": "passed",
+    "scope": "Unchanged connection-check prefix with resolved outer constants and synthetic server data; no socket construction",
+    "native_sha256": "7a2efe2e7dd21d3d3776a0f4538d5ad7038be3be26566a1ae06060e02e32063a",
+    "function_sha256": "8c9a9f7fe27517dfb5bd0f34192d84f5c7217ffeb0282e0da0234e0d1e6ac781",
+    "prefix_sha256": "661d135c2c67d555ad7fe9faa2758055f27bb1cc242a3a4a273047d0ddb5d561",
+    "function_start": 1294912,
+    "function_end": 1348201,
+    "global_names": [
+      "__autoPortAimbotPacketTransport",
+      "GROK_MOD",
+      "__isMyAimbotPlayer",
+      "BabaConfig",
+      "GetAllTargets"
+    ],
+    "xor_key": 75,
+    "historical_key_flag": 1,
+    "current_mod_flag": 0,
+    "global_names_private": true,
+    "archive_preserved": true,
+    "migration": {
+      "status": "not-needed",
+      "moved": 0
+    }
+  },
+  "client_build": {
+    "fingerprint": "ba41a16017f0380e85d629134849cbd5a71d26ba312deeb22ea65b203464e646",
+    "nativeSha256": "7a2efe2e7dd21d3d3776a0f4538d5ad7038be3be26566a1ae06060e02e32063a"
+  },
+  "native": {
+    "canonical_aim": {
+      "status": "passed",
+      "scope": "native codec-input capture; no live server enforcement test",
+      "steps": 6480,
+      "sustained_directions": 9720,
+      "rotations_per_scene": 3,
+      "smoothing_values": [
+        0.05,
+        0.74,
+        1
+      ],
+      "both_directions": true,
+      "short_arc_oracle": true,
+      "all_angles_canonical": true,
+      "fractional_precision_retained": true,
+      "invalid_angles_rejected": true,
+      "worst_oracle_error_degrees": 9.663381206337363e-13
+    },
+    "adaptive_aim": {
+      "status": "passed",
+      "native_weapon_speed_and_range": true,
+      "native_projectile_speed": true,
+      "native_speed_equality": true,
+      "packet_server_positions": true,
+      "shooter_and_target_velocity": true,
+      "fresh_angle_before_native_attack": true,
+      "jitter_priority": true,
+      "line_matches_shot": true,
+      "stale_target_releases_input": true,
+      "cadence_aware_curved_prediction": true,
+      "straight_quantization_rejected": true,
+      "oscillating_target_prediction": true,
+      "ak_and_laser_native_profiles": true
+    },
+    "jitter": {
+      "status": "passed",
+      "original_rotation": true,
+      "configurable_speed": true,
+      "imported_jitter_removed": true,
+      "manual_angle_before_attack": true,
+      "automatic_angle_before_attack": true,
+      "held_fire_tracks_target": true,
+      "cursor_cannot_overwrite": true,
+      "non_jitter_cursor_cannot_overwrite": true,
+      "repeated_bursts_aligned": true,
+      "resumes_on_release": true,
+      "standing_rotation": true,
+      "targetless_manual_alignment": true,
+      "blocked_attack_rejected": true,
+      "local_rotation": true,
+      "death_stops_packets": true
+    },
+    "message27_menu": {
+      "status": "passed",
+      "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+      "folders": {
+        "👑 Aim Bot 👑": [
+          {
+            "property": "AimBotEnabled",
+            "label": "AimBotEnabled",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "target",
+            "label": "Target",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": [
+              {
+                "label": "players",
+                "value": "players"
+              },
+              {
+                "label": "ghouls",
+                "value": "ghouls"
+              },
+              {
+                "label": "all",
+                "value": "all"
+              }
+            ]
+          },
+          {
+            "property": "resolverType",
+            "label": "ResolverType",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": [
+              {
+                "label": "linear",
+                "value": "linear"
+              }
+            ]
+          },
+          {
+            "property": "TargetTeammate",
+            "label": "TargetTeammate",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "hideAimbotAngle",
+            "label": "HideAimbotAngle",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "hidePlayerAngle",
+            "label": "HidePlayerAngle",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "ShowRealAngles",
+            "label": "ShowRealAngles",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": [
+              {
+                "label": "never",
+                "value": "never"
+              },
+              {
+                "label": "always",
+                "value": "always"
+              },
+              {
+                "label": "withAim",
+                "value": "withAim"
+              }
+            ]
+          },
+          {
+            "property": "mouseFovEnable",
+            "label": "MouseFovEnable",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "mouseFov",
+            "label": "MouseFov",
+            "min": 0,
+            "max": 12345,
+            "step": 100,
+            "options": []
+          },
+          {
+            "property": "distanceCoefficient",
+            "label": "DistanceCoefficient",
+            "min": 10,
+            "max": 1000,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "offsetCoefficient",
+            "label": "OffsetCoefficient",
+            "min": 0,
+            "max": 3,
+            "step": 0.1,
+            "options": []
+          },
+          {
+            "property": "aimStick",
+            "label": "AimStick",
+            "min": 0,
+            "max": 800,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "aimHoldMs",
+            "label": "AimHoldMs",
+            "min": 0,
+            "max": 600,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "leadCap",
+            "label": "LeadCap",
+            "min": 40,
+            "max": 500,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "aimSmooth",
+            "label": "AimSmooth",
+            "min": 0.05,
+            "max": 1,
+            "step": 0.01,
+            "options": []
+          },
+          {
+            "property": "autoFire",
+            "label": "AutoFire",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "lockId",
+            "label": "LockId",
+            "min": -1,
+            "max": 120,
+            "step": 1,
+            "options": []
+          }
+        ],
+        "🗡 Aimbot Spear 🗡": [
+          {
+            "property": "AimbotSpearEnabled",
+            "label": "AimbotSpearEnabled",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "spearSpeed",
+            "label": "SpearSpeed",
+            "min": 20,
+            "max": 60,
+            "step": 0.5,
+            "options": []
+          },
+          {
+            "property": "spearMaxRange",
+            "label": "MaxRange",
+            "min": 200,
+            "max": 600,
+            "step": 10,
+            "options": []
+          },
+          {
+            "property": "spearHandFwd",
+            "label": "HandFwd",
+            "min": -60,
+            "max": 60,
+            "step": 1,
+            "options": []
+          },
+          {
+            "property": "spearHandSide",
+            "label": "HandSide",
+            "min": -60,
+            "max": 60,
+            "step": 1,
+            "options": []
+          },
+          {
+            "property": "spearStabDeg",
+            "label": "Stability",
+            "min": 0.5,
+            "max": 10,
+            "step": 0.5,
+            "options": []
+          },
+          {
+            "property": "spearAutoThrow",
+            "label": "AutoThrow",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          }
+        ],
+        "Anti-Aim / Strafe": [
+          {
+            "property": "AntiAimbot",
+            "label": "StrafeEnable",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "antiAimCoefficient",
+            "label": "AntiAimCoefficient",
+            "min": 10,
+            "max": 500,
+            "step": 10,
+            "options": []
+          }
+        ],
+        "Aim Line": [
+          {
+            "property": "visualizeResolving",
+            "label": "ShowAimLine",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          },
+          {
+            "property": "visualizeResolvingColor",
+            "label": "AimLineColor",
+            "min": null,
+            "max": null,
+            "step": null,
+            "options": []
+          }
+        ]
+      },
+      "keyboard": true,
+      "key_controls": [
+        {
+          "property": "AimbotKey",
+          "label": "AimbotKey",
+          "min": null,
+          "max": null,
+          "step": null,
+          "options": []
+        },
+        {
+          "property": "AntiAimbotKey",
+          "label": "AntiAimbotKey",
+          "min": null,
+          "max": null,
+          "step": null,
+          "options": []
+        },
+        {
+          "property": "JitterKey",
+          "label": "JitterKey",
+          "min": null,
+          "max": null,
+          "step": null,
+          "options": []
+        },
+        {
+          "property": "HideAngleKey",
+          "label": "HideAngleKey",
+          "min": null,
+          "max": null,
+          "step": null,
+          "options": []
+        },
+        {
+          "property": "ModMenuKey",
+          "label": "ModMenuKey",
+          "min": null,
+          "max": null,
+          "step": null,
+          "options": []
+        }
+      ],
+      "default_bindings": {
+        "menu": "KeyM",
+        "hide": "KeyH"
+      },
+      "exact_order_labels_ranges_steps_options": true,
+      "original_jitter_controls": true,
+      "controls": 28
+    },
+    "message27_aim": {
+      "status": "passed",
+      "upload_sha256": "f3001e45554d86505e89532faaa2aff5be69dec90b713e7966428273d2b1abd0",
+      "active_override": "__BBY",
+      "scenes": 32,
+      "comparison_points": 2059,
+      "normalized_equivalent_states": true,
+      "exact_non_angle_states": true,
+      "canonical_outgoing_angles": true,
+      "corrected_attack_order": true,
+      "source_timing": true,
+      "spear": true,
+      "uploaded_jitter_removed": true,
+      "strafe": true,
+      "native_angles": true,
+      "mouse_cases": 18,
+      "pixel_projection_cases": 18,
+      "valid_target_admission": true,
+      "session_target_reset": true,
+      "server_death_sends_no_commands": true
+    },
+    "message27_settings": {
+      "status": "passed",
+      "gui_controls_live": true,
+      "checked": 16,
+      "results": [
+        {
+          "key": "distanceCoefficient",
+          "samples": [
+            {
+              "value": 10,
+              "result": {
+                "target": "players:2",
+                "angle": 55.86405992208779,
+                "point": [
+                  1400,
+                  1590
+                ]
+              }
+            },
+            {
+              "value": 1000,
+              "result": {
+                "target": "players:2",
+                "angle": 14.35757265016764,
+                "point": [
+                  1400,
+                  1102.3868787694778
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "key": "offsetCoefficient",
+          "samples": [
+            {
+              "value": 0,
+              "result": {
+                "target": "players:2",
+                "angle": 12.680383491819839,
+                "point": [
+                  1400,
+                  1090
+                ]
+              }
+            },
+            {
+              "value": 3,
+              "result": {
+                "target": "players:2",
+                "angle": 55.86405992208779,
+                "point": [
+                  1400,
+                  1590
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "key": "leadCap",
+          "samples": [
+            {
+              "value": 40,
+              "result": {
+                "target": "players:2",
+                "angle": 18.004161605913396,
+                "point": [
+                  1400,
+                  1130
+                ]
+              }
+            },
+            {
+              "value": 500,
+              "result": {
+                "target": "players:2",
+                "angle": 29.69903089537479,
+                "point": [
+                  1400,
+                  1228.147005168655
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "key": "aimSmooth",
+          "samples": [
+            {
+              "value": 0.05,
+              "result": {
+                "target": "players:2",
+                "angle": 3.688980453154909,
+                "point": [
+                  1400,
+                  1228.147005168655
+                ]
+              }
+            },
+            {
+              "value": 1,
+              "result": {
+                "target": "players:2",
+                "angle": 29.69903089537479,
+                "point": [
+                  1400,
+                  1228.147005168655
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "key": "aimStick",
+          "samples": [
+            {
+              "value": 0,
+              "result": "players:3"
+            },
+            {
+              "value": 800,
+              "result": "players:2"
+            }
+          ]
+        },
+        {
+          "key": "aimHoldMs",
+          "samples": [
+            {
+              "value": 0,
+              "result": "players:3"
+            },
+            {
+              "value": 600,
+              "result": "players:2"
+            }
+          ]
+        },
+        {
+          "key": "mouseFov",
+          "samples": [
+            {
+              "value": 100,
+              "result": null
+            },
+            {
+              "value": 900,
+              "result": "players:2"
+            }
+          ]
+        },
+        {
+          "key": "mouseFovEnable",
+          "samples": [
+            {
+              "value": false,
+              "result": "players:2"
+            },
+            {
+              "value": true,
+              "result": null
+            }
+          ]
+        },
+        {
+          "key": "lockId",
+          "samples": [
+            {
+              "value": -1,
+              "result": "players:3"
+            },
+            {
+              "value": 2,
+              "result": "players:2"
+            }
+          ]
+        },
+        {
+          "key": "TargetTeammate",
+          "samples": [
+            {
+              "value": false,
+              "result": "players:3"
+            },
+            {
+              "value": true,
+              "result": "players:2"
+            }
+          ]
+        },
+        {
+          "key": "target",
+          "samples": [
+            {
+              "value": "players",
+              "result": "players:2"
+            },
+            {
+              "value": "ghouls",
+              "result": "ghouls:17"
+            }
+          ]
+        },
+        {
+          "key": "spearSpeed",
+          "samples": [
+            {
+              "value": 20,
+              "result": {
+                "target": "players:2",
+                "angle": 49,
+                "point": [
+                  1450,
+                  1513.9823785126466
+                ]
+              }
+            },
+            {
+              "value": 60,
+              "result": {
+                "target": "players:2",
+                "angle": 29,
+                "point": [
+                  1450,
+                  1228.1821396422142
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "key": "spearMaxRange",
+          "samples": [
+            {
+              "value": 200,
+              "result": {
+                "target": null,
+                "angle": 0,
+                "point": [
+                  -1,
+                  -1
+                ]
+              }
+            },
+            {
+              "value": 600,
+              "result": {
+                "target": "players:2",
+                "angle": 34,
+                "point": [
+                  1450,
+                  1290.3366947824184
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "key": "spearHandFwd",
+          "samples": [
+            {
+              "value": -60,
+              "result": {
+                "target": "players:2",
+                "angle": 34,
+                "point": [
+                  1450,
+                  1290.3366947824184
+                ]
+              }
+            },
+            {
+              "value": 60,
+              "result": {
+                "target": "players:2",
+                "angle": 35,
+                "point": [
+                  1450,
+                  1290.3366947824184
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "key": "spearHandSide",
+          "samples": [
+            {
+              "value": -60,
+              "result": {
+                "target": "players:2",
+                "angle": 36,
+                "point": [
+                  1450,
+                  1290.3366947824184
+                ]
+              }
+            },
+            {
+              "value": 60,
+              "result": {
+                "target": "players:2",
+                "angle": 23,
+                "point": [
+                  1450,
+                  1290.3366947824184
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "key": "spearStabDeg",
+          "samples": [
+            {
+              "value": 0.5,
+              "result": {
+                "target": "players:2",
+                "angle": 36,
+                "point": [
+                  1450,
+                  1290.3366947824184
+                ]
+              }
+            },
+            {
+              "value": 10,
+              "result": {
+                "target": "players:2",
+                "angle": 27,
+                "point": [
+                  1450,
+                  1290.3366947824184
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "conditional_settings": {
+        "mouseFov": "requires mouseFovEnable; source values above 1600 use 900",
+        "prediction": "distance/offset need target velocity to change lead",
+        "spear": "spear fields require spear mode and weapon 5"
+      }
+    },
+    "native_aim_transport": {
+      "status": "passed",
+      "idle_period_ms": 60000,
+      "sustained_duration_ms": 121000,
+      "directions": 4840,
+      "heartbeats": 2,
+      "real_input_updates_activity": true,
+      "native_wire_metadata": true,
+      "wire_cases": [
+        {
+          "seed": [
+            0,
+            0
+          ],
+          "bytes": 10,
+          "equal": true
+        },
+        {
+          "seed": [
+            0,
+            1
+          ],
+          "bytes": 10,
+          "equal": true
+        },
+        {
+          "seed": [
+            18,
+            52
+          ],
+          "bytes": 10,
+          "equal": true
+        }
+      ]
+    },
+    "menu": true,
+    "connection_close_origin_diagnostics": true,
+    "automation_socket_backpressure": true,
+    "aim_cycle_socket_backpressure": true,
+    "server_death_sends_no_commands": true,
+    "right_click_hovered_door": true,
+    "right_click_without_native_prompt": true,
+    "right_click_real_mouse": true,
+    "independent_door_control": true,
+    "door_server_state_feedback": true,
+    "native_shared_canvas": true,
+    "initial_metadata": true,
+    "head_and_leaderboard_labels": true,
+    "packet_history": true,
+    "packet_removal": true,
+    "self_angle_modes": true,
+    "native_clan_colors_and_cache": true,
+    "native_nickname_color_and_cache": true,
+    "full_player_list_and_native_lifecycle": true,
+    "stable_frame_entity_records": true,
+    "native_fast_loot_cadence": true,
+    "fast_loot_mid_burst_backpressure": true,
+    "bounded_fast_loot": true,
+    "session_mod_traffic_history": true,
+    "native_autobuild_cursor_preview": true,
+    "bounded_auto_build": true,
+    "aim_session_history_reset": true,
+    "valid_live_aim_targets": true,
+    "native_rejoin_identity": true,
+    "native_ad_failure_recovery": true,
+    "native_death_observation": true,
+    "native_death_opcode": 27,
+    "first_server_death_preserved": true,
+    "death_stops_restore_retries": true,
+    "mod_errors": [],
+    "rejection_recovery": {
+      "status": "passed",
+      "native_code": 1024,
+      "native_close_restore_bit": true,
+      "automatic_retries": 0,
+      "manual_play_available": true,
+      "saved_identity_unchanged": true
+    },
+    "preflight_error_ownership": {
+      "status": "passed",
+      "scope": "actual native failure callback and HTTP request guards; held replies and fixture socket; no live server",
+      "native_stages": 5,
+      "late_failure_close_calls": 0,
+      "live_connection_preserved": true,
+      "current_failure_close_calls": 1,
+      "stale_error_rejected": true,
+      "terminal_once": true,
+      "late_failure_during_connecting_rejected": true,
+      "saved_identity_unchanged": true,
+      "features_disabled": true,
+      "callbacks_before": {
+        "wrapped": 0,
+        "accepted": 0,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "callbacks_after": {
+        "wrapped": 10,
+        "accepted": 3,
+        "rejectedStale": 2,
+        "rejectedWhileConnected": 2,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 4
+      }
+    },
+    "movement_ownership": {
+      "status": "passed",
+      "scope": "native codec and fixture socket; no live server",
+      "restores_physical_mask": true,
+      "native_move_supersedes": true,
+      "settings_reset_restores": true,
+      "dispose_restores_once": true
+    }
+  },
+  "physical_numeric": {
+    "status": "passed",
+    "engine": "message27-bby",
+    "physical_text_entry": true,
+    "enter_and_tab_commit": true,
+    "slider_drag": true,
+    "slider_geometry_refreshed": true,
+    "slider_endpoints_verified": true,
+    "native_angle_changes": true,
+    "explicit_saved_values": true,
+    "saved_after_reload": {
+      "distanceCoefficient": 100,
+      "offsetCoefficient": 0.1,
+      "aimStick": 140,
+      "aimSmooth": 0.62,
+      "leadCap": 220,
+      "aimHoldMs": 200,
+      "mouseFov": 600,
+      "mouseFovEnable": false,
+      "lockId": 2
+    },
+    "samples": [
+      {
+        "label": "typed 10 uncommitted",
+        "key": "distanceCoefficient",
+        "input": "10",
+        "value": 10,
+        "type": "number",
+        "angle": 28.25833096594324,
+        "line": {
+          "x": 2000,
+          "y": 1580
+        },
+        "native_angle": 28.25833096594324,
+        "saved": 10
+      },
+      {
+        "label": "typed 10 Enter",
+        "key": "distanceCoefficient",
+        "input": "10",
+        "value": 10,
+        "type": "number",
+        "angle": 28.25833096594324,
+        "line": {
+          "x": 2000,
+          "y": 1580
+        },
+        "native_angle": 28.25833096594324,
+        "saved": 10
+      },
+      {
+        "label": "typed 1000 Tab",
+        "key": "distanceCoefficient",
+        "input": "1000",
+        "value": 1000,
+        "type": "number",
+        "angle": 17.425141720360244,
+        "line": {
+          "x": 2000,
+          "y": 1350.8688811647917
+        },
+        "native_angle": 17.425141720360244,
+        "saved": 1000
+      },
+      {
+        "label": "typed 0 Enter",
+        "key": "offsetCoefficient",
+        "input": "0",
+        "value": 0,
+        "type": "number",
+        "angle": 14.819138452267063,
+        "line": {
+          "x": 2000,
+          "y": 1300
+        },
+        "native_angle": 14.819138452267063,
+        "saved": 0
+      },
+      {
+        "label": "typed 3 Tab",
+        "key": "offsetCoefficient",
+        "input": "3",
+        "value": 3,
+        "type": "number",
+        "angle": 24.63789821761128,
+        "line": {
+          "x": 2000,
+          "y": 1501.3553388832443
+        },
+        "native_angle": 24.63789821761128,
+        "saved": 3
+      },
+      {
+        "label": "typed 0.05 Enter",
+        "key": "aimSmooth",
+        "input": "0.05",
+        "value": 0.05,
+        "type": "number",
+        "angle": 3.074752662636797,
+        "line": {
+          "x": 2000,
+          "y": 1501.3553388832443
+        },
+        "native_angle": 3.074752662636797,
+        "saved": 0.05
+      },
+      {
+        "label": "typed 1 Tab",
+        "key": "aimSmooth",
+        "input": "1",
+        "value": 1,
+        "type": "number",
+        "angle": 26.627141649562304,
+        "line": {
+          "x": 2000,
+          "y": 1501.3553388832443
+        },
+        "native_angle": 26.627141649562304,
+        "saved": 1
+      },
+      {
+        "label": "typed 40 Enter",
+        "key": "leadCap",
+        "input": "40",
+        "value": 40,
+        "type": "number",
+        "angle": 18.778033222445515,
+        "line": {
+          "x": 2000,
+          "y": 1340
+        },
+        "native_angle": 18.778033222445515,
+        "saved": 40
+      },
+      {
+        "label": "typed 500 Tab",
+        "key": "leadCap",
+        "input": "500",
+        "value": 500,
+        "type": "number",
+        "angle": 26.627141649562304,
+        "line": {
+          "x": 2000,
+          "y": 1501.3553388832443
+        },
+        "native_angle": 26.627141649562304,
+        "saved": 500
+      },
+      {
+        "label": "slider 0.02",
+        "key": "distanceCoefficient",
+        "input": "20",
+        "value": 20,
+        "type": "number",
+        "angle": 38.65980825409008,
+        "line": {
+          "x": 2000,
+          "y": 1800
+        },
+        "native_angle": 38.65980825409008,
+        "saved": 20
+      },
+      {
+        "label": "slider 0.98",
+        "key": "distanceCoefficient",
+        "input": "970",
+        "value": 970,
+        "type": "number",
+        "angle": 26.937448920602264,
+        "line": {
+          "x": 2000,
+          "y": 1508.151062405622
+        },
+        "native_angle": 26.937448920602264,
+        "saved": 970
+      }
+    ]
+  },
+  "world_visibility": {
+    "status": "passed",
+    "native_renderers": 3
+  },
+  "integrity_compatibility": {
+    "status": "passed",
+    "predicates": 3
+  },
+  "finished_at": "2026-11-22T08:30:35.541Z"
+}

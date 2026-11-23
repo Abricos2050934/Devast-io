@@ -30,5 +30,6 @@ JSON не содержит аккаунтов, cookies и токенов.
 Сам JSON включается в публикуемый набор и ZIP вместе с JS:
 https://github.com/Abricos2050934/Devast-io/raw/refs/heads/updates/Devast-io-GitHub-Resource-Override.json
 
-Исходник загрузчика — loader.js. После его изменения JSON пересобирается командой
-python3 tools/make_resource_override.py; тест проверяет совпадение файлов.
+Исходник загрузчика — loader.ts. После его изменения команда
+`npm run build:mod` проверяет типы, создаёт loader.js и обновляет JSON;
+тест проверяет совпадение файлов.

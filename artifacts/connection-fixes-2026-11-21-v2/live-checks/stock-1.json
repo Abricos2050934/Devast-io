@@ -1,0 +1,80 @@
+{
+  "name": "stock-1",
+  "requestedServer": "Atlanta 1",
+  "scriptHash": null,
+  "loaded": true,
+  "joined": true,
+  "sockets": [
+    {
+      "host": "atlanta3.devast.io",
+      "openedAt": 15380,
+      "received": 42,
+      "sent": 2,
+      "closedAt": null,
+      "error": false,
+      "death": null
+    }
+  ],
+  "errors": [],
+  "failedRequests": {
+    "xhr": 5,
+    "fetch": 6,
+    "image": 12,
+    "document": 1
+  },
+  "resourceErrors": 2,
+  "samples": [
+    {
+      "at": 17399,
+      "menu": false
+    },
+    {
+      "at": 22786,
+      "menu": false
+    },
+    {
+      "at": 27840,
+      "menu": false
+    },
+    {
+      "at": 32928,
+      "menu": false
+    },
+    {
+      "at": 38037,
+      "menu": false
+    },
+    {
+      "at": 43095,
+      "menu": false
+    },
+    {
+      "at": 48156,
+      "menu": false
+    },
+    {
+      "at": 53223,
+      "menu": false
+    },
+    {
+      "at": 58285,
+      "menu": false
+    },
+    {
+      "at": 63376,
+      "menu": false
+    },
+    {
+      "at": 68435,
+      "menu": false
+    }
+  ],
+  "homeStatus": 200,
+  "selected": "Atlanta 1 - 8 players",
+  "clickedAt": 7026,
+  "final": {
+    "menu": false
+  },
+  "secondsAfterJoin": 51.054,
+  "elapsedMs": 68737
+}

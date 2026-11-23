@@ -1,0 +1,247 @@
+{
+  "status": "client_checks_passed_live_disconnect_unresolved",
+  "publication": "not_published",
+  "source_commit": "99d06dcb4d38b200c2538a2e9070fe060411b85c",
+  "source": {
+    "page_url": "https://devast.io/",
+    "script_url": "https://devast.io/js/YukAlFEf489QnSaQ.js",
+    "raw_sha256": "3c2cadef52f237c7c039e242245853ed531f2b935f4ca6c25dc873f07c1a3b0e"
+  },
+  "output_sha256": "ed148008be8ef73bf7894bcacbc62486efecd2696539b2ec7cdc461a4bdc40e3",
+  "official_source_rechecked_in_browser": true,
+  "regression": {
+    "status": "passed",
+    "python_tests": 83,
+    "node_tests": 341
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "node_tests": 259
+  },
+  "browsers": {
+    "chromium": "passed",
+    "firefox": "passed"
+  },
+  "checksums": {
+    "client.js": "ed148008be8ef73bf7894bcacbc62486efecd2696539b2ec7cdc461a4bdc40e3",
+    "Devast-io-reviewed-v2.json": "3ca4923929db7dbf13b397d7eec9e0b267daeacd64508835b26318f477b1e6cc"
+  },
+  "live_tests": {
+    "sessions": [
+      {
+        "session": "candidate-1",
+        "joined": true,
+        "seconds_after_join": 51.394,
+        "actual_hosts": [
+          "atlanta1.devast.io"
+        ],
+        "death_packets": [],
+        "page_errors": 0,
+        "final_state": 1,
+        "final_socket_state": 1,
+        "mod_error_count": 0,
+        "combat_in_last_2s": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        },
+        "browser_failures": {
+          "exceptions": 0,
+          "unhandledRejections": 0,
+          "resourceErrors": 1
+        },
+        "error": null,
+        "position_after_strafe_off_stayed_constant": true,
+        "position_after_strafe_off": {
+          "x": 13457,
+          "y": 6302
+        }
+      },
+      {
+        "session": "stock-1",
+        "joined": true,
+        "seconds_after_join": 51.054,
+        "actual_hosts": [
+          "atlanta3.devast.io"
+        ],
+        "death_packets": [],
+        "page_errors": 0,
+        "final_state": null,
+        "final_socket_state": null,
+        "mod_error_count": null,
+        "combat_in_last_2s": null,
+        "browser_failures": null,
+        "error": null
+      },
+      {
+        "session": "candidate-jitter-1",
+        "joined": true,
+        "seconds_after_join": 4.67,
+        "actual_hosts": [
+          "atlanta5.devast.io"
+        ],
+        "death_packets": [
+          {
+            "at": 17972,
+            "prefix": "1b0000",
+            "length": 3
+          }
+        ],
+        "page_errors": 0,
+        "final_state": 0,
+        "final_socket_state": 2,
+        "mod_error_count": 0,
+        "combat_in_last_2s": {
+          "angle": 13,
+          "attack": 0,
+          "release": 0
+        },
+        "browser_failures": {
+          "exceptions": 0,
+          "unhandledRejections": 0,
+          "resourceErrors": 1
+        },
+        "error": null
+      },
+      {
+        "session": "jitter-only",
+        "joined": true,
+        "seconds_after_join": 30.766,
+        "actual_hosts": [
+          "atlanta2.devast.io"
+        ],
+        "death_packets": [],
+        "page_errors": 0,
+        "final_state": 1,
+        "final_socket_state": 1,
+        "mod_error_count": 0,
+        "combat_in_last_2s": {
+          "angle": 28,
+          "attack": 0,
+          "release": 0
+        },
+        "browser_failures": {
+          "exceptions": 0,
+          "unhandledRejections": 0,
+          "resourceErrors": 1
+        },
+        "error": null
+      },
+      {
+        "session": "aim-only",
+        "joined": true,
+        "seconds_after_join": 30.479,
+        "actual_hosts": [
+          "atlanta1.devast.io"
+        ],
+        "death_packets": [],
+        "page_errors": 0,
+        "final_state": 1,
+        "final_socket_state": 1,
+        "mod_error_count": 0,
+        "combat_in_last_2s": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        },
+        "browser_failures": {
+          "exceptions": 0,
+          "unhandledRejections": 0,
+          "resourceErrors": 1
+        },
+        "error": null
+      },
+      {
+        "session": "all-off",
+        "joined": false,
+        "seconds_after_join": null,
+        "actual_hosts": [
+          "atlanta2.devast.io",
+          "atlanta4.devast.io"
+        ],
+        "death_packets": [],
+        "page_errors": 9,
+        "final_state": 64,
+        "final_socket_state": 3,
+        "mod_error_count": 0,
+        "combat_in_last_2s": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        },
+        "browser_failures": {
+          "exceptions": 0,
+          "unhandledRejections": 3,
+          "resourceErrors": 9
+        },
+        "error": null
+      },
+      {
+        "session": "stock",
+        "joined": false,
+        "seconds_after_join": null,
+        "actual_hosts": [],
+        "death_packets": [],
+        "page_errors": 0,
+        "final_state": null,
+        "final_socket_state": null,
+        "mod_error_count": null,
+        "combat_in_last_2s": null,
+        "browser_failures": null,
+        "error": "Expected values to be strictly equal:\n\n503 !== 200\n"
+      }
+    ],
+    "scope_limits": [
+      "Bounded guest sessions, automatic firing disabled.",
+      "The same UI region selected different physical backends, so these are not controlled same-server comparisons.",
+      "Combined aim and Jitter received a server death packet after 4.67 seconds; its authoritative reason is still unknown.",
+      "Later connection failures received and sent zero WebSocket packets; the stock page then returned HTTP 503."
+    ]
+  },
+  "limits": "Live checks are bounded observations and do not establish the authoritative reason for earlier server death packets.",
+  "embedded_json_import": {
+    "scope": "Import of the embedded local Resource Override and page reload on the downloaded game page; no live server login",
+    "browsers": {
+      "chromium": {
+        "status": "passed",
+        "replacements": 2,
+        "first": {
+          "loaded": true,
+          "errors": [],
+          "menus": 1
+        },
+        "reload": {
+          "loaded": true,
+          "errors": [],
+          "menus": 1
+        },
+        "page_errors": []
+      },
+      "firefox": {
+        "status": "passed",
+        "replacements": 2,
+        "first": {
+          "loaded": true,
+          "errors": [],
+          "menus": 1
+        },
+        "reload": {
+          "loaded": true,
+          "errors": [],
+          "menus": 1
+        },
+        "page_errors": []
+      }
+    }
+  },
+  "fixes": [
+    {
+      "name": "One result per login request",
+      "evidence": "64 callback sequences plus real native request helper in both browsers"
+    },
+    {
+      "name": "Restore physical movement after strafe",
+      "evidence": "15 regression cases, native codec browser checks, and an observed stable position after strafe was disabled in a live session"
+    }
+  ]
+}

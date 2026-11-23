@@ -13,6 +13,17 @@ for(const code of [8,16,512,1024])test('server rejection '+code+' cannot turn in
 test('an ordinary transport loss still permits the existing bounded restoration',()=>{
  const f=fixture();let joins=0;try{const row=['official',0,0,0,'region',0,'mode'];f.network['ԁᴄࡃ']=row;f.network['ոߒ४']=[row];f.network['ⲅ︊ᄃ']=(_,cb)=>cb();f.B.reconnect=()=>{joins++;f.network.state=1;};f.setClock(0);f.mod.step(0);f.network.state=64;f.mod.step(0);f.setClock(1000);f.mod.step(1000);assert.equal(joins,1);}finally{f.mod.dispose();}
 });
+test('stale entry deadlines never close an already active playable socket',()=>{
+ for(const phase of ['idle','preparing','refreshing','joining','connecting','advertising']){
+  const f=fixture();let closes=0;
+  try{
+   f.mod.observeSocket({readyState:1,bufferedAmount:0,close(){closes++;}});
+   Object.assign(f.mod.reconnect,{pending:true,phase,deadline:0,attempts:3});
+   for(const now of [12001,60000,3600000]){f.setClock(now);f.mod.step(now);}
+   assert.equal(closes,0,phase);assert.equal(f.network.state,1,phase);
+  }finally{f.mod.dispose();}
+ }
+});
 test('an entry timeout retains its close event but a replaced socket cannot contaminate the report',()=>{
  const f=fixture(),handlers=new Map();try{
   f.setClock(0);const socket={readyState:0,addEventListener:(key,fn)=>handlers.set(key,fn),removeEventListener:(key)=>handlers.delete(key),close(){this.readyState=3;handlers.get('close')({code:1006,wasClean:false});}};
@@ -72,3 +83,36 @@ test('nested native preflights keep ownership and reject a stale second stage',(
 for(const failure of ['missing-server','throw','timeout'])test('fresh recovery bounds server-list failure: '+failure,()=>{const f=fixture({saved:{token:'kept-token'}});let calls=0;try{f.network.state=256;f.network['ԁᴄࡃ']=['official',0,0,0,'region',0,'mode'];f.network['ոߒ४']=[];f.network['ⲅ︊ᄃ']=(_,cb)=>{calls++;if(failure==='throw')throw Error('fixture');if(failure==='missing-server')cb();};f.B.reconnect=()=>{};for(let t=0;t<=120000;t+=1000){f.setClock(t);f.mod.step(t);}assert.equal(calls,3);assert.equal(f.mod.reconnect.autoBlocked,true);assert.equal(f.storage.get('token'),'kept-token');assert.equal(f.mod.beginPlay(),true);assert.equal(f.mod.reconnect.refreshFailures,0);}finally{f.mod.dispose();}});
 test('normal join remains possible after earlier restore attempts',()=>{const f=fixture({saved:{token:'kept-token'}}),row=['official',0,0,0,'region',0,'mode'],joins=[];try{f.network.state=256;f.mod.reconnect.attempts=3;f.network['ԁᴄࡃ']=row;f.network['ոߒ४']=[row];f.network['ⲅ︊ᄃ']=(_,cb)=>cb();f.B.reconnect=()=>joins.push(f.network.state);f.setClock(0);f.mod.step(0);f.setClock(1000);f.mod.step(1000);assert.deepEqual(joins,[0]);assert.equal(f.storage.get('token'),'kept-token');}finally{f.mod.dispose();}});
 test('native network failure codes are recorded without account contents',()=>{const f=fixture({saved:{token:'kept-token'}});let calls=0;try{f.network.state=0;f.B.errorKey='error';f.network.error=code=>{calls++;f.network.state=code;};f.mod.step(0);f.network.error(512,'private-error-content');const r=f.mod.connectionInfo();assert.equal(calls,1);assert.equal(f.network.state,512);assert.equal(r.events.at(-1).type,'native-network-error');assert.equal(r.events.at(-1).failureCode,512);assert.ok(!JSON.stringify(r).includes('private-error-content'));assert.ok(!JSON.stringify(r).includes('kept-token'));}finally{f.mod.dispose();}});
+
+test('a slow transport open gets a full application-handshake deadline',()=>{
+ const f=fixture(),handlers=new Map();let closes=0;
+ const socket={readyState:0,addEventListener:(name,fn)=>handlers.set(name,fn),removeEventListener(){},close(){closes++;this.readyState=3;}};
+ const step=now=>{f.setClock(now);f.mod.step(now);};
+ try{
+  step(0);f.network.state=2;f.mod.observeSocket(socket);step(0);
+  f.setClock(11900);socket.readyState=1;handlers.get('open')();
+  step(12001);assert.equal(closes,0,'transport setup must not consume the acknowledgement deadline');assert.equal(f.network.state,2);
+  step(23899);assert.equal(closes,0);
+  step(23901);assert.equal(closes,1,'an unacknowledged connection remains bounded');assert.equal(f.network.state,64);
+ }finally{f.mod.dispose();}
+});
+test('a duplicate transport open cannot keep extending the handshake deadline',()=>{
+ const f=fixture(),handlers=new Map();let closes=0;
+ const socket={readyState:0,addEventListener:(name,fn)=>handlers.set(name,fn),removeEventListener(){},close(){closes++;}};
+ try{
+  f.setClock(0);f.network.state=2;f.mod.observeSocket(socket);f.mod.step(0);
+  f.setClock(1000);socket.readyState=1;handlers.get('open')();
+  f.setClock(12000);handlers.get('open')();f.mod.step(12000);assert.equal(closes,0);
+  f.setClock(13001);f.mod.step(13001);assert.equal(closes,1);
+ }finally{f.mod.dispose();}
+});
+test('an old transport open cannot postpone the current socket deadline',()=>{
+ const f=fixture(),maps=[];let closes=0;
+ const socket=()=>{const h=new Map();maps.push(h);return {readyState:0,addEventListener:(name,fn)=>h.set(name,fn),removeEventListener(){},close(){closes++;}};};
+ try{
+  f.setClock(0);f.network.state=2;f.mod.observeSocket(socket());f.mod.step(0);
+  f.setClock(1000);f.mod.observeSocket(socket());f.mod.step(1000);
+  f.setClock(12999);maps[0].get('open')();f.mod.step(12999);assert.equal(closes,0);
+  f.setClock(13001);f.mod.step(13001);assert.equal(closes,1);
+ }finally{f.mod.dispose();}
+});

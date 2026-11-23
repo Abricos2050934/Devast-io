@@ -211,6 +211,71 @@ test('socket observers preserve native callbacks and exclude close reasons and c
  for(let i=0;i<20;i++)second.emit('error');assert.equal(f.mod.connectionInfo().events.length,12);
  f.mod.dispose();assert.equal(second.handlers.size,0);assert.deepEqual(identity(f),account);
 });
+test('observing the same socket twice retains its connection timings and listeners', () => {
+ const f = fixture(), handlers = new Map();
+ const socket = {
+  readyState: 1,
+  addEventListener: (type, listener) => handlers.set(type, listener),
+  removeEventListener: type => handlers.delete(type),
+ };
+ try {
+  f.mod.observeSocket(socket);
+  f.setClock(2000);
+  const message = handlers.get('message');
+  message();
+  f.setClock(3500);
+  f.mod.observeSocket(socket);
+  assert.equal(handlers.get('message'), message);
+  const { id, openForMs, receiveGapMs, receivedMessages } = f.mod.connectionInfo().transport;
+  assert.equal(id, 1);
+  assert.equal(openForMs, 2500);
+  assert.equal(receiveGapMs, 1500);
+  assert.equal(receivedMessages, 1);
+ } finally {
+  f.mod.dispose();
+ }
+});
+test('a late socket observation after disposal cannot reinstall event handlers', () => {
+ const f = fixture(), handlers = new Map();
+ const socket = {
+  readyState: 1,
+  addEventListener: (type, listener) => handlers.set(type, listener),
+  removeEventListener: type => handlers.delete(type),
+ };
+ f.mod.observeSocket(socket);
+ f.setClock(2500);
+ f.mod.dispose();
+ assert.equal(handlers.size, 0);
+ f.mod.observeSocket(socket);
+ f.mod.observeSocket({ ...socket });
+ assert.equal(handlers.size, 0);
+ assert.equal(f.mod.connectionInfo().transport.id, 1);
+});
+test('the report counts browser exceptions, failed resources and rejected promises separately', () => {
+ const f = fixture();
+ const secret = 'private-url-or-exception-message';
+ const error = properties => f.window.dispatchEvent({ type: 'error', ...properties });
+ try {
+  error({ target: f.window, message: secret });
+  error({ target: { nodeType: 1, src: 'https://fixture.test/' + secret } });
+  f.window.dispatchEvent({ type: 'unhandledrejection', reason: new Error(secret) });
+  f.mod.observeDeath();
+  error({ target: f.window });
+  const report = f.mod.connectionInfo();
+  assert.equal(report.modErrorCount, 0);
+  assert.equal(report.browserFailures.exceptions, 2);
+  assert.equal(report.browserFailures.resourceErrors, 1);
+  assert.equal(report.browserFailures.unhandledRejections, 1);
+  assert.equal(report.firstServerDeath.browserFailures.exceptions, 1);
+  assert.ok(!JSON.stringify(report).includes(secret));
+  report.firstServerDeath.browserFailures.exceptions = 99;
+  assert.equal(f.mod.connectionInfo().firstServerDeath.browserFailures.exceptions, 1);
+ } finally {
+  f.mod.dispose();
+ }
+ assert.equal(f.listeners.get('error').size, 0);
+ assert.equal(f.listeners.get('unhandledrejection').size, 0);
+});
 test('receive timing distinguishes a quiet socket from a client close without retaining packet contents',()=>{
  const f=fixture({saved:account}),handlers=new Map();
  const socket={readyState:0,addEventListener:(k,fn)=>handlers.set(k,fn),removeEventListener:(k)=>handlers.delete(k)};
@@ -329,7 +394,7 @@ test('handshake diagnostics distinguish discarded replies during play without lo
   f.network.login=()=>replies.push(f.mod.guardHandshakeCallback('/private-path?token=do-not-record',()=>accepted++));
   f.mod.step(0);f.network.login();replies[0]();assert.equal(accepted,1);
   f.network.state=1;f.mod.step(16);replies[0]();assert.equal(accepted,1);
-  const info=f.mod.connectionInfo();assert.deepEqual({...info.connectionCallbacks},{wrapped:1,accepted:1,rejectedStale:1,rejectedWhileConnected:1,rejectedAfterDispose:0});
+  const info=f.mod.connectionInfo();assert.deepEqual({...info.connectionCallbacks},{wrapped:1,accepted:1,rejectedStale:1,rejectedWhileConnected:1,rejectedAfterDispose:0,rejectedDuplicate:0});
   assert.ok(!JSON.stringify(info).includes('do-not-record'));info.connectionCallbacks.accepted=999;assert.equal(f.mod.connectionInfo().connectionCallbacks.accepted,1);
  }finally{f.mod.dispose();}
 });

@@ -1,0 +1,5 @@
+{
+  "checkedAt": "2026-11-22T16:07:07.588Z",
+  "requestedHost": "www.devast.io",
+  "error": "page.goto: net::ERR_TUNNEL_CONNECTION_FAILED at https://www.devast.io/\nCall log:\n\u001b[2m  - navigating to \"https://www.devast.io/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+}

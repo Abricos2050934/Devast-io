@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "scope": "Regular Chrome controlled with browser input and passive network events; no Playwright helper injection or page evaluation before the session ends",
+  "artifact": "/workspace/Devast-io/artifacts/native-crypto-control-2026-11-22/Control.json",
+  "sha256": "361841f4aeed27ddf6e89a047722780bbb856bcadaba0e46488c96d1756250df",
+  "joined": false,
+  "minutePassed": false,
+  "sockets": [],
+  "replacements": 1,
+  "networkErrors": [
+    {
+      "host": "token.devast.io",
+      "path": "/633d79ad83ebf3c9c219f683",
+      "status": 404
+    },
+    {
+      "host": "token.devast.io",
+      "path": "/633d79ad83ebf3c9c219f683",
+      "status": 404
+    },
+    {
+      "host": "maestro-uw1.tps.dv.tech",
+      "path": "/event.png",
+      "status": 503
+    },
+    {
+      "host": "ade.googlesyndication.com",
+      "path": "/ddm/activity/dc_oe=ChMI74W6hvibmAMVS-D9BR2RmRiuEAEYACDo9fl7;dc_eps=AHas8cAhBR_4t9UKq8WFPoI6V56vjfmfjH7beu8jg08Jk4unT2ebmsfnxE11MW39tMcH4IwOB_VDIebwY0u_1tP8gOs;met=1;&timestamp=1795362925592;eid1=2;ecn1=1;etm1=10;eid2=871060;ecn2=1;etm2=0;",
+      "status": 503
+    },
+    {
+      "host": "maestro-uw1.tps.dv.tech",
+      "path": "/event.png",
+      "status": 503
+    },
+    {
+      "host": "maestro-uw1.tps.dv.tech",
+      "path": "/event.png",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    }
+  ],
+  "navigationAttempts": 1,
+  "homeStatus": 200,
+  "officialPageCache": true,
+  "replacedPath": "/js/kI1G7NG7AThcrpwiN6RUB.js",
+  "nativeRequestFailures": [
+    {
+      "host": "atlanta3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "losangeles3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "frankfurt4.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "osaka2.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "sydney1.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    }
+  ],
+  "optionCount": 11,
+  "options": [
+    "Auto Select Server",
+    "Atlanta 1 - 18 players",
+    "Atlanta 2 - 11 players",
+    "Frankfurt 1 - 62 players",
+    "Frankfurt 2 - 23 players",
+    "Losangeles 1 - 8 players",
+    "Losangeles 2 - 7 players",
+    "Osaka 1 - 9 players",
+    "Osaka 2 - 4 players",
+    "Sydney 1 - 4 players",
+    "Sydney 2 - 6 players"
+  ],
+  "chosenLabel": "Losangeles 1 - 8 players",
+  "stage": "before-entry",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "playCoordinates": {
+    "x": 644,
+    "y": 356
+  },
+  "playClicks": 3,
+  "tokenResponseStatus": 404,
+  "tokenResponseType": "text/html",
+  "error": "No playable server handshake arrived",
+  "errorStack": "Error: No playable server handshake arrived\n    at /workspace/Devast-io/artifacts/native-crypto-control-live-1795362812/check.cjs:76:27",
+  "failureState": {
+    "focused": true,
+    "visible": "visible",
+    "loaded": true,
+    "state": 0,
+    "phase": "idle",
+    "socket": null,
+    "callbacks": {
+      "wrapped": 6,
+      "accepted": 2,
+      "rejectedStale": 0,
+      "rejectedWhileConnected": 0,
+      "rejectedAfterDispose": 0,
+      "rejectedDuplicate": 0
+    },
+    "status": "Сервис входа не ответил; выберите сервер и повторите Play",
+    "adWaiting": false,
+    "nativePending": false,
+    "errors": 0,
+    "events": [
+      {
+        "type": "entry-timeout",
+        "stage": "joining"
+      },
+      {
+        "type": "entry-timeout",
+        "stage": "joining"
+      }
+    ]
+  },
+  "elapsedMs": 131500
+}

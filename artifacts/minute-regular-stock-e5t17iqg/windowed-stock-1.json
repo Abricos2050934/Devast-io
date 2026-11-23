@@ -1,0 +1,126 @@
+{
+  "name": "windowed-stock-1",
+  "requestedServer": "Atlanta 1",
+  "scriptHash": null,
+  "browserMode": {
+    "webdriver": false,
+    "visibility": "visible"
+  },
+  "loaded": true,
+  "joined": false,
+  "sockets": [
+    {
+      "host": "atlanta4.devast.io",
+      "openedAt": 49984,
+      "received": 9,
+      "sent": 1,
+      "closedAt": null,
+      "error": false,
+      "death": null,
+      "receivedOpcodes": {
+        "20": 1,
+        "47": 1,
+        "52": 1,
+        "71": 1
+      },
+      "textMetadata": [
+        {
+          "bytes": 311,
+          "kind": "array",
+          "items": 121,
+          "opcode": 2
+        },
+        {
+          "bytes": 45,
+          "kind": "array",
+          "items": 19,
+          "opcode": 5
+        },
+        {
+          "bytes": 17,
+          "kind": "array",
+          "items": 7,
+          "opcode": 7
+        },
+        {
+          "bytes": 13,
+          "kind": "array",
+          "items": 4,
+          "opcode": 9
+        },
+        {
+          "bytes": 14,
+          "kind": "array",
+          "items": 5,
+          "opcode": 14
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "at": 11586,
+      "name": "Uncaught (in promise) AbortError",
+      "message": "The play() request was interrupted by a new load request. [URL]"
+    }
+  ],
+  "failedRequests": {
+    "xhr": 5,
+    "fetch": 20,
+    "image": 16,
+    "document": 1,
+    "media": 1,
+    "ping": 1
+  },
+  "resourceErrors": 1,
+  "samples": [],
+  "homeStatus": 200,
+  "failedRequestDetails": [
+    {
+      "host": "losangeles3.devast.io",
+      "path": "/",
+      "kind": "xhr",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "host": "atlanta1.devast.io",
+      "path": "/",
+      "kind": "xhr",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "host": "frankfurt1.devast.io",
+      "path": "/",
+      "kind": "xhr",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "host": "osaka3.devast.io",
+      "path": "/",
+      "kind": "xhr",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "host": "sydney1.devast.io",
+      "path": "/",
+      "kind": "xhr",
+      "error": "net::ERR_FAILED"
+    }
+  ],
+  "selected": "Atlanta 1 - 5 players",
+  "clickedAt": 11722,
+  "httpErrors": [
+    {
+      "host": "t.adx.opera.com",
+      "path": "/pub/sync",
+      "status": 424
+    }
+  ],
+  "final": {
+    "menu": true
+  },
+  "secondsAfterJoin": null,
+  "stockMinutePassed": false,
+  "minutePassed": false,
+  "elapsedMs": 50638
+}

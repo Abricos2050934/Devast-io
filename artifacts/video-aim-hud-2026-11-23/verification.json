@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "scope": "Left-hand statistics HUD and automatic port to the newly downloaded game JS",
+  "output_sha256": "0108257047af8675a566eb39060a187798b9a70c26c409fafa507f8c4cf7686c",
+  "source": {
+    "page_url": "https://devast.io/",
+    "script_url": "https://devast.io/js/JZnx28srLJnmqhN0xR90n6mj7QB.js",
+    "raw_sha256": "b6aea8414a9bc34891bf953b9ea8ba0b5817d6a327c102c60511173231a0f65a"
+  },
+  "hud": {
+    "default_enabled": true,
+    "fields": [
+      "avgPing",
+      "currentPing",
+      "deltaPing",
+      "delay",
+      "lead"
+    ],
+    "manual_ping_is_labelled": true,
+    "unmeasured_current_and_delta": "—",
+    "compact_layout": true,
+    "screen_space_dpi_scaling": true,
+    "no_mouse_capture": true,
+    "controls": "Adaptive Aim → Video Prediction — эксперимент → Показать пинг слева"
+  },
+  "tests": {
+    "candidate_scenarios": 291,
+    "source_tests": 25,
+    "typescript": "strict, passed"
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "156.0.8078.79",
+      "hud_verified": true,
+      "page_errors": [],
+      "preview": "hud-chromium.png"
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "hud_verified": true,
+      "page_errors": [],
+      "preview": "hud-firefox.png"
+    }
+  },
+  "rtt_scope": "The HUD does not add an RTT measurement mechanism. Configured values are marked задано, and genuine sample input is still required for measured values.",
+  "preview_scope": "Browser fixture with synthetic RTT samples, not a live server session.",
+  "publication": "not_published",
+  "live_server_session": "not_tested"
+}

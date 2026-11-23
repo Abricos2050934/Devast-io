@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "scope": "Control: unmodified official JS; live HTML, token service and game server; ordinary movement input; observation up to 120 seconds; no automatic rejoin after join; no page evaluation before the session ends",
+  "artifact": "Unmodified official game JS",
+  "sha256": null,
+  "joined": true,
+  "minutePassed": false,
+  "sockets": [
+    {
+      "requestId": "54890.1070",
+      "host": "losangeles3.devast.io",
+      "createdAt": 48042,
+      "received": 24,
+      "sent": 2,
+      "closedAt": null,
+      "death": {
+        "at": 50994,
+        "prefix": "1b0000",
+        "length": 3
+      },
+      "opcodes": {
+        "20": 14,
+        "27": 1,
+        "47": 1,
+        "52": 1,
+        "53": 1,
+        "71": 1
+      },
+      "handshakeStatus": 101,
+      "lastReceiveAt": 50994
+    }
+  ],
+  "replacements": 0,
+  "networkErrors": [],
+  "navigationAttempts": 1,
+  "homeStatus": 200,
+  "optionCount": 11,
+  "options": [
+    "Auto Select Server",
+    "Atlanta 1 - 8 players",
+    "Atlanta 2 - 5 players",
+    "Frankfurt 1 - 63 players",
+    "Frankfurt 2 - 25 players",
+    "Losangeles 1 - 4 players",
+    "Losangeles 2 - 5 players",
+    "Osaka 1 - 5 players",
+    "Osaka 2 - 3 players",
+    "Sydney 1 - 5 players",
+    "Sydney 2 - 6 players"
+  ],
+  "chosenLabel": "Losangeles 1 - 4 players",
+  "stage": "before-entry",
+  "nativeRequestFailures": [
+    {
+      "host": "losangeles3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "atlanta3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "frankfurt3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "osaka2.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "sydney3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    }
+  ],
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "playCoordinates": {
+    "x": 644,
+    "y": 356
+  },
+  "playClicks": 1,
+  "playerId": 8,
+  "realMovementInput": true,
+  "secondsAfterJoin": 2.992,
+  "final": null,
+  "elapsedMs": 52104
+}

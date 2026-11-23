@@ -1,0 +1,35 @@
+{
+  "scope": "Import of the embedded local Resource Override and page reload on the downloaded game page; no live server login",
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "replacements": 2,
+      "first": {
+        "loaded": true,
+        "errors": [],
+        "menus": 1
+      },
+      "reload": {
+        "loaded": true,
+        "errors": [],
+        "menus": 1
+      },
+      "page_errors": []
+    },
+    "firefox": {
+      "status": "passed",
+      "replacements": 2,
+      "first": {
+        "loaded": true,
+        "errors": [],
+        "menus": 1
+      },
+      "reload": {
+        "loaded": true,
+        "errors": [],
+        "menus": 1
+      },
+      "page_errors": []
+    }
+  }
+}

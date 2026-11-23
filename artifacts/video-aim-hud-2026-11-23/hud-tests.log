@@ -1,0 +1,29 @@
+✔ the left HUD shows configured ping honestly before any measurements exist (11.782814ms)
+✔ measured values replace the configured label and update the displayed delta (3.22425ms)
+✔ HUD visibility is saved and no statistics are drawn after death, disconnect or disposal (6.072705ms)
+✔ the full-height HUD remains fixed in screen space and preserves the native canvas transform (3.735203ms)
+✔ screenshot defaults remain explicit configured values until genuine RTT samples exist (3.661405ms)
+✔ the RTT window keeps the latest 125 samples and reflects a changed window immediately (0.895061ms)
+✔ invalid, stale and previous-clock RTT data cannot become measured lead (1.166973ms)
+✔ receipt age and user compensation are counted exactly once in the launch time (1.516549ms)
+✔ video prediction intercepts independent motion at 500 units/s (2.06597ms)
+✔ video prediction intercepts independent motion at 1400 units/s (0.836154ms)
+✔ video prediction intercepts independent motion at 1450 units/s (1.007868ms)
+✔ measured latency reduces the miss in a delayed crossing compared with uncompensated aim (1.918231ms)
+✔ step count controls actual refinement work; an insufficient approximation uses the exact fallback (1.279448ms)
+✔ spear lateral launch geometry intersects the target along the actual projectile ray (0.952566ms)
+✔ a negative spear hand offset remains a signed launch offset rather than being clamped away (0.840661ms)
+✔ unreachable, stale and invalid profiles never manufacture a shot (0.789335ms)
+✔ the installed spear path uses the video model and sends its corrected angle before native fire (12.801306ms)
+✔ video mode holds a valid target, obeys explicit lock and releases removed targets (5.614127ms)
+✔ RTT ingestion adds no packets and resets on a new socket or session (4.123066ms)
+✔ video settings are editable through the menu, bounded and saved (6.375331ms)
+✔ the portable browser verifier exercises the installed video mode (8.671992ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 114.016598

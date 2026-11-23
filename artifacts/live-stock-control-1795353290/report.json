@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "scope": "Control: unmodified official JS; live HTML, token service and game server; ordinary movement input; observation up to 120 seconds; no automatic rejoin after join; no page evaluation before the session ends",
+  "artifact": "Unmodified official game JS",
+  "sha256": null,
+  "joined": false,
+  "minutePassed": false,
+  "sockets": [],
+  "replacements": 0,
+  "networkErrors": [],
+  "navigationAttempts": 1,
+  "homeStatus": 200,
+  "optionCount": 11,
+  "options": [
+    "Auto Select Server",
+    "Atlanta 1 - 7 players",
+    "Atlanta 2 - 7 players",
+    "Frankfurt 1 - 63 players",
+    "Frankfurt 2 - 24 players",
+    "Losangeles 1 - 4 players",
+    "Losangeles 2 - 6 players",
+    "Osaka 1 - 5 players",
+    "Osaka 2 - 3 players",
+    "Sydney 1 - 5 players",
+    "Sydney 2 - 6 players"
+  ],
+  "chosenLabel": "Losangeles 1 - 4 players",
+  "stage": "nickname",
+  "error": "Element is not focusable",
+  "errorStack": "Error: Element is not focusable\n    at ws.onmessage (/workspace/Devast-io/artifacts/live-stock-control-1795353290/check.cjs:35:155)\n    at [nodejs.internal.kHybridDispatch] (node:internal/event_target:869:20)\n    at WebSocket.dispatchEvent (node:internal/event_target:810:26)\n    at fireEvent (node:internal/deps/undici/undici:14494:14)\n    at #onMessage (node:internal/deps/undici/undici:15834:9)\n    at Object.onMessage (node:internal/deps/undici/undici:15541:76)\n    at websocketMessageReceived (node:internal/deps/undici/undici:14498:15)\n    at node:internal/deps/undici/undici:15243:21\n    at node:internal/deps/undici/undici:15014:11\n    at afterWrite (node:internal/streams/writable:712:5)",
+  "failureState": {
+    "loaded": false
+  },
+  "elapsedMs": 4533
+}

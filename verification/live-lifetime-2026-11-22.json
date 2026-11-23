@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "scope": "Live game servers; duration from native join acknowledgement to incoming native death packet, without rejoining after acknowledgement",
+  "current_mod_sha256": "97ebd0ad6fec53f1ac2739c45a439c87b5fe06ca93ab4b195be40c0b98a57b9a",
+  "minute_passed": false,
+  "runs": [
+    {
+      "client": "mod_stationary",
+      "joined": true,
+      "seconds_until_server_death": 14.247,
+      "host": "losangeles1.devast.io",
+      "handshake_status": 101,
+      "sent": 2,
+      "received": 37,
+      "death_prefix": "1b0000",
+      "mod_errors": 0,
+      "report": "/workspace/Devast-io/artifacts/live-lifetime-1795353103/report.json"
+    },
+    {
+      "client": "mod_movement",
+      "joined": true,
+      "seconds_until_server_death": 4.014,
+      "host": "losangeles1.devast.io",
+      "handshake_status": 101,
+      "sent": 4,
+      "received": 16,
+      "death_prefix": "1b0000",
+      "mod_errors": 0,
+      "report": "/workspace/Devast-io/artifacts/live-active-lifetime-1795353204/report.json"
+    },
+    {
+      "client": "official_unmodified_movement",
+      "joined": true,
+      "seconds_until_server_death": 2.1,
+      "host": "losangeles3.devast.io",
+      "handshake_status": 101,
+      "sent": 2,
+      "received": 24,
+      "death_prefix": "1b0000",
+      "mod_errors": null,
+      "report": "/workspace/Devast-io/artifacts/live-stock-control-ready-1795353344/report.json"
+    }
+  ],
+  "publication": "not_published"
+}

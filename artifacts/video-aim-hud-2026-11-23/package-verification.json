@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "source_recheck": {
+    "checked_at": "2026-11-23T13:14:36.504726+00:00",
+    "site_scripts": [
+      "https://devast.io/js/JZnx28srLJnmqhN0xR90n6mj7QB.js"
+    ],
+    "built_script": "https://devast.io/js/JZnx28srLJnmqhN0xR90n6mj7QB.js",
+    "still_current": true
+  },
+  "source_archive": {
+    "clean_install": true,
+    "independent_build": true,
+    "tests_passed": 25,
+    "strict_tsc": true,
+    "output_matches_tested_client": true
+  },
+  "artifacts": {
+    "client.js": {
+      "bytes": 4746549,
+      "sha256": "0108257047af8675a566eb39060a187798b9a70c26c409fafa507f8c4cf7686c"
+    },
+    "Devast-io-Video-Aim-HUD.json": {
+      "bytes": 4961504,
+      "sha256": "8a4e1bf931fdf6bcbb635aead6438b5b48a1321d6646e6452521f2a926cbfdec"
+    },
+    "Devast-io-Video-Aim-HUD-source.zip": {
+      "bytes": 1838879,
+      "sha256": "ddb1a98a93115f17b82e1a7593b320f1e00c50a6c385fa2eef6349482c18dbf6"
+    }
+  },
+  "publication": "not_published"
+}

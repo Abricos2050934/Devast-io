@@ -1,0 +1,50 @@
+
+> devast-verified-typescript-mod@1.0.0 build
+> node tools/build_verified_mod.cjs
+
+{
+  "status": "passed",
+  "typescript": {
+    "status": "passed",
+    "typescript": "5.9.3",
+    "strict": true,
+    "files": [
+      "mod/ballistic-model.ts",
+      "mod/ilm-aim.ts",
+      "mod/responsive.ts",
+      "mod/bootstrap.ts",
+      "resource-override/loader.ts",
+      "mod/contracts.d.ts",
+      "tsconfig.mod.json"
+    ],
+    "source_sha256": {
+      "mod/ballistic-model.ts": "e894685f87fee4082ddf885f358774ec3287bd242a879617ba0456550ee9aca9",
+      "mod/ilm-aim.ts": "e44832a3317aa5183155900ac2cb4d496c378d2854a9ee662ad350e438af1fcb",
+      "mod/responsive.ts": "333894f0cd1d611909d1b710f912ba5aa44ade84a2d2deee651ca8ec3ef2dbb5",
+      "mod/bootstrap.ts": "d5eb4fcd879c874f43675752adde72ea9f25b19b4b08b932844a5cd74fc706b6",
+      "resource-override/loader.ts": "2c9ebf2f18de013baa702512d6caf705fc4aea30292154bd3808c43873c4326a",
+      "mod/contracts.d.ts": "32ebea60a88c3d0aef6c7ce6f66ee734530b65e4b8497c50b68b99f31d1f4f45",
+      "tsconfig.mod.json": "5bc68d78638d2ea4d2f1a3a97b583e530c3f3472ea4155d871af806d89e5011c"
+    },
+    "generated_sha256": {
+      "mod/ballistic-model.js": "242a6b17fb79ff92a13567534e8df254b84043e4e52b62d684aa5566760b008e",
+      "mod/ilm-aim.js": "e1b0a622f9a984522f1aaecd7e776140b3b7efd3cd7dec271a19cca9dcc11712",
+      "mod/responsive.js": "df0b34beb40d0b0449c4d2ab6a89a46f0518fab306bb91b5ce17ad333cf279a1",
+      "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
+      "resource-override/loader.js": "345faf124ba5a8858e60c952ea7cc85d401314ede59109b7cb5782bd45db1b9a"
+    },
+    "emission": "type erasure, verified against the TypeScript compiler AST"
+  },
+  "native_language": "JavaScript, immutable baseline",
+  "native_sha256": "7a2efe2e7dd21d3d3776a0f4538d5ad7038be3be26566a1ae06060e02e32063a",
+  "published_original_sha256": "bf91326621e60655629bb2bfc27e101261c8acb99fda16342f286e248ddb2e07",
+  "output_sha256": "780d3961024352378ab00f9d9c63d3ed35308e2decb4f817245e0f3731656e96",
+  "runtime": "compiled JavaScript; TypeScript is checked during build",
+  "publication": "not_published",
+  "live_server_session": "not_tested"
+}
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice

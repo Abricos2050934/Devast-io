@@ -39,17 +39,21 @@ function verifyBallistics(m,n,s){
    if(n.release)n.release();else m.afterRelease();
   }
   set('JitterEnabled',false);
-  for(const shape of ['circle','straight']){
+  for(const shape of ['circle','straight','strafe']){
    m.onSessionStart();m.onHandshake();
    for(let i=0;i<12;i++){
     clock+=100;n.setClock?.(clock);packet(playerType,1,1,1000,1000,weaponId<<8);
-    packet(playerType,2,1,shape==='circle'?Math.round(1500+90*Math.cos(i*.22)):1400+i*9,shape==='circle'?Math.round(1000+90*Math.sin(i*.22)):1050+i*8);
+    const wave=Math.sin(.6+i*.36);
+    const x=shape==='circle'?1500+90*Math.cos(i*.22):shape==='strafe'?1470+52*wave:1400+i*9;
+    const y=shape==='circle'?1000+90*Math.sin(i*.22):shape==='strafe'?1050+35*wave:1050+i*8;
+    packet(playerType,2,1,Math.round(x),Math.round(y));
    }
-   m.aim.refresh();check(m.aim.prediction.valid&&m.aim.prediction.motionModel===(shape==='circle'?'circle':'linear'),'Native slow-cadence '+shape+' prediction failed');
+   m.aim.refresh();
+   check(m.aim.prediction.valid&&m.aim.prediction.motionModel===(shape==='straight'?'linear':shape),'Native slow-cadence '+shape+' prediction failed');
   }
   clock+=500;n.setClock?.(clock);capture.packets.length=0;m.aim.refresh();check(!m.aim.targetPlayer&&!m.controlsAimDirection,'Stale physical target kept angle ownership');
   check(!capture.packets.some(p=>p[0]===4),'Stale target emitted an automatic attack');
-  return {status:'passed',native_weapon_speed_and_range:true,native_projectile_speed:true,native_speed_equality:!!n.projectileSpeedKey,packet_server_positions:true,shooter_and_target_velocity:true,fresh_angle_before_native_attack:true,jitter_priority:true,line_matches_shot:true,stale_target_releases_input:true,cadence_aware_curved_prediction:true,straight_quantization_rejected:true,ak_and_laser_native_profiles:!!n.packet};
+  return {status:'passed',native_weapon_speed_and_range:true,native_projectile_speed:true,native_speed_equality:!!n.projectileSpeedKey,packet_server_positions:true,shooter_and_target_velocity:true,fresh_angle_before_native_attack:true,jitter_priority:true,line_matches_shot:true,stale_target_releases_input:true,cadence_aware_curved_prediction:true,straight_quantization_rejected:true,oscillating_target_prediction:true,ak_and_laser_native_profiles:!!n.packet};
  }finally{capture.restore();Date.now=old.now;performance.now=old.performance;m.settings.AimBotEnabled=false;m.settings.autoFire=false;m.onSessionStart();m.onHandshake();self.id=old.id;n.network.state=old.state;m.reconnect.sessionEnded=old.ended;meta[2]=old.meta;if(n.input)n.input.angle=old.input;Object.assign(m.settings,saved);}
 }
 module.exports={verifyBallistics};

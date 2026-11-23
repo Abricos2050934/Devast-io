@@ -1,0 +1,290 @@
+{
+  "scope": "Current delivered mod with its existing keep-alive setting enabled; standing still for up to 75 seconds; live guest entry",
+  "artifact": "/workspace/Devast-io/artifacts/typescript-2026-11-22/Devast-io-TypeScript.json",
+  "script_sha256": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+  "results": [
+    {
+      "name": "windowed-mod-1",
+      "requestedServer": "Atlanta 1",
+      "scriptHash": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+      "browserMode": {
+        "webdriver": false,
+        "visibility": "visible"
+      },
+      "loaded": true,
+      "joined": false,
+      "sockets": [],
+      "errors": [
+        {
+          "at": 9871,
+          "name": "ReferenceError",
+          "message": "osdlfm is not defined"
+        }
+      ],
+      "failedRequests": {
+        "xhr": 10,
+        "fetch": 18,
+        "image": 2,
+        "script": 6
+      },
+      "resourceErrors": 26,
+      "samples": [],
+      "replacedUrl": "https://devast.io/js/YukAlFEf489QnSaQ.js",
+      "homeStatus": 200,
+      "failedRequestDetails": [
+        {
+          "host": "atlanta4.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "losangeles2.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "frankfurt2.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "osaka1.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "sydney1.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "token.devast.io",
+          "path": "/19568b2807d420e21408a05c",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        }
+      ],
+      "modProof": {
+        "clientLoaded": true,
+        "menu": true,
+        "menus": 1,
+        "build": {
+          "fingerprint": "ba41a16017f0380e85d629134849cbd5a71d26ba312deeb22ea65b203464e646",
+          "nativeSha256": "7a2efe2e7dd21d3d3776a0f4538d5ad7038be3be26566a1ae06060e02e32063a"
+        },
+        "aimSettings": {
+          "enabled": false,
+          "spear": false,
+          "hidePlayerAngle": false,
+          "hideAimbotAngle": false,
+          "source": "message27-bby",
+          "adaptive": true,
+          "jitter": false,
+          "jitterSpeed": 360,
+          "strafe": false,
+          "autoFire": false,
+          "target": "players",
+          "lockId": -1,
+          "distanceCoefficient": 80,
+          "offsetCoefficient": 0.8
+        },
+        "keepAliveEnabled": true
+      },
+      "keepAliveEnabled": true,
+      "selected": "Atlanta 1 - 4 players",
+      "clickedAt": 6046,
+      "httpErrors": [
+        {
+          "host": "tr.blismedia.com",
+          "path": "/v1/api/sync/prebid",
+          "status": 503
+        },
+        {
+          "host": "eb2.3lift.com",
+          "path": "/sync",
+          "status": 503
+        },
+        {
+          "host": "pagead2.googlesyndication.com",
+          "path": "/pagead/managed/js/activeview/current/ufs_web_display.js",
+          "status": 503
+        },
+        {
+          "host": "googleads.g.doubleclick.net",
+          "path": "/xbbe/pixel",
+          "status": 503
+        },
+        {
+          "host": "s0.2mdn.net",
+          "path": "/simgad/10057287576131447862",
+          "status": 503
+        },
+        {
+          "host": "pagead2.googlesyndication.com",
+          "path": "/pagead/js/r20261118/r20110914/elements/html/omrhp_fy2021.js",
+          "status": 503
+        },
+        {
+          "host": "pagead2.googlesyndication.com",
+          "path": "/pagead/js/r20261118/r20110914/abg_lite_fy2021.js",
+          "status": 503
+        },
+        {
+          "host": "tpc.googlesyndication.com",
+          "path": "/pagead/js/r20261118/r20110914/client/qs_click_protection_fy2021.js",
+          "status": 503
+        },
+        {
+          "host": "googleads4.g.doubleclick.net",
+          "path": "/pcs/view",
+          "status": 503
+        },
+        {
+          "host": "ep2.adtrafficquality.google",
+          "path": "/sodar/VFc2VJAc.js",
+          "status": 503
+        },
+        {
+          "host": "tpc.googlesyndication.com",
+          "path": "/pagead/js/r20261118/r20110914/client/window_focus_fy2021.js",
+          "status": 503
+        },
+        {
+          "host": "pagead2.googlesyndication.com",
+          "path": "/pagead/gen_204",
+          "status": 503
+        },
+        {
+          "host": "googleads4.g.doubleclick.net",
+          "path": "/pcs/view",
+          "status": 503
+        },
+        {
+          "host": "pixel.rubiconproject.com",
+          "path": "/exchange/sync.php",
+          "status": 503
+        },
+        {
+          "host": "d.agkn.com",
+          "path": "/pixel/10690/",
+          "status": 503
+        },
+        {
+          "host": "ads.pubmatic.com",
+          "path": "/AdServer/js/user_sync.html",
+          "status": 503
+        },
+        {
+          "host": "hbx.media.net",
+          "path": "/checksync.php",
+          "status": 503
+        },
+        {
+          "host": "eb2.3lift.com",
+          "path": "/sync",
+          "status": 503
+        },
+        {
+          "host": "ads.pubmatic.com",
+          "path": "/AdServer/js/user_sync.html",
+          "status": 503
+        },
+        {
+          "host": "js-sec.indexww.com",
+          "path": "/um/ixmatch.html",
+          "status": 503
+        },
+        {
+          "host": "eus.rubiconproject.com",
+          "path": "/usync.html",
+          "status": 503
+        },
+        {
+          "host": "match.adsrvr.org",
+          "path": "/track/usersync",
+          "status": 503
+        },
+        {
+          "host": "scripts.opti-digital.com",
+          "path": "/js/presync.html",
+          "status": 503
+        },
+        {
+          "host": "elb.the-ozone-project.com",
+          "path": "/static/load-cookie.html",
+          "status": 503
+        }
+      ],
+      "final": {
+        "menu": true,
+        "state": 0,
+        "socketState": null,
+        "playerAssigned": false,
+        "playerId": -1,
+        "ownActive": false,
+        "ended": false,
+        "integrityFlag": 0,
+        "modErrorCount": 0,
+        "failureCode": 0,
+        "automation": {
+          "autoBuild": false,
+          "fastLoot": false,
+          "slowLoot": false,
+          "autoTake": false,
+          "spamChat": false
+        },
+        "combat": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        },
+        "wireTraffic": {
+          "packets": 0,
+          "bytes": 0
+        },
+        "aimSettings": {
+          "enabled": false,
+          "spear": false,
+          "hidePlayerAngle": false,
+          "hideAimbotAngle": false,
+          "source": "message27-bby",
+          "adaptive": true,
+          "jitter": false,
+          "jitterSpeed": 360,
+          "strafe": false,
+          "autoFire": false,
+          "target": "players",
+          "lockId": -1,
+          "distanceCoefficient": 80,
+          "offsetCoefficient": 0.8
+        },
+        "self": {
+          "x": 0,
+          "y": 0
+        },
+        "events": [
+          {
+            "type": "entry-timeout",
+            "at": 22418,
+            "health": 0,
+            "state": 0,
+            "flag": 0,
+            "commands": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            }
+          }
+        ]
+      },
+      "secondsAfterJoin": null,
+      "minutePassed": false,
+      "elapsedMs": 43023
+    }
+  ]
+}

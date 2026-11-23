@@ -24,8 +24,10 @@ function surfaces(a){
   const allowed=new Set(reads.map(r=>r.id)),writers=[];let valid=true;
   for(const n of refs.get(b)||[]){const p=a.parent.get(n);
    if(p.type==='VariableDeclarator'&&p.id===n)continue;
-   if(p.type==='AssignmentExpression'&&p.left===n&&p.operator==='='){
-    const v=a.constant(p.right);if(v!==undefined&&v!==1){valid=false;break;}writers.push(p);continue;
+   if(p.type==='AssignmentExpression'&&p.left===n&&['=','-='].includes(p.operator)){
+    // The current native checker also subtracts its computed result. Treat
+    // that target as a writer, preserving the whole native expression.
+    const v=a.constant(p.right);if(p.operator==='='&&v!==undefined&&v!==1){valid=false;break;}writers.push(p);continue;
    }
    if(!allowed.has(n)){valid=false;break;}
   }

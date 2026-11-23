@@ -1,0 +1,281 @@
+{
+  "scope": "Current delivered mod with its existing keep-alive setting enabled; standing still for up to 75 seconds; live guest entry",
+  "artifact": "/workspace/Devast-io/artifacts/typescript-2026-11-22/Devast-io-TypeScript.json",
+  "script_sha256": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+  "results": [
+    {
+      "name": "typescript-1",
+      "requestedServer": "Atlanta 1",
+      "scriptHash": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+      "loaded": false,
+      "joined": false,
+      "sockets": [],
+      "errors": [
+        {
+          "at": 31284,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31285,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31285,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31287,
+          "name": "ReferenceError",
+          "message": "Widget is not defined"
+        },
+        {
+          "at": 31666,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31725,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31725,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31725,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31725,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31725,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31782,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31782,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31782,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31784,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31785,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31785,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31792,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31792,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31792,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31792,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31793,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31793,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31793,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 31793,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        }
+      ],
+      "failedRequests": {
+        "stylesheet": 3,
+        "script": 3
+      },
+      "resourceErrors": 258,
+      "samples": [],
+      "httpErrors": [
+        {
+          "host": "devast.io",
+          "path": "/",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/",
+          "status": 503
+        },
+        {
+          "host": "fonts.googleapis.com",
+          "path": "/css",
+          "status": 503
+        },
+        {
+          "host": "fonts.googleapis.com",
+          "path": "/css",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/css/style.css",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/currency-48.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/changelog-33.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/inv-cooked-steak-out.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/inv-campfire-bbq-out.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/inv-radaway-out.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/inv-wood-door-out.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/inv-sleeping-bag-out.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/currency-128.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/caps-icon.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/badge-ui-7.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/inv-landmine-out.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/shop-currency.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/changelog-33-color.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/chest1.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/settings-out.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/inv-cable-uran-wall-out.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/inv-stone-door-out.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/inv-automatic-uran-door-out.png",
+          "status": 503
+        },
+        {
+          "host": "devast.io",
+          "path": "/img/map-machine-button-out.png",
+          "status": 503
+        }
+      ],
+      "replacedUrl": "https://devast.io/js/YukAlFEf489QnSaQ.js",
+      "homeStatus": 200,
+      "error": "page.waitForFunction: Timeout 30000ms exceeded.",
+      "failureState": {
+        "servers": [
+          "Auto Select Server",
+          "All servers - 0 players"
+        ],
+        "modLoaded": true,
+        "nicknameVisible": true,
+        "canvasSize": [
+          1280,
+          800
+        ]
+      },
+      "elapsedMs": 62153
+    }
+  ]
+}

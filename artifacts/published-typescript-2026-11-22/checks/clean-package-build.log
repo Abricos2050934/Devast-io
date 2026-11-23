@@ -1,0 +1,53 @@
+
+> devast-published-mod-typescript@1.0.0 build
+> node tools/build_published_mod.cjs
+
+{
+  "status": "passed",
+  "source_url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/client.js",
+  "typescript": "5.9.3",
+  "strict": true,
+  "scope": "published owned mod and loader; native game and vendor remain JavaScript",
+  "typing": "Dynamic legacy internals use explicit PublishedDynamic (any); strict checking does not prove their runtime safety.",
+  "source_sha256": "bf91326621e60655629bb2bfc27e101261c8acb99fda16342f286e248ddb2e07",
+  "output_sha256": "bf91326621e60655629bb2bfc27e101261c8acb99fda16342f286e248ddb2e07",
+  "functions_preserved": 357,
+  "fragments": [
+    {
+      "file": "published-mod/core.ts",
+      "functions": 138,
+      "all_functions_preserved": true,
+      "byte_identical_javascript": true,
+      "source_sha256": "5b7acead3d2dfa2ef39daffbe4f0ece6dbb1de9f0649e79e2b439d0735fa7b70",
+      "javascript_sha256": "f68912177d9f98479698a3543f797388b5761b21d26a3782f899f4f9ebb1c983"
+    },
+    {
+      "file": "published-mod/host.ts",
+      "functions": 208,
+      "all_functions_preserved": true,
+      "byte_identical_javascript": true,
+      "source_sha256": "07fc508e0936cc62aec6edd236e5c1a725de4c11ef1d4ab3124e4554c2b22d71",
+      "javascript_sha256": "8927092fe3e6da337294e63ccf42fa8f1127da79b760d112f65d6c863efe0000"
+    },
+    {
+      "file": "published-mod/bootstrap.ts",
+      "functions": 11,
+      "all_functions_preserved": true,
+      "byte_identical_javascript": true,
+      "source_sha256": "1a549380ecb08df2f120da45ecda6983f57c7b6d186e0114f6b1e1302027ecf1",
+      "javascript_sha256": "3b2662f414349f0b8673c28294f0ee751c4a7c476ce00931f6b1bf700ecd54c4"
+    }
+  ],
+  "loader": {
+    "file": "resource-override/loader.ts",
+    "byte_identical_javascript": true
+  },
+  "native_and_vendor_unchanged": true,
+  "publication": "not_published",
+  "live_server_test": "not_run; this migration preserves published runtime bytes"
+}
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice

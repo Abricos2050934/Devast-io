@@ -1,0 +1,287 @@
+{
+  "scope": "Current delivered mod with its existing keep-alive setting enabled; standing still for up to 75 seconds; live guest entry",
+  "artifact": "/workspace/Devast-io/artifacts/typescript-2026-11-22/Devast-io-TypeScript.json",
+  "script_sha256": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+  "results": [
+    {
+      "name": "windowed-mod-1",
+      "requestedServer": "Atlanta 2",
+      "scriptHash": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+      "loaded": true,
+      "joined": false,
+      "sockets": [],
+      "errors": [
+        {
+          "at": 15406,
+          "name": "",
+          "message": "7"
+        }
+      ],
+      "failedRequests": {
+        "xhr": 7,
+        "fetch": 8,
+        "image": 3,
+        "media": 1,
+        "script": 3
+      },
+      "resourceErrors": 24,
+      "samples": [],
+      "replacedUrl": "https://devast.io/js/YukAlFEf489QnSaQ.js",
+      "homeStatus": 200,
+      "failedRequestDetails": [
+        {
+          "host": "atlanta1.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "losangeles3.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "frankfurt4.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "osaka2.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "sydney2.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "token.devast.io",
+          "path": "/19568b2807d420e21408a05c",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        }
+      ],
+      "modProof": {
+        "clientLoaded": true,
+        "menu": true,
+        "menus": 1,
+        "build": {
+          "fingerprint": "ba41a16017f0380e85d629134849cbd5a71d26ba312deeb22ea65b203464e646",
+          "nativeSha256": "7a2efe2e7dd21d3d3776a0f4538d5ad7038be3be26566a1ae06060e02e32063a"
+        },
+        "aimSettings": {
+          "enabled": false,
+          "spear": false,
+          "hidePlayerAngle": false,
+          "hideAimbotAngle": false,
+          "source": "message27-bby",
+          "adaptive": true,
+          "jitter": false,
+          "jitterSpeed": 360,
+          "strafe": false,
+          "autoFire": false,
+          "target": "players",
+          "lockId": -1,
+          "distanceCoefficient": 80,
+          "offsetCoefficient": 0.8
+        },
+        "keepAliveEnabled": true
+      },
+      "keepAliveEnabled": true,
+      "selected": "Atlanta 2 - 7 players",
+      "clickedAt": 6727,
+      "httpErrors": [
+        {
+          "host": "pagead2.googlesyndication.com",
+          "path": "/pagead/gen_204",
+          "status": 503
+        },
+        {
+          "host": "googleads.g.doubleclick.net",
+          "path": "/pagead/interaction/",
+          "status": 503
+        },
+        {
+          "host": "pubads.g.doubleclick.net",
+          "path": "/pagead/adview",
+          "status": 503
+        },
+        {
+          "host": "googleads.g.doubleclick.net",
+          "path": "/pagead/interaction/",
+          "status": 503
+        },
+        {
+          "host": "pagead2.googlesyndication.com",
+          "path": "/pagead/gen_204",
+          "status": 503
+        },
+        {
+          "host": "secure.flashtalking.com",
+          "path": "/oba/icon/consumer-privacy-logo-16.png",
+          "status": 503
+        },
+        {
+          "host": "cdn.flashtalking.com",
+          "path": "/oba/icon/iconc.png",
+          "status": 503
+        },
+        {
+          "host": "cdn.flashtalking.com",
+          "path": "/244947/FY26Q4_DC_AcrobatDC_AcrobatDC_us_en_DTWA_VID_1920x1080_Stylize_NA_NA_Studio_NA_NA_NA_Sept9Release_NA_30s_72StylizeV2_1920_1080_15100_2398_256_48000_-22.mp4",
+          "status": 503
+        },
+        {
+          "host": "pagead2.googlesyndication.com",
+          "path": "/pagead/gen_204",
+          "status": 503
+        },
+        {
+          "host": "googleads.g.doubleclick.net",
+          "path": "/pagead/interaction/",
+          "status": 503
+        },
+        {
+          "host": "ep1.adtrafficquality.google",
+          "path": "/bg/L8uTFvrF0r1nK0gwqXb4ldkGoza4Pgo55Cqe59VPgRk.js",
+          "status": 503
+        },
+        {
+          "host": "ajs-assets.ftstatic.com",
+          "path": "/ftUtils.js",
+          "status": 503
+        },
+        {
+          "host": "ep1.adtrafficquality.google",
+          "path": "/pagead/gen_204",
+          "status": 503
+        },
+        {
+          "host": "securepubads.g.doubleclick.net",
+          "path": "/pagead/adview",
+          "status": 503
+        },
+        {
+          "host": "pagead2.googlesyndication.com",
+          "path": "/pagead/gen_204",
+          "status": 503
+        },
+        {
+          "host": "eb2.3lift.com",
+          "path": "/sync",
+          "status": 503
+        },
+        {
+          "host": "match.adsrvr.org",
+          "path": "/track/usersync",
+          "status": 503
+        },
+        {
+          "host": "eus.rubiconproject.com",
+          "path": "/usync.html",
+          "status": 503
+        },
+        {
+          "host": "ads.pubmatic.com",
+          "path": "/AdServer/js/user_sync.html",
+          "status": 503
+        },
+        {
+          "host": "prebid.a-mo.net",
+          "path": "/isyn",
+          "status": 503
+        },
+        {
+          "host": "js-sec.indexww.com",
+          "path": "/um/ixmatch.html",
+          "status": 503
+        },
+        {
+          "host": "scripts.opti-digital.com",
+          "path": "/js/presync.html",
+          "status": 503
+        },
+        {
+          "host": "acdn.adnxs.com",
+          "path": "/dmp/async_usersync.html",
+          "status": 503
+        },
+        {
+          "host": "elb.the-ozone-project.com",
+          "path": "/cookie_sync",
+          "status": 503
+        }
+      ],
+      "final": {
+        "menu": true,
+        "state": 0,
+        "socketState": null,
+        "playerAssigned": false,
+        "playerId": -1,
+        "ownActive": false,
+        "ended": false,
+        "integrityFlag": 0,
+        "modErrorCount": 0,
+        "failureCode": 0,
+        "automation": {
+          "autoBuild": false,
+          "fastLoot": false,
+          "slowLoot": false,
+          "autoTake": false,
+          "spamChat": false
+        },
+        "combat": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        },
+        "wireTraffic": {
+          "packets": 0,
+          "bytes": 0
+        },
+        "aimSettings": {
+          "enabled": false,
+          "spear": false,
+          "hidePlayerAngle": false,
+          "hideAimbotAngle": false,
+          "source": "message27-bby",
+          "adaptive": true,
+          "jitter": false,
+          "jitterSpeed": 360,
+          "strafe": false,
+          "autoFire": false,
+          "target": "players",
+          "lockId": -1,
+          "distanceCoefficient": 80,
+          "offsetCoefficient": 0.8
+        },
+        "self": {
+          "x": 0,
+          "y": 0
+        },
+        "events": [
+          {
+            "type": "entry-timeout",
+            "at": 27591,
+            "health": 0,
+            "state": 0,
+            "flag": 0,
+            "commands": {
+              "angle": 0,
+              "attack": 0,
+              "release": 0
+            }
+          }
+        ]
+      },
+      "secondsAfterJoin": null,
+      "minutePassed": false,
+      "elapsedMs": 43773
+    }
+  ]
+}

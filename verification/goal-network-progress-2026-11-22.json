@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "blocked_consecutive_goal_turns": 3,
+  "turns": [
+    {
+      "at": "2026-11-22T16:05:33.877700+00:00",
+      "meaningful_progress": false,
+      "checks": [
+        "artifacts/goal-network-recheck-2026-11-22/source-check.json",
+        "artifacts/goal-network-recheck-2026-11-22/retry.json"
+      ]
+    },
+    {
+      "at": "2026-11-22T16:07:21.593866+00:00",
+      "meaningful_progress": false,
+      "checks": [
+        "artifacts/goal-network-recheck-2026-11-22/second-turn.json",
+        "artifacts/goal-network-recheck-2026-11-22/second-turn-www.json"
+      ]
+    },
+    {
+      "at": "2026-11-22T16:08:14.647670+00:00",
+      "meaningful_progress": false,
+      "checks": [
+        "artifacts/goal-network-recheck-2026-11-22/third-turn.json"
+      ]
+    }
+  ],
+  "goal_active": false,
+  "blocker": "Fresh official page returns HTTP 503 with upstream connection failure; no live session can be measured",
+  "minute_confirmed": false,
+  "publication": "not_published",
+  "status": "blocked",
+  "required_external_change": "Restore access to the official game page and token service from this environment"
+}

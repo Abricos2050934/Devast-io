@@ -1,0 +1,37 @@
+
+> devast-verified-typescript-mod@1.0.0 test
+> node --test tests/typescript.test.cjs tests/video-prediction.test.cjs
+
+✔ all owned TypeScript fragments pass strict checking and reproduce the JS used by the game (3734.543777ms)
+✔ type erasure preserves conditional operators, optional parameters and runtime token boundaries (1.976519ms)
+✔ public mod types reject invalid settings, packets and failed prediction use (482.472098ms)
+✔ type errors and disabled checks preserve all previous generated JavaScript (7939.610144ms)
+✔ screenshot defaults remain explicit configured values until genuine RTT samples exist (5.082906ms)
+✔ the RTT window keeps the latest 125 samples and reflects a changed window immediately (1.311136ms)
+✔ invalid, stale and previous-clock RTT data cannot become measured lead (1.633923ms)
+✔ receipt age and user compensation are counted exactly once in the launch time (2.08528ms)
+✔ video prediction intercepts independent motion at 500 units/s (3.028413ms)
+✔ video prediction intercepts independent motion at 1400 units/s (1.113324ms)
+✔ video prediction intercepts independent motion at 1450 units/s (1.320511ms)
+✔ measured latency reduces the miss in a delayed crossing compared with uncompensated aim (2.28204ms)
+✔ step count controls actual refinement work; an insufficient approximation uses the exact fallback (1.401239ms)
+✔ spear lateral launch geometry intersects the target along the actual projectile ray (1.721653ms)
+✔ unreachable, stale and invalid profiles never manufacture a shot (1.038353ms)
+✔ the installed spear path uses the video model and sends its corrected angle before native fire (17.341926ms)
+✔ video mode holds a valid target, obeys explicit lock and releases removed targets (8.810492ms)
+✔ RTT ingestion adds no packets and resets on a new socket or session (4.413669ms)
+✔ video settings are editable through the menu, bounded and saved (6.725132ms)
+✔ the portable browser verifier exercises the installed video mode (9.40581ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12471.256914
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice

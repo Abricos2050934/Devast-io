@@ -27,6 +27,7 @@ function assemble(baseline, profile, symbols, payload, bootstrap, gui, aim = '')
   return source;
 }
 function build() {
+  require('./compile_mod.cjs').compile();
   const read = file => fs.readFileSync(path.join(root,file),'utf8');
   const snapshot=JSON.parse(read('baselines/latest.json'));
   const candidate=zlib.gunzipSync(fs.readFileSync(path.join(root,snapshot.baseline))).toString();

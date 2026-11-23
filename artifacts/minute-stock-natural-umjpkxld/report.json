@@ -1,0 +1,171 @@
+{
+  "scope": "Current delivered mod with its existing keep-alive setting enabled; standing still for up to 75 seconds; live guest entry",
+  "artifact": "/workspace/Devast-io/artifacts/typescript-2026-11-22/Devast-io-TypeScript.json",
+  "script_sha256": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+  "results": [
+    {
+      "name": "windowed-stock-1",
+      "requestedServer": "Atlanta 1",
+      "scriptHash": null,
+      "browserMode": {
+        "webdriver": false,
+        "visibility": "visible",
+        "innerWidth": 1280,
+        "innerHeight": 800,
+        "outerWidth": 1280,
+        "outerHeight": 887,
+        "screenWidth": 1280,
+        "screenHeight": 1024
+      },
+      "loaded": true,
+      "joined": false,
+      "sockets": [],
+      "errors": [
+        {
+          "at": 10653,
+          "name": "TypeError",
+          "message": "Cannot read properties of undefined (reading 'close')"
+        }
+      ],
+      "failedRequests": {
+        "xhr": 9,
+        "fetch": 32,
+        "image": 3,
+        "script": 2,
+        "document": 1
+      },
+      "resourceErrors": 16,
+      "samples": [],
+      "homeStatus": 200,
+      "failedRequestDetails": [
+        {
+          "host": "atlanta4.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "losangeles1.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "frankfurt3.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "osaka1.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "sydney3.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "token.devast.io",
+          "path": "/19568b2807d420e21408a05c",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        }
+      ],
+      "selected": "Atlanta 1 - 4 players",
+      "clickedAt": 7845,
+      "httpErrors": [
+        {
+          "host": "fundingchoicesmessages.google.com",
+          "path": "/i/21726375739",
+          "status": 503
+        },
+        {
+          "host": "8c0941da54a9e277155a623370c94da3.safeframe.googlesyndication.com",
+          "path": "/safeframe/1-0-45/html/container.html",
+          "status": 503
+        },
+        {
+          "host": "invstatic101.creativecdn.com",
+          "path": "/encrypted-signals/encrypted-tag-g.js",
+          "status": 503
+        },
+        {
+          "host": "sync.1rx.io",
+          "path": "/usersync2/rmphb",
+          "status": 503
+        },
+        {
+          "host": "hbx.media.net",
+          "path": "/checksync.php",
+          "status": 503
+        },
+        {
+          "host": "ssum-sec.casalemedia.com",
+          "path": "/usermatchredir",
+          "status": 503
+        },
+        {
+          "host": "ib.adnxs.com",
+          "path": "/getuid",
+          "status": 503
+        },
+        {
+          "host": "eb2.3lift.com",
+          "path": "/sync",
+          "status": 503
+        },
+        {
+          "host": "match.adsrvr.org",
+          "path": "/track/usersync",
+          "status": 503
+        },
+        {
+          "host": "eus.rubiconproject.com",
+          "path": "/usync.html",
+          "status": 503
+        },
+        {
+          "host": "acdn.adnxs.com",
+          "path": "/dmp/async_usersync.html",
+          "status": 503
+        },
+        {
+          "host": "js-sec.indexww.com",
+          "path": "/um/ixmatch.html",
+          "status": 503
+        },
+        {
+          "host": "elb.the-ozone-project.com",
+          "path": "/static/load-cookie.html",
+          "status": 503
+        },
+        {
+          "host": "ads.pubmatic.com",
+          "path": "/AdServer/js/user_sync.html",
+          "status": 503
+        },
+        {
+          "host": "scripts.opti-digital.com",
+          "path": "/js/presync.html",
+          "status": 503
+        },
+        {
+          "host": "prebid.a-mo.net",
+          "path": "/isyn",
+          "status": 503
+        }
+      ],
+      "final": {
+        "menu": true
+      },
+      "secondsAfterJoin": null,
+      "stockMinutePassed": false,
+      "minutePassed": false,
+      "elapsedMs": 100447
+    }
+  ]
+}

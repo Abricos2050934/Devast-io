@@ -1,0 +1,264 @@
+{
+  "schema": 1,
+  "scope": "Control: unmodified official JS; live HTML, token service and game server; stationary observation; continue passive recording for 8 seconds after the death packet; no automatic rejoin after join; no page evaluation before the session ends",
+  "artifact": "Unmodified official game JS",
+  "sha256": null,
+  "joined": false,
+  "minutePassed": false,
+  "sockets": [],
+  "replacements": 0,
+  "networkErrors": [
+    {
+      "host": "ssbsync-global.smartadserver.com",
+      "path": "/api/sync",
+      "status": 403
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "ep2.adtrafficquality.google",
+      "path": "/sodar/VFc2VJAc.js",
+      "status": 503
+    },
+    {
+      "host": "servedby.flashtalking.com",
+      "path": "/imp/8/225407;11259148;201;jsappend;DV360;DV360FY24AcrobatDemandGenPSPWorkingProfessionalsGenPres20USDSKAN970x250DTWA/",
+      "status": 503
+    },
+    {
+      "host": "ib.adnxs.com",
+      "path": "/getuid",
+      "status": 503
+    },
+    {
+      "host": "eb2.3lift.com",
+      "path": "/sync",
+      "status": 503
+    },
+    {
+      "host": "pixel.rubiconproject.com",
+      "path": "/exchange/sync.php",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pcs/activeview",
+      "status": 503
+    },
+    {
+      "host": "eb2.3lift.com",
+      "path": "/sync",
+      "status": 503
+    },
+    {
+      "host": "elb.the-ozone-project.com",
+      "path": "/static/load-cookie.html",
+      "status": 503
+    },
+    {
+      "host": "eus.rubiconproject.com",
+      "path": "/usync.html",
+      "status": 503
+    },
+    {
+      "host": "acdn.adnxs.com",
+      "path": "/dmp/async_usersync.html",
+      "status": 503
+    },
+    {
+      "host": "js-sec.indexww.com",
+      "path": "/um/ixmatch.html",
+      "status": 503
+    },
+    {
+      "host": "match.adsrvr.org",
+      "path": "/track/usersync",
+      "status": 503
+    },
+    {
+      "host": "ads.pubmatic.com",
+      "path": "/AdServer/js/user_sync.html",
+      "status": 503
+    },
+    {
+      "host": "scripts.opti-digital.com",
+      "path": "/js/presync.html",
+      "status": 503
+    },
+    {
+      "host": "prebid.a-mo.net",
+      "path": "/isyn",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/osd.js",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "securepubads.g.doubleclick.net",
+      "path": "/pagead/adview",
+      "status": 503
+    },
+    {
+      "host": "fundingchoicesmessages.google.com",
+      "path": "/f/AGSKWxWLGnkzOecr51tpi5wBP2VG8gAk3vQAmQWlMd9BYZ9LnOf1f2rZpVlbAAOonozqFHYJvG0G49tCBDW59GAczBczHh6gE7hFL_8xorOHMdhpdmX8Vq97XobzYdtddCUwqdao3aFPCw==",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    }
+  ],
+  "navigationAttempts": 1,
+  "homeStatus": 200,
+  "officialJS": {
+    "path": "/js/y6fopeDaqhW3Gwmo2uwu3ccFWsO.js",
+    "status": 200,
+    "requestId": "57127.5",
+    "sha256": "0dc231177bf7842d51832a1ca6f45e8d0d0d18c78f62994dc2b702b4182755a9",
+    "bytes": 6933586
+  },
+  "optionCount": 11,
+  "options": [
+    "Auto Select Server",
+    "Atlanta 1 - 7 players",
+    "Atlanta 2 - 10 players",
+    "Frankfurt 1 - 66 players",
+    "Frankfurt 2 - 22 players",
+    "Losangeles 1 - 5 players",
+    "Losangeles 2 - 6 players",
+    "Osaka 1 - 5 players",
+    "Osaka 2 - 3 players",
+    "Sydney 1 - 4 players",
+    "Sydney 2 - 7 players"
+  ],
+  "chosenLabel": "Frankfurt 1 - 66 players",
+  "stage": "before-entry",
+  "nativeRequestFailures": [
+    {
+      "host": "atlanta2.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "losangeles3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "frankfurt2.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "osaka3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "sydney3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "token.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "token.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "token.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    }
+  ],
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "playCoordinates": {
+    "x": 644,
+    "y": 356
+  },
+  "playClicks": 3,
+  "error": "No playable server handshake arrived",
+  "errorStack": "Error: No playable server handshake arrived\n    at /workspace/Devast-io/artifacts/clean-client-close-observation-1795354293/check.cjs:74:27",
+  "failureState": {
+    "loaded": false
+  },
+  "elapsedMs": 133524
+}

@@ -1,0 +1,28 @@
+✔ all owned TypeScript fragments pass strict checking and reproduce the JS used by the game (5237.932146ms)
+✔ type erasure preserves conditional operators, optional parameters and runtime token boundaries (1.755123ms)
+✔ public mod types reject invalid settings, packets and failed prediction use (486.917859ms)
+✔ type errors and disabled checks preserve all previous generated JavaScript (7063.380949ms)
+✔ screenshot defaults remain explicit configured values until genuine RTT samples exist (6.950906ms)
+✔ the RTT window keeps the latest 125 samples and reflects a changed window immediately (1.356333ms)
+✔ invalid, stale and previous-clock RTT data cannot become measured lead (1.605882ms)
+✔ receipt age and user compensation are counted exactly once in the launch time (2.367206ms)
+✔ video prediction intercepts independent motion at 500 units/s (6.257092ms)
+✔ video prediction intercepts independent motion at 1400 units/s (0.8325ms)
+✔ video prediction intercepts independent motion at 1450 units/s (1.680562ms)
+✔ measured latency reduces the miss in a delayed crossing compared with uncompensated aim (2.556606ms)
+✔ step count controls actual refinement work; an insufficient approximation uses the exact fallback (11.678609ms)
+✔ spear lateral launch geometry intersects the target along the actual projectile ray (1.033286ms)
+✔ unreachable, stale and invalid profiles never manufacture a shot (2.089266ms)
+✔ the installed spear path uses the video model and sends its corrected angle before native fire (20.534368ms)
+✔ video mode holds a valid target, obeys explicit lock and releases removed targets (6.897397ms)
+✔ RTT ingestion adds no packets and resets on a new socket or session (9.286506ms)
+✔ video settings are editable through the menu, bounded and saved (8.879996ms)
+✔ the portable browser verifier exercises the installed video mode (17.92243ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13294.702958

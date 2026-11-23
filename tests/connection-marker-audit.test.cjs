@@ -22,3 +22,16 @@ test('native marker fixture preserves computed server selection and detects the 
  assert.equal(probe.evidence.xor_key,29);
  assert.ok(!probe.code.includes('Do not construct a socket'));
 });
+test('native marker fixture keeps a prologue and nested branch before the result',()=>{
+ const table=[...'__autoPortAimbotPacketTransport'].map(c=>c.charCodeAt(0)^29);
+ const source=`const browser=window,storage=localStorage;function connect(){const enabled=1;if(enabled===1){var server=network.selected;var table=[${JSON.stringify(table)}];var flag=!(browser[table[0].map(c=>String.fromCharCode(c^29)).join('')]||storage.getItem('BestModMenuConfig'))?0:1;throw Error('Socket must never be constructed');}}`;
+ const probe=connectionMarkerProbe(readonlyConstants(analyze(source)),'network');let saved=null;const context={window:{},localStorage:{getItem:()=>saved}};
+ assert.equal(vm.runInNewContext('(function(){'+probe.code+'})()',context),0);
+ saved='{}';assert.equal(vm.runInNewContext('(function(){'+probe.code+'})()',context),1);
+ assert.ok(!probe.code.includes('Socket must never be constructed'));
+});
+test('an ambiguous native marker result is still rejected',()=>{
+ const table=[...'__autoPortAimbotPacketTransport'].map(c=>c.charCodeAt(0)^29);
+ const source=`const browser=window,storage=localStorage;function connect(){var table=[${JSON.stringify(table)}];var first=browser.mark?0:1;var second=storage.getItem('marker')?0:1;}`;
+ assert.throws(()=>connectionMarkerProbe(readonlyConstants(analyze(source)),'network'),/Unique native connection check result/);
+});

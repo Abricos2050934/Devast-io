@@ -1,0 +1,8 @@
+{
+  "checkedAt": "2026-11-22T16:12:15.321Z",
+  "browser": "151.0.7922.34",
+  "mode": "Documented Playwright Chromium binary; regular browser process, proxy and TLS verification retained",
+  "homeStatus": 503,
+  "upstreamConnectionFailure": true,
+  "error": "Official page HTTP 503"
+}

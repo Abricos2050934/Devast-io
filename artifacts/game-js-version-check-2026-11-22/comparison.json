@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-11-22T17:50:17.152Z",
+  "site_page": "https://devast.io/",
+  "current_game": {
+    "script_url": "https://devast.io/js/3oWGwU3JSSc3m5H2tqZH.js",
+    "http": 200,
+    "sha256": "23ba2fee267d0d97af2150d7a1d60e3bf60213737e95c82ac602526f951fdde6",
+    "bytes": 7126059,
+    "syntax": "valid JavaScript"
+  },
+  "last_delivered_json": {
+    "file": "artifacts/verified-typescript-2026-11-22/Devast-io-TypeScript-Verified.json",
+    "game_source_url": "https://devast.io/js/YukAlFEf489QnSaQ.js",
+    "native_sha256": "7a2efe2e7dd21d3d3776a0f4538d5ad7038be3be26566a1ae06060e02e32063a"
+  },
+  "auto_update": {
+    "url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/client.js",
+    "http": 200,
+    "sha256": "bf91326621e60655629bb2bfc27e101261c8acb99fda16342f286e248ddb2e07",
+    "build": {
+      "fingerprint": "6044f45d7e5f18393a30842ecd0ec5bc6e90da313c92d72656bc5a213f46659e",
+      "nativeSha256": "7a2efe2e7dd21d3d3776a0f4538d5ad7038be3be26566a1ae06060e02e32063a"
+    },
+    "unchanged_from_published_snapshot": true
+  },
+  "result": "The last delivered JSON and published auto-update client target the previous native game script; they have not been ported to the game script currently referenced by the site.",
+  "publication": "not_published"
+}

@@ -1,0 +1,4631 @@
+{
+  "date_utc": "2026-11-21",
+  "scope": "Own shipped runtime modules, bootstrap, loader and their callbacks",
+  "source_commit": "99d06dcb4d38b200c2538a2e9070fe060411b85c",
+  "scope_limits": [
+    "The native game and dat.GUI library are exercised through the existing integration checks. Their entire source is outside this function inventory.",
+    "A static review and passing tests do not determine a hidden server-side kick reason.",
+    "The inventory lists functions and callbacks. It does not claim every possible execution path was dynamically exercised."
+  ],
+  "modules": [
+    {
+      "file": "mod/responsive.js",
+      "sha256": "0b5bc455a79d1a5754490485b1f88779639e2b822369930954741ecf2539f700",
+      "functionExpressions": 212,
+      "embeddedModelCopies": 0
+    },
+    {
+      "file": "mod/ilm-aim.js",
+      "sha256": "6db11f6e828a7e9b798f39d908eeb13f646465301fd24124159253089876f632",
+      "functionExpressions": 139,
+      "embeddedModelCopies": 20
+    },
+    {
+      "file": "mod/ballistic-model.js",
+      "sha256": "d3b5c075b1db229e12a86d5db7731d0138a961eaa51d4116142eba2b478a9e7c",
+      "functionExpressions": 20,
+      "embeddedModelCopies": 0
+    },
+    {
+      "file": "mod/bootstrap.js",
+      "sha256": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
+      "functionExpressions": 11,
+      "embeddedModelCopies": 0
+    },
+    {
+      "file": "resource-override/loader.js",
+      "sha256": "345faf124ba5a8858e60c952ea7cc85d401314ede59109b7cb5782bd45db1b9a",
+      "functionExpressions": 1,
+      "embeddedModelCopies": 0
+    }
+  ],
+  "functions": [
+    {
+      "module": "mod/responsive.js",
+      "name": "__installDevastMod",
+      "scope": "",
+      "line": 1,
+      "endLine": 2592,
+      "source_sha256": "dd32810de840d535940244a2f6ddb0eb51eb29a3b4986bfd5d85ceaa2aa33bfd",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "local_storage",
+        "timer_schedule"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "calculateDistance",
+      "scope": "__installDevastMod",
+      "line": 5,
+      "endLine": 7,
+      "source_sha256": "52047fa093160ffeeafb64adddbf3ab833bd2552120abb51d5cf7dfc11169547",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "constructor",
+      "scope": "__installDevastMod",
+      "line": 9,
+      "endLine": 53,
+      "source_sha256": "5658d755c7fdf0b199725f7c3053df6b03b00cfa77ef100aa8da0e79cfa18015",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 59,
+      "endLine": 59,
+      "source_sha256": "d89e3f4c27b0c7ac88ea440d1998f6ae280b7116b18f38f9d5e36f15110aae32",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "validateSetting",
+      "scope": "__installDevastMod",
+      "line": 66,
+      "endLine": 74,
+      "source_sha256": "fe1c55578e49587c408e4aad0306e1ac9521644da73f4e1fbce791206cfcd409",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 97,
+      "endLine": 97,
+      "source_sha256": "77bf493b962ed28ba731283cbc3d3c90a272236865e5f6f806333524093f8abb",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 97,
+      "endLine": 97,
+      "source_sha256": "be71eea2b21e0b4187a90ff815def08768a45795689a79c24d046a399ebf0464",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 750,
+      "endLine": 753,
+      "source_sha256": "23bbb797d4db9cbca57282a891977af881000f7677ef525559a4926744430e70",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 760,
+      "endLine": 789,
+      "source_sha256": "5e5b3049496229d4eb962043aa1b2af8f8e2ec19a017c211b22c9388cf6e2b68",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "local_storage"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/callback",
+      "line": 763,
+      "endLine": 763,
+      "source_sha256": "69b35511fa91bd4bfb6f1e11c313cebcf1e6a0e75be42d8ce5490eb1e82679ad",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "local_storage"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/callback",
+      "line": 763,
+      "endLine": 763,
+      "source_sha256": "c90d7dab2368c32253a4341008d91fc5226f4960332881234acfd340777cd9a1",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/callback",
+      "line": 772,
+      "endLine": 772,
+      "source_sha256": "5aafbf6f27aa3565bf7c730577b7bfd137f03bd6cb9b7ee8842737939a6fa1e7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "refreshLootFilter",
+      "scope": "__installDevastMod",
+      "line": 791,
+      "endLine": 794,
+      "source_sha256": "74231c443488baf4797703024d4a6efc083809a5aad40ea50c617d6292f06541",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 796,
+      "endLine": 796,
+      "source_sha256": "f5d20c2cc63b858ea09f4d37bf7a59055d66c85c10132fdf520fde77c1645067",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "selfId",
+      "scope": "__installDevastMod",
+      "line": 801,
+      "endLine": 801,
+      "source_sha256": "44474c8f5ba46d63bc65e98b9113e215cfbbef3142fbe410c9abefed5084c07a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "selfPosition",
+      "scope": "__installDevastMod",
+      "line": 801,
+      "endLine": 801,
+      "source_sha256": "dfbe726b104d6684b5bb87b8bbd53e580401bf0358bd37ad78c4dbfb02f10173",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "rotationTick",
+      "scope": "__installDevastMod",
+      "line": 801,
+      "endLine": 801,
+      "source_sha256": "76c9bbee9b029a07e806685c04eb33f7806d185b9bea19042a70eafe5ab8686d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "playerInfo",
+      "scope": "__installDevastMod",
+      "line": 802,
+      "endLine": 802,
+      "source_sha256": "827f7658dceb49d313121dddc3434ae868a194bb7cd4cec6824f60a00d712535",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "clanInfo",
+      "scope": "__installDevastMod",
+      "line": 803,
+      "endLine": 803,
+      "source_sha256": "013444e7ab4129d577c0df5743bcce775fe8683f07c7678a34cec99f30a20e7e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "setKey",
+      "scope": "__installDevastMod",
+      "line": 803,
+      "endLine": 803,
+      "source_sha256": "0a251c29661e38b671df3aa017561c083730283800044365f1d7e05fa266f48a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "beginCycle",
+      "scope": "__installDevastMod",
+      "line": 804,
+      "endLine": 804,
+      "source_sha256": "54ec6a5f99f4cd74eddacee763cb86983c6d423828814721e679ad15f35a9b6a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "endCycle",
+      "scope": "__installDevastMod",
+      "line": 805,
+      "endLine": 805,
+      "source_sha256": "bcba4abba55311d7cf673c8dc7f5dd9c1bfa672446f3a57f864e65ac10bf4e5a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "send",
+      "scope": "__installDevastMod",
+      "line": 806,
+      "endLine": 824,
+      "source_sha256": "bca928e232857e2bff4c2d53f70b624d354d2ee2c325313894bf91c012483e2a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "normalizeAimAngle",
+      "scope": "__installDevastMod",
+      "line": 828,
+      "endLine": 828,
+      "source_sha256": "79de4ca7a37ef947a77abc856a6b41388d8dd83d488fbd2a632ac2407907f1bb",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "Aimbot.aimSmooth",
+      "scope": "__installDevastMod",
+      "line": 830,
+      "endLine": 839,
+      "source_sha256": "247bbb97dfbd60f4a0196838884ce0fbe9daa422c51c33bddee0c5f930583825",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "adaptiveGunActive",
+      "scope": "__installDevastMod",
+      "line": 840,
+      "endLine": 840,
+      "source_sha256": "72aae338559269315e764362865b1e67a86d4bd6f69253257e457b4ed86554ca",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "Aimbot.refresh",
+      "scope": "__installDevastMod",
+      "line": 841,
+      "endLine": 841,
+      "source_sha256": "8e37c6735db33d789da6e70745918af592079e3297897f31d3d4a2ea274d842a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "ballisticWeaponProfile",
+      "scope": "__installDevastMod",
+      "line": 842,
+      "endLine": 845,
+      "source_sha256": "f156d88ffde243237e343109b11f621ab25926c934947b7f2356f331c60323c6",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "Aimbot.onDeath",
+      "scope": "__installDevastMod",
+      "line": 846,
+      "endLine": 846,
+      "source_sha256": "ea209a4d47e04ac0d5cf850958888a44a8b6d21c65bf4367cbf095897fe5f84d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "Aimbot.resolve",
+      "scope": "__installDevastMod",
+      "line": 847,
+      "endLine": 868,
+      "source_sha256": "6b1441ffe18bc6f254c3db19b813b2853eacc471abc3901c0a078991a784e84f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "get",
+      "scope": "__installDevastMod",
+      "line": 869,
+      "endLine": 869,
+      "source_sha256": "ebf71e05c555e60ecf3f1e4553fceff853cc61e43db08c32e4a05d131e0b6bc1",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "animationTiming",
+      "scope": "__installDevastMod",
+      "line": 884,
+      "endLine": 888,
+      "source_sha256": "51cb955f05d919c06bfe7580fe8f86ab29883ae7951c134c822ec7ee5b2fd72a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/animationTiming",
+      "line": 885,
+      "endLine": 885,
+      "source_sha256": "c22e5ac5fb1db676c5760913e1f944f228cfe32d411259c1e91165d3b13e448e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/animationTiming",
+      "line": 886,
+      "endLine": 886,
+      "source_sha256": "0e7f05639728a85b551a597b3ff253a4bb730ae312d358a51beec0bec435bbba",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "trimWire",
+      "scope": "__installDevastMod",
+      "line": 892,
+      "endLine": 892,
+      "source_sha256": "02c53e41e3b6840102e979df49ad1e217389b028976390800602d2f47743783c",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "observeWireSend",
+      "scope": "__installDevastMod",
+      "line": 893,
+      "endLine": 902,
+      "source_sha256": "bb178d0fc4f8b41b898a956f1bc2bbdd3469ca5b8ac1977864967120ff445a36",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "wireTrafficInfo",
+      "scope": "__installDevastMod",
+      "line": 903,
+      "endLine": 905,
+      "source_sha256": "bed1eea7ec9b7622196fb7e50ede7e5a10c73a8c6be1e40b93ae43241ab16a3c",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/wireTrafficInfo",
+      "line": 904,
+      "endLine": 904,
+      "source_sha256": "eed99db69396d5a82b7fae9bee8a4f9c1bae78c92092d390fafa86889d18db15",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "trimPickupRequests",
+      "scope": "__installDevastMod",
+      "line": 907,
+      "endLine": 907,
+      "source_sha256": "859b604c579eecfdf7d03cbf4139daab127bfece9167712c2b8bfbd663fbe72e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "recordPickupRequest",
+      "scope": "__installDevastMod",
+      "line": 908,
+      "endLine": 920,
+      "source_sha256": "2b7fa7acd548ec35db1467a7c5b177bf142d769eb2488a5ccb6a1f37c6e4441f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "numeric",
+      "scope": "__installDevastMod/recordPickupRequest",
+      "line": 913,
+      "endLine": 913,
+      "source_sha256": "4af6fefdee42b221234968b7e0b0e5df2e917b1473e357ab262ab02754385c7f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "pickupRequestInfo",
+      "scope": "__installDevastMod",
+      "line": 921,
+      "endLine": 924,
+      "source_sha256": "dfbe5c38f4925e06d475026d42a2fb054e6275cb140697f01102c8284beeb9e7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/pickupRequestInfo",
+      "line": 923,
+      "endLine": 923,
+      "source_sha256": "7590b0daf82dca5ef24dd0d51d4bbcdc45f809a6c5914828daa71ec4ff7fa9fb",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 926,
+      "endLine": 926,
+      "source_sha256": "d89e3f4c27b0c7ac88ea440d1998f6ae280b7116b18f38f9d5e36f15110aae32",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "trimTraffic",
+      "scope": "__installDevastMod",
+      "line": 929,
+      "endLine": 931,
+      "source_sha256": "fcda3f56985d5b9009f04506f07a498b2d8e053f5f43e24f2786932057b724d7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "recordTraffic",
+      "scope": "__installDevastMod",
+      "line": 932,
+      "endLine": 939,
+      "source_sha256": "02c9c89236e2367669443bfe2ba1f1333a20c3e8f0ee4c40af3eff7a290fca90",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "recordCommand",
+      "scope": "__installDevastMod",
+      "line": 940,
+      "endLine": 944,
+      "source_sha256": "96b08a75ba538d9ae7a3a48660dd805767c5753dd41842b1c40487bc92f3cd50",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "trafficInfo",
+      "scope": "__installDevastMod",
+      "line": 945,
+      "endLine": 951,
+      "source_sha256": "12ca87007fb993e2f29f2a3b87d24fb14bf805f5f809d3a765305c27a8a6607a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "copy",
+      "scope": "__installDevastMod/trafficInfo",
+      "line": 947,
+      "endLine": 947,
+      "source_sha256": "f18c52fd28e62afd4400d188666c0f6fb6b81d3371be3f64b3ce5b94cf047bcc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/trafficInfo",
+      "line": 950,
+      "endLine": 950,
+      "source_sha256": "919ead34d2bcbd66366130f7ed9bf9bda3eb529a12b1cc29b721a456bb7015ba",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "automationReady",
+      "scope": "__installDevastMod",
+      "line": 954,
+      "endLine": 964,
+      "source_sha256": "034861a010bc9aa3cbacf5cbc3019ea44afc00a718fd151fdfd2dfa4fc218d89",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "combatCommands",
+      "scope": "__installDevastMod",
+      "line": 965,
+      "endLine": 970,
+      "source_sha256": "3ff885d5e73f89dcb3130f5dc3743b78bb27e5f536089612609c9f9169d9ccea",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "connectionEvent",
+      "scope": "__installDevastMod",
+      "line": 971,
+      "endLine": 992,
+      "source_sha256": "92419f4e918657e1df3191e5712f8c9ee908540f42c52df3f54dd5aa933b1756",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/connectionEvent",
+      "line": 985,
+      "endLine": 985,
+      "source_sha256": "a60b395ddb99890ab0ee7b31466125877846ecf6aa6d7e8ad062527d2928841a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/connectionEvent",
+      "line": 986,
+      "endLine": 986,
+      "source_sha256": "7590b0daf82dca5ef24dd0d51d4bbcdc45f809a6c5914828daa71ec4ff7fa9fb",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "observeDeath",
+      "scope": "__installDevastMod",
+      "line": 993,
+      "endLine": 1019,
+      "source_sha256": "2561bec529b089de1d18755d30b82943f5ca57383088b29f82224838ac5065a3",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/observeDeath",
+      "line": 1001,
+      "endLine": 1001,
+      "source_sha256": "edfb9fca96f1f8da1c64d3c44e516ed41306e76e0a730c54af04a332db3c0d07",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "copyText",
+      "scope": "__installDevastMod",
+      "line": 1034,
+      "endLine": 1039,
+      "source_sha256": "4729105f3bd1ad621cf54d49b9aecaf7db6fb9fdbda42b865b5eeaf3d26d4175",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "copyNickname",
+      "scope": "__installDevastMod",
+      "line": 1040,
+      "endLine": 1045,
+      "source_sha256": "8a9861459d573d67cd337ae614bfe82365dd821c8d8339a0e9487df5a7f432a4",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "listen",
+      "scope": "__installDevastMod",
+      "line": 1060,
+      "endLine": 1063,
+      "source_sha256": "0b106729e068f1743567959ad1530d94e3ced69e100a1cf24f8709ea459bcd8f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/listen",
+      "line": 1062,
+      "endLine": 1062,
+      "source_sha256": "a4a831e7f49467e92972665e6cd92c37bbbd31d54456cbb0bfd63fe5ad4c0e07",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "playing",
+      "scope": "__installDevastMod",
+      "line": 1064,
+      "endLine": 1066,
+      "source_sha256": "bed1c8d53e3753f9c5aaeed4f6ea44f356a24db528660b2a8739f94ac3695587",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "invalidAimState",
+      "scope": "__installDevastMod",
+      "line": 1067,
+      "endLine": 1076,
+      "source_sha256": "de0dc3ac1c90a3884d2f849725f63e56f47d950aea2eea82b8976c2c08b434d0",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "resetAimForSession",
+      "scope": "__installDevastMod",
+      "line": 1077,
+      "endLine": 1086,
+      "source_sha256": "547fa0ab5403e08bd62e9cc870f546bc5b4d08f11be9f004e7c82d8493869ed7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "__send",
+      "scope": "__installDevastMod",
+      "line": 1090,
+      "endLine": 1111,
+      "source_sha256": "3b55fae36ef35c05b7c5dc076865c1cafc7bec03da6b6184143a6aa8edf9026d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/__send",
+      "line": 1093,
+      "endLine": 1093,
+      "source_sha256": "b8ccb59406dd4c570031027bdf534b844a9e679f8a3f8da2672b9c32c20d7319",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "restoreNativeMovement",
+      "scope": "__installDevastMod",
+      "line": 1112,
+      "endLine": 1118,
+      "source_sha256": "0d45af1560c29756d009c7ab4cee3771a78f7cf581e3e15a098ae4829b85b200",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "gunAimActive",
+      "scope": "__installDevastMod",
+      "line": 1122,
+      "endLine": 1122,
+      "source_sha256": "e701f176ac30060081cf24aa81fe006a93924b653fc039ee0b18d1d0d57fcc9f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "jitterAiming",
+      "scope": "__installDevastMod",
+      "line": 1123,
+      "endLine": 1123,
+      "source_sha256": "fcd9ab60107c59765b16f284979d66ee14b69a0a32fbbf794c53039c631cb633",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "stopJitter",
+      "scope": "__installDevastMod",
+      "line": 1124,
+      "endLine": 1124,
+      "source_sha256": "245e268287067343000edd514105b21b68d04cfeb7873c85de838a83bd626ef4",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "updateJitter",
+      "scope": "__installDevastMod",
+      "line": 1125,
+      "endLine": 1131,
+      "source_sha256": "64e1bba3f447951e201becbd457237b9b5f3a8cbc5cbcf58d2900f604c61313d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "beforeFire",
+      "scope": "__installDevastMod",
+      "line": 1132,
+      "endLine": 1144,
+      "source_sha256": "37c55b47c5e3eadeacbb42160e13bd042519cf931ef2814c607b54098463fc4b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "persist",
+      "scope": "__installDevastMod",
+      "line": 1145,
+      "endLine": 1158,
+      "source_sha256": "93e92ef17dadccba349a89d175cbc2e6fd19f0f35f1016399a41cc1728442181",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "local_storage"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/persist",
+      "line": 1150,
+      "endLine": 1150,
+      "source_sha256": "d89e3f4c27b0c7ac88ea440d1998f6ae280b7116b18f38f9d5e36f15110aae32",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/persist",
+      "line": 1156,
+      "endLine": 1156,
+      "source_sha256": "62b5b73d466f91a269893d96bd584850a5c3f19d26ab9642f54906e25b7371a9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "setSetting",
+      "scope": "__installDevastMod",
+      "line": 1159,
+      "endLine": 1198,
+      "source_sha256": "bce190fc15c26e6196a3c5cf97ac035ce82d9505a21e9ea1d9222f83f3851b40",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/setSetting",
+      "line": 1168,
+      "endLine": 1168,
+      "source_sha256": "3003647d717bc9c009eff988166d488af01514f6a7fd64125177abf989ef1dad",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/setSetting",
+      "line": 1191,
+      "endLine": 1191,
+      "source_sha256": "2c29ddfc6337bc02971e7560f133e8d41b7a22fd3e11d57bbf0f9f86eaea2cd7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "report",
+      "scope": "__installDevastMod",
+      "line": 1199,
+      "endLine": 1206,
+      "source_sha256": "6846c1a820bd22ca94ab34648d6912714648d91534123fb8f2de03a51652907a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "trackPacket",
+      "scope": "__installDevastMod",
+      "line": 1208,
+      "endLine": 1225,
+      "source_sha256": "325b665721f335933deaf715586e2471c04070f1473ce3e2a95257cc03a011d5",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "playerMeta",
+      "scope": "__installDevastMod",
+      "line": 1227,
+      "endLine": 1229,
+      "source_sha256": "231645c52deb7d422c426606aeb4e2a2d2650f606ba9248e0ec546f92e55af08",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "nickname",
+      "scope": "__installDevastMod",
+      "line": 1230,
+      "endLine": 1235,
+      "source_sha256": "68dbd2a8b45938cec16918685b163b14a6a3cfcf1fac0eec5d8a9499bd23f018",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "playerLabel",
+      "scope": "__installDevastMod",
+      "line": 1236,
+      "endLine": 1242,
+      "source_sha256": "898f35406e5e8e86979abb3283d1ee4be4626b5671f5b97ca16b6ee933cccd96",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "preparePlayerLabel",
+      "scope": "__installDevastMod",
+      "line": 1243,
+      "endLine": 1255,
+      "source_sha256": "2ea3e9d858d08f1ee4fbf688e84daafe2525d18b6f3cb24bd6d387f305173cba",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "observePlayerSpawn",
+      "scope": "__installDevastMod",
+      "line": 1256,
+      "endLine": 1256,
+      "source_sha256": "e6b02e2feddf249749c644176f8691fc6435e0525c6b163b87bdab2fa1ec14e2",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "observePlayerLeave",
+      "scope": "__installDevastMod",
+      "line": 1257,
+      "endLine": 1257,
+      "source_sha256": "696d1a3e18b21b7d330c7f3f772cf469a7d3ee97851d6462225a8692ca10cfc1",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "zoomOffset",
+      "scope": "__installDevastMod",
+      "line": 1258,
+      "endLine": 1261,
+      "source_sha256": "e51f9811a092e0865e5cde76d3d590b85b91828af7b8e2b5e87ae3dd182822b9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "validClan",
+      "scope": "__installDevastMod",
+      "line": 1262,
+      "endLine": 1267,
+      "source_sha256": "b93c879b0aa29b1566b5cdb628c190fe612336f5efe6f913602e917f62e549d6",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "teamId",
+      "scope": "__installDevastMod",
+      "line": 1268,
+      "endLine": 1273,
+      "source_sha256": "2da74b6817d5c5d6cef2ff5b58fb70e7841e16f90c40d8525ba22c5bbc0fb2c6",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "sameClan",
+      "scope": "__installDevastMod",
+      "line": 1274,
+      "endLine": 1277,
+      "source_sha256": "67f33c3ff6d2f8eaf95c898933fc6b2c13e9dcd45b98cfebf5659df1b6e14b3d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "clanColor",
+      "scope": "__installDevastMod",
+      "line": 1278,
+      "endLine": 1280,
+      "source_sha256": "449afbfae741580f23d1f1a8f9e9177268ba5f7a1a12678497bbfaac98b585e8",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "prepareClanTag",
+      "scope": "__installDevastMod",
+      "line": 1282,
+      "endLine": 1288,
+      "source_sha256": "b3606cd755661f81a2b18144f0d656c64e1597d63b8947c8990893a679ed7418",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "collect",
+      "scope": "__installDevastMod",
+      "line": 1289,
+      "endLine": 1308,
+      "source_sha256": "eb4cd31e684038f3e56ac9af284eeffc8399b0d63b830e2f9847ea0f62636efb",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "updateTargets",
+      "scope": "__installDevastMod",
+      "line": 1309,
+      "endLine": 1314,
+      "source_sha256": "fc853165d9d14e03fc6a00aa4c0f7736bc2d1098da5bb4311ac4c9819faa9dd7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "view",
+      "scope": "__installDevastMod",
+      "line": 1315,
+      "endLine": 1321,
+      "source_sha256": "f43f0dc68d308476fc4b1527d085cc641df1f20a543cb09d7ac89510bac41adf",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "cursorWorld",
+      "scope": "__installDevastMod",
+      "line": 1322,
+      "endLine": 1328,
+      "source_sha256": "69310923aa4a6cc73b953be3920dd021a392082ec80c1ad338bbe0a7632d913b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "updateMouse",
+      "scope": "__installDevastMod",
+      "line": 1329,
+      "endLine": 1335,
+      "source_sha256": "61d18ccbacb73e1b498a54d9d16f7e6e207e682a5fa533b39f6bc18b478d9630",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "automate",
+      "scope": "__installDevastMod",
+      "line": 1336,
+      "endLine": 1362,
+      "source_sha256": "c775f64ceb940481efe7d0404158f15c1e2f963180350f072e8564b308c42611",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/automate",
+      "line": 1345,
+      "endLine": 1345,
+      "source_sha256": "c8c4a06c0bbc1702883dc52976b2dba42c79532c33d8ca93514877da6d2c5a4c",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/automate",
+      "line": 1346,
+      "endLine": 1346,
+      "source_sha256": "749205e0ddf848922af4d509871e4a7578d76d8567c00f0f7156a74f65e9c52e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/automate",
+      "line": 1352,
+      "endLine": 1352,
+      "source_sha256": "fa9c92185912d59f0b5d44506211e9cb84e22e81894daad1cb96a6d4d50c073b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "autoBuildFrame",
+      "scope": "__installDevastMod",
+      "line": 1364,
+      "endLine": 1371,
+      "source_sha256": "9009d1d2532f185e0367db0c84e6d5814a9092df57c54e70236e4c40414dd67d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "updateChat",
+      "scope": "__installDevastMod",
+      "line": 1372,
+      "endLine": 1412,
+      "source_sha256": "2b647d8adbf00fddd8d28309f3f303f9c4239e1d563086fe2797ae86890c6483",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "scanFastLoot",
+      "scope": "__installDevastMod",
+      "line": 1413,
+      "endLine": 1437,
+      "source_sha256": "fbda7b39762d776c0ee528e2f2a064681cf5f98a3f192b6bbd3561e528213af8",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "building",
+      "scope": "__installDevastMod",
+      "line": 1438,
+      "endLine": 1442,
+      "source_sha256": "5da4ce1f6b19e052be9ff6834fcec45034169d4421acc13c485751f72eea17e8",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "ownedBuilding",
+      "scope": "__installDevastMod",
+      "line": 1443,
+      "endLine": 1451,
+      "source_sha256": "c3773e52d642f87fb00a764e3e4f9387655620d45f72e94bb9d99ef440b4fcb8",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "highlightMine",
+      "scope": "__installDevastMod",
+      "line": 1452,
+      "endLine": 1464,
+      "source_sha256": "46fa7d33edab9d04ce7c38e064288d46592aa592055f9606c9c89f35bee23107",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "lootAllowed",
+      "scope": "__installDevastMod",
+      "line": 1465,
+      "endLine": 1468,
+      "source_sha256": "95f37145b5105a8f9e005d76e79ed0d3103fd78b4df797bd16edb7ff541de444",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "updateDoorInteraction",
+      "scope": "__installDevastMod",
+      "line": 1471,
+      "endLine": 1482,
+      "source_sha256": "2c77ee009f27a197961f933fc6856715a8523f748d707394cc28e6cbbb466cc3",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/updateDoorInteraction",
+      "line": 1473,
+      "endLine": 1473,
+      "source_sha256": "019772aeb52e210b7c3e52be295ca661c0d777f92d4008ffb20b75f17810e7c4",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "openUnderMouse",
+      "scope": "__installDevastMod",
+      "line": 1483,
+      "endLine": 1507,
+      "source_sha256": "7ea7130d460ead1332e439d6e858bc4f08c2d6f1ea0d6f263563d5e7c940102e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "ensureOverlay",
+      "scope": "__installDevastMod",
+      "line": 1508,
+      "endLine": 1535,
+      "source_sha256": "685e5d431ad82e40055074e1b2411a4cd92539c44b8e94c579a0bda4959e91f9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "syncFunctionList",
+      "scope": "__installDevastMod",
+      "line": 1536,
+      "endLine": 1568,
+      "source_sha256": "e6842848afa645f82a6f06691ec4d7415ab90406aeee36016526eb5779b44e88",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "syncPlayerList",
+      "scope": "__installDevastMod",
+      "line": 1569,
+      "endLine": 1622,
+      "source_sha256": "913ec14d766690fe01addc0ede59c3c3813a9f845cff10a797e207a2a4b3bd3a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/syncPlayerList",
+      "line": 1582,
+      "endLine": 1582,
+      "source_sha256": "bc2cb257451255ad45f8dc032b00fd952a1f638b11f2ad5ce1ea3fee12ecd8cd",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/syncPlayerList",
+      "line": 1587,
+      "endLine": 1587,
+      "source_sha256": "2790f3fe521750f60caec1ab9e037ae18240ecf28f95fab9344a94e6182cc187",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "nick.onclick",
+      "scope": "__installDevastMod/syncPlayerList",
+      "line": 1603,
+      "endLine": 1603,
+      "source_sha256": "3ba476bc5c28526d02fadc9f20a8ba67a22d5bef92a7d6a0efbcce0218084c74",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/syncPlayerList",
+      "line": 1616,
+      "endLine": 1616,
+      "source_sha256": "d6bf5ab77d8edece1c9fe4c369156a078854338d942ca7f9876f34471b7ec412",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "draw",
+      "scope": "__installDevastMod",
+      "line": 1623,
+      "endLine": 1707,
+      "source_sha256": "da49ed8d8662512020f945c87368f24f51c225bea359c7857aa8830299c4c07c",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "at",
+      "scope": "__installDevastMod/draw",
+      "line": 1636,
+      "endLine": 1641,
+      "source_sha256": "8ab26854c86ea916cbb895d2009e42fee4ecfe9e7e3cd44e63b983a276de0e01",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "text",
+      "scope": "__installDevastMod/draw",
+      "line": 1642,
+      "endLine": 1650,
+      "source_sha256": "0d3a1a568bfd3ce42cb326338baebdf249b19ff5e7087c8bf4be9a82fc9f98ce",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "removeSocketObservers",
+      "scope": "__installDevastMod",
+      "line": 1726,
+      "endLine": 1726,
+      "source_sha256": "5fa8c711247d70f5c653bac436acb6b2959231e50344d054ff9cf6093cc71a2c",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "socketTraffic",
+      "scope": "__installDevastMod",
+      "line": 1729,
+      "endLine": 1735,
+      "source_sha256": "02e7d858229de135afd0482910ce70f88b771ffa05d565fbf4f063c56693c476",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "observeCloseRequest",
+      "scope": "__installDevastMod",
+      "line": 1736,
+      "endLine": 1741,
+      "source_sha256": "0cbedfef46a1d74ee50c93eb51b934e19a21510514a219e2272d521717a7b478",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "observeSocket",
+      "scope": "__installDevastMod",
+      "line": 1743,
+      "endLine": 1764,
+      "source_sha256": "54e269286cb8bed9f38082a35529c25092fb62c6c15d80b0d7d4e9b14ba881b7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "open",
+      "scope": "__installDevastMod/observeSocket",
+      "line": 1754,
+      "endLine": 1754,
+      "source_sha256": "87e1ce1f37e54ef24fb0e5c71cba30b6eb540b18080f856c49cc898c8c68df6d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "message",
+      "scope": "__installDevastMod/observeSocket",
+      "line": 1755,
+      "endLine": 1755,
+      "source_sha256": "271f709b1d837b99f08e877bde94dbe69fa2c8866040378de5118f938a7bacc7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "close",
+      "scope": "__installDevastMod/observeSocket",
+      "line": 1756,
+      "endLine": 1757,
+      "source_sha256": "73104fe838403fc8b362a32668716bf8b5b7985aaecac6984e0a550e6d5a83a0",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "error",
+      "scope": "__installDevastMod/observeSocket",
+      "line": 1758,
+      "endLine": 1758,
+      "source_sha256": "04d68632556734319bc8a90b61b7b81f7b1228dd68e329bc2ecfeedba8bd859b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "removeSocketObservers",
+      "scope": "__installDevastMod/observeSocket",
+      "line": 1761,
+      "endLine": 1763,
+      "source_sha256": "b9683000a588f1a64e4e925dcee35b8a32a7082078ca6a1335ab8a0055c52115",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "connectionInfo",
+      "scope": "__installDevastMod",
+      "line": 1765,
+      "endLine": 1806,
+      "source_sha256": "2047bef902891b95d6129128d76fdfeebcbc3ba9a92b48c82bcfd07d2c8a6e20",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "local_storage"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "copyEvent",
+      "scope": "__installDevastMod/connectionInfo",
+      "line": 1766,
+      "endLine": 1777,
+      "source_sha256": "e9aa48054db15fbb6d132f5dd12054518fdd1d1f9c386a05c621afee08f00cab",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/connectionInfo/copyEvent",
+      "line": 1774,
+      "endLine": 1774,
+      "source_sha256": "9876fd5891e18c0d91bc5940eb01cfb2f4ee9f781f9b48c83b0584fa5472a540",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "releaseNativePending",
+      "scope": "__installDevastMod",
+      "line": 1807,
+      "endLine": 1809,
+      "source_sha256": "5f4a5fc09719f08f7f159f9e36d919a2aea005bd41ff486dc60993063869d500",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "failedServerRefresh",
+      "scope": "__installDevastMod",
+      "line": 1810,
+      "endLine": 1814,
+      "source_sha256": "07c06a60dd0f0e09eebb7f2e462f1d6d143c04e93296a94ff2c53068649479b9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "finishStalledEntry",
+      "scope": "__installDevastMod",
+      "line": 1815,
+      "endLine": 1831,
+      "source_sha256": "a30e0969402bcffd765414796a868bc988a091dc08d32881835a95e7563a1bce",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "watchInitialHome",
+      "scope": "__installDevastMod",
+      "line": 1833,
+      "endLine": 1841,
+      "source_sha256": "3a5a36e32eb5ceb33bbb9495dd731bdf2cb91d44e8e6062be18d6c43a8f60a0c",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "beginPlay",
+      "scope": "__installDevastMod",
+      "line": 1842,
+      "endLine": 1862,
+      "source_sha256": "3d80d3d36d941085bd76d90d1716de8aac2b3fac72459d5434dc7f9ee40f17bc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "guardPlayCallback",
+      "scope": "__installDevastMod",
+      "line": 1863,
+      "endLine": 1872,
+      "source_sha256": "64f9a33fe16e83e7e2ebdbbb30cc4714848b9648afcde67e8e7442ebc64acd03",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/guardPlayCallback",
+      "line": 1867,
+      "endLine": 1871,
+      "source_sha256": "80f38f7411f03aef3a21937004b0175087a3b0622a77815884e28c363041e9ad",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "continueAdGate",
+      "scope": "__installDevastMod",
+      "line": 1873,
+      "endLine": 1878,
+      "source_sha256": "3aadd0da06340d7d601a0c823e2bf71d1d53639036945d1de7be894c3f22d615",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "watchLoginGateway",
+      "scope": "__installDevastMod",
+      "line": 1879,
+      "endLine": 1920,
+      "source_sha256": "e48bad0408083799028a1ca83b58907431e98d1ac6e259771533932cb2f79a81",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "wrapped",
+      "scope": "__installDevastMod/watchLoginGateway",
+      "line": 1885,
+      "endLine": 1909,
+      "source_sha256": "ede55a18211995867fe8cb6b94659134bda395d3b1d5a8b8af714152397f6901",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/watchLoginGateway/wrapped",
+      "line": 1889,
+      "endLine": 1900,
+      "source_sha256": "30cf8f36f5c074899b7b463b2cc7ed4d752057d88f730914a5eed44043e9af3b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "gate.wrapped",
+      "scope": "__installDevastMod/watchLoginGateway/wrapped/callback",
+      "line": 1892,
+      "endLine": 1897,
+      "source_sha256": "caf22db60d9b6f96ba0fb4aa942b76d01f5a91fedb7255386e29fd9588231578",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/watchLoginGateway/wrapped",
+      "line": 1904,
+      "endLine": 1907,
+      "source_sha256": "9abf3b3a260c0b44735ab0d335d3119479e779000425c620c69c5ebc14f35025",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "guardHandshakeCallback",
+      "scope": "__installDevastMod",
+      "line": 1923,
+      "endLine": 1946,
+      "source_sha256": "6f7af1ccbd76407ca6e092db6cdbdfd158ba83148ad2468d082be239910c56d9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/guardHandshakeCallback",
+      "line": 1929,
+      "endLine": 1945,
+      "source_sha256": "cc1e79f0a8809b6b048c978752cc35355b811a8d3f3fa36afc199e28aca3290f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "guardHandshakeCallbacks",
+      "scope": "__installDevastMod",
+      "line": 1948,
+      "endLine": 1951,
+      "source_sha256": "5248c90337671403543faa1d3cfd4746378d5892f61f599e3c2e2af8a7df2184",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "markRestoreFailure",
+      "scope": "__installDevastMod",
+      "line": 1952,
+      "endLine": 1965,
+      "source_sha256": "194962f0f73cbeee4eade1e239ee49681d46e0ba10508798b65499adef83cd43",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "prepareNormalJoin",
+      "scope": "__installDevastMod",
+      "line": 1966,
+      "endLine": 1973,
+      "source_sha256": "96f6ac897e03f58490338f22bac59e92635e6c0e5fda9b7c8397a259b6189835",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "watchConnectionHandlers",
+      "scope": "__installDevastMod",
+      "line": 1974,
+      "endLine": 2043,
+      "source_sha256": "25e9ff2fbef3bf214c9237a4860fee07b11d0eb5649e5da8a6d54149e262fae6",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/watchConnectionHandlers",
+      "line": 1980,
+      "endLine": 1984,
+      "source_sha256": "c669f99462aa14d37efbbb615d27d5c6a5273c76dc83a558069b05a33e25918f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/watchConnectionHandlers",
+      "line": 1984,
+      "endLine": 2003,
+      "source_sha256": "05b694eb0b8804362d9e045f15e79436b2ffad6f2eded3b16b5ab9b49e5da0ca",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/watchConnectionHandlers",
+      "line": 2003,
+      "endLine": 2007,
+      "source_sha256": "988c709a5497f4111438978ae2fac02af20395974ff3ef6b4800d62be7d72126",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/watchConnectionHandlers",
+      "line": 2007,
+      "endLine": 2039,
+      "source_sha256": "8885fa77ececddf7142915ff1f18c76a8c34585e4d290761bf1e93ff1ddd6b42",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "updateReconnect",
+      "scope": "__installDevastMod",
+      "line": 2044,
+      "endLine": 2182,
+      "source_sha256": "b5b8275dd59d08fcea733caccdc97f0df3ce1fa1e5e128987a713cd7f494695b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "socket_close"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/updateReconnect",
+      "line": 2149,
+      "endLine": 2178,
+      "source_sha256": "15d6d57a685cd4fbf935553408eb47c4198abea9fc219ff10e0e4eae5af29035",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/updateReconnect/callback",
+      "line": 2158,
+      "endLine": 2158,
+      "source_sha256": "845029cd322f2d5a653f43b225bd59e8dd6f951e7286f37f4037d4421a194a93",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "step",
+      "scope": "__installDevastMod",
+      "line": 2184,
+      "endLine": 2218,
+      "source_sha256": "c23bee80afb1fc459ad86264c180cd1162e9dc4727e420ec2621ed2cdddb1d15",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "tick",
+      "scope": "__installDevastMod",
+      "line": 2219,
+      "endLine": 2239,
+      "source_sha256": "6e6304bb2ef8e9f0cdffa68a2b1989141917a93a69899bfa44e749c7ad8f2b25",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "timer_schedule"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "keyboard",
+      "scope": "__installDevastMod",
+      "line": 2242,
+      "endLine": 2275,
+      "source_sha256": "e8b20b28bb20f4e0ef2d4202b845c82ca3b635e149831bdcc1557f7d915268cd",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 2277,
+      "endLine": 2280,
+      "source_sha256": "ba33896c1ac5d2e6c7e0ecc220862beca74ee2dfe7d83532926575f40ea06854",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 2281,
+      "endLine": 2281,
+      "source_sha256": "5f456018e14163a7c482409881d86c262325272b1a656dfef995600bb2ad2533",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 2283,
+      "endLine": 2286,
+      "source_sha256": "528b3d0d07d5869c75914f897adc61a227f3f3f3a0babb9d98c180e21a2ea3f1",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 2287,
+      "endLine": 2305,
+      "source_sha256": "bcd41cc3a1ced61ccb91322548b9bf00f7edcdcb346c069d57f343a4572f2234",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 2306,
+      "endLine": 2308,
+      "source_sha256": "95e169092c4d08c4c703acff4019b947bc73a9557f2df5d3c6bf6a228b4da34a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 2309,
+      "endLine": 2311,
+      "source_sha256": "d12ea2efa5b5aa7c6f0c723dd53d5b49fbad307ac6746844b368cd39e9ddb032",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 2314,
+      "endLine": 2316,
+      "source_sha256": "51bcddd92b6e8f6b32ea6417ad68b4704637ef3556ac4af8390cfd3b8b49b2cc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 2317,
+      "endLine": 2325,
+      "source_sha256": "22505ced37594b0d24de5a926d7bc5f81d20e0a80003a50777a7cd223932c3b7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "createMenu",
+      "scope": "__installDevastMod",
+      "line": 2330,
+      "endLine": 2487,
+      "source_sha256": "71216f82728d881fec3b5284d81438545fd8836e54bee74b9459275d991f166a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2340,
+      "endLine": 2340,
+      "source_sha256": "489801f8a783cd91bf0fd38bb6b351db044d7d67d2b714a7bc4008d0cc9898ed",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2343,
+      "endLine": 2343,
+      "source_sha256": "f207a808e7315425a9f1dcb701dc0a5666bfe06ee39ce55febfb24113a4694a3",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "add",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2344,
+      "endLine": 2348,
+      "source_sha256": "cec685829bb028a3e1364f58919ca3c9bd9b7e71869ffbe3422b933207f2baf8",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu/add",
+      "line": 2346,
+      "endLine": 2346,
+      "source_sha256": "f4efd46c2adb95573a9358736c83c4b45494eb727010d1d45f60a3e7463fecc3",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2352,
+      "endLine": 2352,
+      "source_sha256": "b662c85c4fa0b0dd4965220d05bc157ed70a249a57036bbae545b85303543017",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2362,
+      "endLine": 2362,
+      "source_sha256": "68e8f79fb5756f9f01bc3baaff921ab08199c89ec52f471c89fe7aa54717aaf8",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2367,
+      "endLine": 2374,
+      "source_sha256": "3d40a33fef39c0803315082272491e541d77cd1d22993e9cd934a4c79b4f42b8",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "Reset",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2379,
+      "endLine": 2379,
+      "source_sha256": "2bdbbdfdf91c07b1d81a44c1699334b896b1ce6d50253f424a7cd441cfa1b83a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2391,
+      "endLine": 2395,
+      "source_sha256": "709dfbf8c3e1ed05e635810dcc0e3526707445f0207da9594dcabc4d1369e1dd",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "CopyNick",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2400,
+      "endLine": 2400,
+      "source_sha256": "b0f408bf0900d1fc69e1a2ffdcabd9639589a9ec25b645a50b58d056fa4405fc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "CopyAll",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2403,
+      "endLine": 2403,
+      "source_sha256": "f70d98be64674c5feca32c03bae2731dff005e3ae708007d6384b078ae6ed584",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu/CopyAll",
+      "line": 2403,
+      "endLine": 2403,
+      "source_sha256": "02e42be3d646a36b669290fedd5df7e840eb581f9318bd3d5a44353726ce4cf9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu/CopyAll",
+      "line": 2403,
+      "endLine": 2403,
+      "source_sha256": "b79eba707a57b558c7f2c206bfb9d7916860c6372299b9352e9055a6eab8dbdf",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "Copy",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2409,
+      "endLine": 2409,
+      "source_sha256": "a3ccfc2fb8091b1e9677bfa2754230ffd161b2e8b975c19f59b801ea11016fc7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu/Copy",
+      "line": 2409,
+      "endLine": 2409,
+      "source_sha256": "c21c3df6238efcb807e3c1f52df7a68ff4b3855bb0b0cfeb5ff62c27db866ad2",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "local_storage"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "Change",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2415,
+      "endLine": 2462,
+      "source_sha256": "fe9275cdffd3ff57f36509f06af2e7ab6e9f7c4192f0be8e55eb0bb042bc7ae9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu/Change",
+      "line": 2438,
+      "endLine": 2438,
+      "source_sha256": "c3f72ed4f308249f6305b4b1a9469e1bb9bd3d82a930dabf3feedcbdb1dc70f8",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu/Change",
+      "line": 2447,
+      "endLine": 2447,
+      "source_sha256": "23856c8f99330452bffd3aec5dbe3e0f5617339677f56f02cb3ad30077e25868",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "local_storage"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu/Change",
+      "line": 2448,
+      "endLine": 2448,
+      "source_sha256": "795919dc2c444ef4fefe12d855876d54bc30e382aef48a29c83696515aee7d5b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "local_storage"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/createMenu/Change",
+      "line": 2450,
+      "endLine": 2454,
+      "source_sha256": "6d86c2147f2b1c64bbe1eb54840218c89a13a681045f205857098d0320d3c843",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "local_storage"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "CopyReport",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2474,
+      "endLine": 2474,
+      "source_sha256": "21e806227c8d018c15aa147731e69345808859213f61348c27e641137ec75331",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "Reset",
+      "scope": "__installDevastMod/createMenu",
+      "line": 2480,
+      "endLine": 2485,
+      "source_sha256": "4794f9e2b93804bb5e38991d99bd48bd040d9d521ca3ba445427c5cfca92d7bc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod",
+      "line": 2488,
+      "endLine": 2494,
+      "source_sha256": "6dde278c3785218cc63c5f8fc454f66a78859ca853801b6af4f61a803f8b923e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "afterFire",
+      "scope": "__installDevastMod",
+      "line": 2501,
+      "endLine": 2501,
+      "source_sha256": "999f7d0206e5a7b67b28e020ea163d0218ebf468f053631a4a01d36ff5be1abc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "afterRelease",
+      "scope": "__installDevastMod",
+      "line": 2502,
+      "endLine": 2502,
+      "source_sha256": "375866ca8f4e8d05f958a8fca55aa3f91bc64c09fa16d50147c046eab1f82423",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "onMove",
+      "scope": "__installDevastMod",
+      "line": 2503,
+      "endLine": 2503,
+      "source_sha256": "683542b2477439020805de9d54fb768019bd5dd765440c3888a82b2a255ad7ab",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "onHandshake",
+      "scope": "__installDevastMod",
+      "line": 2504,
+      "endLine": 2504,
+      "source_sha256": "5430836ffe3cdf3adebd51c8bc9ff9c2037ada13bbf4aaf8535ac3c5566fbaa6",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "nativePacketAngle",
+      "scope": "__installDevastMod",
+      "line": 2506,
+      "endLine": 2506,
+      "source_sha256": "90125daa659ea2d61179cd6e8151aa38525bb6b6614b7b06eea832c1486d7ea9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "controlsAimDirection",
+      "scope": "__installDevastMod",
+      "line": 2509,
+      "endLine": 2509,
+      "source_sha256": "9b831c96c7eee9a0914df522cbb285f40d0e0ff972771e852ac6f4e533cacf51",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "jitterAngle",
+      "scope": "__installDevastMod",
+      "line": 2510,
+      "endLine": 2510,
+      "source_sha256": "d390cf363e18e5e9332cc75b62aaa12f2ff3a3545cfbaf83dac716dc23fb0b5f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "jitterTick",
+      "scope": "__installDevastMod",
+      "line": 2511,
+      "endLine": 2511,
+      "source_sha256": "b19808c7e93c221f1d5ff58b6cc60bb495bd1d0d3d17507adc676643f100e781",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "aimRenderAngle",
+      "scope": "__installDevastMod",
+      "line": 2512,
+      "endLine": 2512,
+      "source_sha256": "18474e422f80b20f09cc95e1872f54ac82c068bfe73ce2fb0d2f31ff6f76e5dc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "doorInteraction",
+      "scope": "__installDevastMod",
+      "line": 2535,
+      "endLine": 2535,
+      "source_sha256": "beb6949b8fdb7bda4cd53e4258fe1457bc895b5b37aa30bf328458bdafafbb55",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "render",
+      "scope": "__installDevastMod",
+      "line": 2543,
+      "endLine": 2557,
+      "source_sha256": "be302df9ed6c4aaf00927d20e08f830e4b83d3a9ef18ee0adf0cc431d262e231",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "records",
+      "scope": "__installDevastMod",
+      "line": 2558,
+      "endLine": 2560,
+      "source_sha256": "6e991852a6671cb6cd8b74cc2e5940e0f737e256730aeff876ae26bb9c12f600",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "menu",
+      "scope": "__installDevastMod",
+      "line": 2561,
+      "endLine": 2563,
+      "source_sha256": "9123c741459c2ebe874eab21d16084d0cec89380290a38b4c2342cafcdf1752d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "playerList",
+      "scope": "__installDevastMod",
+      "line": 2564,
+      "endLine": 2564,
+      "source_sha256": "0ff236474afeaa9607f8cfe1490041e326dbce514fb9010e8bf6792ec7f79270",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "overlay",
+      "scope": "__installDevastMod",
+      "line": 2565,
+      "endLine": 2567,
+      "source_sha256": "0d85b95128a64a20d5a403a9680fae44647b26888417e25b9377556c78d4810d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "functionList",
+      "scope": "__installDevastMod",
+      "line": 2568,
+      "endLine": 2570,
+      "source_sha256": "bcf36de12cca59e3cd54afa4aa1b2e1be0484c74acdd9ed05369bf9c55b1a79c",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "dispose",
+      "scope": "__installDevastMod",
+      "line": 2571,
+      "endLine": 2590,
+      "source_sha256": "692365f89e4cc723a9ae3a2af2305eef0a6856159c813d43b871ab9a86c526ca",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "timer_cancel"
+      ]
+    },
+    {
+      "module": "mod/responsive.js",
+      "name": "callback",
+      "scope": "__installDevastMod/dispose",
+      "line": 2586,
+      "endLine": 2586,
+      "source_sha256": "b2e56f451e9c02d7a7ea17dba8a132abc6c9ff8a8146a632b113b319914193dc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__createMessage27Core",
+      "scope": "",
+      "line": 3,
+      "endLine": 735,
+      "source_sha256": "ee3bf3f69e0be13991fef7b6820839a4a3339d4799a93cea72acc5253d6a12c0",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "cycle",
+      "scope": "__createMessage27Core",
+      "line": 6,
+      "endLine": 6,
+      "source_sha256": "1dd446d7dc4511e8280bf0ecdfdd2301cb790b632715a71f5b59060d00cbc2d0",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "emit",
+      "scope": "__createMessage27Core",
+      "line": 7,
+      "endLine": 7,
+      "source_sha256": "f7e0d70b228be500449f52aecbc9e889c02eb21211e247b12c71670297fc1962",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/emit",
+      "line": 7,
+      "endLine": 7,
+      "source_sha256": "ce8b1a1970437dadc14becd7c7709a2beaee2fa574a09765e2e8a5d69304824a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "timer",
+      "scope": "__createMessage27Core",
+      "line": 8,
+      "endLine": 8,
+      "source_sha256": "b4cb4bedc7fde77324235eeb1da90583be81f798f3a55cb330ea652bd8ef0b1d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "wrapped",
+      "scope": "__createMessage27Core/timer",
+      "line": 8,
+      "endLine": 8,
+      "source_sha256": "c91343454ea609197c1f0fe523a03140477cd4811a8b4dc07b8d81ab8555e990",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "clear",
+      "scope": "__createMessage27Core",
+      "line": 9,
+      "endLine": 9,
+      "source_sha256": "3fb55a533dd0123d862fdfdc958f0be77685848bbb3968c69b69167effce157b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "setInterval",
+      "scope": "__createMessage27Core",
+      "line": 10,
+      "endLine": 10,
+      "source_sha256": "77be988641e86bd163f2adbea877e378cb03f30498ad953fab0207445cb0700a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "setTimeout",
+      "scope": "__createMessage27Core",
+      "line": 10,
+      "endLine": 10,
+      "source_sha256": "9d4d1098b589cb80f6046cb2d90da0f6ea1f809f68fe80fb34acb45ed3456680",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "addEventListener",
+      "scope": "__createMessage27Core",
+      "line": 11,
+      "endLine": 11,
+      "source_sha256": "2c8a4bba39e8a7354bcdfb417cd3442df263f472417d96ce46a6a2fb1c94f3fb",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/addEventListener",
+      "line": 11,
+      "endLine": 11,
+      "source_sha256": "91d84819d3004b0b39c9e281a255954ec15a5a830816480728fdd0ee4fa7b074",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "get",
+      "scope": "__createMessage27Core",
+      "line": 12,
+      "endLine": 12,
+      "source_sha256": "615bfc47b5e78e3ff602ca0cb0bfc7a231755337b1f9eb4aef48d7c26b16ee60",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/get",
+      "line": 12,
+      "endLine": 12,
+      "source_sha256": "abceda0a5e5d8f82189245d9bc8307c16a3082eec4ea20edd0983bf2bdf54b7a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/get/callback",
+      "line": 12,
+      "endLine": 12,
+      "source_sha256": "8e2cf1df6eec8d1fba6e7e8f68a93f6f2fa81443036bdd038706e4132ea541f1",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__gk",
+      "scope": "__createMessage27Core",
+      "line": 15,
+      "endLine": 15,
+      "source_sha256": "c7ce854503649472e21bc076932afb829911744c2040804d9519da995e6837b0",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "ε٣︀",
+      "scope": "__createMessage27Core",
+      "line": 17,
+      "endLine": 17,
+      "source_sha256": "4215682a1228cfdbd54f98f54358ff46f556b4e334b0c177c9a57d3a47631797",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "ᴉࡃϲ",
+      "scope": "__createMessage27Core",
+      "line": 17,
+      "endLine": 17,
+      "source_sha256": "4215682a1228cfdbd54f98f54358ff46f556b4e334b0c177c9a57d3a47631797",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core",
+      "line": 23,
+      "endLine": 394,
+      "source_sha256": "394cbbca6c01afefca4caa99e1483a6d40c38a10d150976af7829456e05949a4",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "calculateDistance",
+      "scope": "__createMessage27Core/callback",
+      "line": 25,
+      "endLine": 27,
+      "source_sha256": "51d10d40fa2857dfd6a26bb4b071f45cb39f69be235cd0daef64232d5e9db370",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "constructor",
+      "scope": "__createMessage27Core/callback",
+      "line": 29,
+      "endLine": 54,
+      "source_sha256": "e4826ffbe0b4b619ad863fe5dc20c343698f22de6f60eff965a99dd7eae85823",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "getPlayerById",
+      "scope": "__createMessage27Core/callback",
+      "line": 55,
+      "endLine": 57,
+      "source_sha256": "ddc87d858d4071ba3d609bb34267c45bcb0755752fa9ed847d5fb36760c72124",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "getGhoulByUid",
+      "scope": "__createMessage27Core/callback",
+      "line": 58,
+      "endLine": 60,
+      "source_sha256": "62950e599a0b2d84297fda12f6170bc90af33c67b940593a5e164e22b4e18687",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "constructor",
+      "scope": "__createMessage27Core/callback",
+      "line": 63,
+      "endLine": 76,
+      "source_sha256": "210be79a241408b246b5263b3db16fff00aa0e5e787011a4fdd9dace4eb63b01",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "update",
+      "scope": "__createMessage27Core/callback",
+      "line": 77,
+      "endLine": 94,
+      "source_sha256": "c41ab4443f1f0f762d9a7e10d702ee0a4f0b1f2507099e6e981f7f72599775ed",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "setInactive",
+      "scope": "__createMessage27Core/callback",
+      "line": 95,
+      "endLine": 108,
+      "source_sha256": "32fcfb3e6630a09d02b89e2fcd326aa825fe9bbfe6160849746e6e0df1849a0d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "constructor",
+      "scope": "__createMessage27Core/callback",
+      "line": 111,
+      "endLine": 114,
+      "source_sha256": "142d122ae669b0401001a0f4ed7e545928f32784292197a52445983d84e090b7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "resolve",
+      "scope": "__createMessage27Core/callback",
+      "line": 115,
+      "endLine": 175,
+      "source_sha256": "609b4344d37a3c52617bc19152f0602484708b1a26435dd40578bba2d3e304bd",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "isPlayerCandidate",
+      "scope": "__createMessage27Core/callback",
+      "line": 176,
+      "endLine": 188,
+      "source_sha256": "154920d96d1451834b2d7a185c9992faee93a5fca519bc595087f8327d390613",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "findNearestPlayerTo",
+      "scope": "__createMessage27Core/callback",
+      "line": 189,
+      "endLine": 245,
+      "source_sha256": "1c86832148087fbeec7d3a0a30123fc17dd54d1c9a51396b8c045ccb41184e87",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "consider",
+      "scope": "__createMessage27Core/callback/findNearestPlayerTo",
+      "line": 198,
+      "endLine": 212,
+      "source_sha256": "c7f37fcbf95d3f94b80494ef11c46fa904155f0974566306a425937aabb7f32f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "targetVelocity",
+      "scope": "__createMessage27Core/callback",
+      "line": 246,
+      "endLine": 267,
+      "source_sha256": "2ddcd417960dd9e609c553e2ff871383cc9eada13b1b4fe443627a676c151370",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "aimPoint",
+      "scope": "__createMessage27Core/callback",
+      "line": 268,
+      "endLine": 311,
+      "source_sha256": "95d8a8ad71aeca9ca3d018ec5f1390ffdc74bf230d0994cb7c08865edb56c399",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "aimSmooth",
+      "scope": "__createMessage27Core/callback",
+      "line": 312,
+      "endLine": 326,
+      "source_sha256": "f1c58e4a475ece13aad89fa4b7fd8afbf3e9573df2885df9852c88991cc4c4db",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "constructor",
+      "scope": "__createMessage27Core/callback",
+      "line": 329,
+      "endLine": 338,
+      "source_sha256": "44d2beb8ea6141ae6673d4804b9f1008a2e248d7037a8215e3b70a316730413c",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "reset",
+      "scope": "__createMessage27Core/callback",
+      "line": 339,
+      "endLine": 345,
+      "source_sha256": "adcc566df216c3dd5e521609b87e904d2956af8259ccf389d19241868eed65ee",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "set",
+      "scope": "__createMessage27Core/callback",
+      "line": 346,
+      "endLine": 349,
+      "source_sha256": "ece99efd598d74a9672792b58bfbe51ba31a9b3bc11da685e3bf0534f7d704ae",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "AimbotRefresh",
+      "scope": "__createMessage27Core/callback",
+      "line": 351,
+      "endLine": 376,
+      "source_sha256": "46764d1f3311479d65f7bb1a8dfe38fb8d534879ae11197909dc584990059de2",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/callback/AimbotRefresh",
+      "line": 352,
+      "endLine": 352,
+      "source_sha256": "5f439951cbb9a465a50854b1ca5628a2d26d6d3e23cc605fb5a265492508a7aa",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/callback",
+      "line": 390,
+      "endLine": 393,
+      "source_sha256": "7cb27813ca70c1b5e1154b75bf76f96f4c82e0b2add23780373c71fc2e315f34",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "Aimbot.myId",
+      "scope": "__createMessage27Core",
+      "line": 401,
+      "endLine": 407,
+      "source_sha256": "d8cb7ee66222fa3c5ce5431e3da87ac6868c9820cfeda53c04556f99e02ab319",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "Aimbot.send",
+      "scope": "__createMessage27Core",
+      "line": 408,
+      "endLine": 413,
+      "source_sha256": "db9bdc2f00af3721f024868b40679c2bac070bf3fed3167eef690dfffabca457",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "Aimbot.isDead",
+      "scope": "__createMessage27Core",
+      "line": 414,
+      "endLine": 419,
+      "source_sha256": "bfed9981198b842f0651d2bcce0d4d871210ba2e5c43bc432b67e92bc5a76800",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "Aimbot.onDeath",
+      "scope": "__createMessage27Core",
+      "line": 420,
+      "endLine": 430,
+      "source_sha256": "363c1a3f23ad089a5d88fdbe5e058e09331cdc55c58f4317b3bdd196aa9369ae",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "Aimbot.scheduleRefresh",
+      "scope": "__createMessage27Core",
+      "line": 431,
+      "endLine": 438,
+      "source_sha256": "17d0a80e500f66c8b534ae4e4523eace6ab9e623ab159c768c42ece7d2bc32fb",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "timer_cancel",
+        "timer_schedule"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/Aimbot.scheduleRefresh",
+      "line": 437,
+      "endLine": 437,
+      "source_sha256": "f9b15c9b1f350ed83977f4e1b94e9939ed37f854d2858a9170c6ea68cecb2498",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "Aimbot.refresh",
+      "scope": "__createMessage27Core",
+      "line": 439,
+      "endLine": 439,
+      "source_sha256": "1b4380561b60ad0a36febc0a54af473bd0ce61d8e57c1e33c2c13a2a9b5c8456",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "Aimbot.packetAngle",
+      "scope": "__createMessage27Core",
+      "line": 440,
+      "endLine": 446,
+      "source_sha256": "986ee7add930883598fd9c22a11f17f9c82192e921a406518a40413c50ea1c71",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "Aimbot.hasTarget",
+      "scope": "__createMessage27Core",
+      "line": 447,
+      "endLine": 447,
+      "source_sha256": "f4f1eae924541030f167c757ba5664b95a174c2e0a154dfa579a4318e4426ca4",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "Aimbot.getSelf",
+      "scope": "__createMessage27Core",
+      "line": 448,
+      "endLine": 457,
+      "source_sha256": "f312a449879a1e8ea95a43671626496e27cb2898ceb42a7c648ed914248944c3",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "Aimbot.findTarget",
+      "scope": "__createMessage27Core",
+      "line": 458,
+      "endLine": 460,
+      "source_sha256": "72f00efd8540459f28bb13ddfa74789b5e12e32a18979dcb090093d082b47adc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "GetAllTargets.resetLines",
+      "scope": "__createMessage27Core",
+      "line": 465,
+      "endLine": 467,
+      "source_sha256": "66b0c628c59c2a2ea8394feb16367fe4227adfc668abef06a4a30789020dfc5e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/GetAllTargets.resetLines",
+      "line": 466,
+      "endLine": 466,
+      "source_sha256": "2d15650f96aae0f49fbd66ab93414098192197142b8aa5e97ec357ae12759b0f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "GetAllTargets.resetAll",
+      "scope": "__createMessage27Core",
+      "line": 468,
+      "endLine": 479,
+      "source_sha256": "9a1b9ff27f80e4ce5d2da08379fcfb2f5f4ce2153d1f8685849039f4210fabb1",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "Aimbot.spearResolve",
+      "scope": "__createMessage27Core",
+      "line": 480,
+      "endLine": 515,
+      "source_sha256": "64f098f8030d21317112b7f44b82dd217721a2713978db77f4ae9a5fa4f4389f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "touchAim",
+      "scope": "__createMessage27Core",
+      "line": 517,
+      "endLine": 528,
+      "source_sha256": "e3ed4896830f973b09c70d970c82f95158544bc17fee2556d14243eeaeaf62c9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/touchAim",
+      "line": 519,
+      "endLine": 523,
+      "source_sha256": "6aa195898f188ccda4e0eb940400a3df800b570711c164d0a9d2cddddb0ff891",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "releaseAimTouch",
+      "scope": "__createMessage27Core",
+      "line": 529,
+      "endLine": 531,
+      "source_sha256": "24592cf0975c42d032ae5f9cb766747cf3c67d9cc6b9fd4835cefaf0485bb6b9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/releaseAimTouch",
+      "line": 530,
+      "endLine": 530,
+      "source_sha256": "ccc9ce257746b27c068127df66323ab5b630e4de940f3a1cfd7b0a1f850544a1",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core",
+      "line": 536,
+      "endLine": 536,
+      "source_sha256": "cb77d974c1ffb1e495d4bbe89ef5114f03a406f57e7706a055a0eae22b8e3104",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core",
+      "line": 537,
+      "endLine": 540,
+      "source_sha256": "d12cda0aef56e9595d26082dc497d5119ed6d5ae56a334cf31802fa08d17556d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core",
+      "line": 541,
+      "endLine": 544,
+      "source_sha256": "f34b24d5ca3c82fc1bbe01253499f02f7121ae201df75a549bc2aaeffbbced4d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core",
+      "line": 545,
+      "endLine": 547,
+      "source_sha256": "83be0f5c6f10d050450a793478b741bbb426bb307688d9bb9be2d700514bc7a6",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__isMyAimbotPlayer",
+      "scope": "__createMessage27Core",
+      "line": 548,
+      "endLine": 553,
+      "source_sha256": "bdf63df7a8ddf023fde295ab2b979edf90f10e342766a9d021b718933fd4977d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__aimShotAllowed",
+      "scope": "__createMessage27Core",
+      "line": 554,
+      "endLine": 562,
+      "source_sha256": "3a87f9b752b79011c8651346a6c40ec39d48d7a7fea8636d340f270d2faa8d95",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "aimbotTick",
+      "scope": "__createMessage27Core",
+      "line": 563,
+      "endLine": 579,
+      "source_sha256": "2a02739fe32c7d0bc3a68d277f91829488647767f588163faa3f4cfb5746b897",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "routineAntiAimbot",
+      "scope": "__createMessage27Core",
+      "line": 582,
+      "endLine": 590,
+      "source_sha256": "38e803c2a4685664b4716589299247e1d6dd7d8feec3c075c8ad572b6ab59c37",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "afterFire",
+      "scope": "__createMessage27Core",
+      "line": 591,
+      "endLine": 591,
+      "source_sha256": "7945f17abd36604607752f6baf788ff40c4aa61d098331c49af480d6df63515c",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "start",
+      "scope": "__createMessage27Core",
+      "line": 592,
+      "endLine": 598,
+      "source_sha256": "cc23043fefd8baff47624ebf84337b7f44362fde987c50e07d53b08646b1e134",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "timer_schedule"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/start",
+      "line": 592,
+      "endLine": 592,
+      "source_sha256": "53d9dd05fe71dee0d61673fc5e50c14b1e022dad83c29bcc5f7375b1fe9660bc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "aimbotLoop",
+      "scope": "__createMessage27Core/start",
+      "line": 593,
+      "endLine": 598,
+      "source_sha256": "9f373c80bbc6992fda92d232966e84839f7a70b5c5e929b92fb22854b680a9bc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "timer_schedule"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "render",
+      "scope": "__createMessage27Core",
+      "line": 599,
+      "endLine": 631,
+      "source_sha256": "bd29695f1ebfcfe99744c6f8c4363f483dadf4386073398c88c2504501a970c6",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "get",
+      "scope": "__createMessage27Core/render",
+      "line": 603,
+      "endLine": 603,
+      "source_sha256": "50dd390eb42b1f0201b56b687d606064b3dae146540d96bbad3c233ee0b26978",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/render/get",
+      "line": 603,
+      "endLine": 603,
+      "source_sha256": "91118bbaed8e54d52aa477b6c29a67c7c4bd8b7ea81f00e23896ddb6d685f8e5",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "set",
+      "scope": "__createMessage27Core/render",
+      "line": 603,
+      "endLine": 603,
+      "source_sha256": "a45286975f07f9f7bfeb87a26cede5710ecd9ae73630406541dbf0a7b652a331",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "AimbotDraw",
+      "scope": "__createMessage27Core/render",
+      "line": 604,
+      "endLine": 631,
+      "source_sha256": "ff952ba3eff13f9dc58d6133093795d3c0ad9b5c120e9dbcd282d2094009ed65",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "AimbotSaveConfig",
+      "scope": "__createMessage27Core",
+      "line": 632,
+      "endLine": 632,
+      "source_sha256": "f40799a215e0a51ee9d3dbef1e7ea8acd41384cf3ab5c3b4af41b786c0f62f26",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "AimbotHookSave",
+      "scope": "__createMessage27Core",
+      "line": 633,
+      "endLine": 645,
+      "source_sha256": "2621b90e19ec48dd70d2c951d1532a0e0b33137b1b85d681de5be3c7203d6f04",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/AimbotHookSave",
+      "line": 634,
+      "endLine": 641,
+      "source_sha256": "fe90b3bd0fc71c222a1e676c66d795682f2f47755c5b5c8de2685c00409c21f4",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/AimbotHookSave/callback",
+      "line": 636,
+      "endLine": 640,
+      "source_sha256": "ead1dcf9efbbd097bd239aa2584ac93e8d2f428be6b07ee9ac164378777006cd",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "finishKeyCapture",
+      "scope": "__createMessage27Core",
+      "line": 647,
+      "endLine": 653,
+      "source_sha256": "8945d2ca26bfdb0dc9cb73449ed420dcaf150b4c327577790d32fbfe3356ec6e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "handleCapturedKey",
+      "scope": "__createMessage27Core",
+      "line": 654,
+      "endLine": 669,
+      "source_sha256": "a96458c40d9adb8018da3f30d52803ee9948b43f6dbb8fe66a9a625e2010d0bd",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "AimbotMenuSetupKey",
+      "scope": "__createMessage27Core",
+      "line": 671,
+      "endLine": 684,
+      "source_sha256": "d9eaa81160ff3fb5d4ee8dc08930368062a32b9892aded2473282be6bcb043d5",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "event_listener"
+      ]
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/AimbotMenuSetupKey",
+      "line": 677,
+      "endLine": 683,
+      "source_sha256": "019756a8737465e3fd1c9b5f38f515560ac841d32a18e77112c935e8210a97db",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "installMenu",
+      "scope": "__createMessage27Core",
+      "line": 685,
+      "endLine": 725,
+      "source_sha256": "8c2513d0a196032df3ad2d0e15d5e5ab177ea6a79163d002ac626e36f7795ba1",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/installMenu",
+      "line": 724,
+      "endLine": 724,
+      "source_sha256": "9a8b3976ae586e30cfba8afeef5421a1343845c6b49ae5a2d796722d53c146ee",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "tick",
+      "scope": "__createMessage27Core",
+      "line": 727,
+      "endLine": 727,
+      "source_sha256": "3e7aec9cbe9b77137ca744dee61fb49e2dcd3f7a23ac46966e2262c8bacc7e86",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "refreshTargets",
+      "scope": "__createMessage27Core",
+      "line": 727,
+      "endLine": 727,
+      "source_sha256": "933a1c00124be69df7ead5a71e636caa1ae79543e29e7da39ba87bbe9b370d39",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "position",
+      "scope": "__createMessage27Core",
+      "line": 728,
+      "endLine": 728,
+      "source_sha256": "6b053f86a86352f232d0159c3d0ce3cfa0ddf0dbcda7bc09fd384e59e3ae7ed9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createMessage27Core/position",
+      "line": 728,
+      "endLine": 728,
+      "source_sha256": "6c394aa29872a947ac5e8d7c8f760a3c7a40fe29414848b627688f47887421d2",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "afterFire",
+      "scope": "__createMessage27Core",
+      "line": 729,
+      "endLine": 729,
+      "source_sha256": "d395b14d100c123bb2db1860e181b232dfe176d703c6f0f1253d0b995709778b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "afterRelease",
+      "scope": "__createMessage27Core",
+      "line": 729,
+      "endLine": 729,
+      "source_sha256": "117042aaf9e97e60321dfab4af4426831f11f5d0b2cac560fd99decc5442e3ea",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "onMove",
+      "scope": "__createMessage27Core",
+      "line": 729,
+      "endLine": 729,
+      "source_sha256": "f37f324c1260b2f64c3d3a26fc3373daaf669121fb7d9e5685cd870b55f1ce73",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "antiTick",
+      "scope": "__createMessage27Core",
+      "line": 730,
+      "endLine": 730,
+      "source_sha256": "f62ca2bd05801cdcc66bc23e49aeb44d6f42051b0690f6648c1b8f0a58ec3ad3",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "onHandshake",
+      "scope": "__createMessage27Core",
+      "line": 731,
+      "endLine": 731,
+      "source_sha256": "f86b5689fd33b1dca0c4fc276db04dab560c7abb241a2a60c6e0af56e729db4b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "onOtherDie",
+      "scope": "__createMessage27Core",
+      "line": 731,
+      "endLine": 731,
+      "source_sha256": "1f5526856d09e8c503d0dbffaeb57b90270a1f0910af6cdc3644055b9ff1d1c4",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "sync",
+      "scope": "__createMessage27Core",
+      "line": 731,
+      "endLine": 731,
+      "source_sha256": "4f888e090430fea81ed3e2f31a2824445a98e2877f0048502d57d8ead350cb5b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "ensure",
+      "scope": "__createMessage27Core",
+      "line": 732,
+      "endLine": 732,
+      "source_sha256": "9880208c20aea2de1d4feb844c79d2c5cefba8aac32c3a52ab711141d95115ab",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "dispose",
+      "scope": "__createMessage27Core",
+      "line": 733,
+      "endLine": 733,
+      "source_sha256": "3518154e177d40e0dbba50709c57447d5790710cc2c36a146b6ec751ce5f08a1",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__createIlmAim",
+      "scope": "",
+      "line": 738,
+      "endLine": 738,
+      "source_sha256": "316e4f43f5d5c91dad3ede97277f31192409df5c0a1e9e55bfc703fc1d06c1b6",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__createIlmAdapter",
+      "scope": "",
+      "line": 739,
+      "endLine": 749,
+      "source_sha256": "faa4a038e4d3546882504d5c1437d4066b9eac3f94bc4c585d6f53209763515d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "get",
+      "scope": "__createIlmAdapter",
+      "line": 741,
+      "endLine": 741,
+      "source_sha256": "270918fdad0796121602308f2539d69d9fe7d167fb0d724c8416f29f5075fdd9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "set",
+      "scope": "__createIlmAdapter",
+      "line": 741,
+      "endLine": 741,
+      "source_sha256": "6835259d6dffdf712c3f3f7e2b9c69dea474be927eca0629d126170a4f4d7948",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "get",
+      "scope": "__createIlmAdapter",
+      "line": 742,
+      "endLine": 742,
+      "source_sha256": "d7440f96947b083411819938378a638c0143ce2d0397afaf3467e546e0c0bbff",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "εᴎ༩",
+      "scope": "__createIlmAdapter/get",
+      "line": 742,
+      "endLine": 742,
+      "source_sha256": "59bcae10483a34cfc6baeee3254d1055d4295e3f27759e797401807a72ab523f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "і٥ࠂ",
+      "scope": "__createIlmAdapter/get",
+      "line": 742,
+      "endLine": 742,
+      "source_sha256": "219a901e29b461bcb7db1f113506751f67c97a4add8a823de6b01167e378a641",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "get",
+      "scope": "__createIlmAdapter",
+      "line": 743,
+      "endLine": 743,
+      "source_sha256": "e61b72ffb0ac285ad1bb41b414b0cdd2175cefee9b7284b9c28a7f0e6ed633c9",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "ᴎ०︁",
+      "scope": "__createIlmAdapter/get",
+      "line": 743,
+      "endLine": 743,
+      "source_sha256": "27c7943ccaae5ad4e4d1869b23af2d81df61d9a5a41c18a1491a686c7410a320",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "id",
+      "scope": "__createIlmAdapter",
+      "line": 744,
+      "endLine": 744,
+      "source_sha256": "379a47d92ee93923e6261acae7220648b409b7101046d9247979c0ffca24dd4c",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "x",
+      "scope": "__createIlmAdapter",
+      "line": 744,
+      "endLine": 744,
+      "source_sha256": "b6db835d4b00d02e1b89527b5786401e788c76c33d8f147c3668b295e55f375e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "y",
+      "scope": "__createIlmAdapter",
+      "line": 744,
+      "endLine": 744,
+      "source_sha256": "782f26a6474cec4193917b54b5ee5c7a2bfb0767809a50c7b393632e172cb68e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "εᴎ༩",
+      "scope": "__createIlmAdapter",
+      "line": 744,
+      "endLine": 744,
+      "source_sha256": "90ecb7d3b3bed1754f3db92c34383a730c98281dd2da080bbd564f639af9deea",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "get",
+      "scope": "__createIlmAdapter",
+      "line": 746,
+      "endLine": 746,
+      "source_sha256": "3992cbbc0dd806162ad61886e018fe85849d3532953c8c88335dc06d522aa0f1",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__ilmAimDefaults",
+      "scope": "",
+      "line": 750,
+      "endLine": 750,
+      "source_sha256": "744dbccd4f4e9bdde136536b6f767a3fe0e6fedaeb170ba7e2766f09f6f3194a",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__ilmAimConstraints",
+      "scope": "",
+      "line": 751,
+      "endLine": 751,
+      "source_sha256": "7f302d928849d18cf8b63252f0c54f569b6e24cac96050e7e22fee1294b5d9c5",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__ilmMouseToWorld",
+      "scope": "",
+      "line": 752,
+      "endLine": 752,
+      "source_sha256": "362d5333506567cf29ce9519701c253fc9e5cbfb5d1297bdb7d695aaa471d2be",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__createBallisticAim",
+      "scope": "",
+      "line": 754,
+      "endLine": 885,
+      "source_sha256": "e5620a69a2e1656b69eb34e9cd82df8ad73d3f55649adba15adfc8d9fcf5ebc5",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "circle",
+      "scope": "__createBallisticAim",
+      "line": 757,
+      "endLine": 760,
+      "source_sha256": "f385c277a8937f5a1f2f0ae4049d0aae67481e7c93eeea52a57dfb8236b2616f",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "fitCircle",
+      "scope": "__createBallisticAim",
+      "line": 761,
+      "endLine": 787,
+      "source_sha256": "e5b807bc1111259170222fe8d6db0116962a5ceac3a9c2de168d04f17434232d",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/fitCircle",
+      "line": 763,
+      "endLine": 763,
+      "source_sha256": "ef4a1612257538cfdcd7850b8901c304a65426d29e81810fee6e3ed653ea63e2",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/fitCircle",
+      "line": 784,
+      "endLine": 784,
+      "source_sha256": "86eb117f460437183b594f0cd7415653790d8736457dfdc7f7bf5c7e1368fb56",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/fitCircle",
+      "line": 785,
+      "endLine": 785,
+      "source_sha256": "8a691bf0dcc9a3c1f0f1e64e064765ed01c989878e7a41ef2964adbb3c590295",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "track",
+      "scope": "__createBallisticAim",
+      "line": 788,
+      "endLine": 806,
+      "source_sha256": "0673c744b9338d2e787192f3603267dc8a810fd6d465e9806c2a9dd512a64e2e",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "motion",
+      "scope": "__createBallisticAim",
+      "line": 807,
+      "endLine": 834,
+      "source_sha256": "b9b0f353cc7596e35cfec60025536d469d67e6910f23523c132e1332026025fe",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "projectile",
+      "scope": "__createBallisticAim",
+      "line": 835,
+      "endLine": 846,
+      "source_sha256": "32194fc636219055e66401daab819994b73673d16fe512ffa0fb7782c9aab665",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "speedFor",
+      "scope": "__createBallisticAim",
+      "line": 847,
+      "endLine": 856,
+      "source_sha256": "db641683eaa5b85b46ff4bad5e2550c966c52d7d37a4c0871c51b77e73871cc0",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/speedFor",
+      "line": 848,
+      "endLine": 848,
+      "source_sha256": "7a82c9e0ff7db65b04340c011fa6184119d2f86c64583388b576aa6adf56ce25",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/speedFor",
+      "line": 850,
+      "endLine": 850,
+      "source_sha256": "e8faf8fe916cb1df9b68ace5bceb06eca3e4a7be9c79ef4e670a92b838ddf37b",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/speedFor",
+      "line": 850,
+      "endLine": 850,
+      "source_sha256": "c22e5ac5fb1db676c5760913e1f944f228cfe32d411259c1e91165d3b13e448e",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/speedFor",
+      "line": 852,
+      "endLine": 852,
+      "source_sha256": "7e3538365fb4bbb2b7ecf0859348fafaa6f4367322b6cf4fae223045f7721546",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "intercept",
+      "scope": "__createBallisticAim",
+      "line": 857,
+      "endLine": 865,
+      "source_sha256": "4584da5507d5e4cfb1a092dd06528c8b8bb70dfc7409180132e9f146773ae985",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/intercept",
+      "line": 864,
+      "endLine": 864,
+      "source_sha256": "c01f27599f15236f36971c08da58f2cae320c560c1f24de48903545adcb2e2ce",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "resolve",
+      "scope": "__createBallisticAim",
+      "line": 866,
+      "endLine": 883,
+      "source_sha256": "03a104a8c27b9868114f21f961ff87ef8d1bc4014ceff890380c2ce19c237ab7",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "future",
+      "scope": "__createBallisticAim/resolve",
+      "line": 870,
+      "endLine": 870,
+      "source_sha256": "2e80c5546da9fda8999bfe9c33f97668671a8ce92db2fc8da4695be745f820cc",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "gap",
+      "scope": "__createBallisticAim/resolve",
+      "line": 876,
+      "endLine": 876,
+      "source_sha256": "214efce72b47e194341080e9eca5010e3ce88c7e345ea8634c700c2813080f25",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "reset",
+      "scope": "__createBallisticAim",
+      "line": 884,
+      "endLine": 884,
+      "source_sha256": "b146dda21b14ebd8f86d3406b8c3f0b371e02a7e36ccaadf672d7e07d3ca7700",
+      "embedded_model_copy": true,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__ilmPlayerNickname",
+      "scope": "",
+      "line": 886,
+      "endLine": 888,
+      "source_sha256": "7c20e1b7d5fb4503ccb3c191a94fed6d09f7b149a215b456c00c134c5fa915f4",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__ilmPatchPlayerMetadata",
+      "scope": "",
+      "line": 890,
+      "endLine": 894,
+      "source_sha256": "a05f549dfb433c4ec9c2bd680d8d7f36ecd57bc8723db0cc1666701a6d1b613e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__ilmPatchNativeDirection",
+      "scope": "",
+      "line": 896,
+      "endLine": 901,
+      "source_sha256": "e6c580a74a044b3d9fdb9ad42c44e4301df3afee0c21e6ff22a85c0eb967c908",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ilm-aim.js",
+      "name": "__jitterPatchNativeFire",
+      "scope": "",
+      "line": 903,
+      "endLine": 907,
+      "source_sha256": "c4113d1a41b6a84126fe8fa3bcca7a6f0210a04be377d48803ddfa03547ebaec",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "__createBallisticAim",
+      "scope": "",
+      "line": 2,
+      "endLine": 133,
+      "source_sha256": "e5620a69a2e1656b69eb34e9cd82df8ad73d3f55649adba15adfc8d9fcf5ebc5",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "circle",
+      "scope": "__createBallisticAim",
+      "line": 5,
+      "endLine": 8,
+      "source_sha256": "f385c277a8937f5a1f2f0ae4049d0aae67481e7c93eeea52a57dfb8236b2616f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "fitCircle",
+      "scope": "__createBallisticAim",
+      "line": 9,
+      "endLine": 35,
+      "source_sha256": "e5b807bc1111259170222fe8d6db0116962a5ceac3a9c2de168d04f17434232d",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/fitCircle",
+      "line": 11,
+      "endLine": 11,
+      "source_sha256": "ef4a1612257538cfdcd7850b8901c304a65426d29e81810fee6e3ed653ea63e2",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/fitCircle",
+      "line": 32,
+      "endLine": 32,
+      "source_sha256": "86eb117f460437183b594f0cd7415653790d8736457dfdc7f7bf5c7e1368fb56",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/fitCircle",
+      "line": 33,
+      "endLine": 33,
+      "source_sha256": "8a691bf0dcc9a3c1f0f1e64e064765ed01c989878e7a41ef2964adbb3c590295",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "track",
+      "scope": "__createBallisticAim",
+      "line": 36,
+      "endLine": 54,
+      "source_sha256": "0673c744b9338d2e787192f3603267dc8a810fd6d465e9806c2a9dd512a64e2e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "motion",
+      "scope": "__createBallisticAim",
+      "line": 55,
+      "endLine": 82,
+      "source_sha256": "b9b0f353cc7596e35cfec60025536d469d67e6910f23523c132e1332026025fe",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "projectile",
+      "scope": "__createBallisticAim",
+      "line": 83,
+      "endLine": 94,
+      "source_sha256": "32194fc636219055e66401daab819994b73673d16fe512ffa0fb7782c9aab665",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "speedFor",
+      "scope": "__createBallisticAim",
+      "line": 95,
+      "endLine": 104,
+      "source_sha256": "db641683eaa5b85b46ff4bad5e2550c966c52d7d37a4c0871c51b77e73871cc0",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/speedFor",
+      "line": 96,
+      "endLine": 96,
+      "source_sha256": "7a82c9e0ff7db65b04340c011fa6184119d2f86c64583388b576aa6adf56ce25",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/speedFor",
+      "line": 98,
+      "endLine": 98,
+      "source_sha256": "e8faf8fe916cb1df9b68ace5bceb06eca3e4a7be9c79ef4e670a92b838ddf37b",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/speedFor",
+      "line": 98,
+      "endLine": 98,
+      "source_sha256": "c22e5ac5fb1db676c5760913e1f944f228cfe32d411259c1e91165d3b13e448e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/speedFor",
+      "line": 100,
+      "endLine": 100,
+      "source_sha256": "7e3538365fb4bbb2b7ecf0859348fafaa6f4367322b6cf4fae223045f7721546",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "intercept",
+      "scope": "__createBallisticAim",
+      "line": 105,
+      "endLine": 113,
+      "source_sha256": "4584da5507d5e4cfb1a092dd06528c8b8bb70dfc7409180132e9f146773ae985",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "callback",
+      "scope": "__createBallisticAim/intercept",
+      "line": 112,
+      "endLine": 112,
+      "source_sha256": "c01f27599f15236f36971c08da58f2cae320c560c1f24de48903545adcb2e2ce",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "resolve",
+      "scope": "__createBallisticAim",
+      "line": 114,
+      "endLine": 131,
+      "source_sha256": "03a104a8c27b9868114f21f961ff87ef8d1bc4014ceff890380c2ce19c237ab7",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "future",
+      "scope": "__createBallisticAim/resolve",
+      "line": 118,
+      "endLine": 118,
+      "source_sha256": "2e80c5546da9fda8999bfe9c33f97668671a8ce92db2fc8da4695be745f820cc",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "gap",
+      "scope": "__createBallisticAim/resolve",
+      "line": 124,
+      "endLine": 124,
+      "source_sha256": "214efce72b47e194341080e9eca5010e3ce88c7e345ea8634c700c2813080f25",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/ballistic-model.js",
+      "name": "reset",
+      "scope": "__createBallisticAim",
+      "line": 132,
+      "endLine": 132,
+      "source_sha256": "b146dda21b14ebd8f86d3406b8c3f0b371e02a7e36ccaadf672d7e07d3ca7700",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/bootstrap.js",
+      "name": "integrity",
+      "scope": "",
+      "line": 13,
+      "endLine": 13,
+      "source_sha256": "e2391e1ec9d9a2f82fca22e7aa32b1c2095dd69f3c859d6793a0428abaaaf259",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/bootstrap.js",
+      "name": "integrityPatched",
+      "scope": "",
+      "line": 14,
+      "endLine": 14,
+      "source_sha256": "0c2267c508e14bc75e72d6caf6579ef2b7f59c7a87d5c976ad0faf9280ff0d3e",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/bootstrap.js",
+      "name": "health",
+      "scope": "",
+      "line": 15,
+      "endLine": 15,
+      "source_sha256": "bcd410c29fe3fc862a4e89af3e0020bb1893f45b6b5748c56429dbaddd9b4ac0",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/bootstrap.js",
+      "name": "isManualDoor",
+      "scope": "",
+      "line": 16,
+      "endLine": 16,
+      "source_sha256": "2fc8986d448df7fd44a573508145a516325d4d825fcd751f886ff560e42cc706",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/bootstrap.js",
+      "name": "adWaiting",
+      "scope": "",
+      "line": 17,
+      "endLine": 17,
+      "source_sha256": "1a6c05bbd7b437542cf5b1a6eeaf9fad50e6204e91343f5915bf425129778e09",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/bootstrap.js",
+      "name": "returnToMenu",
+      "scope": "",
+      "line": 18,
+      "endLine": 20,
+      "source_sha256": "c9bc32258ea69f90169a93314708703b0c1c9a1e1d066d046e3b727a8a896bed",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/bootstrap.js",
+      "name": "homeControlsVisible",
+      "scope": "",
+      "line": 21,
+      "endLine": 24,
+      "source_sha256": "20025b466ddc83c991e1e4d4c187eb880b184089ffbf3113e6b864c978964f3f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/bootstrap.js",
+      "name": "canShowHome",
+      "scope": "",
+      "line": 25,
+      "endLine": 25,
+      "source_sha256": "01e51cd09bd45521e4395ad464640bdcfa39f76c5749afa3f94ac095512d4426",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/bootstrap.js",
+      "name": "reconnect",
+      "scope": "",
+      "line": 26,
+      "endLine": 29,
+      "source_sha256": "3516da92a4c3ad188bbad113bde7c25e84d17eeedb453764d02a8ccc308d6a0f",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/bootstrap.js",
+      "name": "view",
+      "scope": "",
+      "line": 30,
+      "endLine": 30,
+      "source_sha256": "810fadd84a6a27ebc13d68784dde377d801a25d432bbe3e1a980cacedf6213e8",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "mod/bootstrap.js",
+      "name": "chatActive",
+      "scope": "",
+      "line": 31,
+      "endLine": 31,
+      "source_sha256": "1ffdeda722693ff64ccdc82a59d1512f43c27d2c44d9be904efa9d646bc2f161",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": []
+    },
+    {
+      "module": "resource-override/loader.js",
+      "name": "callback",
+      "scope": "",
+      "line": 1,
+      "endLine": 27,
+      "source_sha256": "e91192ba9236240deb6fdf10e1d168d3bfa1fa05ff16ff0bfcd72948d47f1443",
+      "embedded_model_copy": false,
+      "review_status": "static review; behavioral checks recorded for the module",
+      "direct_effects": [
+        "network_send"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "function": "persist",
+      "issue": "Saving settings reset the fast-loot interval",
+      "reproduction": "200 requests in a 25 ms fixture while repeatedly changing zoom",
+      "result": "The same fixture stays at eight requests until the next 25 ms cycle",
+      "test": "tests/automation-transport.test.cjs"
+    },
+    {
+      "function": "__send",
+      "issue": "Manual interactions could send while the observed socket was not open or a death had ended the session",
+      "result": "Connecting, closing, closed and terminated-session sends are rejected",
+      "test": "tests/door-click.test.cjs"
+    },
+    {
+      "function": "automate",
+      "issue": "Direct native chat bypassed the common send guard after confirmed death",
+      "reproduction": "Two messages after death while the native state remained 1",
+      "result": "No messages or mod commands in the same fixture",
+      "test": "tests/automation-transport.test.cjs"
+    },
+    {
+      "function": "Aimbot.resolve / beforeFire",
+      "issue": "The source resolver could dereference a missing own-player record before the first position packet",
+      "result": "No exception before the packet, targeting resumes after it arrives",
+      "test": "tests/aim-review.test.cjs"
+    },
+    {
+      "function": "beforeFire / afterFire / trackPacket / cycle / timer",
+      "issue": "Callbacks arriving after disposal could block native fire or create more timers",
+      "result": "Native fire remains available, disposed callbacks allocate no timers or packets",
+      "test": "tests/mod.test.cjs"
+    },
+    {
+      "function": "observeSocket",
+      "issue": "Repeated observation reset timing and counters, and observation after disposal could add listeners",
+      "result": "Same-socket state is retained and disposed instances attach no observers",
+      "test": "tests/rejoin-recovery.test.cjs"
+    },
+    {
+      "function": "connectionInfo / browser error listeners",
+      "issue": "Mod-only errors omitted browser exceptions and promise rejections",
+      "result": "Bounded exception, rejection and resource-failure counters with independent snapshots",
+      "test": "tests/rejoin-recovery.test.cjs"
+    },
+    {
+      "function": "Imported aim runtime and menu",
+      "issue": "Shared AutoFire/AutoThrow, pre-ID death check, invalid line reset, lost range indicator, key capture, touch ownership, inert coefficient, redundant configuration and per-packet adaptive searches",
+      "result": "Explicit source corrections and regression cases",
+      "test": "tests/aim-review.test.cjs"
+    },
+    {
+      "functions": [
+        "guardHandshakeCallback",
+        "guardHandshakeCallbacks",
+        "watchConnectionHandlers"
+      ],
+      "issue": "Multiple terminal callbacks could start duplicate login stages or close a socket while it was connecting",
+      "reproduction": "Six repeated callbacks were all accepted; success, success, failure started twice and closed once",
+      "result": "One result is accepted per request; success/failure share ownership, including nested requests",
+      "checks": [
+        "64 event sequences",
+        "receiver and argument preservation",
+        "throwing callback",
+        "actual native HTTP helper in Chromium and Firefox"
+      ]
+    },
+    {
+      "functions": [
+        "restoreNativeMovement",
+        "setSetting",
+        "onMove",
+        "step",
+        "observeDeath",
+        "observeSocket",
+        "dispose"
+      ],
+      "issue": "Disabling strafe or disposing the mod left its last movement mask on the server",
+      "result": "Restore the last native movement once while the mod owns it; skip ended and replaced sessions",
+      "checks": [
+        "15 movement-ownership cases",
+        "actual native codec browser fixture",
+        "active playable sockets survive stale entry deadlines in six phases"
+      ]
+    }
+  ],
+  "validation": {
+    "status": "client_checks_passed_live_disconnect_unresolved",
+    "source_commit": "99d06dcb4d38b200c2538a2e9070fe060411b85c",
+    "output_sha256": "ed148008be8ef73bf7894bcacbc62486efecd2696539b2ec7cdc461a4bdc40e3",
+    "regression": {
+      "status": "passed",
+      "python_tests": 83,
+      "node_tests": 341
+    },
+    "candidate_function_tests": {
+      "status": "passed",
+      "node_tests": 259
+    },
+    "browsers": {
+      "chromium": "passed",
+      "firefox": "passed"
+    },
+    "official_source_rechecked_in_browser": true,
+    "live_tests": {
+      "sessions": [
+        {
+          "session": "candidate-1",
+          "joined": true,
+          "seconds_after_join": 51.394,
+          "actual_hosts": [
+            "atlanta1.devast.io"
+          ],
+          "death_packets": [],
+          "page_errors": 0,
+          "final_state": 1,
+          "final_socket_state": 1,
+          "mod_error_count": 0,
+          "combat_in_last_2s": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          },
+          "browser_failures": {
+            "exceptions": 0,
+            "unhandledRejections": 0,
+            "resourceErrors": 1
+          },
+          "error": null,
+          "position_after_strafe_off_stayed_constant": true,
+          "position_after_strafe_off": {
+            "x": 13457,
+            "y": 6302
+          }
+        },
+        {
+          "session": "stock-1",
+          "joined": true,
+          "seconds_after_join": 51.054,
+          "actual_hosts": [
+            "atlanta3.devast.io"
+          ],
+          "death_packets": [],
+          "page_errors": 0,
+          "final_state": null,
+          "final_socket_state": null,
+          "mod_error_count": null,
+          "combat_in_last_2s": null,
+          "browser_failures": null,
+          "error": null
+        },
+        {
+          "session": "candidate-jitter-1",
+          "joined": true,
+          "seconds_after_join": 4.67,
+          "actual_hosts": [
+            "atlanta5.devast.io"
+          ],
+          "death_packets": [
+            {
+              "at": 17972,
+              "prefix": "1b0000",
+              "length": 3
+            }
+          ],
+          "page_errors": 0,
+          "final_state": 0,
+          "final_socket_state": 2,
+          "mod_error_count": 0,
+          "combat_in_last_2s": {
+            "angle": 13,
+            "attack": 0,
+            "release": 0
+          },
+          "browser_failures": {
+            "exceptions": 0,
+            "unhandledRejections": 0,
+            "resourceErrors": 1
+          },
+          "error": null
+        },
+        {
+          "session": "jitter-only",
+          "joined": true,
+          "seconds_after_join": 30.766,
+          "actual_hosts": [
+            "atlanta2.devast.io"
+          ],
+          "death_packets": [],
+          "page_errors": 0,
+          "final_state": 1,
+          "final_socket_state": 1,
+          "mod_error_count": 0,
+          "combat_in_last_2s": {
+            "angle": 28,
+            "attack": 0,
+            "release": 0
+          },
+          "browser_failures": {
+            "exceptions": 0,
+            "unhandledRejections": 0,
+            "resourceErrors": 1
+          },
+          "error": null
+        },
+        {
+          "session": "aim-only",
+          "joined": true,
+          "seconds_after_join": 30.479,
+          "actual_hosts": [
+            "atlanta1.devast.io"
+          ],
+          "death_packets": [],
+          "page_errors": 0,
+          "final_state": 1,
+          "final_socket_state": 1,
+          "mod_error_count": 0,
+          "combat_in_last_2s": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          },
+          "browser_failures": {
+            "exceptions": 0,
+            "unhandledRejections": 0,
+            "resourceErrors": 1
+          },
+          "error": null
+        },
+        {
+          "session": "all-off",
+          "joined": false,
+          "seconds_after_join": null,
+          "actual_hosts": [
+            "atlanta2.devast.io",
+            "atlanta4.devast.io"
+          ],
+          "death_packets": [],
+          "page_errors": 9,
+          "final_state": 64,
+          "final_socket_state": 3,
+          "mod_error_count": 0,
+          "combat_in_last_2s": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          },
+          "browser_failures": {
+            "exceptions": 0,
+            "unhandledRejections": 3,
+            "resourceErrors": 9
+          },
+          "error": null
+        },
+        {
+          "session": "stock",
+          "joined": false,
+          "seconds_after_join": null,
+          "actual_hosts": [],
+          "death_packets": [],
+          "page_errors": 0,
+          "final_state": null,
+          "final_socket_state": null,
+          "mod_error_count": null,
+          "combat_in_last_2s": null,
+          "browser_failures": null,
+          "error": "Expected values to be strictly equal:\n\n503 !== 200\n"
+        }
+      ],
+      "scope_limits": [
+        "Bounded guest sessions, automatic firing disabled.",
+        "The same UI region selected different physical backends, so these are not controlled same-server comparisons.",
+        "Combined aim and Jitter received a server death packet after 4.67 seconds; its authoritative reason is still unknown.",
+        "Later connection failures received and sent zero WebSocket packets; the stock page then returned HTTP 503."
+      ]
+    },
+    "publication": "not_published"
+  },
+  "functionExpressions": 383,
+  "reviewUnitsExcludingEmbeddedModelCopy": 363
+}

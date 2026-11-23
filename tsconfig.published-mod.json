@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "none",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": [],
+    "strict": true,
+    "alwaysStrict": false,
+    "erasableSyntaxOnly": true,
+    "noEmitOnError": true,
+    "skipLibCheck": false
+  },
+  "include": ["published-mod/*.ts", "resource-override/loader.ts"]
+}

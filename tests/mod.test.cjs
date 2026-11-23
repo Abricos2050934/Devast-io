@@ -67,14 +67,15 @@ test('fast loot visits in-range drops on bounded cycles without the native selec
  f.mod.setSetting('FAutoLootEnabled',true);f.network.state=64;f.mod.render(125);assert.equal(f.packets.length,10);f.mod.dispose();
 });
 
-test('fast loot menu filter applies immediately to every drop, independently of cursor interaction',()=>{
+test('fast loot applies filter changes on its next scheduled scan, independently of cursor interaction',()=>{
  const f=fixture({dom:true}),gui=menu(f),automation=gui.__folders.Automation;
  control(automation,'FAutoLootEnabled').setValue(true);control(automation,'LootDataEnabled').setValue(true);
  const steel=automation.__folders['Loot filter'].__controllers.find(c=>c.object===f.mod.loot.steel);
  steel.setValue(false);scene(f,2,[{id:10,x:10,y:0,'е̝ހ':0,'Іࡈ５':6}]);
  f.mod.render(0);assert.equal(f.packets.length,0);steel.setValue(true);
- f.mod.render(16);assert.deepEqual(f.packets,[[12,10]]);
- f.mod.loot.steel.acquire=false;f.mod.setSetting('LootDataEnabled',false);f.mod.render(41);assert.deepEqual(f.packets,[[12,10],[12,10]]);f.mod.dispose();
+ f.mod.render(16);assert.deepEqual(f.packets,[]);
+ f.mod.render(25);assert.deepEqual(f.packets,[[12,10]]);
+ f.mod.loot.steel.acquire=false;f.mod.setSetting('LootDataEnabled',false);f.mod.render(50);assert.deepEqual(f.packets,[[12,10],[12,10]]);f.mod.dispose();
 });
 
 test('zoom persists across reload; invalid ranges and choices are rejected; conflicting key bindings swap',()=>{
@@ -245,4 +246,20 @@ test('native synchronized fast loot respects its interval without a second RAF s
  f.mod.step(0);assert.equal(f.packets.length,0);f.mod.render(0);assert.deepEqual(f.packets,[[12,10]]);
  f.mod.step(16);assert.equal(f.packets.length,1);f.mod.render(16);assert.equal(f.packets.length,1);f.mod.render(25);assert.deepEqual(f.packets,[[12,10],[12,10]]);
  scene(f,2,[]);f.mod.render(32);assert.equal(f.packets.length,2);f.mod.dispose();
+});
+
+test('late native callbacks after disposal leave no timers and permit ordinary native firing', () => {
+ const f = fixture();
+ f.mod.trackPacket(1, 1, 1, 100, 100, true);
+ f.mod.trackPacket(1, 2, 1, 200, 200, true);
+ f.mod.dispose();
+ assert.equal(f.mod.beforeFire(), true);
+ f.mod.afterFire();
+ f.mod.aimModule.afterFire();
+ f.mod.aim.scheduleRefresh();
+ f.mod.trackPacket(1, 3, 1, 300, 300, true);
+ assert.equal(f.timers.size, 0);
+ assert.equal(f.mod.aim.mouseDown, false);
+ assert.equal(f.mod.targets.players[3].active, false);
+ assert.equal(f.packets.length, 0);
 });

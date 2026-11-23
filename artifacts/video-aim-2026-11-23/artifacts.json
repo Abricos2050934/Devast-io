@@ -1,0 +1,14 @@
+{
+  "client.js": {
+    "sha256": "f6b2368a221f9f67cb1027f265494cfe53abcfd61478892b494f912765fce2d5",
+    "bytes": 4802740
+  },
+  "Devast-io-Video-Aim.json": {
+    "sha256": "29ece2848f68f4ed1d347b106cf888b75e8d6245d47290e4ca4cad815ff14d99",
+    "bytes": 5016758
+  },
+  "Devast-io-Video-Aim-source.zip": {
+    "sha256": "14888a25343a42261cc7a6fcff68264edec27ac745b430901d1ab9ae19619509",
+    "bytes": 1903606
+  }
+}

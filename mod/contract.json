@@ -62,7 +62,12 @@
     "native-rejection-stops-auto-reconnect",
     "verified-legacy-settings-retirement",
     "canonical-source-angle-domain",
-    "stale-preflight-errors-preserve-current-connection"
+    "stale-preflight-errors-preserve-current-connection",
+    "reviewed-aim-runtime-corrections",
+    "strafe-movement-ownership",
+    "typescript-owned-mod",
+    "video-ping-aware-prediction",
+    "video-latency-left-hud"
   ],
   "removed_overlays": [
     "bottom-gauge-text",
@@ -95,10 +100,23 @@
     "tests/wire-diagnostics.test.cjs",
     "tests/legacy-settings-migration.test.cjs",
     "tests/aim-angle-domain.test.cjs",
-    "tests/native-preflight-errors.test.cjs"
+    "tests/native-preflight-errors.test.cjs",
+    "tests/aim-review.test.cjs",
+    "tests/movement-ownership.test.cjs",
+    "tests/video-prediction.test.cjs",
+    "tests/video-aim-hud.test.cjs"
   ],
   "required_browsers": [
     "chromium",
     "firefox"
+  ],
+  "typescript_sources": [
+    "mod/responsive.ts",
+    "mod/ilm-aim.ts",
+    "mod/ballistic-model.ts",
+    "mod/bootstrap.ts",
+    "resource-override/loader.ts",
+    "mod/contracts.d.ts",
+    "tsconfig.mod.json"
   ]
 }

@@ -1,0 +1,168 @@
+{
+  "scope": "Current delivered mod with its existing keep-alive setting enabled; standing still for up to 75 seconds; live guest entry",
+  "artifact": "/workspace/Devast-io/artifacts/typescript-2026-11-22/Devast-io-TypeScript.json",
+  "script_sha256": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+  "results": [
+    {
+      "name": "typescript-1",
+      "requestedServer": "Atlanta 1",
+      "scriptHash": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+      "loaded": true,
+      "joined": false,
+      "sockets": [],
+      "errors": [
+        {
+          "at": 16208,
+          "name": "ReferenceError",
+          "message": "Widget is not defined"
+        },
+        {
+          "at": 16638,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16638,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16638,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16638,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16638,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16638,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16639,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16639,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16639,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16639,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16639,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16639,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16671,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16671,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16671,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16671,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16672,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16672,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16686,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16694,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16694,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        {
+          "at": 16694,
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        }
+      ],
+      "failedRequests": {
+        "stylesheet": 3,
+        "script": 3
+      },
+      "resourceErrors": 116,
+      "samples": [],
+      "replacedUrl": "https://devast.io/js/YukAlFEf489QnSaQ.js",
+      "homeStatus": 200,
+      "modProof": {
+        "clientLoaded": true,
+        "menu": true,
+        "menus": 1,
+        "build": {
+          "fingerprint": "ba41a16017f0380e85d629134849cbd5a71d26ba312deeb22ea65b203464e646",
+          "nativeSha256": "7a2efe2e7dd21d3d3776a0f4538d5ad7038be3be26566a1ae06060e02e32063a"
+        },
+        "aimSettings": {
+          "enabled": false,
+          "spear": false,
+          "hidePlayerAngle": false,
+          "hideAimbotAngle": false,
+          "source": "message27-bby",
+          "adaptive": true,
+          "jitter": false,
+          "jitterSpeed": 360,
+          "strafe": false,
+          "autoFire": false,
+          "target": "players",
+          "lockId": -1,
+          "distanceCoefficient": 80,
+          "offsetCoefficient": 0.8
+        }
+      },
+      "keepAliveEnabled": true,
+      "error": "Requested region is unavailable",
+      "elapsedMs": 17192
+    }
+  ]
+}

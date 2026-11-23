@@ -1,0 +1,182 @@
+{
+  "graphicsConfiguration": "Real ANGLE/SwiftShader WebGL enabled; no graphics API spoofing; no debugger",
+  "schema": 1,
+  "scope": "Latest local JSON; official live HTML, token service and game server; stationary observation up to 120 seconds; no automatic rejoin after join; no page evaluation before the session ends",
+  "artifact": "/workspace/Devast-io/artifacts/open-handshake-2026-11-22/Devast-io-Open-Handshake.json",
+  "sha256": "97ebd0ad6fec53f1ac2739c45a439c87b5fe06ca93ab4b195be40c0b98a57b9a",
+  "joined": true,
+  "minutePassed": false,
+  "sockets": [
+    {
+      "requestId": "63352.1044",
+      "host": "losangeles1.devast.io",
+      "createdAt": 45771,
+      "received": 10,
+      "sent": 1,
+      "closedAt": 48304,
+      "death": {
+        "at": 47109,
+        "prefix": "1b0000",
+        "length": 3
+      },
+      "opcodes": {
+        "20": 1,
+        "27": 1,
+        "47": 1,
+        "52": 1,
+        "71": 1
+      },
+      "handshakeStatus": 101,
+      "lastReceiveAt": 47109
+    }
+  ],
+  "replacements": 1,
+  "networkErrors": [],
+  "navigationAttempts": 1,
+  "homeStatus": 200,
+  "replacedPath": "/js/y6fopeDaqhW3Gwmo2uwu3ccFWsO.js",
+  "optionCount": 11,
+  "options": [
+    "Auto Select Server",
+    "Atlanta 1 - 10 players",
+    "Atlanta 2 - 17 players",
+    "Frankfurt 1 - 58 players",
+    "Frankfurt 2 - 16 players",
+    "Losangeles 1 - 7 players",
+    "Losangeles 2 - 9 players",
+    "Osaka 1 - 5 players",
+    "Osaka 2 - 2 players",
+    "Sydney 1 - 4 players",
+    "Sydney 2 - 2 players"
+  ],
+  "chosenLabel": "Losangeles 1 - 7 players",
+  "stage": "before-entry",
+  "nativeRequestFailures": [
+    {
+      "host": "losangeles3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "atlanta5.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "frankfurt2.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "osaka2.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "sydney3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    }
+  ],
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "playCoordinates": {
+    "x": 644,
+    "y": 356
+  },
+  "playClicks": 1,
+  "playerId": 4,
+  "secondsAfterJoin": 1.427,
+  "final": {
+    "loaded": true,
+    "state": 64,
+    "socketState": 3,
+    "ended": true,
+    "playerId": 4,
+    "active": false,
+    "settings": {
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "aim": {
+        "enabled": false,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "players",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      }
+    },
+    "modErrors": 0,
+    "integrityFlag": 0,
+    "callbacks": {
+      "wrapped": 5,
+      "accepted": 3,
+      "rejectedStale": 0,
+      "rejectedWhileConnected": 0,
+      "rejectedAfterDispose": 0,
+      "rejectedDuplicate": 0
+    },
+    "events": [
+      {
+        "type": "server-death",
+        "health": 255,
+        "flag": 0,
+        "source": null
+      },
+      {
+        "type": "native-network-error",
+        "health": 255,
+        "flag": 0,
+        "source": null
+      },
+      {
+        "type": "socket-close",
+        "code": 1005,
+        "health": 255,
+        "flag": 0,
+        "source": null
+      }
+    ]
+  },
+  "elapsedMs": 48304
+}

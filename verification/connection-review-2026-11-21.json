@@ -1,0 +1,200 @@
+{
+  "date_utc": "2026-11-21",
+  "published_js_sha256": "bf91326621e60655629bb2bfc27e101261c8acb99fda16342f286e248ddb2e07",
+  "observations": [
+    {
+      "session": "published-1",
+      "requested_server": "Atlanta 1",
+      "actual_host": "atlanta4.devast.io",
+      "joined": true,
+      "seconds_observed_after_join": 51.066,
+      "connection_state_at_end": 1,
+      "incoming_death": null,
+      "browser_exception_count": 0,
+      "native_integrity_flag_at_end": 0,
+      "combat_commands_in_last_2s": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "native_wire_packets": 2,
+      "event_sequence": []
+    },
+    {
+      "session": "published-2",
+      "requested_server": "Atlanta 2",
+      "actual_host": "atlanta4.devast.io",
+      "joined": true,
+      "seconds_observed_after_join": 6.4,
+      "connection_state_at_end": 2,
+      "incoming_death": {
+        "at": 20998,
+        "prefix": "1b0000",
+        "length": 3
+      },
+      "browser_exception_count": 0,
+      "native_integrity_flag_at_end": 0,
+      "combat_commands_in_last_2s": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "native_wire_packets": 2,
+      "event_sequence": [
+        {
+          "type": "server-death",
+          "at": 20981,
+          "health": 255,
+          "state": 1,
+          "flag": 0,
+          "deathOpcode": 27,
+          "deathPrefix": "1b 00 00",
+          "deathLength": 3,
+          "localCloseSource": null,
+          "received": 22,
+          "sent": 2,
+          "commands": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          }
+        },
+        {
+          "type": "native-network-error",
+          "at": 20982,
+          "health": 255,
+          "state": 0,
+          "flag": 0,
+          "failureCode": 128,
+          "localCloseSource": null,
+          "received": 22,
+          "sent": 2,
+          "commands": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          }
+        }
+      ]
+    },
+    {
+      "session": "stock-1",
+      "requested_server": "Atlanta 1",
+      "actual_host": "atlanta5.devast.io",
+      "joined": true,
+      "seconds_observed_after_join": 51.532,
+      "connection_state_at_end": null,
+      "incoming_death": null,
+      "browser_exception_count": 0,
+      "native_integrity_flag_at_end": null,
+      "combat_commands_in_last_2s": null,
+      "native_wire_packets": null,
+      "event_sequence": []
+    },
+    {
+      "session": "stock-2",
+      "requested_server": "Atlanta 2",
+      "actual_host": "atlanta5.devast.io",
+      "joined": true,
+      "seconds_observed_after_join": 51.972,
+      "connection_state_at_end": null,
+      "incoming_death": null,
+      "browser_exception_count": 0,
+      "native_integrity_flag_at_end": null,
+      "combat_commands_in_last_2s": null,
+      "native_wire_packets": null,
+      "event_sequence": []
+    },
+    {
+      "session": "published-aim-3",
+      "requested_server": "Atlanta 1",
+      "actual_host": "atlanta5.devast.io",
+      "joined": true,
+      "seconds_observed_after_join": 4.335,
+      "connection_state_at_end": 2,
+      "incoming_death": {
+        "at": 19355,
+        "prefix": "1b0000",
+        "length": 3
+      },
+      "browser_exception_count": 0,
+      "native_integrity_flag_at_end": 0,
+      "combat_commands_in_last_2s": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "native_wire_packets": 2,
+      "event_sequence": [
+        {
+          "type": "server-death",
+          "at": 19332,
+          "health": 255,
+          "state": 1,
+          "flag": 0,
+          "deathOpcode": 27,
+          "deathPrefix": "1b 00 00",
+          "deathLength": 3,
+          "localCloseSource": null,
+          "received": 22,
+          "sent": 2,
+          "commands": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          }
+        },
+        {
+          "type": "native-network-error",
+          "at": 19333,
+          "health": 255,
+          "state": 0,
+          "flag": 0,
+          "failureCode": 128,
+          "localCloseSource": null,
+          "received": 22,
+          "sent": 2,
+          "commands": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          }
+        }
+      ]
+    }
+  ],
+  "connection_marker_check": {
+    "nativeFlag": 0,
+    "markerResults": [
+      {
+        "serverId": 0,
+        "result": 0
+      },
+      {
+        "serverId": 1,
+        "result": 0
+      },
+      {
+        "serverId": 67,
+        "result": 0
+      },
+      {
+        "serverId": 68,
+        "result": 0
+      },
+      {
+        "serverId": 100,
+        "result": 0
+      }
+    ],
+    "scope": "Unmodified extracted connection check evaluated against the loaded published client and synthetic server rows. No game-server login."
+  },
+  "limits": [
+    "Guest sessions. Automatic attacks were disabled in every session.",
+    "The published-aim-3 session enabled tracking after join. No target direction packets were emitted before the death event.",
+    "Server selection routed connections to different nodes in the same region.",
+    "The recorded client flag does not establish the result of every server-side check.",
+    "The incoming death packet does not expose the server reason for terminating the character."
+  ],
+  "finding": "Two incoming death events reproduced before a client error 128. Client exceptions, an observed nonzero integrity flag and outgoing combat requests did not precede them. The authoritative server cause remains undetermined."
+}

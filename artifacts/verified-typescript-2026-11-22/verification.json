@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "source_language": "TypeScript 5.9.3; strict checks enabled",
+  "runtime": "compiled JavaScript",
+  "old_published_sha256": "bf91326621e60655629bb2bfc27e101261c8acb99fda16342f286e248ddb2e07",
+  "output_sha256": "780d3961024352378ab00f9d9c63d3ed35308e2decb4f817245e0f3731656e96",
+  "functional_tests": {
+    "published_before": {
+      "tests": 270,
+      "pass": 221,
+      "fail": 49
+    },
+    "fixed_candidate": {
+      "tests": 270,
+      "pass": 270,
+      "fail": 0
+    },
+    "local_typescript": {
+      "tests": 270,
+      "pass": 270,
+      "fail": 0
+    }
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "156.0.8078.79",
+      "scope": "native browser fixtures; no live game session",
+      "output_sha256": "780d3961024352378ab00f9d9c63d3ed35308e2decb4f817245e0f3731656e96",
+      "page_errors": []
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "scope": "native browser fixtures; no live game session",
+      "output_sha256": "780d3961024352378ab00f9d9c63d3ed35308e2decb4f817245e0f3731656e96",
+      "page_errors": []
+    }
+  },
+  "game_baseline": "same 7a2efe2e7dd21d3d3776a0f4538d5ad7038be3be26566a1ae06060e02e32063a native JavaScript; not migrated to TypeScript",
+  "fixes": [
+    "independent gun/spear automatic fire",
+    "unknown self ID and finite line coordinates",
+    "key capture cancellation and touch ownership",
+    "bounded automation and stopped-session transport",
+    "restore physical movement when strafe stops",
+    "settled and stale native entry callbacks",
+    "bounded socket-open handshake deadline",
+    "motion continuity and projectile prediction",
+    "idempotent socket observation and diagnostic event copying"
+  ],
+  "publication": "not_published",
+  "live_server_session": "not_tested; browser tests use fixtures, not a real server",
+  "limits": "270 test scenarios pass; this is not proof that every possible game state is free of errors."
+}

@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "clean_install": "npm ci --ignore-scripts --no-audit --no-fund",
+  "independent_archive_build": "passed",
+  "archive_tests": {
+    "passed": 3,
+    "failed": 0
+  },
+  "standard_tsc_noemit": "passed",
+  "existing_generated_mod_check": "passed",
+  "resource_override_schema": "v1, on flags and fileOverride confirmed",
+  "published": false,
+  "files": {
+    "Devast-io-TypeScript-source.zip": {
+      "bytes": 1575010,
+      "sha256": "d8abab13636224c87d044a762c6184329d757cebc39d580571cb4883c4c656e2"
+    },
+    "Devast-io-TypeScript.json": {
+      "bytes": 4608774,
+      "sha256": "ee53469ed2d020875b73fdc18c961497a26009f67b681651cc10812958792e3c"
+    },
+    "client.js": {
+      "bytes": 4421055,
+      "sha256": "bf91326621e60655629bb2bfc27e101261c8acb99fda16342f286e248ddb2e07"
+    }
+  }
+}

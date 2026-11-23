@@ -236,7 +236,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
  const operations=patchAnchors.map(({op,match})=>{
   const before=cur.source.slice(match.current.start,match.current.end);
   let after=match.callbackGuard?before:nativeFragment(op.after,match.local,require('./updater/project-fragment.cjs').preservedSpans(old,cur,match,op.after));
-  if(match.callbackGuard){const [url,ok,fail]=match.current.params.map(p=>p.name),at=match.current.body.start+1-match.current.start;after=before.slice(0,at)+`if(__responsiveMod){${ok}=__responsiveMod.guardHandshakeCallback(${url},${ok});${fail}=__responsiveMod.guardHandshakeCallback(${url},${fail});}`+before.slice(at);}
+  if(match.callbackGuard){const [url,ok,fail]=match.current.params.map(p=>p.name),at=match.current.body.start+1-match.current.start;after=before.slice(0,at)+`if(__responsiveMod){[${ok},${fail}]=__responsiveMod.guardHandshakeCallbacks(${url},${ok},${fail});}`+before.slice(at);}
   return {id:op.id,expected:1,before,after};
  }).concat(integrity.operations);
  const fn=cur.tree.body[0]?.expression?.callee;
@@ -301,6 +301,7 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
 if(require.main===module){
  try{
   const [, ,input,out]=process.argv;if(!input||!out)throw Error('Usage: node tools/auto_port.cjs RAW_JS OUTPUT_DIR');
+  require('./compile_mod.cjs').compile();
   const read=f=>fs.readFileSync(path.join(root,f),'utf8');
   const candidate=fs.readFileSync(input,'utf8'),reference=require('./updater/references.cjs').loadReference(root,candidate);
   const result=port(reference.source,candidate,reference.profile,reference.bindings,read('mod/responsive.js'),read('mod/bootstrap.js'),read('mod/ilm-aim.js'),read('vendor/dat.gui.recovered.js'));

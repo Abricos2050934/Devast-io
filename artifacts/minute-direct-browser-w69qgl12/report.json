@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "scope": "Regular Chrome controlled with browser input and passive network events; no Playwright helper injection or page evaluation before the session ends",
+  "artifact": "/workspace/Devast-io/artifacts/connection-deferred-entry-2026-11-22/Devast-io-Connection-v3.json",
+  "sha256": "8a068e8177a318465b2a1d2c1b8f94bdd1823e4f58bfefa58152c170109a9f1d",
+  "joined": false,
+  "minutePassed": false,
+  "sockets": [],
+  "replacements": 0,
+  "networkErrors": [
+    {
+      "host": "devast.io",
+      "path": "/",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/favicon.ico",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/favicon.ico",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/favicon.ico",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/favicon.ico",
+      "status": 503
+    }
+  ],
+  "navigationAttempts": 4,
+  "homeStatus": 503,
+  "error": "Game home HTTP 503",
+  "elapsedMs": 61455
+}

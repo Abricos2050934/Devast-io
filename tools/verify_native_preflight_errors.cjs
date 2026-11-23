@@ -26,8 +26,30 @@ function verifyNativePreflightErrors(m,n,s){
   // A current attempt must still execute the same native failure callback.
   n.network.state=0;m.reconnect.pending=false;m.reconnect.phase='idle';n.network[key]();const current=window.__updateHeldPreflights.at(-1);socket.readyState=0;current.failure();
   check(closes===1&&socket.readyState===3&&n.network.state===64,'Current native failure was suppressed');
+  // Execute the actual native HTTP helper with safe terminal callbacks while
+  // the socket is connecting. This exercises the generated shared guard.
+  let starts=0,failures=0;
+  n.network.state=0;m.reconnect.pending=false;m.reconnect.phase='idle';m.reconnect.armed=false;socket.readyState=1;
+  n.network[key]=()=>n.nativeRequestWithCallbacks('https://audit.invalid/',()=>{starts++;n.network.state=2;},()=>{failures++;n.network.state=64;});
+  m.step(++clock);n.network[key]();const successFirst=window.__updateHeldPreflights.at(-1);
+  successFirst.success();successFirst.success();successFirst.failure();
+  check(starts===1&&failures===0&&n.network.state===2&&socket.readyState===1&&closes===1,'Repeated native HTTP results interrupted the connecting socket');
+  n.network.state=0;m.reconnect.pending=false;m.reconnect.phase='idle';n.network[key]();
+  const failureFirst=window.__updateHeldPreflights.at(-1);failureFirst.failure();failureFirst.failure();failureFirst.success();
+  check(starts===1&&failures===1&&n.network.state===64,'A settled native HTTP failure started another connection');
+  // Start another native stage only after the wrapped login has returned.
+  // A timer or promise uses this same path, without nativeLoginDepth on stack.
+  n.network.state=0;m.reconnect.pending=false;m.reconnect.phase='idle';
+  n.network[key]=()=>{};m.step(++clock);n.network[key]();
+  n.nativePreflightStage('https://audit.invalid/',()=>{});
+  const deferred=window.__updateHeldPreflights.at(-1);
+  n.network.state=1;socket.readyState=1;
+  const beforeDeferred=m.connectionInfo().connectionCallbacks.rejectedWhileConnected;
+  deferred.failure();
+  check(closes===1&&socket.readyState===1&&n.network.state===1,'Deferred native stage closed the established socket');
+  check(m.connectionInfo().connectionCallbacks.rejectedWhileConnected===beforeDeferred+1,'Deferred native stage lost entry ownership');
   check(['token','tokenId','userId','accountToken'].every((k,i)=>localStorage.getItem(k)===identity[i]),'Preflight error ownership changed saved identity');
-  return {status:'passed',scope:'actual native failure callback; held HTTP replies and fixture socket; no live server',native_stages:window.__updateHeldPreflights.length,late_failure_close_calls:0,live_connection_preserved:true,current_failure_close_calls:closes,stale_error_rejected:true,saved_identity_unchanged:true,features_disabled:true,callbacks_before:snapshot,callbacks_after:m.connectionInfo().connectionCallbacks};
+  return {status:'passed',scope:'actual native failure callback and HTTP request guards; held replies and fixture socket; no live server',native_stages:window.__updateHeldPreflights.length,late_failure_close_calls:0,live_connection_preserved:true,current_failure_close_calls:closes,stale_error_rejected:true,terminal_once:true,late_failure_during_connecting_rejected:true,deferred_entry_stages_guarded:true,saved_identity_unchanged:true,features_disabled:true,callbacks_before:snapshot,callbacks_after:m.connectionInfo().connectionCallbacks};
  }finally{window.__holdNativePreflight=false;window.__updateHeldPreflights=[];restoreSocket?.();n.network[key]=original;performance.now=oldPerformance;m.observeSocket(null);}
 }
 module.exports={verifyNativePreflightErrors};

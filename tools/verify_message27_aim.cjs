@@ -22,6 +22,10 @@ function verifyMessage27Aim(m,n,s,reference){
  const sameAngle=(a,b)=>a===b||Number.isFinite(a)&&Number.isFinite(b)&&Math.abs(Math.atan2(Math.sin((a-b)*Math.PI/180),Math.cos((a-b)*Math.PI/180)))<1e-10;
  function compare(label){
   const a=JSON.parse(state(m)),b=JSON.parse(state(ref));
+  // The reviewed line reset uses finite hidden coordinates after death.
+  for (const line of b.lines) for (const key of ['x1','y1','x2','y2']) if (line[key] === null) line[key] = -1;
+  // The new range flag is covered by its dedicated line/render tests.
+  for (const line of a.lines) delete line.outOfRange;
   for(const key of ['angle','smooth']){check(sameAngle(a[key],b[key]),'Uploaded angular state differs '+label+' in '+key);delete a[key];delete b[key];}
   if(JSON.stringify(a)!==JSON.stringify(b)){const key=Object.keys(a).find(k=>JSON.stringify(a[k])!==JSON.stringify(b[k]));throw Error('Uploaded aim state differs '+label+' in '+key+': '+JSON.stringify({actual:a[key],expected:b[key]}));}
   check(capture.packets.length===expected.length,'Uploaded command count differs '+label);
@@ -48,7 +52,7 @@ function verifyMessage27Aim(m,n,s,reference){
    const ownTeam=scene%4===0?0:-1;world.PLAYER.εᴎ༩=ownTeam;clans[0]={[s['ոᚄރ']]:7};clanView[0]={ᴎ०︁:7};
    for(const id of [1,2,3,120]){const team=id===1?ownTeam:(id===2&&scene%4===0?0:-1),membership=scene%8===0&&id===2?8:7;metadata[id]={[s['а༤̘']]:team,[s['ᴌ̗ⲟ']]:membership};metaView[id]={εᴎ༩:team,і٥ࠂ:membership};}
    const configured={AimBotEnabled:scene%7!==0,autoFire:scene%3===0,target:['players','ghouls','all'][scene%3],lockId:[-1,2,120,1][scene%4],mouseFovEnable:scene%2===0,mouseFov:scene%5===0?50:900,distanceCoefficient:[10,80,300,1000][scene%4],offsetCoefficient:(scene%4)*.8,aimStick:[0,120,240,800][scene%4],aimHoldMs:[0,100,200,600][scene%4],leadCap:[40,120,280,500][scene%4],aimSmooth:[.05,.5,.74,1][scene%4],TargetTeammate:scene%6===0,hideAimbotAngle:scene%5===0,hidePlayerAngle:scene%3===0,visualizeResolving:scene%3!==1,visualizeResolvingColor:'#aabbcc',AimbotSpearEnabled:scene%8===0};
-   Object.assign(m.settings,configured);Object.assign(settings,configured);m.targets.mouseMapCords={x:1400,y:1100};ref.targets.mouseMapCords={x:1400,y:1100};capture.packets.length=expected.length=0;
+   Object.assign(m.settings,configured,{spearAutoThrow:configured.autoFire});Object.assign(settings,configured);m.targets.mouseMapCords={x:1400,y:1100};ref.targets.mouseMapCords={x:1400,y:1100};capture.packets.length=expected.length=0;
    for(let step=0;step<10;step++){
     clock+=20+(step%4)*30;
     n.setClock?.(clock);

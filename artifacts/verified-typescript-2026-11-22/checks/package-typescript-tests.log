@@ -1,0 +1,21 @@
+
+> devast-verified-typescript-mod@1.0.0 test
+> node --test tests/typescript.test.cjs
+
+✔ all owned TypeScript fragments pass strict checking and reproduce the JS used by the game (3566.229041ms)
+✔ type erasure preserves conditional operators, optional parameters and runtime token boundaries (1.860217ms)
+✔ public mod types reject invalid settings, packets and failed prediction use (431.189334ms)
+✔ type errors and disabled checks preserve all previous generated JavaScript (7387.706823ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11638.993933
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice

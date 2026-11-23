@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "published_source_url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/client.js",
+  "published_sha256": "bf91326621e60655629bb2bfc27e101261c8acb99fda16342f286e248ddb2e07",
+  "native_sha256": "7a2efe2e7dd21d3d3776a0f4538d5ad7038be3be26566a1ae06060e02e32063a",
+  "expected_output_sha256": "780d3961024352378ab00f9d9c63d3ed35308e2decb4f817245e0f3731656e96",
+  "input_sha256": {
+    "verified-mod/profile.json": "45f4c30d9555967065f52fd18d7728cba34c4950d040078708141b143da384c5",
+    "verified-mod/bindings.json": "407f3ba0d2a75fea55899b290d57abceeb821e25b147939dc9dd77087d09551d",
+    "verified-mod/aim-helpers.json": "5ea62b23653cc1f8bb15fda88898dfc2b4f286aa5bebc86b1c6fc1505860a54b",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  }
+}

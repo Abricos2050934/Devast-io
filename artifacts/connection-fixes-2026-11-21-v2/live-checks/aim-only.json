@@ -1,0 +1,492 @@
+{
+  "name": "aim-only",
+  "requestedServer": "Atlanta 1",
+  "scriptHash": "ed148008be8ef73bf7894bcacbc62486efecd2696539b2ec7cdc461a4bdc40e3",
+  "loaded": true,
+  "joined": true,
+  "sockets": [
+    {
+      "host": "atlanta1.devast.io",
+      "openedAt": 12976,
+      "received": 123,
+      "sent": 65,
+      "closedAt": null,
+      "error": false,
+      "death": null
+    }
+  ],
+  "errors": [],
+  "failedRequests": {
+    "xhr": 5,
+    "fetch": 5,
+    "image": 7,
+    "document": 2
+  },
+  "resourceErrors": 5,
+  "samples": [
+    {
+      "at": 14147,
+      "menu": true,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "aim": {
+        "enabled": false,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "players",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 1,
+        "bytes": 92
+      },
+      "events": []
+    },
+    {
+      "at": 19464,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "aim": {
+        "enabled": true,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "all",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 13,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 31,
+        "bytes": 760
+      },
+      "events": []
+    },
+    {
+      "at": 24493,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "aim": {
+        "enabled": true,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "all",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 13,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 65,
+        "bytes": 1520
+      },
+      "events": []
+    },
+    {
+      "at": 29525,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "aim": {
+        "enabled": true,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "all",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 65,
+        "bytes": 1520
+      },
+      "events": []
+    },
+    {
+      "at": 34545,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "aim": {
+        "enabled": true,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "all",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 65,
+        "bytes": 1520
+      },
+      "events": []
+    },
+    {
+      "at": 39583,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "aim": {
+        "enabled": true,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "all",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 65,
+        "bytes": 1520
+      },
+      "events": []
+    },
+    {
+      "at": 44624,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "callbacks": {
+        "wrapped": 5,
+        "accepted": 3,
+        "rejectedStale": 0,
+        "rejectedWhileConnected": 0,
+        "rejectedAfterDispose": 0,
+        "rejectedDuplicate": 0
+      },
+      "aim": {
+        "enabled": true,
+        "spear": false,
+        "hidePlayerAngle": false,
+        "hideAimbotAngle": false,
+        "source": "message27-bby",
+        "adaptive": true,
+        "jitter": false,
+        "jitterSpeed": 360,
+        "strafe": false,
+        "autoFire": false,
+        "target": "all",
+        "lockId": -1,
+        "distanceCoefficient": 80,
+        "offsetCoefficient": 0.8
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 65,
+        "bytes": 1520
+      },
+      "events": []
+    }
+  ],
+  "homeStatus": 200,
+  "selected": "Atlanta 1 - 7 players",
+  "selectionAtClick": {
+    "value": "atlantasurvival1",
+    "label": "Atlanta 1 - 7 players"
+  },
+  "clickedAt": 7335,
+  "final": {
+    "menu": false,
+    "state": 1,
+    "socketState": 1,
+    "playerAssigned": true,
+    "ended": false,
+    "integrityFlag": 0,
+    "modErrorCount": 0,
+    "browserFailures": {
+      "exceptions": 0,
+      "unhandledRejections": 0,
+      "resourceErrors": 1
+    },
+    "callbacks": {
+      "wrapped": 5,
+      "accepted": 3,
+      "rejectedStale": 0,
+      "rejectedWhileConnected": 0,
+      "rejectedAfterDispose": 0,
+      "rejectedDuplicate": 0
+    },
+    "aim": {
+      "enabled": true,
+      "spear": false,
+      "hidePlayerAngle": false,
+      "hideAimbotAngle": false,
+      "source": "message27-bby",
+      "adaptive": true,
+      "jitter": false,
+      "jitterSpeed": 360,
+      "strafe": false,
+      "autoFire": false,
+      "target": "all",
+      "lockId": -1,
+      "distanceCoefficient": 80,
+      "offsetCoefficient": 0.8
+    },
+    "failureCode": 0,
+    "automation": {
+      "autoBuild": false,
+      "fastLoot": false,
+      "slowLoot": false,
+      "autoTake": false,
+      "spamChat": false
+    },
+    "combat": {
+      "angle": 0,
+      "attack": 0,
+      "release": 0
+    },
+    "wireTraffic": {
+      "packets": 65,
+      "bytes": 1520
+    },
+    "events": []
+  },
+  "secondsAfterJoin": 30.479,
+  "elapsedMs": 44778
+}

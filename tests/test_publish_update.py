@@ -7,13 +7,39 @@ import hashlib
 SPEC=importlib.util.spec_from_file_location('publisher',Path(__file__).resolve().parents[1]/'tools/publish_update.py')
 p=importlib.util.module_from_spec(SPEC);SPEC.loader.exec_module(p)
 class PublicationTests(unittest.TestCase):
+ def test_type_verification_must_match_the_current_sources_in_both_browsers(self):
+  self.contract['features']=['typescript-owned-mod']
+  self.contract['typescript_sources']=['mod/test.ts','mod/contracts.d.ts','tsconfig.mod.json']
+  for file in self.contract['typescript_sources']:(self.root/file).write_text('typed source '+file)
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  good={'status':'passed','strict':True,'source_sha256':{file:p.digest((self.root/file).read_bytes()) for file in self.contract['typescript_sources']}}
+  self.validation['typescript']=dict(good)
+  for report in self.validation['browsers'].values():report['typescript']=dict(good)
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
+  self.validation['browsers']['firefox']['typescript']['strict']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'TypeScript browser verification.*firefox'):p.artifacts(self.root,self.out)
+  self.validation['browsers']['firefox']['typescript']=dict(good);self.validation['typescript']['strict']=False;self.save()
+  with self.assertRaisesRegex(ValueError,'TypeScript verification'):p.artifacts(self.root,self.out)
+  self.validation['typescript']=dict(good);self.save();(self.root/'mod/test.ts').write_text('changed typed source')
+  with self.assertRaisesRegex(ValueError,'TypeScript verification'):p.artifacts(self.root,self.out)
+
+ def test_strafe_restoration_is_verified_in_both_browsers(self):
+  self.contract['features']=['strafe-movement-ownership']
+  (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
+  good={'status':'passed','restores_physical_mask':True,'native_move_supersedes':True,'settings_reset_restores':True,'dispose_restores_once':True}
+  for report in self.validation['browsers'].values():report['native']={'movement_ownership':dict(good)}
+  self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
+  for key in good:
+   self.validation['browsers']['firefox']['native']['movement_ownership']={**good,key:False};self.save()
+   with self.assertRaisesRegex(ValueError,'Native movement restoration.*firefox'):p.artifacts(self.root,self.out)
+
  def test_stale_native_errors_cannot_close_the_current_socket_but_current_errors_remain_enabled(self):
   self.contract['features']=['stale-preflight-errors-preserve-current-connection']
   (self.root/'mod/contract.json').write_text(json.dumps(self.contract))
-  good={'status':'passed','late_failure_close_calls':0,'current_failure_close_calls':1,'live_connection_preserved':True,'stale_error_rejected':True,'saved_identity_unchanged':True,'features_disabled':True}
+  good={'status':'passed','late_failure_close_calls':0,'current_failure_close_calls':1,'live_connection_preserved':True,'stale_error_rejected':True,'terminal_once':True,'late_failure_during_connecting_rejected':True,'saved_identity_unchanged':True,'features_disabled':True}
   for report in self.validation['browsers'].values():report['native']={'preflight_error_ownership':dict(good)}
   self.save();self.assertIn(p.PUBLIC_CLIENT,p.artifacts(self.root,self.out))
-  for key,value in [('late_failure_close_calls',1),('late_failure_close_calls',False),('current_failure_close_calls',0),('live_connection_preserved',False),('stale_error_rejected',False),('saved_identity_unchanged',False),('features_disabled',False)]:
+  for key,value in [('late_failure_close_calls',1),('late_failure_close_calls',False),('current_failure_close_calls',0),('live_connection_preserved',False),('stale_error_rejected',False),('terminal_once',False),('late_failure_during_connecting_rejected',False),('saved_identity_unchanged',False),('features_disabled',False)]:
    self.validation['browsers']['firefox']['native']['preflight_error_ownership']={**good,key:value};self.save()
    with self.assertRaisesRegex(ValueError,'Native preflight error ownership.*firefox'):p.artifacts(self.root,self.out)
  def test_canonical_angles_require_both_orbit_directions_and_explicit_normalized_reference_proof(self):

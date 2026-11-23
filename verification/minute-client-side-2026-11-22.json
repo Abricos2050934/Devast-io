@@ -1,0 +1,9 @@
+{
+  "scope": "Simulated 75 seconds with an already active fixture connection; no live server",
+  "status": "passed",
+  "closes": 0,
+  "state": 1,
+  "keepAlivePackets": 10,
+  "events": [],
+  "modErrors": []
+}

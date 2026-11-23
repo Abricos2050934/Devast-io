@@ -1,0 +1,275 @@
+{
+  "schema": 1,
+  "scope": "Regular Chrome controlled with browser input and passive network events; no Playwright helper injection or page evaluation before the session ends",
+  "artifact": "/workspace/Devast-io/artifacts/native-runtime-preserved-2026-11-22/Devast-io-Original-Signers.json",
+  "sha256": "7744232c7d0cab940416f3e5487e0adab54498c23c8aa6328059a77eb2d41d37",
+  "joined": false,
+  "minutePassed": false,
+  "sockets": [],
+  "replacements": 1,
+  "networkErrors": [
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "googleads.g.doubleclick.net",
+      "path": "/xbbe/pixel",
+      "status": 503
+    },
+    {
+      "host": "na-ice.360yield.com",
+      "path": "/imp_pixel",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "googleads.g.doubleclick.net",
+      "path": "/dbm/ad",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "googleads.g.doubleclick.net",
+      "path": "/xbbe/pixel",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "googleads.g.doubleclick.net",
+      "path": "/dbm/ad",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/managed/js/activeview/current/ufs_web_display.js",
+      "status": 503
+    },
+    {
+      "host": "servedby.flashtalking.com",
+      "path": "/imp/8/225407;11279265;201;jsappend;DV360;DV360FY24AcrobatDemandGenPSPWorkingProfessionalsGenReport1USDSKAN970x250DTWA/",
+      "status": 503
+    },
+    {
+      "host": "securepubads.g.doubleclick.net",
+      "path": "/pagead/adview",
+      "status": 503
+    },
+    {
+      "host": "pagead2.googlesyndication.com",
+      "path": "/pagead/gen_204",
+      "status": 503
+    },
+    {
+      "host": "token.devast.io",
+      "path": "/19568b2807d420e21408a05c",
+      "status": 404
+    },
+    {
+      "host": "servedby.flashtalking.com",
+      "path": "/state/11279265;6444337;0;202;CE3514B0-D0CD-8382-213E-051E175FEC4A/",
+      "status": 503
+    },
+    {
+      "host": "secure.flashtalking.com",
+      "path": "/oba/icon/consumer-privacy-logo.png",
+      "status": 503
+    },
+    {
+      "host": "token.devast.io",
+      "path": "/19568b2807d420e21408a05c",
+      "status": 404
+    }
+  ],
+  "navigationAttempts": 1,
+  "homeStatus": 200,
+  "replacedPath": "/js/y6fopeDaqhW3Gwmo2uwu3ccFWsO.js",
+  "nativeRequestFailures": [
+    {
+      "host": "atlanta4.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "losangeles3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "frankfurt1.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "osaka3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "sydney1.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "token.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    }
+  ],
+  "optionCount": 11,
+  "options": [
+    "Auto Select Server",
+    "Atlanta 1 - 6 players",
+    "Atlanta 2 - 3 players",
+    "Frankfurt 1 - 40 players",
+    "Frankfurt 2 - 31 players",
+    "Losangeles 1 - 5 players",
+    "Losangeles 2 - 4 players",
+    "Osaka 1 - 3 players",
+    "Osaka 2 - 6 players",
+    "Sydney 1 - 7 players",
+    "Sydney 2 - 5 players"
+  ],
+  "chosenLabel": "Atlanta 1 - 6 players",
+  "stage": "before-entry",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "playCoordinates": {
+    "x": 644,
+    "y": 356
+  },
+  "osInput": true,
+  "playClicks": 3,
+  "error": "No playable server handshake arrived",
+  "errorStack": "Error: No playable server handshake arrived\n    at /workspace/Devast-io/artifacts/minute-native-protocol-hmnsg4u6/check.cjs:73:27",
+  "failureState": {
+    "focused": true,
+    "visible": "visible",
+    "loaded": true,
+    "state": 0,
+    "phase": "idle",
+    "socket": null,
+    "callbacks": {
+      "wrapped": 9,
+      "accepted": 3,
+      "rejectedStale": 0,
+      "rejectedWhileConnected": 0,
+      "rejectedAfterDispose": 0,
+      "rejectedDuplicate": 0
+    },
+    "status": "Сервис входа не ответил; выберите сервер и повторите Play",
+    "adWaiting": false,
+    "nativePending": false,
+    "errors": 0,
+    "runtime": {
+      "preservedEval": true,
+      "runs": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "events": [
+      {
+        "type": "entry-timeout",
+        "stage": "joining"
+      },
+      {
+        "type": "entry-timeout",
+        "stage": "joining"
+      },
+      {
+        "type": "entry-timeout",
+        "stage": "joining"
+      }
+    ]
+  },
+  "elapsedMs": 132376
+}

@@ -12,7 +12,8 @@ test('translation changes own identifiers and binding strings, preserving commen
 for(const scenario of ['unknown-baseline','unknown-snapshot','ambiguous-anchor'])test('build preserves previous JS and status on '+scenario,()=>{
   const root=fs.mkdtempSync(path.join(os.tmpdir(),'devast-build-'));
   try{
-    for(const dir of ['tools','baselines','patches','mod','vendor'])fs.cpSync(dir,path.join(root,dir),{recursive:true});
+    for(const dir of ['tools','baselines','patches','mod','vendor','resource-override'])fs.cpSync(dir,path.join(root,dir),{recursive:true});
+    fs.copyFileSync('tsconfig.mod.json',path.join(root,'tsconfig.mod.json'));
     fs.symlinkSync(path.resolve('node_modules'),path.join(root,'node_modules'));
     fs.mkdirSync(path.join(root,'dist'));
     fs.writeFileSync(path.join(root,'dist/game.modded.js'),'previous verified client');

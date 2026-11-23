@@ -1,0 +1,548 @@
+{
+  "name": "candidate-1",
+  "requestedServer": "Atlanta 1",
+  "scriptHash": "ed148008be8ef73bf7894bcacbc62486efecd2696539b2ec7cdc461a4bdc40e3",
+  "loaded": true,
+  "joined": true,
+  "sockets": [
+    {
+      "host": "atlanta1.devast.io",
+      "openedAt": 13378,
+      "received": 176,
+      "sent": 59,
+      "closedAt": null,
+      "error": false,
+      "death": null
+    }
+  ],
+  "errors": [],
+  "failedRequests": {
+    "fetch": 3,
+    "xhr": 5,
+    "image": 7,
+    "document": 2
+  },
+  "resourceErrors": 4,
+  "samples": [
+    {
+      "at": 14669,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "position": {
+        "x": 13450,
+        "y": 6350
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 2,
+        "bytes": 99
+      },
+      "events": []
+    },
+    {
+      "at": 20327,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "position": {
+        "x": 13457,
+        "y": 6302
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 59,
+        "bytes": 445
+      },
+      "events": []
+    },
+    {
+      "at": 25414,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "position": {
+        "x": 13457,
+        "y": 6302
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 59,
+        "bytes": 445
+      },
+      "events": []
+    },
+    {
+      "at": 30471,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "position": {
+        "x": 13457,
+        "y": 6302
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 59,
+        "bytes": 445
+      },
+      "events": []
+    },
+    {
+      "at": 35563,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "position": {
+        "x": 13457,
+        "y": 6302
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 59,
+        "bytes": 445
+      },
+      "events": []
+    },
+    {
+      "at": 40710,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "position": {
+        "x": 13457,
+        "y": 6302
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 59,
+        "bytes": 445
+      },
+      "events": []
+    },
+    {
+      "at": 45795,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "position": {
+        "x": 13457,
+        "y": 6302
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 59,
+        "bytes": 445
+      },
+      "events": []
+    },
+    {
+      "at": 50844,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "position": {
+        "x": 13457,
+        "y": 6302
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 59,
+        "bytes": 445
+      },
+      "events": []
+    },
+    {
+      "at": 55927,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "position": {
+        "x": 13457,
+        "y": 6302
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 59,
+        "bytes": 445
+      },
+      "events": []
+    },
+    {
+      "at": 60991,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "position": {
+        "x": 13457,
+        "y": 6302
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 59,
+        "bytes": 445
+      },
+      "events": []
+    },
+    {
+      "at": 66043,
+      "menu": false,
+      "state": 1,
+      "socketState": 1,
+      "playerAssigned": true,
+      "ended": false,
+      "integrityFlag": 0,
+      "modErrorCount": 0,
+      "browserFailures": {
+        "exceptions": 0,
+        "unhandledRejections": 0,
+        "resourceErrors": 1
+      },
+      "position": {
+        "x": 13457,
+        "y": 6302
+      },
+      "failureCode": 0,
+      "automation": {
+        "autoBuild": false,
+        "fastLoot": false,
+        "slowLoot": false,
+        "autoTake": false,
+        "spamChat": false
+      },
+      "combat": {
+        "angle": 0,
+        "attack": 0,
+        "release": 0
+      },
+      "wireTraffic": {
+        "packets": 59,
+        "bytes": 445
+      },
+      "events": []
+    }
+  ],
+  "homeStatus": 200,
+  "selected": "Atlanta 1 - 8 players",
+  "clickedAt": 6979,
+  "beforeStrafeOff": {
+    "menu": false,
+    "state": 1,
+    "socketState": 1,
+    "playerAssigned": true,
+    "ended": false,
+    "integrityFlag": 0,
+    "modErrorCount": 0,
+    "browserFailures": {
+      "exceptions": 0,
+      "unhandledRejections": 0,
+      "resourceErrors": 1
+    },
+    "position": {
+      "x": 13471,
+      "y": 6315
+    },
+    "failureCode": 0,
+    "automation": {
+      "autoBuild": false,
+      "fastLoot": false,
+      "slowLoot": false,
+      "autoTake": false,
+      "spamChat": false
+    },
+    "combat": {
+      "angle": 0,
+      "attack": 0,
+      "release": 0
+    },
+    "wireTraffic": {
+      "packets": 58,
+      "bytes": 439
+    },
+    "events": []
+  },
+  "afterStrafeOff": {
+    "menu": false,
+    "state": 1,
+    "socketState": 1,
+    "playerAssigned": true,
+    "ended": false,
+    "integrityFlag": 0,
+    "modErrorCount": 0,
+    "browserFailures": {
+      "exceptions": 0,
+      "unhandledRejections": 0,
+      "resourceErrors": 1
+    },
+    "position": {
+      "x": 13457,
+      "y": 6332
+    },
+    "failureCode": 0,
+    "automation": {
+      "autoBuild": false,
+      "fastLoot": false,
+      "slowLoot": false,
+      "autoTake": false,
+      "spamChat": false
+    },
+    "combat": {
+      "angle": 0,
+      "attack": 0,
+      "release": 0
+    },
+    "wireTraffic": {
+      "packets": 59,
+      "bytes": 445
+    },
+    "events": []
+  },
+  "final": {
+    "menu": false,
+    "state": 1,
+    "socketState": 1,
+    "playerAssigned": true,
+    "ended": false,
+    "integrityFlag": 0,
+    "modErrorCount": 0,
+    "browserFailures": {
+      "exceptions": 0,
+      "unhandledRejections": 0,
+      "resourceErrors": 1
+    },
+    "position": {
+      "x": 13457,
+      "y": 6302
+    },
+    "failureCode": 0,
+    "automation": {
+      "autoBuild": false,
+      "fastLoot": false,
+      "slowLoot": false,
+      "autoTake": false,
+      "spamChat": false
+    },
+    "combat": {
+      "angle": 0,
+      "attack": 0,
+      "release": 0
+    },
+    "wireTraffic": {
+      "packets": 59,
+      "bytes": 445
+    },
+    "events": []
+  },
+  "secondsAfterJoin": 51.394,
+  "elapsedMs": 66279
+}

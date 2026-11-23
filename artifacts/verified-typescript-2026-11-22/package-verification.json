@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "standalone_clean_install": "passed",
+  "standalone_build": "passed",
+  "standalone_type_tests": {
+    "passed": 4,
+    "failed": 0
+  },
+  "standard_tsc_noemit": "passed",
+  "independent_build_matches_tested_client": true,
+  "artifacts": {
+    "client.js": {
+      "sha256": "780d3961024352378ab00f9d9c63d3ed35308e2decb4f817245e0f3731656e96",
+      "bytes": 4435235
+    },
+    "Devast-io-TypeScript-Verified.json": {
+      "sha256": "1b0dfe9d156ab08ce9585544f496171375f3dec150b8421464d156c2ac8865ea",
+      "bytes": 4623261
+    },
+    "Devast-io-TypeScript-Verified-source.zip": {
+      "sha256": "5c3587110e4a31c348ffa327952986ed47258a50781663434116ad02ce7c4dae",
+      "bytes": 1725660
+    }
+  },
+  "publication": "not_published"
+}

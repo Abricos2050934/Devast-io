@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "published_source_url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/client.js",
+  "published_sha256": "bf91326621e60655629bb2bfc27e101261c8acb99fda16342f286e248ddb2e07",
+  "game_source": {
+    "page_url": "https://devast.io/",
+    "script_url": "https://devast.io/js/JZnx28srLJnmqhN0xR90n6mj7QB.js",
+    "raw_sha256": "b6aea8414a9bc34891bf953b9ea8ba0b5817d6a327c102c60511173231a0f65a"
+  },
+  "native_sha256": "e9f3d592cad25b78e519fe4afd5e1598bd1e0a82dc02eb1071ca3941ad6880c0",
+  "expected_output_sha256": "0108257047af8675a566eb39060a187798b9a70c26c409fafa507f8c4cf7686c",
+  "input_sha256": {
+    "video-aim-release/profile.json": "8ea8fc7b043142e6173f1d4137e8c7283121843700320d958749542e9c6968bf",
+    "video-aim-release/bindings.json": "86dd20b4fb8258b8316c033fbce0dedc233011ddb7b7efda1522924ae263de5f",
+    "video-aim-release/aim-helpers.json": "edd64f51603ed72c6ed057236caa21b3d3ce4d092f7e3a512a1214cd82abc9d5",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+  },
+  "variant": "hud"
+}

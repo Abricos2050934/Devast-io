@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "scope": "Regular Chrome controlled with browser input and passive network events; no Playwright helper injection or page evaluation before the session ends",
+  "artifact": "/workspace/Devast-io/artifacts/raw-current-native-2026-11-22/Devast-io-Original-Signers.json",
+  "sha256": "d940e3904b0b11ae48f6401dd16bf56018e2579f9f492e63f381b1db18c257ce",
+  "joined": false,
+  "minutePassed": false,
+  "sockets": [],
+  "replacements": 1,
+  "networkErrors": [
+    {
+      "host": "api.adinplay.com",
+      "path": "/libs/aiptag/pub/LBS/devast.io/tag.min.js",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/list",
+      "status": 503
+    },
+    {
+      "host": "webgames.io",
+      "path": "/img/display/taming924.png",
+      "status": 503
+    },
+    {
+      "host": "analytics.google.com",
+      "path": "/g/collect",
+      "status": 503
+    }
+  ],
+  "navigationAttempts": 1,
+  "homeStatus": 200,
+  "officialPageCache": true,
+  "replacedPath": "/js/kI1G7NG7AThcrpwiN6RUB.js",
+  "error": "The live server list is unavailable",
+  "errorStack": "Error: The live server list is unavailable\n    at /workspace/Devast-io/artifacts/raw-current-native-live-1795362962/check.cjs:66:64",
+  "failureState": {
+    "focused": true,
+    "visible": "visible",
+    "loaded": true,
+    "integrityFlag": 0,
+    "state": 0,
+    "phase": "idle",
+    "socket": null,
+    "callbacks": {
+      "wrapped": 0,
+      "accepted": 0,
+      "rejectedStale": 0,
+      "rejectedWhileConnected": 0,
+      "rejectedAfterDispose": 0,
+      "rejectedDuplicate": 0
+    },
+    "status": "Ready",
+    "adWaiting": false,
+    "nativePending": false,
+    "errors": 0,
+    "runtime": {
+      "preservedEval": true,
+      "runs": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "events": []
+  },
+  "elapsedMs": 65173
+}

@@ -1,0 +1,93 @@
+{
+  "scope": "Bounded analysis of user-supplied report; no credentials, addresses, arbitrary packet contents or storage values",
+  "report_sha256": "377e6c80f9eaa21e553a85f9715cdc1ae4932595df073ca96c67bad9b7d2f8c8",
+  "reported_build": {
+    "fingerprint": "6343344bfb7830f720a44aa8c0d9bcbffdeb75a26d053b4d7df0c6ec11de39cf",
+    "nativeSha256": "8a4e133616561e127254de7b50ddfa8fd53ce93e9774f09e38de778a45f0617b"
+  },
+  "matching_local_artifact_sha256": "8f933e684d841d45295ff75389b14fcdfa8cfa5d3f25bd03edd5a6a5fd8acf30",
+  "latest_issued_build_fingerprint": "8c6e71cd06e463e1c5f687619bd00abcb4dfba552cb1615c6a819441c0b57252",
+  "issued_build_matches_report": false,
+  "mod_error_count": 0,
+  "sessions": [
+    {
+      "socket": 1,
+      "duration_ms": 1306657,
+      "first_event": "server-death",
+      "opcode": 27,
+      "incoming_gap_ms": 1,
+      "queue_bytes": 0,
+      "client_health_snapshot": 15.373099999999228,
+      "local_close_source": null,
+      "mod_command_count": 2066,
+      "last_mod_bucket_before_death_ms": 43617,
+      "end_sequence": [
+        {
+          "event": "server-death",
+          "after_death_ms": 0
+        },
+        {
+          "event": "native-network-error",
+          "after_death_ms": 1
+        },
+        {
+          "event": "socket-close",
+          "after_death_ms": 24
+        }
+      ]
+    },
+    {
+      "socket": 2,
+      "duration_ms": 14313,
+      "first_event": "server-death",
+      "opcode": 27,
+      "incoming_gap_ms": 0,
+      "queue_bytes": 0,
+      "client_health_snapshot": 53,
+      "local_close_source": null,
+      "mod_command_count": 0,
+      "last_mod_bucket_before_death_ms": null,
+      "end_sequence": [
+        {
+          "event": "server-death",
+          "after_death_ms": 0
+        },
+        {
+          "event": "native-network-error",
+          "after_death_ms": 1
+        },
+        {
+          "event": "socket-close",
+          "after_death_ms": 2
+        }
+      ]
+    },
+    {
+      "socket": 3,
+      "duration_ms": 5516,
+      "first_event": "server-death",
+      "opcode": 27,
+      "incoming_gap_ms": 0,
+      "queue_bytes": 0,
+      "client_health_snapshot": 255,
+      "local_close_source": null,
+      "mod_command_count": 0,
+      "last_mod_bucket_before_death_ms": null,
+      "end_sequence": [
+        {
+          "event": "server-death",
+          "after_death_ms": 0
+        },
+        {
+          "event": "native-network-error",
+          "after_death_ms": 1
+        },
+        {
+          "event": "socket-close",
+          "after_death_ms": 3
+        }
+      ]
+    }
+  ],
+  "conclusion": "Three recorded incoming character-death notifications precede error 128 and socket close. No server enforcement reason is present. The report matches an earlier local predictor build, not the last issued Resource Override JSON."
+}

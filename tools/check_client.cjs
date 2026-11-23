@@ -4,6 +4,7 @@ const assert = require('node:assert/strict');
 const {parse} = require('./parser.cjs');
 const {translate} = require('./translate_payload.cjs');
 const options = {ecmaVersion: 'latest', sourceType: 'script'};
+require('./compile_mod.cjs').compile({verifyOnly:true});
 const status=JSON.parse(fs.readFileSync('dist/update-status.json'));
 const symbols=status.bindings;
 assert.ok(symbols,'Build bindings are required; run npm run build');

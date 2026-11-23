@@ -3,42 +3,20 @@
 function __createMessage27Core(MOD,environment) {
  let stopped=false,started=false,depth=0,phase='aim';
  const timers=new Map(),removers=[];
- function cycle(fn,kind=phase){const previous=phase;phase=kind;if(depth++===0)environment.beginCycle(kind);try{return fn();}finally{if(--depth===0)environment.endCycle();phase=previous;}}
+ function cycle(fn,kind=phase){if(stopped)return;const previous=phase;phase=kind;if(depth++===0)environment.beginCycle(kind);try{return fn();}finally{if(--depth===0)environment.endCycle();phase=previous;}}
  function emit(packet){if(stopped)return false;return depth?environment.send(packet,{kind:phase}):cycle(()=>environment.send(packet,{kind:phase}));}
- function timer(method,fn,delay){let id;const interval=method==='setInterval';const wrapped=()=>{if(!interval)timers.delete(id);if(!stopped)cycle(fn,fn.name==='routineAntiAimbot'?'anti':'aim');};id=environment.window[method](wrapped,delay);timers.set(id,interval);return id;}
+ function timer(method,fn,delay){if(stopped)return null;let id;const interval=method==='setInterval';const wrapped=()=>{if(!interval)timers.delete(id);if(!stopped)cycle(fn,fn.name==='routineAntiAimbot'?'anti':'aim');};id=environment.window[method](wrapped,delay);timers.set(id,interval);return id;}
  function clear(id){const interval=timers.get(id);if(interval===undefined)return;environment.window[interval?'clearInterval':'clearTimeout'](id);timers.delete(id);}
  const setInterval=(fn,delay)=>timer('setInterval',fn,delay),setTimeout=(fn,delay)=>timer('setTimeout',fn,delay),clearTimeout=clear,clearInterval=clear;
  const window={Math,JSON,setInterval,setTimeout,clearInterval,clearTimeout,addEventListener(type,fn,options){environment.window.addEventListener(type,fn,options);removers.push(()=>environment.window.removeEventListener(type,fn,options));}};
  const document=new Proxy(environment.document,{get(target,key){if(key==='addEventListener')return (type,fn,options)=>{target.addEventListener(type,fn,options);removers.push(()=>target.removeEventListener(type,fn,options));};const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;}});
  const օܓߋ=window;
- const localStorage={getItem:()=>JSON.stringify(Object.fromEntries(Object.keys(__ilmAimDefaults()).map(key=>[key,MOD[key]]))),setItem(){environment.persist();}};
  const globalThis={__autoPortAimbotPacketTransport:emit};
  const __gk=value=>value; // Imported integration passes plain booleans/numbers.
  const World=environment.world,օ̖̏='id',x='x',y='y';
  const network={ε٣︀:value=>emit(JSON.parse(value)),ᴉࡃϲ:value=>emit(JSON.parse(value))},ո︀̜=network,аρ３=network;
  const AIM_RAD=180/Math.PI,SPEAR_IDX=5;
- function AimbotLoadConfig() {
-    try {
-        var saved = JSON.parse(localStorage.getItem("BestModMenuConfig"));
-        if (saved && typeof saved === "object") {
-            for (var field in MOD) {
-                if (field in saved && typeof saved[field] === typeof MOD[field]) {
-                    MOD[field] = saved[field];
-                }
-            }
-        }
-        MOD.mouseFovEnable = true;
-        MOD.resolverType = "linear";
-        if (!(+MOD.mouseFov > 0) || +MOD.mouseFov > 1600) MOD.mouseFov = 900;
-        if (+MOD.distanceCoefficient === 100) MOD.distanceCoefficient = 80;
-        if (+MOD.offsetCoefficient === 0.1 || +MOD.offsetCoefficient === 0.45) MOD.offsetCoefficient = 0.8;
-        if (!(+MOD.aimStick >= 0) || +MOD.aimStick === 140) MOD.aimStick = 240;
-        if (!(+MOD.aimSmooth > 0 && +MOD.aimSmooth <= 1) || +MOD.aimSmooth === 0.62) MOD.aimSmooth = 0.74;
-        if (!(+MOD.aimMaxRange > 0)) MOD.aimMaxRange = 2400;
-        if (!(+MOD.leadCap > 0) || +MOD.leadCap === 220) MOD.leadCap = 280;
-        if (!(+MOD.aimHoldMs >= 0)) MOD.aimHoldMs = 200;
-    } catch (e) {}
-}
+ // Settings are loaded and validated by the host before creating the core.
  // The host has already loaded and validated its versioned aim namespace.
  // Running the old BestModMenuConfig migration here would replace deliberate
  // values such as 100/.1/.62/220 and re-enable a saved disabled mouse FOV.
@@ -111,7 +89,7 @@ function __createMessage27Core(MOD,environment) {
                 this.prevY[0] = this.y;
                 this.y = uy;
                 this.weapon = xy;
-                AimbotRefresh();
+                if (!MOD.AdaptiveAimEnabled) AimbotRefresh();
             }
         }
         setInactive() {
@@ -126,7 +104,7 @@ function __createMessage27Core(MOD,environment) {
             this.movedAt = 0;
             this.prevMovedAt = 0;
             this.prevMovedAt2 = 0;
-            AimbotRefresh();
+            if (!MOD.AdaptiveAimEnabled) AimbotRefresh();
         }
     }
     class AimbotCon {
@@ -154,9 +132,6 @@ function __createMessage27Core(MOD,environment) {
                     if (isFinite(angleResolverType1)) angleResolverType1 = ((angleResolverType1 % 360) + 360) % 360;
                     angleResolverType1 = this.aimSmooth(angleResolverType1);
                     if (MOD.hideAimbotAngle) {
-                        if (angleResolverType1 === null) {
-                            angleResolverType1 = angleResolverType1 * 180 / window.Math.PI;
-                        }
                         ո︀̜.ε٣︀(window.JSON.stringify([6, angleResolverType1]));
                     }
                     this.lastAngle = angleResolverType1;
@@ -188,9 +163,6 @@ function __createMessage27Core(MOD,environment) {
                     if (isFinite(angleResolverLinear)) angleResolverLinear = ((angleResolverLinear % 360) + 360) % 360;
                     angleResolverLinear = this.aimSmooth(angleResolverLinear);
                     if (MOD.hideAimbotAngle) {
-                        if (angleResolverLinear === null) {
-                            angleResolverLinear = angleResolverLinear * 180 / window.Math.PI;
-                        }
                         ո︀̜.ε٣︀(window.JSON.stringify([6, angleResolverLinear]));
                     }
                     this.lastAngle = angleResolverLinear;
@@ -362,15 +334,18 @@ function __createMessage27Core(MOD,environment) {
             this.alpha = alpha;
             this.width = width;
             this.color = color;
+            this.outOfRange = false;
         }
-        reset(x1, y1, x2, y2) {
+        reset(x1 = -1, y1 = -1, x2 = -1, y2 = -1) {
+            this.outOfRange = false;
             this.x1 = x1;
             this.x2 = x2;
             this.y1 = y1;
             this.y2 = y2;
         }
-        set(x1, y1, x2, y2) {
+        set(x1, y1, x2, y2, outOfRange = false) {
             this.reset(x1, y1, x2, y2);
+            this.outOfRange = Boolean(outOfRange);
         }
     }
     function AimbotRefresh() {
@@ -437,9 +412,10 @@ Aimbot.send = function(packet) {
     } catch (e) {}
 };
 Aimbot.isDead = function() {
-    if (this.dead || !World.PLAYER || this.myId() === 0)
-        return true;
-    return GetAllTargets.getPlayerById(this.myId()).active === false;
+    if (this.dead || !World.PLAYER) return true;
+    const id = World.PLAYER[օ̖̏];
+    const player = Number.isInteger(id) && id > 0 ? GetAllTargets.getPlayerById(id) : null;
+    return !player || player.active !== true;
 };
 Aimbot.onDeath = function() {
     this.dead = true;
@@ -487,7 +463,7 @@ GetAllTargets.selfFromPacket = 0;
 GetAllTargets.selfWeapon = -1;
 GetAllTargets.cameraCenter = { x: 0, y: 0 };
 GetAllTargets.resetLines = function() {
-    this.lines.forEach(function(line) { line.reset(); });
+    this.lines.forEach(function(line) { line.reset(-1, -1, -1, -1); });
 };
 GetAllTargets.resetAll = function() {
     for (var i = 1; i < this.players.length; i++) {
@@ -530,7 +506,6 @@ Aimbot.spearResolve = function() {
     var stabDeg = MOD.spearStabDeg || 2.5;
     var stab = stabDeg * Math.PI / 180;
     var ax = pt.x - hx, ay = pt.y - hy;
-    var ang = Math.atan2(ay, ax) * AIM_RAD;
     var angStab = Math.atan2(ay * Math.cos(stab) - ax * Math.sin(stab), ax * Math.cos(stab) + ay * Math.sin(stab)) * AIM_RAD;
     var angle = Math.floor(angStab);
     this.lastAngle = ((angle % 360) + 360) % 360;
@@ -538,18 +513,27 @@ Aimbot.spearResolve = function() {
         GetAllTargets.lines[1].set(me.x, me.y, pt.x, pt.y, dist > (MOD.spearMaxRange || 560) ? 1 : 0);
     return this.lastAngle;
 };
- var __oTouchAim = function(event) {
-    // changedTouches[0] = the finger that just moved/landed — the aim intent,
-    // not a finger already parked on the joystick
-    var t = event.changedTouches && event.changedTouches.length ? event.changedTouches[0]
-        : (event.touches && event.touches.length ? event.touches[0] : null);
-    if (t) {
-        GetAllTargets.mousePosition.x = t.clientX;
-        GetAllTargets.mousePosition.y = t.clientY;
-    }
-};
-օܓߋ.addEventListener("touchstart", __oTouchAim, { passive: true });
-օܓߋ.addEventListener("touchmove", __oTouchAim, { passive: true });
+ let aimTouchId = null;
+function touchAim(event) {
+    const changed = Array.from(event.changedTouches || event.touches || []);
+    const touch = changed.find(point => {
+        if (aimTouchId !== null) return point.identifier === aimTouchId;
+        const target = point.target || event.target;
+        return !target || target.tagName === 'CANVAS';
+    });
+    if (!touch) return;
+    aimTouchId = touch.identifier ?? null;
+    GetAllTargets.mousePosition.x = touch.clientX;
+    GetAllTargets.mousePosition.y = touch.clientY;
+}
+function releaseAimTouch(event) {
+    if (Array.from(event.changedTouches || []).some(point => point.identifier === aimTouchId)) aimTouchId = null;
+}
+օܓߋ.addEventListener('touchstart', touchAim, {passive:true});
+օܓߋ.addEventListener('touchmove', touchAim, {passive:true});
+օܓߋ.addEventListener('touchend', releaseAimTouch, {passive:true});
+օܓߋ.addEventListener('touchcancel', releaseAimTouch, {passive:true});
+օܓߋ.addEventListener('blur', () => { aimTouchId = null; });
 document.addEventListener("mousedown", function(event) {
     if (event.button === 0)
         Aimbot.mouseDown = true;
@@ -561,22 +545,11 @@ document.addEventListener("mouseup", function(event) {
 օܓߋ.addEventListener("blur", function() {
     Aimbot.mouseDown = false;
 });
- function __isMyAimbotPlayer(o, id) {
-    var my = World.PLAYER[օ̖̏];
-    if (o === null || o === undefined || my === undefined || my === null)
-        return false;
-    if (id !== undefined && id !== null)
-        return id === my;
-    var key = __isMyAimbotPlayer.key;
-    if (key !== undefined && o[key] !== undefined)
-        return o[key] === my;
-    for (var k in o) {
-        if (typeof o[k] === "number" && o[k] === my) {
-            __isMyAimbotPlayer.key = k;
-            return true;
-        }
-    }
-    return false;
+ function __isMyAimbotPlayer(object, id) {
+    if (!object || !World.PLAYER) return false;
+    const self = World.PLAYER[օ̖̏];
+    if (!Number.isInteger(self) || self <= 0) return false;
+    return (id === undefined ? object[օ̖̏] : id) === self;
 }
  function __aimShotAllowed() {
     var t = Aimbot && Aimbot.targetPlayer;
@@ -595,7 +568,7 @@ document.addEventListener("mouseup", function(event) {
         var sAngle = Aimbot.spearResolve();
         if (sAngle !== null && isFinite(+sAngle))
             Aimbot.send([6, __gk(sAngle)]);
-        if (MOD.autoFire && __aimShotAllowed()) {
+        if (MOD.spearAutoThrow && __aimShotAllowed()) {
             Aimbot.send([4]);
             Aimbot.send([5]);
         }
@@ -610,8 +583,8 @@ var __antiMovePattern = [1, 2, 4, 8, 1, 2, 4, 8, 5, 9, 10, 6];
     try {
         if (!__gk(MOD.AntiAimbot)) return;
         var coeff = Math.max(1, +MOD.antiAimCoefficient || 100);
-        __antiMoveStep += coeff;
-        var idx = Math.floor(__antiMoveStep / coeff) % __antiMovePattern.length;
+        __antiMoveStep++;
+        var idx = Math.floor(__antiMoveStep * 100 / coeff) % __antiMovePattern.length;
         ո︀̜.ε٣︀(window.JSON.stringify([2, __antiMovePattern[idx]]));
     } catch (e) {}
 }
@@ -634,7 +607,7 @@ var __antiMovePattern = [1, 2, 4, 8, 1, 2, 4, 8, 5, 9, 10, 6];
       for (var aimLine = 0; aimLine < GetAllTargets.lines.length; aimLine++) {
         let pos = GetAllTargets.lines[aimLine];
         ᴏܘ๐.lineWidth = pos.width;
-        ᴏܘ๐.globalAlpha = pos.alpha;
+        ᴏܘ๐.globalAlpha = pos.outOfRange ? pos.alpha * .3 : pos.alpha;
         ᴏܘ๐.strokeStyle = pos.color;
         ᴏܘ๐.beginPath();
         ᴏܘ๐.moveTo((ㅤο９ + pos.x1) * о༨ε, (ᴉᚉ̷ + pos.y1) * о༨ε);
@@ -655,18 +628,8 @@ var __antiMovePattern = [1, 2, 4, 8, 1, 2, 4, 8, 5, 9, 10, 6];
           };
         }
       } catch (e) {}
-      if (MOD.mouseFovEnable) {
-        GetAllTargets.mouseMapCords = {
-          x: GetAllTargets.mousePosition.x / о༨ε - ㅤο９,
-          y: GetAllTargets.mousePosition.y / о༨ε - ᴉᚉ̷
-        };
-      }
     }AimbotDraw();}
- function AimbotSaveConfig() {
-    try {
-        localStorage.setItem("BestModMenuConfig", JSON.stringify(MOD));
-    } catch (e) {}
-}
+ function AimbotSaveConfig() { environment.persist(); }
  function AimbotHookSave(gui) {
     gui.__controllers.forEach(function(controller) {
         var previous = controller.__onFinishChange;
@@ -680,28 +643,44 @@ var __antiMovePattern = [1, 2, 4, 8, 1, 2, 4, 8, 5, 9, 10, 6];
         AimbotHookSave(gui.__folders[name]);
     }
 }
- function AimbotMenuSetupKey(folder, keyName, displayName) {
-    const input = folder.add(MOD, keyName).name(displayName);
-    const element = input.domElement.querySelector("input");
-    element.readOnly = true;
-    element.style.textAlign = "center";
-    element.style.cursor = "pointer";
-    element.addEventListener("click", () => {
-        element.blur();
-        MOD[keyName] = "...";
-        input.updateDisplay();
-        function KeyHandler(event) {
-            MOD[keyName] = event.code;
-            if (keyName === "ModMenuKey") {
-                MOD.ModMenuKeyCode = event.keyCode;
-            }
-            input.updateDisplay();
-            AimbotSaveConfig();
-            document.removeEventListener("keydown", KeyHandler);
-        }
-        document.addEventListener("keydown", KeyHandler);
+ const keyCapture = {current: null};
+function finishKeyCapture() {
+    const current = keyCapture.current;
+    if (!current) return;
+    keyCapture.current = null;
+    MOD[current.key] = current.previous;
+    current.control.updateDisplay();
+}
+function handleCapturedKey(event) {
+    const current = keyCapture.current;
+    if (!current || event.repeat) return;
+    event.preventDefault?.();
+    event.stopImmediatePropagation?.();
+    if (event.code === 'Escape') { finishKeyCapture(); return; }
+    try {
+        MOD[current.key] = event.code;
+    } catch (error) {
+        current.element.title = error.message;
+        return;
     }
-    );
+    keyCapture.current = null;
+    current.control.updateDisplay();
+    AimbotSaveConfig();
+}
+document.addEventListener('keydown', handleCapturedKey);
+function AimbotMenuSetupKey(folder, keyName, displayName) {
+    const control = folder.add(MOD, keyName).name(displayName);
+    const element = control.domElement.querySelector('input');
+    element.readOnly = true;
+    element.style.textAlign = 'center';
+    element.style.cursor = 'pointer';
+    element.addEventListener('click', () => {
+        finishKeyCapture();
+        element.blur();
+        keyCapture.current = {key: keyName, previous: MOD[keyName], control, element};
+        MOD[keyName] = '...';
+        control.updateDisplay();
+    });
 }
  function installMenu(menu){const aimFolder = menu.addFolder("👑 Aim Bot 👑");
 aimFolder.add(MOD, "AimBotEnabled").name("AimBotEnabled");
@@ -728,7 +707,7 @@ spearFolder.add(MOD, "spearMaxRange", 200, 600, 10).name("MaxRange");
 spearFolder.add(MOD, "spearHandFwd", -60, 60, 1).name("HandFwd");
 spearFolder.add(MOD, "spearHandSide", -60, 60, 1).name("HandSide");
 spearFolder.add(MOD, "spearStabDeg", 0.5, 10, 0.5).name("Stability");
-spearFolder.add(MOD, "autoFire").name("AutoThrow");
+spearFolder.add(MOD, "spearAutoThrow").name("AutoThrow");
 const antiFolder = menu.addFolder("Anti-Aim / Strafe");
 antiFolder.add(MOD, "AntiAimbot").name("StrafeEnable");
 antiFolder.add(MOD, "antiAimCoefficient", 10, 500, 10).name("AntiAimCoefficient");
@@ -751,7 +730,7 @@ AimbotMenuSetupKey(keyFolder, "ModMenuKey", "ModMenuKey");
    antiTick:()=>cycle(routineAntiAimbot,'anti'),
    onHandshake(){Aimbot.dead=false;},onOtherDie(id){GetAllTargets.players[id]?.setInactive();},sync(){},
    ensure(id){if(id>0){for(const group of [GetAllTargets.players,GetAllTargets.ghouls])if(!group[id])group[id]=new this.Target(id);}},
-   dispose(){if(stopped)return;stopped=true;for(const id of [...timers.keys()])clear(id);for(const remove of removers)remove();Aimbot.mouseDown=false;}
+   dispose(){if(stopped)return;finishKeyCapture();stopped=true;for(const id of [...timers.keys()])clear(id);for(const remove of removers)remove();Aimbot.mouseDown=false;}
  };
 }
 // Existing Resource Override installations recognize this entrypoint name.
@@ -759,7 +738,7 @@ AimbotMenuSetupKey(keyFolder, "ModMenuKey", "ModMenuKey");
 function __createIlmAim(settings,environment){return __createMessage27Core(settings,environment);}
 function __createIlmAdapter(settings,environment){
  const pendingKeys=new Set();
- const sourceSettings=new Proxy(settings,{get(target,key){return pendingKeys.has(key)?'...':target[key];},set(target,key,value){if(['AimbotKey','AntiAimbotKey','JitterKey','HideAngleKey','ModMenuKey'].includes(key)){if(value==='...'){pendingKeys.add(key);return true;}if(pendingKeys.has(key)){pendingKeys.delete(key);environment.setKey(key,value);return true;}}target[key]=value;return true;}});
+ const sourceSettings=new Proxy(settings,{get(target,key){return pendingKeys.has(key)?'...':target[key];},set(target,key,value){if(['AimbotKey','AntiAimbotKey','JitterKey','HideAngleKey','ModMenuKey'].includes(key)){if(value==='...'){pendingKeys.add(key);return true;}if(pendingKeys.has(key)){environment.setKey(key,value);pendingKeys.delete(key);return true;}}target[key]=value;return true;}});
  const metadata=new Proxy([],{get(target,key){if(typeof key==='string'&&/^\d+$/.test(key)){const id=+key;if(!environment.playerInfo(id).exists)return undefined;if(!target[id])target[id]={get εᴎ༩(){return environment.playerInfo(id).team;},get і٥ࠂ(){return environment.playerInfo(id).membership;}};}return target[key];}});
  const clans=new Proxy([],{get(target,key){if(typeof key==='string'&&/^\d+$/.test(key)){const id=+key;if(!environment.clanInfo(id).exists)return undefined;if(!target[id])target[id]={get ᴎ०︁(){return environment.clanInfo(id).membership;}};}return target[key];}});
  const self={get id(){return environment.selfId();},get x(){return environment.selfPosition().x;},get y(){return environment.selfPosition().y;},get εᴎ༩(){return environment.playerInfo(environment.selfId()).team;}};
@@ -768,15 +747,91 @@ function __createIlmAdapter(settings,environment){
  core.ensure=originalEnsure;
  return core;
 }
-function __ilmAimDefaults(){return {"AimBotEnabled":false,"AimbotSpearEnabled":false,"spearSpeed":46.5,"spearMaxRange":560,"spearHandFwd":22,"spearHandSide":-39,"spearStabDeg":2.5,"hideAimbotAngle":false,"hidePlayerAngle":false,"target":"players","TargetTeammate":false,"resolverType":"linear","mouseFovEnable":true,"mouseFov":900,"distanceCoefficient":80,"offsetCoefficient":0.8,"aimStick":240,"aimSmooth":0.74,"aimMaxRange":2400,"aimHoldMs":200,"leadCap":280,"visualizeResolving":true,"visualizeResolvingColor":"#FFF200","autoFire":false,"lockId":-1,"AntiAimbot":false,"antiAimCoefficient":100,"ShowRealAngles":"withAim","AimbotKey":"KeyZ","AntiAimbotKey":"NoKey","JitterKey":"KeyJ","HideAngleKey":"KeyH","ModMenuKey":"KeyM","ModMenuKeyCode":77};}
+function __ilmAimDefaults(){return {"AimBotEnabled":false,"AimbotSpearEnabled":false,"spearSpeed":46.5,"spearMaxRange":560,"spearHandFwd":22,"spearHandSide":-39,"spearStabDeg":2.5,"hideAimbotAngle":false,"hidePlayerAngle":false,"target":"players","TargetTeammate":false,"resolverType":"linear","mouseFovEnable":true,"mouseFov":900,"distanceCoefficient":80,"offsetCoefficient":0.8,"aimStick":240,"aimSmooth":0.74,"aimMaxRange":2400,"aimHoldMs":200,"leadCap":280,"visualizeResolving":true,"visualizeResolvingColor":"#FFF200","autoFire":false,"lockId":-1,"AntiAimbot":false,"antiAimCoefficient":100,"ShowRealAngles":"withAim","AimbotKey":"KeyZ","AntiAimbotKey":"NoKey","JitterKey":"KeyJ","HideAngleKey":"KeyH","ModMenuKey":"KeyM","spearAutoThrow":false};}
 function __ilmAimConstraints(){return {limits:{mouseFov:[0,12345],distanceCoefficient:[10,1000],offsetCoefficient:[0,3],aimStick:[0,800],aimHoldMs:[0,600],leadCap:[40,500],aimSmooth:[.05,1],lockId:[-1,120],aimMaxRange:[1,20000],spearSpeed:[20,60],spearMaxRange:[200,600],spearHandFwd:[-60,60],spearHandSide:[-60,60],spearStabDeg:[.5,10],antiAimCoefficient:[10,500]},choices:{target:['players','ghouls','all'],resolverType:['linear'],ShowRealAngles:['never','always','withAim']}};}
 function __ilmMouseToWorld(point,view){return {x:point.x/view.scale-view.x,y:point.y/view.scale-view.y};}
 // Physical prediction in world units and seconds. No native game code is executed here.
 function __createBallisticAim(settings, clock) {
   const tracks=new Map(), speeds=new Map(), projectiles=new Map();
   const maxAge=350, maxGap=500, maxSpeed=1800;
+  const maxHistory=1250, maxObservations=32, circleHistory=600;
+  // Experimental interpretation of the screenshot, not its recovered formula.
+  // RTT samples must be real round trips supplied by a verified integration.
+  // Until then the configured fallback is reported as configured, not measured.
+  const rttSamples=[];
+  function bounded(value, fallback, minimum, maximum) {
+    return Number.isFinite(value)?Math.max(minimum,Math.min(maximum,value)):fallback;
+  }
+  function sampleRtt(milliseconds) {
+    const at=clock();
+    if(!Number.isFinite(milliseconds)||milliseconds<0||milliseconds>2000||!Number.isFinite(at))return false;
+    if(rttSamples.length&&at<rttSamples.at(-1).at)rttSamples.length=0;
+    rttSamples.push({value:milliseconds,at});
+    while(rttSamples.length>250)rttSamples.shift();
+    return true;
+  }
+  function timingInfo() {
+    const at=clock(),window=Math.round(bounded(settings.videoPingSteps,125,1,250));
+    while(rttSamples.length&&(rttSamples.length>window||at-rttSamples[0].at>10000||at<rttSamples[0].at))rttSamples.shift();
+    const currentPing=rttSamples.at(-1)?.value??null;
+    const avgPing=rttSamples.length?rttSamples.reduce((sum,item)=>sum+item.value,0)/rttSamples.length:bounded(settings.videoPingMs,90,0,500);
+    const leadMs=bounded(avgPing,90,0,500);
+    const totalDelayMs=Math.min(750,leadMs+bounded(settings.videoDelayMs,1,0,100)+bounded(settings.videoDelaySendMs,20,0,100)+bounded(settings.predictionLatencyMs,0,0,500));
+    return {enabled:!!settings.VideoAimEnabled,avgPing,currentPing,deltaPing:currentPing===null?null:currentPing-avgPing,samples:rttSamples.length,
+      source:rttSamples.length?'measured':'configured',leadMs,totalDelayMs,aimSteps:Math.round(bounded(settings.videoAimSteps,2,1,8))};
+  }
+  // Use an evenly spaced observation clock only when packet arrivals support
+  // one. Whole-slot gaps preserve the timing of a missing observation.
+  function sampleTimes(samples) {
+    if (samples.length < 7) return samples;
+    const intervals = [];
+    for (let i = 1; i < samples.length; i++) intervals.push(samples[i].at - samples[i - 1].at);
+    const typical = intervals.slice().sort((a, b) => a - b)[Math.floor((intervals.length - 1) / 2)];
+    if (typical < 25 || typical > 150) return samples;
+
+    const last = samples.at(-1).at;
+    const slots = new Array(samples.length);
+    slots[intervals.length] = 0;
+    for (let i = intervals.length - 1; i >= 0; i--) {
+      const steps = Math.round(intervals[i] / typical);
+      if (steps < 1 || steps > 4) return samples;
+      slots[i] = slots[i + 1] - steps;
+    }
+
+    let sumSlot = 0, sumTime = 0, sumSlot2 = 0, sumSlotTime = 0;
+    for (let i = 0; i < samples.length; i++) {
+      const slot = slots[i], time = samples[i].at - last;
+      sumSlot += slot;
+      sumTime += time;
+      sumSlot2 += slot * slot;
+      sumSlotTime += slot * time;
+    }
+    const count = samples.length;
+    const period = (count * sumSlotTime - sumSlot * sumTime) / (count * sumSlot2 - sumSlot ** 2);
+    const offset = (sumTime - period * sumSlot) / count;
+    const residuals = samples.map((point, i) => point.at - last - offset - slots[i] * period);
+    const rms = Math.sqrt(residuals.reduce((sum, value) => sum + value ** 2, 0) / count);
+    if (rms < .001 || period < typical * .85 || period > typical * 1.15 ||
+        rms > Math.min(10, .17 * period) || residuals.some(r => Math.abs(r) > .32 * period)) {
+      return samples;
+    }
+
+    // Keep the receipt time of the newest position as the age reference.
+    return samples.map(({ x, y }, i) => ({ x, y, at: last + slots[i] * period }));
+  }
   function circle(samples){
-    for(let count=samples.length;count>=5;count--){const fit=fitCircle(samples.slice(-count));if(fit)return fit;}
+    if (samples.length < 5) return null;
+    const first = samples[0], last = samples.at(-1), previous = samples.at(-2);
+    if (last.at - first.at < 250 - 1e-6) return null;
+    const dx = previous.x - last.x, dy = previous.y - last.y;
+    if (dx === 0 && dy === 0) return null;
+    const collinear = samples.every(point =>
+      (point.x - last.x) * dy === (point.y - last.y) * dx);
+    if (collinear) return null;
+    for (let count = samples.length; count >= 5; count--) {
+      const fit = fitCircle(samples.slice(-count));
+      if (fit) return fit;
+    }
     return null;
   }
   function fitCircle(samples){
@@ -806,6 +861,184 @@ function __createBallisticAim(settings, clock) {
     if(speed<30||speed>1200||sweep<.08||sweep>Math.PI||sagitta<1.5||timingError>2.5||rates.some(r=>r*omega<=0))return null;
     return {cx:last.x+cx,cy:last.y+cy,radius,omega,angle,at:last.at};
   }
+  function segmentError(rows, start, end) {
+    const count = end - start;
+    let sumT = 0, sumZ = 0, sumTT = 0, sumTZ = 0, sumZZ = 0;
+    for (let i = start; i < end; i++) {
+      const { t, z } = rows[i];
+      sumT += t;
+      sumZ += z;
+      sumTT += t * t;
+      sumTZ += t * z;
+      sumZZ += z * z;
+    }
+    const variance = sumTT - sumT * sumT / count;
+    const covariance = sumTZ - sumT * sumZ / count;
+    return Math.max(0, sumZZ - sumZ * sumZ / count - (variance > 0 ? covariance ** 2 / variance : 0));
+  }
+  // A periodic strafe has a nearly fixed travel axis, but its velocity
+  // changes sign. Anchor its displacement to the newest packet and fit
+  // frequency and phase from the history, rather than extrapolating speed.
+  function fitStrafe(samples) {
+    const first = samples[0], last = samples.at(-1), count = samples.length;
+    if (count < 6 || last.at - first.at < 420) return null;
+    const previous = samples.at(-2);
+    if (last.x === previous.x && last.y === previous.y) return null;
+
+    let axisX = 0, axisY = 0, extent = 0;
+    for (const point of samples) {
+      const x = point.x - last.x, y = point.y - last.y, distance = Math.hypot(x, y);
+      if (distance > extent) {
+        axisX = x;
+        axisY = y;
+        extent = distance;
+      }
+    }
+    if (extent < 13) return null;
+    axisX /= extent;
+    axisY /= extent;
+    const rows = samples.slice(0, -1).map(point => {
+      const x = point.x - last.x, y = point.y - last.y;
+      return { t: (point.at - last.at) / 1000, z: x * axisX + y * axisY, orthogonal: y * axisX - x * axisY };
+    });
+    if (rows.some(row => Math.abs(row.orthogonal) > 2.5)) return null;
+
+    // Compare with a linear lead through the same latest sample.
+    let tt = 0, tz = 0;
+    for (const { t, z } of rows) {
+      tt += t * t;
+      tz += t * z;
+    }
+    const slope = tz / tt;
+    const lineError = rows.reduce((error, { t, z }) => error + (z - slope * t) ** 2, 0);
+    if (lineError / count < 2.1) return null;
+
+    let best = null;
+    for (let omega = .75; omega <= 6; omega += .25) {
+      const terms = rows.map(({ t, z }) => [Math.cos(omega * t) - 1, Math.sin(omega * t), z]);
+      let cc = 0, cs = 0, ss = 0, cz = 0, sz = 0;
+      for (const [cos, sin, z] of terms) {
+        cc += cos * cos;
+        cs += cos * sin;
+        ss += sin * sin;
+        cz += cos * z;
+        sz += sin * z;
+      }
+      const determinant = cc * ss - cs * cs;
+      if (determinant < 1e-9) continue;
+      const a = (cz * ss - sz * cs) / determinant;
+      const b = (sz * cc - cz * cs) / determinant;
+      const amplitude = Math.hypot(a, b);
+      if (amplitude < 10 || amplitude > 240 || amplitude * omega > 700) continue;
+
+      let error = 0, peakError = 0;
+      for (const [cos, sin, z] of terms) {
+        const residual = Math.abs(z - a * cos - b * sin);
+        error += residual * residual;
+        peakError = Math.max(peakError, residual);
+      }
+      if (peakError > 3.25 || error / count > 1.9 ** 2 || error > lineError * .24) continue;
+      // When several fits explain the observations, penalize wide swings.
+      const score = error / count + .1 * (amplitude / 110) ** 2;
+      if (!best || score < best.score) best = { a, b, omega, amplitude, error, score };
+    }
+    if (!best) return null;
+
+    // Two straight legs with an observed change can mimic a partial wave.
+    // Prefer the latest leg when this explains the history much better.
+    const observed = rows.concat({ t: 0, z: 0 });
+    for (let split = 3; split + 3 <= observed.length; split++) {
+      const legsError = segmentError(observed, 0, split) + segmentError(observed, split, observed.length);
+      if (legsError < best.error * .6) return null;
+    }
+    const { a, b, omega, amplitude } = best;
+    return {
+      name: 'strafe', speed: amplitude * omega,
+      vx: axisX * b * omega, vy: axisY * b * omega,
+      offset(t) {
+        const distance = a * (Math.cos(omega * t) - 1) + b * Math.sin(omega * t);
+        return { x: axisX * distance, y: axisY * distance };
+      },
+    };
+  }
+  // Fit forward drift plus one oscillating axis. Subtract the projection
+  // onto time before solving for the sine and cosine coefficients.
+  function fitDriftingStrafe(samples) {
+    if (samples.length < 10) return null;
+    const last = samples.at(-1);
+    const previous = samples.at(-2);
+    const span = (last.at - samples[0].at) / 1000;
+    if (span < .65 || (last.x === previous.x && last.y === previous.y)) return null;
+    const rows = samples.slice(0, -1).map(point => ({
+      t: (point.at - last.at) / 1000, x: point.x - last.x, y: point.y - last.y,
+    }));
+    const tt = rows.reduce((sum, row) => sum + row.t ** 2, 0);
+    const slopeX = rows.reduce((sum, row) => sum + row.t * row.x, 0) / tt;
+    const slopeY = rows.reduce((sum, row) => sum + row.t * row.y, 0) / tt;
+    const straightError = rows.reduce((sum, { t, x, y }) => sum + (x - slopeX * t) ** 2 + (y - slopeY * t) ** 2, 0);
+    if (straightError < rows.length * 9) return null;
+
+    let best = null;
+    for (let omega = 2; omega <= 9; omega += .25) {
+      if (omega * span < 4) continue;
+      const basis = rows.map(({ t }) => ({ c: Math.cos(omega * t) - 1, s: Math.sin(omega * t) }));
+      const slopeC = basis.reduce((sum, { c }, i) => sum + c * rows[i].t, 0) / tt;
+      const slopeS = basis.reduce((sum, { s }, i) => sum + s * rows[i].t, 0) / tt;
+      let cc = 0, cs = 0, ss = 0, cx = 0, sx = 0, cy = 0, sy = 0;
+      for (let i = 0; i < rows.length; i++) {
+        const { t, x, y } = rows[i];
+        const c = basis[i].c - slopeC * t, s = basis[i].s - slopeS * t;
+        cc += c * c; cs += c * s; ss += s * s;
+        cx += c * x; sx += s * x; cy += c * y; sy += s * y;
+      }
+      const determinant = cc * ss - cs * cs;
+      if (determinant <= 1e-6) continue;
+      const ax = (cx * ss - sx * cs) / determinant, ay = (cy * ss - sy * cs) / determinant;
+      const bx = (sx * cc - cx * cs) / determinant, by = (sy * cc - cy * cs) / determinant;
+
+      const radiusA = Math.hypot(ax, ay), radiusB = Math.hypot(bx, by);
+      const amplitude = Math.hypot(radiusA, radiusB);
+      // A transverse strafe has a single oscillation axis. For instance,
+      // an orbit has two distinct axes and should stay in the circle model.
+      if (amplitude < 12 || amplitude * omega > 700 ||
+          Math.abs(ax * by - ay * bx) > amplitude * 1.8) continue;
+      const driftX = slopeX - slopeC * ax - slopeS * bx;
+      const driftY = slopeY - slopeC * ay - slopeS * by;
+      const [axisX, axisY] = radiusA > radiusB ? [ax / radiusA, ay / radiusA] : [bx / radiusB, by / radiusB];
+      const transverseDrift = Math.abs(driftX * axisY - driftY * axisX);
+      if (transverseDrift < 20 || Math.hypot(driftX, driftY) > 600) continue;
+
+      let error = 0, peakError = 0;
+      for (let i = 0; i < rows.length; i++) {
+        const { t, x, y } = rows[i], { c, s } = basis[i];
+        const residual = Math.hypot(x - driftX * t - ax * c - bx * s, y - driftY * t - ay * c - by * s);
+        error += residual ** 2;
+        peakError = Math.max(peakError, residual);
+      }
+      if (peakError > 4 || error > Math.min(4 * rows.length, .15 * straightError)) continue;
+      if (!best || error < best.error) best = { ax, ay, bx, by, omega, driftX, driftY, amplitude, error };
+    }
+    if (!best) return null;
+    const { ax, ay, bx, by, omega, driftX, driftY, amplitude } = best;
+    return {
+      name: 'drifting-strafe',
+      speed: Math.hypot(driftX, driftY) + amplitude * omega,
+      vx: driftX + bx * omega, vy: driftY + by * omega,
+      offset(t) {
+        const c = Math.cos(omega * t) - 1, s = Math.sin(omega * t);
+        return { x: driftX * t + ax * c + bx * s, y: driftY * t + ay * c + by * s };
+      },
+    };
+  }
+  function strafe(key, motion) {
+    if (motion.curve) return null;
+    const track = tracks.get(key);
+    if (track.strafe === undefined) {
+      const samples = track.timedSamples ??= sampleTimes(track.samples);
+      track.strafe = fitStrafe(samples) ?? fitDriftingStrafe(samples);
+    }
+    return track.strafe;
+  }
   function track(key,x,y,active,meta={}) {
     if(!active){tracks.delete(key);return;}
     if(!Number.isFinite(x)||!Number.isFinite(y))return;
@@ -819,8 +1052,11 @@ function __createBallisticAim(settings, clock) {
     const newObservation=!last||at-t.observationAt>=8;
     if(!newObservation)t.samples[t.samples.length-1]={x,y,at};
     else {t.samples.push({x,y,at});t.observationAt=at;}
-    while(t.samples.length>8||t.samples.length>2&&at-t.samples[0].at>600+1e-6)t.samples.shift();
-    const curve=circle(t.samples),before=t.curve;
+    while(t.samples.length>maxObservations||t.samples.length>2&&at-t.samples[0].at>maxHistory+1e-6)t.samples.shift();
+    t.timedSamples=undefined;
+    const window=t.samples.slice(-8).filter(p=>at-p.at<=circleHistory+1e-6);
+    const curve=circle(window),before=t.curve;
+    t.strafe=undefined;
     // Coalesced packets refine one observation; they cannot confirm a new window.
     if(curve){curve.streak=before&&before.omega*curve.omega>0&&Math.abs(before.radius-curve.radius)<.15*curve.radius&&Math.hypot(before.cx-curve.cx,before.cy-curve.cy)<Math.max(8,.15*curve.radius)?before.streak+(newObservation?1:0):1;}
     t.curve=curve;
@@ -828,7 +1064,7 @@ function __createBallisticAim(settings, clock) {
   function motion(key,at=clock()) {
     const t=tracks.get(key),last=t?.samples.at(-1);
     if(!last || at<last.at || at-last.at>maxAge)return null;
-    const s=t.samples;let vx=0,vy=0;
+    const s=t.timedSamples ??= sampleTimes(t.samples);let vx=0,vy=0;
     if(s.length>1){
       const p=s.at(-2),dt=(last.at-p.at)/1000;
       if(dt>0){
@@ -849,7 +1085,7 @@ function __createBallisticAim(settings, clock) {
         }
       }
     }
-    const curve=t.curve?.streak>=2&&at-last.at<=200?t.curve:null;
+    const curve=t.curve?.streak>=2?t.curve:null;
     if(curve){vx=-curve.radius*curve.omega*Math.sin(curve.angle);vy=curve.radius*curve.omega*Math.cos(curve.angle);}
     return {x:last.x,y:last.y,vx,vy,age:(at-last.at)/1000,weapon:t.weapon,samples:s.length,curve};
   }
@@ -875,34 +1111,115 @@ function __createBallisticAim(settings, clock) {
     if(settings.predictionAutoSpeed && profile.speed>0)return {speed:profile.speed,source:'native-weapon',samples:0};
     return {speed:settings.bulletSpeedCoefficient*1000,source:'configured',samples:0};
   }
-  function intercept(rx,ry,vx,vy,speed,muzzle=0) {
-    if(![rx,ry,vx,vy,speed,muzzle].every(Number.isFinite)||speed<=0||muzzle<0)return null;
-    const c=rx*rx+ry*ry-muzzle*muzzle;if(c<=0)return 0;
+  function intercept(rx,ry,vx,vy,speed,muzzle=0,side=0) {
+    if(![rx,ry,vx,vy,speed,muzzle,side].every(Number.isFinite)||speed<=0||muzzle<0)return null;
+    return offsetIntercept(rx,ry,vx,vy,speed,muzzle,side);
+  }
+  function offsetIntercept(rx,ry,vx,vy,speed,muzzle,side) {
+    if(![rx,ry,vx,vy,speed,muzzle,side].every(Number.isFinite)||speed<=0)return null;
+    const c=rx*rx+ry*ry-muzzle*muzzle-side*side;if(c<=0)return 0;
     const a=vx*vx+vy*vy-speed*speed,b=2*(rx*vx+ry*vy-speed*muzzle);
     let roots;
     if(Math.abs(a)<1e-8*Math.max(speed*speed,1))roots=Math.abs(b)>1e-9?[-c/b]:[];
     else {const d=b*b-4*a*c;if(d<0)return null;const q=-.5*(b+(b>=0?1:-1)*Math.sqrt(d));roots=q===0?[-b/(2*a)]:[q/a,c/q];}
     const positive=roots.filter(t=>Number.isFinite(t)&&t>=0);return positive.length?Math.min(...positive):null;
   }
+  function nonlinearFlight(gap, speed, targetSpeed, limit, radialMinimum=speed) {
+    let lo=0, remaining=gap(0);
+    if (remaining<=0) return 0;
+    if (radialMinimum>=targetSpeed) {
+      // The expanding reach of the bullet overtakes every position along
+      // the predicted path at most once when the gap can only decrease.
+      let hi=limit;
+      if (gap(hi)>0) return null;
+      for (let i=0;i<32;i++) {
+        const mid=(lo+hi)/2;
+        if (gap(mid)>0) lo=mid; else hi=mid;
+      }
+      return hi;
+    }
+    // A slower bullet may have more than one intercept. Advance only as
+    // far as the maximum rate of approach permits, so an earlier crossing
+    // cannot be skipped by a coarse scan or a tangent extrapolation.
+    const maxClosingSpeed=speed+targetSpeed;
+    for (let i=0;i<512;i++) {
+      if (remaining<=.005) return lo;
+      if (lo>=limit) return null;
+      lo=Math.min(limit,lo+remaining/maxClosingSpeed);
+      remaining=gap(lo);
+    }
+    return null;
+  }
   function resolve(selfKey,targetKey,profile={}) {
     const now=clock(),self=motion(selfKey,now),target=motion(targetKey,now);
     if(!self||!target)return {valid:false,status:'stale-position'};
-    const delay=(settings.predictionLatencyMs||0)/1000;
-    function future(m,t){if(m.curve){const c=m.curve,a=c.angle+c.omega*t;return {x:c.cx+c.radius*Math.cos(a),y:c.cy+c.radius*Math.sin(a)};}return {x:m.x+m.vx*t,y:m.y+m.vy*t};}
-    const origin=future(self,self.age+delay),ox=origin.x,oy=origin.y,initial=future(target,target.age+delay),tx=initial.x,ty=initial.y;
-    const distance=Math.hypot(tx-ox,ty-oy),model=speedFor(self.weapon,profile);
-    let flight=intercept(tx-ox,ty-oy,target.vx,target.vy,model.speed,profile.muzzle||0),motionModel='linear';
-    if(target.curve&&model.speed>Math.hypot(target.vx,target.vy)*1.05){
-      let lo=0,hi=Math.min(3,profile.range>0?profile.range/model.speed:3);
-      const gap=t=>{const p=future(target,target.age+delay+t);return Math.hypot(p.x-ox,p.y-oy)-model.speed*t-(profile.muzzle||0);};
-      if(gap(hi)>0)flight=null;
-      else{for(let i=0;i<32;i++){const mid=(lo+hi)/2;if(gap(mid)>0)lo=mid;else hi=mid;}flight=(lo+hi)/2;motionModel='circle';}
+    const timing=settings.VideoAimEnabled?timingInfo():null;
+    const delay=timing?timing.totalDelayMs/1000:(settings.predictionLatencyMs||0)/1000;
+    const selfStrafe=strafe(selfKey,self), targetStrafe=strafe(targetKey,target);
+    function future(m,model,t) {
+      if (model) {
+        const offset = model.offset(t);
+        return { x: m.x + offset.x, y: m.y + offset.y };
+      }
+      if (m.curve) {
+        const c=m.curve,a=c.angle+c.omega*t;
+        return {x:c.cx+c.radius*Math.cos(a),y:c.cy+c.radius*Math.sin(a)};
+      }
+      return {x:m.x+m.vx*t,y:m.y+m.vy*t};
     }
-    if(flight===null || flight>3 || profile.range>0&&model.speed*flight>profile.range)return {valid:false,status:'unreachable',distance,...model};
-    const point=motionModel==='circle'?future(target,target.age+delay+flight):{x:tx+target.vx*flight,y:ty+target.vy*flight},x=point.x,y=point.y,angle=Math.atan2(y-oy,x-ox)*180/Math.PI;
-    return {valid:true,status:'tracking',angle,x,y,ox,oy,distance,flight,motionModel,...model,selfVelocity:{x:self.vx,y:self.vy},targetVelocity:{x:target.vx,y:target.vy}};
+    const origin=future(self,selfStrafe,self.age+delay),ox=origin.x,oy=origin.y;
+    const position=t=>future(target,targetStrafe,target.age+delay+t);
+    const initial=position(0),distance=Math.hypot(initial.x-ox,initial.y-oy);
+    const model=speedFor(self.weapon,profile),muzzle=profile.forward??profile.muzzle??0,side=profile.side??0;
+    const motionModel=target.curve?'circle':targetStrafe?.name??'linear';
+    const unavailable={valid:false,status:'unreachable',distance,...model};
+    if(!Number.isFinite(model.speed)||model.speed<=0||!Number.isFinite(muzzle)||profile.forward===undefined&&muzzle<0||!Number.isFinite(side))return unavailable;
+    const limit=Math.min(3,profile.range>0?profile.range/model.speed:3);
+    const exactFlight=()=>{
+      if(motionModel==='linear')return offsetIntercept(initial.x-ox,initial.y-oy,target.vx,target.vy,model.speed,muzzle,side);
+      const speedBound=targetStrafe?.speed??Math.hypot(target.vx,target.vy);
+      const gap=t=>{
+        const p=position(t);
+        return Math.hypot(p.x-ox,p.y-oy)-Math.hypot(model.speed*t+muzzle,side);
+      };
+      const radialMinimum=side===0?model.speed:model.speed*muzzle/Math.hypot(muzzle,side);
+      return nonlinearFlight(gap,model.speed,speedBound,limit,radialMinimum);
+    };
+    let flight,iterations=0,exactFallback=false;
+    if(timing){
+      // Start with stationary-target flight time, then refine the predicted
+      // point. A bounded Newton step avoids unbounded fixed-point oscillation.
+      let candidate=Math.max(0,(distance-muzzle)/model.speed);
+      const gap=(t)=>{const p=position(t);return Math.hypot(p.x-ox,p.y-oy)-Math.hypot(model.speed*t+muzzle,side);};
+      const speedBound=targetStrafe?.speed??Math.hypot(target.vx,target.vy);
+      const radialMinimum=side===0?model.speed:model.speed*muzzle/Math.hypot(muzzle,side);
+      if(speedBound<(motionModel==='linear'?model.speed:radialMinimum)&&candidate<=limit){
+        for(let step=1;step<=timing.aimSteps;step++){
+          iterations++;
+          const residual=gap(candidate),h=.0001;
+          const lo=Math.max(0,candidate-h),hi=candidate+h;
+          const derivative=(gap(hi)-gap(lo))/(hi-lo);
+          if(!Number.isFinite(derivative)||derivative>=-1e-6)break;
+          const next=candidate-residual/derivative;
+          if(!Number.isFinite(next)||next<0||next>limit)break;
+          candidate=next;
+        }
+        // A tiny residual certifies accuracy on the predicted path, not a
+        // server hit. Fall back to the existing solver for ambiguous roots.
+        flight=Math.abs(gap(candidate))<=.01?candidate:null;
+      }else flight=null;
+      if(flight===null){exactFallback=true;flight=exactFlight();}
+    }else flight=exactFlight();
+    if(flight===null || flight>limit)return unavailable;
+    const {x,y}=position(flight),radians=Math.atan2(y-oy,x-ox)-Math.atan2(side,model.speed*flight+muzzle),angle=radians*180/Math.PI;
+    // A lateral hand offset changes both the launch point and the direction.
+    // Keep the legacy origin convention unless the new side profile is used.
+    const launch=profile.side===undefined&&profile.forward===undefined?{x:ox,y:oy}:{x:ox+Math.cos(radians)*muzzle-Math.sin(radians)*side,y:oy+Math.sin(radians)*muzzle+Math.cos(radians)*side};
+    const velocity=(m,strafe)=>({x:strafe?.vx??m.vx,y:strafe?.vy??m.vy});
+    return {valid:true,status:'tracking',angle,x,y,ox:launch.x,oy:launch.y,distance,flight,motionModel,...model,
+      selfVelocity:velocity(self,selfStrafe),targetVelocity:velocity(target,targetStrafe),...(timing?{video:{...timing,iterations,exactFallback}}:{})};
   }
-  return {track,motion,projectile,speedFor,resolve,intercept,reset(){tracks.clear();projectiles.clear();}};
+  return {track,motion,projectile,speedFor,resolve,intercept,sampleRtt,timingInfo,resetTiming(){rttSamples.length=0;},reset(){tracks.clear();projectiles.clear();rttSamples.length=0;}};
 }
 function __ilmPlayerNickname(value,id) {
   return typeof value==='string' ? value+'#'+id : value;

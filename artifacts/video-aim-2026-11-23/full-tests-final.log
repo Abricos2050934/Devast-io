@@ -1,0 +1,517 @@
+
+> devast-io-recovery@0.1.0 test
+> python3 -m unittest discover -s tests -v && npm run check && node --test tests/*.test.cjs
+
+test_304_reuses_only_hash_verified_cache (test_auto_update.DownloadTests.test_304_reuses_only_hash_verified_cache) ... ok
+test_corrupt_cache_body_cannot_be_accepted_on_304 (test_auto_update.DownloadTests.test_corrupt_cache_body_cannot_be_accepted_on_304) ... ok
+test_download_size_and_redirect_destination_are_checked (test_auto_update.DownloadTests.test_download_size_and_redirect_destination_are_checked) ... ok
+test_html_is_unconditional_and_must_not_accept_an_unexpected_304 (test_auto_update.DownloadTests.test_html_is_unconditional_and_must_not_accept_an_unexpected_304) ... ok
+test_server_503_retries_are_bounded_and_403_is_not_retried (test_auto_update.DownloadTests.test_server_503_retries_are_bounded_and_403_is_not_retried) ... ok
+test_both_browsers_are_required_for_the_same_candidate (test_auto_update.PipelineBrowserTests.test_both_browsers_are_required_for_the_same_candidate) ... ok
+test_firefox_failure_stops_the_pipeline (test_auto_update.PipelineBrowserTests.test_firefox_failure_stops_the_pipeline) ... ok
+test_missing_one_signature_in_firefox_stops_the_pipeline (test_auto_update.PipelineBrowserTests.test_missing_one_signature_in_firefox_stops_the_pipeline) ... ok
+test_stale_firefox_report_is_rejected (test_auto_update.PipelineBrowserTests.test_stale_firefox_report_is_rejected) ... ok
+test_changed_build_inputs_before_activation_preserve_current (test_auto_update.UpdaterTests.test_changed_build_inputs_before_activation_preserve_current) ... ok
+test_concurrent_update_lock_has_no_stale_pid_problem (test_auto_update.UpdaterTests.test_concurrent_update_lock_has_no_stale_pid_problem) ... ok
+test_corrupted_active_release_is_not_called_unchanged (test_auto_update.UpdaterTests.test_corrupted_active_release_is_not_called_unchanged) ... ok
+test_failed_port_does_not_change_current_or_its_file (test_auto_update.UpdaterTests.test_failed_port_does_not_change_current_or_its_file) ... ok
+test_failed_source_recheck_does_not_activate_a_validated_candidate (test_auto_update.UpdaterTests.test_failed_source_recheck_does_not_activate_a_validated_candidate) ... ok
+test_failed_type_preparation_does_not_replace_the_active_release (test_auto_update.UpdaterTests.test_failed_type_preparation_does_not_replace_the_active_release) ... ok
+test_first_update_and_same_content_do_not_rebuild (test_auto_update.UpdaterTests.test_first_update_and_same_content_do_not_rebuild) ... ok
+test_invalid_official_candidate_preserves_active_snapshot (test_auto_update.UpdaterTests.test_invalid_official_candidate_preserves_active_snapshot) ... ok
+test_local_server_serves_current_etag_and_blocks_path_traversal (test_auto_update.UpdaterTests.test_local_server_serves_current_etag_and_blocks_path_traversal) ... ok
+test_mod_change_rebuilds_same_native_js (test_auto_update.UpdaterTests.test_mod_change_rebuilds_same_native_js) ... ok
+test_multiple_compatible_clients_are_rejected (test_auto_update.UpdaterTests.test_multiple_compatible_clients_are_rejected) ... ok
+test_network_403_preserves_current (test_auto_update.UpdaterTests.test_network_403_preserves_current) ... ok
+test_official_rotation_keeps_original_bytes_and_separate_pointer (test_auto_update.UpdaterTests.test_official_rotation_keeps_original_bytes_and_separate_pointer) ... ok
+test_renamed_url_same_bytes_refreshes_pointer_without_rebuild (test_auto_update.UpdaterTests.test_renamed_url_same_bytes_refreshes_pointer_without_rebuild) ... ok
+test_same_url_new_bytes_builds_new_version_and_rolls_back (test_auto_update.UpdaterTests.test_same_url_new_bytes_builds_new_version_and_rolls_back) ... ok
+test_script_bytes_changed_during_build_are_not_activated (test_auto_update.UpdaterTests.test_script_bytes_changed_during_build_are_not_activated) ... ok
+test_script_selection_and_redirect_trust (test_auto_update.UpdaterTests.test_script_selection_and_redirect_trust) ... ok
+test_script_url_changed_during_build_is_not_activated (test_auto_update.UpdaterTests.test_script_url_changed_during_build_is_not_activated) ... ok
+test_source_check_detects_rotation_without_building_or_activating (test_auto_update.UpdaterTests.test_source_check_detects_rotation_without_building_or_activating) ... ok
+test_source_check_rejects_html_with_bom (test_auto_update.UpdaterTests.test_source_check_rejects_html_with_bom) ... ok
+test_type_preparation_finishes_before_the_build_input_fingerprint (test_auto_update.UpdaterTests.test_type_preparation_finishes_before_the_build_input_fingerprint) ... ok
+test_type_sources_and_compiler_config_invalidate_the_update_fingerprint (test_auto_update.UpdaterTests.test_type_sources_and_compiler_config_invalidate_the_update_fingerprint) ... ok
+test_validation_hash_mismatch_is_not_activated (test_auto_update.UpdaterTests.test_validation_hash_mismatch_is_not_activated) ... ok
+test_adaptive_aim_requires_native_packet_speed_and_shot_evidence_in_both_browsers (test_publish_update.PublicationTests.test_adaptive_aim_requires_native_packet_speed_and_shot_evidence_in_both_browsers) ... ok
+test_aim_backpressure_requires_native_verification_in_both_browsers (test_publish_update.PublicationTests.test_aim_backpressure_requires_native_verification_in_both_browsers) ... ok
+test_aim_ownership_resync_requires_both_native_browsers (test_publish_update.PublicationTests.test_aim_ownership_resync_requires_both_native_browsers) ... ok
+test_automation_backpressure_requires_browser_verification (test_publish_update.PublicationTests.test_automation_backpressure_requires_browser_verification) ... ok
+test_browser_report_from_another_build_cannot_publish (test_publish_update.PublicationTests.test_browser_report_from_another_build_cannot_publish) ... ok
+test_builds_only_verified_current_mod_and_matching_zip (test_publish_update.PublicationTests.test_builds_only_verified_current_mod_and_matching_zip) ... ok
+test_cadence_prediction_requires_both_native_browsers (test_publish_update.PublicationTests.test_cadence_prediction_requires_both_native_browsers) ... ok
+test_candidate_function_failures_cannot_publish (test_publish_update.PublicationTests.test_candidate_function_failures_cannot_publish) ... ok
+test_canonical_angles_require_both_orbit_directions_and_explicit_normalized_reference_proof (test_publish_update.PublicationTests.test_canonical_angles_require_both_orbit_directions_and_explicit_normalized_reference_proof) ... ok
+test_changed_mod_after_validation_cannot_publish (test_publish_update.PublicationTests.test_changed_mod_after_validation_cannot_publish) ... ok
+test_changed_override_after_validation_cannot_publish (test_publish_update.PublicationTests.test_changed_override_after_validation_cannot_publish) ... ok
+test_close_origin_diagnostics_require_both_browsers (test_publish_update.PublicationTests.test_close_origin_diagnostics_require_both_browsers) ... ok
+test_coalesced_directions_require_native_idle_ping_verification (test_publish_update.PublicationTests.test_coalesced_directions_require_native_idle_ping_verification) ... ok
+test_corrupted_client_cannot_publish (test_publish_update.PublicationTests.test_corrupted_client_cannot_publish) ... ok
+test_curved_chasing_requires_native_verification_in_both_browsers (test_publish_update.PublicationTests.test_curved_chasing_requires_native_verification_in_both_browsers) ... ok
+test_death_opcode_diagnostics_require_a_mapped_byte_in_both_browsers (test_publish_update.PublicationTests.test_death_opcode_diagnostics_require_a_mapped_byte_in_both_browsers) ... ok
+test_door_without_prompt_requires_real_mouse_verification (test_publish_update.PublicationTests.test_door_without_prompt_requires_real_mouse_verification) ... ok
+test_efficient_target_search_requires_both_native_browsers (test_publish_update.PublicationTests.test_efficient_target_search_requires_both_native_browsers) ... ok
+test_fast_loot_mid_burst_backpressure_requires_both_browsers (test_publish_update.PublicationTests.test_fast_loot_mid_burst_backpressure_requires_both_browsers) ... ok
+test_feature_contract_changes_cannot_publish_an_old_release (test_publish_update.PublicationTests.test_feature_contract_changes_cannot_publish_an_old_release) ... ok
+test_first_server_death_requires_both_browsers (test_publish_update.PublicationTests.test_first_server_death_requires_both_browsers) ... ok
+test_immediate_message15_directions_are_required_in_each_browser (test_publish_update.PublicationTests.test_immediate_message15_directions_are_required_in_each_browser) ... ok
+test_independent_door_control_requires_state_feedback_verification (test_publish_update.PublicationTests.test_independent_door_control_requires_state_feedback_verification) ... ok
+test_jitter_shot_priority_requires_both_native_browsers (test_publish_update.PublicationTests.test_jitter_shot_priority_requires_both_native_browsers) ... ok
+test_last_source_check_runs_before_remote_write_and_can_reject_an_unchanged_tree (test_publish_update.PublicationTests.test_last_source_check_runs_before_remote_write_and_can_reject_an_unchanged_tree) ... To /tmp/tmp74mzt9yb/source-guard.git
+ * [new branch]      ce4972a65541eb94e5fdbff8761e00ed2ee19083 -> updates
+From /tmp/tmp74mzt9yb/source-guard
+ * branch            updates    -> FETCH_HEAD
+From /tmp/tmp74mzt9yb/source-guard
+ * branch            updates    -> FETCH_HEAD
+ok
+test_legacy_storage_retirement_requires_native_positive_control_and_clean_current_mod (test_publish_update.PublicationTests.test_legacy_storage_retirement_requires_native_positive_control_and_clean_current_mod) ... ok
+test_line_projection_live_settings_and_saved_values_require_both_browsers (test_publish_update.PublicationTests.test_line_projection_live_settings_and_saved_values_require_both_browsers) ... ok
+test_loot_budget_and_session_history_require_both_browsers (test_publish_update.PublicationTests.test_loot_budget_and_session_history_require_both_browsers) ... ok
+test_message15_source_and_numeric_proofs_are_required_in_both_browsers (test_publish_update.PublicationTests.test_message15_source_and_numeric_proofs_are_required_in_both_browsers) ... ok
+test_missing_integrity_check_in_one_browser_cannot_publish (test_publish_update.PublicationTests.test_missing_integrity_check_in_one_browser_cannot_publish) ... ok
+test_native_aim_transport_requires_heartbeat_checks_in_each_browser (test_publish_update.PublicationTests.test_native_aim_transport_requires_heartbeat_checks_in_each_browser) ... ok
+test_native_rejection_recovery_requires_no_retries_and_manual_play_in_both_browsers (test_publish_update.PublicationTests.test_native_rejection_recovery_requires_no_retries_and_manual_play_in_both_browsers) ... ok
+test_native_shot_and_render_sync_require_both_browsers (test_publish_update.PublicationTests.test_native_shot_and_render_sync_require_both_browsers) ... ok
+test_native_wire_diagnostics_require_both_browsers (test_publish_update.PublicationTests.test_native_wire_diagnostics_require_both_browsers) ... ok
+test_original_ilm_mechanics_require_both_native_browsers (test_publish_update.PublicationTests.test_original_ilm_mechanics_require_both_native_browsers) ... ok
+test_original_ilm_menu_requires_matching_controls_and_source_line_in_both_browsers (test_publish_update.PublicationTests.test_original_ilm_menu_requires_matching_controls_and_source_line_in_both_browsers) ... ok
+test_original_ilm_mouse_and_server_angle_require_both_browsers (test_publish_update.PublicationTests.test_original_ilm_mouse_and_server_angle_require_both_browsers) ... ok
+test_original_ilm_pointer_ownership_during_target_loss_is_required (test_publish_update.PublicationTests.test_original_ilm_pointer_ownership_during_target_loss_is_required) ... ok
+test_original_ilm_requires_full_source_and_native_lifecycle_in_each_browser (test_publish_update.PublicationTests.test_original_ilm_requires_full_source_and_native_lifecycle_in_each_browser) ... ok
+test_publication_retires_old_link_and_preserves_immutable_versions (test_publish_update.PublicationTests.test_publication_retires_old_link_and_preserves_immutable_versions) ... To /tmp/tmphn2urrod/remote.git
+ * [new branch]      9dbe12b3ce979b723ceef692489cc3abf1623583 -> updates
+From /tmp/tmphn2urrod/remote
+ * branch            updates    -> FETCH_HEAD
+To /tmp/tmphn2urrod/remote.git
+   9dbe12b..b2ba994  b2ba9943e5c0ee046aa9a4838a98a4ed07b29b22 -> updates
+From /tmp/tmphn2urrod/remote
+ * branch            updates    -> FETCH_HEAD
+ok
+test_required_firefox_failure_cannot_publish (test_publish_update.PublicationTests.test_required_firefox_failure_cannot_publish) ... ok
+test_restored_spin_requires_speed_and_non_jitter_burst_evidence (test_publish_update.PublicationTests.test_restored_spin_requires_speed_and_non_jitter_burst_evidence) ... ok
+test_right_click_door_requires_native_verification_in_each_browser (test_publish_update.PublicationTests.test_right_click_door_requires_native_verification_in_each_browser) ... ok
+test_small_queue_admission_is_required_in_both_browsers (test_publish_update.PublicationTests.test_small_queue_admission_is_required_in_both_browsers) ... ok
+test_stale_native_errors_cannot_close_the_current_socket_but_current_errors_remain_enabled (test_publish_update.PublicationTests.test_stale_native_errors_cannot_close_the_current_socket_but_current_errors_remain_enabled) ... ok
+test_strafe_restoration_is_verified_in_both_browsers (test_publish_update.PublicationTests.test_strafe_restoration_is_verified_in_both_browsers) ... ok
+test_type_verification_must_match_the_current_sources_in_both_browsers (test_publish_update.PublicationTests.test_type_verification_must_match_the_current_sources_in_both_browsers) ... ok
+test_unpatched_integrity_build_cannot_publish (test_publish_update.PublicationTests.test_unpatched_integrity_build_cannot_publish) ... ok
+test_uploaded_message27_requires_source_menu_and_native_pipeline_in_both_browsers (test_publish_update.PublicationTests.test_uploaded_message27_requires_source_menu_and_native_pipeline_in_both_browsers) ... ok
+test_uploaded_untitled_source_requires_complete_comparison_in_each_browser (test_publish_update.PublicationTests.test_uploaded_untitled_source_requires_complete_comparison_in_each_browser) ... ok
+test_valid_targets_and_death_handling_require_both_native_browsers (test_publish_update.PublicationTests.test_valid_targets_and_death_handling_require_both_native_browsers) ... ok
+test_world_visibility_requires_three_native_renderers_in_each_browser (test_publish_update.PublicationTests.test_world_visibility_requires_three_native_renderers_in_each_browser) ... ok
+test_corrupted_source_is_rejected (test_recovery.RecoveryTests.test_corrupted_source_is_rejected) ... ok
+test_original_archive_remains_available (test_recovery.RecoveryTests.test_original_archive_remains_available) ... ok
+test_round_trip_is_byte_identical (test_recovery.RecoveryTests.test_round_trip_is_byte_identical) ... ok
+
+----------------------------------------------------------------------
+Ran 87 tests in 1.482s
+
+OK
+
+> devast-io-recovery@0.1.0 check
+> node tools/check_client.cjs
+
+AST OK: full client, one installer, one bootstrap; extracted payload matches
+Uploaded aim AST OK: active override, lifecycle, menu, source calculations; retired engines absent
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice
+✔ legacy smoothing and sent directions follow the shortest arc for three full turns: -1/0.05 (53.775967ms)
+✔ legacy smoothing and sent directions follow the shortest arc for three full turns: -1/0.74 (33.619921ms)
+✔ legacy smoothing and sent directions follow the shortest arc for three full turns: -1/1 (25.025818ms)
+✔ legacy smoothing and sent directions follow the shortest arc for three full turns: 1/0.05 (27.868026ms)
+✔ legacy smoothing and sent directions follow the shortest arc for three full turns: 1/0.74 (29.358127ms)
+✔ legacy smoothing and sent directions follow the shortest arc for three full turns: 1/1 (29.616938ms)
+✔ every source angle is canonical at the wire boundary without quantizing valid fractional angles (5.040434ms)
+✔ full browser oracle also verifies the installed source at the codec boundary (151.175127ms)
+✔ aim line shares native player coordinates across graphics ratios, zoom and camera offsets (50.847722ms)
+✔ old movement does not return on later packets after turn (4.660873ms)
+✔ old movement does not return on later packets after reversal (0.969933ms)
+✔ old movement does not return on later packets after restart (1.934777ms)
+✔ a teleport received in the same event-loop timestamp cannot create a huge velocity (0.749828ms)
+✔ aim matches the restored baseline except for explicitly reviewed motion fixes (57.788653ms)
+✔ gun auto fire and spear auto throw are independent and persist separately (25.188729ms)
+✔ old shared auto-fire preference migrates once and remains independently editable (4.009831ms)
+✔ unknown or removed self ID is dead and cannot crash afterFire (4.583974ms)
+✔ line reset and character death retain finite hidden coordinates (4.280652ms)
+✔ native fire before the first self position cannot crash the source resolver (6.162952ms)
+✔ repeated key selection uses one handler and Escape cancels without changing a binding (12.026551ms)
+✔ Strafe coefficient changes phase advance at the same timer cadence (23.249326ms)
+✔ adaptive packet bursts defer target searches to the existing refresh cycle (6.739113ms)
+✔ spear automatic attack responds only to its own toggle (5.170225ms)
+✔ line range flag is retained and clears on the next normal update (3.522832ms)
+✔ a second finger or menu touch cannot steal the active aiming finger (5.726938ms)
+✔ invalid captured keys retain capture and a later valid key uses conflict swapping (4.094146ms)
+✔ real aim GUI controls change the intended computations and modes (33.771474ms)
+✔ explicit saved aim values are not reinterpreted as legacy defaults on reload (10.232311ms)
+✔ removed target stops auto attacks and returns the source native fallback (12.758833ms)
+✔ missing self coordinates, self locks and server death emit no automated combat (15.811161ms)
+✔ rapid reconnect clears histories and reused IDs start without previous positions (4.037884ms)
+✔ a ghoul with self numeric UID remains a distinct target (4.590509ms)
+✔ fast loot stops when its own request fills the queue and resumes at the unsent drop (12.288818ms)
+✔ Uploaded aim still computes on position refresh while queued and non-open sockets suppress its sends (6.027692ms)
+✔ fast loot and native auto-build pause together and resume one current frame (8.026754ms)
+✔ slow loot, container take, chat and keepalive wait for writable transport without retry bursts (4.610429ms)
+✔ saving settings cannot bypass the existing fast-loot interval (12.894783ms)
+✔ confirmed death stops chat before the native handler clears the playing state (3.45296ms)
+✔ a stationary target is intercepted at distance divided by speed (4.273301ms)
+✔ transverse motion uses the actual interception time, rather than distance / speed alone (2.373025ms)
+✔ approaching and receding targets have different physical flight times (1.66566ms)
+✔ movement of the shooter changes the launch origin during packet age and network delay (0.910274ms)
+✔ the same path sampled at different server rates gives the same angle (5.344704ms)
+✔ a stable circular path predicts the curved interception rather than its old tangent (1.561907ms)
+✔ coalesced packets cannot confirm a circular path at 0ms (1.762303ms)
+✔ coalesced packets cannot confirm a circular path at 1ms (1.89609ms)
+✔ coalesced packets cannot confirm a circular path at 7ms (1.833598ms)
+✔ zero-time duplicate packets do not manufacture an infinite velocity (0.830567ms)
+✔ a continuous dense packet stream still accumulates timed motion observations (1.970901ms)
+✔ a stop and a reversal discard the obsolete motion direction immediately (0.807472ms)
+✔ teleports, generation reuse and long gaps restart velocity estimation (0.720263ms)
+✔ stale, removed and reset targets are not reported as valid intercepts (0.735176ms)
+✔ a target faster than the bullet and moving away is unreachable (0.775566ms)
+✔ quadratic degeneracy, tangency and negative intercept times remain finite (0.752652ms)
+✔ projectile speed averages distinct server projectiles and keeps weapons separate (0.924666ms)
+✔ old speed calibration expires and manual speed takes effect when automatic calibration is disabled (0.660836ms)
+✔ the installed adaptive default uses native weapon speed and range immediately (12.758692ms)
+✔ actual GUI controls change speed, delay, automatic calibration and mode, and persist (9.938578ms)
+✔ native packed projectile speed calibrates only our distinct projectiles, separately by equipped weapon (4.913506ms)
+✔ adaptive position tracking uses server coordinates while preserving the source endpoint history (3.572105ms)
+✔ fresh physical direction precedes manual attack with Jitter=false (5.628562ms)
+✔ fresh physical direction precedes manual attack with Jitter=true (3.500079ms)
+✔ stale targets cannot emit automatic attacks or keep direction ownership (3.513429ms)
+✔ physical aim keeps native backpressure and identity protections (4.541788ms)
+✔ a dense packet batch cannot multiply adaptive idle aim traffic beyond 20 directions per second (40.701388ms)
+✔ portable native browser fixture also verifies the installed adapter (9.970595ms)
+✔ independent projectile simulation measures interception error across distance, walk speed and direction (32.52225ms)
+✔ quantized projectile simulation improves over both current BBY defaults and its tuned profile (1402.689356ms)
+✔ renamed initializer property retains the independently matched allocator and original startup arguments (6.923976ms)
+✔ changed allocation arguments, missing method proof or duplicate startup calls stop the bootstrap adaptation (2.869928ms)
+✔ translation changes own identifiers and binding strings, preserving comments and unrelated text (3.909904ms)
+✔ build preserves previous JS and status on unknown-baseline (4800.90273ms)
+✔ build preserves previous JS and status on unknown-snapshot (6371.388606ms)
+✔ build preserves previous JS and status on ambiguous-anchor (75752.06074ms)
+✔ native disconnect before a WebSocket exists does not throw, and closes an existing socket once (4.328623ms)
+✔ a replaced socket cannot send a second login or change the current socket timer (3.098586ms)
+✔ build fingerprints identify different assembled inputs reproducibly (8.032772ms)
+✔ native receive watchdog observation retains its original close threshold and never suppresses a close (1.515588ms)
+✔ entry timeout is observed before its first native socket close, including the final attempt (2.055446ms)
+✔ native malformed saved session ID reaches its intended finite fallback without changing stored identity (4.497842ms)
+✔ native marker fixture preserves computed server selection and detects the historical storage marker (9.644513ms)
+✔ native marker fixture keeps a prologue and nested branch before the result (2.237965ms)
+✔ an ambiguous native marker result is still rejected (1.698779ms)
+✔ server rejection 8 cannot turn into automatic restoration after native close (11.709112ms)
+✔ server rejection 16 cannot turn into automatic restoration after native close (2.840735ms)
+✔ server rejection 512 cannot turn into automatic restoration after native close (3.446961ms)
+✔ server rejection 1024 cannot turn into automatic restoration after native close (3.295406ms)
+✔ an ordinary transport loss still permits the existing bounded restoration (3.090294ms)
+✔ stale entry deadlines never close an already active playable socket (20.032194ms)
+✔ an entry timeout retains its close event but a replaced socket cannot contaminate the report (3.687937ms)
+✔ a replacement socket gets a new entry deadline without an intervening state change (3.40617ms)
+✔ an earlier socket closing does not prevent a stalled login from unlocking Play (2.890098ms)
+✔ disposed native preflight cannot start an old connection (4.988177ms)
+✔ nested native preflights keep ownership and reject a stale second stage (5.655192ms)
+✔ fresh recovery bounds server-list failure: missing-server (3.185594ms)
+✔ fresh recovery bounds server-list failure: throw (3.3926ms)
+✔ fresh recovery bounds server-list failure: timeout (5.763111ms)
+✔ normal join remains possible after earlier restore attempts (2.651326ms)
+✔ native network failure codes are recorded without account contents (2.768899ms)
+✔ a slow transport open gets a full application-handshake deadline (2.599709ms)
+✔ a duplicate transport open cannot keep extending the handshake deadline (2.582484ms)
+✔ an old transport open cannot postpone the current socket deadline (2.60016ms)
+✔ isolated data decoding supports a new cipher, non-BMP alphabets, filler and array swaps (100.268768ms)
+✔ a familiar sixteen-symbol alphabet with a different byte cipher uses the isolated decoder (74.209474ms)
+✔ isolated data dependencies cannot acquire host capabilities or access prototypes (108.358225ms)
+✔ data-table values do not leak into a shadowed local table (87.58039ms)
+✔ data decoding does not initialize a local constant before its declaration (4.322364ms)
+✔ death diagnostics follow the actual incoming opcode 5 (15.592808ms)
+✔ death diagnostics follow the actual incoming opcode 27 (4.926145ms)
+✔ death diagnostics follow the actual incoming opcode 203 (5.332235ms)
+✔ dynamic, mismatched, missing and ambiguous death dispatches stop generation (3.377047ms)
+✔ the mapped prefix excludes unrelated packet contents and invalid expected opcodes (4.060928ms)
+✔ native decoder cache retains parsed output and its input/recipe evidence (12.673026ms)
+✔ corrupt decoded bytes, wrong input hash and stale recipes are rebuilt from the native input (8.60668ms)
+✔ right click opens the hovered door over a selected container, once, using click coordinates and zoom (20.055819ms)
+✔ right click ignores UI, typing, disabled controls and other tiles (6.50769ms)
+✔ door request is independent of E, nearest selection, client range and owner filtering (9.417888ms)
+✔ cursor picks the second adjacent door rather than the door with the E prompt (4.589026ms)
+✔ door control defaults on independently of a disabled saved generic interaction setting (4.695164ms)
+✔ door feedback waits for the requested entity state instead of faking an open door (5.503167ms)
+✔ a different door update cannot confirm the request; timeout is visible and sends nothing again (7.118843ms)
+✔ door clicks wait for the socket to be open, readyState=0 (3.599716ms)
+✔ door clicks wait for the socket to be open, readyState=2 (9.1143ms)
+✔ door clicks wait for the socket to be open, readyState=3 (3.37244ms)
+✔ a confirmed death blocks door requests while the native state is still being cleared (4.802432ms)
+✔ renamed native home entry retains the full implementation including one new binary-state reset (12.04008ms)
+✔ home entry refuses changed actions, non-binary resets and executable reset expressions (5.394236ms)
+✔ home entry requires a unique native export (2.16675ms)
+✔ AutoBuild sends the latest native cursor cell and rotation independently of player position (12.478769ms)
+✔ high-FPS AutoBuild is bounded, uses current preview, and does not replay skipped frames (7.32708ms)
+✔ AutoBuild honors preview validity, selected building, session, and toggle across transitions (10.023062ms)
+✔ AutoBuild GUI and KeyB binding change the next native frame (7.774131ms)
+✔ standalone fallback builds on its bounded step and never adds a sender in overlay render (6.013ms)
+✔ AutoBuild rejects nonfinite preview data and stops outside a living session or after disposal (3.349707ms)
+✔ runtime generation reproduces the committed source blocks and host bindings exactly (64.228453ms)
+✔ active source calculations, lifecycle, spear, jitter and menu survive verbatim (58.316592ms)
+✔ state and commands match the upload with canonical angle representation (348.434914ms)
+✔ changed positions refresh immediately; repeated coordinates do not manufacture velocity samples (4.63171ms)
+✔ original rotation and aim loops retain 50ms cadence and all timers/listeners are disposed (12.776623ms)
+✔ previous engines cannot replace source defaults or overwrite identity (4.961567ms)
+✔ aim menu order, numeric ranges and options match the uploaded menu (13.826499ms)
+✔ source touch input uses the changed finger and native document mouse state (3.19617ms)
+✔ source key capture retains conflict swaps, persists bindings and cleans up an unfinished capture (5.403666ms)
+✔ raw and automatically decoded native direction hooks preserve ILM timing and angle bookkeeping (2260.729369ms)
+✔ uploaded direction adaptation retains the native fallback and changes only the primary angle argument (1582.335125ms)
+✔ native packetAngle uses the exact source floor and hidden fallback (15.008665ms)
+✔ source receiver skips unused zero position and removal slots (3.557875ms)
+✔ native weapon metadata activates imported spear calculations (6.175279ms)
+✔ integrity mapping follows native identifier rotation and preserves the rest of each signer (9.938336ms)
+✔ a changed native signature contract or unknown flag reader blocks the port (4.876292ms)
+✔ missing reviewed predicates do not silently produce an unpatched update (0.341284ms)
+✔ a separate reviewed reference can name its native flag and three signers without relaxing contracts (1.50292ms)
+✔ opaque native signer rotation retains new formulas and rejects an extra flag reader (8.293107ms)
+✔ a named IIFE around a flag read retains the outer native signature owner (2.032212ms)
+✔ our original rotation has configurable speed and protects manual and automatic shots (30.980322ms)
+✔ our Jitter menu, saved speed, and J binding replace the imported modes (13.199083ms)
+✔ rotation leaves native movement and pointer untouched and sends at most 20Hz (5.55271ms)
+✔ legacy settings are retired only after verified current copies and an exact archive (15.368135ms)
+✔ existing current settings win and old settings are archived unchanged (4.021189ms)
+✔ migration keeps original data if writing DevastILM:settings:v3:legacy-backup:v1 fails (3.979667ms)
+✔ migration keeps original data if writing DevastILM:settings:v3 fails (2.653779ms)
+✔ migration keeps original data if writing DevastILM:settings:v3:loot fails (3.003435ms)
+✔ malformed historical settings are retained instead of replacing current data (4.210308ms)
+✔ session hook retains the native guard and action order: if(ready){save(name);save(skin);connect();} (12.646747ms)
+✔ session hook retains the native guard and action order: ready&&(save(name),save(skin),connect()); (8.738034ms)
+✔ session hook rejects an unguarded or unsupported native start body (2.696812ms)
+✔ uploaded packetAngle transforms both native send sites while preserving timing and codec call count (4.499695ms)
+[Devast mod] Native drawing fixture failure
+✔ fast loot bounds unsuccessful scans and reaches later drops without scanning every frame (35.460578ms)
+✔ removed HUD text and AIM BOT label cannot return from old saved settings (10.017313ms)
+✔ building owner labels read cursor layout once per frame even with hundreds of buildings (4.674483ms)
+✔ frame entity collection reuses records while preserving removal, replacement and pooled type changes (3.474552ms)
+✔ movement report separates browser frame timing from automation traffic and ignores hidden-tab gaps (6.393802ms)
+✔ owner overlay resolves item metadata only for the hovered tile, while preserving the label (7.812717ms)
+✔ status HUD avoids rewriting unchanged layout styles but responds to resizing (4.336965ms)
+✔ loot without building tile coordinates does not add owner-overlay layout reads (3.126427ms)
+✔ native frame drawing uses the game canvas without a second full-screen canvas or clearing the game (7.192863ms)
+✔ a failed native drawing call restores the host canvas state and standalone mode retains its separate surface (5.594642ms)
+✔ fast loot caps a dense high-FPS scene, rotates fairly, and never replays delayed cycles (36.962947ms)
+✔ session report retains earlier aim activity after the two-second combat window and redacts payloads (8.885883ms)
+✔ traffic retention stays bounded over forty minutes and idle reads expire old buckets (33.578924ms)
+✔ automated chat contributes opcode counts without recording message contents or rejected sends (4.629837ms)
+✔ pickup evidence identifies repeated drops without changing packet order or logging account data (5.077618ms)
+✔ death preserves pickup evidence after expiry and later sessions cannot overwrite the first snapshot (4.709325ms)
+✔ pickup evidence stays bounded, separates reused IDs and sockets, and excludes blocked sends (6.858068ms)
+✔ settings persist, transient account fields are excluded, loot modes exclude each other (11.733749ms)
+✔ disabled aim and disconnected state send no aim packets (6.063735ms)
+✔ hotkeys ignore text input and toggle outside text fields (4.21858ms)
+✔ dispose removes timers, frame callbacks and registered event handlers (2.812564ms)
+✔ fast loot visits in-range drops on bounded cycles without the native selected-item restriction (5.319566ms)
+✔ fast loot applies filter changes on its next scheduled scan, independently of cursor interaction (10.457644ms)
+✔ zoom persists across reload; invalid ranges and choices are rejected; conflicting key bindings swap (9.810298ms)
+✔ mouse wheel updates the saved zoom setting through the same setter (3.657822ms)
+✔ map names, ID 120, clan/name colors, gauges, hitboxes and real-angle display use real fixture data (7.597851ms)
+✔ Uploaded auto fire sends a complete clear-shot cycle on each explicit tick (3.908562ms)
+✔ container take sends only when enabled, with native permission flags and nonempty slots (7.654454ms)
+✔ cursor interaction uses camera coordinates and requires the native eligible target; never fakes a door state (3.746272ms)
+✔ chat obeys native cooldown, stops when disabled, and pauses during typing (4.595287ms)
+✔ nickname copy uses the requested ID and reports clipboard refusal or missing player (10.988639ms)
+✔ reconnect preserves a newly selected server and uses a fresh deadline after an asynchronous refresh (5.683213ms)
+✔ all exposed action paths stop after dispose (10.821932ms)
+✔ restore rejection falls back to a normal join once while cookies and stored identity remain unchanged (3.163492ms)
+✔ manual Play calls are serialized before the native asynchronous handshake starts (3.03339ms)
+✔ ordinary version or authorization rejections never trigger cookie clearing or automatic fresh joins (14.604267ms)
+✔ changing the selected server cancels a delayed automatic retry until Play is pressed again (2.648752ms)
+✔ a stale native login preflight callback cannot start a second connection after a newer Play attempt (3.127999ms)
+✔ native decorated names copy raw names with internal hashes preserved and never duplicate own overlay IDs (3.293293ms)
+✔ legacy settings migrate separately from account storage and preserve customized aim and loot (6.678472ms)
+✔ position refresh precedes native fire and Jitter aligns before the attack (4.573184ms)
+✔ native synchronized fast loot respects its interval without a second RAF scan (3.764619ms)
+✔ late native callbacks after disposal leave no timers and permit ordinary native firing (2.932731ms)
+✔ disabling strafe restores physical movement 0 exactly once (15.179087ms)
+✔ disabling strafe restores physical movement 1 exactly once (7.925074ms)
+✔ disabling strafe restores physical movement 5 exactly once (4.506736ms)
+✔ disabling strafe restores physical movement 10 exactly once (3.576001ms)
+✔ native movement supersedes strafe and needs no extra restoration packet (3.480379ms)
+✔ direct setting reset restores movement on the next step without repeating it (4.2051ms)
+✔ disposal releases owned movement while retaining ordinary native firing (3.093418ms)
+✔ disabling unused strafe produces no movement command (4.621786ms)
+✔ death and a replaced socket cannot restore an earlier session movement (6.826582ms)
+✔ restoration skips non-open socket 0 (3.248247ms)
+✔ restoration skips non-open socket 2 (3.41237ms)
+✔ restoration skips non-open socket 3 (3.000331ms)
+✔ GUI toggle restores movement even though the controller already wrote false (7.243778ms)
+✔ reobserving the same socket retains owned movement until the toggle is disabled (3.41278ms)
+✔ invalid physical masks restore a valid stationary command (7.115999ms)
+✔ reviewed combat bridge preserves codec/socket arguments while keeping native input activity separate (7.010994ms)
+✔ changed native transport contracts stop generation (2.362589ms)
+✔ installed aim uses the dedicated bridge; other features retain the ordinary sender (13.14965ms)
+✔ late failure of a timed-out login cannot close a newer active session (12.767986ms)
+✔ failure of the current attempt still reaches its native error handler (3.022894ms)
+✔ a pending entry failure cannot close the socket between native entry and the next frame (5.448396ms)
+✔ an error callback remains owned when it starts another asynchronous stage (2.788558ms)
+✔ disposal rejects a pending error callback (2.768038ms)
+✔ a failure-only request is guarded even without a success callback (3.010877ms)
+✔ each ordering of repeated terminal HTTP callbacks accepts exactly one result (240.338192ms)
+✔ late failure cannot close a socket while a successful request is still connecting (8.399334ms)
+✔ nested requests with the same URL keep independent terminal ownership (7.506987ms)
+✔ throwing terminal callbacks stay settled and preserve the receiver and arguments (8.266458ms)
+✔ all reviewed native profiles guard both terminal callbacks before running the request body (53.199225ms)
+✔ a preflight scheduled after the login stack returns cannot close an active socket (20.147804ms)
+✔ a deferred success from an old entry cannot overwrite the current connection state (10.094707ms)
+✔ a current deferred error still reaches its native handler exactly once (7.748323ms)
+✔ ordinary native HTTP callbacks remain usable outside an entry attempt (19.214266ms)
+✔ login skin compatibility accepts the native nickname and preflight shape only (6.971516ms)
+✔ native namespace discovery uses lexical export identities despite repeated local names (2.097928ms)
+✔ shared export names or a changed export table cannot select an ambiguous native namespace (0.679323ms)
+✔ decoded sloppy block functions retain their unique function-scope namespace exports (0.494079ms)
+✔ native Play callback additions survive the reviewed wrapper without borrowing the old callback body (9.143773ms)
+✔ native Play changes outside the callback, a changed prefix/login, or ambiguity stop adaptation (4.642446ms)
+✔ player list uses the full metadata roster including distant players and empty nicknames with IDs (19.86085ms)
+✔ nickname and clan colors remain independent and change through real GUI callbacks (8.616545ms)
+✔ nickname color invalidates both native name canvases and the leaderboard without rebuilding an unchanged color (3.38578ms)
+✔ departed players disappear and reused or replaced metadata rejoins the roster (7.153805ms)
+✔ native suffix is displayed as a separate ID and copying preserves hashes inside the actual nickname (4.889962ms)
+✔ the player list preserves row nodes between frames and closes through L or its close button (6.473189ms)
+✔ player list clicks do not arm gameplay mouse input and stale clans are excluded (3.124494ms)
+✔ rejoin nickname mapping preserves the new native animation reset and every old statement (3.925317ms)
+✔ changed rejoin packets, animation behavior, table, owner and ambiguous handlers block the adaptation (9.523274ms)
+✔ rejoin retains the native skin validation added in November 19 and rejects different packet semantics (5.387476ms)
+✔ constructor mapping retains six new scalar initializers and rejects changed existing fields (3.55511ms)
+✔ anonymous and query-string keys cannot fetch private files or reach GitHub (24.448425ms)
+✔ revoked, expired, malformed-expiry and unknown keys are rejected before any upstream call (5.195623ms)
+✔ valid key gets the exact verified client; secrets stay upstream and responses cannot be cached publicly (4.159032ms)
+✔ CORS preflight enables the private Authorization header but never downloads code (2.933362ms)
+✔ tampered, unverified and unavailable upstream updates fail closed without leaking upstream errors (3.79135ms)
+✔ private manifest exposes only the client release and checksum, with no repository URLs (2.521604ms)
+✔ issued imports get different keys, store only their hashes on the server, and can be revoked individually (3.444086ms)
+✔ private loader sends a per-recipient key, executes authorized code and never falls back to a public URL (2.529326ms)
+✔ confirmed circular motion survives 80 ms packet intervals and quantization (5.547402ms)
+✔ confirmed circular motion survives 100 ms packet intervals and quantization (1.108838ms)
+✔ duplicate same-time observations cannot confirm an unconfirmed circle (1.105132ms)
+✔ tight fast circle radius 50 survives arc length and position rounding (1.119022ms)
+✔ tight fast circle radius 60 survives arc length and position rounding (0.992025ms)
+✔ rounding a straight diagonal path does not manufacture a curved target (1.173713ms)
+✔ several off-axis strafes are intercepted through late and missing packets (9.817929ms)
+✔ forward travel and sideways reversals remain predictable through packet jitter and loss (3.255007ms)
+✔ the slower projectile uses the first intersection with the curved path and respects range (2.549255ms)
+✔ a confirmed curve remains continuous across a gap until the position is stale (1.463581ms)
+✔ fixed independent suites improve overall and circular accuracy without dropping opportunities (1101.566736ms)
+✔ published mod preserves every function and every emitted byte, including native game and loader (2588.693932ms)
+✔ migration erases only types and added parentheses while preserving original arrow and class layout (3.264662ms)
+✔ type errors, suppressed checks, changed runtime and missing functions leave existing output untouched (8342.810956ms)
+✔ the actual native Play gateway hangs on an SDK failure with saved data, and recovers with the fix (39.101405ms)
+✔ rejected preroll cannot leave the native Play callback blocked with existing account data (5.053022ms)
+✔ synchronous SDK failure completes the newly registered native callback once (6.257041ms)
+✔ a successful preroll waits for the SDK and does not start a second login (14.094464ms)
+✔ a missing ad completion callback recovers after a deadline, preserving storage (3.340984ms)
+✔ hidden tabs and disposal do not force a pending ad callback (7.275354ms)
+✔ a stalled preflight releases the native busy flag and ignores its late result (3.255738ms)
+✔ a timed out Webgames preflight returns to native Play once and keeps saved identity (7.910036ms)
+✔ hidden tabs keep their pending preflight instead of returning to the menu (4.73995ms)
+✔ a stalled initial service screen opens native Play once only after servers are available (12.642176ms)
+✔ initial recovery leaves a visible menu and a hidden browser tab alone (31.29663ms)
+✔ an immediate native login exception does not leave Play locked (9.173527ms)
+✔ an unacknowledged socket closes once and can retry without clearing identity (10.916882ms)
+✔ a socket opened after a slow preflight gets its own time to complete entry (5.584708ms)
+✔ the native error callback releases Play while retaining its original behavior (36.126763ms)
+✔ late preflight responses cannot overwrite the newer connection key before starting a socket (5.760898ms)
+✔ preflight ownership follows a second HTTP round created asynchronously by the first response (21.361386ms)
+✔ the connection report contains presence flags, without exposing stored credentials (11.429139ms)
+✔ server death captures combat and health before the native handler resets the player (8.337163ms)
+✔ socket observers preserve native callbacks and exclude close reasons and credentials (3.747154ms)
+✔ observing the same socket twice retains its connection timings and listeners (5.057138ms)
+✔ a late socket observation after disposal cannot reinstall event handlers (3.491547ms)
+✔ the report counts browser exceptions, failed resources and rejected promises separately (3.160037ms)
+✔ receive timing distinguishes a quiet socket from a client close without retaining packet contents (6.401584ms)
+✔ combat snapshots expire idle commands and cannot be changed by the report consumer (12.41192ms)
+✔ the native death prefix is captured without logging arbitrary packet bodies (13.440889ms)
+✔ Play preparation timeout releases the pre-login busy flag and ignores stale resource callbacks (3.77164ms)
+✔ native Play works without Widget and can retry a stalled resource load with the same saved identity (26.460547ms)
+✔ partially loaded Widget cannot set an advertising wait with no usable completion method (26.622196ms)
+✔ disposing recovery leaves native Play usable while canceling old preparation callbacks (5.714569ms)
+✔ reported 05 00 02 death stops restoration retries and Play keeps identity while starting a normal join (6.601338ms)
+✔ death invalidates a pending handshake callback without deleting stored login (2.828578ms)
+✔ failed normal joins after death stay normal, are bounded and keep the same account (3.121119ms)
+✔ handshake diagnostics distinguish discarded replies during play without logging request URLs (6.331239ms)
+✔ Resource Override v1 schema and embedded loader match the supplied format (1.263927ms)
+✔ loader fetches our current stable JS synchronously with cache busting, and starts it once (1.679721ms)
+✔ same JSON loads a newly published client after a fresh page load (2.04499ms)
+✔ HTTP errors, network failures and HTML do not execute a game client (3.53488ms)
+✔ a failed request can retry, but an already running client is never loaded twice (1.334491ms)
+✔ all owned TypeScript fragments pass strict checking and reproduce the JS used by the game (5725.666791ms)
+✔ type erasure preserves conditional operators, optional parameters and runtime token boundaries (2.109475ms)
+✔ public mod types reject invalid settings, packets and failed prediction use (577.239032ms)
+✔ type errors and disabled checks preserve all previous generated JavaScript (11084.730648ms)
+✔ native subtract-assignment writers retain their original expression during signature port (19.892918ms)
+✔ additional native flag reads still stop the signature port (3.001483ms)
+✔ unreviewed compound assignment forms still stop the signature port (3.083523ms)
+✔ rotation-2026-11-06.js.gz ports without registering a new baseline (45090.146496ms)
+✔ rotation-2026-11-08.js.gz ports without registering a new baseline (38377.66886ms)
+✔ rotation-2026-11-08b.js.gz ports without registering a new baseline (33234.601588ms)
+✔ rotation-2026-11-11.js.gz ports without registering a new baseline (32087.434796ms)
+✔ native-2026-11-19.js.gz ports without registering a new baseline (35025.783159ms)
+✔ rotation-2026-11-22.js.gz ports without registering a new baseline (31018.173004ms)
+✔ native correspondence handles block/sequence conditionals and immutable aliases (24.125368ms)
+✔ native loop initializers may rotate without losing stride or opcode checks (36.827849ms)
+✔ mutable aliases and reads preceding initialization are not constants (1.086274ms)
+✔ projection retains candidate getter order and leaves both native ASTs untouched (10.481799ms)
+✔ native server-list interface rejects changed lobby indices or JSON fields (9.708287ms)
+✔ native fingerprints survive identifier rotation, escape spelling and immutable aliases (44.141248ms)
+✔ a changed packet stride, opcode or comparison changes the native contract (4.628586ms)
+✔ mutable and shadowed bindings are not folded as global constants (0.631282ms)
+✔ bounded decoder captures text rather than executing it (1.010873ms)
+✔ rotated native symbol alphabets decode string aliases as data, including executable-looking text (129.440269ms)
+✔ native string tables reject duplicate and out-of-range byte substitutions (10.505014ms)
+✔ a shadowed string-table name never borrows decoded values from the outer table (2.46487ms)
+✔ affine alphabets decode rotated ranges and offsets without executing the decoder function (55.219239ms)
+✔ identical direction handlers retain their distinct read-only native timers (1.717306ms)
+✔ network discovery includes appended exports and excludes other namespaces and unknown computed keys (9.281027ms)
+✔ native idle timer discovery accepts reversed operands with the same strict inequality (0.518205ms)
+✔ decoder rejects host capabilities and prototype access (0.530183ms)
+✔ automatic port refuses a modified reference baseline before changing any file (8.927494ms)
+✔ reference selection preserves the historical client and uses the latest reviewed client for a new rotation (687.893988ms)
+✔ screenshot defaults remain explicit configured values until genuine RTT samples exist (7.866099ms)
+✔ the RTT window keeps the latest 125 samples and reflects a changed window immediately (0.984244ms)
+✔ invalid, stale and previous-clock RTT data cannot become measured lead (5.346918ms)
+✔ receipt age and user compensation are counted exactly once in the launch time (1.642356ms)
+✔ video prediction intercepts independent motion at 500 units/s (6.153419ms)
+✔ video prediction intercepts independent motion at 1400 units/s (1.354961ms)
+✔ video prediction intercepts independent motion at 1450 units/s (1.045665ms)
+✔ measured latency reduces the miss in a delayed crossing compared with uncompensated aim (23.462105ms)
+✔ step count controls actual refinement work; an insufficient approximation uses the exact fallback (5.09129ms)
+✔ spear lateral launch geometry intersects the target along the actual projectile ray (4.159544ms)
+✔ a negative spear hand offset remains a signed launch offset rather than being clamped away (1.002881ms)
+✔ unreachable, stale and invalid profiles never manufacture a shot (0.761826ms)
+✔ the installed spear path uses the video model and sends its corrected angle before native fire (46.62591ms)
+✔ video mode holds a valid target, obeys explicit lock and releases removed targets (9.558058ms)
+✔ RTT ingestion adds no packets and resets on a new socket or session (38.875412ms)
+✔ video settings are editable through the menu, bounded and saved (15.212961ms)
+✔ the portable browser verifier exercises the installed video mode (22.001689ms)
+✔ wire observer runs after a successful send and never changes bytes or propagates diagnostic errors (11.19019ms)
+✔ ambiguous or structurally changed native wire send contracts stop generation (11.974868ms)
+✔ wire reports include native traffic with automation off, split sockets, retain close snapshots and contain no payloads (10.504496ms)
+✔ wire history remains bounded and expires while lifetime totals remain available (8.885715ms)
+✔ reports record independent spear and hidden angle settings that can affect native control with gun aim disabled (6.941183ms)
+✔ first server death survives repeated joins and returned reports cannot overwrite its metadata (28.284439ms)
+✔ an earlier native network rejection is retained separately from a later character death (7.352961ms)
+✔ hover owner labels include walls, floors and sleeping bags without interaction opcodes (15.370524ms)
+✔ mine markers use camera/zoom and preserve canvas state (25.495479ms)
+✔ native landmine-visibility reveals distant received objects without changing entity state (4106.231336ms)
+✔ native wire-visibility reveals distant received objects without changing entity state (28.885178ms)
+✔ native mine-visibility reveals distant received objects without changing entity state (28.504075ms)
+ℹ tests 382
+ℹ suites 0
+ℹ pass 382
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 232303.133795
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice

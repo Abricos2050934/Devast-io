@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "scope": "Regular Chrome controlled with browser input and passive network events; no Playwright helper injection or page evaluation before the session ends",
+  "artifact": "/workspace/Devast-io/artifacts/current-js-cause-2026-11-22/Devast-io-Current-JS.json",
+  "sha256": "f7a92c260a0adcd69fcc5b3dbed0e732d0a34cb0c98d0a971879de2e8b4caf74",
+  "joined": false,
+  "minutePassed": false,
+  "sockets": [],
+  "replacements": 1,
+  "networkErrors": [
+    {
+      "host": "www.googletagmanager.com",
+      "path": "/gtag/js",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/audio/ambient8.mp3",
+      "status": 503
+    },
+    {
+      "host": "api.adinplay.com",
+      "path": "/libs/aiptag/pub/LBS/devast.io/tag.min.js",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/list",
+      "status": 503
+    },
+    {
+      "host": "webgames.io",
+      "path": "/img/banner/webgames92.png",
+      "status": 503
+    }
+  ],
+  "navigationAttempts": 1,
+  "homeStatus": 200,
+  "officialPageCache": true,
+  "replacedPath": "/js/kI1G7NG7AThcrpwiN6RUB.js",
+  "error": "The live server list is unavailable",
+  "errorStack": "Error: The live server list is unavailable\n    at /workspace/Devast-io/artifacts/token-error-details-1795363234/check.cjs:67:64",
+  "failureState": {
+    "focused": true,
+    "visible": "visible",
+    "loaded": true,
+    "state": 0,
+    "phase": "idle",
+    "socket": null,
+    "callbacks": {
+      "wrapped": 0,
+      "accepted": 0,
+      "rejectedStale": 0,
+      "rejectedWhileConnected": 0,
+      "rejectedAfterDispose": 0,
+      "rejectedDuplicate": 0
+    },
+    "status": "Ready",
+    "adWaiting": false,
+    "nativePending": false,
+    "errors": 0,
+    "events": []
+  },
+  "elapsedMs": 65240
+}

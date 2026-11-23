@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "created_at": "2026-11-22T15:59:36.165551+00:00",
+  "status": "update_checks_fixed_live_session_not_fixed",
+  "source": {
+    "page_url": "https://devast.io/",
+    "script_url": "https://devast.io/js/kI1G7NG7AThcrpwiN6RUB.js",
+    "raw_sha256": "0e7b56a938550c6f75a1e99267d2c989aaa8d8c6f45ebdd16bc70985d94edc3e",
+    "provenance": "Exact public script cached by the unmodified physical browser; decoded native HTTP Zstandard encoding",
+    "compressed_bytes": 3120721,
+    "bytes": 7666786
+  },
+  "output_sha256": "f7a92c260a0adcd69fcc5b3dbed0e732d0a34cb0c98d0a971879de2e8b4caf74",
+  "changes": [
+    "Read-only native connection-marker fixture supports an unchanged result inside an if block after a protected prologue; unknown scopes and ambiguous results are rejected"
+  ],
+  "validation": {
+    "native_browsers": {
+      "chromium": "passed",
+      "firefox": "passed"
+    },
+    "candidate_function_tests": {
+      "passed": 270,
+      "failed": 0
+    },
+    "marker_fixture_unit_tests": {
+      "passed": 3,
+      "failed": 0
+    }
+  },
+  "environment": {
+    "webgl_before": false,
+    "webgl_after": true,
+    "webgl_fix_did_not_eliminate_death": true,
+    "no_alternative_outbound_identity": true
+  },
+  "diagnostics": {
+    "normal_crypto_report": "/workspace/Devast-io/artifacts/current-js-live-retry-1795362675/report.json",
+    "original_crypto_report": "/workspace/Devast-io/artifacts/native-crypto-control-live-1795362812/report.json",
+    "original_eval_report": "/workspace/Devast-io/artifacts/raw-current-native-live-1795362962/report.json",
+    "debugger_probe": "artifacts/connection-cause-blackboxed-2026-11-22/report.json",
+    "debugger_probe_is_not_live_acceptance": true
+  },
+  "known_live_observation": {
+    "artifact": "open-handshake-2026-11-22",
+    "native_integrity_flag": 0,
+    "seconds_until_death": 0.566,
+    "report": "/workspace/Devast-io/artifacts/webgl-fixed-live-1795358301/report.json"
+  },
+  "current_entry_blocker": "Native token service HTTP 404; physical unmodified browser also recorded HTTP 503 on the same token-service path. These responses do not establish why earlier sessions received death.",
+  "root_cause_of_server_death": "not_established",
+  "minute_passed": false,
+  "publication": "not_published"
+}

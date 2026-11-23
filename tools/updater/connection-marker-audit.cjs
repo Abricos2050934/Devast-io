@@ -11,7 +11,8 @@ function connectionMarkerProbe(a,networkName){
  assert.equal(tables.length,1,'Unique native connection marker table required');
  const table=tables[0];let fn=table.node;while(fn&&!/Function/.test(fn.type))fn=a.parent.get(fn);
  assert.equal(fn?.type,'FunctionDeclaration');
- const gates=fn.body.body.flatMap(n=>n.declarations||[]).filter(d=>d.init?.type==='ConditionalExpression'&&a.constant(d.init.consequent)===0&&a.constant(d.init.alternate)===1);
+ const inOwner=n=>{for(let p=a.parent.get(n);p;p=a.parent.get(p))if(/Function/.test(p.type))return p===fn;return false;};
+ const gates=a.nodes.filter(d=>d.type==='VariableDeclarator'&&d.start>fn.start&&d.end<fn.end&&inOwner(d)&&d.init?.type==='ConditionalExpression'&&a.constant(d.init.consequent)===0&&a.constant(d.init.alternate)===1);
  assert.equal(gates.length,1,'Unique native connection check result required');
  const gate=gates[0],aliases=new Map(),windowNames=new Set(),storageNames=new Set();
  for(const n of a.nodes){
@@ -25,8 +26,13 @@ function connectionMarkerProbe(a,networkName){
   if(b?.init?.type==='Identifier'&&b.init.name==='window')windowNames.add(n.name);
  }
  assert.equal(windowNames.size,1);assert.equal(storageNames.size,1);
- const selected=fn.body.body[0].declarations[0].init;
- assert.equal(selected.type,'MemberExpression');
+ // A protected prologue can place the unchanged result inside an if block.
+ // Close only its lexical blocks; do not extract results from loops or switches.
+ let blocks=0;
+ for(let p=a.parent.get(gate);p&&p!==fn.body;p=a.parent.get(p)){
+  assert.ok(['VariableDeclaration','BlockStatement','IfStatement'].includes(p.type),'Unsupported native connection check scope');
+  if(p.type==='BlockStatement')blocks++;
+ }
  // The selected-server key can itself be computed by the native obfuscator.
  // Supply the same fixture tuple for its reads and keep that expression intact.
  const tuple='[67,0,0,1,"fixture",20,0,[443],0]';
@@ -35,6 +41,6 @@ function connectionMarkerProbe(a,networkName){
   [...storageNames].map(k=>'const '+k+'=localStorage;').join('')+
   'const '+networkName+'=new Proxy(Object.create(null),{get:()=>'+tuple+'});';
  const prefix=a.source.slice(fn.start,gate.end);
- return {code:setup+prefix+';return '+gate.id.name+';}return '+fn.id.name+'();',evidence:{scope:'Unchanged connection-check prefix with resolved outer constants and synthetic server data; no socket construction',native_sha256:hash(a.source),function_sha256:hash(a.source.slice(fn.start,fn.end)),prefix_sha256:hash(prefix),function_start:fn.start,function_end:fn.end,global_names:table.names,xor_key:table.key}};
+ return {code:setup+prefix+';return '+gate.id.name+';'+'}'.repeat(blocks+1)+'return '+fn.id.name+'();',evidence:{scope:'Unchanged connection-check prefix with resolved outer constants and synthetic server data; no socket construction',native_sha256:hash(a.source),function_sha256:hash(a.source.slice(fn.start,fn.end)),prefix_sha256:hash(prefix),function_start:fn.start,function_end:fn.end,global_names:table.names,xor_key:table.key}};
 }
 module.exports={connectionMarkerProbe};

@@ -11,6 +11,38 @@ u = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(u)
 
 class UpdaterTests(unittest.TestCase):
+    def test_type_sources_and_compiler_config_invalidate_the_update_fingerprint(self):
+        self.bot.once()
+        original = self.bot.current()['inputs_sha256']
+        (self.root / 'mod/aim.ts').write_text('const checked: number = 1;')
+        self.bot.once()
+        typed = self.bot.current()['inputs_sha256']
+        self.assertNotEqual(original, typed)
+        (self.root / 'tsconfig.mod.json').write_text('{"compilerOptions":{"strict":true}}')
+        self.bot.once()
+        self.assertNotEqual(typed, self.bot.current()['inputs_sha256'])
+        self.assertEqual(len(self.calls), 3)
+
+    def test_failed_type_preparation_does_not_replace_the_active_release(self):
+        from unittest.mock import patch
+        self.bot.once()
+        original = self.bot.current()
+        self.bot.prepare_typescript = True
+        with patch.object(u, 'run', side_effect=u.UpdateError('TypeScript compilation failed')):
+            with self.assertRaisesRegex(u.UpdateError, 'TypeScript'):
+                self.bot.once()
+        self.assertEqual(original, self.bot.current())
+        self.assertEqual(len(self.calls), 1)
+
+    def test_type_preparation_finishes_before_the_build_input_fingerprint(self):
+        from unittest.mock import patch
+        self.bot.prepare_typescript = True
+        def compile_modules(*args, **kwargs):
+            (self.root / 'mod/aim.js').write_text('compiled from TypeScript')
+        with patch.object(u, 'run', side_effect=compile_modules):
+            self.assertEqual(self.bot.once()['state'], 'updated')
+        self.assertEqual(self.bot.current()['inputs_sha256'], u.fingerprint(self.root))
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)

@@ -1,0 +1,195 @@
+{
+  "scope": "Current delivered mod with its existing keep-alive setting enabled; standing still for up to 75 seconds; live guest entry",
+  "artifact": "/workspace/Devast-io/artifacts/typescript-2026-11-22/Devast-io-TypeScript.json",
+  "script_sha256": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+  "results": [
+    {
+      "name": "windowed-stock-1",
+      "requestedServer": "Atlanta 1",
+      "scriptHash": null,
+      "loaded": true,
+      "joined": true,
+      "sockets": [
+        {
+          "host": "atlanta2.devast.io",
+          "openedAt": 28291,
+          "received": 146,
+          "sent": 2,
+          "closedAt": null,
+          "error": false,
+          "death": {
+            "at": 58203,
+            "prefix": "1b0000",
+            "length": 3
+          },
+          "receivedOpcodes": {
+            "9": 1,
+            "20": 123,
+            "27": 1,
+            "29": 2,
+            "47": 1,
+            "52": 1,
+            "53": 9,
+            "62": 1,
+            "63": 1,
+            "71": 1
+          }
+        }
+      ],
+      "errors": [
+        {
+          "at": 4400,
+          "name": "",
+          "message": "Uncaught (in promise) false"
+        },
+        {
+          "at": 4506,
+          "name": "Uncaught (in promise) TypeError",
+          "message": "Failed to fetch"
+        }
+      ],
+      "failedRequests": {
+        "xhr": 6,
+        "script": 1,
+        "fetch": 1,
+        "font": 3
+      },
+      "resourceErrors": 6,
+      "samples": [
+        {
+          "at": 30286,
+          "menu": false
+        },
+        {
+          "at": 35733,
+          "menu": false
+        },
+        {
+          "at": 40977,
+          "menu": false
+        },
+        {
+          "at": 46167,
+          "menu": false
+        },
+        {
+          "at": 51335,
+          "menu": false
+        },
+        {
+          "at": 56482,
+          "menu": false
+        }
+      ],
+      "homeStatus": 200,
+      "failedRequestDetails": [
+        {
+          "host": "atlanta2.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "api.adinplay.com",
+          "path": "/v4/live/aip/ad-manager.js",
+          "kind": "script",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "host": "ads2.nocorspolicy.com",
+          "path": "/ads/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "hb.vntsm.com",
+          "path": "/v4/live/srv/g.txt",
+          "kind": "fetch",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "losangeles3.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "fonts.gstatic.com",
+          "path": "/s/blackhansans/v24/ea8Aad44WunzF9a-dL6toA8r8kqSK3U.woff2",
+          "kind": "font",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "fonts.gstatic.com",
+          "path": "/s/blackhansans/v24/ea8Aad44WunzF9a-dL6toA8r8nqQSWKmEJKy1nK6J8sYUGdTBHS2osQ.119.woff2",
+          "kind": "font",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "fonts.gstatic.com",
+          "path": "/s/blackhansans/v24/ea8Aad44WunzF9a-dL6toA8r8nqQSWKmEJKy1nK6J8sYUGdTBHS2osQ.118.woff2",
+          "kind": "font",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "frankfurt3.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "osaka3.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "host": "sydney2.devast.io",
+          "path": "/",
+          "kind": "xhr",
+          "error": "net::ERR_FAILED"
+        }
+      ],
+      "httpErrors": [
+        {
+          "host": "api.adinplay.com",
+          "path": "/v4/live/aip/ad-manager.js",
+          "status": 503
+        },
+        {
+          "host": "analytics.google.com",
+          "path": "/g/collect",
+          "status": 503
+        },
+        {
+          "host": "webgames.io",
+          "path": "/img/display/taming922.png",
+          "status": 503
+        },
+        {
+          "host": "stats.g.doubleclick.net",
+          "path": "/g/collect",
+          "status": 503
+        },
+        {
+          "host": "webgames.io",
+          "path": "/img/adplayer-logo.png",
+          "status": 503
+        },
+        {
+          "host": "webgames.io",
+          "path": "/img/adplayer-loader.png",
+          "status": 503
+        }
+      ],
+      "selected": "Atlanta 1 - 2 players",
+      "clickedAt": 7149,
+      "final": {
+        "menu": false
+      },
+      "secondsAfterJoin": 28.202,
+      "minutePassed": false,
+      "elapsedMs": 58599
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "name": "__installDevastMod",
+    "old": 106573,
+    "current": 109458
+  },
+  {
+    "name": "step",
+    "old": 909,
+    "current": 957
+  },
+  {
+    "name": "watchConnectionHandlers",
+    "old": 3352,
+    "current": 3238
+  },
+  {
+    "name": "guardHandshakeCallback",
+    "old": 1071,
+    "current": 1483
+  },
+  {
+    "name": "connectionInfo",
+    "old": 3140,
+    "current": 3362
+  },
+  {
+    "name": "observeSocket",
+    "old": 1449,
+    "current": 1878
+  },
+  {
+    "name": "automate",
+    "old": 1216,
+    "current": 1359
+  },
+  {
+    "name": "trackPacket",
+    "old": 1069,
+    "current": 1094
+  },
+  {
+    "name": "setSetting",
+    "old": 1758,
+    "current": 1817
+  },
+  {
+    "name": "persist",
+    "old": 846,
+    "current": 818
+  },
+  {
+    "name": "beforeFire",
+    "old": 651,
+    "current": 681
+  },
+  {
+    "name": "__send",
+    "old": 1151,
+    "current": 1234
+  },
+  {
+    "name": "resetAimForSession",
+    "old": 472,
+    "current": 502
+  },
+  {
+    "name": "observeDeath",
+    "old": 1177,
+    "current": 1207
+  },
+  {
+    "name": "connectionEvent",
+    "old": 1768,
+    "current": 1813
+  },
+  {
+    "name": "guardHandshakeCallbacks",
+    "old": null,
+    "current": 198
+  },
+  {
+    "name": "copyEvent",
+    "old": null,
+    "current": 430
+  },
+  {
+    "name": "restoreNativeMovement",
+    "old": null,
+    "current": 283
+  }
+]

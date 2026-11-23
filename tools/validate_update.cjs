@@ -4,6 +4,7 @@ const acorn=require('./parser.cjs'),{hash}=require('./build_client.cjs'),{transl
 const {chromium,firefox}=require('playwright-core');
 const {elapsedTimer}=require('./updater/network-contracts.cjs');
 const root=path.resolve(__dirname,'..'),dir=path.resolve(process.argv[2]||'');
+const typescript=require('./compile_mod.cjs').compile({verifyOnly:true});
 const read=f=>fs.readFileSync(path.join(dir,f),'utf8'),json=f=>JSON.parse(read(f));
 const overrideBytes=fs.readFileSync(path.join(root,'resource-override/Devast-io-GitHub-Resource-Override.json'));
 const override=JSON.parse(overrideBytes);
@@ -90,9 +91,14 @@ const assignment=senderDefinition.body.body[0].expression;
 assert.ok(assignment?.type==='AssignmentExpression'&&assignment.left.type==='Identifier'&&assignment.right.type==='Identifier','Native send clock changed');
 edits.push({at:senderDefinition.start,text:`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.captureWire=frame=>{const codec=${roles['еϲᄄ']},key=${JSON.stringify(roles['ᴎ︅ހ'])},encode=codec[key],socket=${roles['І̎ܘ']},bytes=[],inputs=[];codec[key]=packet=>{inputs.push(packet.slice());return new Uint8Array(frame);};${roles['І̎ܘ']}={readyState:1,send(data){bytes.push(Array.from(data));}};return {bytes,inputs,normal:packet=>${senderDefinition.id.name}(JSON.stringify(packet)),aim:packet=>${senderDefinition.id.name}.__devastAimTransport(packet),restore(){codec[key]=encode;${roles['І̎ܘ']}=socket;}};};`});
 // Hold native requests only while the isolated error-ownership fixture is armed.
-const guardedPreflight=acorn.parse(profile.operations.find(op=>op.id==='native-guard-stale-preflight-response').after,{ecmaVersion:'latest'}).body[0];
-const nativePreflights=nativeAnalysis.functions.filter(fn=>fn.id?.name===guardedPreflight.id.name&&fn.params.length===3);
+const guardedPreflightSource=profile.operations.find(op=>op.id==='native-guard-stale-preflight-response').after;
+const guardedPreflight=acorn.parse(guardedPreflightSource,{ecmaVersion:'latest'}).body[0];
+// Obfuscated names may be reused in unrelated lexical scopes. Match the exact
+// already-reviewed patch rather than a three-argument namesake.
+const guardedPreflightText=guardedPreflightSource.slice(guardedPreflight.start,guardedPreflight.end);
+const nativePreflights=nativeAnalysis.functions.filter(fn=>fn.type==='FunctionDeclaration'&&fn.params.length===3&&nativeAnalysis.source.slice(fn.start,fn.end)===guardedPreflightText);
 assert.equal(nativePreflights.length,1,'Unique native preflight required');const nativePreflight=nativePreflights[0];
+edits.push({at:nativePreflight.start,text:`window.__updateFunctions=window.__updateFunctions||{};window.__updateFunctions.nativeRequestWithCallbacks=(url,success,failure)=>${nativePreflight.id.name}(url,success,failure);`});
 const nativeCloser=nativeAnalysis.functions.find(fn=>fn.type==='FunctionDeclaration'&&fn.id?.name===closeName);
 const callsWithin=(fn,target)=>nativeAnalysis.nodes.some(n=>n.type==='CallExpression'&&n.callee.type==='Identifier'&&nativeAnalysis.binding(n.callee)?.node===target&&n.start>fn.start&&n.end<fn.end);
 const nativeFailureStages=nativeAnalysis.functions.filter(fn=>fn.type==='FunctionDeclaration'&&fn.params.length===2&&callsWithin(fn,nativePreflight)&&callsWithin(fn,nativeCloser)).sort((a,b)=>a.start-b.start);
@@ -118,7 +124,7 @@ edits.push({at:tree.body[0].expression.callee.body.end-1,text:`window.__updateIn
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
 acorn.parse(code,{ecmaVersion:'latest'});
 (async()=>{
- const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',aim_core:'active uploaded __BBY declarations and lifecycle',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
+ const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',typescript,aim_core:'active uploaded __BBY declarations and lifecycle',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
  let browser,page;
  try{
   const engine=process.env.DEVAST_BROWSER||'chromium';assert.ok(['chromium','firefox'].includes(engine),'Unsupported browser');report.browser=engine;
@@ -149,6 +155,7 @@ acorn.parse(code,{ecmaVersion:'latest'});
   await page.addInitScript('window.__verifyMessage27Settings='+require('./verify_message27_settings.cjs').verifyMessage27Settings.toString());
   await page.addInitScript('window.__verifyJitter='+require('./verify_jitter.cjs').verifyJitter.toString());
   await page.addInitScript('window.__verifyBallistics='+require('./verify_ballistics.cjs').verifyBallistics.toString());
+  await page.addInitScript('window.__verifyVideoPrediction='+require('./verify_video_prediction.cjs').verifyVideoPrediction.toString());
 
 
   await page.addInitScript('window.__verifyNativeAimTransport='+require('./verify_native_aim_transport.cjs').verifyNativeAimTransport.toString());
@@ -252,6 +259,7 @@ acorn.parse(code,{ecmaVersion:'latest'});
     m.message27SettingsVerification=window.__verifyMessage27Settings(m,n,s);
     m.jitterVerification=window.__verifyJitter(m,n,s);
     m.ballisticVerification=window.__verifyBallistics(m,{...n,projectileSpeedKey:r.ballisticProjectileSpeed},s);
+    m.videoPredictionVerification=window.__verifyVideoPrediction(m,n,s);
 
 
     m.nativeAimTransportVerification=window.__verifyNativeAimTransport(m,n,s);
@@ -362,6 +370,7 @@ acorn.parse(code,{ecmaVersion:'latest'});
     }
    }finally{n.graphics[drawKey]=originalDraw;self.id=visualState.id;n.network.state=visualState.state;n.ctx.globalAlpha=visualState.alpha;}
    const doorTransport=n.capturePackets(),doorState=n.network.state,doorRecords=m.records.slice(),doorView=n.view,doorRender=m.render;
+   const doorSession={sessionEnded:m.reconnect.sessionEnded,awaitingPlay:m.reconnect.awaitingPlay};
    const doorKeys=['id',s['І๔︊'],s['ⲟܐ༠'],s['с̣ߏ'],s['ࡀ︂̄']];
    const doorSaved=doorKeys.map(key=>[key,Object.hasOwn(self,key),self[key]]),hidden=[];
    const doorSettings=Object.fromEntries(['AimBotEnabled','autoFire'].map(key=>[key,m.settings[key]]));
@@ -373,6 +382,8 @@ acorn.parse(code,{ecmaVersion:'latest'});
     // confirmation timeout. Timeout behavior is covered by door-click.test;
     // hold this unrelated clock fixed while testing DOM event delivery.
     performance.now=()=>doorNow;
+    // This scene represents a new live session after the preceding death test.
+    m.reconnect.sessionEnded=false;m.reconnect.awaitingPlay=false;
     // Earlier login-recovery fixtures queue native home callbacks. Keep this
     // independent door scene alive while Playwright delivers real mouse input.
     for(const entry of doorIdentity)Object.defineProperty(entry.object,entry.key,{configurable:true,enumerable:true,get:()=>entry.value,set(){}});
@@ -415,7 +426,7 @@ acorn.parse(code,{ecmaVersion:'latest'});
     for(const entry of doorIdentity){if(entry.descriptor)Object.defineProperty(entry.object,entry.key,entry.descriptor);else delete entry.object[entry.key];}
     hitLayer?.remove();for(const [el,display]of hidden)el.style.display=display;
     n.view=doorView;m.render=doorRender;for(const [key,value]of Object.entries(doorSettings))m.setSetting(key,value);
-    doorTransport.restore();n.network.state=doorState;m.records.length=0;m.records.push(...doorRecords);
+    doorTransport.restore();n.network.state=doorState;Object.assign(m.reconnect,doorSession);m.records.length=0;m.records.push(...doorRecords);
     for(const [key,present,value]of doorSaved){if(present)self[key]=value;else delete self[key];}
    }
    const integrity=window.__updateIntegrityProbe,networkSnapshot={...n.network},savedIntegrity=integrity.read();
@@ -443,6 +454,7 @@ acorn.parse(code,{ecmaVersion:'latest'});
    check(!m.diagnostics.errors.length,'Mod reported errors: '+m.diagnostics.errors.join('; '));
    return {canonical_aim:m.canonicalAimVerification,adaptive_aim:m.ballisticVerification,jitter:m.jitterVerification,message27_menu:m.message27MenuVerification,message27_aim:m.message27AimVerification,message27_settings:m.message27SettingsVerification,native_aim_transport:m.nativeAimTransportVerification,menu:true,connection_close_origin_diagnostics:true,automation_socket_backpressure:true,aim_cycle_socket_backpressure:true,server_death_sends_no_commands:true,right_click_hovered_door:true,right_click_without_native_prompt:true,right_click_real_mouse:true,independent_door_control:true,door_server_state_feedback:true,native_shared_canvas:true,initial_metadata:true,head_and_leaderboard_labels:true,packet_history:true,packet_removal:true,self_angle_modes:true,native_clan_colors_and_cache:true,native_nickname_color_and_cache:true,full_player_list_and_native_lifecycle:true,stable_frame_entity_records:true,native_fast_loot_cadence:true,fast_loot_mid_burst_backpressure:m.lootMidBurstVerification===true,bounded_fast_loot:true,session_mod_traffic_history:true,native_autobuild_cursor_preview:true,bounded_auto_build:true,aim_session_history_reset:m.message27AimVerification.session_target_reset===true,valid_live_aim_targets:m.message27AimVerification.valid_target_admission===true,native_rejoin_identity:true,native_ad_failure_recovery:true,native_death_observation:true,native_death_opcode:r.nativeDeathOpcode,first_server_death_preserved:m.firstDeathVerification===true,death_stops_restore_retries:true,mod_errors:[...m.diagnostics.errors]};
   },{s:symbols,r:roles,originalAim:reference,originalHooks,originalAngles,originalMenu:JSON.parse(z.gunzipSync(fs.readFileSync(path.join(root,'recovery/ilm-aim-menu-reference.json.gz'))))});
+  report.native.video_prediction=await page.evaluate(()=>window.__devastMod.videoPredictionVerification);
   report.physical_numeric=await require('./verify_ilm_physical.cjs').verifyPhysical(page,symbols);
   // A fresh fixture keeps the rejection test independent of previous death/UI
   // scenes. All network refresh attempts are replaced by a local counter.
@@ -468,6 +480,10 @@ acorn.parse(code,{ecmaVersion:'latest'});
   await page.reload({waitUntil:'domcontentloaded',timeout:45000});
   await page.waitForFunction(()=>!!window.__updateProbe?.nativePreflightStage&&!!window.__devastMod?.menu,{timeout:25000});
   report.native.preflight_error_ownership=await page.evaluate(s=>window.__verifyNativePreflightErrors(window.__devastMod,window.__updateProbe,s),symbols);
+  await page.reload({waitUntil:'domcontentloaded',timeout:45000});
+  await page.waitForFunction(()=>!!window.__devastMod?.menu&&!!window.__updateProbe?.capturePackets,{timeout:25000});
+  await page.addScriptTag({content:'window.__verifyMovementOwnership='+require('./verify_movement_ownership.cjs').verifyMovementOwnership.toString()});
+  report.native.movement_ownership=await page.evaluate(s=>window.__verifyMovementOwnership(window.__devastMod,window.__updateProbe,s),symbols);
   assert.equal(report.page_errors.length,0,'Browser page errors');report.world_visibility={status:'passed',native_renderers:3};report.integrity_compatibility={status:'passed',predicates:3};report.status='passed';
  }catch(error){console.error(error.stack);report.error=error.message;if(error.physicalNumeric)report.physical_numeric_failure=error.physicalNumeric;report.startup=await page?.evaluate(()=>({mod:!!window.__devastMod,menu:!!window.__devastMod?.menu,probe:!!window.__updateProbe,loader:window.__devastRemoteLoader?.state,ready:document.readyState,modErrors:window.__devastMod?.diagnostics?.errors})).catch(()=>null);process.exitCode=1;}
  finally{report.finished_at=new Date().toISOString();fs.writeFileSync(path.join(dir,'validation.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));if(browser)await browser.close();}

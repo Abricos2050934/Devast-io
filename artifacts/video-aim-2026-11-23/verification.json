@@ -1,0 +1,98 @@
+{
+  "status": "passed",
+  "output_sha256": "f6b2368a221f9f67cb1027f265494cfe53abcfd61478892b494f912765fce2d5",
+  "source": {
+    "page_url": "https://devast.io/",
+    "script_url": "https://devast.io/js/biChJIexPMmW9G8MVa2NVjFjtxh.js",
+    "raw_sha256": "144934943e246ae18c43d6c7f19fa9c48fca871f5f44b0dc28d6a7eca96ae77e"
+  },
+  "source_recheck": {
+    "checked_at": "2026-11-22T22:25:02.861131+00:00",
+    "urls": [
+      "https://devast.io/js/biChJIexPMmW9G8MVa2NVjFjtxh.js"
+    ],
+    "built_url": "https://devast.io/js/biChJIexPMmW9G8MVa2NVjFjtxh.js",
+    "same_url": true
+  },
+  "implementation": "TypeScript; browser runs compiled JavaScript",
+  "defaults": {
+    "mode_enabled": false,
+    "ping_fallback_ms": 90,
+    "ping_window": 125,
+    "aim_steps": 2,
+    "processing_ms": 1,
+    "assumed_queue_ms": 20
+  },
+  "rtt_measurement": "No automatic measurement is claimed. A verified integration can submit RTT samples; otherwise the configured 90 ms is used.",
+  "tests": {
+    "javascript": 382,
+    "python": 87,
+    "total": 469,
+    "candidate_scenarios": 287,
+    "standalone_archive": {
+      "clean_install": true,
+      "build": true,
+      "tests_passed": 21,
+      "standard_tsc_noemit": true,
+      "identical_output": true
+    }
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "156.0.8078.79",
+      "video_mode": {
+        "status": "passed",
+        "configured_ping_is_labelled": true,
+        "measured_samples_are_explicit": true,
+        "gun_native_packets": true,
+        "spear_native_speed_and_geometry": true,
+        "native_angle_before_shot": true,
+        "controls_connected": true,
+        "stale_target_released": true,
+        "no_additional_ping_packets": true
+      },
+      "page_errors": []
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "video_mode": {
+        "status": "passed",
+        "configured_ping_is_labelled": true,
+        "measured_samples_are_explicit": true,
+        "gun_native_packets": true,
+        "spear_native_speed_and_geometry": true,
+        "native_angle_before_shot": true,
+        "controls_connected": true,
+        "stale_target_released": true,
+        "no_additional_ping_packets": true
+      },
+      "page_errors": []
+    }
+  },
+  "simulation": {
+    "cases": 960,
+    "tolerance_world_units": 20,
+    "results": {
+      "uncompensated": {
+        "opportunities": 960,
+        "within20": 510
+      },
+      "known-delay-reference": {
+        "opportunities": 960,
+        "within20": 799
+      },
+      "video": {
+        "opportunities": 960,
+        "within20": 799
+      }
+    },
+    "scope": "Synthetic projectile closest approach, not a server hit rate. No obstacles or spread. The known-delay reference uses the existing predictor with correct explicit latency."
+  },
+  "geometry_scope": "Spear speed comes from native metadata; hand offsets and angle calibration remain configurable assumptions, not verified server geometry.",
+  "live_server_accuracy": "not_verified",
+  "disconnect_cause": "not_claimed_fixed_by_this_feature",
+  "publication": "not_published",
+  "auto_update_url": "unchanged"
+}

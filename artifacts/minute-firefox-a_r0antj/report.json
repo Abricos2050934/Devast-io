@@ -1,0 +1,39 @@
+{
+  "scope": "Stock control and current mod, standing still for up to 75 seconds; ordinary live guest entry; no mock servers",
+  "artifact": "/workspace/Devast-io/artifacts/typescript-2026-11-22/Devast-io-TypeScript.json",
+  "script_sha256": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+  "results": [
+    {
+      "name": "stock-1",
+      "requestedServer": "Atlanta 1",
+      "scriptHash": null,
+      "loaded": false,
+      "joined": false,
+      "sockets": [],
+      "errors": [],
+      "failedRequests": {
+        "document": 1
+      },
+      "resourceErrors": 0,
+      "samples": [],
+      "error": "page.goto: SEC_ERROR_UNKNOWN_ISSUER\nCall log:\n\u001b[2m  - navigating to \"[URL] waiting until \"domcontentloaded\"\u001b[22m\n",
+      "elapsedMs": 153
+    },
+    {
+      "name": "typescript-1",
+      "requestedServer": "Atlanta 1",
+      "scriptHash": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+      "loaded": false,
+      "joined": false,
+      "sockets": [],
+      "errors": [],
+      "failedRequests": {
+        "document": 1
+      },
+      "resourceErrors": 0,
+      "samples": [],
+      "error": "page.goto: SEC_ERROR_UNKNOWN_ISSUER\nCall log:\n\u001b[2m  - navigating to \"[URL] waiting until \"domcontentloaded\"\u001b[22m\n",
+      "elapsedMs": 227
+    }
+  ]
+}

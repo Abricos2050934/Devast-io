@@ -1,0 +1,11 @@
+
+> devast-io-recovery@0.1.0 check
+> node tools/check_client.cjs
+
+AST OK: full client, one installer, one bootstrap; extracted payload matches
+Uploaded aim AST OK: active override, lifecycle, menu, source calculations; retired engines absent
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice

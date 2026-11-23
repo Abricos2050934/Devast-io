@@ -1,0 +1,3 @@
+{"event":"homepage-unavailable","status":503,"attempt":1}
+{"event":"homepage-unavailable","status":503,"attempt":2}
+{"name":"typescript-1","event":"final","joined":false,"sockets":[],"error":"page.waitForFunction: Timeout 30000ms exceeded.","errors":24}

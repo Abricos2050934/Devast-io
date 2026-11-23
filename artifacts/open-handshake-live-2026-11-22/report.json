@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "scope": "Regular Chrome controlled with browser input and passive network events; no Playwright helper injection or page evaluation before the session ends",
+  "artifact": "/workspace/Devast-io/artifacts/open-handshake-2026-11-22/Devast-io-Open-Handshake.json",
+  "sha256": "97ebd0ad6fec53f1ac2739c45a439c87b5fe06ca93ab4b195be40c0b98a57b9a",
+  "joined": false,
+  "minutePassed": false,
+  "sockets": [],
+  "replacements": 1,
+  "networkErrors": [
+    {
+      "host": "api.adinplay.com",
+      "path": "/libs/aiptag/pub/LBS/devast.io/tag.min.js",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/list",
+      "status": 503
+    },
+    {
+      "host": "analytics.google.com",
+      "path": "/g/collect",
+      "status": 503
+    },
+    {
+      "host": "webgames.io",
+      "path": "/img/banner/webgames92.png",
+      "status": 503
+    }
+  ],
+  "navigationAttempts": 1,
+  "homeStatus": 200,
+  "officialPageCache": true,
+  "replacedPath": "/js/y6fopeDaqhW3Gwmo2uwu3ccFWsO.js",
+  "error": "The live server list is unavailable",
+  "errorStack": "Error: The live server list is unavailable\n    at /workspace/Devast-io/artifacts/open-handshake-live-2026-11-22/check.cjs:65:64",
+  "failureState": {
+    "focused": true,
+    "visible": "visible",
+    "loaded": true,
+    "state": 0,
+    "phase": "idle",
+    "socket": null,
+    "callbacks": {
+      "wrapped": 0,
+      "accepted": 0,
+      "rejectedStale": 0,
+      "rejectedWhileConnected": 0,
+      "rejectedAfterDispose": 0,
+      "rejectedDuplicate": 0
+    },
+    "status": "Ready",
+    "adWaiting": false,
+    "nativePending": false,
+    "errors": 0,
+    "events": []
+  },
+  "elapsedMs": 68182
+}

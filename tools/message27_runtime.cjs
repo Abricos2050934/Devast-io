@@ -1,6 +1,6 @@
 // Host bindings only. Imported calculations and source lifecycle blocks are
 // inserted without rewriting their statements or numeric constants.
-function gunBlock(name,source){
+function importedBlock(name,source){
  if(name==='aim-menu')return source.split('\n').filter(line=>!/antiFolder\.add\(MOD, "(?:antiAimMode|jitterActive|jitterOffset|stopJittersOnStop)"/.test(line)).join('\n');
  if(name!=='active-core')return source;
  const {parse}=require('./parser.cjs'),pending=[parse(source,{ecmaVersion:'latest'})],edits=[];
@@ -13,7 +13,10 @@ function gunBlock(name,source){
  for(const e of edits.sort((a,b)=>b.start-a.start))source=source.slice(0,e.start)+e.text+source.slice(e.end);
  return source;
 }
-function gunDefaults(reference){return Object.fromEntries(Object.entries(reference.defaults).filter(([key])=>!['jitterActive','jitterOffset','stopJittersOnStop','antiAimMode'].includes(key)));}
+function gunBlock(name, source) {
+ return require('./aim_review_fixes.cjs').reviewedBlock(name, importedBlock(name, source));
+}
+function gunDefaults(reference){return Object.fromEntries(Object.entries(reference.defaults).filter(([key])=>!['jitterActive','jitterOffset','stopJittersOnStop','antiAimMode','ModMenuKeyCode'].includes(key)).concat([['spearAutoThrow',false]]));}
 function generate(reference,nativeHelpers){
  const block=name=>gunBlock(name,reference.blocks.find(b=>b.name===name).source);
  return `// Active __BBY aim from message (27).txt, SHA256 ${reference.upload_sha256}.
@@ -21,15 +24,14 @@ function generate(reference,nativeHelpers){
 function __createMessage27Core(MOD,environment) {
  let stopped=false,started=false,depth=0,phase='aim';
  const timers=new Map(),removers=[];
- function cycle(fn,kind=phase){const previous=phase;phase=kind;if(depth++===0)environment.beginCycle(kind);try{return fn();}finally{if(--depth===0)environment.endCycle();phase=previous;}}
+ function cycle(fn,kind=phase){if(stopped)return;const previous=phase;phase=kind;if(depth++===0)environment.beginCycle(kind);try{return fn();}finally{if(--depth===0)environment.endCycle();phase=previous;}}
  function emit(packet){if(stopped)return false;return depth?environment.send(packet,{kind:phase}):cycle(()=>environment.send(packet,{kind:phase}));}
- function timer(method,fn,delay){let id;const interval=method==='setInterval';const wrapped=()=>{if(!interval)timers.delete(id);if(!stopped)cycle(fn,fn.name==='routineAntiAimbot'?'anti':'aim');};id=environment.window[method](wrapped,delay);timers.set(id,interval);return id;}
+ function timer(method,fn,delay){if(stopped)return null;let id;const interval=method==='setInterval';const wrapped=()=>{if(!interval)timers.delete(id);if(!stopped)cycle(fn,fn.name==='routineAntiAimbot'?'anti':'aim');};id=environment.window[method](wrapped,delay);timers.set(id,interval);return id;}
  function clear(id){const interval=timers.get(id);if(interval===undefined)return;environment.window[interval?'clearInterval':'clearTimeout'](id);timers.delete(id);}
  const setInterval=(fn,delay)=>timer('setInterval',fn,delay),setTimeout=(fn,delay)=>timer('setTimeout',fn,delay),clearTimeout=clear,clearInterval=clear;
  const window={Math,JSON,setInterval,setTimeout,clearInterval,clearTimeout,addEventListener(type,fn,options){environment.window.addEventListener(type,fn,options);removers.push(()=>environment.window.removeEventListener(type,fn,options));}};
  const document=new Proxy(environment.document,{get(target,key){if(key==='addEventListener')return (type,fn,options)=>{target.addEventListener(type,fn,options);removers.push(()=>target.removeEventListener(type,fn,options));};const value=Reflect.get(target,key,target);return typeof value==='function'?value.bind(target):value;}});
  const օܓߋ=window;
- const localStorage={getItem:()=>JSON.stringify(Object.fromEntries(Object.keys(__ilmAimDefaults()).map(key=>[key,MOD[key]]))),setItem(){environment.persist();}};
  const globalThis={__autoPortAimbotPacketTransport:emit};
  const __gk=value=>value; // Imported integration passes plain booleans/numbers.
  const World=environment.world,օ̖̏='id',x='x',y='y';
@@ -71,7 +73,7 @@ function __createMessage27Core(MOD,environment) {
    antiTick:()=>cycle(routineAntiAimbot,'anti'),
    onHandshake(){Aimbot.dead=false;},onOtherDie(id){GetAllTargets.players[id]?.setInactive();},sync(){},
    ensure(id){if(id>0){for(const group of [GetAllTargets.players,GetAllTargets.ghouls])if(!group[id])group[id]=new this.Target(id);}},
-   dispose(){if(stopped)return;stopped=true;for(const id of [...timers.keys()])clear(id);for(const remove of removers)remove();Aimbot.mouseDown=false;}
+   dispose(){if(stopped)return;finishKeyCapture();stopped=true;for(const id of [...timers.keys()])clear(id);for(const remove of removers)remove();Aimbot.mouseDown=false;}
  };
 }
 // Existing Resource Override installations recognize this entrypoint name.
@@ -79,7 +81,7 @@ function __createMessage27Core(MOD,environment) {
 function __createIlmAim(settings,environment){return __createMessage27Core(settings,environment);}
 function __createIlmAdapter(settings,environment){
  const pendingKeys=new Set();
- const sourceSettings=new Proxy(settings,{get(target,key){return pendingKeys.has(key)?'...':target[key];},set(target,key,value){if(['AimbotKey','AntiAimbotKey','JitterKey','HideAngleKey','ModMenuKey'].includes(key)){if(value==='...'){pendingKeys.add(key);return true;}if(pendingKeys.has(key)){pendingKeys.delete(key);environment.setKey(key,value);return true;}}target[key]=value;return true;}});
+ const sourceSettings=new Proxy(settings,{get(target,key){return pendingKeys.has(key)?'...':target[key];},set(target,key,value){if(['AimbotKey','AntiAimbotKey','JitterKey','HideAngleKey','ModMenuKey'].includes(key)){if(value==='...'){pendingKeys.add(key);return true;}if(pendingKeys.has(key)){environment.setKey(key,value);pendingKeys.delete(key);return true;}}target[key]=value;return true;}});
  const metadata=new Proxy([],{get(target,key){if(typeof key==='string'&&/^\\d+$/.test(key)){const id=+key;if(!environment.playerInfo(id).exists)return undefined;if(!target[id])target[id]={get εᴎ༩(){return environment.playerInfo(id).team;},get і٥ࠂ(){return environment.playerInfo(id).membership;}};}return target[key];}});
  const clans=new Proxy([],{get(target,key){if(typeof key==='string'&&/^\\d+$/.test(key)){const id=+key;if(!environment.clanInfo(id).exists)return undefined;if(!target[id])target[id]={get ᴎ०︁(){return environment.clanInfo(id).membership;}};}return target[key];}});
  const self={get id(){return environment.selfId();},get x(){return environment.selfPosition().x;},get y(){return environment.selfPosition().y;},get εᴎ༩(){return environment.playerInfo(environment.selfId()).team;}};

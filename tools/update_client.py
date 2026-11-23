@@ -163,9 +163,9 @@ def locked(state):
         finally: fcntl.flock(stream, fcntl.LOCK_UN)
 
 def fingerprint(root):
-    files = [p for p in (root / 'package-lock.json', root / 'package.json') if p.exists()]
+    files = [p for p in (root / 'package-lock.json', root / 'package.json', root / 'tsconfig.mod.json') if p.exists()]
     for directory in ('mod', 'patches', 'vendor', 'tools', 'tests', 'recovery', 'baselines', 'resource-override'):
-        files.extend(p for p in (root / directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix in ('.js', '.cjs', '.py', '.json', '.gz'))
+        files.extend(p for p in (root / directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix in ('.js', '.ts', '.cjs', '.py', '.json', '.gz'))
     sha = hashlib.sha256()
     for file in sorted(set(files)):
         sha.update(str(file.relative_to(root)).encode() + b'\0' + hashlib.sha256(file.read_bytes()).digest())
@@ -204,7 +204,7 @@ def pipeline(root, work, url):
         atomic_json(work / ('validation-' + browser + '.json'), report)
         if validation is None:
             validation = dict(report)
-        browsers[browser] = {key: report.get(key) for key in ('status', 'output_sha256', 'browser_version', 'native', 'page_errors', 'reload_identity', 'integrity_compatibility', 'world_visibility', 'physical_numeric', 'connection_marker_audit')}
+        browsers[browser] = {key: report.get(key) for key in ('status', 'output_sha256', 'browser_version', 'native', 'page_errors', 'reload_identity', 'integrity_compatibility', 'world_visibility', 'physical_numeric', 'connection_marker_audit', 'typescript')}
     validation['browsers'] = browsers
     candidate_env = dict(os.environ, DEVAST_TEST_CANDIDATE=str(work))
     run(['node', '--test', *contract['candidate_tests']], root, work / 'candidate-tests.log', env=candidate_env)
@@ -226,6 +226,7 @@ class Updater:
         self.output = self.root / config['output_dir']
         self.fetch = fetch or Fetcher(config, self.state)
         self.build = build or pipeline
+        self.prepare_typescript = build is None
     def current(self):
         file = self.output / 'current.json'
         return read_json(file) if file.exists() else None
@@ -283,6 +284,8 @@ class Updater:
             attempt = {'schema': SCHEMA, 'started_at': started, 'state': 'checking', 'publication': 'local_only'}
             atomic_json(self.output / 'status.json', attempt)
             try:
+                if self.prepare_typescript:
+                    run(['node', 'tools/compile_mod.cjs'], self.root, self.state / 'compile-mod.log')
                 page_url = validate_url(self.config['page_url'], self.config)
                 html = self.fetch(page_url, self.config['max_html_bytes'])
                 urls = discover(html, page_url, self.config)

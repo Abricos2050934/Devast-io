@@ -1,0 +1,16 @@
+{
+  "name": "stock-1",
+  "requestedServer": "Atlanta 1",
+  "scriptHash": null,
+  "loaded": false,
+  "joined": false,
+  "sockets": [],
+  "errors": [],
+  "failedRequests": {
+    "document": 1
+  },
+  "resourceErrors": 0,
+  "samples": [],
+  "error": "page.goto: SEC_ERROR_UNKNOWN_ISSUER\nCall log:\n\u001b[2m  - navigating to \"[URL] waiting until \"domcontentloaded\"\u001b[22m\n",
+  "elapsedMs": 153
+}

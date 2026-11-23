@@ -1,0 +1,38 @@
+
+> devast-verified-typescript-mod@1.0.0 test
+> node --test tests/typescript.test.cjs tests/video-prediction.test.cjs
+
+✔ all owned TypeScript fragments pass strict checking and reproduce the JS used by the game (4231.384931ms)
+✔ type erasure preserves conditional operators, optional parameters and runtime token boundaries (1.913065ms)
+✔ public mod types reject invalid settings, packets and failed prediction use (474.256726ms)
+✔ type errors and disabled checks preserve all previous generated JavaScript (7793.976981ms)
+✔ screenshot defaults remain explicit configured values until genuine RTT samples exist (5.278502ms)
+✔ the RTT window keeps the latest 125 samples and reflects a changed window immediately (1.419246ms)
+✔ invalid, stale and previous-clock RTT data cannot become measured lead (1.721472ms)
+✔ receipt age and user compensation are counted exactly once in the launch time (1.880296ms)
+✔ video prediction intercepts independent motion at 500 units/s (2.26285ms)
+✔ video prediction intercepts independent motion at 1400 units/s (0.752751ms)
+✔ video prediction intercepts independent motion at 1450 units/s (0.979175ms)
+✔ measured latency reduces the miss in a delayed crossing compared with uncompensated aim (1.620422ms)
+✔ step count controls actual refinement work; an insufficient approximation uses the exact fallback (4.238898ms)
+✔ spear lateral launch geometry intersects the target along the actual projectile ray (1.018304ms)
+✔ a negative spear hand offset remains a signed launch offset rather than being clamped away (0.847682ms)
+✔ unreachable, stale and invalid profiles never manufacture a shot (0.733203ms)
+✔ the installed spear path uses the video model and sends its corrected angle before native fire (13.046991ms)
+✔ video mode holds a valid target, obeys explicit lock and releases removed targets (5.782226ms)
+✔ RTT ingestion adds no packets and resets on a new socket or session (4.541054ms)
+✔ video settings are editable through the menu, bounded and saved (6.588597ms)
+✔ the portable browser verifier exercises the installed video mode (10.249961ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12784.972754
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice

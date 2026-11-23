@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "created_at": "2026-11-22T08:56:06.292625+00:00",
+  "status": "blocked_not_fixed",
+  "goal": "Same live guest session remains playable with the delivered mod for at least 60 seconds",
+  "goal_confirmed": false,
+  "live_baseline": [
+    {
+      "client": "stock-1",
+      "region": "Atlanta 1",
+      "joined": true,
+      "seconds_after_join": 13.386,
+      "page_errors": [],
+      "sockets": [
+        {
+          "host": "atlanta2.devast.io",
+          "openedAt": 16952,
+          "received": 20,
+          "sent": 2,
+          "closedAt": null,
+          "error": false,
+          "death": {
+            "at": 32178,
+            "prefix": "1b0000",
+            "length": 3
+          },
+          "receivedOpcodes": {
+            "20": 5,
+            "27": 1,
+            "47": 1,
+            "52": 1,
+            "53": 5,
+            "62": 1,
+            "71": 1
+          }
+        }
+      ],
+      "events": [],
+      "report": "/workspace/Devast-io/artifacts/minute-baseline-3q_e5rq5/stock-1.json"
+    },
+    {
+      "client": "typescript-1",
+      "region": "Atlanta 1",
+      "joined": true,
+      "seconds_after_join": 14.94,
+      "page_errors": [],
+      "sockets": [
+        {
+          "host": "atlanta4.devast.io",
+          "openedAt": 13097,
+          "received": 42,
+          "sent": 2,
+          "closedAt": null,
+          "error": false,
+          "death": {
+            "at": 29168,
+            "prefix": "1b0000",
+            "length": 3
+          },
+          "receivedOpcodes": {
+            "20": 26,
+            "27": 1,
+            "47": 1,
+            "52": 1,
+            "53": 6,
+            "62": 1,
+            "71": 1
+          }
+        }
+      ],
+      "events": [
+        {
+          "type": "server-death",
+          "at": 29157,
+          "health": 255,
+          "state": 1,
+          "flag": 0,
+          "deathOpcode": 27,
+          "deathPrefix": "1b 00 00",
+          "deathLength": 3,
+          "localCloseSource": null,
+          "received": 42,
+          "sent": 2,
+          "commands": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          }
+        },
+        {
+          "type": "native-network-error",
+          "at": 29159,
+          "health": 255,
+          "state": 0,
+          "flag": 0,
+          "failureCode": 128,
+          "localCloseSource": null,
+          "received": 42,
+          "sent": 2,
+          "commands": {
+            "angle": 0,
+            "attack": 0,
+            "release": 0
+          }
+        }
+      ],
+      "report": "/workspace/Devast-io/artifacts/minute-baseline-3q_e5rq5/typescript-1.json"
+    }
+  ],
+  "followup_attempts": [
+    {
+      "report": "/workspace/Devast-io/artifacts/minute-heartbeat-dwxz075f/typescript-1.json",
+      "joined": false,
+      "home_status": 200,
+      "error": "Requested region is unavailable",
+      "keep_alive_enabled": true,
+      "page_errors": 23,
+      "resource_errors": 115
+    },
+    {
+      "report": "/workspace/Devast-io/artifacts/minute-firefox-trusted-pa7yu6l9/typescript-1.json",
+      "joined": false,
+      "home_status": 503,
+      "error": "Expected values to be strictly equal:\n\n503 !== 200\n",
+      "keep_alive_enabled": false,
+      "page_errors": 0,
+      "resource_errors": 1
+    }
+  ],
+  "observations": [
+    "Both unchanged game and delivered mod received incoming death opcode 27 before a minute.",
+    "No mod-originated close request preceded the incoming death in the reproduced mod session.",
+    "Existing optional keep-alive was prepared for a live test but the test could not reach a game server.",
+    "Subsequent requests to the home page, official game script and external game widget returned HTTP 503. One home-page retry returned 200 while 115 resources failed and the requested server was unavailable."
+  ],
+  "last_network_check": {
+    "home": 503,
+    "game_script": 503,
+    "game_widget": 503,
+    "body": "upstream connect error or disconnect/reset before headers. reset reason: remote connection failure"
+  },
+  "source_changes": [],
+  "delivered_json_unchanged": true,
+  "publication": "not_published",
+  "conclusion": "Server reason remains unknown. No runtime patch is validated and a one-minute session has not been achieved."
+}

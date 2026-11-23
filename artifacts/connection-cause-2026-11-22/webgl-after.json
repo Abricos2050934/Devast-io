@@ -1,0 +1,21 @@
+{
+  "webdriver": false,
+  "contexts": [
+    {
+      "kind": "webgl",
+      "available": true,
+      "scissorNative": true,
+      "scissorLength": 4,
+      "renderer": "WebKit WebGL",
+      "lost": false
+    },
+    {
+      "kind": "webgl2",
+      "available": true,
+      "scissorNative": true,
+      "scissorLength": 4,
+      "renderer": "WebKit WebGL",
+      "lost": false
+    }
+  ]
+}

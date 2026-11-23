@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Devast.io - The Online Post-Apocalyptic Survival Game.</title>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="description" content="In a post-apocalyptic world where nature takes back its rights. Build a bunker, weapons, warm up and produce your own food to protect yourself from this ruthless world and the many other survivors. Play completely free online with other players now!"/>
+		<meta name="keywords" content="devast, devast.io, post-apocalyptic, post-apocalyptic survival game, survival game, online game, mmo, multiplayer, starve.io, starveio, survival, io games, .io, craft, browser game, html game, html5 game, flash game, wasteland, radioactivity, irradiated city, uranium, hunger, cold, weapons, crafting, cities, nuclear war, nuclear, cute, fun, hardcore, fight"/>
+		<meta property="og:title" content="Devast.io - The post-apocalyptic survival game"/>
+		<meta property="og:description" content="In a post-apocalyptic world where nature takes back its rights. Build a bunker, weapons, warm up and produce your own food to protect yourself from this ruthless world and the many other survivors. Play completely free online with other players now!"/>
+		<meta property="og:url" content="https://devast.io"/>
+		<meta property="og:site_name" content="devast.io"/>
+		<meta property="og:image" content="https://devast.io/img/banner.png"/>
+		<meta property="og:image:width" content="500"/>
+		<meta property="og:image:height" content="250"/>
+		<meta name="twitter:card" content="summary_large_image"/>
+		<meta name="twitter:site" content="@devast.io"/>
+		<meta name="twitter:creator" content="@lapamauve"/>
+		<meta name="twitter:url" content="https://devast.io"/>
+		<meta name="twitter:title" content="Devast.io - The post-apocalyptic survival game"/>
+		<meta name="twitter:description" content="In a post-apocalyptic world where nature takes back its rights. Build a bunker, weapons, warm up and produce your own food to protect yourself from this ruthless world and the many other survivors. Play completely free online with other players now!"/>
+		<meta name="twitter:image" content="https://devast.io/img/banner.png"/>
+		<meta name="mobile-web-app-capable" content="yes"/>
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta name="robots" content="index, follow"/>
+		<meta name="revisit-after" content="3 days"/>
+		<meta name="googlebot" content="all"/>
+		<link rel="icon" type="image/png" href="img/favicon.png"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Black+Han+Sans"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Viga"/>
+		<link rel="stylesheet" type="text/css" href="css/style.css?1795358788601"/>
+	</head>
+
+	<body id="bod">
+
+		<canvas id="can"></canvas>
+
+		<script src="js/3oWGwU3JSSc3m5H2tqZH.js"></script>
+
+		<div id="nickname">
+
+			<input id="nicknameInput" type="text" placeholder="Nickname" maxLength="16">
+			
+		</div>
+
+		<div id="terms">
+
+			<a href="./authors/" target="blank">Authors</a> - <a href="./termsofuse/" target="blank">Terms of Use</a> - <a href="./privacy/" target="blank">Privacy</a>
+			
+		</div>
+
+		<div id="serverList">
+
+			<select id="servers">
+			</select>
+			
+		</div>
+
+		<div id="accountBox">
+
+			<div id="accountPanel" class="dv-panel dv-account">
+			
+			      <div class="dv-title dv-account-title">Devaster account</div>
+			
+			      <div class="dv-screen dv-account-screen">
+			
+			            <!-- Guest: what an account gives, and the way in -->
+			            <div id="accountGuest" class="dv-account-guest">
+			                  <div class="dv-account-pitch">
+			                        <img class="dv-cap" src="./img/currency-128.png" srcset="./img/currency-128.png 1x, ./img/currency-256.png 2x" alt="">
+			                        <p>Save your progress, earn <span class="dv-gold">caps</span> and climb the <span class="dv-gold">ranks</span>!</p>
+			                  </div>
+			                  <div class="dv-account-actions">
+			                        <button type="button" id="accountLoginButton" class="dv-btn dv-btn-yellow dv-btn-small">Login</button>
+			                        <button type="button" id="accountSignupButton" class="dv-btn dv-btn-small">Sign up</button>
+			                  </div>
+			            </div>
+			
+			            <!-- Saved session, waiting for the account service -->
+			            <div id="accountWaiting" class="dv-account-waiting" style="display:none;">
+			                  <img class="dv-cap" src="./img/currency-128.png" srcset="./img/currency-128.png 1x, ./img/currency-256.png 2x" alt="">
+			                  <p id="accountWaitingText">Connecting to your account...</p>
+			            </div>
+			
+			            <!-- Logged in: rank, progress to the next rank and caps -->
+			            <div id="accountUser" class="dv-account-user" style="display:none;">
+			                  <button type="button" id="accountIdentity" class="dv-account-id" title="Open my profile">
+			                        <img id="accountRankImage" class="dv-rank" src="./img/badge-ui-0.png" alt="">
+			                        <span class="dv-account-name">
+			                              <span class="dv-account-nick"><span id="accountNickname"></span><span id="accountTag" class="dv-dim"></span></span>
+			                              <span id="accountRankName" class="dv-gold"></span>
+			                        </span>
+			                  </button>
+			                  <div id="accountGauge" class="dv-bar" title="Lifetime score to the next rank">
+			                        <div id="accountRankBar" class="dv-bar-fill"></div>
+			                        <div id="accountRankText" class="dv-bar-text"></div>
+			                  </div>
+			                  <!-- Banned: replaces the gauge, opens the banned view -->
+			                  <button type="button" id="accountBanned" class="dv-account-banned" style="display:none;" title="Why is my account banned?">
+			                        <span class="dv-account-banned-tag">Banned</span>
+			                        <span id="accountBannedLeft" class="dv-account-banned-left"></span>
+			                  </button>
+			                  <div class="dv-account-footer">
+			                        <button type="button" id="accountCapsButton" class="dv-caps dv-caps-button" title="Get more caps"><img class="dv-cap" src="./img/currency-48.png" srcset="./img/currency-48.png 1x, ./img/currency-64.png 2x" alt=""><span id="accountCaps">0</span></button>
+			                        <button type="button" id="accountProfileButton" class="dv-btn dv-btn-yellow dv-btn-small">Profile</button>
+			                  </div>
+			            </div>
+			
+			      </div>
+			
+			      <div class="dv-connect"><span></span><span></span></div>
+			</div>
+			
+		</div>
+
+		<div id="changelogPanel">
+
+			<div class="dv-panel dv-log-panel">
+			
+			      <div class="dv-title dv-log-title">Changelog</div>
+			
+			      <button type="button" id="changelogOpen" class="dv-screen dv-log-open" title="Read the changelog">
+			            <img class="dv-log-shot" src="./img/changelog-33.png" alt="Autumn update">
+			            <span class="dv-log-teaser">
+			                  <span class="dv-log-tag">Latest update</span>
+			                  <span class="dv-log-text">A new <span class="dv-gold">Shop</span>, <span class="dv-gold">44 skins</span> and <span class="dv-gold">private servers</span> for autumn!</span>
+			            </span>
+			      </button>
+			
+			      <button type="button" id="changelogButton" class="dv-btn dv-btn-small dv-btn-wide">Read the changelog</button>
+			
+			      <div class="dv-connect"><span></span><span></span></div>
+			</div>
+			
+		</div>
+
+		<div id="homeButtons">
+
+			<div class="dv-panel dv-home-buttons">
+			      <button type="button" id="shopButton" class="dv-btn dv-btn-orange dv-btn-wide">
+			            <img class="dv-emblem" src="./img/cosmetics-icon.png" alt="">
+			            <span>Cosmetics</span>
+			      </button>
+			      <button type="button" id="howtoplayButton" class="dv-btn dv-btn-wide">
+			            <img class="dv-emblem" src="./img/how-to-play-icon.png" alt="">
+			            <span>How to play</span>
+			      </button>
+			      <button type="button" id="leaderboardButton" class="dv-btn dv-btn-wide">
+			            <img class="dv-emblem" src="./img/leaderboard-icon.png" alt="">
+			            <span>Leaderboard</span>
+			      </button>
+			      <button type="button" id="clanButton" class="dv-btn dv-btn-wide">
+			            <span id="clanButtonEmblem" class="dv-emblem"></span>
+			            <span>Clans</span>
+			            <span id="clanButtonBadge" class="dv-clan-badge"></span>
+			      </button>
+			</div>
+			
+		</div>
+
+		<div id="featuredVideo">
+
+			Featured Video
+			
+		</div>
+
+		<div id="bebebaba">
+
+			<div id="devast-io_970x250"></div>
+			
+		</div>
+
+		<div id="preroll">
+
+			
+		</div>
+
+		<div id="footer">
+
+			<script src="https://webgames.io/js/widget.min.js?dv1"></script>
+			<script>
+				Widget.init ({
+			
+					reference : "devast.io",
+			
+					/*
+					crossPromotion : {
+			
+						showBiscuit : { border : "black" },
+			
+						container : "crossPromotion",
+						link : "alsoTryLink",
+						img : "alsoTryImg"
+					},
+					*/
+			
+					ads : {
+						GDPR: true,
+			
+						mediator: "adinplay",
+						init: "//api.adinplay.com/libs/aiptag/pub/LBS/devast.io/tag.min.js",
+						refresh : "refresh", 
+						onload : function () { filterBadWords = Widget.filter; },
+			
+						testAdinplay: "https://ads2.nocorspolicy.com/ads/",
+			
+						replace : [
+							["devast-io_970x250", "970x250", "random"],
+						],
+			
+						list : [
+							["devast-io_970x250", "970x250"],
+						],
+			
+						authorize : [
+						],
+					}
+				});
+			</script>
+			
+			<script type="application/javascript" src="https://exapush.com/sdk/devast.js?1" async></script>
+			
+			<!-- Global site tag (gtag.js) - Google Analytics -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=UA-78561996-8"></script>
+			<script>
+			  window.dataLayer = window.dataLayer || [];
+			  function gtag(){dataLayer.push(arguments);}
+			  gtag('js', new Date());
+			
+			  gtag('config', 'UA-78561996-8');
+			</script>
+			
+		</div>
+
+		<div id="howtoplayPopup" class="dv-overlay">
+
+			<div class="dv-panel dv-window dv-help" role="dialog" aria-modal="true" aria-labelledby="howtoplayTitle">
+			      <div class="dv-pipes"></div>
+			      <div class="dv-lights"></div>
+			
+			      <div class="dv-window-head">
+			            <div id="howtoplayTitle" class="dv-title">How to play</div>
+			            <button type="button" class="dv-close" data-close="howtoplayPopup" title="Close"></button>
+			      </div>
+			
+			      <div class="dv-tabs" role="tablist">
+			            <button type="button" class="dv-btn dv-btn-small dv-tab dv-on" data-page="0">Survive</button>
+			            <button type="button" class="dv-btn dv-btn-small dv-tab" data-page="1">Controls</button>
+			            <button type="button" class="dv-btn dv-btn-small dv-tab" data-page="2">Build</button>
+			            <button type="button" class="dv-btn dv-btn-small dv-tab" data-page="3">Dangers</button>
+			            <button type="button" class="dv-btn dv-btn-small dv-tab" data-page="4">Caps &amp; ranks</button>
+			      </div>
+			
+			      <div class="dv-screen dv-window-body dv-help-body dv-scroll">
+			
+			            <!-- The Lapabot guide -->
+			            <div class="dv-help-guide">
+			                  <div class="dv-help-bot"><img src="./img/day-lapabot.png" alt="Lapabot"></div>
+			                  <p id="howtoplaySay" class="dv-help-say"></p>
+			            </div>
+			
+			            <div class="dv-help-page" data-say="Beep! Welcome to the wasteland, devaster. Eat, warm up and survive by gathering resources, crafting items and building a shelter. Fight other players, and beware the radiation!">
+			                  <div class="dv-help-grid">
+			                        <div class="dv-help-card dv-plate">
+			                              <span class="dv-hud dv-hud-food" aria-hidden="true"></span>
+			                              <h3>Food</h3>
+			                              <p>Hunger eats your life. Pick fruits, cook meat on a campfire, keep cans for later.</p>
+			                              <span class="dv-help-items"><img src="./img/inv-orange-out.png" alt="Orange" title="Orange"><img src="./img/inv-tomato-out.png" alt="Tomato" title="Tomato"><img src="./img/inv-cooked-steak-out.png" alt="Cooked steak" title="Cooked steak"><img src="./img/inv-can-out.png" alt="Can" title="Can"></span>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <span class="dv-hud dv-hud-cold" aria-hidden="true"></span>
+			                              <h3>Warmth</h3>
+			                              <p>Nights are cold. Stay near a campfire or wear warm clothes, a frozen devaster dies fast.</p>
+			                              <span class="dv-help-items"><img src="./img/inv-campfire-out.png" alt="Campfire" title="Campfire"><img src="./img/inv-campfire-bbq-out.png" alt="Barbecue" title="Barbecue"><img src="./img/inv-coat-out.png" alt="Coat" title="Coat"></span>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <span class="dv-hud dv-hud-rad" aria-hidden="true"></span>
+			                              <h3>Radiation</h3>
+			                              <p>Cities and toxic areas are irradiated. Get in, loot fast, get out, and drink a RadAway.</p>
+			                              <span class="dv-help-items"><img src="./img/inv-radaway-out.png" alt="RadAway" title="RadAway"><img src="./img/inv-gaz-mask-out.png" alt="Gas mask" title="Gas mask"><img src="./img/inv-gaz-protection-out.png" alt="Hazmat suit" title="Hazmat suit"></span>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <span class="dv-hud dv-hud-stamina" aria-hidden="true"></span>
+			                              <h3>Stamina</h3>
+			                              <p>Running empties your stamina. Your life comes back when you are fed, warm and clean.</p>
+			                              <span class="dv-help-items"><img src="./img/inv-bandage-out.png" alt="Bandage" title="Bandage"></span>
+			                        </div>
+			                  </div>
+			            </div>
+			
+			            <div class="dv-help-page" data-say="Your fingers are your best weapon. Here is where they go. On an AZERTY keyboard, switch to ZQSD in the settings.">
+			                  <div class="dv-help-keys">
+			                        <div class="dv-help-key"><span class="dv-keys"><span class="dv-cmd dv-cmd-wasd" role="img" aria-label="W A S D"></span></span><span>Move</span></div>
+			                        <div class="dv-help-key"><span class="dv-keys"><span class="dv-cmd dv-cmd-mouse" role="img" aria-label="Mouse"></span></span><span>Hit, shoot, build</span></div>
+			                        <div class="dv-help-key"><span class="dv-keys"><span class="dv-cmd dv-cmd-shift" role="img" aria-label="Shift"></span></span><span>Run</span></div>
+			                        <div class="dv-help-key"><span class="dv-keys"><kbd class="dv-key">E</kbd><kbd class="dv-key dv-key-wide">Space</kbd></span><span>Interact, loot, open</span></div>
+			                        <div class="dv-help-key"><span class="dv-keys"><kbd class="dv-key">F</kbd></span><span>Pick up the next loot</span></div>
+			                        <div class="dv-help-key"><span class="dv-keys"><kbd class="dv-key">R</kbd></span><span>Reload, rotate a building</span></div>
+			                        <div class="dv-help-key"><span class="dv-keys"><kbd class="dv-key">1</kbd><span class="dv-dim">to</span><kbd class="dv-key">9</kbd></span><span>Pick an inventory slot</span></div>
+			                        <div class="dv-help-key"><span class="dv-keys"><kbd class="dv-key">C</kbd></span><span>Craft</span></div>
+			                        <div class="dv-help-key"><span class="dv-keys"><kbd class="dv-key">M</kbd></span><span>Map</span></div>
+			                        <div class="dv-help-key"><span class="dv-keys"><kbd class="dv-key dv-key-wide">Enter</kbd></span><span>Chat</span></div>
+			                  </div>
+			            </div>
+			
+			            <div class="dv-help-page" data-say="A good base is a closed base. Gather, craft, build, and never forget your sleeping bag.">
+			                  <div class="dv-help-grid">
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/inv-wood-out.png" alt="">
+			                              <h3>Gather</h3>
+			                              <p>Hit trees, stones and scrap with your tools. Better tools gather faster and unlock rarer materials.</p>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/inv-workbench-out.png" alt="">
+			                              <h3>Craft</h3>
+			                              <p>Press C to craft. Stand next to a workbench or another machine to unlock its recipes.</p>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/inv-wood-door-out.png" alt="">
+			                              <h3>Build</h3>
+			                              <p>Walls, doors and floors keep the wasteland out. Repair them with a hammer and some nails.</p>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/inv-sleeping-bag-out.png" alt="">
+			                              <h3>Sleeping bag</h3>
+			                              <p>Place one in your base: when you die, you wake up in it and keep your level.</p>
+			                        </div>
+			                  </div>
+			            </div>
+			
+			            <div class="dv-help-page" data-say="My sensors detect danger everywhere. Especially at night. Especially with humans around.">
+			                  <div class="dv-help-grid">
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/day-ghoul.png" alt="">
+			                              <h3>Ghouls</h3>
+			                              <p>At night, mutated ghouls hunt in the forest and attack bases. They run faster than you: hide behind your walls.</p>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/day-skin0.png" alt="">
+			                              <h3>Devasters</h3>
+			                              <p>Other players want your loot. Build a team to survive together, or fight alone if you dare.</p>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/karma5.png" alt="">
+			                              <h3>Karma</h3>
+			                              <p>Killing peaceful players lowers your karma and slows your progress. Peaceful devasters level up faster.</p>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/inv-landmine-out.png" alt="">
+			                              <h3>Traps</h3>
+			                              <p>Landmines, spikes and automatic defenses guard some bases. Watch where you step.</p>
+			                        </div>
+			                  </div>
+			            </div>
+			
+			            <div class="dv-help-page" data-say="Bottle caps! The only currency that survived the apocalypse. Log in before playing and every life fills your pockets.">
+			                  <div class="dv-help-grid">
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/caps-icon.png" alt="">
+			                              <h3>Caps</h3>
+			                              <p>A real death pays 1 cap every 1,000 score of the life, up to 500 caps. A sleeping bag rebirth pays nothing.</p>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/badge-ui-7.png" alt="">
+			                              <h3>Ranks</h3>
+			                              <p>All your lives add up to your lifetime score: 14 ranks from Wanderer to Devastator.</p>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/badge-ui-13.png" alt="">
+			                              <h3>Leaderboards</h3>
+			                              <p>Best life of the day, of the month and of all time in each game mode, by score, kills and survival time.</p>
+			                        </div>
+			                        <div class="dv-help-card dv-plate">
+			                              <img src="./img/badge-ui-0.png" alt="">
+			                              <h3>Your badge</h3>
+			                              <p>Your rank badge shows next to your nickname in game. Your first nickname change is free.</p>
+			                        </div>
+			                  </div>
+			                  <div class="dv-help-cta">
+			                        <button type="button" id="howtoplayAccountButton" class="dv-btn dv-btn-yellow">Create my account</button>
+			                  </div>
+			            </div>
+			
+			      </div>
+			
+			      <div class="dv-help-nav">
+			            <button type="button" id="howtoplayPrevious" class="dv-btn dv-btn-small">Back</button>
+			            <div id="howtoplayDots" class="dv-help-dots"><span></span><span></span><span></span><span></span><span></span></div>
+			            <button type="button" id="howtoplayNext" class="dv-btn dv-btn-small dv-btn-yellow">Next</button>
+			      </div>
+			</div>
+			
+		</div>
+
+		<div id="changelogPopup" class="dv-overlay">
+
+			<div class="dv-panel dv-window dv-log" role="dialog" aria-modal="true" aria-labelledby="changelogPopupTitle">
+			      <div class="dv-pipes"></div>
+			      <div class="dv-lights"></div>
+			
+			      <div class="dv-window-head">
+			            <div id="changelogPopupTitle" class="dv-title">Changelog</div>
+			            <button type="button" class="dv-close" data-close="changelogPopup" title="Close"></button>
+			      </div>
+			
+			      <div class="dv-screen dv-window-body dv-log-body dv-scroll">
+			            <article class="dv-log-entry dv-log-latest">
+			                  <h3 class="dv-log-version">Version 0.36.3040 &middot; Autumn update</h3>
+			                  <img class="dv-log-hero" src="./img/changelog-33.png" alt="Autumn update">
+			                  <p>Mirror, mirror, who's the prettiest devaster in the wasteland? The new <span class="dv-gold">Shop</span> is open: pick a free color for your devaster in the <span class="dv-gold">Wardrobe</span>, or spend your caps on <span class="dv-gold">crates</span> and collect 44 new <span class="dv-gold">skins</span>, from Common to Mythic. Want a wasteland of your own? Rent a <span class="dv-gold">private server</span> and rule it with your moderators. The game also gets a new <span class="dv-gold">settings</span> window with your own keys, a leaderboard for each mode, and a <span class="dv-gold">horde</span> that lays siege to your base on every side.</p>
+			                  <ul class="dv-log-list">
+			                        <li><img src="./img/shop-currency.png" alt=""><span><b class="dv-gold">Shop</b>: the new button of the homepage, right under Clans, opens the Wardrobe, the Crates and the Lapa Cola stand.</span></li>
+			                        <li><img src="./img/changelog-33-skin.png" alt=""><span><b class="dv-gold">44 skins</b> out of Russian folklore, the wasteland roads and the purge: Bludichka, Koschei, Baba Yaga, Chernobog, Skomorokh, Rusalka, Leshy, Magma, Uranium and many more. Five rarities, Common, Rare, Epic, Legendary and Mythic, and everyone in the game sees the skin you wear.</span></li>
+			                        <li><img src="./img/changelog-33-color.png" alt=""><span><b class="dv-gold">Free colors</b>: six new colors of the devaster for everyone, guests too: Rust, Acid, Frost, Smoke, Brick and Cobalt. Pick yours in the Wardrobe.</span></li>
+			                        <li><img src="./img/chest1.png" alt=""><span><b class="dv-gold">Crates</b>: open them with your caps, they drop, shake and burst in the light of their best skin. The wood crate gives 1 skin for 500 caps, the steel crate 2 for 950, the hazard crate 3 for 1,400.</span></li>
+			                        <li><img src="./img/chest4.png" alt=""><span><b class="dv-gold">Airdrop</b>: the rarest crate, 3 skins for 4,000 caps, and only skins you don't own yet.</span></li>
+			                        <li><img src="./img/currency-128.png" srcset="./img/currency-128.png 1x, ./img/currency-256.png 2x" alt=""><span><b class="dv-gold">Welcome caps</b>: a new Devaster account starts with 500 caps instead of 100, enough for a first wood crate.</span></li>
+			                        <li><img src="./img/devast-io-currency-3-shop.png" alt=""><span><b class="dv-gold">Lapa Cola stand</b>: coming soon to the shop, packs of caps from 500 to 100,000. The bigger the pack, the more caps you get for a dollar.</span></li>
+			                        <li><img src="./img/private-server-icon.png" alt=""><span><b class="dv-gold">Private servers</b>: rent your own with the Private server button of the homepage, 1 month for $24.99 or 3 months for $49.99, in Frankfurt, Atlanta, Los Angeles, Osaka or Sydney. It's ready a few minutes after the payment, and your account is its owner: every command of the manual, no password. Renew it any time in My servers, the days add up. Lives played there earn no caps and don't count for your rank or the leaderboards.</span></li>
+			                        <li><img src="./img/staff-button-out.png" alt=""><span><b class="dv-gold">Staff panel</b>: run your private server in game with the star under the map button, or P. Name your moderators and tick what each one may do. Teleport, build, destroy and spawn with a click on the world or on the map. Ban an account or an address, keep the guests out or lock the server to your staff, and read the logs: who joined, who left, every command and who ran it.</span></li>
+			                        <li><img src="./img/settings-out.png" alt=""><span><b class="dv-gold">New settings</b>: the gear of the game opens a new window while the game goes on behind it. The keyboard, the resolution, the music, the sound effects and the particles as before, and the Controls: two keys for each action, yours to choose, kept on your device.</span></li>
+			                        <li><img src="./img/changelog-33-kill.png" alt=""><span><b class="dv-gold">Kill my devaster</b>: stuck somewhere? In the settings, stand still for 15 seconds and your devaster dies, like a death of hunger: your loot drops and your sleeping bag brings you back. A step or a blow stops it, and everyone around sees the red ring counting down.</span></li>
+			                        <li><img src="./img/leaderboard-icon.png" alt=""><span><b class="dv-gold">Leaderboards by mode</b>: Survival and Ghoul each get their own score, kills and time boards, Battle Royale soon. Lifetime still adds up every mode, like your rank. Scores above 45 million no longer show wrong on the in-game leaderboard.</span></li>
+			                        <li><img src="./img/inv-sleeping-bag-out.png" alt=""><span><b class="dv-gold">Already playing</b>: your survivor stayed on a server and you join another one? The game tells you where it plays, and Go back takes you to it: its life still counts.</span></li>
+			                        <li><img src="./img/inv-workbench-out.png" alt=""><span><b class="dv-gold">Crafting pages</b>: the craft and skill lists go by pages of 30 recipes, with arrows below them, so every recipe of a bench fits, however many you unlocked.</span></li>
+			                        <li><img src="./img/inv-uranium-door-out.png" alt=""><span><b class="dv-gold">Uranium door</b>: tougher, 12,500 life instead of 7,500, nearly as tough as the uranium wall.</span></li>
+			                        <li><img src="./img/inv-laser-sniper-turret-out.png" alt=""><span><b class="dv-gold">Plasma turret</b>: dearer, twice the materials of the laser turret, and a longer craft at the Tesla bench.</span></li>
+			                        <li><img src="./img/changelog-33-ghoul.png" alt=""><span><b class="dv-gold">Ghoul mode</b>: the horde starts smaller, 5 wild ghouls the first night, 15 the next, then 15 more each night, and gets faster night after night. It lays siege to your base on every side at once, walks around the trees and the rocks, and the ghouls with no room at a wall break the one next to it. Low walls and doors no longer hold them back, and a landmine goes off under a ghoul standing on it. At the end of a round, everyone goes to the score and joins the next one: no more frozen game.</span></li>
+			                  </ul>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.35.3026 &middot; Turrets and chest</h3>
+			                  <img class="dv-log-hero" src="./img/changelog-32.png" alt="New turrets and chest">
+			                  <p>Did we really need more turrets? Here are two more: the <span class="dv-gold">sniper turret</span> hits from farther than any other, and the <span class="dv-gold">plasma turret</span> burns everything in its beam. Store more in the new <span class="dv-gold">metal chest</span>, and wire your base with the new <span class="dv-gold">uranium</span> cable wall and automatic door.</p>
+			                  <ul class="dv-log-list">
+			                        <li><img src="./img/inv-sniper-turret-out.png" alt=""><span><b class="dv-gold">Sniper turret</b>: shoots heavy bullets farther than any other turret, 100 damage a shot. But one shot every 1.3 seconds and a slow head: the ghouls that get close overrun it. Built from a turret base and a sniper at the research bench or the Tesla bench.</span></li>
+			                        <li><img src="./img/inv-laser-sniper-turret-out.png" alt=""><span><b class="dv-gold">Plasma turret</b>: 8 energy cells light a beam that burns every target in its line for 4 seconds, up to 306 damage, then it rests 2 seconds. The first wall, tree or stone stops the beam and burns too, never your team. Built from a turret base and a laser sniper at the Tesla bench.</span></li>
+			                        <li><img src="./img/inv-steel-chest-out.png" alt=""><span><b class="dv-gold">Metal chest</b>: 6 stacks instead of 4, still no food. Crafted at the research bench.</span></li>
+			                        <li><img src="./img/inv-cable-uran-wall-out.png" alt=""><span><b class="dv-gold">Uranium cable wall</b>: connects to a cable like the cable wall, and irradiates anyone nearby. Crafted at the welding machine.</span></li>
+			                        <li><img src="./img/inv-automatic-uran-door-out.png" alt=""><span><b class="dv-gold">Uranium automatic door</b>: opens and closes with a switch, and irradiates anyone nearby. Crafted at the welding machine.</span></li>
+			                        <li><img src="./img/inv-uranium-wall-out.png" alt=""><span><b class="dv-gold">Uranium wall</b>: as tough as the metal wall, 15,000 life instead of 10,000.</span></li>
+			                        <li><img src="./img/inv-stone-door-out.png" alt=""><span><b class="dv-gold">Doors left open</b>: the ghouls now break a low door left open, instead of hitting the air in front of it. Your Lapabots mend it too.</span></li>
+			                        <li><span class="dv-log-noicon"></span><span><b class="dv-gold">Zoom</b>: the mouse wheel zooms out further, up to twice the default view.</span></li>
+			                        <li><img src="./img/day-ghoul.png" alt=""><span><b class="dv-gold">Ghoul mode</b>: harder, the horde grows by 7 wild ghouls each night instead of 5, still up to 80. The score no longer counts the XP 3 times, only 1.5 times: the levels still come 3 times faster.</span></li>
+			                  </ul>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.34.3016 &middot; The horde</h3>
+			                  <p>The nights of the <span class="dv-gold">Ghoul mode</span> get crowded: a <span class="dv-gold">horde of wild ghouls</span> now comes every night to help the ghouls finish off the last survivors. The <span class="dv-gold">map editor</span> gets every building of the game and its logic, and the <span class="dv-gold">turrets</span> are rebalanced.</p>
+			                  <ul class="dv-log-list">
+			                        <li><img src="./img/day-ghoul.png" alt=""><span><b class="dv-gold">Wild ghoul horde</b>: in the Ghoul mode, once the time to build is over, wild ghouls come every night to help the ghoul players: 5 the first night, 5 more each night, up to 80. The ones you kill come back until the day burns them, and they leave the ghoul players alone.</span></li>
+			                        <li><img src="./img/inv-ghoul-drug-out.png" alt=""><span><b class="dv-gold">They hunt you down</b>: the horde tracks the nearest survivor across the whole map. It goes around the houses, but breaks through the buildings of your base to get you. On the ghoul drug, it doesn't hunt you.</span></li>
+			                        <li><img src="./img/map-machine-button-out.png" alt=""><span><b class="dv-gold">Map editor</b>: a new gear button holds every building that was missing: the workbenches, the machines, the fires, the sleeping bag, the turrets, the robots and the seeds.</span></li>
+			                        <li><img src="./img/logic-button-out.png" alt=""><span><b class="dv-gold">Logic in the editor</b>: press E on a switch, a timer or a lamp and walk on the platforms: the lamps light, the doors open and the cables glow where the signal runs. Try a circuit before you build it in game.</span></li>
+			                        <li><img src="./img/inv-rifle-turret-out.png" alt=""><span><b class="dv-gold">Turrets rebalanced</b>: about 25% more materials to build them, and their heads turn 15% slower.</span></li>
+			                        <li><img src="./img/inv-camouflage-gear-out.png" alt=""><span><b class="dv-gold">Camouflage gear</b>: while you wear it, a turret only spots you within 60% of its range.</span></li>
+			                        <li><img src="./img/day-boar-body.png" alt=""><span><b class="dv-gold">Boars and deer</b>: they roam the whole map, around the trees, the rocks and the buildings, with a calmer walk: only their legs move.</span></li>
+			                        <li><img src="./img/clan-icon.png" alt=""><span><b class="dv-gold">Clans</b>: a clan name can be as short as 2 letters or digits.</span></li>
+			                  </ul>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.34.3015 &middot; Towers</h3>
+			                  <img class="dv-log-hero" src="./img/changelog-31.png" alt="Turrets">
+			                  <p>Your base can now defend itself. Build a <span class="dv-gold">rifle turret</span> or a <span class="dv-gold">laser turret</span>, feed it the ammo of its gun, and it shoots the <span class="dv-gold">ghouls</span>, the <span class="dv-gold">devasters</span>, or both, even while you are away. And your <span class="dv-gold">rank</span> now raises how much you can build, while living <span class="dv-gold">boars</span> and <span class="dv-gold">deer</span> roam the map.</p>
+			                  <ul class="dv-log-list">
+			                        <li><img src="./img/inv-rifle-turret-out.png" alt=""><span><b class="dv-gold">Rifle turret</b>: shoots heavy bullets, the ammo of the AK47. Built from a turret base, made of shaped metal and electronics, and an AK47: both at the research bench or the Tesla bench.</span></li>
+			                        <li><img src="./img/inv-laser-turret-out.png" alt=""><span><b class="dv-gold">Laser turret</b>: shoots energy cells, farther and harder. Built from a turret base and a laser submachine at the Tesla bench.</span></li>
+			                        <li><img src="./img/ghoul-target-button-click.png" alt=""><span><b class="dv-gold">Its window</b>: open it like a campfire. The + loads 30 rounds, 255 at most, and a click on the rounds takes them back. Switch the ghouls and the devasters on or off, together or apart. Only you and your team can open your turrets.</span></li>
+			                        <li><img src="./img/inv-turret-base-out.png" alt=""><span><b class="dv-gold">Read it at a glance</b>: yellow lights on standby, a green ring while it shoots, red when it is out of ammo. Empty, it stops shooting and its ring flashes red while an enemy is in range.</span></li>
+			                        <li><img src="./img/inv-stone-wall-out.png" alt=""><span><b class="dv-gold">Building limit by rank</b>: a guest builds up to 950 buildings, each rank from Settler adds 150, up to 2,450 for a Devastator. Point at a rank in your account to see what it gives.</span></li>
+			                        <li><img src="./img/day-boar-body.png" alt=""><span><b class="dv-gold">Living boars</b>: they roam the map day and night, and the ghouls leave them alone. Hit one and it charges you back for a few seconds. Killed, it leaves its carcass to harvest with an axe.</span></li>
+			                        <li><img src="./img/day-deer-body.png" alt=""><span><b class="dv-gold">Living deer</b>: they bolt as soon as you get close, so sneak up or take a bow. Killed, they leave their carcass to harvest with an axe.</span></li>
+			                        <li><img src="./img/inv-sleeping-bag-out.png" alt=""><span><b class="dv-gold">Your survivor waits for you</b>: logged in, after 10 minutes of play, your survivor stays in the world when you leave, until you come back, even from another device. The ghouls and the other devasters can still find it.</span></li>
+			                        <li><span class="dv-log-noicon"></span><span><b class="dv-gold">Servers keep their world</b>: after a restart, the survivors and their bases come back.</span></li>
+			                        <li><img src="./img/clan-icon.png" alt=""><span><b class="dv-gold">Clans</b>: 50 members at most, and the ten blazons redrawn.</span></li>
+			                        <li><img src="./img/leaderboard-icon.png" alt=""><span><b class="dv-gold">Rank insignia</b> show on the in-game leaderboard.</span></li>
+			                  </ul>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.33.3000 &middot; Devaster accounts and clans</h3>
+			                  <img class="dv-log-hero" src="./img/changelog-30.png" alt="Account system">
+			                  <p>The wasteland finally remembers you. Create your <span class="dv-gold">Devaster account</span> with an email and a password, right above the changelog, and every life you play counts. Then gather your devasters under one <span class="dv-gold">clan</span> and fight for the top of the <span class="dv-gold">weekly clan leaderboard</span>.</p>
+			                  <ul class="dv-log-list">
+			                        <li><img src="./img/currency-128.png" srcset="./img/currency-128.png 1x, ./img/currency-256.png 2x" alt=""><span><b class="dv-gold">Lapa Cola caps</b>: 100 caps to welcome you, then 1 cap every 1,000 score of each life, up to 500 caps per life.</span></li>
+			                        <li><img src="./img/badge-ui-7.png" alt=""><span><b class="dv-gold">14 ranks</b>: all your lives add up to your lifetime score, from Wanderer to Devastator. Your rank badge shows before your name in game, for everyone to see.</span></li>
+			                        <li><img src="./img/leaderboard-icon.png" alt=""><span><b class="dv-gold">Leaderboards</b>: best life of the day, of the month and of all time, by score, kills and survival time, plus the lifetime ranking. Find your own position at the bottom.</span></li>
+			                        <li><img src="./img/badge-ui-13.png" alt=""><span><b class="dv-gold">Your profile</b>: lifetime score, kills, deaths, kill / death ratio, best score, best kills, longest life, time played, your 5 best lives and how far the next rank is.</span></li>
+			                        <li><img src="./img/day-skin0.png" alt=""><span><b class="dv-gold">Your nickname</b> comes with a #tag, so two devasters can wear the same name. The first change is free, then it costs 100 caps.</span></li>
+			                        <li><img src="./img/clan-icon.png" alt=""><span><b class="dv-gold">Clans</b>: found one for 150 caps, joining and leaving are free. The [NAME] of your clan shows in its color before your nickname, next to your team tag.</span></li>
+			                        <li><img src="./img/inv-uranium-out.png" alt=""><span><b class="dv-gold">Weekly clan leaderboard</b>: when a member dies, the score of the life goes to the clan. Every Monday at 00:00 UTC, the 1st clan wins uranium, alloys and junk, the 2nd alloys and junk, the 3rd junk, in its inventory.</span></li>
+			                        <li><img src="./img/inv-junk-out.png" alt=""><span><b class="dv-gold">Clan shop</b>: the leader spends the inventory, 1 junk to change the clan color, in game too, or 1 alloys to raise one of 10 blazons.</span></li>
+			                        <li><span class="dv-log-noicon"></span><span><b class="dv-gold">Find a clan</b>: search all the clans and ask up to 5 of them. The leader accepts or refuses, can remove a member and hands over the lead before leaving.</span></li>
+			                        <li><span class="dv-log-noicon"></span><span><b class="dv-gold">Forgot your password?</b> A reset link comes by email. Changing your password logs out your other devices.</span></li>
+			                        <li><span class="dv-log-noicon"></span><span><b class="dv-gold">Fair play</b>: cheaters can be banned for a while or for good. A banned account can't play with its account and leaves the leaderboards until the ban ends, the countdown shows when you log in.</span></li>
+			                        <li><img src="./img/how-to-play-icon.png" alt=""><span><b class="dv-gold">A new homepage</b>: the account panel, this changelog, the Clans window and a How to play guide with Lapabot, in the colors of the machine.</span></li>
+			                  </ul>
+			                  <p>Guests can still play as before: log in only if you want your lives to count.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.32.1890</h3>
+			                  <ul class="dv-log-list">
+			                        <li><img src="./img/day-ground-uranium-wall.png" alt=""><span><b class="dv-gold">Uranium wall</b>: weaker than a steel wall, but it irradiates anyone nearby. Crafted at the Tesla machine.</span></li>
+			                        <li><img src="./img/day-ground-uranium-door.png" alt=""><span><b class="dv-gold">Uranium door</b>: weaker than a steel door, but it irradiates anyone nearby, you included. Crafted at the Tesla machine.</span></li>
+			                  </ul>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.31.1800</h3>
+			                  <img class="dv-log-hero" src="./img/changelog-29.png" alt="New feeder">
+			                  <p>There you are, trying to survive with your tomatoes and oranges, but as you <span class="dv-gold">scroll with your mouse</span>, you see a <span class="dv-gold">feeder</span>! Say goodbye to fruits and vegetables, and <span class="dv-gold">feed on the energy around you</span>. Your mind is calmed and problems/<span class="dv-gold">bugs starts to disappear</span>.</p>
+			                  <p>You can now <span class="dv-gold">zoom in and out</span> with the mouse wheel. Fixed the lags when approaching a house, a crash after dying and a teleport bug.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.30.1719</h3>
+			                  <p>Your predecessors did not survive. But they have left behind <span class="dv-gold">some vestiges!</span> Dare to venture into the <span class="dv-gold">cave</span>, tunnel through the stone and maybe you will discover a <span class="dv-gold">hidden bunker</span>. Have you always dreamed of being green and radioactive? Do you look good with dynamite? Do you want to work with long, rotten brains? Maybe you're cut out to <span class="dv-gold">be a Ghoul</span>? That's good news! The <span class="dv-gold">new game mode </span>offers you the opportunity to transform yourself and create chaos around you!"</p>
+			                  <p>The <span class="dv-gold">"Lamps, that's pretty but that's better when that's useful!"</span> said the old uncle, cloistered in his devastated wooden cabin. Then came the survivors, armed with lamps and picks. "What are you doing in my house? Get out of here!" But the villagers stayed, and <span class="dv-gold">put their lamps in the old man's house</span>. "But how is that possible? <span class="dv-gold">No one can place objects in my house except myself!"</span> And the villagers left, without a word. Several minutes later, the ghouls landed in the old man's cabin. They destroyed the walls and doors. The man felt his time coming. The ghouls approached and, one by one, <span class="dv-gold">disappeared into the lights of the Christmas neon lights.</span> The lamps were finally useful, and the old uncle shouted, "Well, that's what I was saying! <span class="dv-gold">Lamps, that's pretty but that's better when that's useful!" </span></p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.28.1494</h3>
+			                  <p>The <span class="dv-gold">Merry Christmas</span>, everyone! Your gifts are waiting for you under the <span class="dv-gold">tree in the gingerbread houses</span>. Enjoy new <span class="dv-gold">clothes</span>, new <span class="dv-gold">sweets</span> and a new <span class="dv-gold">weapon</span>. Now you can enjoy the fresh air of the day as <span class="dv-gold">ghouls die in the sunlight</span>! Have fun! <span class="dv-gold">New lamps</span> are now available. Perhaps you will dare to decorate your gardens to celebrate the <span class="dv-gold">apocalyptic Christmas</span> coming up!</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.27.1492</h3>
+			                  <p>The <span class="dv-gold">Many new buildings</span> have been added to the map. Want to play video games? Discover our new <span class="dv-gold">internet cafe</span> . Be careful, the <span class="dv-gold">owner could lock you in there!</span> A little depressed? The <span class="dv-gold">doctor </span> welcomes you! Do you want to fight? The <span class="dv-gold">boxing rin</span> g is waiting for you. Find the <span class="dv-gold">different passwords</span> that will give you access to <span class="dv-gold">many safes</span> and much more! <span class="dv-gold">New lamps</span> are now available. Perhaps you will dare to decorate your gardens to celebrate the <span class="dv-gold">apocalyptic Christmas</span> coming up!</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.26.1465</h3>
+			                  <p>The Lapabots now repair your base better than ever before but you are always looking for more <span class="dv-gold">automatic machines</span> that can do the job for you, and more efficiently. <span class="dv-gold">HAL is the one you missed</span>. While Lapabot is repairing, HAL doesn't like to feel attacked. But if HAL is not strong enough for you, the <span class="dv-gold">TESLA bot</span> will probably do the trick, with <span class="dv-gold">your new laser sniper! </span></p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.25.1460</h3>
+			                  <p>The <span class="dv-gold">new map editor</span> is a way to diversify the community's servers so that each administrator can <span class="dv-gold">create his own mini-game</span>. But it can also be used to plan, alone or with your friends, the bases you will try to build during your next game. This map editor is an awakening for your creativity. <span class="dv-gold">Make good use of it!</span></p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.25.1337</h3>
+			                  <p>Remember the fundamental rule of good living in society: <span class="dv-gold">The richer you are, the richer you will become.</span> <span class="dv-gold">The extractors</span> are further proof of this. These machines will be difficult to design but once they are placed in your home, they will collect <span class="dv-gold">stone, iron, sulphide and uranium</span> without you having to leave your home! Of course, you'll have to keep them on with gasoline. For that, you would do better to fill with orange rotten. <span class="dv-gold">Compost could be useful.</span> For those with an<span class="dv-gold"> addiction problem</span> and a pale pink head, you will need to look for a <span class="dv-gold">flower to create an antidote</span>. Be careful, this flower is extremely rare (only one on the whole map), let's hope it doesn't spawn in town! You have also found a way to collect these <span class="dv-gold">acorns</span> that have been taunting you for so long in the branches of trees. Well done! <span class="dv-gold">You can eat them... or plant your own forest</span></p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.24.1294</h3>
+			                  <p>The weather cools down and <span class="dv-gold">mushrooms</span> multiply in the forest. Three species in particular. One of them is <span class="dv-gold">poisoned</span>. It is better not to eat it or you will see it cloudy for some time. However, it is useful for making a <span class="dv-gold">drug that will make you faster</span>. But beware of the <span class="dv-gold">withdrawal effects</span>. This medicine is extremely addictive and you will need to take it again soon. The other two mushrooms are edible and one of them will be used to make a medicine that will <span class="dv-gold">protect you from Ghouls.</span> If you are the lazy type, and cleaning your bases bothers you, the new <span class="dv-gold">"Repair Lapabot"</span> will satisfy you. With its multi-purpose arms and 360° view, you won't have to worry about those nasty holes in your walls anymore!</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.23.1282</h3>
+			                  <p>You dreamed of it, well now it's possible. <span class="dv-gold">You can be a tree.</span> But beware of woodcutters' axes!</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.22.1280</h3>
+			                  <p>The <span class="dv-gold">pumpkin ghoul</span> is very slow. In the middle of nature, she won't be a scary opponent. Once killed, you can either <span class="dv-gold">eat it</span> or <span class="dv-gold">recreate it</span> from its pumpkin seeds. Once replanted, <span class="dv-gold">it will attack your enemies!</span> Learn how to control the pumpkin ghoul! It will only move if enemies approach. Once placed close to your base, it will be a formidable ally to protect your walls! And that's not all! Once killed, it will grow back from its roots</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.20.1260</h3>
+			                  <p>They are <span class="dv-gold">more numerous</span>, but <span class="dv-gold">more balanced</span>. The bad ghouls have been <span class="dv-gold">nerfed</span>, and will only attack from a certain number of days. Their diversity will also make them fewer, giving you more time to build a base. For those who think that the bases become useless, don't forget the importance of the <span class="dv-gold">low walls</span> that will allow you to attack the ghouls <span class="dv-gold">without being touched, and without leaving your base</span>, as well as the <span class="dv-gold">low doors</span>. It is also important to build several doors in opposite places. If a ghoul could destroy one of your walls, flee to the other side. If a ghoul is chasing you, consider putting a building in a narrow path to block the road. If a ghoul chases you around a fire, <span class="dv-gold">you can turn around it</span>, it will do the same. This will give you time to make a <span class="dv-gold">spear</span>, or <span class="dv-gold">bow</span>. But don't forget that if you want to be quiet, don't go looking for trouble!</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.19.1246</h3>
+			                  <p>Take refuge in your homes and prepare your tools. Your walls won't last long, because <span class="dv-gold">the monsters have arrived</span> and they're hungry. Avoid going out in the evening in the dense forest without being prepared. <span class="dv-gold">Ghouls are faster than you</span>, and they are merciless. Once they see you, they won't let you go.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.18.1175</h3>
+			                  <p>Some people eat grenades or make grenadines out of them. Here, it is better to avoid eating <span class="dv-gold">grenades</span>! Or you'll risk splashing into grenadine! Ahahaha! And for private server owners, only you and you can make spawn <span class="dv-gold">super hammer</span> in your server to destroy immortal walls.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.17.1162</h3>
+			                  <p>Gather a bunch of pieces of wood, make a hole, and throw them in. That's right. You hadn't thought of that? You will be impressed by the power of simple sharp sticks. Put your <span class="dv-gold">wooden spikes</span> on the ground, like a trap, and slow down your inattentive enemies! Meanwhile, you can either shoot them down with a <span class="dv-gold">laser machine gun</span>, hoping he doesn't wear tesla armor,or run away like a little scoundrel.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.16.1120</h3>
+			                  <p><span class="dv-gold">Armor</span> is finally available, and there is something for everyone! Armor that protects and warms, armor against firearms and explosives. <span class="dv-gold">Armor that gives you class.</span> Armor that is made for you. But because we know it's difficult for you all to carry with your little arms, be brave enough to <span class="dv-gold">unlock 2 new inventory slots</span>! And because we like to have a nice tidy wardrobe, you can now <span class="dv-gold">build your base 2x faster</span> with the <span class="dv-gold">builder's skill</span>, to quickly tidy up your little things! And because your inventory is valuable, you'll enjoy the arrival of the <span class="dv-gold">new compost</span> that will take the weight off your shoulders as you wait for 20 oranges to rot in your inventory.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.15.1086</h3>
+			                  <p>Protect your base and surroundings by placing <span class="dv-gold">landmines</span> around you. <span class="dv-gold">Dynamite</span> the city's armoured gates so as not to expose yourself to radiation. Collect electronic parts from TVs, computers or even refrigerators to make a <span class="dv-gold">trigger</span> and blow up your <span class="dv-gold">C4</span> whenever you want. Activate the <span class="dv-gold">lightweight skill</span> and avoid the triggering of landmines.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.14.1070</h3>
+			                  <p>We added a <span class="dv-gold">knock back effect</span> so you can no longer get stuck in a corner. Knock, defend yourself and you'll push your opponent away! This is a small update to <span class="dv-gold">rebalance recipes</span>, and the <span class="dv-gold">sulphur axe</span> is a gift!</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.13.1055</h3>
+			                  <p>The discovery of the old abandoned <span class="dv-gold">power station</span> has taught you something useful this time: <span class="dv-gold">electricity</span>. And remember that phrase from Mr. Nikola Tesla found on his <span class="dv-gold">smartphone</span>: "My only regret was that I didn't invent the <span class="dv-gold">laser gun</span>." That gives you an idea. That's right! Why don't you make a laser gun? What ingenuity! You who look so smart to me, what are you going to do with the <span class="dv-gold">electronic parts</span>, <span class="dv-gold">the electric wires</span>, and the <span class="dv-gold">junk</span> that you will find by searching the houses? <span class="dv-gold">Batteries.</span> Tesla couldn't have said it better.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.11.924</h3>
+			                  <p>Your parents know that. DIY stores are very dangerous. But you're not afraid of danger. <span class="dv-gold"> Saw off your shotgun</span> for a more powerful weapon, defend yourself and your base with <span class="dv-gold"> nail guns</span>, lay stone floors or tile and become a survivor handyman.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.10.900</h3>
+			                  <p>Did you like to compare every "Battle Royale Game" with Fortnite or PUBG? Here, useless to try... This new Battle Royale is based on real fictional events. For those who would have hibernated for a year, <span class="dv-gold"> the goal is simple, kill each other.</span> But maybe along the way you will find hot food leftovers, a fire still lit, or the night will seem too cold and your stomach too greedy and you will let yourself die in the worst half-day of your life.</p>
+			                  <p>To cheer you up, <a href="https://www.youtube.com/watch?v=22sYrPTyVjg" target="_blank" rel="noopener" class="dv-gold">watch our first LapaMovie<span> on </span>https://www.youtube.com/watch?v=22sYrPTyVjg</a></p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.9.860</h3>
+			                  <p>The soup revolution has come. It was a dream and it finally happened. <span class="dv-gold">Tomatoes</span>. That's right. We know that in the hearts of every one of you lies a tomato. Store your <span class="dv-gold">soups in cans</span> and discover the magic of this object: <span class="dv-gold">Slowing down the perishing of your food</span>. Come worship the canned food.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.8.846</h3>
+			                  <p>Come discover our wonderful<span class="dv-gold">abandonned houses</span>. The habitants left away because of the radiation but maybe will you find some <span class="dv-gold">interesting loot?</span></p>
+			                  <p>If you're lucky, you could probably craft a radAway to move the radiation... away.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.7.834</h3>
+			                  <p>According to Rousseau, man is born good, and society makes him bad. It is therefore by following his word that we make you spawn with a <span class="dv-gold">125% experience bonus</span>, visible in the form of <span class="dv-gold">an angel</span>.</p>
+			                  <p><span class="dv-gold">Will you be able to stay that way?</span></p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.6.832</h3>
+			                  <p>To die is now less painful since an <span class="dv-gold">inventory will be returned to you according to your level</span>! Young arrivals and players of long hours will all find their benefit. No more hours looking for your partner in the map. Once you join a team, <span class="dv-gold">your teammates are displayed</span> in the minimap! But that's not all! Were you tired of the damn rocks that kept you from opening your door? Come and discover... The <span class="dv-gold">new F button</span>.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.5.745</h3>
+			                  <p>You thought you were alone in this hostile forest? <span class="dv-gold">Create your own team or join one</span> to build strength and make new friends. Be surprised by this new power and brave the damn forest! Also, we offer you a <span class="dv-gold">hammer to repair</span> your walls against the bad guys who try to dislodge you. But we repair better when we have <span class="dv-gold">nails</span> on hand, so remember to keep some in your pocket.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.4.700</h3>
+			                  <p>Many of you have asked us for a way not to lose your buildings after you die, because you are "too lazy to rebuild everything". What could be better than a <span class="dv-gold">sleeping bag</span> as a metaphor for your laziness? With this, you will lose neither your buildings nor your levels. But "a base that can no longer be destroyed" also means "a base blocker that does not stop". Destroy your own buildings with a <span class="dv-gold">hammer</span> and destroy others' buildings much faster!</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.3.660</h3>
+			                  <p>Are your feet full of mud? You have rocks stuck between your toes and it hurts? This new <span class="dv-gold">waxed parquet</span> is made for you. In addition to ensuring smooth, obstacle-free movement, your feet will again be soft and silky. You were tired of seeing new players spawn in your home and hearing them say "no please don't kill me please", this floor will give you total privacy. A uranium rock spawne in your house? Put on a <span class="dv-gold">floor</span>. Put on a <span class="dv-gold">floor</span>. Put on a <span class="dv-gold">floor</span>. Plus it's cheap.</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.2.644</h3>
+			                  <p>No more socks on the floor and disappearing. Mom won't bother you once you make this <span class="dv-gold">new wooden chest</span>! Ideal to arrange and decorate your base with style. Your Mom will be so proud that, who knows, maybe you'll get a <span class="dv-gold">mini-fridge</span> in your brand new base!</p>
+			            </article>
+			            <article class="dv-log-entry">
+			                  <h3 class="dv-log-version">Version 0.1.620</h3>
+			                  <p>In a post-apocalyptic world where nature takes back its rights. Build a bunker, weapons, warm up and produce your own food to protect yourself from this ruthless world and the many other survivors.</p>
+			            </article>
+			      </div>
+			
+			      <div class="dv-log-foot">
+			            <span class="dv-dim">Every update since the first day of the wasteland</span>
+			            <a id="changelogSeeMore" class="dv-btn dv-btn-yellow" href="./changelog/" target="_blank" rel="noopener">See more</a>
+			      </div>
+			</div>
+			
+		</div>
+
+		<div id="authPopup" class="dv-overlay">
+
+			<div class="dv-panel dv-window dv-auth" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+			      <div class="dv-pipes"></div>
+			      <div class="dv-lights"></div>
+			
+			      <div class="dv-window-head">
+			            <div id="authTitle" class="dv-title">Devaster account</div>
+			            <button type="button" class="dv-close" data-close="authPopup" title="Close"></button>
+			      </div>
+			
+			      <div id="authTabs" class="dv-tabs">
+			            <button type="button" id="authTabLogin" class="dv-btn dv-btn-small dv-tab dv-on">Login</button>
+			            <button type="button" id="authTabSignup" class="dv-btn dv-btn-small dv-tab">Sign up</button>
+			      </div>
+			
+			      <div class="dv-screen dv-window-body">
+			
+			            <!-- Login and sign up share the form, the nickname only shows for sign up -->
+			            <form id="authForm" class="dv-auth-form" novalidate>
+			                  <div id="authGift" class="dv-auth-gift">
+			                        <img class="dv-cap" src="./img/currency-48.png" srcset="./img/currency-48.png 1x, ./img/currency-64.png 2x" alt="">
+			                        <span><b class="dv-gold">+500 caps</b> to welcome you in the wasteland</span>
+			                  </div>
+			                  <label class="dv-field">
+			                        <span class="dv-label">Email</span>
+			                        <input id="authEmail" class="dv-input" type="email" maxlength="254" autocomplete="email" placeholder="devaster@mail.com" spellcheck="false">
+			                  </label>
+			                  <label id="authNicknameField" class="dv-field">
+			                        <span class="dv-label">Nickname</span>
+			                        <input id="authNickname" class="dv-input" type="text" maxlength="16" autocomplete="nickname" placeholder="Nickname" spellcheck="false">
+			                  </label>
+			                  <label class="dv-field">
+			                        <span class="dv-label">Password</span>
+			                        <input id="authPassword" class="dv-input" type="password" maxlength="128" autocomplete="current-password" placeholder="6 characters or more">
+			                  </label>
+			                  <div id="authError" class="dv-error" role="alert"></div>
+			                  <button type="submit" id="authSubmit" class="dv-btn dv-btn-yellow dv-btn-wide">Login</button>
+			                  <div class="dv-auth-links">
+			                        <button type="button" id="authForgotLink" class="dv-link">Forgot your password?</button>
+			                  </div>
+			            </form>
+			
+			            <!-- Forgotten password: a link is sent by email -->
+			            <form id="authForgotForm" class="dv-auth-form" novalidate style="display:none;">
+			                  <p class="dv-auth-text">Enter the email of your account. We'll send you a link to choose a new password.</p>
+			                  <label class="dv-field">
+			                        <span class="dv-label">Email</span>
+			                        <input id="authForgotEmail" class="dv-input" type="email" maxlength="254" autocomplete="email" placeholder="devaster@mail.com" spellcheck="false">
+			                  </label>
+			                  <div id="authForgotError" class="dv-error" role="alert"></div>
+			                  <div id="authForgotSent" class="dv-success" style="display:none;"></div>
+			                  <button type="submit" id="authForgotSubmit" class="dv-btn dv-btn-yellow dv-btn-wide">Send the link</button>
+			                  <div class="dv-auth-links">
+			                        <button type="button" id="authBackLink" class="dv-link">Back to login</button>
+			                  </div>
+			            </form>
+			
+			            <!-- New password, opened by the link of the email -->
+			            <form id="authResetForm" class="dv-auth-form" novalidate style="display:none;">
+			                  <p class="dv-auth-text">Choose a new password. Every other device will be logged out.</p>
+			                  <label class="dv-field">
+			                        <span class="dv-label">New password</span>
+			                        <input id="authResetPassword" class="dv-input" type="password" maxlength="128" autocomplete="new-password" placeholder="6 characters or more">
+			                  </label>
+			                  <label class="dv-field">
+			                        <span class="dv-label">Confirm</span>
+			                        <input id="authResetConfirm" class="dv-input" type="password" maxlength="128" autocomplete="new-password" placeholder="Same password again">
+			                  </label>
+			                  <div id="authResetError" class="dv-error" role="alert"></div>
+			                  <button type="submit" id="authResetSubmit" class="dv-btn dv-btn-yellow dv-btn-wide">Save the password</button>
+			            </form>
+			
+			      </div>
+			</div>
+			
+		</div>
+
+		<div id="accountPopup" class="dv-overlay">
+
+			<div class="dv-panel dv-window dv-profile" role="dialog" aria-modal="true" aria-labelledby="accountPopupTitle">
+			      <div class="dv-pipes"></div>
+			      <div class="dv-lights"></div>
+			
+			      <div class="dv-window-head">
+			            <div id="accountPopupTitle" class="dv-title">Devaster account</div>
+			            <span class="dv-caps" id="accountPopupCapsBox" title="Caps"><img class="dv-cap" src="./img/currency-48.png" srcset="./img/currency-48.png 1x, ./img/currency-64.png 2x" alt=""><span id="accountPopupCaps">0</span></span>
+			            <button type="button" class="dv-close" data-close="accountPopup" title="Close"></button>
+			      </div>
+			
+			      <div class="dv-tabs" role="tablist">
+			            <button type="button" class="dv-btn dv-btn-small dv-tab dv-on" data-tab="profile">Profile</button>
+			            <button type="button" class="dv-btn dv-btn-small dv-tab" data-tab="leaderboard">Leaderboard</button>
+			            <button type="button" class="dv-btn dv-btn-small dv-tab" data-tab="ranks">Ranks</button>
+			      </div>
+			
+			      <div class="dv-screen dv-window-body dv-profile-body">
+			
+			            <!-- PROFILE -->
+			            <div id="accountTabProfile" class="dv-profile-tab dv-scroll">
+			
+			                  <div id="profileContent" class="dv-profile-content">
+			                        <div class="dv-profile-card">
+			                              <div id="profileBackground" class="dv-profile-bg"></div>
+			                              <img id="profileRankImage" class="dv-profile-badge" src="./img/badge-ui-0.png" alt="">
+			                              <div class="dv-profile-who">
+			                                    <div id="profileNameRow" class="dv-profile-name">
+			                                          <span id="profileNickname"></span><span id="profileTag" class="dv-dim"></span>
+			                                          <button type="button" id="profileRenameButton" class="dv-profile-edit" title="Change my nickname">
+			                                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.2-4.6L15.8 4.8a2.3 2.3 0 0 1 3.3 3.3L8.5 18.8z" fill="#bcb33e" stroke="#000" stroke-width="2" stroke-linejoin="round"/></svg>
+			                                          </button>
+			                                    </div>
+			                                    <form id="profileRenameForm" class="dv-profile-rename" novalidate style="display:none;">
+			                                          <input id="profileRenameInput" class="dv-input" type="text" maxlength="16" spellcheck="false" aria-label="New nickname">
+			                                          <button type="submit" id="profileRenameSave" class="dv-btn dv-btn-small dv-btn-yellow"></button>
+			                                          <button type="button" id="profileRenameCancel" class="dv-btn dv-btn-small">Cancel</button>
+			                                    </form>
+			                                    <div id="profileRenameError" class="dv-error" role="alert"></div>
+			                                    <div id="profileRankName" class="dv-profile-rank"></div>
+			                                    <div class="dv-profile-next">
+			                                          <img id="profileRankFrom" class="dv-rank" src="./img/badge-ui-0.png" alt="">
+			                                          <div class="dv-bar"><div id="profileRankBar" class="dv-bar-fill"></div><div id="profileRankBarText" class="dv-bar-text"></div></div>
+			                                          <img id="profileRankTo" class="dv-rank" src="./img/badge-ui-1.png" alt="">
+			                                    </div>
+			                                    <div id="profileRankHint" class="dv-profile-hint"></div>
+			                              </div>
+			                        </div>
+			
+			                        <div id="profileBanned" class="dv-profile-banned" style="display:none;"></div>
+			
+			                        <div class="dv-stats">
+			                              <div class="dv-stat dv-plate"><span class="dv-stat-label">Lifetime score</span><span id="profileStatScore" class="dv-stat-value">0</span></div>
+			                              <div class="dv-stat dv-plate"><span class="dv-stat-label">Kills</span><span id="profileStatKills" class="dv-stat-value">0</span></div>
+			                              <div class="dv-stat dv-plate"><span class="dv-stat-label">Deaths</span><span id="profileStatDeaths" class="dv-stat-value">0</span></div>
+			                              <div class="dv-stat dv-plate"><span class="dv-stat-label">Kill / death</span><span id="profileStatRatio" class="dv-stat-value">0</span></div>
+			                              <div class="dv-stat dv-plate"><span class="dv-stat-label">Best score</span><span id="profileStatBestScore" class="dv-stat-value">0</span></div>
+			                              <div class="dv-stat dv-plate"><span class="dv-stat-label">Best kills</span><span id="profileStatBestKills" class="dv-stat-value">0</span></div>
+			                              <div class="dv-stat dv-plate"><span class="dv-stat-label">Longest life</span><span id="profileStatBestTime" class="dv-stat-value">0</span></div>
+			                              <div class="dv-stat dv-plate"><span class="dv-stat-label">Time played</span><span id="profileStatTime" class="dv-stat-value">0</span></div>
+			                        </div>
+			
+			                        <div class="dv-profile-section">
+			                              <h3 class="dv-section-title">Best lives</h3>
+			                              <ol id="profileBestLives" class="dv-lives"></ol>
+			                        </div>
+			
+			                        <div class="dv-profile-footer">
+			                              <span id="profileSince" class="dv-dim"></span>
+			                              <button type="button" id="profilePasswordLink" class="dv-link">Change my password</button>
+			                              <button type="button" id="profileLogoutButton" class="dv-btn dv-btn-small dv-btn-orange">Logout</button>
+			                        </div>
+			
+			                        <form id="profilePasswordForm" class="dv-profile-password" novalidate style="display:none;">
+			                              <input id="profilePasswordCurrent" class="dv-input" type="password" maxlength="128" autocomplete="current-password" placeholder="Current password" aria-label="Current password">
+			                              <input id="profilePasswordNew" class="dv-input" type="password" maxlength="128" autocomplete="new-password" placeholder="New password" aria-label="New password">
+			                              <button type="submit" id="profilePasswordSave" class="dv-btn dv-btn-small dv-btn-yellow">Save</button>
+			                              <div id="profilePasswordError" class="dv-error" role="alert"></div>
+			                        </form>
+			                  </div>
+			
+			                  <!-- Guests see what they miss -->
+			                  <div id="profileGuest" class="dv-profile-guest" style="display:none;">
+			                        <div class="dv-profile-guest-box">
+			                              <img class="dv-cap" src="./img/currency-128.png" srcset="./img/currency-128.png 1x, ./img/currency-256.png 2x" alt="">
+			                              <div class="dv-title">Login to save your progress</div>
+			                              <p>Earn caps with every life, climb 14 ranks and write your name on the leaderboards.</p>
+			                              <div class="dv-profile-guest-actions">
+			                                    <button type="button" id="profileGuestLogin" class="dv-btn dv-btn-yellow">Login</button>
+			                                    <button type="button" id="profileGuestSignup" class="dv-btn">Sign up</button>
+			                              </div>
+			                        </div>
+			                  </div>
+			            </div>
+			
+			            <!-- LEADERBOARD -->
+			            <div id="accountTabLeaderboard" class="dv-board-tab" style="display:none;">
+			                  <div class="dv-board-top">
+			                        <div id="boardModes" class="dv-board-modes" role="group" aria-label="Game mode">
+			                              <button type="button" class="dv-mode dv-on" data-mode="survival" aria-pressed="true" aria-label="Survival"><span class="dv-mode-art"></span></button>
+			                              <button type="button" class="dv-mode" data-mode="ghoul" aria-pressed="false" aria-label="Ghoul mode"><span class="dv-mode-art"></span></button>
+			                              <button type="button" class="dv-mode dv-soon" data-mode="br" aria-pressed="false" aria-label="Battle Royale, not open yet"><span class="dv-mode-art"></span><span class="dv-mode-soon" aria-hidden="true">Soon</span></button>
+			                        </div>
+			                        <div class="dv-board-filters">
+			                              <div id="boardTypes" class="dv-tabs dv-board-types">
+			                                    <button type="button" class="dv-btn dv-btn-small dv-tab dv-on" data-board="score">Score</button>
+			                                    <button type="button" class="dv-btn dv-btn-small dv-tab" data-board="kills">Kills</button>
+			                                    <button type="button" class="dv-btn dv-btn-small dv-tab" data-board="time">Time</button>
+			                                    <button type="button" class="dv-btn dv-btn-small dv-tab" data-board="ranking">Lifetime</button>
+			                              </div>
+			                              <div id="boardPeriods" class="dv-tabs dv-board-periods">
+			                                    <button type="button" class="dv-btn dv-btn-small dv-tab" data-period="day">Daily</button>
+			                                    <button type="button" class="dv-btn dv-btn-small dv-tab" data-period="month">Monthly</button>
+			                                    <button type="button" class="dv-btn dv-btn-small dv-tab dv-on" data-period="all">All time</button>
+			                              </div>
+			                        </div>
+			                  </div>
+			                  <div class="dv-board-head">
+			                        <span class="dv-board-pos">#</span>
+			                        <span class="dv-board-name">Devaster</span>
+			                        <span id="boardValueTitle" class="dv-board-value">Best score</span>
+			                  </div>
+			                  <ol id="boardRows" class="dv-board-rows dv-scroll"></ol>
+			                  <div id="boardMe" class="dv-board-me"></div>
+			            </div>
+			
+			            <!-- RANKS -->
+			            <div id="accountTabRanks" class="dv-ranks-tab dv-scroll" style="display:none;">
+			                  <p class="dv-ranks-intro">Every life adds its score to your <span class="dv-gold">lifetime score</span>, which sets your rank and the insignia shown next to your nickname in game. Each life that ends in a real death, not in a sleeping bag, also pays <span class="dv-gold">1 cap per 1,000 score</span>, up to 500, and every rank from Settler on raises your <span class="dv-gold">building limit</span>. Hover or tap a rank to see everything it gives you.</p>
+			                  <ol id="ranksList" class="dv-ranks"></ol>
+			            </div>
+			
+			      </div>
+			</div>
+			
+		</div>
+
+		<div id="clanPopup" class="dv-overlay">
+
+			<div class="dv-panel dv-window dv-clan" role="dialog" aria-modal="true" aria-labelledby="clanPopupTitle">
+			      <div class="dv-pipes"></div>
+			      <div class="dv-lights"></div>
+			
+			      <div class="dv-window-head">
+			            <div id="clanPopupTitle" class="dv-title">Clans</div>
+			            <span class="dv-caps" id="clanPopupCapsBox" title="Caps"><img class="dv-cap" src="./img/currency-48.png" srcset="./img/currency-48.png 1x, ./img/currency-64.png 2x" alt=""><span id="clanPopupCaps">0</span></span>
+			            <button type="button" class="dv-close" data-close="clanPopup" title="Close"></button>
+			      </div>
+			
+			      <div class="dv-tabs" role="tablist">
+			            <button type="button" class="dv-btn dv-btn-small dv-tab dv-on" data-clantab="mine">My clan</button>
+			            <button type="button" class="dv-btn dv-btn-small dv-tab" data-clantab="board">Leaderboard</button>
+			            <button type="button" class="dv-btn dv-btn-small dv-tab" data-clantab="find">Find a clan</button>
+			      </div>
+			
+			      <!-- Drawn by client/js/account/clan.js -->
+			      <div class="dv-screen dv-window-body dv-clan-body">
+			            <div id="clanPane" class="dv-clan-pane dv-scroll"></div>
+			      </div>
+			</div>
+			
+		</div>
+
+		<div id="shopPopup" class="dv-overlay">
+
+			<div class="dv-panel dv-window dv-shop" role="dialog" aria-modal="true" aria-labelledby="shopPopupTitle">
+			      <div class="dv-pipes"></div>
+			      <div class="dv-lights"></div>
+			
+			      <div class="dv-window-head">
+			            <div id="shopPopupTitle" class="dv-title">Cosmetics</div>
+			            <button type="button" id="shopPopupCapsBox" class="dv-caps dv-caps-button" title="Get more caps"><img class="dv-cap" src="./img/currency-48.png" srcset="./img/currency-48.png 1x, ./img/currency-64.png 2x" alt=""><span id="shopPopupCaps">0</span></button>
+			            <button type="button" class="dv-close" data-close="shopPopup" title="Close"></button>
+			      </div>
+			
+			      <div class="dv-tabs" role="tablist">
+			            <button type="button" class="dv-btn dv-btn-small dv-tab dv-on" data-shoptab="wardrobe">Cosmetics</button>
+			            <button type="button" class="dv-btn dv-btn-small dv-tab" data-shoptab="crates">Crates</button>
+			            <button type="button" class="dv-btn dv-btn-small dv-tab" data-shoptab="lapacola">Lapa Cola</button>
+			      </div>
+			
+			      <!-- Drawn by client/js/account/shop.js -->
+			      <div class="dv-screen dv-window-body dv-shop-body">
+			            <div id="shopPane" class="dv-shop-pane dv-scroll"></div>
+			      </div>
+			</div>
+			
+		</div>
+
+		<div id="crateOpening" class="dv-overlay">
+
+			<div id="crateOpeningStage" class="dv-crate-stage" role="dialog" aria-modal="true" aria-labelledby="crateOpeningTitle" tabindex="-1">
+			
+			      <!-- Drawn by client/js/account/crate.js -->
+			      <div class="dv-crate-tape"><span id="crateOpeningTitle"></span></div>
+			
+			      <div class="dv-crate-floor">
+			            <div class="dv-crate-rays"></div>
+			            <div class="dv-crate-shadow"></div>
+			            <div class="dv-crate-dust"></div>
+			            <div id="crateOpeningBox" class="dv-crate-box"><img id="crateOpeningImage" alt=""></div>
+			            <div class="dv-crate-flash"></div>
+			            <div id="crateOpeningDebris" class="dv-crate-debris"></div>
+			            <div id="crateOpeningCards" class="dv-crate-cards" aria-live="polite"></div>
+			      </div>
+			
+			      <div id="crateOpeningHint" class="dv-crate-hint">Click to open it now</div>
+			
+			      <div id="crateOpeningActions" class="dv-crate-actions">
+			            <button type="button" id="crateOpeningWear" class="dv-btn dv-btn-yellow">Wear it</button>
+			            <button type="button" id="crateOpeningAgain" class="dv-btn">Open another</button>
+			            <button type="button" id="crateOpeningClose" class="dv-btn dv-btn-orange">Close</button>
+			      </div>
+			
+			      <div class="dv-crate-tape dv-crate-tape-bottom"></div>
+			</div>
+			
+		</div>
+
+		<div id="bannedPopup" class="dv-overlay">
+
+			<div class="dv-panel dv-window dv-banned" role="alertdialog" aria-modal="true" aria-labelledby="bannedTitle" aria-describedby="bannedLead">
+			      <div class="dv-pipes"></div>
+			      <div class="dv-lights"></div>
+			
+			      <div class="dv-window-head">
+			            <div id="bannedTitle" class="dv-title">Account banned</div>
+			            <button type="button" class="dv-close" data-close="bannedPopup" title="Close"></button>
+			      </div>
+			
+			      <div class="dv-screen dv-window-body dv-banned-body">
+			
+			            <!-- Hazard tape across the screen -->
+			            <div class="dv-banned-tape" aria-hidden="true"><span>Banned</span></div>
+			
+			            <div class="dv-banned-who">
+			                  <img id="bannedRank" class="dv-rank" src="./img/badge-ui-0.png" alt="">
+			                  <span class="dv-banned-name"><span id="bannedNickname"></span><span id="bannedTag" class="dv-dim"></span></span>
+			            </div>
+			
+			            <p id="bannedLead" class="dv-banned-lead">Your account is banned for</p>
+			
+			            <!-- Time left, counted down every second -->
+			            <div id="bannedTimer" class="dv-banned-timer" role="timer" aria-live="off">
+			                  <div class="dv-banned-unit"><span id="bannedDays" class="dv-banned-digits">00</span><span class="dv-banned-label">days</span></div>
+			                  <div class="dv-banned-unit"><span id="bannedHours" class="dv-banned-digits">00</span><span class="dv-banned-label">hours</span></div>
+			                  <div class="dv-banned-unit"><span id="bannedMinutes" class="dv-banned-digits">00</span><span class="dv-banned-label">minutes</span></div>
+			                  <div class="dv-banned-unit"><span id="bannedSeconds" class="dv-banned-digits">00</span><span class="dv-banned-label">seconds</span></div>
+			            </div>
+			            <div id="bannedForever" class="dv-banned-forever" style="display:none;">Permanent</div>
+			
+			            <p id="bannedUntil" class="dv-banned-until"></p>
+			
+			            <div id="bannedReasonBox" class="dv-plate dv-banned-reason">
+			                  <span class="dv-banned-reason-label">Reason</span>
+			                  <span id="bannedReason"></span>
+			            </div>
+			
+			            <ul class="dv-banned-rules">
+			                  <li>You can't play with this account until the ban ends: no caps, no rank.</li>
+			                  <li>You are off the leaderboards meanwhile.</li>
+			                  <li>Your caps, rank and stats are kept for when you come back.</li>
+			            </ul>
+			      </div>
+			
+			      <div class="dv-banned-actions">
+			            <button type="button" id="bannedLogout" class="dv-btn dv-btn-small">Logout</button>
+			            <button type="button" id="bannedGuest" class="dv-btn dv-btn-small dv-btn-yellow">Play as a guest</button>
+			      </div>
+			</div>
+			
+		</div>
+
+		<div id="playingPopup" class="dv-overlay">
+
+			<div class="dv-panel dv-window dv-playing" role="alertdialog" aria-modal="true" aria-labelledby="playingTitle" aria-describedby="playingLead">
+			      <div class="dv-pipes"></div>
+			      <div class="dv-lights"></div>
+			
+			      <div class="dv-window-head">
+			            <div id="playingTitle" class="dv-title">Already playing</div>
+			            <button type="button" class="dv-close" data-close="playingPopup" title="Close"></button>
+			      </div>
+			
+			      <div class="dv-screen dv-window-body dv-playing-body">
+			
+			            <div id="playingWho" class="dv-playing-who">
+			                  <img id="playingRank" class="dv-rank" src="./img/badge-ui-0.png" alt="">
+			                  <span class="dv-playing-name"><span id="playingNickname"></span><span id="playingTag" class="dv-dim"></span></span>
+			            </div>
+			
+			            <p id="playingLead" class="dv-playing-lead">You are already playing on</p>
+			
+			            <!-- Where the survivor plays: the plate of its game mode, the server as the list names it, a light while it lives -->
+			            <div class="dv-plate dv-playing-server">
+			                  <span id="playingMode" class="dv-playing-mode" role="img" aria-label="Survival" data-mode="survival"></span>
+			                  <span class="dv-playing-where">
+			                        <span id="playingServer" class="dv-playing-label"></span>
+			                        <span class="dv-playing-alive"><span class="dv-playing-light" aria-hidden="true"></span>Your survivor is alive</span>
+			                  </span>
+			            </div>
+			
+			            <ul class="dv-playing-rules">
+			                  <li>Go back to it: its score keeps counting for your account.</li>
+			                  <li>Your account can't join another server while it lives, its score would be lost.</li>
+			                  <li>Once it is gone, every server is open again.</li>
+			            </ul>
+			      </div>
+			
+			      <div class="dv-playing-actions">
+			            <button type="button" class="dv-btn dv-btn-small" data-close="playingPopup">Cancel</button>
+			            <button type="button" id="playingBack" class="dv-btn dv-btn-small dv-btn-yellow">Go back</button>
+			      </div>
+			</div>
+			
+		</div>
+
+		<div id="privatePopup" class="dv-overlay">
+
+			<div class="dv-panel dv-window dv-private" role="dialog" aria-modal="true" aria-labelledby="privatePopupTitle">
+			      <div class="dv-pipes"></div>
+			      <div class="dv-lights"></div>
+			
+			      <div class="dv-window-head">
+			            <div id="privatePopupTitle" class="dv-title">Private server</div>
+			            <button type="button" class="dv-close" data-close="privatePopup" title="Close"></button>
+			      </div>
+			
+			      <div class="dv-tabs" role="tablist">
+			            <button type="button" class="dv-btn dv-btn-small dv-tab dv-on" data-privatetab="rent">Rent a server</button>
+			            <button type="button" class="dv-btn dv-btn-small dv-tab" data-privatetab="mine">My servers<span id="privatePopupCount" class="dv-private-count" style="display: none">0</span></button>
+			      </div>
+			
+			      <!-- Drawn by client/js/account/private.js -->
+			      <div class="dv-screen dv-window-body dv-private-body">
+			            <div id="privatePane" class="dv-private-pane dv-scroll"></div>
+			      </div>
+			</div>
+			
+		</div>
+
+		<div id="chat">
+
+			<input id="chatInput" type="text" placeholder="Enter text..." maxLength="60">
+			
+		</div>
+
+		<div id="settingsPopup" class="dv-game-layer">
+
+			<!-- The settings of the game, over the world (client/js/ui/settings.js): the
+			     options of the old canvas box, the keys of the actions, the self kill.
+			     The look of the canvas boxes in CSS (In-game windows, css/mainStyle.css),
+			     their glyphs cut out of the art of the game (img/settings-icons.png).
+			     No id here starts like the panels of the cheat tools (scripts/domids.json) -->
+			<div class="dv-game-window dv-settings" role="dialog" aria-labelledby="settingsTitle" tabindex="-1">
+			
+				<div class="dv-game-box">
+			
+					<div class="dv-game-rail" role="tablist">
+						<button type="button" class="dv-gbtn dv-gbtn-square dv-on" data-page="game" role="tab" aria-selected="true" title="Settings"><span class="dv-ico dv-ico-gear" aria-hidden="true"></span></button>
+						<button type="button" class="dv-gbtn dv-gbtn-square" data-page="controls" role="tab" aria-selected="false" title="Controls"><span class="dv-ico dv-ico-keyboard" aria-hidden="true"></span></button>
+						<button type="button" class="dv-gbtn dv-gbtn-square" data-page="devaster" role="tab" aria-selected="false" title="Kill my devaster"><span class="dv-ico dv-ico-skull" aria-hidden="true"></span></button>
+					</div>
+			
+					<div class="dv-set-main">
+			
+						<div class="dv-set-page" data-page="game" role="tabpanel">
+							<div class="dv-game-title" id="settingsTitle">Settings</div>
+							<div class="dv-set-rows">
+								<div class="dv-set-row">
+									<span class="dv-set-icon"><span class="dv-ico dv-ico-keyboard" aria-hidden="true"></span></span>
+									<span class="dv-set-label">Keyboard</span>
+									<span class="dv-set-options"><button type="button" class="dv-gbtn" data-set="azerty" title="Azerty: Z Q S D to move"><span>Azerty</span></button><button type="button" class="dv-gbtn" data-set="qwerty" title="Qwerty: W A S D to move"><span>Qwerty</span></button></span>
+								</div>
+								<div class="dv-set-row">
+									<span class="dv-set-icon"><span class="dv-ico dv-ico-monitor" aria-hidden="true"></span></span>
+									<span class="dv-set-label">Resolution<span class="dv-set-auto" id="settingsAuto">Auto</span></span>
+									<span class="dv-set-options"><button type="button" class="dv-gbtn" data-set="res-3" title="Low resolution"><span class="dv-ico dv-ico-res-3" aria-hidden="true"></span></button><button type="button" class="dv-gbtn" data-set="res-2" title="Medium resolution"><span class="dv-ico dv-ico-res-2" aria-hidden="true"></span></button><button type="button" class="dv-gbtn" data-set="res-1" title="High resolution"><span class="dv-ico dv-ico-res-1" aria-hidden="true"></span></button></span>
+								</div>
+								<div class="dv-set-row">
+									<span class="dv-set-icon"><span class="dv-ico dv-ico-note" aria-hidden="true"></span></span>
+									<span class="dv-set-label">Music</span>
+									<span class="dv-set-options"><button type="button" class="dv-gbtn" data-set="music-1" title="Music on"><span class="dv-ico dv-ico-sound-on" aria-hidden="true"></span></button><button type="button" class="dv-gbtn" data-set="music-0" title="Music off"><span class="dv-ico dv-ico-sound-off" aria-hidden="true"></span></button></span>
+								</div>
+								<div class="dv-set-row">
+									<span class="dv-set-icon"><span class="dv-ico dv-ico-fx" aria-hidden="true"></span></span>
+									<span class="dv-set-label">Sound effects</span>
+									<span class="dv-set-options"><button type="button" class="dv-gbtn" data-set="fx-1" title="Sound effects on"><span class="dv-ico dv-ico-sound-on" aria-hidden="true"></span></button><button type="button" class="dv-gbtn" data-set="fx-0" title="Sound effects off"><span class="dv-ico dv-ico-sound-off" aria-hidden="true"></span></button></span>
+								</div>
+								<div class="dv-set-row">
+									<span class="dv-set-icon"><span class="dv-ico dv-ico-gem" aria-hidden="true"></span></span>
+									<span class="dv-set-label">Particles</span>
+									<span class="dv-set-options"><button type="button" class="dv-gbtn" data-set="part-0" title="No particles"><span class="dv-ico dv-ico-cross" aria-hidden="true"></span></button><button type="button" class="dv-gbtn" data-set="part-1" title="Few particles"><span class="dv-ico dv-ico-few" aria-hidden="true"></span></button><button type="button" class="dv-gbtn" data-set="part-2" title="Many particles"><span class="dv-ico dv-ico-many" aria-hidden="true"></span></button></span>
+								</div>
+							</div>
+						</div>
+			
+						<div class="dv-set-page" data-page="controls" role="tabpanel" style="display: none">
+							<div class="dv-game-title">Controls</div>
+							<div class="dv-binds-head"><span>Action</span><span>Key</span><span>Other</span></div>
+							<div class="dv-binds dv-scroll">
+									<div class="dv-binds-group">Movement</div>
+									<div class="dv-bind"><span class="dv-bind-name">Move up</span><button type="button" class="dv-gbtn dv-key" data-action="0" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="0" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Move left</span><button type="button" class="dv-gbtn dv-key" data-action="1" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="1" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Move down</span><button type="button" class="dv-gbtn dv-key" data-action="2" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="2" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Move right</span><button type="button" class="dv-gbtn dv-key" data-action="3" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="3" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Run</span><button type="button" class="dv-gbtn dv-key" data-action="4" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="4" data-slot="1"><span></span></button></div>
+									<div class="dv-binds-group">Actions</div>
+									<div class="dv-bind"><span class="dv-bind-name">Use, open, pick up</span><button type="button" class="dv-gbtn dv-key" data-action="5" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="5" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Pick up the other loot</span><button type="button" class="dv-gbtn dv-key" data-action="6" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="6" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Reload, turn a building</span><button type="button" class="dv-gbtn dv-key" data-action="7" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="7" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Craft</span><button type="button" class="dv-gbtn dv-key" data-action="8" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="8" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Map</span><button type="button" class="dv-gbtn dv-key" data-action="9" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="9" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Chat</span><button type="button" class="dv-gbtn dv-key" data-action="10" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="10" data-slot="1"><span></span></button></div>
+									<div class="dv-binds-group">Inventory</div>
+									<div class="dv-bind"><span class="dv-bind-name">Slot 1</span><button type="button" class="dv-gbtn dv-key" data-action="11" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="11" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Slot 2</span><button type="button" class="dv-gbtn dv-key" data-action="12" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="12" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Slot 3</span><button type="button" class="dv-gbtn dv-key" data-action="13" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="13" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Slot 4</span><button type="button" class="dv-gbtn dv-key" data-action="14" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="14" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Slot 5</span><button type="button" class="dv-gbtn dv-key" data-action="15" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="15" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Slot 6</span><button type="button" class="dv-gbtn dv-key" data-action="16" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="16" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Slot 7</span><button type="button" class="dv-gbtn dv-key" data-action="17" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="17" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Slot 8</span><button type="button" class="dv-gbtn dv-key" data-action="18" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="18" data-slot="1"><span></span></button></div>
+									<div class="dv-bind"><span class="dv-bind-name">Slot 9</span><button type="button" class="dv-gbtn dv-key" data-action="19" data-slot="0"><span></span></button><button type="button" class="dv-gbtn dv-key" data-action="19" data-slot="1"><span></span></button></div>
+							</div>
+							<div class="dv-binds-foot">
+								<span class="dv-set-hint" id="settingsBindHint">Click a key, then press the new one. Escape cancels, Delete clears it.</span>
+								<button type="button" class="dv-gbtn" data-set="reset" title="Back to the keys of your keyboard"><span>Reset</span></button>
+							</div>
+						</div>
+			
+						<div class="dv-set-page" data-page="devaster" role="tabpanel" style="display: none">
+							<div class="dv-game-title">Kill my devaster</div>
+							<div class="dv-kill">
+								<div class="dv-kill-preview" aria-hidden="true">
+									<svg viewBox="0 0 160 160">
+										<circle cx="80" cy="80" r="62" fill="none" stroke="rgba(4, 7, 7, 0.45)" stroke-width="16"/>
+										<circle cx="80" cy="80" r="62" fill="none" stroke="#040707" stroke-width="16" stroke-linecap="round" stroke-dasharray="272 1000" transform="rotate(-90 80 80)"/>
+										<circle cx="80" cy="80" r="62" fill="none" stroke="#c72127" stroke-width="7" stroke-linecap="round" stroke-dasharray="272 1000" transform="rotate(-90 80 80)"/>
+									</svg>
+									<img src="./img/day-skin0.png" alt="">
+								</div>
+								<div class="dv-kill-side">
+									<p class="dv-kill-text">Stuck, or done with this life? Stand still: the red circle around your devaster fills in <b>15 seconds</b>, then it dies.</p>
+									<p class="dv-kill-text dv-kill-dim">Everyone around sees the circle. A step or a hit stops it, hunger, cold and radiation don't.</p>
+									<button type="button" class="dv-gbtn dv-gbtn-red dv-kill-go" data-set="kill" id="settingsKill"><span>Kill my devaster</span></button>
+									<span class="dv-set-hint dv-kill-warn" id="settingsKillHint"></span>
+								</div>
+							</div>
+						</div>
+			
+					</div>
+				</div>
+			
+				<button type="button" class="dv-close" data-set="close" title="Close"></button>
+			</div>
+			
+		</div>
+
+		<div id="staffPopup" class="dv-game-layer">
+
+			<!-- The panel of the staff of a private server, over the world
+			     (client/js/ui/staff.js): its owner, its moderators and the admins of the
+			     deploy, each page as far as their privileges go (the server checks them
+			     again). The look of the canvas boxes in CSS (In-game windows,
+			     css/mainStyle.css), their glyphs cut out of the art of the game or drawn
+			     in its style (img/staff-icons.png). The bar of a tool sits beside it.
+			     No id here starts like the panels of the cheat tools (scripts/domids.json) -->
+			
+			<div class="dv-staff-toolbar" id="staffToolbar" style="display: none">
+				<span class="dv-staff-toolbar-icon dv-ico dv-ico-staff dv-ico-build" id="staffToolbarIcon" aria-hidden="true"></span>
+				<span class="dv-staff-toolbar-text" id="staffToolbarText"></span>
+				<button type="button" class="dv-gbtn" data-act="tool-stop" title="Stop (Esc, right click)"><span>Stop</span></button>
+			</div>
+			
+			<div class="dv-game-window dv-staff" role="dialog" aria-labelledby="staffTitle" tabindex="-1" style="display: none">
+			
+				<div class="dv-game-box">
+			
+					<div class="dv-game-rail" role="tablist">
+						<button type="button" class="dv-gbtn dv-gbtn-square dv-on" data-page="players" role="tab" aria-selected="true" title="Players"><span class="dv-ico dv-ico-staff dv-ico-players" aria-hidden="true"></span></button>
+						<button type="button" class="dv-gbtn dv-gbtn-square" data-page="tools" role="tab" aria-selected="false" title="Tools: teleport, build, spawn with a click"><span class="dv-ico dv-ico-staff dv-ico-tools" aria-hidden="true"></span></button>
+						<button type="button" class="dv-gbtn dv-gbtn-square" data-page="commands" role="tab" aria-selected="false" title="Commands"><span class="dv-ico dv-ico-staff dv-ico-commands" aria-hidden="true"></span></button>
+						<button type="button" class="dv-gbtn dv-gbtn-square" data-page="staff" role="tab" aria-selected="false" title="Moderators"><span class="dv-ico dv-ico-staff dv-ico-moderators" aria-hidden="true"></span></button>
+						<button type="button" class="dv-gbtn dv-gbtn-square" data-page="bans" role="tab" aria-selected="false" title="Bans"><span class="dv-ico dv-ico-staff dv-ico-bans" aria-hidden="true"></span></button>
+						<button type="button" class="dv-gbtn dv-gbtn-square" data-page="logs" role="tab" aria-selected="false" title="Logs"><span class="dv-ico dv-ico-staff dv-ico-logs" aria-hidden="true"></span></button>
+						<button type="button" class="dv-gbtn dv-gbtn-square" data-page="server" role="tab" aria-selected="false" title="Server"><span class="dv-ico dv-ico-staff dv-ico-server" aria-hidden="true"></span></button>
+					</div>
+			
+					<div class="dv-staff-main">
+			
+						<div class="dv-staff-head">
+							<div class="dv-game-title" id="staffTitle">Players</div>
+							<span class="dv-staff-role" id="staffRole"></span>
+							<span class="dv-staff-left" id="staffLeft"></span>
+						</div>
+			
+						<div class="dv-staff-page" data-page="players" role="tabpanel">
+							<div class="dv-staff-bar">
+								<input type="text" class="dv-staff-input" id="staffPlayerSearch" maxlength="40" spellcheck="false" autocomplete="off" placeholder="Find a player: name, account, #slot or address tag">
+								<span class="dv-staff-count" id="staffPlayerCount"></span>
+							</div>
+							<div class="dv-staff-list dv-scroll" id="staffPlayers"></div>
+							<div class="dv-staff-actions" id="staffPlayerActions"></div>
+						</div>
+			
+						<div class="dv-staff-page" data-page="tools" role="tabpanel" style="display: none">
+							<div class="dv-staff-tools" id="staffTools"></div>
+							<div class="dv-staff-palette dv-scroll" id="staffPalette"></div>
+							<div class="dv-staff-foot">
+								<span class="dv-staff-hint" id="staffToolHint">Pick a tool, then click the world, the minimap or the map (M).</span>
+								<button type="button" class="dv-gbtn dv-staff-go" data-act="tool-use"><span>Use it</span></button>
+							</div>
+						</div>
+			
+						<div class="dv-staff-page" data-page="commands" role="tabpanel" style="display: none">
+							<div class="dv-staff-bar">
+								<input type="text" class="dv-staff-input dv-staff-line" id="staffCommandLine" maxlength="4000" spellcheck="false" autocomplete="off" placeholder="!command=value (Enter runs it, up and down for the last ones)">
+								<button type="button" class="dv-gbtn" data-act="line-run"><span>Run</span></button>
+							</div>
+							<div class="dv-staff-bar">
+								<input type="text" class="dv-staff-input" id="staffCommandSearch" maxlength="40" spellcheck="false" autocomplete="off" placeholder="Find a command">
+							</div>
+							<div class="dv-staff-list dv-scroll" id="staffCommands"></div>
+						</div>
+			
+						<div class="dv-staff-page" data-page="staff" role="tabpanel" style="display: none">
+							<div class="dv-staff-hint dv-staff-intro" id="staffTeamHint"></div>
+							<div class="dv-staff-list dv-scroll" id="staffTeam"></div>
+						</div>
+			
+						<div class="dv-staff-page" data-page="bans" role="tabpanel" style="display: none">
+							<div class="dv-staff-hint dv-staff-intro">The bans hold on this server only. An address is never shown: the ban keeps the name it was taken with.</div>
+							<div class="dv-staff-list dv-scroll" id="staffBans"></div>
+						</div>
+			
+						<div class="dv-staff-page" data-page="logs" role="tabpanel" style="display: none">
+							<div class="dv-staff-bar">
+								<span class="dv-staff-chips" id="staffLogKinds">
+									<button type="button" class="dv-gbtn dv-on" data-logs="all"><span>All</span></button>
+									<button type="button" class="dv-gbtn" data-logs="commands"><span>Commands</span></button>
+									<button type="button" class="dv-gbtn" data-logs="joins"><span>Joins</span></button>
+									<button type="button" class="dv-gbtn" data-logs="staff"><span>Staff</span></button>
+								</span>
+								<input type="text" class="dv-staff-input" id="staffLogSearch" maxlength="40" spellcheck="false" autocomplete="off" placeholder="Find">
+							</div>
+							<div class="dv-staff-list dv-scroll" id="staffLogs"></div>
+						</div>
+			
+						<div class="dv-staff-page" data-page="server" role="tabpanel" style="display: none">
+							<div class="dv-staff-list dv-scroll" id="staffServer"></div>
+						</div>
+			
+						<span class="dv-staff-status" id="staffStatus"></span>
+					</div>
+				</div>
+			
+				<button type="button" class="dv-close" data-act="close" title="Close"></button>
+			</div>
+			
+		</div>
+
+	</body>
+</html>

@@ -1,0 +1,115 @@
+{
+  "status": "local_checks_passed",
+  "publication": "not_published",
+  "network_freshness": "Unable to refresh game source or publish because the configured network gateway returns HTTP 503.",
+  "source": {
+    "page_url": "https://devast.io/",
+    "script_url": "https://devast.io/js/YukAlFEf489QnSaQ.js",
+    "raw_sha256": "3c2cadef52f237c7c039e242245853ed531f2b935f4ca6c25dc873f07c1a3b0e"
+  },
+  "source_commit": "0ef094604355303ffcc040c545d572c308f4eb7a",
+  "output_sha256": "8b91f1635622643fd5cd8b87c82024eadcd1184ea0cacc77cc8fed3e48b3e7a2",
+  "mod_source_sha256": {
+    "mod/responsive.js": "d3d3c3a505f8ae2dd9cdff4af3542e993fe869eeb663e22edb24e253b50e009d",
+    "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
+    "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8",
+    "mod/ilm-aim.js": "6db11f6e828a7e9b798f39d908eeb13f646465301fd24124159253089876f632",
+    "mod/ballistic-model.js": "d3b5c075b1db229e12a86d5db7731d0138a961eaa51d4116142eba2b478a9e7c"
+  },
+  "regression": {
+    "command": "npm test",
+    "status": "passed",
+    "python_tests": 82,
+    "node_tests": 321
+  },
+  "candidate_function_tests": {
+    "status": "passed",
+    "node_tests": 239,
+    "files": [
+      "tests/mod.test.cjs",
+      "tests/mod-performance.test.cjs",
+      "tests/rejoin-recovery.test.cjs",
+      "tests/ilm-autobuild.test.cjs",
+      "tests/player-labels.test.cjs",
+      "tests/world-visuals.test.cjs",
+      "tests/door-click.test.cjs",
+      "tests/automation-transport.test.cjs",
+      "tests/native-aim-transport.test.cjs",
+      "tests/ilm-current.test.cjs",
+      "tests/mod-traffic.test.cjs",
+      "tests/aim-validity.test.cjs",
+      "tests/ilm-native-pipeline.test.cjs",
+      "tests/aim-line-projection.test.cjs",
+      "tests/aim-settings-persistence.test.cjs",
+      "tests/aim-settings-effects.test.cjs",
+      "tests/jitter-arbitration.test.cjs",
+      "tests/ballistics.test.cjs",
+      "tests/aim-preserved-before-disconnect.test.cjs",
+      "tests/connection-recovery-only.test.cjs",
+      "tests/aim-motion-continuity.test.cjs",
+      "tests/projectile-accuracy.test.cjs",
+      "tests/death-diagnostics.test.cjs",
+      "tests/wire-diagnostics.test.cjs",
+      "tests/legacy-settings-migration.test.cjs",
+      "tests/aim-angle-domain.test.cjs",
+      "tests/native-preflight-errors.test.cjs",
+      "tests/aim-review.test.cjs"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "browser_version": "156.0.8078.79",
+      "output_sha256": "8b91f1635622643fd5cd8b87c82024eadcd1184ea0cacc77cc8fed3e48b3e7a2",
+      "page_errors": [],
+      "fixture_scope": "native browser fixtures; no live game session"
+    },
+    "firefox": {
+      "status": "passed",
+      "browser_version": "153.0",
+      "output_sha256": "8b91f1635622643fd5cd8b87c82024eadcd1184ea0cacc77cc8fed3e48b3e7a2",
+      "page_errors": [],
+      "fixture_scope": "native browser fixtures; no live game session"
+    }
+  },
+  "unresolved": "The authoritative reason for the live server death packet remains unproven.",
+  "delivery": {
+    "json": "Devast-io-reviewed.json",
+    "kind": "full embedded client; local fixed version"
+  },
+  "embedded_json_import": {
+    "scope": "Import of the embedded local Resource Override and page reload on the downloaded game page; no live server login",
+    "browsers": {
+      "chromium": {
+        "status": "passed",
+        "replacements": 2,
+        "first": {
+          "loaded": true,
+          "errors": [],
+          "menus": 1
+        },
+        "reload": {
+          "loaded": true,
+          "errors": [],
+          "menus": 1
+        },
+        "page_errors": []
+      },
+      "firefox": {
+        "status": "passed",
+        "replacements": 2,
+        "first": {
+          "loaded": true,
+          "errors": [],
+          "menus": 1
+        },
+        "reload": {
+          "loaded": true,
+          "errors": [],
+          "menus": 1
+        },
+        "page_errors": []
+      }
+    }
+  }
+}

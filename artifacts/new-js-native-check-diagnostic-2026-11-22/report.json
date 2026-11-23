@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "scope": "Regular Chrome controlled with browser input and passive network events; no Playwright helper injection or page evaluation before the session ends",
+  "artifact": "/workspace/Devast-io/artifacts/new-js-entry-2026-11-22/Devast-io-New-JS.json",
+  "sha256": "5ef7a9fa5e7a2f861d4e8e01b06433ed625669431f71f5200e1efbe8335c9a8e",
+  "joined": false,
+  "minutePassed": false,
+  "sockets": [],
+  "replacements": 1,
+  "networkErrors": [],
+  "navigationAttempts": 1,
+  "freshGuestContext": true,
+  "homeStatus": 200,
+  "officialPageCache": true,
+  "replacedPath": "/js/y6fopeDaqhW3Gwmo2uwu3ccFWsO.js",
+  "nativeRequestFailures": [
+    {
+      "host": "atlanta1.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "losangeles3.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "frankfurt1.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    },
+    {
+      "host": "osaka2.devast.io",
+      "type": "XHR",
+      "error": "net::ERR_FAILED",
+      "canceled": false,
+      "cors": {
+        "corsError": "MissingAllowOriginHeader",
+        "failedParameter": ""
+      }
+    }
+  ],
+  "beforeLogin": {
+    "integrityFlag": 0,
+    "state": 0,
+    "modErrors": 0
+  },
+  "error": "Diagnostic only: no login attempted",
+  "errorStack": "Error: Diagnostic only: no login attempted\n    at /workspace/Devast-io/artifacts/new-js-native-check-diagnostic-2026-11-22/check.cjs:59:292",
+  "failureState": {
+    "focused": true,
+    "visible": "visible",
+    "loaded": true,
+    "state": 0,
+    "phase": "idle",
+    "socket": null,
+    "callbacks": {
+      "wrapped": 0,
+      "accepted": 0,
+      "rejectedStale": 0,
+      "rejectedWhileConnected": 0,
+      "rejectedAfterDispose": 0,
+      "rejectedDuplicate": 0
+    },
+    "status": "Ready",
+    "adWaiting": false,
+    "nativePending": false,
+    "errors": 0,
+    "events": []
+  },
+  "elapsedMs": 4769
+}

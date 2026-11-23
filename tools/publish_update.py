@@ -36,10 +36,22 @@ def artifacts(root, output):
         raise ValueError('Verified release belongs to another feature contract')
     if 'candidate_tests' in contract and validation['candidate_function_tests'].get('files') != contract['candidate_tests']:
         raise ValueError('Required current feature tests were not verified')
+    typed_sources = contract.get('typescript_sources', [])
+    if 'typescript-owned-mod' in contract.get('features', []):
+        if not typed_sources:
+            raise ValueError('TypeScript source list is missing')
+        expected_typed = {file: digest((root / file).read_bytes()) for file in typed_sources}
+        proof = validation.get('typescript', {})
+        if proof.get('status') != 'passed' or proof.get('strict') is not True or proof.get('source_sha256') != expected_typed:
+            raise ValueError('TypeScript verification is missing or stale')
     for browser in contract.get('required_browsers', []):
         report = validation.get('browsers', {}).get(browser, {})
         if report.get('status') != 'passed' or report.get('output_sha256') != meta['output_sha256']:
             raise ValueError('Required browser validation missing or stale: ' + browser)
+        if 'typescript-owned-mod' in contract.get('features', []):
+            proof = report.get('typescript', {})
+            if proof.get('status') != 'passed' or proof.get('strict') is not True or proof.get('source_sha256') != expected_typed:
+                raise ValueError('TypeScript browser verification is missing or stale: ' + browser)
         if report.get('integrity_compatibility') != {'status': 'passed', 'predicates': 3}:
             raise ValueError('Native integrity compatibility was not verified in browser: ' + browser)
         if 'received-mines-and-wires-visibility' in contract.get('features', []) and report.get('world_visibility') != {'status': 'passed', 'native_renderers': 3}:
@@ -92,8 +104,12 @@ def artifacts(root, output):
             ownership = report.get('native', {}).get('preflight_error_ownership', {})
             if (ownership.get('status') != 'passed' or type(ownership.get('late_failure_close_calls')) is not int
                     or ownership.get('late_failure_close_calls') != 0 or ownership.get('current_failure_close_calls') != 1
-                    or not all(ownership.get(key) is True for key in ('live_connection_preserved', 'stale_error_rejected', 'saved_identity_unchanged', 'features_disabled'))):
+                    or not all(ownership.get(key) is True for key in ('live_connection_preserved', 'stale_error_rejected', 'terminal_once', 'late_failure_during_connecting_rejected', 'saved_identity_unchanged', 'features_disabled'))):
                 raise ValueError('Native preflight error ownership was not verified in browser: ' + browser)
+        if 'strafe-movement-ownership' in contract.get('features', []):
+            movement = report.get('native', {}).get('movement_ownership', {})
+            if movement.get('status') != 'passed' or not all(movement.get(key) is True for key in ('restores_physical_mask', 'native_move_supersedes', 'settings_reset_restores', 'dispose_restores_once')):
+                raise ValueError('Native movement restoration was not verified in browser: ' + browser)
         if 'native-rejection-stops-auto-reconnect' in contract.get('features', []):
             recovery = report.get('native', {}).get('rejection_recovery', {})
             if (recovery.get('status') != 'passed' or type(recovery.get('automatic_retries')) is not int

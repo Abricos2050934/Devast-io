@@ -1,0 +1,191 @@
+{
+  "schema": 1,
+  "scope": "Regular Chrome controlled with browser input and passive network events; no Playwright helper injection or page evaluation before the session ends",
+  "artifact": "/workspace/Devast-io/artifacts/new-js-entry-2026-11-22/Devast-io-New-JS.json",
+  "sha256": "5ef7a9fa5e7a2f861d4e8e01b06433ed625669431f71f5200e1efbe8335c9a8e",
+  "joined": false,
+  "minutePassed": false,
+  "sockets": [],
+  "replacements": 1,
+  "networkErrors": [
+    {
+      "host": "devast.io",
+      "path": "/css/style.css",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-cooked-steak-out.png",
+      "status": 503
+    },
+    {
+      "host": "fonts.googleapis.com",
+      "path": "/css",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/currency-128.png",
+      "status": 503
+    },
+    {
+      "host": "fonts.googleapis.com",
+      "path": "/css",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-can-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/badge-ui-0.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-campfire-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/cosmetics-icon.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/changelog-33.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/currency-48.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-campfire-bbq-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-coat-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-radaway-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-wood-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-gaz-protection-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-sleeping-bag-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/day-ghoul.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-gaz-mask-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-wood-door-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/day-skin0.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-workbench-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/badge-ui-7.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/chest1.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/karma5.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-bandage-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/inv-landmine-out.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/caps-icon.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/badge-ui-13.png",
+      "status": 503
+    },
+    {
+      "host": "devast.io",
+      "path": "/img/settings-out.png",
+      "status": 503
+    }
+  ],
+  "navigationAttempts": 1,
+  "freshGuestContext": true,
+  "homeStatus": 200,
+  "officialPageCache": true,
+  "replacedPath": "/js/y6fopeDaqhW3Gwmo2uwu3ccFWsO.js",
+  "error": "The live server list is unavailable",
+  "errorStack": "Error: The live server list is unavailable\n    at /workspace/Devast-io/artifacts/new-js-cached-page-session-2026-11-22/check.cjs:64:64",
+  "failureState": {
+    "focused": true,
+    "visible": "visible",
+    "loaded": true,
+    "state": 0,
+    "phase": "idle",
+    "socket": null,
+    "callbacks": {
+      "wrapped": 0,
+      "accepted": 0,
+      "rejectedStale": 0,
+      "rejectedWhileConnected": 0,
+      "rejectedAfterDispose": 0,
+      "rejectedDuplicate": 0
+    },
+    "status": "Ready",
+    "adWaiting": false,
+    "nativePending": false,
+    "errors": 0,
+    "events": []
+  },
+  "elapsedMs": 68343
+}

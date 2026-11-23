@@ -1,0 +1,214 @@
+{
+  "status": "built_not_live_verified",
+  "originalNativeSigners": true,
+  "outputSha256": "7744232c7d0cab940416f3e5487e0adab54498c23c8aa6328059a77eb2d41d37",
+  "rawSha256": "3c2cadef52f237c7c039e242245853ed531f2b935f4ca6c25dc873f07c1a3b0e",
+  "bytes": 7139227,
+  "nativePrograms": 30,
+  "patchOperations": 34,
+  "decoderAudit": [
+    {
+      "block": 0,
+      "decoderLocals": 16,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 1,
+      "decoderLocals": 13,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 2,
+      "decoderLocals": 13,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 3,
+      "decoderLocals": 14,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 4,
+      "decoderLocals": 16,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 5,
+      "decoderLocals": 14,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 6,
+      "decoderLocals": 16,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 7,
+      "decoderLocals": 15,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 8,
+      "decoderLocals": 16,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 9,
+      "decoderLocals": 16,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 10,
+      "decoderLocals": 13,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 11,
+      "decoderLocals": 15,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 12,
+      "decoderLocals": 14,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 13,
+      "decoderLocals": 15,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 14,
+      "decoderLocals": 13,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 15,
+      "decoderLocals": 14,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 16,
+      "decoderLocals": 14,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 17,
+      "decoderLocals": 15,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 18,
+      "decoderLocals": 16,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 19,
+      "decoderLocals": 13,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 20,
+      "decoderLocals": 14,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 21,
+      "decoderLocals": 15,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 22,
+      "decoderLocals": 14,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 23,
+      "decoderLocals": 15,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 24,
+      "decoderLocals": 13,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 25,
+      "decoderLocals": 16,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 26,
+      "decoderLocals": 13,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 27,
+      "decoderLocals": 15,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 28,
+      "decoderLocals": 14,
+      "capturedLocals": [],
+      "outerWrites": 0
+    },
+    {
+      "block": 29,
+      "decoderLocals": 15,
+      "capturedLocals": [],
+      "outerWrites": 0
+    }
+  ],
+  "editedPrograms": [
+    {
+      "index": 4,
+      "operations": [
+        "ilm-native-angle-bookkeeping-primary",
+        "ilm-native-angle-bookkeeping-secondary"
+      ]
+    },
+    {
+      "index": 5,
+      "operations": [
+        "jitter-native-fire-priority",
+        "message15-native-afterRelease"
+      ]
+    },
+    {
+      "index": 6,
+      "operations": [
+        "ilm-native-initial-nickname-id"
+      ]
+    }
+  ],
+  "staticReplay": "Each runtime edit reproduces the canonical patched native program exactly; original eval callers and decoder statements retained"
+}

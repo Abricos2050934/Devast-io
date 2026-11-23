@@ -1,0 +1,298 @@
+{
+  "name": "all-off",
+  "requestedServer": "Atlanta 1",
+  "scriptHash": "ed148008be8ef73bf7894bcacbc62486efecd2696539b2ec7cdc461a4bdc40e3",
+  "loaded": true,
+  "joined": false,
+  "sockets": [
+    {
+      "host": "atlanta2.devast.io",
+      "openedAt": 8858,
+      "received": 0,
+      "sent": 0,
+      "closedAt": 8929,
+      "error": true,
+      "death": null
+    },
+    {
+      "host": "atlanta4.devast.io",
+      "openedAt": 23008,
+      "received": 0,
+      "sent": 0,
+      "closedAt": 23089,
+      "error": true,
+      "death": null
+    },
+    {
+      "host": "atlanta2.devast.io",
+      "openedAt": 39341,
+      "received": 0,
+      "sent": 0,
+      "closedAt": 39389,
+      "error": true,
+      "death": null
+    }
+  ],
+  "errors": [
+    {
+      "at": 2393,
+      "name": "Uncaught (in promise) TypeError",
+      "message": "Failed to fetch"
+    },
+    {
+      "at": 2459,
+      "name": "Uncaught (in promise) TypeError",
+      "message": "Failed to fetch"
+    },
+    {
+      "at": 4240,
+      "name": "",
+      "message": "Uncaught (in promise) false"
+    },
+    {
+      "at": 4268,
+      "name": "",
+      "message": "false"
+    },
+    {
+      "at": 4269,
+      "name": "",
+      "message": "Uncaught (in promise) false"
+    },
+    {
+      "at": 4341,
+      "name": "",
+      "message": "Uncaught (in promise) false"
+    },
+    {
+      "at": 4420,
+      "name": "",
+      "message": "false"
+    },
+    {
+      "at": 4420,
+      "name": "Uncaught (in promise) TypeError",
+      "message": "Failed to fetch"
+    },
+    {
+      "at": 6104,
+      "name": "",
+      "message": "false"
+    }
+  ],
+  "failedRequests": {
+    "stylesheet": 2,
+    "script": 9,
+    "xhr": 15,
+    "fetch": 34
+  },
+  "resourceErrors": 19,
+  "samples": [],
+  "homeStatus": 200,
+  "selected": "Atlanta 1 - 8 players",
+  "selectionAtClick": {
+    "value": "atlantasurvival1",
+    "label": "Atlanta 1 - 8 players"
+  },
+  "clickedAt": 5529,
+  "final": {
+    "menu": true,
+    "state": 64,
+    "socketState": 3,
+    "playerAssigned": false,
+    "ended": false,
+    "integrityFlag": 0,
+    "modErrorCount": 0,
+    "browserFailures": {
+      "exceptions": 0,
+      "unhandledRejections": 3,
+      "resourceErrors": 9
+    },
+    "callbacks": {
+      "wrapped": 15,
+      "accepted": 9,
+      "rejectedStale": 0,
+      "rejectedWhileConnected": 0,
+      "rejectedAfterDispose": 0,
+      "rejectedDuplicate": 0
+    },
+    "aim": {
+      "enabled": false,
+      "spear": false,
+      "hidePlayerAngle": false,
+      "hideAimbotAngle": false,
+      "source": "message27-bby",
+      "adaptive": true,
+      "jitter": false,
+      "jitterSpeed": 360,
+      "strafe": false,
+      "autoFire": false,
+      "target": "players",
+      "lockId": -1,
+      "distanceCoefficient": 80,
+      "offsetCoefficient": 0.8
+    },
+    "failureCode": 0,
+    "automation": {
+      "autoBuild": false,
+      "fastLoot": false,
+      "slowLoot": false,
+      "autoTake": false,
+      "spamChat": false
+    },
+    "combat": {
+      "angle": 0,
+      "attack": 0,
+      "release": 0
+    },
+    "wireTraffic": {
+      "packets": 0,
+      "bytes": 0
+    },
+    "events": [
+      {
+        "type": "socket-error",
+        "at": 8919,
+        "health": 0,
+        "state": 2,
+        "flag": 0,
+        "localCloseSource": null,
+        "received": 0,
+        "sent": 0,
+        "commands": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        }
+      },
+      {
+        "type": "socket-close",
+        "at": 8920,
+        "health": 0,
+        "state": 64,
+        "code": 1006,
+        "clean": false,
+        "flag": 0,
+        "localCloseSource": null,
+        "received": 0,
+        "sent": 0,
+        "commands": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        }
+      },
+      {
+        "type": "client-close-request",
+        "at": 10854,
+        "health": 0,
+        "state": 64,
+        "flag": 0,
+        "localCloseSource": "native-entry-timeout",
+        "received": 0,
+        "sent": 0,
+        "commands": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        }
+      },
+      {
+        "type": "socket-error",
+        "at": 23078,
+        "health": 0,
+        "state": 66,
+        "flag": 0,
+        "localCloseSource": null,
+        "received": 0,
+        "sent": 0,
+        "commands": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        }
+      },
+      {
+        "type": "socket-close",
+        "at": 23078,
+        "health": 0,
+        "state": 64,
+        "code": 1006,
+        "clean": false,
+        "flag": 0,
+        "localCloseSource": null,
+        "received": 0,
+        "sent": 0,
+        "commands": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        }
+      },
+      {
+        "type": "client-close-request",
+        "at": 24992,
+        "health": 0,
+        "state": 64,
+        "flag": 0,
+        "localCloseSource": "native-entry-timeout",
+        "received": 0,
+        "sent": 0,
+        "commands": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        }
+      },
+      {
+        "type": "socket-error",
+        "at": 39378,
+        "health": 0,
+        "state": 66,
+        "flag": 0,
+        "localCloseSource": null,
+        "received": 0,
+        "sent": 0,
+        "commands": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        }
+      },
+      {
+        "type": "socket-close",
+        "at": 39379,
+        "health": 0,
+        "state": 64,
+        "code": 1006,
+        "clean": false,
+        "flag": 0,
+        "localCloseSource": null,
+        "received": 0,
+        "sent": 0,
+        "commands": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        }
+      },
+      {
+        "type": "client-close-request",
+        "at": 41310,
+        "health": 0,
+        "state": 64,
+        "flag": 0,
+        "localCloseSource": "native-entry-timeout",
+        "received": 0,
+        "sent": 0,
+        "commands": {
+          "angle": 0,
+          "attack": 0,
+          "release": 0
+        }
+      }
+    ]
+  },
+  "secondsAfterJoin": null,
+  "elapsedMs": 42315
+}

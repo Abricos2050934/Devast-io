@@ -1,0 +1,42 @@
+
+> devast-verified-typescript-mod@1.0.0 test
+> node --test tests/typescript.test.cjs tests/video-prediction.test.cjs tests/video-aim-hud.test.cjs
+
+✔ all owned TypeScript fragments pass strict checking and reproduce the JS used by the game (3986.206405ms)
+✔ type erasure preserves conditional operators, optional parameters and runtime token boundaries (1.912788ms)
+✔ public mod types reject invalid settings, packets and failed prediction use (475.86967ms)
+✔ type errors and disabled checks preserve all previous generated JavaScript (6786.016266ms)
+✔ the left HUD shows configured ping honestly before any measurements exist (16.419649ms)
+✔ measured values replace the configured label and update the displayed delta (6.670477ms)
+✔ HUD visibility is saved and no statistics are drawn after death, disconnect or disposal (7.285236ms)
+✔ the full-height HUD remains fixed in screen space and preserves the native canvas transform (4.432326ms)
+✔ screenshot defaults remain explicit configured values until genuine RTT samples exist (3.950113ms)
+✔ the RTT window keeps the latest 125 samples and reflects a changed window immediately (1.018457ms)
+✔ invalid, stale and previous-clock RTT data cannot become measured lead (1.337028ms)
+✔ receipt age and user compensation are counted exactly once in the launch time (1.542201ms)
+✔ video prediction intercepts independent motion at 500 units/s (2.402334ms)
+✔ video prediction intercepts independent motion at 1400 units/s (0.867583ms)
+✔ video prediction intercepts independent motion at 1450 units/s (1.127689ms)
+✔ measured latency reduces the miss in a delayed crossing compared with uncompensated aim (2.281605ms)
+✔ step count controls actual refinement work; an insufficient approximation uses the exact fallback (1.821264ms)
+✔ spear lateral launch geometry intersects the target along the actual projectile ray (1.164202ms)
+✔ a negative spear hand offset remains a signed launch offset rather than being clamped away (1.189709ms)
+✔ unreachable, stale and invalid profiles never manufacture a shot (1.032407ms)
+✔ the installed spear path uses the video model and sends its corrected angle before native fire (14.307104ms)
+✔ video mode holds a valid target, obeys explicit lock and releases removed targets (6.705599ms)
+✔ RTT ingestion adds no packets and resets on a new socket or session (5.969731ms)
+✔ video settings are editable through the menu, bounded and saved (7.255974ms)
+✔ the portable browser verifier exercises the installed video mode (12.077576ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11488.900566
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice

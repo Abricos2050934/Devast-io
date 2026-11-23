@@ -16,6 +16,13 @@ function __installDevastMod(B) {
       this.AdaptiveAimEnabled = true;
       this.predictionAutoSpeed = true;
       this.predictionLatencyMs = 0;
+      this.VideoAimEnabled = false;
+      this.VideoAimHudEnabled = true;
+      this.videoPingMs = 90;
+      this.videoPingSteps = 125;
+      this.videoAimSteps = 2;
+      this.videoDelayMs = 1;
+      this.videoDelaySendMs = 20;
       this.bulletSpeedCoefficient = 1.5;
       this.HidePlayerLabels = true;
       this.OpenEverythingByClick = true;
@@ -38,7 +45,6 @@ function __installDevastMod(B) {
       this.SpamChatText = "";
       this.PlayerId = "";
       this.ModMenuKey = "KeyH";
-      this.ModMenuKeyCode = 72;
       this.hit = true;
       this.ShowPosition = true;
       this.ShowNamesOnMap = true;
@@ -62,13 +68,14 @@ function __installDevastMod(B) {
   const SAVE = 'DevastILM:settings:v3', LEGACY_SAVE = 'BestModMenuConfig';
   const transient = new Set(['Token', 'token', 'tokenId', 'userId']);
   const keySettings = ['AimbotKey','AutoBuiledKey','SAutoLootKey','FAutoLootKey','AutoTakeKey','XrayKey','PlayersListKey','ModMenuKey','AntiAimbotKey','JitterKey','HideAngleKey'];
-  const limits = {JitterSpeed:[1,3600],zoomFactor:[.33,2],Xraytransparency:[.05,1],predictionLatencyMs:[0,500],bulletSpeedCoefficient:[.1,20],...__ilmAimConstraints().limits};
+  const limits = {JitterSpeed:[1,3600],zoomFactor:[.33,2],Xraytransparency:[.05,1],predictionLatencyMs:[0,500],bulletSpeedCoefficient:[.1,20],videoPingMs:[0,500],videoPingSteps:[1,250],videoAimSteps:[1,8],videoDelayMs:[0,100],videoDelaySendMs:[0,100],...__ilmAimConstraints().limits};
   const choices = __ilmAimConstraints().choices;
   function validateSetting(key,value) {
     if (!Object.prototype.hasOwnProperty.call(defaults,key) || typeof value !== typeof defaults[key]) throw new Error('Invalid setting: '+key);
     if (typeof value === 'number' && !Number.isFinite(value)) throw new Error('Invalid numeric setting');
     if (limits[key] && (value < limits[key][0] || value > limits[key][1])) throw new Error('Setting out of range: '+key);
     if (key === 'lockId' && !Number.isInteger(value)) throw new Error('Player ID must be an integer');
+    if (['videoPingSteps','videoAimSteps'].includes(key) && !Number.isInteger(value)) throw new Error('Prediction steps must be an integer');
     if (choices[key] && !choices[key].includes(value)) throw new Error('Invalid choice: '+key);
     if (keySettings.includes(key) && value!=='NoKey' && !/^(Key[A-Z]|Digit[0-9]|F(?:[1-9]|1[0-2])|Space|Escape|Tab|Backquote|Minus|Equal|BracketLeft|BracketRight|Backslash|Semicolon|Quote|Comma|Period|Slash|Arrow(?:Up|Down|Left|Right)|(?:Shift|Control|Alt|Meta)(?:Left|Right)|Enter|Backspace|Delete|Insert|Home|End|PageUp|PageDown|Numpad\w+)$/.test(value)) throw new Error('Invalid key code');
     return value;
@@ -82,7 +89,15 @@ function __installDevastMod(B) {
     }
   } catch (_) {}
   Object.assign(MOD,aimDefaults);
-  try{const saved=JSON.parse(localStorage.getItem(AIM_SAVE)||'{}');for(const key of aimKeys)if(Object.hasOwn(saved,key)){try{MOD[key]=validateSetting(key,saved[key]);}catch(_){}}}catch(_){}
+  try {
+    const saved = JSON.parse(localStorage.getItem(AIM_SAVE) || '{}');
+    for (const key of aimKeys) if (Object.hasOwn(saved, key)) {
+      try { MOD[key] = validateSetting(key, saved[key]); } catch (_) {}
+    }
+    if (!Object.hasOwn(saved, 'spearAutoThrow') && typeof saved.autoFire === 'boolean') {
+      MOD.spearAutoThrow = saved.autoFire;
+    }
+  } catch (_) {}
   const usedKeys = new Set();
   for (const key of keySettings) {
     if(MOD[key]==='NoKey')continue;
@@ -811,11 +826,14 @@ function __installDevastMod(B) {
       }
       if(packet[0]===6)stopJitter();
       if(packet[0]===4){stopJitter();jitter.fireUntil=performance.now()+150;if(!__send([6,Aimbot.lastAngle],true,true))return false;}
-      return __send(packet,!MOD.AdaptiveAimEnabled,true);
+      const sent=__send(packet,!MOD.AdaptiveAimEnabled,true);
+      if(sent&&packet[0]===2&&source?.kind==='anti')strafeOwnsMovement=true;
+      return sent;
     }
   });
   const GetAllTargets=aimModule.targets,Aimbot=aimModule.aim;
   const originalGunResolve=Aimbot.resolve.bind(Aimbot),originalAimDeath=Aimbot.onDeath.bind(Aimbot),originalAimRefresh=Aimbot.refresh.bind(Aimbot);
+  const originalSpearResolve=Aimbot.spearResolve.bind(Aimbot);
   function normalizeAimAngle(angle){return angle>=0&&angle<360?angle:((angle%360)+360)%360;}
   const originalAimSmooth=Aimbot.aimSmooth.bind(Aimbot);
   Aimbot.aimSmooth=function(angle){
@@ -828,20 +846,39 @@ function __installDevastMod(B) {
     this._smoothAngle=normalizeAimAngle(resolved);
     return this._smoothAngle;
   };
-  function adaptiveGunActive(){return MOD.AdaptiveAimEnabled&&MOD.AimBotEnabled&&!(MOD.AimbotSpearEnabled&&GetAllTargets.selfWeapon===5);}
+  function videoSpearActive(){return MOD.AdaptiveAimEnabled&&MOD.VideoAimEnabled&&MOD.AimbotSpearEnabled&&GetAllTargets.selfWeapon===5;}
+  function adaptiveGunActive(){return videoSpearActive()||MOD.AdaptiveAimEnabled&&MOD.AimBotEnabled&&!(MOD.AimbotSpearEnabled&&GetAllTargets.selfWeapon===5);}
   Aimbot.refresh=function(){if(adaptiveGunActive()&&!this.dead)aimModule.refreshTargets();return originalAimRefresh();};
   function ballisticWeaponProfile(weapon){
     const native=B.types?.[B.categories.player]?.curveWeapons?.[weapon];
+    if(videoSpearActive()&&weapon===5)return {
+      speed:Number.isFinite(native?.curveBulletSpeed)&&native.curveBulletSpeed>0?native.curveBulletSpeed*1000:500,
+      range:Math.min(Number.isFinite(native?.path)&&native.path>0?native.path:600,MOD.spearMaxRange),
+      forward:MOD.spearHandFwd,side:MOD.spearHandSide
+    };
     return {speed:Number.isFinite(native?.curveBulletSpeed)?native.curveBulletSpeed*1000:0,range:Number.isFinite(native?.path)?native.path:0};
   }
   Aimbot.onDeath=function(){ballistic.reset();ballisticPrediction={valid:false,status:'session-ended'};lastAdaptiveDirection=-Infinity;lastAdaptiveTarget=null;return originalAimDeath();};
   Aimbot.resolve=function(){
-    if(!MOD.AdaptiveAimEnabled)return originalGunResolve();
+    if(!MOD.AdaptiveAimEnabled){
+      const self=GetAllTargets.players[B.world.ᅠᏧ‍?.id];
+      if(!self?.active||!Number.isFinite(self.x)||!Number.isFinite(self.y)){
+        this.targetPlayer=null;GetAllTargets.lines[0].reset();return this.lastAngle;
+      }
+      return originalGunResolve();
+    }
     const id=B.world.ᅠᏧ‍?.id,self=GetAllTargets.players[id];
     let target=null;
     if(self?.active){
       if(MOD.lockId>-1){const locked=GetAllTargets.players[MOD.lockId];if(this.isPlayerCandidate(locked))target=locked;}
-      else target=this.findNearestPlayerTo(MOD.mouseFovEnable?GetAllTargets.mouseMapCords:self,MOD.mouseFovEnable?MOD.mouseFov:MOD.aimMaxRange);
+      else {
+        const held=MOD.VideoAimEnabled?this.targetPlayer:null;
+        const anchor=MOD.mouseFovEnable?GetAllTargets.mouseMapCords:self,range=MOD.mouseFovEnable?MOD.mouseFov:MOD.aimMaxRange;
+        const heldPlayer=held&&GetAllTargets.players[held.id]===held;
+        const permitted=held&&(heldPlayer?MOD.target!=='ghouls'&&this.isPlayerCandidate(held):MOD.target!=='players'&&GetAllTargets.ghouls[held.id]===held);
+        if(held&&held.active&&permitted&&Math.hypot(held.x-anchor.x,held.y-anchor.y)<=range)target=held;
+        else target=this.findNearestPlayerTo(anchor,range);
+      }
     }
     this.targetPlayer=target;
     const selfMotion=ballistic.motion('p:'+id);
@@ -849,6 +886,15 @@ function __installDevastMod(B) {
     if(!ballisticPrediction.valid){this.targetPlayer=null;GetAllTargets.lines[0].reset();return this.lastAngle;}
     this.lastAngle=((ballisticPrediction.angle%360)+360)%360;this._smoothAngle=this.lastAngle;
     if(MOD.visualizeResolving){const p=ballisticPrediction;GetAllTargets.lines[0].color=MOD.visualizeResolvingColor;GetAllTargets.lines[0].reset(p.ox,p.oy,p.x,p.y);}
+    return this.lastAngle;
+  };
+  Aimbot.spearResolve=function(){
+    if(!videoSpearActive())return originalSpearResolve();
+    Aimbot.resolve();
+    if(ballisticPrediction.valid){
+      this.lastAngle=normalizeAimAngle(ballisticPrediction.angle-MOD.spearStabDeg);
+      if(MOD.visualizeResolving){const p=ballisticPrediction;GetAllTargets.lines[1].set(p.ox,p.oy,p.x,p.y,false);}
+    }
     return this.lastAngle;
   };
   Object.defineProperty(Aimbot,'prediction',{get:()=>({...ballisticPrediction})});
@@ -863,6 +909,7 @@ function __installDevastMod(B) {
     deduplicatedAngles: 0,
     commandsByOpcode:Object.create(null)
   };
+  const browserFailures = { exceptions: 0, unhandledRejections: 0, resourceErrors: 0 };
   const frameGaps=new Array(120);
   let frameGapIndex=0,frameGapCount=0,previousAnimationFrame=null;
   function animationTiming() {
@@ -963,7 +1010,8 @@ function __installDevastMod(B) {
       socketState:connectionSocket?.readyState??null,socketBufferedBytes:Number.isFinite(connectionSocket?.bufferedAmount)?connectionSocket.bufferedAmount:null,
       transport:socketTraffic(now),pageHidden:!!document.hidden,
       frameGapMs:previousAnimationFrame===null?null:Math.max(0,Math.round(now-previousAnimationFrame)),
-      health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),...details};
+      health:Number.isFinite(health) ? health : null,commandsInLast2s:combatCommands(),
+      browserFailures: {...browserFailures},...details};
     if(['server-death','socket-close','native-network-error'].includes(type)){
       const recent=pickupRequests.filter(entry=>entry.socket===event.transport?.id&&event.at-entry.at>=0&&event.at-entry.at<10000).slice(-32);
       if(recent.length)event.pickupRequestsBeforeEnd=recent.map(entry=>({...entry}));
@@ -984,6 +1032,7 @@ function __installDevastMod(B) {
       details.deathPrefixHex = Array.from(packet.subarray(0,3),value=>value.toString(16).padStart(2,'0')).join(' ');
     }
     connectionEvent('server-death',details);
+    strafeOwnsMovement=false;
     Aimbot.onDeath();
     // A confirmed death terminates the playable session. Socket close flags
     // must not turn it into a request to restore the dead character.
@@ -1057,6 +1106,7 @@ function __installDevastMod(B) {
     return null;
   }
   function resetAimForSession() {
+    strafeOwnsMovement=false;
     lastSentAngle=null;automaticDirection=false;
     stopJitter();jitter.fireUntil=-Infinity;
     Aimbot.onDeath();
@@ -1066,9 +1116,10 @@ function __installDevastMod(B) {
     for(const group of [GetAllTargets.players,GetAllTargets.ghouls])for(const target of group)if(target?.active)target.setInactive();
   }
   let lastSentAngle = null,lastSentPlayer = 0,automaticDirection=false;
+  let strafeOwnsMovement=false;
   const appliedToggles={AimBotEnabled:MOD.AimBotEnabled,JitterEnabled:MOD.JitterEnabled};
   function __send(value, forceAngle = false, sourceAngle = false) {
-    if (!playing()) return false;
+    if (!playing() || reconnect.sessionEnded || connectionSocket && connectionSocket.readyState !== 1) return false;
     const packet = typeof value === 'string' ? JSON.parse(value) : value;
     if (!Array.isArray(packet) || packet.length === 0 || packet.some(x => typeof x !== 'number' || !Number.isFinite(x))) return false;
     if (packet[0] === 6) {
@@ -1089,6 +1140,13 @@ function __installDevastMod(B) {
     recordCommand(packet[0]);
     return true;
   }
+  function restoreNativeMovement() {
+    if(!strafeOwnsMovement)return false;
+    strafeOwnsMovement=false;
+    const mask=GetAllTargets.myLastMoveDirection;
+    try{return __send([2,Number.isInteger(mask)&&mask>=0&&mask<=15?mask:0]);}
+    catch(error){report(error);return false;}
+  }
   // Restored from our earlier rotating Jitter (f978ade), independent of mouse
   // and movement input. Only its 50 ms timer is allowed to send idle angles.
   const jitter={angle:0,updatedAt:null,lastSentAt:-Infinity,fireUntil:-Infinity,spinning:false,deferredDirections:0};
@@ -1103,6 +1161,7 @@ function __installDevastMod(B) {
     if(sendDirection&&now-jitter.lastSentAt>=50){if(!automationReady('aim')){jitter.deferredDirections++;return;}if(__send([6,jitter.angle]))jitter.lastSentAt=now;}
   }
   function beforeFire(){
+    if (stopped) return true;
     if(!playing()||reconnect.sessionEnded||Aimbot.dead)return false;
     if(!MOD.JitterEnabled&&!gunAimActive()&&!automaticDirection)return true;
     jitter.fireUntil=performance.now()+150;stopJitter();
@@ -1116,7 +1175,6 @@ function __installDevastMod(B) {
   }
   function persist() {
     refreshLootFilter();
-    lastFastLoot=-Infinity;
     const saved = {};
     for (const key of Object.keys(defaults)) if (!transient.has(key)) saved[key] = MOD[key];
     try {
@@ -1142,7 +1200,8 @@ function __installDevastMod(B) {
       if (conflict) MOD[conflict] = MOD[key];
     }
     MOD[key] = value;
-    if(key==='AdaptiveAimEnabled'){lastAdaptiveDirection=-Infinity;lastAdaptiveTarget=null;}
+    if(key==='AntiAimbot'&&!value)restoreNativeMovement();
+    if(key==='AdaptiveAimEnabled'||key==='VideoAimEnabled'){lastAdaptiveDirection=-Infinity;lastAdaptiveTarget=null;}
     if(key==='JitterEnabled'&&!value)stopJitter();
     if (key === 'NicknameColor') {
       for (let id=1;id<B.world.ᴎ︃ᄉ.length;id++) {
@@ -1178,6 +1237,7 @@ function __installDevastMod(B) {
   }
   // Decode the native protocol; prediction/history stay in the imported engine.
   function trackPacket(type, playerId, uid, x, y, active, weapon, packed, packet={}) {
+    if (stopped) return;
     if(type===B.categories.projectile){
       if(active&&playerId===B.world.ᅠᏧ‍?.id&&Number.isInteger(packet.state)){
         const self=ballistic.motion('p:'+playerId);
@@ -1305,6 +1365,10 @@ function __installDevastMod(B) {
     if (v.scale > 0) GetAllTargets.mouseMapCords = __ilmMouseToWorld(GetAllTargets.mousePosition,v);
   }
   function automate(now) {
+    if (!playing() || reconnect.sessionEnded) {
+      chatState.status = MOD.SpamChatEnabled ? 'Waiting for game' : 'Off';
+      return;
+    }
     const me = B.world.ᅠᏧ‍;
     if (!B.synchronizedRender && MOD.FAutoLootEnabled) scanFastLoot(now);
     if (MOD.SAutoLootEnabled && !MOD.FAutoLootEnabled && now - lastLoot >= 200 && automationReady('loot')) {
@@ -1587,6 +1651,29 @@ function __installDevastMod(B) {
     const title='Игроки: '+ids.length;
     if (playerListCount.textContent !== title) playerListCount.textContent=title;
   }
+  function drawVideoAimHud() {
+    if(!MOD.VideoAimHudEnabled||!playing()||reconnect.sessionEnded||!ctx)return;
+    const timing=ballistic.timingInfo(),canvas=ctx.canvas,rect=canvas.getBoundingClientRect();
+    if(!(canvas.width>0&&canvas.height>0&&rect.width>0&&rect.height>0))return;
+    const ratio=canvas.width/rect.width,height=canvas.height/ratio,compact=height<550;
+    const number=(value)=>value===null?'—':value.toFixed(1)+' ms';
+    const active=MOD.VideoAimEnabled&&MOD.AdaptiveAimEnabled;
+    const source=timing.source==='measured'?timing.samples+' зам.':'задано';
+    const avg='avgPing: '+number(timing.avgPing)+' ('+source+(compact&&!active?'; режим выкл.':'')+')';
+    const lines=compact?[avg,'currentPing: '+number(timing.currentPing)+'  deltaPing: '+number(timing.deltaPing),'delay: '+number(timing.totalDelayMs)+'  lead: '+number(timing.leadMs)]:[
+      avg,'currentPing: '+number(timing.currentPing),'deltaPing: '+number(timing.deltaPing),
+      'delay: '+number(timing.totalDelayMs),'lead: '+number(timing.leadMs),active?'Video Aim: включён':'Video Aim: выключен'
+    ];
+    const font=compact?12:13,lineHeight=compact?14:17;
+    const y=Math.min(Math.max(110,height*.30),Math.max(font,height-lines.length*lineHeight-12));
+    ctx.save();
+    try{
+      ctx.setTransform(ratio,0,0,ratio,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
+      ctx.font='bold '+font+'px sans-serif';ctx.textAlign='left';ctx.textBaseline='alphabetic';
+      ctx.fillStyle='#fff';ctx.strokeStyle='rgba(0,0,0,.9)';ctx.lineWidth=3;
+      for(let i=0;i<lines.length;i++){ctx.strokeText(lines[i],12,y+i*lineHeight);ctx.fillText(lines[i],12,y+i*lineHeight);}
+    }finally{ctx.restore();}
+  }
   function draw() {
     updateDoorInteraction();
     if (!playing()) {
@@ -1626,6 +1713,7 @@ function __installDevastMod(B) {
         ctx.setLineDash([]);ctx.lineDashOffset=0;ctx.textBaseline='alphabetic';
       }
       if (MOD.ShowPosition) text('[' + Math.floor(me.x / 100) + ':' + Math.floor(me.y / 100) + ']', 100, 32, '#fff', 18);
+      drawVideoAimHud();
       let ownerCursor, ownerCursorRead=false,ownerLabelCount=0;
       const drawRecords=MOD.ShowBuildingOwner||MOD.RightClickDoors?records:playerRecords;
       for (const r of drawRecords) {
@@ -1692,7 +1780,7 @@ function __installDevastMod(B) {
   };
   let connectionSocket = null, adGate = null, removeSocketObservers = () => {};
   let socketSerial=0,socketTrace=null;
-  const callbackTraffic={wrapped:0,accepted:0,rejectedStale:0,rejectedWhileConnected:0,rejectedAfterDispose:0};
+  const callbackTraffic={wrapped:0,accepted:0,rejectedStale:0,rejectedWhileConnected:0,rejectedAfterDispose:0,rejectedDuplicate:0};
   function socketTraffic(now=performance.now()) {
     if(!socketTrace)return null;
     return {id:socketTrace.id,openForMs:socketTrace.openedAt===null?null:Math.max(0,Math.round(now-socketTrace.openedAt)),
@@ -1708,17 +1796,26 @@ function __installDevastMod(B) {
   }
   const widgetWrappers = new Map();
   function observeSocket(socket) {
-    if (socket !== connectionSocket) {
-      lastSentAngle = null;
-      if (socket && reconnect.phase === 'connecting') reconnect.deadline = performance.now() + 12000;
-    }
+    if (stopped || socket === connectionSocket) return;
+    strafeOwnsMovement=false;
+    lastSentAngle = null;
+    if (socket && reconnect.phase === 'connecting') reconnect.deadline = performance.now() + 12000;
     removeSocketObservers();
+    ballistic.resetTiming();
     connectionSocket = socket;
     socketTrace=socket?{id:++socketSerial,openedAt:socket.readyState===1?performance.now():null,lastReceiveAt:null,receivedMessages:0,lastSendAt:null,sentMessages:0,sentBytes:0,localCloseSource:null}:null;
     const observedTrace=socketTrace;
     if (typeof socket?.addEventListener !== 'function') return;
     const handlers = {
-      open:() => {if(!stopped&&socket===connectionSocket)socketTrace.openedAt=performance.now();},
+      open:() => {
+        if(stopped||socket!==connectionSocket||socket.readyState!==1||socketTrace.openedAt!==null)return;
+        const openedAt=performance.now();
+        socketTrace.openedAt=openedAt;
+        // Transport setup and the game's acknowledgement each need their
+        // own bounded wait. A slow open must not consume the latter.
+        if(reconnect.pending&&reconnect.phase==='connecting'&&(B.network.state&2)!==0)
+          reconnect.deadline=openedAt+12000;
+      },
       message:() => {if(!stopped&&socket===connectionSocket){socketTrace.lastReceiveAt=performance.now();socketTrace.receivedMessages++;}},
       close:event => { if (!stopped && observedTrace === socketTrace) connectionEvent('socket-close',
         {code:Number.isInteger(event.code) ? event.code : null,clean:event.wasClean === true,localCloseObserved:socketTrace.localCloseSource!==null}); },
@@ -1730,7 +1827,18 @@ function __installDevastMod(B) {
     };
   }
   function connectionInfo() {
-    const copyEvent=event=>({...event,transport:event.transport?{...event.transport}:null,commandsInLast2s:{...event.commandsInLast2s},...(event.pickupRequestsBeforeEnd?{pickupRequestsBeforeEnd:event.pickupRequestsBeforeEnd.map(entry=>({...entry}))}:{})});
+    function copyEvent(event) {
+      const copy = {
+        ...event,
+        transport: event.transport ? { ...event.transport } : null,
+        commandsInLast2s: { ...event.commandsInLast2s },
+        browserFailures: { ...event.browserFailures },
+      };
+      if (event.pickupRequestsBeforeEnd) {
+        copy.pickupRequestsBeforeEnd = event.pickupRequestsBeforeEnd.map(entry => ({ ...entry }));
+      }
+      return copy;
+    }
     const stored = {};
     for (const key of ['token','tokenId','userId','accountToken']) {
       try { stored[key] = !!localStorage.getItem(key); } catch (_) { stored[key] = null; }
@@ -1755,9 +1863,10 @@ function __installDevastMod(B) {
       modTraffic:trafficInfo(),
       connectionCallbacks:{...callbackTraffic},
       aimTransport:{...aimTransport,nativeSenderAvailable:typeof B.aimSend==='function',sourceTickRateMs:50,deduplicatedDirections:diagnostics.deduplicatedAngles},
-      aimSettings:{enabled:MOD.AimBotEnabled,spear:MOD.AimbotSpearEnabled,hidePlayerAngle:MOD.hidePlayerAngle,hideAimbotAngle:MOD.hideAimbotAngle,source:'message27-bby',adaptive:MOD.AdaptiveAimEnabled,jitter:MOD.JitterEnabled,jitterSpeed:MOD.JitterSpeed,strafe:MOD.AntiAimbot,autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
+      aimSettings:{enabled:MOD.AimBotEnabled,spear:MOD.AimbotSpearEnabled,hidePlayerAngle:MOD.hidePlayerAngle,hideAimbotAngle:MOD.hideAimbotAngle,source:'message27-bby',adaptive:MOD.AdaptiveAimEnabled,video:ballistic.timingInfo(),jitter:MOD.JitterEnabled,jitterSpeed:MOD.JitterSpeed,strafe:MOD.AntiAimbot,autoFire:MOD.autoFire,target:MOD.target,lockId:MOD.lockId,distanceCoefficient:MOD.distanceCoefficient,offsetCoefficient:MOD.offsetCoefficient},
       lastFailureCode:reconnect.lastFailureCode,serverListRefreshFailures:reconnect.refreshFailures,gatewayRecoveries:reconnect.gatewayRecoveries,initialHomeRecoveries:reconnect.initialHomeRecoveries,
-      stored,modErrorCount:diagnostics.errors.length,firstServerDeath:firstServerDeath?copyEvent(firstServerDeath):null,firstConnectionEnd:firstConnectionEnd?copyEvent(firstConnectionEnd):null,events:connectionEvents.map(copyEvent)};
+      stored,modErrorCount:diagnostics.errors.length,browserFailures:{...browserFailures},
+      firstServerDeath:firstServerDeath?copyEvent(firstServerDeath):null,firstConnectionEnd:firstConnectionEnd?copyEvent(firstConnectionEnd):null,events:connectionEvents.map(copyEvent)};
   }
   function releaseNativePending() {
     if (B.pendingKey) B.network[B.pendingKey] = false;
@@ -1875,8 +1984,12 @@ function __installDevastMod(B) {
   }
   let automaticJoin = false;
   let nativeLoginDepth = 0;
-  function guardHandshakeCallback(url, callback) {
-    if (!nativeLoginDepth || typeof callback !== 'function') return callback;
+  function guardHandshakeCallback(url, callback, request = {settled:false}) {
+    // A native timer or promise can start the next HTTP stage after the login
+    // stack has returned. It still belongs to the pending entry attempt.
+    const entering = nativeLoginDepth > 0 || reconnect.pending &&
+      (reconnect.phase === 'joining' || reconnect.phase === 'connecting');
+    if (!entering || typeof callback !== 'function') return callback;
     const generation = reconnect.generation;
     callbackTraffic.wrapped++;
     // Gate the native HTTP response before it can overwrite the current
@@ -1890,6 +2003,8 @@ function __installDevastMod(B) {
         if(connected)callbackTraffic.rejectedWhileConnected++;
         return;
       }
+      if(request.settled){callbackTraffic.rejectedDuplicate++;return;}
+      request.settled=true;
       callbackTraffic.accepted++;
       // Native preflight can issue its next HTTP round from this callback.
       // Carry ownership into that round before the original stack returns.
@@ -1898,6 +2013,10 @@ function __installDevastMod(B) {
     };
   }
   const connectionWrappers = new Map();
+  function guardHandshakeCallbacks(url, success, failure) {
+    const request={settled:false};
+    return [guardHandshakeCallback(url,success,request),guardHandshakeCallback(url,failure,request)];
+  }
   function markRestoreFailure() {
     reconnect.generation++;
     reconnect.pending = false;
@@ -1927,8 +2046,7 @@ function __installDevastMod(B) {
       const original = n[key];
       originals[key] = original;
       const wrapper = kind === 'preflight' ? function (...args) {
-        if (!nativeLoginDepth) return original.apply(this,args);
-        for(const index of [1,2])if(typeof args[index]==='function')args[index]=guardHandshakeCallback(args[0],args[index]);
+        [args[1],args[2]]=guardHandshakeCallbacks(args[0],args[1],args[2]);
         return original.apply(this,args);
       } : kind === 'error' ? function (...args) {
         if (!stopped) {
@@ -2154,6 +2272,7 @@ function __installDevastMod(B) {
       lastChat = nextChatAt = -Infinity;
       lastKeepAlive = now;
     }
+    if(!MOD.AntiAimbot)restoreNativeMovement();
     if (!B.synchronizedRender) {
       autoBuildFrame(now);
       records = collect();
@@ -2221,6 +2340,12 @@ function __installDevastMod(B) {
       break;
     }
   }
+  // Count browser failures without retaining URLs, exceptions, or rejection payloads.
+  listen(window, 'error', event => {
+    if (event.target === window) browserFailures.exceptions++;
+    else if (event.target?.nodeType === 1) browserFailures.resourceErrors++;
+  }, true);
+  listen(window, 'unhandledrejection', () => { browserFailures.unhandledRejections++; });
   listen(window, 'keydown', keyboard, true);
   listen(window, 'mousemove', e => {
     mouse={x:e.clientX,y:e.clientY};
@@ -2298,6 +2423,14 @@ function __installDevastMod(B) {
     add(adaptiveMenu,'predictionAutoSpeed','Скорость из игры и пуль');
     add(adaptiveMenu,'bulletSpeedCoefficient','Резервная скорость, ед/мс',.1,20,.05);
     add(adaptiveMenu,'predictionLatencyMs','Компенсация задержки, мс',0,500,5);
+    const videoMenu=adaptiveMenu.addFolder('Video Prediction — эксперимент');
+    add(videoMenu,'VideoAimEnabled','Упреждение по пингу');
+    add(videoMenu,'VideoAimHudEnabled','Показать пинг слева');
+    add(videoMenu,'videoPingMs','Пинг при отсутствии замеров, мс',0,500,1);
+    add(videoMenu,'videoPingSteps','Окно замеров пинга',1,250,1);
+    add(videoMenu,'videoAimSteps','Шаги уточнения',1,8,1);
+    add(videoMenu,'videoDelayMs','Дополнительная задержка, мс',0,100,1);
+    add(videoMenu,'videoDelaySendMs','Ожидание команды, мс',0,100,1);
     const jitterMenu=menu.addFolder('Jitter');
     add(jitterMenu,'JitterEnabled','Enabled');
     add(jitterMenu,'JitterSpeed','Speed (degrees/sec)',1,3600,1);
@@ -2439,10 +2572,12 @@ function __installDevastMod(B) {
   return {
     settings: MOD,
     observeWireSend,
+    sampleAimRtt:(milliseconds)=>!stopped&&playing()&&!reconnect.sessionEnded?ballistic.sampleRtt(milliseconds):false,
+    aimTiming:()=>ballistic.timingInfo(),
     beforeFire,
-    afterFire:()=>aimModule.afterFire(),
+    afterFire:()=>{if (!stopped) aimModule.afterFire();},
     afterRelease:()=>{aimModule.afterRelease();jitter.fireUntil=performance.now()+150;},
-    onMove:move=>aimModule.onMove(move),
+    onMove:move=>{strafeOwnsMovement=false;return aimModule.onMove(move);},
     onHandshake:()=>{lastSentAngle=null;stopJitter();jitter.fireUntil=-Infinity;aimModule.onHandshake();},
     onSessionStart:resetAimForSession,
     nativePacketAngle:angle=>playing()&&!Aimbot.dead&&!(jitterAiming()&&invalidAimState())?Aimbot.packetAngle(angle):angle,
@@ -2469,6 +2604,7 @@ function __installDevastMod(B) {
     beginPlay,
     guardPlayCallback,
     guardHandshakeCallback,
+    guardHandshakeCallbacks,
     connectionInfo,
     step,
     setSetting,
@@ -2510,6 +2646,8 @@ function __installDevastMod(B) {
       return functionList;
     },
     dispose() {
+      if(stopped)return;
+      restoreNativeMovement();
       aimModule.dispose();
 
       MOD.zoomFactor = 1;

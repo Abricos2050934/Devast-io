@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-11-22T21:19:13.165Z",
+  "requested_url": "https://youtu.be/q5vJvzABkLs?is=KleFQ_Pw9DtWF_82",
+  "mode": "actual Chromium browser; inherited managed proxy and normal TLS verification",
+  "responses": [],
+  "failed_requests": [
+    {
+      "url": "https://youtu.be/q5vJvzABkLs?is=KleFQ_Pw9DtWF_82",
+      "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+    }
+  ],
+  "browser_version": "151.0.7922.34",
+  "navigation_error": "page.goto: net::ERR_TUNNEL_CONNECTION_FAILED at https://youtu.be/q5vJvzABkLs?is=KleFQ_Pw9DtWF_82\nCall log:\n\u001b[2m  - navigating to \"https://youtu.be/q5vJvzABkLs?is=KleFQ_Pw9DtWF_82\", waiting until \"domcontentloaded\"\u001b[22m\n",
+  "final_url": "about:blank",
+  "title": "",
+  "text": "This site can’t be reached\n\nThe webpage at https://youtu.be/q5vJvzABkLs?is=KleFQ_Pw9DtWF_82 might be temporarily down or it may have moved permanently to a new web address.\n\nERR_TUNNEL_CONNECTION_FAILED",
+  "video": []
+}

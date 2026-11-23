@@ -15,10 +15,20 @@
     "update:watch-official": "python3 tools/update_client.py watch-official",
     "update:status": "python3 tools/update_client.py status",
     "update:serve": "python3 tools/update_client.py serve",
-    "update:rollback": "python3 tools/update_client.py rollback"
+    "update:rollback": "python3 tools/update_client.py rollback",
+    "build:readable": "npm run build && node tools/format_readable.cjs",
+    "build:mod": "node tools/compile_mod.cjs",
+    "typecheck": "node tools/compile_mod.cjs --check",
+    "check:generated": "node tools/compile_mod.cjs --verify",
+    "build:published-mod": "node tools/build_published_mod.cjs",
+    "check:published-mod": "node tools/build_published_mod.cjs --check",
+    "build:verified-mod": "node tools/build_verified_mod.cjs",
+    "build:video-aim": "node tools/build_video_aim.cjs"
   },
   "devDependencies": {
     "acorn": "8.15.0",
-    "playwright-core": "1.62.1"
+    "js-beautify": "1.15.4",
+    "playwright-core": "1.62.1",
+    "typescript": "5.9.3"
   }
 }

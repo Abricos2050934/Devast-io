@@ -1,0 +1,5 @@
+{
+  "scope": "Diagnostic control: all three candidate-native cryptographic functions retained verbatim; native integrity checks enabled; remaining current mod unchanged",
+  "sha256": "361841f4aeed27ddf6e89a047722780bbb856bcadaba0e46488c96d1756250df",
+  "raw_sha256": "0e7b56a938550c6f75a1e99267d2c989aaa8d8c6f45ebdd16bc70985d94edc3e"
+}

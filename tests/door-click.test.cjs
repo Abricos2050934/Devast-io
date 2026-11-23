@@ -90,3 +90,33 @@ test('a different door update cannot confirm the request; timeout is visible and
   assert.equal(f.mod.doorInteraction.message,'Нет подтверждения от двери');assert.deepEqual(f.packets,[[15,21,1]]);
  }finally{f.mod.dispose();}
 });
+
+for (const state of [0, 2, 3]) test('door clicks wait for the socket to be open, readyState=' + state, () => {
+ const {f, press} = setup();
+ try {
+  const socket = {readyState: state, bufferedAmount: 0};
+  f.mod.observeSocket(socket);
+  assert.equal(press().prevented, false);
+  assert.equal(f.packets.length, 0);
+  assert.equal(f.mod.doorInteraction.pending, false);
+  socket.readyState = 1;
+  assert.equal(press().prevented, true);
+  assert.deepEqual(f.packets, [[15, 20, 1]]);
+ } finally {
+  f.mod.dispose();
+ }
+});
+
+test('a confirmed death blocks door requests while the native state is still being cleared', () => {
+ const {f, press} = setup();
+ try {
+  f.mod.observeSocket({readyState: 1, bufferedAmount: 0});
+  f.mod.observeDeath(new Uint8Array([5, 0, 0]), 5);
+  assert.equal(f.network.state, 1);
+  assert.equal(press().prevented, false);
+  assert.equal(f.packets.length, 0);
+  assert.equal(f.mod.doorInteraction.pending, false);
+ } finally {
+  f.mod.dispose();
+ }
+});

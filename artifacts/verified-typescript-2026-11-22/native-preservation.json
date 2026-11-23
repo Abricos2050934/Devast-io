@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "native_and_vendor_bytes_preserved_except": [
+    "owned modules",
+    "owned build fingerprint",
+    "owned preflight callback integration"
+  ],
+  "integration_change": "shared terminal ownership of success and error callbacks",
+  "game_language": "JavaScript"
+}

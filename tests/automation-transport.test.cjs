@@ -53,3 +53,40 @@ test('slow loot, container take, chat and keepalive wait for writable transport 
   assert.deepEqual(f.packets,[[12,10],[27,0],[0]]);assert.deepEqual(messages,['test']);
  }finally{f.mod.dispose();}
 });
+
+test('saving settings cannot bypass the existing fast-loot interval', () => {
+ const f = fixture();
+ try {
+  f.B.synchronizedRender = true;
+  scene(f, 2, Array.from({length: 16}, (_, id) => ({id, x: 10, y: 0, 'е̝ހ': 0, 'Іࡈ５': 6})));
+  f.mod.setSetting('FAutoLootEnabled', true);
+  f.mod.render(1000);
+  assert.equal(f.packets.length, 8);
+  for (let now = 1001; now < 1025; now++) {
+   f.mod.setSetting('zoomFactor', .75);
+   f.mod.render(now);
+  }
+  assert.equal(f.packets.length, 8);
+  f.mod.render(1025);
+  assert.equal(f.packets.length, 16);
+ } finally {
+  f.mod.dispose();
+ }
+});
+
+test('confirmed death stops chat before the native handler clears the playing state', () => {
+ const f = fixture(), messages = [];
+ try {
+  f.network['іߐ̸'] = text => { messages.push(text); return 0; };
+  f.mod.setSetting('SpamChatEnabled', true);
+  f.mod.setSetting('SpamChatText', 'test');
+  f.mod.observeDeath();
+  assert.equal(f.network.state, 1);
+  f.mod.step(1000);
+  f.mod.step(7000);
+  assert.deepEqual(messages, []);
+  assert.deepEqual(f.packets, []);
+ } finally {
+  f.mod.dispose();
+ }
+});

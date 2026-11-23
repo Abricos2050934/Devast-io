@@ -1,0 +1,15 @@
+{
+  "name": "stock",
+  "requestedServer": "Atlanta 1",
+  "scriptHash": null,
+  "loaded": false,
+  "joined": false,
+  "sockets": [],
+  "errors": [],
+  "failedRequests": {},
+  "resourceErrors": 1,
+  "samples": [],
+  "homeStatus": 503,
+  "error": "Expected values to be strictly equal:\n\n503 !== 200\n",
+  "elapsedMs": 66
+}

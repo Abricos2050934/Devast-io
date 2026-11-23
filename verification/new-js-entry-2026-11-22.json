@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "status": "new_js_ported_disconnect_not_resolved",
+  "source": {
+    "page_url": "https://devast.io/",
+    "script_url": "https://devast.io/js/y6fopeDaqhW3Gwmo2uwu3ccFWsO.js",
+    "raw_sha256": "0dc231177bf7842d51832a1ca6f45e8d0d0d18c78f62994dc2b702b4182755a9"
+  },
+  "output_sha256": "5ef7a9fa5e7a2f861d4e8e01b06433ed625669431f71f5200e1efbe8335c9a8e",
+  "tests": {
+    "python": 87,
+    "node": 357,
+    "failed": 0
+  },
+  "browsers": {
+    "chromium": "passed",
+    "firefox": "passed"
+  },
+  "live_report": "artifacts/new-js-live-entry-2026-11-22/report.json",
+  "live_seconds": 16.241,
+  "live_minute_passed": false,
+  "publication": "not_published",
+  "auto_update_cycle": {
+    "status": "blocked",
+    "error": "Source HTTP 503",
+    "status_file": "dist/auto-update/status.json"
+  },
+  "additional_live_attempts": [
+    {
+      "report": "artifacts/new-js-active-session-2026-11-22/report.json",
+      "result": "home_HTTP_503"
+    },
+    {
+      "report": "artifacts/new-js-cached-page-session-2026-11-22/report.json",
+      "result": "server_list_unavailable"
+    },
+    {
+      "report": "artifacts/new-js-active-cached-context-2026-11-22/report.json",
+      "result": "no_server_handshake"
+    }
+  ]
+}

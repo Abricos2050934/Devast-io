@@ -1,0 +1,59 @@
+{
+  "otherPauseCount": 50,
+  "writes": [
+    {
+      "at": 41441,
+      "previousFlag": 0,
+      "probeResult": "stack_capture_count,stack_empty,stack_anchors_not_found,stack_depth,coercion_count,",
+      "site": {
+        "lineNumber": 1,
+        "columnNumber": 120708,
+        "source": "ᴄᚇᚃ=01",
+        "context": "f\\156\\x74\\145\\170\\x74\"](\"\\x77\\x65\\x62\\147\\154\")||аߐܔ[\"\\147\\x65\\x74\\103\\157n\\x74\\x65\\170\\x74\"]( \"\\x65\\170\\160\\145\\x72\\151m\\x65\\x6E\\x74\\x61\\154\\55\\x77e\\x62\\x67l\");}catch ( ι᠋͏){}}аࡇᚊᴉ=ᴇᄈ༧̊(\"\\x77\\145\\x62g\\u006C\",\"\\x73\\x63\\x69s\\163\\x6Fr\",\"n\\165m\\x62\\145\\x72\",ᅠ︂๖ރ,εބ̌ނ,І̅ܒ︇);ᴏ२̉᠋=0x79;break; case 0136:ᴄᚇᚃ=1;ᴏ२̉᠋=0x3e7;break ; case 0X44:ᴏ२̉᠋=(аࡇᚊᴉ!==\"\" ) ? 0x94:0422;break;case 0Xc8:ᴄᚇᚃ=01;ᴏ२̉᠋ =999 ;break;case 360:ᴄᚇᚃ=0x1; ᴏ२̉᠋=01747 ; break;case 0X8F:ᴄᚇᚃ=01; ᴏ२̉᠋=999;break ;case 240:ᴄᚇᚃ = 0X1;ᴏ२̉᠋=0x3e7;break;case 0x153:ᴄᚇᚃ = 1;ᴏ२̉᠋ = 0X3e7;break;case 0xF4:if(!ᅠ︂๖ރ){try{var аߐܔ=ᴑ̘༨[\"\\x64o\\143\\x75\\155\\145\\x6e\\164\" ] [\"\\143\\x72\\145\\x61\\164\\145\\x45\\x6c\\u0065\\155\\145\\156\\x74\"]( \"\\143\\x61\\156\\x76\\141\\x73\") ",
+        "guards": []
+      },
+      "stack": [
+        {
+          "function": "ѐօ",
+          "line": 1,
+          "column": 120708
+        },
+        {
+          "function": "о३ѕ",
+          "line": 56,
+          "column": 2442
+        },
+        {
+          "function": "оߏᴘ",
+          "line": 56,
+          "column": 2478
+        },
+        {
+          "function": "",
+          "line": 17,
+          "column": 392042
+        },
+        {
+          "function": "",
+          "line": 17,
+          "column": 392058
+        },
+        {
+          "function": "",
+          "line": 17,
+          "column": 392203
+        },
+        {
+          "function": "",
+          "line": 17,
+          "column": 392403
+        },
+        {
+          "function": "",
+          "line": 17,
+          "column": 392406
+        }
+      ]
+    }
+  ]
+}

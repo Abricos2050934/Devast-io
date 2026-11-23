@@ -1,0 +1,17 @@
+[
+  {
+    "name": "core",
+    "start": 3133007,
+    "end": 3183743
+  },
+  {
+    "name": "host",
+    "start": 3183743,
+    "end": 3290162
+  },
+  {
+    "name": "bootstrap",
+    "start": 3290162,
+    "end": 3291421
+  }
+]

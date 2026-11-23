@@ -1,0 +1,92 @@
+[
+  {
+    "opcode": 20,
+    "branch": "case еօ༥:а̍р(ɑࠂކ,ⲥ̌ᄄ,ᴌࡅ５) ; break ;",
+    "handlers": [
+      {
+        "name": "а̍р",
+        "bytes": 725
+      }
+    ]
+  },
+  {
+    "opcode": 27,
+    "branch": "case 0x1B:ϲᄁ̇( ⲥ̌ᄄ)  ; break;",
+    "handlers": [
+      {
+        "name": "ϲᄁ̇",
+        "bytes": 179
+      }
+    ]
+  },
+  {
+    "opcode": 47,
+    "branch": "case 057:ⲅ९９(ⲥ̌ᄄ ) ;break;",
+    "handlers": [
+      {
+        "name": "ⲅ९９",
+        "bytes": 363
+      }
+    ]
+  },
+  {
+    "opcode": 52,
+    "branch": "case 52:ᴑ̟ࡂ (ɑࠂކ ,ⲥ̌ᄄ);break ;",
+    "handlers": [
+      {
+        "name": "ᴑ̟ࡂ",
+        "bytes": 2652
+      }
+    ]
+  },
+  {
+    "opcode": 53,
+    "branch": "case 0X35:ϲᄃࠃ( ɑࠂކ,ⲥ̌ᄄ);break ;",
+    "handlers": [
+      {
+        "name": "ϲᄃࠃ",
+        "bytes": 102
+      }
+    ]
+  },
+  {
+    "opcode": 62,
+    "branch": "case 0X3E:ԁ０ܖ();break;",
+    "handlers": [
+      {
+        "name": "ԁ０ܖ",
+        "bytes": 41
+      }
+    ]
+  },
+  {
+    "opcode": 65,
+    "branch": "case 0x41:αο̊(ⲥ̌ᄄ ) ;break ;",
+    "handlers": [
+      {
+        "name": "αο̊",
+        "bytes": 252
+      }
+    ]
+  },
+  {
+    "opcode": 71,
+    "branch": "case 71:ι̎̊(ⲥ̌ᄄ);break;",
+    "handlers": [
+      {
+        "name": "ι̎̊",
+        "bytes": 109
+      }
+    ]
+  },
+  {
+    "opcode": 74,
+    "branch": "case 0112:ࡀ٢‌(ⲥ̌ᄄ);break ;",
+    "handlers": [
+      {
+        "name": "ࡀ٢‌",
+        "bytes": 412
+      }
+    ]
+  }
+]

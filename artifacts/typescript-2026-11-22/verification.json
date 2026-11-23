@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "task": "Migrate only the owned mod to TypeScript",
+  "status": "migration_verified",
+  "created_at": "2026-11-22T08:34:17.865918+00:00",
+  "publication": "not_published; existing external URL unchanged",
+  "typescript": {
+    "status": "passed",
+    "typescript": "5.9.3",
+    "strict": true,
+    "files": [
+      "mod/ballistic-model.ts",
+      "mod/ilm-aim.ts",
+      "mod/responsive.ts",
+      "mod/bootstrap.ts",
+      "resource-override/loader.ts",
+      "mod/contracts.d.ts",
+      "tsconfig.mod.json"
+    ],
+    "source_sha256": {
+      "mod/ballistic-model.ts": "e894685f87fee4082ddf885f358774ec3287bd242a879617ba0456550ee9aca9",
+      "mod/ilm-aim.ts": "e44832a3317aa5183155900ac2cb4d496c378d2854a9ee662ad350e438af1fcb",
+      "mod/responsive.ts": "f99286ec27c3178fbe435e4b0817cf7c0b2dd0ab5e65dcca99d89925a7d72bc0",
+      "mod/bootstrap.ts": "d5eb4fcd879c874f43675752adde72ea9f25b19b4b08b932844a5cd74fc706b6",
+      "resource-override/loader.ts": "2c9ebf2f18de013baa702512d6caf705fc4aea30292154bd3808c43873c4326a",
+      "mod/contracts.d.ts": "32ebea60a88c3d0aef6c7ce6f66ee734530b65e4b8497c50b68b99f31d1f4f45",
+      "tsconfig.mod.json": "5bc68d78638d2ea4d2f1a3a97b583e530c3f3472ea4155d871af806d89e5011c"
+    },
+    "generated_sha256": {
+      "mod/ballistic-model.js": "242a6b17fb79ff92a13567534e8df254b84043e4e52b62d684aa5566760b008e",
+      "mod/ilm-aim.js": "e1b0a622f9a984522f1aaecd7e776140b3b7efd3cd7dec271a19cca9dcc11712",
+      "mod/responsive.js": "0b5bc455a79d1a5754490485b1f88779639e2b822369930954741ecf2539f700",
+      "mod/bootstrap.js": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18",
+      "resource-override/loader.js": "345faf124ba5a8858e60c952ea7cc85d401314ede59109b7cb5782bd45db1b9a"
+    },
+    "emission": "type erasure, verified against the TypeScript compiler AST"
+  },
+  "scope": {
+    "typed": [
+      "mod/responsive.ts",
+      "mod/ilm-aim.ts",
+      "mod/ballistic-model.ts",
+      "mod/bootstrap.ts",
+      "resource-override/loader.ts",
+      "mod/contracts.d.ts"
+    ],
+    "native_game_and_vendor": "Remain JavaScript. Existing native snapshots and port rules unchanged by this migration.",
+    "browser_execution": "TypeScript checked and erased during build; only compiled JavaScript executes"
+  },
+  "preservation": {
+    "runtime_unchanged": {
+      "mod/responsive.js": {
+        "unchanged": true,
+        "sha256": "0b5bc455a79d1a5754490485b1f88779639e2b822369930954741ecf2539f700"
+      },
+      "mod/ilm-aim.js": {
+        "unchanged": true,
+        "sha256": "e1b0a622f9a984522f1aaecd7e776140b3b7efd3cd7dec271a19cca9dcc11712"
+      },
+      "mod/ballistic-model.js": {
+        "unchanged": true,
+        "sha256": "242a6b17fb79ff92a13567534e8df254b84043e4e52b62d684aa5566760b008e"
+      },
+      "mod/bootstrap.js": {
+        "unchanged": true,
+        "sha256": "eb74212a3304da79d06bc19b3196ccf862f4cb697eb885c6239a98a62e2feb18"
+      },
+      "resource-override/loader.js": {
+        "unchanged": true,
+        "sha256": "345faf124ba5a8858e60c952ea7cc85d401314ede59109b7cb5782bd45db1b9a"
+      }
+    },
+    "native_inputs_unchanged": {
+      "baselines/current-metadata.js.gz": "d8700ec6a46b155ca7c9a774ecea86f23aeda9a805c57276c3962ef20b0687ad",
+      "baselines/current.js.gz": "bace8140afe93c614e47cb658e5fad590af45c153134879288d2f94781f41a27",
+      "baselines/native-2026-11-05.js.gz": "ec4969d9dd30d4ae657775df09e0900c1cd418154bd375eb4f5e331a7c12853a",
+      "baselines/native-2026-11-06.js.gz": "a0c7e68ca1d372d5b499ed636814d6098b5f50e53892a2aa7b3f5e66466a7ae7",
+      "baselines/latest.json": "55a4ab4613e1979bd689cbba74c00f58d410eef7a1d0296d3568c75450e785dd",
+      "baselines/native-2026-11-19.js.gz": "e2c3c97565601a49af6e0151cf4273dc9cce690be0feaa53aa837aa112e1a02d",
+      "patches/bindings-2026-11-05.json": "cf3c26c04fe3efbb533d63e3d951b9790361d629c34aac3ebb2b89ceac1ad154",
+      "patches/bindings-2026-11-06.json": "f58b3cabed8f5aeb002f5610be41bf3bde23dc4a2761216a0a2b6924672b756a",
+      "patches/native-2026-11-05.json": "0e39d46b12eab0bffda755316d2b3c55fcddbbe0f0436f11a0742d0bf10caf54",
+      "patches/native-2026-11-06.json": "9f0a0ee7c2694b39c07769689cdeb51d6f8432b7d8ecb4fec13efbd3a1f56f78",
+      "patches/recovered-bindings.json": "8b2fa168f311b07a8631bb24b452bd987a230e23c1735058289a8a25b511ecc9",
+      "patches/recovered-current.json": "90d863bad048f5e930f391fc7e4c238add42370c5f39931fabfb340d0c9ffc91",
+      "vendor/dat.gui.recovered.js": "45c73373303546a1159091dcd8aba002c59be6273e0479aebbe5fa19aacb3ad8"
+    }
+  },
+  "native_source": {
+    "page_url": "https://devast.io/",
+    "script_url": "https://devast.io/js/YukAlFEf489QnSaQ.js",
+    "raw_sha256": "3c2cadef52f237c7c039e242245853ed531f2b935f4ca6c25dc873f07c1a3b0e"
+  },
+  "tests": {
+    "full": {
+      "status": "passed",
+      "javascript": 349,
+      "python": 87,
+      "total": 436,
+      "log": "checks/full-tests.log"
+    },
+    "current_candidate": {
+      "status": "passed",
+      "tests": 263,
+      "log": "checks/candidate-tests.log"
+    },
+    "standalone_source_archive": {
+      "status": "passed",
+      "clean_install": true,
+      "build": true,
+      "tests": 4,
+      "log": "checks/source-archive-tests.log"
+    },
+    "standard_tsc_project_noemit": "passed",
+    "browsers": {
+      "chromium": {
+        "status": "passed",
+        "version": "156.0.8078.79",
+        "page_errors": [],
+        "scope": "native browser fixtures; no live game session",
+        "report": "validation-chromium.json"
+      },
+      "firefox": {
+        "status": "passed",
+        "version": "153.0",
+        "page_errors": [],
+        "scope": "native browser fixtures; no live game session",
+        "report": "validation-firefox.json"
+      }
+    },
+    "local_resource_override_import_and_reload": {
+      "report": "import-check.json"
+    }
+  },
+  "live_session": {
+    "scope": "One ordinary guest entry with automation disabled, then one unchanged native client control on the same selected region",
+    "modified": {
+      "joined": true,
+      "seconds_after_join": 22.998,
+      "page_errors": [],
+      "death_received": true,
+      "mod_error_count": 0,
+      "report": "live-checks/typescript-1.json"
+    },
+    "stock": {
+      "joined": true,
+      "seconds_after_join": 18.312,
+      "page_errors": [],
+      "death_received": true,
+      "report": "live-checks/stock-1.json"
+    },
+    "result": "Both entered successfully and received a server death packet. TypeScript preserves runtime behavior; the cause of the earlier kick problem remains unresolved."
+  },
+  "artifacts": {
+    "client.js": {
+      "sha256": "a918c29c52b5c02f11a27eb8e086712862a3d9ba56af3c75648e648ba94dcd9b",
+      "bytes": 4434622
+    },
+    "Devast-io-TypeScript.json": {
+      "sha256": "5a284656d0780fa8b3fc8017b15e2094ebaf72dc8d7150955dc5446d92117c19",
+      "bytes": 4622611
+    },
+    "Devast-io-TypeScript-source.zip": {
+      "sha256": "6428245ba4d16140561ad999dc4c95454c12da64f2acd9b9a78aad93bde31416",
+      "bytes": 128831
+    }
+  },
+  "notes": [
+    "One earlier Chromium fixture run saw an asynchronous native UI null textContent error. Unchanged JavaScript then passed Chromium, Firefox and both import/reload checks. This is not evidence of a TypeScript runtime regression."
+  ]
+}
