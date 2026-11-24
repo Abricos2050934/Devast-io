@@ -20,7 +20,7 @@ jobs:
   update:
     # Keep Playwright's supported OS stable across GitHub runner-image rollouts.
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -36,8 +36,16 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: devast-playwright-${{ runner.os }}-ubuntu-24.04-${{ hashFiles('package-lock.json') }}
+      - name: Select official Ubuntu package mirror
+        run: |
+          # The hosted runner's regional EC2 mirror can transfer packages too
+          # slowly to finish installing Playwright dependencies. Keep APT's
+          # signed package verification and use Ubuntu's official HTTPS archive.
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+          fi
       - name: Install browser system dependencies
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: |
           for attempt in 1 2 3; do
             if npx playwright-core install-deps chromium firefox; then
