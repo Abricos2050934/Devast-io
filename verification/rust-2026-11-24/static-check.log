@@ -1,0 +1,6 @@
+
+> devast-io-recovery@0.1.0 check
+> node tools/check_client.cjs
+
+AST OK: full client, one installer, one bootstrap; extracted payload matches
+Uploaded aim AST OK: active override, lifecycle, menu, source calculations; retired engines absent

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "checked_at": "2026-11-24T07:41:17.567595+00:00",
+  "state": "source_checked",
+  "page_url": "https://devast.io/",
+  "page_sha256": "7f2acd4d5526278d08d7ab15b00fb32907b190710397b2888c025a668b28a51a",
+  "current_raw_sha256": "f486858e2155cc0cca5f95fa66e0ecd6f7c8a670cc62b655e8dac0bf06724930",
+  "candidates": [
+    {
+      "url": "https://devast.io/js/SoU74f1CSGBLrnN70LACrWeKIQ.js",
+      "raw_sha256": "f486858e2155cc0cca5f95fa66e0ecd6f7c8a670cc62b655e8dac0bf06724930",
+      "bytes": 7299325,
+      "matches_current": true
+    }
+  ]
+}

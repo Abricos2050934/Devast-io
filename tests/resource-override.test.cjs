@@ -5,7 +5,9 @@ function fixture(responses){
  const calls=[],errors=[];let index=0;
  class XHR {open(method,url,async){calls.push({method,url,async});}send(){const response=responses[index++];if(response instanceof Error)throw response;this.status=response.status;this.responseText=response.body;}}
  const scope={XMLHttpRequest:XHR,console:{error(...args){errors.push(args);}},Date:{now:()=>1234567}};scope.window=scope;
- const context=vm.createContext(scope);return {context,calls,errors,run:()=>vm.runInContext(loader,context,{timeout:1000})};
+ const context=vm.createContext(scope);
+ if(process.env.DEVAST_RUST_MOD)require('../tools/rust_fixture.cjs').install(context,process.env.DEVAST_RUST_MOD);
+ return {context,calls,errors,run:()=>vm.runInContext(process.env.DEVAST_RUST_MOD?'wasm_bindgen.run_program(3,__devastRustEnv)':loader,context,{timeout:1000})};
 }
 const client=version=>'function __installDevastMod(){} function __createIlmAim(){} window.__devastClientLoaded=true;window.__devastMod={version:'+version+'};';
 test('Resource Override v1 schema and embedded loader match the supplied format',()=>{

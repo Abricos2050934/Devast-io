@@ -122,9 +122,12 @@ const end=tree.body[0].expression.callee.body.end-1;
 edits.push({at:end,text:`window.__updateProbe={...window.__updateFunctions,keyboard:${roles.messageKeyboard},world:${symbols['еܞ︌']},network:${symbols['о̃༩']},entities:${symbols['ι‌̵']},input:${symbols['ρ̃५']},labelFactory:${roles['а̵̠']},types:${symbols['εᚇ๓']},graphics:${symbols['ᴘᚉ٦']},items:${symbols['ιᄅᴄ']},get view(){return __responsiveView},set view(value){__responsiveView=value},get ctx(){return ${symbols['а०̅']}},nativePlacement:()=>${output.slice(placements[0].start,placements[0].end)},nativeMenu:()=>${symbols['ɑᚆᴏ']}};`});
 edits.push({at:tree.body[0].expression.callee.body.end-1,text:`window.__updateIntegrityProbe={read:()=>${roles.nativeIntegrityFlag},set:value=>${roles.nativeIntegrityFlag}=value,signers:[${roles.nativeIntegritySigners.join(',')}]};`});
 let code=output;for(const e of edits.sort((a,b)=>b.at-a.at))code=code.slice(0,e.at)+e.text+code.slice(e.at);
+const rustRuntime=process.env.DEVAST_RUST_RUNTIME?fs.readFileSync(process.env.DEVAST_RUST_RUNTIME,'utf8'):null;
+const runtimeOutput=rustRuntime?require('./build_rust_client.cjs').replaceOwned(output,rustRuntime):output;
+if(rustRuntime)code=require('./build_rust_client.cjs').replaceOwned(code,rustRuntime);
 acorn.parse(code,{ecmaVersion:'latest'});
 (async()=>{
- const report={schema:1,status:'failed',output_sha256:hash(output),static_ast:'passed',typescript,aim_core:'active uploaded __BBY declarations and lifecycle',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[]};
+ const report={schema:1,status:'failed',output_sha256:hash(runtimeOutput),static_ast:'passed',typescript,aim_core:rustRuntime?'Rust/WebAssembly owned mod':'active uploaded __BBY declarations and lifecycle',resource_override_sha256:hash(overrideBytes),mod_contract:contract,module_sha256:moduleHashes,mod_bundle_sha256:hash(JSON.stringify(moduleHashes)),mode:'native browser fixtures; no live game session',page_errors:[],...(rustRuntime?{owned_backend:'Rust/WebAssembly',rust_runtime_sha256:hash(rustRuntime)}:{})};
  let browser,page;
  try{
   const engine=process.env.DEVAST_BROWSER||'chromium';assert.ok(['chromium','firefox'].includes(engine),'Unsupported browser');report.browser=engine;

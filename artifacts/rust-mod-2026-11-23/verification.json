@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "verified_at": "2026-11-24T06:25:38.475Z",
+  "owned_backend": "Rust/WebAssembly",
+  "owned_functions": 406,
+  "generated_rust_lines": 83603,
+  "client": {
+    "bytes": 10223877,
+    "sha256": "c3069880e5874202b268a86798ed17d322606233f4c7993ad46ec2e05769f7c3",
+    "wasm_sha256": "8b9bc3a0640b62b7abaf2f9a6a99eb800ee31b9760179d27bfbae043ecb7d95e",
+    "native_outside_owned_modules": "byte-identical"
+  },
+  "resource_override": {
+    "sha256": "b7a33cee2da7495b7818cb33983e91eb075984c926dbeef7851badc208caf842",
+    "embedded_client_matches": true
+  },
+  "source_archive": {
+    "sha256": "afa61347f7308689ee82ac7c0b880e74f2f88ef1d54713bc65c1b873ece3cfbc",
+    "contains_typescript": false,
+    "clean_wasm_build": "passed",
+    "clean_smoke_test": "passed",
+    "clean_full_client_build": "passed"
+  },
+  "tests": {
+    "repository": {
+      "passed": 390,
+      "failed": 0,
+      "skipped": 1
+    },
+    "rust_runtime": {
+      "passed": 301,
+      "failed": 0,
+      "skipped": 0
+    },
+    "browsers": [
+      {
+        "name": "chromium",
+        "version": "156.0.8078.79",
+        "status": "passed",
+        "page_errors": 0,
+        "report": "validation-chromium.json"
+      },
+      {
+        "name": "firefox",
+        "version": "153.0",
+        "status": "passed",
+        "page_errors": 0,
+        "report": "validation-firefox.json"
+      }
+    ]
+  },
+  "scope": {
+    "live_server": "not_tested",
+    "publication": "not_published"
+  }
+}

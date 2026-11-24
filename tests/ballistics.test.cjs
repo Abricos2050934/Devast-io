@@ -3,7 +3,7 @@ const {fixture,menu,control}=require('./mod-fixture.cjs');
 function model(){
  const context=vm.createContext({});
  const source=fs.readFileSync(process.env.DEVAST_TEST_CANDIDATE?require('path').join(process.env.DEVAST_TEST_CANDIDATE,'ilm-aim.js'):'mod/ilm-aim.js','utf8');
- vm.runInContext(source,context);let now=0;
+ if(process.env.DEVAST_RUST_MOD)require('../tools/rust_fixture.cjs').install(context,process.env.DEVAST_RUST_MOD);else vm.runInContext(source,context);let now=0;
  const settings={bulletSpeedCoefficient:1.5,predictionAutoSpeed:true,predictionLatencyMs:0};
  return {aim:context.__createBallisticAim(settings,()=>now),settings,at(t){now=t;}};
 }

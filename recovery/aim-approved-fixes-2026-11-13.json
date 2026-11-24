@@ -4,6 +4,24 @@
   "changes": [
     {
       "file": "mod/responsive.js",
+      "reason": "Preserve calibrated video spear direction immediately before automatic throw",
+      "before": "      if(adaptiveGunActive()&&packet[0]===4)Aimbot.resolve();",
+      "after": "      if(adaptiveGunActive()&&packet[0]===4){\n        if(videoSpearActive())Aimbot.spearResolve();else Aimbot.resolve();\n      }"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "Clear both aim lines when the video spear target is lost or stale",
+      "before": "    if(!ballisticPrediction.valid){this.targetPlayer=null;GetAllTargets.lines[0].reset();return this.lastAngle;}",
+      "after": "    if(!ballisticPrediction.valid){this.targetPlayer=null;GetAllTargets.resetLines();return this.lastAngle;}"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "Prediction mode switches must not retain an old selected target, forecast or smoothing state",
+      "before": "    if(key==='AdaptiveAimEnabled'||key==='VideoAimEnabled'){lastAdaptiveDirection=-Infinity;lastAdaptiveTarget=null;}",
+      "after": "    if(key==='AdaptiveAimEnabled'||key==='VideoAimEnabled'){\n      lastAdaptiveDirection=-Infinity;lastAdaptiveTarget=null;\n      ballisticPrediction={valid:false,status:'no-target'};\n      Aimbot.targetPlayer=null;Aimbot._smoothAngle=undefined;GetAllTargets.resetLines();\n    }"
+    },
+    {
+      "file": "mod/responsive.js",
       "reason": "User-requested left avgPing/currentPing/deltaPing HUD with honest configured/measured labels, screen-space layout and visibility control",
       "before": "      this.AdaptiveAimEnabled = true;\n      this.predictionAutoSpeed = true;\n      this.predictionLatencyMs = 0;\n      this.VideoAimEnabled = false;\n      this.videoPingMs = 90;\n      this.videoPingSteps = 125;\n      this.videoAimSteps = 2;\n      this.videoDelayMs = 1;\n",
       "after": "      this.AdaptiveAimEnabled = true;\n      this.predictionAutoSpeed = true;\n      this.predictionLatencyMs = 0;\n      this.VideoAimEnabled = false;\n      this.VideoAimHudEnabled = true;\n      this.videoPingMs = 90;\n      this.videoPingSteps = 125;\n      this.videoAimSteps = 2;\n      this.videoDelayMs = 1;\n"

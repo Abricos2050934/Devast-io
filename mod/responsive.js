@@ -815,7 +815,9 @@ function __installDevastMod(B) {
       if(!aimCycleWritable||!playing()||reconnect.sessionEnded||connectionSocket&&connectionSocket.readyState!==1)return false;
       // The source calculates first. Reject its whole automatic cycle when
       // that calculation used a missing player or a removed/own target.
-      if(adaptiveGunActive()&&packet[0]===4)Aimbot.resolve();
+      if(adaptiveGunActive()&&packet[0]===4){
+        if(videoSpearActive())Aimbot.spearResolve();else Aimbot.resolve();
+      }
       if([4,5,6].includes(packet[0])){const reason=invalidAimState();if(reason){aimCycleWritable=false;aimTransport.invalidCycles++;aimTransport.lastInvalidReason=reason;return false;}}
       if(packet[0]===6&&MOD.JitterEnabled&&!jitterAiming())return false;
       if(packet[0]===6&&MOD.AdaptiveAimEnabled){
@@ -883,7 +885,7 @@ function __installDevastMod(B) {
     this.targetPlayer=target;
     const selfMotion=ballistic.motion('p:'+id);
     ballisticPrediction=target?ballistic.resolve('p:'+id,(GetAllTargets.ghouls[target.id]===target?'g:':'p:')+target.id,ballisticWeaponProfile(selfMotion?.weapon)):{valid:false,status:'no-target'};
-    if(!ballisticPrediction.valid){this.targetPlayer=null;GetAllTargets.lines[0].reset();return this.lastAngle;}
+    if(!ballisticPrediction.valid){this.targetPlayer=null;GetAllTargets.resetLines();return this.lastAngle;}
     this.lastAngle=((ballisticPrediction.angle%360)+360)%360;this._smoothAngle=this.lastAngle;
     if(MOD.visualizeResolving){const p=ballisticPrediction;GetAllTargets.lines[0].color=MOD.visualizeResolvingColor;GetAllTargets.lines[0].reset(p.ox,p.oy,p.x,p.y);}
     return this.lastAngle;
@@ -1201,7 +1203,11 @@ function __installDevastMod(B) {
     }
     MOD[key] = value;
     if(key==='AntiAimbot'&&!value)restoreNativeMovement();
-    if(key==='AdaptiveAimEnabled'||key==='VideoAimEnabled'){lastAdaptiveDirection=-Infinity;lastAdaptiveTarget=null;}
+    if(key==='AdaptiveAimEnabled'||key==='VideoAimEnabled'){
+      lastAdaptiveDirection=-Infinity;lastAdaptiveTarget=null;
+      ballisticPrediction={valid:false,status:'no-target'};
+      Aimbot.targetPlayer=null;Aimbot._smoothAngle=undefined;GetAllTargets.resetLines();
+    }
     if(key==='JitterEnabled'&&!value)stopJitter();
     if (key === 'NicknameColor') {
       for (let id=1;id<B.world.ᴎ︃ᄉ.length;id++) {

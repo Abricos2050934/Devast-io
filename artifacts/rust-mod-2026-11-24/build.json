@@ -1,0 +1,14 @@
+{
+  "status": "built-not-browser-verified",
+  "owned_functions": 406,
+  "native_language": "JavaScript",
+  "owned_backend": "Rust/WebAssembly",
+  "native_source": "https://devast.io/js/SoU74f1CSGBLrnN70LACrWeKIQ.js",
+  "native_input_sha256": "698491f099541f338eb7c1db2a29c82fa0fa3b791f0cf13903e0c99c9b1a8a22",
+  "output_sha256": "0c1e9ca6c9f0102fffac64620de166b7e31e2f775ff1ded78ea191026f35eb3c",
+  "wasm_sha256": "06c0915f19917f47806197e01b6a7fc9a1f57630573a4f87ffc4c80895a7fdd2",
+  "bytes": 10299154,
+  "native_outside_owned_modules": "byte-identical",
+  "publication": "not_published",
+  "live_server": "not_tested"
+}

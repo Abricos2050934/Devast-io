@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "source": {
+    "page_url": "https://devast.io/",
+    "script_url": "https://devast.io/js/leZs64ZPgDsXo.js",
+    "raw_sha256": "9e84275413e96268144d98febd374d72bbcdecce81adfb1be1ee98117ae7992f"
+  },
+  "output_sha256": "a02eae84cf1f016d9500c551b605e397c2720776bc42958513b51a4695417264",
+  "candidate_tests": 294,
+  "full_regression": {
+    "python": 87,
+    "node": 389,
+    "status": "passed"
+  },
+  "browsers": {
+    "chromium": {
+      "status": "passed",
+      "version": "156.0.8078.79",
+      "page_errors": []
+    },
+    "firefox": {
+      "status": "passed",
+      "version": "153.0",
+      "page_errors": []
+    }
+  },
+  "fixes": [
+    "calibrated-angle-before-auto-throw",
+    "clear-stale-spear-lines",
+    "clear-selected-target-on-mode-switch"
+  ],
+  "publication": "not_published",
+  "live_server": "not_tested",
+  "video_algorithm_reconstruction": false
+}

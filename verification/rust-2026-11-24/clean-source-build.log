@@ -1,0 +1,42 @@
+
+added 1 package in 366ms
+
+> devast-rust-mod-source@0.1.0 test
+> node tools/rust_source_smoke.cjs
+
+{"status":"passed","backend":"Rust/WebAssembly","gui":true,"settings":true,"analytic_intercept":true,"wasm_dispatch":true,"cleanup":true}
+
+> devast-rust-mod-source@0.1.0 build
+> node tools/build_rust_client.cjs
+
+   Compiling wasm-bindgen-shared v0.2.105
+   Compiling unicode-ident v1.0.27
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling rustversion v1.0.23
+   Compiling bumpalo v3.20.4
+   Compiling once_cell v1.21.4
+   Compiling cfg-if v1.0.5
+   Compiling wasm-bindgen v0.2.105
+   Compiling syn v2.0.119
+   Compiling wasm-bindgen-macro-support v0.2.105
+   Compiling wasm-bindgen-macro v0.2.105
+   Compiling js-sys v0.3.82
+   Compiling wasm-bindgen-futures v0.4.55
+   Compiling devast-owned-mod v0.1.0 (/tmp/devast-rust-source-Uzuofl/rust-mod/.native-build)
+    Finished `release` profile [optimized] target(s) in 55.92s
+{
+  "status": "built-not-browser-verified",
+  "owned_functions": 406,
+  "native_language": "JavaScript",
+  "owned_backend": "Rust/WebAssembly",
+  "native_source": "https://devast.io/js/SoU74f1CSGBLrnN70LACrWeKIQ.js",
+  "native_input_sha256": "698491f099541f338eb7c1db2a29c82fa0fa3b791f0cf13903e0c99c9b1a8a22",
+  "output_sha256": "3e95125145664db7fa471000c7fcc7c1629060dc98c185e06df3c66588443ec1",
+  "wasm_sha256": "71d6304aac07afb48aec30decb16f2cc02f71aa2761df76a29959bfad02bfdcc",
+  "bytes": 10299154,
+  "native_outside_owned_modules": "byte-identical",
+  "publication": "not_published",
+  "live_server": "not_tested",
+  "dir": "/tmp/devast-rust-source-Uzuofl/artifacts/rust-mod-2026-11-24"
+}

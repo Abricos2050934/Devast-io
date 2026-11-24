@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "release": "ad4d11e019f0a4710404787650ade33ad429e7e9556100f7445bdc725d3d3033",
+  "raw_sha256": "f486858e2155cc0cca5f95fa66e0ecd6f7c8a670cc62b655e8dac0bf06724930",
+  "inputs_sha256": "f03b30db8043d97309cd75f66adb4d1232e2e524d053edbeab8b48ca21d626d8",
+  "output_sha256": "698491f099541f338eb7c1db2a29c82fa0fa3b791f0cf13903e0c99c9b1a8a22",
+  "script": "versions/ad4d11e019f0a4710404787650ade33ad429e7e9556100f7445bdc725d3d3033/game.modded.js",
+  "source_url": "https://devast.io/js/SoU74f1CSGBLrnN70LACrWeKIQ.js",
+  "source_candidates": [
+    "https://devast.io/js/SoU74f1CSGBLrnN70LACrWeKIQ.js"
+  ],
+  "activated_at": "2026-11-24T07:33:24.400926+00:00",
+  "previous_release": "19cdbe7eaa5f8feb3c4c63b838f025d0b49b4603be879ab9356e68774827574a",
+  "validation": "passed",
+  "live_server": "not_tested",
+  "publication": "local_only"
+}

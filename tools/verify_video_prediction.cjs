@@ -44,9 +44,14 @@ function verifyVideoPrediction(m,n,s){
   const angle=m.aim.spearResolve();result=m.aim.prediction;
   check(result.valid&&result.video?.enabled&&result.speed===500,'Video spear model is disconnected from the native spear profile');
   check(Math.abs(angle-((result.angle-m.settings.spearStabDeg)%360+360)%360)<1e-7,'Spear packet-angle calibration was lost');
+  m.setSetting('spearAutoThrow',true);capture.packets.length=0;m.aimModule.tick();
+  const throwIndex=capture.packets.findIndex(packet=>packet[0]===4);
+  check(throwIndex>0&&capture.packets[throwIndex-1][0]===6&&Math.abs(capture.packets[throwIndex-1][1]-angle)<1e-7,'Automatic spear throw overwrote the calibrated direction');
+  m.setSetting('spearAutoThrow',false);
   const folder=m.menu.__folders['Adaptive Aim'].__folders['Video Prediction — эксперимент'];
   check(folder,'Video controls missing');folder.__controllers.find(c=>c.property==='videoAimSteps').setValue(3);check(m.aimTiming().aimSteps===3,'Video control does not affect the model');
   clock+=500;n.setClock?.(clock);m.aim.spearResolve();check(!m.aim.prediction.valid&&!m.aim.targetPlayer,'Stale video target retained');
+  check(m.targets.lines.every(line=>[line.x1,line.y1,line.x2,line.y2].every(value=>value===-1)),'Stale spear prediction left a visible aim line');
   return {status:'passed',configured_ping_is_labelled:true,measured_samples_are_explicit:true,gun_native_packets:true,spear_native_speed_and_geometry:true,native_angle_before_shot:true,controls_connected:true,stale_target_released:true,no_additional_ping_packets:true,left_hud_values_and_toggle:true,hud_preview_data_url:hudPreview};
  }finally{capture.restore();Date.now=previous.now;performance.now=previous.performance;m.onSessionStart();m.onHandshake();self.id=previous.id;n.network.state=previous.state;m.reconnect.sessionEnded=previous.ended;meta[2]=previous.meta;Object.assign(m.settings,saved);}
 }

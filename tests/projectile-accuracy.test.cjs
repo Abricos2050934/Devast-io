@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),z=require('node:zlib'),path=require('node:path');
 const {benchmark}=require('../tools/benchmark_projectile_accuracy.cjs');
 function source(){return fs.readFileSync(process.env.DEVAST_TEST_CANDIDATE?path.join(process.env.DEVAST_TEST_CANDIDATE,'ilm-aim.js'):'mod/ballistic-model.js','utf8');}
-function model(){const c=vm.createContext({});vm.runInContext(source(),c);let now=0;return {aim:c.__createBallisticAim({predictionAutoSpeed:true,predictionLatencyMs:0,bulletSpeedCoefficient:1.4},()=>now),at(t){now=t;}};}
+function model(){const c=vm.createContext({});if(process.env.DEVAST_RUST_MOD)require('../tools/rust_fixture.cjs').install(c,process.env.DEVAST_RUST_MOD);else vm.runInContext(source(),c);let now=0;return {aim:c.__createBallisticAim({predictionAutoSpeed:true,predictionLatencyMs:0,bulletSpeedCoefficient:1.4},()=>now),at(t){now=t;}};}
 for(const interval of [80,100])test('confirmed circular motion survives '+interval+' ms packet intervals and quantization',()=>{
  const m=model();for(let i=0;i<12;i++){const at=i*interval;m.at(at+(i%3===1?5:0));m.aim.track('self',1000,1000,true,{weapon:10});m.aim.track('target',Math.round(1500+90*Math.cos(at*.0022)),Math.round(1000+90*Math.sin(at*.0022)),true);}
  const r=m.aim.resolve('self','target',{speed:1400,range:900});assert.equal(r.motionModel,'circle');assert.ok(r.valid);

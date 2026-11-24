@@ -23,7 +23,10 @@
     "build:published-mod": "node tools/build_published_mod.cjs",
     "check:published-mod": "node tools/build_published_mod.cjs --check",
     "build:verified-mod": "node tools/build_verified_mod.cjs",
-    "build:video-aim": "node tools/build_video_aim.cjs"
+    "build:video-aim": "node tools/build_video_aim.cjs",
+    "build:rust": "node tools/build_rust.cjs",
+    "build:rust-client": "node tools/build_rust_client.cjs",
+    "test:rust": "node tools/test_rust.cjs"
   },
   "devDependencies": {
     "acorn": "8.15.0",

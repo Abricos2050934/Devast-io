@@ -3,7 +3,7 @@ const {fixture,menu,control}=require('./mod-fixture.cjs');
 function model(overrides={}){
  const context=vm.createContext({});
  const file=process.env.DEVAST_TEST_CANDIDATE?path.join(process.env.DEVAST_TEST_CANDIDATE,'ilm-aim.js'):'mod/ballistic-model.js';
- vm.runInContext(fs.readFileSync(file,'utf8'),context);
+ if(process.env.DEVAST_RUST_MOD)require('../tools/rust_fixture.cjs').install(context,process.env.DEVAST_RUST_MOD);else vm.runInContext(fs.readFileSync(file,'utf8'),context);
  let now=1000;const settings={predictionAutoSpeed:true,predictionLatencyMs:0,bulletSpeedCoefficient:1.5,VideoAimEnabled:true,videoPingMs:90,videoPingSteps:125,videoAimSteps:2,videoDelayMs:1,videoDelaySendMs:20,...overrides};
  return {settings,aim:context.__createBallisticAim(settings,()=>now),at(value){now=value;}};
 }
@@ -90,6 +90,40 @@ test('video mode holds a valid target, obeys explicit lock and releases removed 
   f.world['ᴎ︃ᄉ'][3]={'ο̏︇':'Third','а༤̘':-1};f.mod.trackPacket(1,3,1,1080,1000,true);f.mod.setSetting('lockId',-1);f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,2);
   f.mod.setSetting('lockId',3);f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,3);
   f.mod.setSetting('lockId',-1);f.mod.trackPacket(1,3,1,0,0,false);f.mod.aim.resolve();assert.equal(f.mod.aim.targetPlayer.id,2);
+ }finally{f.mod.dispose();}
+});
+test('automatic spear throws retain exactly the calibrated manual direction',()=>{
+ const f=scene({spear:true});try{
+  for(const correction of [.5,2.5,10]){
+   f.mod.setSetting('spearStabDeg',correction);f.mod.setSetting('spearAutoThrow',true);
+   const expected=f.mod.aim.spearResolve();f.packets.length=0;f.mod.aimModule.tick();
+   const attack=f.packets.findIndex(p=>p[0]===4);assert.ok(attack>0,'Automatic throw missing');
+   assert.equal(f.packets[attack-1][0],6);close(f.packets[attack-1][1],expected);
+   f.packets.length=0;assert.equal(f.mod.beforeFire(),true);close(f.packets.at(-1)[1],expected);
+  }
+ }finally{f.mod.dispose();}
+});
+test('a removed or stale video spear target clears both lines and cannot auto throw',()=>{
+ for(const removed of [true,false]){
+  const f=scene({spear:true});try{
+   f.mod.setSetting('spearAutoThrow',true);f.mod.aim.spearResolve();
+   assert.notEqual(f.mod.targets.lines[1].x1,-1);
+   if(removed)f.mod.trackPacket(1,2,1,0,0,false);else f.setClock(1800);
+   f.packets.length=0;f.mod.aimModule.tick();assert.equal(f.mod.aim.targetPlayer,null);
+   assert.equal(f.mod.aim.prediction.valid,false);assert.ok(!f.packets.some(p=>p[0]===4));
+   for(const line of f.mod.targets.lines)assert.deepEqual([line.x1,line.y1,line.x2,line.y2],[-1,-1,-1,-1]);
+  }finally{f.mod.dispose();}
+ }
+});
+test('switching prediction modes drops the old target and forecast without changing saved controls',()=>{
+ const f=scene({spear:true});try{
+  const saved=Object.fromEntries(['spearStabDeg','distanceCoefficient','aimSmooth','spearAutoThrow'].map(k=>[k,f.mod.settings[k]]));
+  for(const [key,value]of [['VideoAimEnabled',false],['VideoAimEnabled',true],['AdaptiveAimEnabled',false]]){
+   f.mod.aim.spearResolve();f.mod.setSetting(key,value);
+   assert.equal(f.mod.aim.targetPlayer,null);assert.equal(f.mod.aim.prediction.valid,false);
+   for(const line of f.mod.targets.lines)assert.deepEqual([line.x1,line.y1,line.x2,line.y2],[-1,-1,-1,-1]);
+   for(const [k,v]of Object.entries(saved))assert.equal(f.mod.settings[k],v);
+  }
  }finally{f.mod.dispose();}
 });
 test('RTT ingestion adds no packets and resets on a new socket or session',()=>{

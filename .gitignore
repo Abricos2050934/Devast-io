@@ -14,3 +14,7 @@ dist/auto-update/
 /.private-updates/
 .dev.vars*
 .wrangler/
+
+# Rust compilation cache and temporary native binding adaptation
+rust-mod/target/
+rust-mod/.native-build/

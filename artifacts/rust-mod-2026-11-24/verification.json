@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "verified_at": "2026-11-24T07:42:32.752Z",
+  "owned_backend": "Rust/WebAssembly",
+  "owned_functions": 406,
+  "native_source": "https://devast.io/js/SoU74f1CSGBLrnN70LACrWeKIQ.js",
+  "native_raw_sha256": "f486858e2155cc0cca5f95fa66e0ecd6f7c8a670cc62b655e8dac0bf06724930",
+  "client": {
+    "bytes": 10299154,
+    "sha256": "0c1e9ca6c9f0102fffac64620de166b7e31e2f775ff1ded78ea191026f35eb3c",
+    "wasm_sha256": "06c0915f19917f47806197e01b6a7fc9a1f57630573a4f87ffc4c80895a7fdd2",
+    "native_outside_owned_modules": "byte-identical"
+  },
+  "resource_override": {
+    "sha256": "ca68d04c70989de3e8c9629ef520dccaed3b02f65aa76eb68e05103823c12296",
+    "embedded_client_matches": true
+  },
+  "source_archive": {
+    "sha256": "aae6bdf064af1bd14fdee94abb983ef9cf9909f6efc47c3b8c470243ae9ba2b9",
+    "contains_typescript": false,
+    "clean_dependency_install": "passed",
+    "clean_smoke_test": "passed",
+    "clean_full_client_build": "passed"
+  },
+  "tests": {
+    "repository": {
+      "python_passed": 87,
+      "node_passed": 390,
+      "node_skipped": 1,
+      "failed": 0
+    },
+    "native_candidate": {
+      "passed": 294,
+      "failed": 0
+    },
+    "rust_runtime": {
+      "passed": 301,
+      "failed": 0,
+      "skipped": 0
+    },
+    "browsers": [
+      {
+        "name": "chromium",
+        "version": "156.0.8078.79",
+        "status": "passed",
+        "page_errors": 0,
+        "output_sha256": "0c1e9ca6c9f0102fffac64620de166b7e31e2f775ff1ded78ea191026f35eb3c",
+        "report": "validation-chromium.json"
+      },
+      {
+        "name": "firefox",
+        "version": "153.0",
+        "status": "passed",
+        "page_errors": 0,
+        "output_sha256": "0c1e9ca6c9f0102fffac64620de166b7e31e2f775ff1ded78ea191026f35eb3c",
+        "report": "validation-firefox.json"
+      }
+    ]
+  },
+  "source_check": {
+    "schema": 1,
+    "checked_at": "2026-11-24T07:41:17.567595+00:00",
+    "state": "source_checked",
+    "page_url": "https://devast.io/",
+    "page_sha256": "7f2acd4d5526278d08d7ab15b00fb32907b190710397b2888c025a668b28a51a",
+    "current_raw_sha256": "f486858e2155cc0cca5f95fa66e0ecd6f7c8a670cc62b655e8dac0bf06724930",
+    "candidates": [
+      {
+        "url": "https://devast.io/js/SoU74f1CSGBLrnN70LACrWeKIQ.js",
+        "raw_sha256": "f486858e2155cc0cca5f95fa66e0ecd6f7c8a670cc62b655e8dac0bf06724930",
+        "bytes": 7299325,
+        "matches_current": true
+      }
+    ]
+  },
+  "scope": {
+    "live_server": "not_tested",
+    "publication": "not_published"
+  },
+  "performance": "Dynamic JsValue interop; Rust variant slower than JavaScript in the test fixture; no speedup claim"
+}
