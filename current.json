@@ -1,16 +1,16 @@
 {
   "schema": 1,
-  "release": "1c5245b086d5da5ab5b0e7f371002488866b3acd295c34a9d5f1be2acb95413e",
-  "raw_sha256": "f486858e2155cc0cca5f95fa66e0ecd6f7c8a670cc62b655e8dac0bf06724930",
+  "release": "5263ba34c1ce34422f7474a63d7346fd393366bf489e1f4a68f6c0cc947119a5",
+  "raw_sha256": "f9f94b979a4f597d0de2686cf5c41f2d65687b03476072b1b32802f82c92f214",
   "inputs_sha256": "c85e6f766df0bcf120a3471a5c19d75d5d63356c782d8627f8dcbd185a16d8d3",
-  "output_sha256": "698491f099541f338eb7c1db2a29c82fa0fa3b791f0cf13903e0c99c9b1a8a22",
-  "script": "versions/1c5245b086d5da5ab5b0e7f371002488866b3acd295c34a9d5f1be2acb95413e/game.modded.js",
-  "source_url": "https://devast.io/js/SoU74f1CSGBLrnN70LACrWeKIQ.js",
+  "output_sha256": "a187f088f237190ba155f318b9c9cd45a1cb1d961686c4677aee017385153823",
+  "script": "versions/5263ba34c1ce34422f7474a63d7346fd393366bf489e1f4a68f6c0cc947119a5/game.modded.js",
+  "source_url": "https://devast.io/js/ZfEmnNKOgaFxkz1h9KeG.js",
   "source_candidates": [
-    "https://devast.io/js/SoU74f1CSGBLrnN70LACrWeKIQ.js"
+    "https://devast.io/js/ZfEmnNKOgaFxkz1h9KeG.js"
   ],
-  "activated_at": "2026-11-24T08:03:39.970192+00:00",
-  "previous_release": "1737194c9ebf1c89d55fbe09a96a0a8806576c8b03b990474c225608f2c56352",
+  "activated_at": "2026-11-24T20:50:50.851717+00:00",
+  "previous_release": "1c5245b086d5da5ab5b0e7f371002488866b3acd295c34a9d5f1be2acb95413e",
   "validation": "passed",
   "live_server": "not_tested",
   "publication": "github",
