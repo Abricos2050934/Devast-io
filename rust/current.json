@@ -5,11 +5,11 @@
   "source_url": "https://devast.io/js/X2K2qN7Q5NcvSsiLXTz.js",
   "raw_sha256": "f4b757053b450a9a65c9dee21a613a3e79331195c034d95c315ea9e2103f1b4f",
   "rust_inputs_sha256": "f74e9a3c1cf9f6ca9f6d3b677b11477f667ea6567b503798cfb93bf58fb3e7fd",
-  "output_sha256": "d924c391f4c4ca0ce9b7eed9b42387f397b00af73eb2be20ec1fa7102addcc63",
-  "wasm_sha256": "bf25adb0439987d5a88b1af6cc7f0191eb8c3bcf8b19bc234009a18cdaa9e3d8",
+  "output_sha256": "676ec192233731b164cf81d1f38678efe79aad28ea02822ddc1500e4b9ff7b8f",
+  "wasm_sha256": "86a652c3238792377292625fe8c368df16e1fb89e3abf87c704efe595f935c2c",
   "backend": "Rust/WebAssembly",
   "script": "versions/8d4b19168f4ff09bbd0fdd21a940c48c70024b5c36bd19867da0d138beed3978/client.js",
   "validation": "passed",
-  "activated_at": "2026-11-25T06:25:47.242128+00:00",
+  "activated_at": "2026-11-25T06:41:41.430061+00:00",
   "publication": "github"
 }
