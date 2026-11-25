@@ -862,6 +862,7 @@ function __installDevastMod(B) {
   }
   Aimbot.onDeath=function(){ballistic.reset();ballisticPrediction={valid:false,status:'session-ended'};lastAdaptiveDirection=-Infinity;lastAdaptiveTarget=null;return originalAimDeath();};
   function retainStationaryMotion(id,target,kind='p') {
+    if (!Number.isInteger(id)) return null;
     const key=kind+':'+id, current=ballistic.motion(key);
     if (current) return current;
     const now=performance.now();
@@ -1379,7 +1380,7 @@ function __installDevastMod(B) {
   }
   function updateMouse() {
     if (!MOD.mouseFovEnable) return;
-    // Mouse events carry viewport coordinates.  Convert them through the
+    // Mouse events carry viewport coordinates. Convert them through the
     // canvas rectangle before applying the camera, otherwise an embedded or
     // offset canvas makes the target anchor miss the pointer.
     const point = cursorWorld();
@@ -1387,7 +1388,7 @@ function __installDevastMod(B) {
     GetAllTargets.mouseMapCords = point;
     // The legacy overlay renderer runs after this handler. Keep the converted
     // value so it can be restored without another layout read.
-    GetAllTargets.__responsiveCursorWorld = point;
+    (GetAllTargets).__responsiveCursorWorld = point;
   }
   function automate(now) {
     if (!playing() || reconnect.sessionEnded) {
@@ -1784,7 +1785,8 @@ function __installDevastMod(B) {
       aimModule.render(ctx,aimView,v.scale/aimView.scale);
       // The imported overlay keeps its historical raw-client calculation.
       // Restore the host's canvas-correct cursor after it finishes drawing.
-      if (GetAllTargets.__responsiveCursorWorld) GetAllTargets.mouseMapCords = GetAllTargets.__responsiveCursorWorld;
+      const responsiveCursor=(GetAllTargets).__responsiveCursorWorld;
+      if (responsiveCursor) GetAllTargets.mouseMapCords = responsiveCursor;
       ctx.globalAlpha = 1;
     } finally {ctx.restore();}
   }
