@@ -35,3 +35,12 @@ test('an ambiguous native marker result is still rejected',()=>{
  const source=`const browser=window,storage=localStorage;function connect(){var table=[${JSON.stringify(table)}];var first=browser.mark?0:1;var second=storage.getItem('marker')?0:1;}`;
  assert.throws(()=>connectionMarkerProbe(readonlyConstants(analyze(source)),'network'),/Unique native connection check result/);
 });
+test('a mutated 0/1 loop state is not confused with the stable native result',()=>{
+ const table=[...'__autoPortAimbotPacketTransport'].map(c=>c.charCodeAt(0)^29);
+ const source=`const browser=window,storage=localStorage;function connect(){var table=[${JSON.stringify(table)}];let state=browser.skip?0:1;do{state=2;}while(state<2);var flag=!(browser[table[0].map(c=>String.fromCharCode(c^29)).join('')]||storage.getItem('BestModMenuConfig'))?0:1;throw Error('Socket must never be constructed');}`;
+ const probe=connectionMarkerProbe(readonlyConstants(analyze(source)),'network');
+ let saved=null;const context={window:{},localStorage:{getItem:()=>saved}};
+ const run=()=>vm.runInNewContext('(function(){'+probe.code+'})()',context);
+ assert.equal(run(),0);saved='{}';assert.equal(run(),1);
+ assert.ok(!probe.code.includes('Socket must never be constructed'));
+});

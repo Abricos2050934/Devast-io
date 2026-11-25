@@ -109,6 +109,11 @@ def once(output=OUTPUT, publish=False):
                 os.replace(built, directory)
         meta = updater.read_json(directory / 'release.json')
         body, proof = verified_files(directory, meta)
+        if meta['raw_sha256'] != js['raw_sha256'] or meta['js_release'] != js['release']:
+            raise ValueError('Cached Rust release belongs to another game source')
+        # A game URL may change without changing its bytes or JS release ID.
+        # Keep the current channel pointer in sync even when reusing its build.
+        meta = dict(meta, source_url=js['source_url'])
         publisher.check_publication_source(ROOT, js)
         if inputs() != source_hash:
             raise ValueError('Rust inputs changed before activation')

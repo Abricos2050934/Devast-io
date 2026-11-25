@@ -1,0 +1,28 @@
+name: Check JS and Rust channel freshness
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '3-58/5 * * * *'
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: devast-channel-freshness
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Detect drift and dispatch the verified JS and Rust builder
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/check_update_channels.py --dispatch

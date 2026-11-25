@@ -12,7 +12,15 @@ function connectionMarkerProbe(a,networkName){
  const table=tables[0];let fn=table.node;while(fn&&!/Function/.test(fn.type))fn=a.parent.get(fn);
  assert.equal(fn?.type,'FunctionDeclaration');
  const inOwner=n=>{for(let p=a.parent.get(n);p;p=a.parent.get(p))if(/Function/.test(p.type))return p===fn;return false;};
- const gates=a.nodes.filter(d=>d.type==='VariableDeclarator'&&d.start>fn.start&&d.end<fn.end&&inOwner(d)&&d.init?.type==='ConditionalExpression'&&a.constant(d.init.consequent)===0&&a.constant(d.init.alternate)===1);
+ // Obfuscation can add 0/1 loop-state initializers in the same function.
+ // The extracted connection result is read-only; a mutated state variable
+ // cannot serve as that result. Keep ambiguity rejection for stable results.
+ const written=new Set();
+ for(const n of a.nodes){
+  const target=n.type==='AssignmentExpression'?n.left:n.type==='UpdateExpression'?n.argument:null;
+  if(target?.type==='Identifier')written.add(a.binding(target));
+ }
+ const gates=a.nodes.filter(d=>d.type==='VariableDeclarator'&&d.start>fn.start&&d.end<fn.end&&inOwner(d)&&!written.has(a.binding(d.id))&&d.init?.type==='ConditionalExpression'&&a.constant(d.init.consequent)===0&&a.constant(d.init.alternate)===1);
  assert.equal(gates.length,1,'Unique native connection check result required');
  const gate=gates[0],aliases=new Map(),windowNames=new Set(),storageNames=new Set();
  for(const n of a.nodes){
