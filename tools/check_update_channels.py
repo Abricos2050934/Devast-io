@@ -42,7 +42,16 @@ def check(dispatch=False):
     urls = updater.discover(fetch(config['page_url'], config['max_html_bytes']), config['page_url'], config)
     if len(urls) != 1:
         raise ValueError('Ambiguous current game script')
-    raw_sha = updater.digest(fetch(urls[0], config['max_script_bytes']))
+    try:
+        raw_sha = updater.digest(fetch(urls[0], config['max_script_bytes']))
+    except updater.UpdateError as error:
+        cause = error.__cause__
+        if isinstance(cause, urllib.error.HTTPError) and cause.code == 404:
+            # During game deployment the HTML can advertise an asset before
+            # that asset is available. Wait for it instead of building a 404.
+            return dict(state='source-unavailable', source_url=urls[0], http_status=404,
+                        retry_next_tick=True)
+        raise
     drift = reasons(urls[0], raw_sha, public_meta('current.json'), public_meta('rust/current.json'), update_rust.inputs())
     result = dict(source_url=urls[0], raw_sha256=raw_sha, reasons=drift, state='current')
     if drift:

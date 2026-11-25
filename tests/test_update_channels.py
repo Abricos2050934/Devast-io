@@ -1,9 +1,12 @@
 import sys
 from pathlib import Path
 import unittest
+from unittest.mock import patch
+import urllib.error
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
-from check_update_channels import reasons, watch
+from check_update_channels import reasons, watch, check
+import update_client as updater
 
 
 class ChannelFreshnessTests(unittest.TestCase):
@@ -24,6 +27,21 @@ class ChannelFreshnessTests(unittest.TestCase):
 
 
 class MonitorTests(unittest.TestCase):
+    def test_advertised_missing_asset_waits_without_dispatching_a_broken_build(self):
+        error=updater.UpdateError('Source HTTP 404')
+        error.__cause__=urllib.error.HTTPError('https://devast.io/js/new.js',404,'Not Found',{},None)
+        def fetch(url, limit):
+            if url=='https://devast.io/':
+                return b'<script src="/js/new.js"></script>'
+            raise error
+        with patch('check_update_channels.updater.Fetcher',return_value=fetch), \
+             patch('check_update_channels.subprocess.run') as dispatch:
+            result=check(True)
+        self.assertEqual(result['state'],'source-unavailable')
+        self.assertEqual(result['http_status'],404)
+        self.assertTrue(result['retry_next_tick'])
+        dispatch.assert_not_called()
+
     def test_checks_continue_after_a_transient_failure_and_session_is_bounded(self):
         now = [0]
         calls = []
