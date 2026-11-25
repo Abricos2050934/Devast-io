@@ -861,6 +861,19 @@ function __installDevastMod(B) {
     return {speed:Number.isFinite(native?.curveBulletSpeed)?native.curveBulletSpeed*1000:0,range:Number.isFinite(native?.path)?native.path:0};
   }
   Aimbot.onDeath=function(){ballistic.reset();ballisticPrediction={valid:false,status:'session-ended'};lastAdaptiveDirection=-Infinity;lastAdaptiveTarget=null;return originalAimDeath();};
+  function retainStationaryMotion(id,target,kind='p') {
+    const key=kind+':'+id, current=ballistic.motion(key);
+    if (current) return current;
+    const now=performance.now();
+    // A position may be legitimately unchanged and therefore absent from the
+    // delta stream. Refresh only while the socket is receiving traffic; a
+    // stale/disconnected entity remains invalid and cannot keep an old target
+    // alive.
+    if (!socketTrace || socketTrace.lastReceiveAt===null || now-socketTrace.lastReceiveAt>750) return null;
+    if (!target?.active || !Number.isFinite(target.x) || !Number.isFinite(target.y)) return null;
+    ballistic.track(key,target.x,target.y,true,{weapon:kind==='p'?target.weapon:undefined});
+    return ballistic.motion(key);
+  }
   Aimbot.resolve=function(){
     if(!MOD.AdaptiveAimEnabled){
       const self=GetAllTargets.players[B.world.ᅠᏧ‍?.id];
@@ -883,8 +896,9 @@ function __installDevastMod(B) {
       }
     }
     this.targetPlayer=target;
-    const selfMotion=ballistic.motion('p:'+id);
-    ballisticPrediction=target?ballistic.resolve('p:'+id,(GetAllTargets.ghouls[target.id]===target?'g:':'p:')+target.id,ballisticWeaponProfile(selfMotion?.weapon)):{valid:false,status:'no-target'};
+    const selfMotion=retainStationaryMotion(id,self),targetKind=target&&GetAllTargets.ghouls[target.id]===target?'g':'p';
+    if(target)retainStationaryMotion(target.id,target,targetKind);
+    ballisticPrediction=target?ballistic.resolve('p:'+id,targetKind+':'+target.id,ballisticWeaponProfile(selfMotion?.weapon)):{valid:false,status:'no-target'};
     if(!ballisticPrediction.valid){this.targetPlayer=null;GetAllTargets.resetLines();return this.lastAngle;}
     this.lastAngle=((ballisticPrediction.angle%360)+360)%360;this._smoothAngle=this.lastAngle;
     if(MOD.visualizeResolving){const p=ballisticPrediction;GetAllTargets.lines[0].color=MOD.visualizeResolvingColor;GetAllTargets.lines[0].reset(p.ox,p.oy,p.x,p.y);}
@@ -1365,10 +1379,15 @@ function __installDevastMod(B) {
   }
   function updateMouse() {
     if (!MOD.mouseFovEnable) return;
-    // The imported renderer uses client coordinates and the native camera.
-    // Doors and building previews retain their canvas/DPI conversion.
-    const v = B.view();
-    if (v.scale > 0) GetAllTargets.mouseMapCords = __ilmMouseToWorld(GetAllTargets.mousePosition,v);
+    // Mouse events carry viewport coordinates.  Convert them through the
+    // canvas rectangle before applying the camera, otherwise an embedded or
+    // offset canvas makes the target anchor miss the pointer.
+    const point = cursorWorld();
+    if (!point) return;
+    GetAllTargets.mouseMapCords = point;
+    // The legacy overlay renderer runs after this handler. Keep the converted
+    // value so it can be restored without another layout read.
+    GetAllTargets.__responsiveCursorWorld = point;
   }
   function automate(now) {
     if (!playing() || reconnect.sessionEnded) {
@@ -1763,6 +1782,9 @@ function __installDevastMod(B) {
       }
       const aimView=B.view();
       aimModule.render(ctx,aimView,v.scale/aimView.scale);
+      // The imported overlay keeps its historical raw-client calculation.
+      // Restore the host's canvas-correct cursor after it finishes drawing.
+      if (GetAllTargets.__responsiveCursorWorld) GetAllTargets.mouseMapCords = GetAllTargets.__responsiveCursorWorld;
       ctx.globalAlpha = 1;
     } finally {ctx.restore();}
   }

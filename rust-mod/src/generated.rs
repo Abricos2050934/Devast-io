@@ -41374,6 +41374,35 @@ fn f_206(parent: V, receiver: V, args: V, callee: V) -> Result<V, V> {
                 let v4663 = get(&env, "target")?;
                 op("putref", &[v4661, v4663])?
             };
+            // A stationary entity may have no position delta for longer than
+            // the predictor's normal freshness window.  Refresh that sample
+            // only when the active connection is still receiving traffic.
+            let stationary_self = {
+                let ballistic = get(&env, "ballistic")?;
+                let motion = prop(ballistic.clone(), s("motion"))?;
+                op("call1", &[motion, ballistic, op("binary", &[s("+"), s("p:"), get(&env, "id")?])?])?
+            };
+            if !truth(&stationary_self) {
+                let trace = get(&env, "socketTrace")?;
+                let fresh = if !truth(&trace) || nullish(&prop(trace.clone(), s("lastReceiveAt"))?) {
+                    false
+                } else {
+                    let perf = get(&env, "performance")?;
+                    let now = op("call0", &[prop(perf.clone(), s("now"))?, perf])?;
+                    let last = prop(trace, s("lastReceiveAt"))?;
+                    now.as_f64().is_some_and(|now| last.as_f64().is_some_and(|last| now - last <= 750.0))
+                };
+                let self_active = truth(&prop(get(&env, "self")?, s("active"))?)
+                    && prop(get(&env, "self")?, s("x"))?.as_f64().is_some_and(f64::is_finite)
+                    && prop(get(&env, "self")?, s("y"))?.as_f64().is_some_and(f64::is_finite);
+                if fresh && self_active {
+                    let meta = op("object", &[])?;
+                    let _ = op("define", &[meta.clone(), s("weapon"), s("value"), prop(get(&env, "self")?, s("weapon"))?, b(true)])?;
+                    let ballistic = get(&env, "ballistic")?;
+                    let track = prop(ballistic.clone(), s("track"))?;
+                    let _ = op("call5", &[track, ballistic, op("binary", &[s("+"), s("p:"), get(&env, "id")?])?, prop(get(&env, "self")?, s("x"))?, prop(get(&env, "self")?, s("y"))?, b(true), meta])?;
+                }
+            }
             let _ = op(
                 "init",
                 &[env.clone(), s("selfMotion"), {
@@ -41389,6 +41418,43 @@ fn f_206(parent: V, receiver: V, args: V, callee: V) -> Result<V, V> {
                     )?
                 }],
             )?;
+            if truth(&get(&env, "target")?) {
+                let target_kind = if truth(&op(
+                    "binary",
+                    &[
+                        s("===") ,
+                        prop(prop(get(&env, "GetAllTargets")?, s("ghouls"))?, prop(get(&env, "target")?, s("id"))?)?,
+                        get(&env, "target")?,
+                    ],
+                )?) { s("g:") } else { s("p:") };
+                let target_key = op("binary", &[s("+"), target_kind, prop(get(&env, "target")?, s("id"))?])?;
+                let current = {
+                    let ballistic = get(&env, "ballistic")?;
+                    let motion = prop(ballistic.clone(), s("motion"))?;
+                    op("call1", &[motion, ballistic, target_key.clone()])?
+                };
+                if !truth(&current) {
+                    let trace = get(&env, "socketTrace")?;
+                    let fresh = if !truth(&trace) || nullish(&prop(trace.clone(), s("lastReceiveAt"))?) {
+                        false
+                    } else {
+                        let perf = get(&env, "performance")?;
+                        let now = op("call0", &[prop(perf.clone(), s("now"))?, perf])?;
+                        let last = prop(trace, s("lastReceiveAt"))?;
+                        now.as_f64().is_some_and(|now| last.as_f64().is_some_and(|last| now - last <= 750.0))
+                    };
+                    let active = truth(&prop(get(&env, "target")?, s("active"))?)
+                        && prop(get(&env, "target")?, s("x"))?.as_f64().is_some_and(f64::is_finite)
+                        && prop(get(&env, "target")?, s("y"))?.as_f64().is_some_and(f64::is_finite);
+                    if fresh && active {
+                        let meta = op("object", &[])?;
+                        let _ = op("define", &[meta.clone(), s("weapon"), s("value"), prop(get(&env, "target")?, s("weapon"))?, b(true)])?;
+                        let ballistic = get(&env, "ballistic")?;
+                        let track = prop(ballistic.clone(), s("track"))?;
+                        let _ = op("call5", &[track, ballistic, target_key, prop(get(&env, "target")?, s("x"))?, prop(get(&env, "target")?, s("y"))?, b(true), meta])?;
+                    }
+                }
+            }
             let _ = {
                 let v4666 = op("ref_name", &[env.clone(), s("ballisticPrediction")])?;
                 let v4668 = if truth(&get(&env, "target")?) {
@@ -50141,7 +50207,7 @@ fn f_274(parent: V, receiver: V, args: V, callee: V) -> Result<V, V> {
             &[parent, receiver, args.clone(), callee.clone()],
         )?;
         {
-            let _ = op("decl", &[env.clone(), s("v"), s("const")])?;
+            let _ = op("decl", &[env.clone(), s("point"), s("const")])?;
             if truth(&op(
                 "unary",
                 &[s("!"), prop(get(&env, "MOD")?, s("mouseFovEnable"))?],
@@ -50150,37 +50216,29 @@ fn f_274(parent: V, receiver: V, args: V, callee: V) -> Result<V, V> {
             }
             let _ = op(
                 "init",
-                &[env.clone(), s("v"), {
-                    let v5799 = get(&env, "B")?;
-                    let v5800 = prop(v5799.clone(), s("view"))?;
+                &[env.clone(), s("point"), {
+                    let v5799 = u();
+                    let v5800 = get(&env, "cursorWorld")?;
                     op("call0", &[v5800, v5799])?
                 }],
             )?;
-            if truth(&op(
-                "binary",
-                &[s(">"), prop(get(&env, "v")?, s("scale"))?, n(0.0)],
-            )?) {
-                let _ = {
-                    let v5801 = op(
-                        "ref_prop",
-                        &[get(&env, "GetAllTargets")?, s("mouseMapCords")],
-                    )?;
-                    let v5803 = {
-                        let v5804 = u();
-                        let v5805 = get(&env, "__ilmMouseToWorld")?;
-                        op(
-                            "call2",
-                            &[
-                                v5805,
-                                v5804,
-                                prop(get(&env, "GetAllTargets")?, s("mousePosition"))?,
-                                get(&env, "v")?,
-                            ],
-                        )?
-                    };
-                    op("putref", &[v5801, v5803])?
-                };
+            if truth(&op("unary", &[s("!"), get(&env, "point")?])?) {
+                return Err(Flow::Return(u()));
             }
+            let _ = {
+                let v5801 = op(
+                    "ref_prop",
+                    &[get(&env, "GetAllTargets")?, s("mouseMapCords")],
+                )?;
+                op("putref", &[v5801, get(&env, "point")?])?
+            };
+            let _ = {
+                let v5802 = op(
+                    "ref_prop",
+                    &[get(&env, "GetAllTargets")?, s("__responsiveCursorWorld")],
+                )?;
+                op("putref", &[v5802, get(&env, "point")?])?
+            };
         }
         Ok(u())
     })();
@@ -58136,9 +58194,19 @@ fn f_298(parent: V, receiver: V, args: V, callee: V) -> Result<V, V> {
                             )?
                         };
                         let _ = {
-                            let v6853 = op("ref_prop", &[get(&env, "ctx")?, s("globalAlpha")])?;
-                            let v6855 = n(1.0);
-                            op("putref", &[v6853, v6855])?
+                            let v6853 = u();
+                            let v6854 = prop(get(&env, "GetAllTargets")?, s("__responsiveCursorWorld"))?;
+                            if truth(&v6854) {
+                                let v6855 = op("ref_prop", &[get(&env, "GetAllTargets")?, s("mouseMapCords")])?;
+                                op("putref", &[v6855, v6854])?
+                            } else {
+                                v6853
+                            }
+                        };
+                        let _ = {
+                            let v6856 = op("ref_prop", &[get(&env, "ctx")?, s("globalAlpha")])?;
+                            let v6857 = n(1.0);
+                            op("putref", &[v6856, v6857])?
                         };
                     }
                     Ok(u())
