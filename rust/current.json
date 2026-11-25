@@ -1,15 +1,15 @@
 {
   "schema": 1,
-  "release": "df8b99b823828b8ff9393c144c5c8a20ce3e311c00fce9aea9334455c1ad2dee",
-  "js_release": "6ba00cac6c4cdf7b0a28ff3ba41c40c61d431d81b47568d6c530a9d921368604",
-  "source_url": "https://devast.io/js/6gNk7pa069U23t9kfPHLxIypTpqe.js",
-  "raw_sha256": "b0cc4514184370d6f4edf5dec573b48b5d2b2533c3a6945094cbdc13a3686250",
+  "release": "3d491c99310e9913efc6111e0c07ab0278cc89a4a33a891b218091609e005791",
+  "js_release": "025651aa2d3a1300a9d65961de05d8e079540f6460427df6c82a6177016e5643",
+  "source_url": "https://devast.io/js/6XTwmwoCfUf8gAauG.js",
+  "raw_sha256": "6d2ed2575e07807a935259c6ca4d0decfde6817053ee3c1ffe41b6fb8101ce9a",
   "rust_inputs_sha256": "7ca924deba0118b647cb7c8239041cc7a9dc150cf008c759ff4595f355af2ca6",
-  "output_sha256": "c4fa21e30f29d1584edcdbffb8113254703c45fe4fc35514089ad5cb4f803776",
-  "wasm_sha256": "095650c4c85706b3de4c7c1e68ee64b2c66fc17e57993ca26acbeb08d4d9eb63",
+  "output_sha256": "b111bc40123bee70b35dd276053676712c46afe652ad006c28855bc9204bc479",
+  "wasm_sha256": "491a2500d52ff5a3cceec0d11c2bcf0a5db1c7e06c95eb47d3f91fcafc2302f1",
   "backend": "Rust/WebAssembly",
-  "script": "versions/df8b99b823828b8ff9393c144c5c8a20ce3e311c00fce9aea9334455c1ad2dee/client.js",
+  "script": "versions/3d491c99310e9913efc6111e0c07ab0278cc89a4a33a891b218091609e005791/client.js",
   "validation": "passed",
-  "activated_at": "2026-11-25T15:39:04.572043+00:00",
+  "activated_at": "2026-11-25T18:33:23.522432+00:00",
   "publication": "github"
 }
