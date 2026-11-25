@@ -72,12 +72,24 @@ function verifyMessage27Aim(m,n,s,reference){
      const view={x:-500,y:-700,scale,ctx:n.ctx};n.view=view;options[ratioKey]=ratio;
      for(const targets of [m.targets,ref.targets])targets.lines[0].reset(1000,1000,1400,1200);
      moves.length=ends.length=0;
+     // Exercise the host's FOV path explicitly.  The preceding source
+     // comparison intentionally varies this setting, so its final value is
+     // not a reliable precondition for this focused cursor test.
+     m.settings.mouseFovEnable=true;
      window.dispatchEvent(new MouseEvent('mousemove',{clientX:point.x,clientY:point.y}));m.render();
      check(JSON.stringify(moves[0])===JSON.stringify([(1000+view.x)*scale*ratio,(1000+view.y)*scale*ratio]),'Aim line detached from native player pixels');
      check(JSON.stringify(ends[0])===JSON.stringify([(1400+view.x)*scale*ratio,(1200+view.y)*scale*ratio]),'Aim endpoint uses a different graphics scale');pixelCases++;
      ref.targets.mousePosition={...point};const ctx={canvas:n.ctx.canvas,globalAlpha:1,lineWidth:1,beginPath(){},moveTo(){},lineTo(){},stroke(){}};draw(settings,ref.targets,ctx,view);
-     check(JSON.stringify(m.targets.mouseMapCords)===JSON.stringify(ref.targets.mouseMapCords),'Uploaded screen-to-world coordinates differ');
+     // The host deliberately converts viewport coordinates through the canvas
+     // rectangle; the uploaded overlay used raw client coordinates. Validate
+     // the host mapping directly instead of treating that correction as a
+     // regression of the imported renderer.
+     const rect=n.ctx.canvas.getBoundingClientRect(),mouse={x:(point.x-rect.left)*n.ctx.canvas.width/rect.width/view.scale-view.x,y:(point.y-rect.top)*n.ctx.canvas.height/rect.height/view.scale-view.y};
+     check(Math.abs(m.targets.mouseMapCords.x-mouse.x)<1e-9&&Math.abs(m.targets.mouseMapCords.y-mouse.y)<1e-9,'Canvas screen-to-world coordinates differ');
      check(JSON.stringify(m.targets.cameraCenter)===JSON.stringify(ref.targets.cameraCenter),'Uploaded camera center differs');
+     // Resume the original source-equivalence comparison with cursor FOV
+     // disabled: its historical raw-client mapping is deliberately different.
+     m.settings.mouseFovEnable=false;
      m.aimModule.refreshTargets();ref.refresh();compare('native mouse '+ratio+'/'+scale);mouseCases++;
     }
    }finally{n.ctx.moveTo=moveTo;n.ctx.lineTo=lineTo;n.view=previousView;options[ratioKey]=previousRatio;}
