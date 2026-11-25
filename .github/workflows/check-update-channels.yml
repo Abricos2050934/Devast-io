@@ -2,6 +2,12 @@ name: Check JS and Rust channel freshness
 
 on:
   workflow_dispatch:
+    inputs:
+      batch_minutes:
+        description: 'Session duration; successor sessions always use 20 minutes'
+        type: choice
+        default: '20'
+        options: ['1', '20']
   schedule:
     - cron: '3-58/5 * * * *'
 
@@ -16,13 +22,21 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 28
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Detect drift and dispatch the verified JS and Rust builder
+      - name: Monitor channel freshness and dispatch verified builds
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 tools/check_update_channels.py --dispatch
+          WATCH_MINUTES: ${{ inputs.batch_minutes || '20' }}
+        run: python3 -u tools/check_update_channels.py --dispatch --watch-minutes "$WATCH_MINUTES"
+      # workflow_dispatch events are allowed to start another run when created
+      # with GITHUB_TOKEN. This handoff does not depend on delivery of cron events.
+      - name: Start the next monitoring session
+        if: success() && !cancelled()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run check-update-channels.yml --ref main

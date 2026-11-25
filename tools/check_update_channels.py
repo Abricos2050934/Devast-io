@@ -2,6 +2,8 @@
 import argparse
 import json
 import subprocess
+import os
+import time
 import urllib.request
 from pathlib import Path
 
@@ -56,8 +58,48 @@ def check(dispatch=False):
     return result
 
 
+def source_changed():
+    repository = os.environ.get('GITHUB_REPOSITORY')
+    revision = os.environ.get('GITHUB_SHA')
+    if not repository or not revision:
+        return False
+    latest = subprocess.check_output(['gh', 'api', 'repos/' + repository + '/git/ref/heads/main',
+        '--jq', '.object.sha'], cwd=ROOT, timeout=30).decode().strip()
+    if len(latest) != 40 or any(char not in '0123456789abcdef' for char in latest):
+        raise ValueError('GitHub returned an invalid main revision')
+    return latest != revision
+
+
+def watch(seconds, interval=300, dispatch=False, *, tick=check, clock=time.monotonic,
+          sleep=time.sleep, rotate=source_changed, emit=None):
+    if not 1 <= seconds <= 1500 or interval < 1:
+        raise ValueError('Watch duration must be 1–1500 seconds with a positive interval')
+    emit = emit or (lambda value: print(json.dumps(value, ensure_ascii=False), flush=True))
+    end = clock() + seconds
+    checks = failures = 0
+    while clock() < end:
+        try:
+            if rotate():
+                return dict(state='handoff', reason='main-changed', checks=checks, failures=failures)
+        except Exception as error:
+            emit(dict(state='source-check-failed', error=str(error)))
+        try:
+            result = tick(dispatch)
+            checks += 1
+            emit(result)
+        except Exception as error:
+            failures += 1
+            emit(dict(state='check-failed', error=str(error)))
+        remaining = end - clock()
+        if remaining > 0:
+            sleep(min(interval, remaining))
+    return dict(state='handoff', reason='session-complete', checks=checks, failures=failures)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dispatch', action='store_true')
+    parser.add_argument('--watch-minutes', type=int, choices=range(1, 26))
     args = parser.parse_args()
-    print(json.dumps(check(args.dispatch), ensure_ascii=False, indent=2))
+    result = watch(args.watch_minutes * 60, dispatch=args.dispatch) if args.watch_minutes else check(args.dispatch)
+    print(json.dumps(result, ensure_ascii=False, indent=2), flush=True)
