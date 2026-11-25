@@ -1372,7 +1372,9 @@ function __installDevastMod(B) {
     };
   }
   function cursorWorld(cursor = mouse || GetAllTargets.mousePosition) {
-    const v = view(), can = v.ctx?.canvas || document.getElementById('can');
+    // Canvas backing pixels already encode the graphics density. Use the
+    // native camera scale here so that density is not applied twice.
+    const v = B.view(), can = v.ctx?.canvas || document.getElementById('can');
     if (!can || !(v.scale > 0)) return null;
     const r = can.getBoundingClientRect();
     if (!r.width || !r.height) return null;

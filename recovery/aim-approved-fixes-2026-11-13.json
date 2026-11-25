@@ -973,6 +973,12 @@
       "reason": "keep the corrected cursor anchor after the imported overlay draws",
       "before": "      const aimView=B.view();\n      aimModule.render(ctx,aimView,v.scale/aimView.scale);\n      ctx.globalAlpha = 1;",
       "after": "      const aimView=B.view();\n      aimModule.render(ctx,aimView,v.scale/aimView.scale);\n      // The imported overlay keeps its historical raw-client calculation.\n      // Restore the host's canvas-correct cursor after it finishes drawing.\n      const responsiveCursor=(GetAllTargets).__responsiveCursorWorld;\n      if (responsiveCursor) GetAllTargets.mouseMapCords = responsiveCursor;\n      ctx.globalAlpha = 1;"
+    },
+    {
+      "file": "mod/responsive.js",
+      "reason": "avoid applying the canvas density twice when mapping a viewport cursor to the game world",
+      "before": "    const v = view(), can = v.ctx?.canvas || document.getElementById('can');",
+      "after": "    // Canvas backing pixels already encode the graphics density. Use the\n    // native camera scale here so that density is not applied twice.\n    const v = B.view(), can = v.ctx?.canvas || document.getElementById('can');"
     }
   ],
   "physics_audit_baseline": "72daa7c"

@@ -50035,8 +50035,8 @@ fn f_273(parent: V, receiver: V, args: V, callee: V) -> Result<V, V> {
             let _ = op(
                 "init",
                 &[env.clone(), s("v"), {
-                    let v5780 = u();
-                    let v5781 = get(&env, "view")?;
+                    let v5780 = get(&env, "B")?;
+                    let v5781 = prop(v5780.clone(), s("view"))?;
                     op("call0", &[v5781, v5780])?
                 }],
             )?;
