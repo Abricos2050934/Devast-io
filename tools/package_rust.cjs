@@ -11,6 +11,6 @@ fs.writeFileSync(path.join(stage,'package.json'),JSON.stringify(pkg,null,2)+'\n'
 const original=JSON.parse(fs.readFileSync(path.join(root,'package-lock.json')));
 const lock={name:pkg.name,version:pkg.version,lockfileVersion:3,requires:true,packages:{'':{name:pkg.name,version:pkg.version,devDependencies:pkg.devDependencies},'node_modules/acorn':original.packages['node_modules/acorn']}};
 fs.writeFileSync(path.join(stage,'package-lock.json'),JSON.stringify(lock,null,2)+'\n');
-const archive=path.join(root,'artifacts/rust-mod-2026-11-24/Devast-io-Rust-source.zip');
+const archive=path.join(root,'artifacts/rust-mod-fps3-2026-11-25/Devast-io-Rust-source.zip');
 const r=spawnSync('zip',['-q','-r',archive,'.'],{cwd:stage,stdio:'inherit'});if(r.error)throw r.error;if(r.status)throw Error('Source archive failed');
 console.log(JSON.stringify({archive,clean_source_directory:stage,contains_typescript:false}));

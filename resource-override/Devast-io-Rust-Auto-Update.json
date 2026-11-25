@@ -1,0 +1,19 @@
+{
+  "v": 1,
+  "data": [
+    {
+      "id": "d1",
+      "matchUrl": "https://devast.io/*",
+      "on": true,
+      "rules": [
+        {
+          "type": "fileOverride",
+          "match": "**://devast.io/js/*.js",
+          "on": true,
+          "fileId": "f1",
+          "file": "(function(){\n var url=\"https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/rust/client.js\",previous=window.__devastRustRemoteLoader;\n if(window.__devastClientLoaded||previous&&(previous.state==='loading'||previous.state==='loaded'))return;\n var state=window.__devastRustRemoteLoader={state:'loading',url:url};\n try{\n  var request=new XMLHttpRequest();request.open('GET',url+'?t='+Date.now(),false);request.send(null);\n  if(request.status<200||request.status>=300||!request.responseText)throw Error('Rust update HTTP '+request.status);\n  var code=request.responseText;\n  if(code.indexOf('window.__devastRustInfo=Object.freeze(')<0||code.indexOf('Rust/WebAssembly')<0)throw Error('Invalid Rust client');\n  (0,eval)(code);\n  if(!window.__devastClientLoaded||!window.__devastMod||window.__devastRustInfo?.backend!=='Rust/WebAssembly')throw Error('Rust client installation failed');\n  state.state='loaded';\n }catch(error){state.state='failed';state.error=String(error&&error.message||error);console.error('[Devast Rust auto-update]',state.error);}\n})();"
+        }
+      ]
+    }
+  ]
+}

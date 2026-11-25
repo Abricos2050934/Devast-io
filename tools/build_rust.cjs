@@ -11,7 +11,7 @@ function build({nativeBindings=null}={}){
  const cfg=configuration();let manifest=path.join(rust,'Cargo.toml'),out=path.join(rust,'pkg');
  if(nativeBindings){
   const scratch=path.join(rust,'.native-build');fs.mkdirSync(path.join(scratch,'src'),{recursive:true});
-  for(const file of ['Cargo.toml','Cargo.lock','src/lib.rs'])write(path.join(scratch,file),fs.readFileSync(path.join(rust,file)));
+  for(const file of ['Cargo.toml','Cargo.lock',...fs.readdirSync(path.join(rust,'src')).filter(name=>name.endsWith('.rs')&&name!=='generated.rs').map(name=>'src/'+name)])write(path.join(scratch,file),fs.readFileSync(path.join(rust,file)));
   let source=fs.readFileSync(path.join(rust,'src/generated.rs'),'utf8');
   source=source.split(/(?=\/\/ @program )/).map(section=>{
    if(!/^\/\/ @program [12]\n/.test(section))return section;

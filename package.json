@@ -26,7 +26,10 @@
     "build:video-aim": "node tools/build_video_aim.cjs",
     "build:rust": "node tools/build_rust.cjs",
     "build:rust-client": "node tools/build_rust_client.cjs",
-    "test:rust": "node tools/test_rust.cjs"
+    "test:rust": "node tools/test_rust.cjs",
+    "update:rust": "python3 tools/update_rust.py",
+    "publish:rust": "python3 tools/update_rust.py --publish",
+    "build:rust-loader": "node tools/rust_auto_loader.cjs"
   },
   "devDependencies": {
     "acorn": "8.15.0",

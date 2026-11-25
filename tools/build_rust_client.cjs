@@ -17,6 +17,10 @@ function ownedInterval(original){
  return{start,end,names};
 }
 function replaceOwned(original,runtime){const {start,end}=ownedInterval(original);return original.slice(0,start)+runtime+original.slice(end);}
+function createResourceOverride(client){
+ // Resource Override's importer accepts domain IDs /^d[0-9]+$/ and file IDs /^f[0-9]+$/.
+ return{v:1,data:[{id:'d1',matchUrl:'https://devast.io/*',on:true,rules:[{type:'fileOverride',match:'**://devast.io/js/*.js',on:true,fileId:'f1',file:client}]}]};
+}
 function pinNative(){
  const status=JSON.parse(read('dist/update-status.json')),symbols=status.bindings;
  assert.ok(symbols&&Object.keys(symbols).length>70,'Verified native bindings required');
@@ -26,11 +30,24 @@ function pinNative(){
  fs.writeFileSync(path.join(dir,'snapshot.json'),JSON.stringify({status,prefix_sha256:hash(prefix),suffix_sha256:hash(suffix)},null,2)+'\n');
  return dir;
 }
-function packageClient(){
- const base=path.join(rustPath(),'native-base');if(!fs.existsSync(path.join(base,'snapshot.json'))||process.argv.includes('--pin-native'))pinNative();
- const snapshot=JSON.parse(fs.readFileSync(path.join(base,'snapshot.json'))),status=snapshot.status,symbols=status.bindings;
- const prefix=zlib.gunzipSync(fs.readFileSync(path.join(base,'prefix.js.gz'))).toString(),suffix=zlib.gunzipSync(fs.readFileSync(path.join(base,'suffix.js.gz'))).toString();
- assert.equal(hash(prefix),snapshot.prefix_sha256);assert.equal(hash(suffix),snapshot.suffix_sha256);
+function packageClient({candidateDir=null,outputDir=null}={}){
+ const base=path.join(rustPath(),'native-base');if(!candidateDir&&(!fs.existsSync(path.join(base,'snapshot.json'))||process.argv.includes('--pin-native')))pinNative();
+ let status,symbols,prefix,suffix;
+ if(candidateDir){
+  const original=fs.readFileSync(path.join(candidateDir,'game.modded.js'),'utf8');
+  const report=JSON.parse(fs.readFileSync(path.join(candidateDir,'port-report.json')));
+  const source=JSON.parse(fs.readFileSync(path.join(candidateDir,'source.json')));
+  assert.equal(hash(original),report.output_sha256,'Candidate client checksum mismatch');
+  assert.equal(hash(fs.readFileSync(path.join(candidateDir,'raw.js'))),source.raw_sha256,'Candidate game checksum mismatch');
+  symbols=JSON.parse(fs.readFileSync(path.join(candidateDir,'bindings.json'))).symbols;
+  assert.ok(Object.keys(symbols).length>70,'Candidate native bindings required');
+  const interval=ownedInterval(original);prefix=original.slice(0,interval.start);suffix=original.slice(interval.end);
+  status={source_url:source.script_url,output_sha256:report.output_sha256};
+ }else{
+  const snapshot=JSON.parse(fs.readFileSync(path.join(base,'snapshot.json')));status=snapshot.status;symbols=status.bindings;
+  prefix=zlib.gunzipSync(fs.readFileSync(path.join(base,'prefix.js.gz'))).toString();suffix=zlib.gunzipSync(fs.readFileSync(path.join(base,'suffix.js.gz'))).toString();
+  assert.equal(hash(prefix),snapshot.prefix_sha256);assert.equal(hash(suffix),snapshot.suffix_sha256);
+ }
  const manifest=JSON.parse(read('rust-mod/function-manifest.json')),names=manifest.programs.slice(0,2).flatMap(p=>p.entries);
  const pkg=build({nativeBindings:symbols});
  const wasm=fs.readFileSync(path.join(pkg,'mod_bg.wasm'));
@@ -52,14 +69,15 @@ function packageClient(){
  fs.writeFileSync(path.join(rustPath(),'native/owned-runtime.js'),init);
  const client=prefix+init+suffix;
  parser.parse(client,{ecmaVersion:'latest'});
- const dir=path.join(root,'artifacts/rust-mod-2026-11-24');fs.mkdirSync(dir,{recursive:true});
+ const dir=outputDir?path.resolve(outputDir):path.join(root,'artifacts/rust-mod-fps3-2026-11-25');fs.mkdirSync(dir,{recursive:true});
  fs.writeFileSync(path.join(dir,'client.js'),client);
- const override={v:1,data:[{id:'rust-owned-mod',matchUrl:'https://devast.io/*',on:true,rules:[{type:'fileOverride',match:'**://devast.io/js/*.js',on:true,fileId:'rust-client',file:client}]}]};
- fs.writeFileSync(path.join(dir,'Devast-io-Rust-Resource-Override.json'),JSON.stringify(override,null,2)+'\n');
+ const override=createResourceOverride(client);
+ const overrideBytes=JSON.stringify(override,null,2)+'\n';
+ for(const name of ['Devast-io-Rust-Resource-Override.json','Devast-io-Rust-Resource-Override-Fixed.json'])fs.writeFileSync(path.join(dir,name),overrideBytes);
  const report={status:'built-not-browser-verified',owned_functions:manifest.functions.length,native_language:'JavaScript',owned_backend:'Rust/WebAssembly',native_source:status.source_url,native_input_sha256:status.output_sha256,output_sha256:hash(client),wasm_sha256:hash(wasm),bytes:Buffer.byteLength(client),native_outside_owned_modules:'byte-identical',publication:'not_published',live_server:'not_tested'};
  fs.writeFileSync(path.join(dir,'build.json'),JSON.stringify(report,null,2)+'\n');
  return{...report,dir};
 }
 function rustPath(){return path.join(root,'rust-mod');}
-module.exports={packageClient,replaceOwned,pinNative};
+module.exports={packageClient,replaceOwned,pinNative,createResourceOverride};
 if(require.main===module)console.log(JSON.stringify(packageClient(),null,2));

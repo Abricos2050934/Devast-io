@@ -1,17 +1,18 @@
 // Generic browser/ECMAScript interop. Mod functions are compiled in generated.rs.
 var __devastRustOps = (() => {
   let wasm;
+  const functionIds=new WeakMap();
   const U = undefined;
   function scope(parent, fn = false) { return { parent, fn, slots: new Map(), globals: parent?.globals || globalThis }; }
   function slot(env, key) {
-    for (let e = env; e; e = e.parent) if (e.slots.has(key)) return [e, e.slots.get(key)];
+    for (let e = env; e; e = e.parent) if (e.slots.has(key)) return e.slots.get(key);
     return null;
   }
   function read(env, key, soft = false) {
     const found = slot(env, key);
     if (found) {
-      if (!found[1].ready) throw new ReferenceError('Cannot access ' + key + ' before initialization');
-      return found[1].value;
+      if (!found.ready) throw new ReferenceError('Cannot access ' + key + ' before initialization');
+      return found.value;
     }
     if (key in env.globals) return env.globals[key];
     if (soft) return U;
@@ -20,9 +21,9 @@ var __devastRustOps = (() => {
   function write(env, key, value) {
     const found = slot(env, key);
     if (!found) { env.globals[key] = value; return value; }
-    if (!found[1].ready) throw new ReferenceError('Cannot access ' + key + ' before initialization');
-    if (found[1].kind === 'const') throw new TypeError('Assignment to constant variable');
-    found[1].value = value;
+    if (!found.ready) throw new ReferenceError('Cannot access ' + key + ' before initialization');
+    if (found.kind === 'const') throw new TypeError('Assignment to constant variable');
+    found.value = value;
     return value;
   }
   function decl(env, key, kind) {
@@ -32,7 +33,7 @@ var __devastRustOps = (() => {
   function init(env, key, value) {
     const found = slot(env, key);
     if (!found) throw new ReferenceError('Missing binding ' + key);
-    found[1].value = value; found[1].ready = true;
+    found.value = value; found.ready = true;
     return value;
   }
   function makefn(id, env, name, arity, arrow, async, classOnly) {
@@ -45,6 +46,7 @@ var __devastRustOps = (() => {
     };
     Object.defineProperty(fn, 'name', { value: name || '', configurable: true });
     Object.defineProperty(fn, 'length', { value: arity, configurable: true });
+    functionIds.set(fn,id);
     return fn;
   }
   function binary(code, a, c) {
@@ -60,6 +62,15 @@ var __devastRustOps = (() => {
       default: throw new Error('Unsupported binary operation ' + code);
     }
   }
+  function functionScope(parent,receiver,args) {
+    const e=scope(parent,true);
+    e.slots.set('@this',{kind:'var',ready:true,value:receiver});
+    e.slots.set('arguments',{kind:'var',ready:true,value:args});
+    return e;
+  }
+  function fastUnary(operator,value) {
+    switch(operator){case '+':return +value;case '-':return -value;case '~':return ~value;case '!':return !value;case 'typeof':return typeof value;case 'void':return U;default:throw new Error('Unsupported unary operation');}
+  }
   function deref(ref) { return ref[0] === 'name' ? read(ref[1], ref[2]) : ref[1][ref[2]]; }
   function putref(ref, value) {
     if (ref[0] === 'name') return write(ref[1], ref[2], value);
@@ -70,9 +81,7 @@ var __devastRustOps = (() => {
       case 'scope': return scope(a[0]);
       case 'root': { const e = scope(null, true); e.globals = a[0]; return e; }
       case 'function_scope': {
-        const e = scope(a[0], true);
-        for (const [key, value] of [['@this', a[1]], ['arguments', a[2]]]) { decl(e, key, 'var'); init(e, key, value); }
-        return e;
+        return functionScope(a[0],a[1],a[2]);
       }
       case 'clone_scope': { const e = scope(a[0].parent, a[0].fn); for (const [k,v] of a[0].slots) e.slots.set(k, {...v}); return e; }
       case 'decl': return decl(a[0], a[1], a[2]);
@@ -114,5 +123,17 @@ var __devastRustOps = (() => {
   }
   function alias(env,key,getter,setter){env.slots.set(key,{kind:'var',ready:true,get value(){return getter();},set value(value){setter(value);}});}
   const dispatchOp=(name,a,b,c,d,e,f,g)=>op(name,[a,b,c,d,e,f,g]);
-  return { op, dispatchOp, attach(value) { wasm = value; }, scope, read, decl, init, alias };
+  return { op, dispatchOp, attach(value) { wasm = value; }, scope, read, write, decl, init, alias,
+    binary,functionScope,fastUnary,deref,putref,functionId:fn=>functionIds.get(fn)??-1,
+    fastGet:(object,key)=>object[key],fastSet:(object,key,value)=>{object[key]=value;return value;},
+    fastArray:()=>[],fastPush:(array,value)=>{array.push(value);return array;},
+    fastApply:(fn,receiver,args)=>Reflect.apply(fn,receiver,args),
+    call0:(fn,receiver)=>Reflect.apply(fn,receiver,[]),
+    call1:(fn,receiver,a)=>Reflect.apply(fn,receiver,[a]),
+    call2:(fn,receiver,a,b)=>Reflect.apply(fn,receiver,[a,b]),
+    call3:(fn,receiver,a,b,c)=>Reflect.apply(fn,receiver,[a,b,c]),
+    call4:(fn,receiver,a,b,c,d)=>Reflect.apply(fn,receiver,[a,b,c,d]),
+    call5:(fn,receiver,a,b,c,d,e)=>Reflect.apply(fn,receiver,[a,b,c,d,e]),
+    call6:(fn,receiver,a,b,c,d,e,f)=>Reflect.apply(fn,receiver,[a,b,c,d,e,f])
+  };
 })();

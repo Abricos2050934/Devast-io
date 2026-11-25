@@ -12,9 +12,11 @@ declare interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly dispatch: (a: number, b: any, c: any, d: any, e: any) => [number, number, number];
   readonly run_program: (a: number, b: any) => [number, number, number];
-  readonly wasm_bindgen_14e4876b1f393bc___convert__closures_____invoke___wasm_bindgen_14e4876b1f393bc___JsValue_____: (a: number, b: number, c: any) => void;
-  readonly wasm_bindgen_14e4876b1f393bc___closure__destroy___dyn_core_d941ad8722425d2e___ops__function__FnMut__wasm_bindgen_14e4876b1f393bc___JsValue____Output_______: (a: number, b: number) => void;
-  readonly wasm_bindgen_14e4876b1f393bc___convert__closures_____invoke___wasm_bindgen_14e4876b1f393bc___JsValue__wasm_bindgen_14e4876b1f393bc___JsValue_____: (a: number, b: number, c: any, d: any) => void;
+  readonly wasm_bindgen_8dd24b00c320514a___convert__closures_____invoke___wasm_bindgen_8dd24b00c320514a___JsValue_____: (a: number, b: number, c: any) => void;
+  readonly wasm_bindgen_8dd24b00c320514a___closure__destroy___dyn_core_d941ad8722425d2e___ops__function__FnMut__wasm_bindgen_8dd24b00c320514a___JsValue____Output_______: (a: number, b: number) => void;
+  readonly wasm_bindgen_8dd24b00c320514a___convert__closures_____invoke___wasm_bindgen_8dd24b00c320514a___JsValue__wasm_bindgen_8dd24b00c320514a___JsValue_____: (a: number, b: number, c: any, d: any) => void;
+  readonly __wbindgen_malloc: (a: number, b: number) => number;
+  readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
   readonly __wbindgen_exn_store: (a: number) => void;
   readonly __externref_table_alloc: () => number;
   readonly __wbindgen_externrefs: WebAssembly.Table;

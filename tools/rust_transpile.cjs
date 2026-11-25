@@ -70,7 +70,8 @@ function transpile(sources){
      if(chain)setup+=`let ${functionValue}=if ${chain}${n.callee.optional?`||nullish(&${receiver})`:''}{${chain}=true;u()}else{prop(${receiver}.clone(),${n.callee.computed?expr(n.callee.property):str(n.callee.property.name)})?};`;
      else setup+=`let ${functionValue}=prop(${receiver}.clone(),${n.callee.computed?expr(n.callee.property):str(n.callee.property.name)})?;`;
     }else setup=`let ${receiver}=u();let ${functionValue}=${expr(n.callee,chain)};`;
-    const invoke=op(n.type==='NewExpression'?'new':'apply',n.type==='NewExpression'?[functionValue,array(n.arguments)]:[functionValue,receiver,array(n.arguments)]);
+    const smallCall=n.type==='CallExpression'&&n.arguments.length<=4&&n.arguments.every(a=>a.type!=='SpreadElement');
+    const invoke=smallCall?op('call'+n.arguments.length,[functionValue,receiver,...n.arguments.map(a=>expr(a))]):op(n.type==='NewExpression'?'new':'apply',n.type==='NewExpression'?[functionValue,array(n.arguments)]:[functionValue,receiver,array(n.arguments)]);
     return`{${setup}${chain?`if ${chain}${n.optional?`||nullish(&${functionValue})`:''}{${chain}=true;u()}else{${invoke}}`:invoke}}`;
    }
    case'BinaryExpression':return op('binary',[str(n.operator),expr(n.left),expr(n.right)]);

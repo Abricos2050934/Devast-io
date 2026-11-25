@@ -31,6 +31,26 @@ jobs:
         with:
           python-version: '3.12'
       - run: npm ci --ignore-scripts
+      - name: Install Rust with the WebAssembly target
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Cache Rust toolchain dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ~/.cargo/bin/wasm-bindgen*
+            rust-mod/target
+          key: devast-rust-${{ runner.os }}-${{ hashFiles('rust-mod/Cargo.lock') }}
+      - name: Install matching Wasm bindings tool
+        run: |
+          if ! wasm-bindgen --version 2>/dev/null | grep -qx 'wasm-bindgen 0.2.105'; then
+            cargo install wasm-bindgen-cli --version 0.2.105 --locked
+          fi
+      - name: Build canonical Rust for regression tests
+        run: npm run build:rust
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         with:
@@ -76,6 +96,8 @@ jobs:
       - run: npm run update:once
       - name: Publish the verified client
         run: python3 tools/publish_update.py
+      - name: Build, verify and publish the Rust client on the current game JS
+        run: python3 tools/update_rust.py --publish
       - name: Save verified versions for the next check
         uses: actions/cache/save@v4
         with:
@@ -93,6 +115,8 @@ jobs:
           path: |
             dist/auto-update/current.json
             dist/auto-update/status.json
+            dist/rust-auto-update/current.json
+            dist/rust-auto-update/versions/*/verification.json
             .updater/failed-latest/*.json
             .updater/failed-latest/*.log
           include-hidden-files: true

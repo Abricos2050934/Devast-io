@@ -1,9 +1,22 @@
 # Devast-io — адаптивный аимбот и автообновление
 
+Rust теперь имеет отдельный канал автообновления:
+[импорт JSON](https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/Devast-io-Rust-Auto-Update.json),
+[клиент](https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/rust/client.js),
+[версия](https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/rust/current.json).
+После импорта отключите прежнюю подмену игрового JS и перезагрузите страницу.
+Новые проверенные версии загружаются при следующей перезагрузке.
+[Как обновляются JS и Rust](docs/rust-auto-update-2026-11-25.md).
+
+Актуальный Rust-выпуск с оптимизацией нагрузки:
+`artifacts/rust-mod-fps3-2026-11-25/Devast-io-Rust-Resource-Override-Fixed.json`.
+Предыдущие сборки сохранены в artifacts/rust-mod-2026-11-24-current/.
+[Совместная нагрузка функций и оставшиеся ограничения](docs/rust-fps3-2026-11-25.md).
+
 [Все текущие файлы, инструкции сборки и состояние работы на 24 ноября](docs/handoff-2026-11-24.md).
 
 Локальная сборка обновлена под JS игры от 24 ноября 2026:
-`SoU74f1CSGBLrnN70LACrWeKIQ.js`. `npm run build` собирает полный мод из этого
+`ZfEmnNKOgaFxkz1h9KeG.js`. `npm run build` собирает полный мод из этого
 проверяемого по SHA256 снимка (`baselines/latest.json`). `npm run update:once`
 получает актуальный JS с сайта и переносит на него весь мод с проверками в двух
 браузерах. Исправлено распознавание нового входа с выбором скина и обработчика
@@ -13,7 +26,8 @@
 обработчиков находятся в `rust-mod/`, а игровой клиент и браузерные API остаются
 JavaScript. Сборка: `npm run build:rust-client`, проверка: `npm run test:rust`.
 Готовый локальный Resource Override и автономный архив исходников находятся в
-`artifacts/rust-mod-2026-11-24/`. [Устройство и ограничения Rust-версии](rust-mod/README.md).
+`artifacts/rust-mod-fps3-2026-11-25/`. [Устройство и ограничения Rust-версии](rust-mod/README.md).
+[Обновление Rust на текущую основу игры](docs/rust-game-update-2026-11-24-2002.md).
 
 Новый режим **Adaptive Aim** учитывает серверные позиции, движение стрелка/цели,
 штатную скорость и дальность оружия, уточнение по собственным пулям и устойчивое
