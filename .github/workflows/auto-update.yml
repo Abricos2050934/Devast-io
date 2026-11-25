@@ -91,6 +91,7 @@ jobs:
           path: |
             .updater/http-cache
             dist/auto-update
+            dist/rust-auto-update
           key: devast-updater-${{ github.run_id }}
           restore-keys: devast-updater-
       - run: npm run update:once
@@ -104,6 +105,7 @@ jobs:
           path: |
             .updater/http-cache
             dist/auto-update
+            dist/rust-auto-update
           key: devast-updater-${{ github.run_id }}
       - name: Upload the local result for review
         if: always()

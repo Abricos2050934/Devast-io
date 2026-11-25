@@ -1,0 +1,27 @@
+{
+  "status": "published-and-remote-loader-verified",
+  "source_commit": "a1924f20b2619e0cd0675389b534398048ba8968",
+  "observed_release": "7124f8243af8a12ccd90548b4c306053cb06f5fdd0f7f703b1766ae0e8f0bd60",
+  "game_source": "https://devast.io/js/X2K2qN7Q5NcvSsiLXTz.js",
+  "raw_game_sha256": "f4b757053b450a9a65c9dee21a613a3e79331195c034d95c315ea9e2103f1b4f",
+  "client_url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/rust/client.js",
+  "loader_url": "https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/Devast-io-Rust-Auto-Update.json",
+  "observed_client_sha256": "46222587b41163f7d4b1cb7200f86114dc119040d8195cf067d2d9596faa50aa",
+  "wasm_sha256": "9c75c8927b1325c6df6f0c7c2c714274cf041ea38b9bab27da63613f9d7cd490",
+  "owned_functions": 406,
+  "canonical_tests": "301/301",
+  "native_tests": "301/301",
+  "focused_tests": "11/11",
+  "browsers": {"chromium": "passed", "firefox": "passed"},
+  "public_hash_download": "matched",
+  "remote_loader_browser_check": {
+    "method": "Playwright Chromium, actual devast.io home page, game JS replaced by the delivered JSON loader; client fetched from the public GitHub URL",
+    "replacements": 1,
+    "loader_state": "loaded",
+    "client_loaded": true,
+    "mod_installed": true,
+    "backend": "Rust/WebAssembly"
+  },
+  "live_server_join": "not_tested",
+  "performance_changes": "none in the auto-update change; prior dense-scene limitations remain"
+}
