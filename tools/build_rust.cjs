@@ -23,9 +23,13 @@ function build({nativeBindings=null}={}){
   for(const file of ['bridge.js','function-manifest.json'])fs.copyFileSync(path.join(rust,file),path.join(rust,'native',file));
   fs.writeFileSync(path.join(rust,'native/bindings.json'),JSON.stringify({symbols:nativeBindings},null,2)+'\n');
  }
- run(cfg.cargo,['build','--manifest-path',manifest,'--target','wasm32-unknown-unknown','--release','--locked','--target-dir',path.join(rust,'target')],cfg.env);
+ // These crates share the same package name but have different source fields.
+ // Separate target directories prevent Cargo from reusing the other crate's
+ // final .wasm artifact when its own fingerprint is otherwise already fresh.
+ const target=path.join(rust,'target',nativeBindings?'native':'canonical');
+ run(cfg.cargo,['build','--manifest-path',manifest,'--target','wasm32-unknown-unknown','--release','--locked','--target-dir',target],cfg.env);
  fs.mkdirSync(out,{recursive:true});
- run(cfg.bindgen,[path.join(rust,'target/wasm32-unknown-unknown/release/devast_owned_mod.wasm'),'--target','no-modules','--out-dir',out,'--out-name','mod'],cfg.env);
+ run(cfg.bindgen,[path.join(target,'wasm32-unknown-unknown/release/devast_owned_mod.wasm'),'--target','no-modules','--out-dir',out,'--out-name','mod'],cfg.env);
  return out;
 }
 module.exports={build,configuration,run};
