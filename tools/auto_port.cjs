@@ -172,6 +172,10 @@ function port(reference,candidate,profile,bindings,payload,bootstrap,aim,gui){
    return {old:n,current,local,callbackGuard:true};
   }
   if(fn&&fn!==old.tree.body[0]?.expression?.callee){
+   if(!pairs.has(fn)&&id==='ilm-native-self-server-angle'){
+    const match=require('./updater/server-angle.cjs').serverAngle(old,cur,fn);
+    pairs.set(fn,match.current);curCanon.set(match.current,match.nc);
+   }
    if(!pairs.has(fn)&&id==='ilm-native-player-nickname-id'){
     const match=require('./updater/player-rejoin.cjs').playerRejoin(old,cur,fn);
     pairs.set(fn,match.current);curCanon.set(match.current,match.nc);
