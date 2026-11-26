@@ -1,5 +1,7 @@
 # Devast-io — адаптивный аимбот и автообновление
 
+[Продолжить работу в новом чате Codex: краткий контекст на 26 ноября](CODEX-CHAT-SUMMARY.md).
+
 Rust теперь имеет отдельный канал автообновления:
 [импорт JSON](https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/Devast-io-Rust-Auto-Update.json),
 [клиент](https://raw.githubusercontent.com/Abricos2050934/Devast-io/updates/rust/client.js),
