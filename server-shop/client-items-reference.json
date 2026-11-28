@@ -1,0 +1,766 @@
+{
+  "source": "https://devast.io/js/jegOBMlLVmYwOozk34eB8x.js",
+  "raw_sha256": "cf6081d814bf5bdd63d6fa14ef636f6be6e1ebcb48d11e77052d3f67e02e42f9",
+  "items": [
+    {
+      "name": "Wood",
+      "iid": 0
+    },
+    {
+      "name": "Stone",
+      "iid": 1
+    },
+    {
+      "name": "Iron",
+      "iid": 2
+    },
+    {
+      "name": "Animal Fat",
+      "iid": 3
+    },
+    {
+      "name": "Animal Tendon",
+      "iid": 4
+    },
+    {
+      "name": "String",
+      "iid": 5
+    },
+    {
+      "name": "Leather",
+      "iid": 6
+    },
+    {
+      "name": "Shaped Metal",
+      "iid": 7
+    },
+    {
+      "name": "Raw Steak",
+      "iid": 8
+    },
+    {
+      "name": "Cooked Steak",
+      "iid": 9
+    },
+    {
+      "name": "Rotten Steak",
+      "iid": 10
+    },
+    {
+      "name": "Orange",
+      "iid": 11
+    },
+    {
+      "name": "Rotten Orange",
+      "iid": 12
+    },
+    {
+      "name": "Orange Seed",
+      "iid": 13
+    },
+    {
+      "name": "Hatchet",
+      "iid": 14
+    },
+    {
+      "name": "Stone Pickaxe",
+      "iid": 15
+    },
+    {
+      "name": "Metal Pickaxe",
+      "iid": 16
+    },
+    {
+      "name": "Metal Axe",
+      "iid": 17
+    },
+    {
+      "name": "Workbench",
+      "iid": 18
+    },
+    {
+      "name": "Wood Spear",
+      "iid": 19
+    },
+    {
+      "name": "Wood Bow",
+      "iid": 20
+    },
+    {
+      "name": "9MM",
+      "iid": 21
+    },
+    {
+      "name": "Desert Eagle",
+      "iid": 22
+    },
+    {
+      "name": "Shotgun",
+      "iid": 23
+    },
+    {
+      "name": "AK47",
+      "iid": 24
+    },
+    {
+      "name": "Sniper",
+      "iid": 25
+    },
+    {
+      "name": "Wooden Wall",
+      "iid": 26
+    },
+    {
+      "name": "Stone Wall",
+      "iid": 27
+    },
+    {
+      "name": "Metal Wall",
+      "iid": 28
+    },
+    {
+      "name": "Wooden Low Door",
+      "iid": 29
+    },
+    {
+      "name": "Stone Low Door",
+      "iid": 30
+    },
+    {
+      "name": "Metal Low Door",
+      "iid": 31
+    },
+    {
+      "name": "Campfire",
+      "iid": 32
+    },
+    {
+      "name": "Bullet",
+      "iid": 33
+    },
+    {
+      "name": "Cartridge",
+      "iid": 34
+    },
+    {
+      "name": "Heavy Bullet",
+      "iid": 35
+    },
+    {
+      "name": "Medkit",
+      "iid": 36
+    },
+    {
+      "name": "Bandage",
+      "iid": 37
+    },
+    {
+      "name": "Soda",
+      "iid": 38
+    },
+    {
+      "name": "MP5",
+      "iid": 39
+    },
+    {
+      "name": "Headscarf",
+      "iid": 40
+    },
+    {
+      "name": "Chapka",
+      "iid": 41
+    },
+    {
+      "name": "Winter Coat",
+      "iid": 42
+    },
+    {
+      "name": "Radiation Mask",
+      "iid": 43
+    },
+    {
+      "name": "Min. Radiation Suit",
+      "iid": 44
+    },
+    {
+      "name": "Radiation Suit",
+      "iid": 45
+    },
+    {
+      "name": "Wood Arrow",
+      "iid": 46
+    },
+    {
+      "name": "Firepit",
+      "iid": 47
+    },
+    {
+      "name": "Smelter",
+      "iid": 48
+    },
+    {
+      "name": "Wooden Door",
+      "iid": 49
+    },
+    {
+      "name": "Stone Door",
+      "iid": 50
+    },
+    {
+      "name": "Metal Door",
+      "iid": 51
+    },
+    {
+      "name": "Sulfur",
+      "iid": 52
+    },
+    {
+      "name": "Shaped Uranium",
+      "iid": 53
+    },
+    {
+      "name": "Research Bench",
+      "iid": 54
+    },
+    {
+      "name": "Uranium",
+      "iid": 55
+    },
+    {
+      "name": "Weaving Machine",
+      "iid": 56
+    },
+    {
+      "name": "Gasoline",
+      "iid": 57
+    },
+    {
+      "name": "Sulfur Pickaxe",
+      "iid": 58
+    },
+    {
+      "name": "Wood chest",
+      "iid": 59
+    },
+    {
+      "name": "Fridge",
+      "iid": 60
+    },
+    {
+      "name": "Wood floor",
+      "iid": 61
+    },
+    {
+      "name": "Hammer",
+      "iid": 62
+    },
+    {
+      "name": "Sleeping Bag",
+      "iid": 63
+    },
+    {
+      "name": "Repair Hammer",
+      "iid": 64
+    },
+    {
+      "name": "Nails",
+      "iid": 65
+    },
+    {
+      "name": "Light Wood Floor",
+      "iid": 66
+    },
+    {
+      "name": "Wooden Low Wall",
+      "iid": 67
+    },
+    {
+      "name": "Stone Low Wall",
+      "iid": 68
+    },
+    {
+      "name": "Metal Low Wall",
+      "iid": 69
+    },
+    {
+      "name": "Tomato Soup",
+      "iid": 71
+    },
+    {
+      "name": "Syringe",
+      "iid": 72
+    },
+    {
+      "name": "Chemical Component",
+      "iid": 73
+    },
+    {
+      "name": "RadAway",
+      "iid": 74
+    },
+    {
+      "name": "Tomato Seed",
+      "iid": 75
+    },
+    {
+      "name": "Tomato",
+      "iid": 76
+    },
+    {
+      "name": "Rotten Tomato",
+      "iid": 77
+    },
+    {
+      "name": "Can",
+      "iid": 78
+    },
+    {
+      "name": "Wood Crossbow",
+      "iid": 79
+    },
+    {
+      "name": "Crossbow Arrows",
+      "iid": 80
+    },
+    {
+      "name": "Nail Gun",
+      "iid": 81
+    },
+    {
+      "name": "Sawed Off",
+      "iid": 82
+    },
+    {
+      "name": "Stone floor",
+      "iid": 83
+    },
+    {
+      "name": "Tiling floor",
+      "iid": 84
+    },
+    {
+      "name": "Crisps",
+      "iid": 86
+    },
+    {
+      "name": "Expired Crisps",
+      "iid": 87
+    },
+    {
+      "name": "Electronic Parts",
+      "iid": 88
+    },
+    {
+      "name": "Junk",
+      "iid": 89
+    },
+    {
+      "name": "Big Wire",
+      "iid": 90
+    },
+    {
+      "name": "Energy Cells",
+      "iid": 91
+    },
+    {
+      "name": "Laser Pistol",
+      "iid": 92
+    },
+    {
+      "name": "Tesla Bench",
+      "iid": 93
+    },
+    {
+      "name": "Alloys",
+      "iid": 94
+    },
+    {
+      "name": "Sulfur Axe",
+      "iid": 95
+    },
+    {
+      "name": "Landmine",
+      "iid": 96
+    },
+    {
+      "name": "Dynamite",
+      "iid": 97
+    },
+    {
+      "name": "C4",
+      "iid": 98
+    },
+    {
+      "name": "C4 Trigger",
+      "iid": 99
+    },
+    {
+      "name": "Compost",
+      "iid": 100
+    },
+    {
+      "name": "Metal Helmet",
+      "iid": 101
+    },
+    {
+      "name": "Welding Helmet",
+      "iid": 102
+    },
+    {
+      "name": "Gladiator Helmet",
+      "iid": 103
+    },
+    {
+      "name": "Leather Jacket",
+      "iid": 104
+    },
+    {
+      "name": "Kevlar Suit",
+      "iid": 105
+    },
+    {
+      "name": "SWAT Suit",
+      "iid": 106
+    },
+    {
+      "name": "Protective Suit",
+      "iid": 107
+    },
+    {
+      "name": "Power Armor",
+      "iid": 108
+    },
+    {
+      "name": "Tesla Armor",
+      "iid": 109
+    },
+    {
+      "name": "Wooden Spike",
+      "iid": 110
+    },
+    {
+      "name": "Laser Submachine",
+      "iid": 111
+    },
+    {
+      "name": "Grenade",
+      "iid": 112
+    },
+    {
+      "name": "Super Hammer",
+      "iid": 113
+    },
+    {
+      "name": "Ghoul Blood",
+      "iid": 114
+    },
+    {
+      "name": "Camouflage Gear",
+      "iid": 115
+    },
+    {
+      "name": "Agitator",
+      "iid": 116
+    },
+    {
+      "name": "Ghoul Drug",
+      "iid": 117
+    },
+    {
+      "name": "Amanita",
+      "iid": 118
+    },
+    {
+      "name": "Boletus",
+      "iid": 119
+    },
+    {
+      "name": "Russula",
+      "iid": 120
+    },
+    {
+      "name": "Rotten Mushroom",
+      "iid": 121
+    },
+    {
+      "name": "Rotten Mushroom",
+      "iid": 122
+    },
+    {
+      "name": "Rotten Mushroom",
+      "iid": 123
+    },
+    {
+      "name": "Lapadone",
+      "iid": 124
+    },
+    {
+      "name": "LapaBot",
+      "iid": 125
+    },
+    {
+      "name": "Small Wire",
+      "iid": 126
+    },
+    {
+      "name": "Pumpkin",
+      "iid": 127
+    },
+    {
+      "name": "Rotten Pumpkin",
+      "iid": 128
+    },
+    {
+      "name": "Ghoul Seed",
+      "iid": 129
+    },
+    {
+      "name": "Extractor",
+      "iid": 130
+    },
+    {
+      "name": "Antidote",
+      "iid": 131
+    },
+    {
+      "name": "Rare Flower",
+      "iid": 132
+    },
+    {
+      "name": "Tree Seed",
+      "iid": 133
+    },
+    {
+      "name": "Acorn",
+      "iid": 134
+    },
+    {
+      "name": "Rotten Acorn",
+      "iid": 135
+    },
+    {
+      "name": "Laser Sniper",
+      "iid": 136
+    },
+    {
+      "name": "HAL Bot",
+      "iid": 137
+    },
+    {
+      "name": "Tesla Bot",
+      "iid": 138
+    },
+    {
+      "name": "Cable",
+      "iid": 139
+    },
+    {
+      "name": "Cable",
+      "iid": 140
+    },
+    {
+      "name": "Cable",
+      "iid": 141
+    },
+    {
+      "name": "Cable",
+      "iid": 142
+    },
+    {
+      "name": "Switch",
+      "iid": 143
+    },
+    {
+      "name": "Gate OR",
+      "iid": 144
+    },
+    {
+      "name": "Gate AND",
+      "iid": 145
+    },
+    {
+      "name": "Gate NOT",
+      "iid": 146
+    },
+    {
+      "name": "Lamp",
+      "iid": 147
+    },
+    {
+      "name": "Cable - Wall",
+      "iid": 148
+    },
+    {
+      "name": "Automatic Door",
+      "iid": 149
+    },
+    {
+      "name": "Platform",
+      "iid": 150
+    },
+    {
+      "name": "Stone Cave",
+      "iid": 151
+    },
+    {
+      "name": "Bunker Wall",
+      "iid": 152
+    },
+    {
+      "name": "Golden Floor",
+      "iid": 153
+    },
+    {
+      "name": "Red floor",
+      "iid": 154
+    },
+    {
+      "name": "Welding Machine",
+      "iid": 155
+    },
+    {
+      "name": "Cable - Bridge",
+      "iid": 156
+    },
+    {
+      "name": "Gate Timer",
+      "iid": 157
+    },
+    {
+      "name": "Gate Xor",
+      "iid": 158
+    },
+    {
+      "name": "Feeder",
+      "iid": 159
+    },
+    {
+      "name": "Gingerbread Wall",
+      "iid": 160
+    },
+    {
+      "name": "Gingerbread Door",
+      "iid": 161
+    },
+    {
+      "name": "Gingerbread Cable/Wall",
+      "iid": 162
+    },
+    {
+      "name": "Gingerbread Automat' Door",
+      "iid": 163
+    },
+    {
+      "name": "Christmas Hat",
+      "iid": 164
+    },
+    {
+      "name": "Rudolph Hat",
+      "iid": 165
+    },
+    {
+      "name": "Snowman Hat",
+      "iid": 166
+    },
+    {
+      "name": "Christmas Cake",
+      "iid": 167
+    },
+    {
+      "name": "Rotten Christmas Cake",
+      "iid": 168
+    },
+    {
+      "name": "The Little Gingerbread Man",
+      "iid": 169
+    },
+    {
+      "name": "The Old Gingerbread Man",
+      "iid": 170
+    },
+    {
+      "name": "Elf hat",
+      "iid": 171
+    },
+    {
+      "name": "Giant Sugar Can",
+      "iid": 172
+    },
+    {
+      "name": "Sugar Can",
+      "iid": 173
+    },
+    {
+      "name": "Uranium Wall",
+      "iid": 174
+    },
+    {
+      "name": "Uranium Door",
+      "iid": 175
+    },
+    {
+      "name": "Builder 1",
+      "iid": 176
+    },
+    {
+      "name": "Builder 2",
+      "iid": 177
+    },
+    {
+      "name": "Inventory 1",
+      "iid": 178
+    },
+    {
+      "name": "Inventory 2",
+      "iid": 179
+    },
+    {
+      "name": "Inventory 3",
+      "iid": 180
+    },
+    {
+      "name": "Inventory 4",
+      "iid": 181
+    },
+    {
+      "name": "Inventory 5",
+      "iid": 182
+    },
+    {
+      "name": "Light Weight",
+      "iid": 183
+    },
+    {
+      "name": "Turret Base",
+      "iid": 184
+    },
+    {
+      "name": "Rifle Turret",
+      "iid": 185
+    },
+    {
+      "name": "Laser Turret",
+      "iid": 186
+    },
+    {
+      "name": "Sniper Turret",
+      "iid": 187
+    },
+    {
+      "name": "Plasma Turret",
+      "iid": 188
+    },
+    {
+      "name": "Metal chest",
+      "iid": 189
+    },
+    {
+      "name": "Uranium Cable - Wall",
+      "iid": 190
+    },
+    {
+      "name": "Uranium Automatic Door",
+      "iid": 191
+    }
+  ]
+}
